@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>StrongLoop API Studio [prototype]</title>
+
+    <link rel="stylesheet" type="text/css" href="./style/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="./style/ng-grid.min.css">
+    <link rel="stylesheet" type="text/css" href="./style/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="./style/studio.style.css">
+
+  </head>
+  <body ng-app="app">
+
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">API Studio</a>
+        </div>
+        <div class="collapse navbar-collapse" ng-controller="MainNavController">
+          <ul class="nav navbar-nav">
+            <li ng-class="{ active: isActive('/')}"><a ui-sref="home">home</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="#" lb-logout>logout</a>
+            </li>
+            <li ng-hide="isAuthUser()">
+              <a ui-sref="register">register</a></li>
+            <li><a href="http://loopback.io" target="_new">docs</a>
+            </li>
+            <li>
+              <a href="/explorer" target="_new">explorer</a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div ui-view></div>
+
+    </div>
+
+    <!-- angular -->
+    <script src="./scripts/vendor/angular/angular.js"></script>
+
+    <!-- jquery -->
+    <script src="./scripts/vendor/jquery/jquery-2.0.0.js"></script>
+
+    <!-- d3 -->
+    <script src="./scripts/vendor/d3/d3.js"></script>
+    <script src="./scripts/vendor/d3/d3.layout.js"></script>
+
+    <!-- lb services -->
+    <script src="./scripts/modules/common/lb-services.js"></script>
+
+    <!-- angular plugins -->
+    <script src="./scripts/vendor/angular/ui-utils.js"></script>
+    <script src="./scripts/vendor/angular/angular-animate.js"></script>
+    <script src="./scripts/vendor/angular/angular-ui-router.js"></script>
+    <script src="./scripts/vendor/angular/angular-touch.js"></script>
+    <script src="./scripts/vendor/angular/angular-sanitize.js"></script>
+    <script src="./scripts/vendor/angular/ng-grid.js"></script>
+    <script src="./scripts/vendor/angular/checklist-model.js"></script>
+    <script src="./scripts/vendor/angular/ui-bootstrap.js"></script>
+    <script src="./scripts/vendor/angular/ui-bootstrap-tpls.js"></script>
+    <script src="./scripts/vendor/angular/angular-resource.js"></script>
+
+    <!-- app -->
+    <script src="./scripts/app.js"></script>
+    <script src="./scripts/modules/app/app.controllers.js"></script>
+    <script src="./scripts/modules/app/app.directives.js"></script>
+    <script src="./scripts/modules/app/app.services.js"></script>
+
+    <!-- profile -->
+    <script src="./scripts/modules/profile/profile.module.js"></script>
+    <script src="./scripts/modules/profile/profile.controllers.js"></script>
+    <script src="./scripts/modules/profile/profile.services.js"></script>
+    <script src="./scripts/modules/profile/profile.directives.js"></script>
+
+  </body>
+</html>

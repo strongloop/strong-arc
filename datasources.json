@@ -1,0 +1,24 @@
+{
+  "db": {
+    "defaultForType": "db",
+    "connector": "memory"
+  },
+  "mongodb": {
+    "defaultForType": "mongodb",
+    "connector": "loopback-connector-mongodb",
+    "database": "apistudio",
+    "host": "localhost",
+    "port": 27017
+  },
+  "push": {
+    "defaultForType": "push",
+    "connector": "loopback-push-notification",
+    "installation": "installation",
+    "notification": "notification",
+    "application": "application"
+  },
+  "mail": {
+    "defaultForType": "mail",
+    "connector": "mail"
+  }
+}

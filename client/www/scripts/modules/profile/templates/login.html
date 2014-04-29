@@ -1,0 +1,34 @@
+<view title="viewTitle">
+    <content has-header="true" scroll="true">
+        <div class="card">
+            <div class="item item-divider">
+                Sign In
+            </div>
+            <div class="item item-divider assertive" ng-if="loginError">
+                Could not sign in!
+            </div>
+            <form class="item item-text-wrap" ng-submit="login()">
+                <div class="list list-inset">
+                    <label class="item item-input">
+                        <input type="text" placeholder="Email" ng-model="credentials.email">
+                    </label>
+                    <label class="item item-input">
+                        <input type="password" placeholder="Password" ng-model="credentials.password">
+                    </label>
+                </div>
+                <button class="button button-full button-energized">
+                    Sign In
+                </button>
+            </form>
+            <span>
+                <pre>
+        hint:
+            credentials = {
+              email: 'foo@bar.com',
+              password: 'password'
+            };
+                </pre>
+            </span>
+        </div>
+    </content>
+</view>

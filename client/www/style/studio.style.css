@@ -1,0 +1,24 @@
+body{
+    font-size:16px;
+    padding-top: 65px;
+}
+.container{
+    max-width:1200px;
+}
+ul{
+    list-style:none;
+    padding:0;
+}
+
+pre {
+    background-color: #F8F8F8;
+    border: 1px solid #DDD;
+    font-size: 13px;
+    line-height: 19px;
+    overflow: auto;
+    padding: 6px 10px;
+    border-radius: 3px
+}
+code {
+    color:#000;
+}

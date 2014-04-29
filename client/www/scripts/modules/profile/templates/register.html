@@ -1,0 +1,34 @@
+<view title="viewTitle">
+    <content has-header="true" scroll="true">
+        <div class="card">
+            <div class="item item-divider">
+                <span>Register</span>
+            </div>
+            <div class="item item-divider assertive" ng-if="registerError">
+                An error has occured.
+            </div>
+            <form class="item item-text-wrap" ng-submit="register()">
+                <div class="list list-inset">
+                    <label class="item item-input">
+                        <input type="text" placeholder="First Name" ng-model="registration.firstName">
+                    </label>
+                    <label class="item item-input">
+                        <input type="text" placeholder="Last Name" ng-model="registration.lastName">
+                    </label>
+                    <label class="item item-input">
+                        <input type="text" placeholder="Email" ng-model="registration.email">
+                    </label>
+                    <label class="item item-input">
+                        <input type="password" placeholder="Password" ng-model="registration.password">
+                    </label>
+                    <label class="item item-input">
+                        <input type="password" placeholder="Confrim Password" ng-model="confirmPassword">
+                    </label>
+                </div>
+                <button type="submit" class="button button-full button-energized">
+                    Register
+                </button>
+            </form>
+        </div>
+    </content>
+</view>

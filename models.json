@@ -1,0 +1,93 @@
+{
+  "email": {
+    "dataSource": "mail",
+    "public": false,
+    "options": {
+      "base": "Email"
+    }
+  },
+  "user": {
+    "dataSource": "mongodb",
+    "public": true,
+    "options": {
+      "base": "User",
+      "relations": {
+        "accessTokens": {
+          "model": "accessToken",
+          "type": "hasMany",
+          "foreignKey": "userId"
+        }
+      }
+    }
+  },
+  "accessToken": {
+    "dataSource": "mongodb",
+    "public": true,
+    "options": {
+      "base": "AccessToken"
+    }
+  },
+  "application": {
+    "dataSource": "mongodb",
+    "public": true,
+    "options": {
+      "base": "Application"
+    }
+  },
+  "acl": {
+    "dataSource": "mongodb",
+    "public": false,
+    "options": {
+      "base": "ACL"
+    }
+  },
+  "roleMapping": {
+    "dataSource": "mongodb",
+    "public": false,
+    "options": {
+      "base": "RoleMapping"
+    }
+  },
+  "role": {
+    "dataSource": "mongodb",
+    "public": false,
+    "options": {
+      "base": "Role",
+      "relations": {
+        "principals": {
+          "type": "hasMany",
+          "model": "roleMapping",
+          "foreignKey": "roleId"
+        }
+      }
+    }
+  },
+  "scope": {
+    "dataSource": "mongodb",
+    "public": false,
+    "options": {
+      "base": "Scope"
+    }
+  },
+  "push": {
+    "dataSource": "push",
+    "options": {
+      "base": "Push",
+      "plural": "push"
+    }
+  },
+  "installation": {
+    "dataSource": "db",
+    "public": true,
+    "options": {
+      "base": "Installation"
+    }
+  },
+  "notification": {
+    "dataSource": "db",
+    "public": true,
+    "options": {
+      "base": "Notification"
+    }
+  }
+}

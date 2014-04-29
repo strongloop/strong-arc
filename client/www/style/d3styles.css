@@ -1,0 +1,39 @@
+#MainSVG{
+    border:1px solid red;
+    position:relative;
+}
+form[name="NewPropertyInputForm"]{
+    width:26rem;
+    position:absolute;
+    top:40px;
+    left:200px;
+}
+#NewPropertyContainer{
+    display:none;
+}
+.new-property-form-container{
+    display:block;
+    position:absolute;
+    top:100px;
+    left:40px;
+    z-index:4003;
+}
+.new-property-form-container #ModelNameInput{
+    display:none;
+}
+
+g.node {
+    font-family: Verdana, Helvetica;
+    font-size: 12px;
+    font-weight: bold;
+}
+circle.node-dot {
+    fill: lightsalmon;
+    stroke: red;
+    stroke-width: 1px;
+}
+
+path.link {
+    fill: none;
+    stroke: gray;
+}
