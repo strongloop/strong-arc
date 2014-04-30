@@ -1,0 +1,15 @@
+<div class="container" data-id="ModelMainContainer">
+  <h1>Model Main</h1>
+  <div class="row">
+    <div class="col-xs-4">
+      <accordion>
+        <accordion-group heading="{{model.name}}" ng-repeat="model in models">
+          <pre>{{model.props | json}}</pre>
+        </accordion-group>
+      </accordion>
+    </div>
+    <div class="xs-col-8">
+
+    </div>
+  </div>
+</div>

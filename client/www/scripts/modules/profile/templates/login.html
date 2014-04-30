@@ -1,34 +1,22 @@
-<view title="viewTitle">
-    <content has-header="true" scroll="true">
-        <div class="card">
-            <div class="item item-divider">
-                Sign In
-            </div>
-            <div class="item item-divider assertive" ng-if="loginError">
-                Could not sign in!
-            </div>
-            <form class="item item-text-wrap" ng-submit="login()">
-                <div class="list list-inset">
-                    <label class="item item-input">
-                        <input type="text" placeholder="Email" ng-model="credentials.email">
-                    </label>
-                    <label class="item item-input">
-                        <input type="password" placeholder="Password" ng-model="credentials.password">
-                    </label>
-                </div>
-                <button class="button button-full button-energized">
-                    Sign In
-                </button>
-            </form>
-            <span>
-                <pre>
-        hint:
-            credentials = {
-              email: 'foo@bar.com',
-              password: 'password'
-            };
-                </pre>
-            </span>
+<div class="container card" id="LoginMainContainer">
+  <div class="center_div">
+      <h2>Sign in to API Studio</h2>
+      <div class="item item-divider assertive" ng-if="loginError">
+          Could not sign in!
+      </div>
+      <form name="LoginForm" role="form" ng-submit="login()">
+        <div class="form-group">
+          <label for="InputUserName">Username</label>
+          <input id="InputUserName" class="form-control" name="InputUserName" type="text" placeholder="Email" ng-model="credentials.email">
         </div>
-    </content>
-</view>
+        <div class="form-group">
+          <label for="InputPassword">Password</label>
+          <input type="password" class="form-control" id="InputPassword" name="InputPassword" placeholder="Password" ng-model="credentials.password">
+        </div>
+        <button type="submit" class="primary pull-right">
+            Sign In
+        </button>
+      </form>
+  </div>
+</div>
+

@@ -24,14 +24,15 @@
         </div>
         <div class="collapse navbar-collapse" ng-controller="MainNavController">
           <ul class="nav navbar-nav">
-            <li ng-class="{ active: isActive('/')}"><a ui-sref="home">home</a></li>
+            <li ng-class="{ active: isActive('/api')}"><a ui-sref="api">Api</a></li>
+            <li ng-class="{ active: isActive('/datasource')}"><a ui-sref="datasource">Datasource</a></li>
+            <li ng-class="{ active: isActive('/model')}"><a ui-sref="model">Model</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li>
-              <a href="#" lb-logout>logout</a>
-            </li>
-            <li ng-hide="isAuthUser()">
-              <a ui-sref="register">register</a></li>
+            <li lb-greeting-nav-item></li>
+            <li lb-login-nav-item></li>
+            <li lb-logout-nav-item></li>
+            <li lb-register-nav-item></li>
             <li><a href="http://loopback.io" target="_new">docs</a>
             </li>
             <li>
@@ -39,7 +40,6 @@
             </li>
           </ul>
         </div>
-
       </div>
     </div>
 
@@ -58,6 +58,9 @@
     <!-- d3 -->
     <script src="./scripts/vendor/d3/d3.js"></script>
     <script src="./scripts/vendor/d3/d3.layout.js"></script>
+
+    <!-- string -->
+    <script src="./scripts/vendor/string.min.js"></script>
 
     <!-- lb services -->
     <script src="./scripts/modules/common/lb-services.js"></script>
@@ -85,6 +88,30 @@
     <script src="./scripts/modules/profile/profile.controllers.js"></script>
     <script src="./scripts/modules/profile/profile.services.js"></script>
     <script src="./scripts/modules/profile/profile.directives.js"></script>
+
+    <!-- auth -->
+    <script src="./scripts/modules/auth/auth.module.js"></script>
+    <script src="./scripts/modules/auth/auth.controllers.js"></script>
+    <script src="./scripts/modules/auth/auth.services.js"></script>
+    <script src="./scripts/modules/auth/auth.directives.js"></script>
+
+    <!-- api -->
+    <script src="./scripts/modules/api/api.module.js"></script>
+    <script src="./scripts/modules/api/api.controllers.js"></script>
+    <script src="./scripts/modules/api/api.services.js"></script>
+    <script src="./scripts/modules/api/api.directives.js"></script>
+
+    <!-- model -->
+    <script src="./scripts/modules/model/model.module.js"></script>
+    <script src="./scripts/modules/model/model.controllers.js"></script>
+    <script src="./scripts/modules/model/model.services.js"></script>
+    <script src="./scripts/modules/model/model.directives.js"></script>
+
+    <!-- datasource -->
+    <script src="./scripts/modules/datasource/datasource.module.js"></script>
+    <script src="./scripts/modules/datasource/datasource.controllers.js"></script>
+    <script src="./scripts/modules/datasource/datasource.services.js"></script>
+    <script src="./scripts/modules/datasource/datasource.directives.js"></script>
 
   </body>
 </html>

@@ -8,7 +8,9 @@
   "dependencies": {
     "loopback": "1.x >=1.7.0",
     "loopback-angular": "^1.1.0",
-    "loopback-connector-mongodb": "^1.2.2"
+    "loopback-connector-mongodb": "^1.2.2",
+    "protractor": "^0.22.0",
+    "request": "^2.34.0"
   },
   "optionalDependencies": {
     "loopback-explorer": "~1.1.0",

@@ -1,14 +1,12 @@
 {
   "email": {
-    "dataSource": "mail",
-    "public": false,
     "options": {
       "base": "Email"
-    }
+    },
+    "dataSource": "mail",
+    "public": false
   },
   "user": {
-    "dataSource": "mongodb",
-    "public": true,
     "options": {
       "base": "User",
       "relations": {
@@ -17,40 +15,48 @@
           "type": "hasMany",
           "foreignKey": "userId"
         }
-      }
-    }
+      },
+      "acls": [
+        {
+          "permission": "ALLOW",
+          "principalType": "ROLE",
+          "principalId": "$owner",
+          "property": "findById"
+        }
+      ]
+    },
+    "dataSource": "mongodb",
+    "public": true
   },
   "accessToken": {
-    "dataSource": "mongodb",
-    "public": true,
     "options": {
       "base": "AccessToken"
-    }
+    },
+    "dataSource": "mongodb",
+    "public": true
   },
   "application": {
-    "dataSource": "mongodb",
-    "public": true,
     "options": {
       "base": "Application"
-    }
+    },
+    "dataSource": "mongodb",
+    "public": true
   },
   "acl": {
-    "dataSource": "mongodb",
-    "public": false,
     "options": {
       "base": "ACL"
-    }
+    },
+    "dataSource": "mongodb",
+    "public": false
   },
   "roleMapping": {
-    "dataSource": "mongodb",
-    "public": false,
     "options": {
       "base": "RoleMapping"
-    }
+    },
+    "dataSource": "mongodb",
+    "public": false
   },
   "role": {
-    "dataSource": "mongodb",
-    "public": false,
     "options": {
       "base": "Role",
       "relations": {
@@ -60,34 +66,99 @@
           "foreignKey": "roleId"
         }
       }
-    }
+    },
+    "dataSource": "mongodb",
+    "public": false
   },
   "scope": {
-    "dataSource": "mongodb",
-    "public": false,
     "options": {
       "base": "Scope"
-    }
+    },
+    "dataSource": "mongodb",
+    "public": false
   },
   "push": {
-    "dataSource": "push",
     "options": {
       "base": "Push",
       "plural": "push"
-    }
+    },
+    "dataSource": "push"
   },
   "installation": {
-    "dataSource": "db",
-    "public": true,
     "options": {
       "base": "Installation"
-    }
+    },
+    "dataSource": "db",
+    "public": true
   },
   "notification": {
-    "dataSource": "db",
-    "public": true,
     "options": {
       "base": "Notification"
-    }
+    },
+    "dataSource": "db",
+    "public": true
+  },
+  "apidefinition": {
+    "properties": {
+      "id": {
+        "type": "string",
+        "id": true
+      },
+      "name": {
+        "type": "string"
+      },
+      "display": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "models": {
+        "type": "array"
+      },
+      "datasources": {
+        "type": "array"
+      },
+      "studioApiKey": {
+        "type": "string"
+      },
+      "userId": {
+        "type": "string"
+      }
+    },
+    "public": true,
+    "dataSource": "mongodb",
+    "plural": "apidefinitions"
+  },
+  "modeldef": {
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "display": {
+        "type": "string"
+      },
+      "properties": {
+        "type": "object"
+      },
+      "public": {
+        "type": "boolean"
+      },
+      "datasource": {
+        "type": "string"
+      },
+      "plural": {
+        "type": "string"
+      },
+      "options": {
+        "type": "object"
+      }
+    },
+    "public": true,
+    "dataSource": "db",
+    "plural": "modeldefs"
   }
 }

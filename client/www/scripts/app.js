@@ -5,6 +5,10 @@ var app = angular.module('app', [
   'ngSanitize',
   'lbServices',
   'Profile',
+  'Api',
+  'Auth',
+  'Model',
+  'Datasource',
   'ui.bootstrap',
   'ui.utils',
   'checklist-model',
@@ -30,6 +34,21 @@ app.config([
         controller: 'HomeMainController',
         templateUrl: './scripts/modules/app/templates/home.main.html'
       }).
+      state('api', {
+        url: '/api',
+        controller: 'ApiMainController',
+        templateUrl: './scripts/modules/api/templates/api.main.html'
+      }).
+      state('datasource', {
+        url: '/datasource',
+        controller: 'DatasourceMainController',
+        templateUrl: './scripts/modules/datasource/templates/datasource.main.html'
+      }).
+      state('model', {
+        url: '/model',
+        controller: 'ModelMainController',
+        templateUrl: './scripts/modules/model/templates/model.main.html'
+      }).
       state('login', {
         url: '/login',
         controller: 'LoginController',
@@ -46,7 +65,8 @@ app.config([
 app.factory('requestInterceptor', [
   '$q',
   '$rootScope',
-  function ($q, $rootScope) {
+  '$location',
+  function ($q, $rootScope, $location) {
     return {
       'request': function (config) {
         if (window.localStorage.getItem('accessToken')) {
@@ -57,7 +77,7 @@ app.factory('requestInterceptor', [
       responseError: function(rejection) {
         console.log('intercepted rejection of ', rejection.config.url, rejection.status);
         if (rejection.status == 401) {
-          AppAuth.currentUser = null;
+          //AppAuth.currentUser = null;
           // save the current location so that login can redirect back
           $location.nextAfterLogin = $location.path();
           $location.path('/login');

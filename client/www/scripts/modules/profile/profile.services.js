@@ -39,6 +39,9 @@ Profile.service('ProfileService', [
           }
         });
     };
+    svc.getCurrentUser = function() {
+      return User.findById({id:svc.getCurrentUserId()});
+    };
 
     return svc;
 
