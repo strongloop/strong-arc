@@ -1,5 +1,5 @@
 <div class="container" data-id="ApiMainContainer">
-  <h1>Api Main</h1>
+  <h1>Apis</h1>
   <div class="row">
     <div class="col-xs-4">
       <input type="button" ng-click="addNewApi()" ng-hide="isHideNewApiButton" ng-disabled="isNewApiButtonDisabled()" value="Add New" />
@@ -13,7 +13,7 @@
       </form>
       <div data-id="ApiListContainer">
         <h2>Api's</h2>
-        <div id="ApiListGrid"></div>
+        <div class="api-list-grid" ng-grid="apiGridOptions"></div>
       </div>
     </div>
     <div class="col-xs-8">

@@ -26,6 +26,53 @@ code {
     margin: 0 auto;
     width:80% /* value of your choice which suits your alignment */
 }
+/*
+
+    growl
+
+*/
+.growl{
+    top:60px;
+}
+/*
+
+    Datasource
+
+*/
+.model-schema-editor-source-table-table {
+    border:1px solid #dddddd;
+    border-radius:4px;
+    width:100%
+
+}
+.model-schema-editor-source-table-table th {
+    background-color:darkgreen;
+    color:#ffffff;
+    font-weight: bold;
+}
+.model-schema-editor-source-table-table td{
+    font-size:125%;
+    border:1px solid #eeeeee;
+
+}
+/*
+
+api
+
+*/
+.api-list-grid {
+    border: 1px solid rgb(212,212,212);
+    width: 400px;
+    height: 300px
+}
+.datasource-list-grid {
+    border: 1px solid rgb(212,212,212);
+    min-height: 1000px
+}
+.api-grid-ctrl-col{
+    text-align: center;
+    margin:0 auto 0 auto;
+}
 #RegisterMainContainer {
 
 }
@@ -40,4 +87,39 @@ code {
 }
 #LoginMainContainer form {
     margin:0 5rem 0 5rem;
+}
+/*
+
+    models
+
+*/
+.name-not-unique {
+    background-color: #CFD496;
+}
+.warning-message {
+    line-height: 1.5rem;
+    display:block;
+    color:darkgreen;
+}
+.model-property-editor-container {
+    max-width:50rem;
+}
+.default-model-editor-controls-list li{
+    display: inline-block;
+    transition: 0.4s all ease-out;
+    -webkit-transition: 0.4s ease-out all;
+
+}
+.default-model-editor-controls-list li.ng-hide-add,
+.default-model-editor-controls-list li.ng-hide-remove {
+    display: inline-block !important;
+}
+.default-model-editor-controls-list li.ng-hide-remove, .default-model-editor-controls-list li.ng-hide-add.ng-hide-add-active{
+    margin-left: -80px;
+    opacity: 0;
+}
+
+.default-model-editor-controls-list li.ng-hide-remove.ng-hide-remove-active, .default-model-editor-controls-list li.ng-hide-add{
+    margin-left: 0;
+    opacity: 1;
 }

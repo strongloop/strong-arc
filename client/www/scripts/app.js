@@ -3,8 +3,11 @@ var app = angular.module('app', [
   'ui.router',
   'ngResource',
   'ngSanitize',
+  'ngAnimate',
+  'angular-growl',
   'lbServices',
   'Profile',
+  'Common',
   'Api',
   'Auth',
   'Model',
@@ -14,6 +17,9 @@ var app = angular.module('app', [
   'checklist-model',
   'ngGrid'
 ]);
+app.config(['growlProvider', function(growlProvider) {
+  growlProvider.globalTimeToLive(1800);
+}]);
 app.config([
   '$httpProvider',
   function ($httpProvider) {
@@ -48,6 +54,11 @@ app.config([
         url: '/model',
         controller: 'ModelMainController',
         templateUrl: './scripts/modules/model/templates/model.main.html'
+      }).
+      state('profile', {
+        url: '/profile',
+        controller: 'ProfileMainController',
+        templateUrl: './scripts/modules/profile/templates/profile.main.html'
       }).
       state('login', {
         url: '/login',
@@ -88,6 +99,16 @@ app.factory('requestInterceptor', [
   }
 ]);
 
+// global autofocus
+app.factory('Focus', [
+  '$rootScope', '$timeout', (function($rootScope, $timeout) {
+    return function(name) {
+      return $timeout(function() {
+        return $rootScope.$broadcast('focusOn', name);
+      });
+    };
+  })
+]);
 
 
 

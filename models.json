@@ -158,7 +158,45 @@
       }
     },
     "public": true,
-    "dataSource": "db",
+    "dataSource": "mongodb",
     "plural": "modeldefs"
+  },
+  "datasourcedef": {
+    "properties": {
+      "id": {
+        "type": "string",
+        "id": true
+      },
+      "name": {
+        "type": "string"
+      },
+      "defaultForType": {
+        "type": "string"
+      },
+      "connector": {
+        "type": "string"
+      },
+      "database": {
+        "type": "string"
+      },
+      "host": {
+        "type": "string"
+      },
+      "port": {
+        "type": "number"
+      },
+      "url": {
+        "type": "string"
+      },
+      "username": {
+        "type": "string"
+      },
+      "password": {
+        "type": "string"
+      }
+    },
+    "public": true,
+    "dataSource": "mongodb",
+    "plural": "datasourcedefs"
   }
 }

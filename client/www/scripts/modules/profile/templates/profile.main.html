@@ -1,15 +1,4 @@
-<nav-page hide-back-button="false">
-    <view title="viewTitle">
-        <content has-header="true"
-                 scroll="true">
-            <a class="button button-full button-outline" ui-sref="home">
-                Home
-            </a>
-            <a class="button button-full button-outline" ui-sref="myreservations" ng-show="showMyReservations()">
-                My Reservations
-            </a>
-
-            <div lb-profile-choose-theme></div>
-        </content>
-    </view>
-</nav-page>
+<div class="container" data-id="ProfileMainContainer">
+  <h2>{{ viewTitle }} Page</h2>
+  <div user-preferences-editor></div>
+</div>

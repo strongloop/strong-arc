@@ -1,0 +1,35 @@
+<div class="container" data-id="ModelDatasourceEditorContainer">
+  <ul class="default-model-editor-controls-list">
+    <li ng-show="isDatasourceEditorActive()" >
+      <em ng-show="checkUniquePropStatus()" class="warning-message">name must be unique</em>
+      <input type="text"
+             placeholder="add new datasource"
+             name="PropertyName"
+             ng-model="currDatasource.name"
+             ng-change="datasourceNameUpdate()"
+             focus-on="datasourceEditInit"
+             ng-class="{'name-not-unique': checkUniquePropStatus()}"
+             required  />
+    </li>
+    <li ng-show="isDatasourceEditorActive()" >
+      <select ng-model="baseDataType" ng-options="c.name for c in baseDataTypes"></select>
+    </li>
+    <li>
+      <input type="button"
+             ng-click="addDatasource()"
+             ng-disabled="isAddDatasourceButtonDisabled()"
+             class="btn btn-xs btn-primary"
+             value="add Datasource" />
+    </li>
+    <li ng-show="isDatasourceEditorActive()" >
+      <input type="button"
+             ng-model="currDatasource"
+             value="&times;"
+             class="close"
+             aria-hidden="true"
+             ng-click="deactivateDatasourceEditor()" />
+    </li>
+  </ul>
+</div>
+
+

@@ -4,21 +4,14 @@
  * Profile Controller
  *
  * */
-Profile.controller('ProfileController', [
+Profile.controller('ProfileMainController', [
   '$rootScope',
-  'ProfileService',
   '$scope',
   'User',
   function ($rootScope, ProfileService, $scope, User) {
 
     $scope.viewTitle = 'Profile';
 
-    $scope.showMyReservations = function () {
-      if (ProfileService.getCurrentUserId()) {
-        return true;
-      }
-      return false;
-    };
   }
 ]);
 Profile.controller('LoginController', [

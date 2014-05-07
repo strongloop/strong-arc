@@ -1,0 +1,37 @@
+<div class="container" data-id="ModelRelationsEditorContainer">
+  <ul class="default-model-editor-controls-list">
+    <li ng-show="isRelationsEditorActive()" >
+      <select >
+        <option>has many</option>
+        <option>has many belongs to</option>
+        <option>belongs to</option>
+      </select>
+    </li>
+    <li ng-show="isRelationsEditorActive()" >
+      <input type="text"
+             placeholder="add new relation"
+             name="RelationName"
+             ng-model="currRelation.name"
+             ng-change="relationNameUpdate()"
+             focus-on="relationsEditInit"
+             ng-class="{'name-not-unique': checkUniquePropStatus()}"
+             required  />
+    </li>
+    <li>
+      <input type="button"
+             ng-click="addRelation()"
+             ng-disabled="isAddRelationsButtonDisabled()"
+             class="btn btn-xs btn-primary"
+             value="add relation" />
+    </li>
+    <li ng-show="isRelationsEditorActive()" >
+      <input type="button"
+             ng-model="currRelation"
+             value="&times;"
+             class="close"
+             aria-hidden="true"
+             ng-click="deactivateRelationsEditor()" />
+    </li>
+  </ul>
+</div>
+

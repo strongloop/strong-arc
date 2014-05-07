@@ -4,7 +4,7 @@ app.controller('HomeMainController',[
   '$location',
   function($scope, $location){
     var viewModel = {};
-    viewModel.message = 'Welcome to StrongLoop API Studio client';
+    viewModel.message = 'StrongLoop API Studio';
     $scope.viewModel = viewModel;
   }
 ]);

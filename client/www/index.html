@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="./style/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="./style/ng-grid.min.css">
     <link rel="stylesheet" type="text/css" href="./style/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="./style/angular-growl.min.css">
     <link rel="stylesheet" type="text/css" href="./style/studio.style.css">
 
   </head>
@@ -24,20 +25,21 @@
         </div>
         <div class="collapse navbar-collapse" ng-controller="MainNavController">
           <ul class="nav navbar-nav">
-            <li ng-class="{ active: isActive('/api')}"><a ui-sref="api">Api</a></li>
-            <li ng-class="{ active: isActive('/datasource')}"><a ui-sref="datasource">Datasource</a></li>
-            <li ng-class="{ active: isActive('/model')}"><a ui-sref="model">Model</a></li>
+            <li ng-class="{ active: isActive('/api')}"><a ui-sref="api">Apis</a></li>
+            <li ng-class="{ active: isActive('/datasource')}"><a ui-sref="datasource">Datasources</a></li>
+            <li ng-class="{ active: isActive('/model')}"><a ui-sref="model">Models</a></li>
+
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li lb-greeting-nav-item></li>
-            <li lb-login-nav-item></li>
-            <li lb-logout-nav-item></li>
             <li lb-register-nav-item></li>
             <li><a href="http://loopback.io" target="_new">docs</a>
             </li>
             <li>
               <a href="/explorer" target="_new">explorer</a>
             </li>
+            <li lb-login-nav-item></li>
+            <li lb-logout-nav-item></li>
           </ul>
         </div>
       </div>
@@ -48,6 +50,9 @@
       <div ui-view></div>
 
     </div>
+
+    <!-- growl notification placeholder -->
+    <div growl></div>
 
     <!-- angular -->
     <script src="./scripts/vendor/angular/angular.js"></script>
@@ -61,6 +66,9 @@
 
     <!-- string -->
     <script src="./scripts/vendor/string.min.js"></script>
+
+    <!-- growl -->
+    <script src="./scripts/vendor/angular/angular-growl.min.js"></script>
 
     <!-- lb services -->
     <script src="./scripts/modules/common/lb-services.js"></script>
@@ -82,6 +90,12 @@
     <script src="./scripts/modules/app/app.controllers.js"></script>
     <script src="./scripts/modules/app/app.directives.js"></script>
     <script src="./scripts/modules/app/app.services.js"></script>
+
+    <!-- common -->
+    <script src="./scripts/modules/common/common.module.js"></script>
+    <script src="./scripts/modules/common/common.controllers.js"></script>
+    <script src="./scripts/modules/common/common.directives.js"></script>
+    <script src="./scripts/modules/common/common.services.js"></script>
 
     <!-- profile -->
     <script src="./scripts/modules/profile/profile.module.js"></script>

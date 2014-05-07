@@ -1,0 +1,35 @@
+<div class="container" data-id="ModelAclEditorContainer">
+  <ul class="default-model-editor-controls-list">
+    <li ng-show="isAclEditorActive()" >
+      <em ng-show="checkUniquePropStatus()" class="warning-message">name must be unique</em>
+      <input type="text"
+             placeholder="add new acl"
+             name="PropertyName"
+             ng-model="currAcl.name"
+             ng-change="aclNameUpdate()"
+             focus-on="aclEditInit"
+             ng-class="{'name-not-unique': checkUniquePropStatus()}"
+             required  />
+    </li>
+    <li ng-show="isAclEditorActive()" >
+      <select ng-model="baseDataType" ng-options="c.name for c in baseDataTypes"></select>
+    </li>
+    <li>
+      <input type="button"
+             ng-click="addAcl()"
+             ng-disabled="isAddAclButtonDisabled()"
+             class="btn btn-xs btn-primary"
+             value="add ACL" />
+    </li>
+    <li ng-show="isAclEditorActive()" >
+      <input type="button"
+             ng-model="currAcl"
+             value="&times;"
+             class="close"
+             aria-hidden="true"
+             ng-click="deactivateAclEditor()" />
+    </li>
+  </ul>
+</div>
+
+

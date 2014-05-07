@@ -1,0 +1,28 @@
+<div class="container">
+  <h3>user prefs</h3>
+  <form name="UserPreferences" role="form">
+    <div class="form-group">
+      <label for="SelectModelNameNormalizationStrategy">Model Name Normalization Strategy</label>
+      <select ng-model="userPreferences.modelNameNormalizationStrategy"
+              id="SelectModelNameNormalizationStrategy"
+              name="SelectModelNameNormalizationStrategy"
+              ng-change="updateModelNameNormalizationStrategyPreference('modelNameNormalizationStrategy')">
+        <option value="camelize">camelize</option>
+        <option value="dasherize">dasherize</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="SelectModelEditingJSONDialect">Prefered model editing JSON dialect</label>
+      <select ng-model="userPreferences.modelEditingJSONDialect"
+              id="SelectModelEditingJSONDialect"
+              name="SelectModelEditingJSONDialect"
+              ng-change="updateModelEditingJSONDialectPreference('modelEditingJSONDialect')">
+        <option value="anonArray">Anonymous Array</option>
+        <option value="namedObj">Named Object</option>
+      </select>
+    </div>
+  </form>
+  <ul>
+    <li ng-repeat="preference in userPreferences">{{ preference.name }} :  {{ preference.value }}</li>
+  </ul>
+</div>

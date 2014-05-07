@@ -10,6 +10,15 @@
     "host": "localhost",
     "port": 27017
   },
+  "apmDev": {
+    "defaultForType": "mysql",
+    "connector": "loopback-connector-mysql",
+    "database": "apm",
+    "host": "localhost",
+    "port": 3306,
+    "username": "root",
+    "password": ""
+  },
   "push": {
     "defaultForType": "push",
     "connector": "loopback-push-notification",

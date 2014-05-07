@@ -1,14 +1,25 @@
 // Copyright StrongLoop 2014
-Profile.directive('lbProfileMainDirective', [
-  '$templateCache',
-  function ($templateCache) {
-
+Profile.directive('userPreferencesEditor', [
+  'ProfileService',
+  'UserPreferenceService',
+  function(ProfileService, UserPreferenceService) {
     return {
-      templateUrl: 'profile.main.html'
-    };
+      templateUrl: './scripts/modules/profile/templates/user.preferences.editor.html',
+      link: function(scope, elem, attrs) {
+
+        scope.userPreferences = UserPreferenceService.getAllUserPreferences();
+        // name normalization strategy
+        scope.updateModelNameNormalizationStrategyPreference = function() {
+          UserPreferenceService.saveBulkUserPrefs(scope.userPreferences);
+        };
+        // json dialect
+        scope.updateModelEditingJSONDialectPreference = function(){
+          UserPreferenceService.saveBulkUserPrefs(scope.userPreferences);
+        };
+      }
+    }
   }
 ]);
-
 Profile.directive('lbLogoutNavItem', [
   'ProfileService',
   '$location',
@@ -68,7 +79,7 @@ Profile.directive('lbGreetingNavItem', [
   'NavigationService',
   function (ProfileService, $location, NavigationService) {
     return{
-      template: '<li ng-show="isUserAuth()"><a>Hi {{ currentUser.firstName }}</a></li>',
+      template: '<li ng-show="isUserAuth()"><a href="#profile" us-sref="profile">Hi {{ currentUser.firstName }}</a></li>',
       link: function(scope,element, attribs) {
         scope.currentUser = {};
         var isAuthUser = ProfileService.getCurrentUserId();

@@ -36,11 +36,54 @@ Api.controller('ApiMainController', [
       apiObj.apiKey = ProfileService.getCurrentUserId();
       apiObj.userId = ProfileService.getCurrentUserId();
       console.log(JSON.stringify(apiObj));
-      //return ApiService.createApi(apiObj);
+      return ApiService.createApi(apiObj);
+      $scope.apis = ApiService.getAllApis({});
     };
     $scope.closeApiForm = function() {
       $scope.isShowApiForm = false;
       $scope.isHideNewApiButton = false;
     };
+
+
+
+//    var apis = ApiService.getAllApis();
+
+//    $scope.apis = apis;
+
+    $scope.apis = ApiService.getAllApis({});
+    $scope.apis.$promise.
+      then(function (result) {
+        console.log('whew');
+
+        var apis = result;
+        $scope.apis = apis;
+
+
+      });
+
+
+    $scope.apiGridOptions = {
+      data: 'apis',
+      columnDefs: [
+        {field:'display', displayName:'Name'},
+        {field:'apiKey',displayName:'Api Key'},
+        {field: '', width: '35px', cellClass:'api-grid-ctrl-col', cellTemplate: '<button type="button" ng-click="deleteApi(row)" class="close" aria-hidden="true">&times;</button>' }
+      ],
+      selectedItems: $scope.mySelections,
+      multiSelect: false,
+      afterSelectionChange: function (theRow, evt) {
+
+
+      }
+    };
+
+
+
+
+
+
+
+
+
   }
 ]);

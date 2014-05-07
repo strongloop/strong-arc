@@ -1,0 +1,41 @@
+<div class="container"  id="ModelFormContainer">
+  <div class="row">
+    <div class="col-xs-6">
+      <form name="ModelForm" role="form">
+        <div id="ModelNameDisplay" ng-hide="isCurrModelSaved()">Model: {{ currModel.display }}</div>
+        <div id="ModelNameInput" ng-show="isCurrModelSaved()">
+          <em ng-show="checkUniqueStatus()" class="warning-message">name must be unique</em>
+          <input type="text"
+                 placeholder="enter unique model name"
+                 autofocus="autofocus"
+                 name="ModelName"
+                 ng-change="modelNameUpdate()"
+                 ng-model="currModel.display"
+                 ng-class="{'name-not-unique': checkUniqueStatus()}"
+                 required />
+          <input type="button"
+                 ng-click="createNewModel()"
+                 ng-disabled="isNewModelButtonDisabled()"
+                 class="btn btn-sm btn-primary"
+                 value="Create Model" />
+        </div>
+        <div ng-show="hasCurrentModel" >
+          <div model-extension-editor class="model-property-editor-container"></div>
+          <div model-property-editor class="model-property-editor-container"></div>
+          <div model-relations-editor class="model-property-editor-container"></div>
+          <div model-acl-editor class="model-property-editor-container"></div>
+          <div model-datasource-editor class="model-property-editor-container"></div>
+          <div model-scopes-editor class="model-property-editor-container"></div>
+
+        </div>
+      </form>
+    </div>
+    <div class="col-xs-6">
+      <h3>{{ currModel.display }}</h3>
+      <h4>{{ currModel.name }}</h4>
+      <input type="button" value="toggle dialect" ng-click="toggleDialect()" ng-model="currModel">
+      <pre>{{ currDisplayModel() | json}}</pre>
+    </div>
+  </div>
+</div>
+
