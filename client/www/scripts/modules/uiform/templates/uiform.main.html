@@ -1,0 +1,53 @@
+<div class="container" id="UIFormEditorContainer">
+
+  <div class="row">
+    <div class="col-xs-2">
+      <ul>
+        <li>
+          <input type="button"
+                 data-name="textInput"
+                 ng-click="addUIFormElement('text')"
+                 value="text" >
+        </li>
+        <li>
+          <input type="button"
+                 data-name="textareaInput"
+                 ng-click="addUIFormElement('textarea')"
+                 value="textarea" >
+        </li>
+        <li>
+          <input type="button"
+                 data-name="selectInput"
+                 ng-click="addUIFormElement('select')"
+                 value="select" >
+        </li>
+        <li>
+          <input type="button"
+                 data-name="radioInput"
+                 ng-click="addUIFormElement('radio')"
+                 value="radio" >
+        </li>
+        <li>
+          <input type="button"
+                 data-name="dateInput"
+                 ng-click="addUIFormElement('date')"
+                 value="date" >
+        </li>
+        <li>
+          <input type="button"
+                 data-name="checkboxInput"
+                 ng-click="addUIFormElement('checkbox')"
+                 value="checkbox" >
+        </li>
+      </ul>
+
+    </div>
+    <div class="col-xs-4">
+      <pre>{{currUIForm | json}}</pre>
+    </div>
+    <div class="col-xs-4">
+      <div uiform-form-builder></div>
+    </div>
+  </div>
+
+</div>

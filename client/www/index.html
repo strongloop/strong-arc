@@ -25,10 +25,17 @@
         </div>
         <div class="collapse navbar-collapse" ng-controller="MainNavController">
           <ul class="nav navbar-nav">
-            <li ng-class="{ active: isActive('/api')}"><a ui-sref="api">Apis</a></li>
-            <li ng-class="{ active: isActive('/datasource')}"><a ui-sref="datasource">Datasources</a></li>
-            <li ng-class="{ active: isActive('/model')}"><a ui-sref="model">Models</a></li>
-
+            <li ng-class="{ active: isActive('/api')}">
+              <a ui-sref="api">Apis</a></li>
+            <li ng-class="{ active: isActive('/datasource')}">
+              <a ui-sref="datasource">Datasources</a>
+            </li>
+            <li ng-class="{ active: isActive('/model')}">
+              <a ui-sref="model">Models</a>
+            </li>
+            <li ng-class="{ active: isActive('/uiform')}">
+              <a ui-sref="uiform">Forms</a>
+            </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li lb-greeting-nav-item></li>
@@ -66,9 +73,10 @@
 
     <!-- string -->
     <script src="./scripts/vendor/string.min.js"></script>
-
     <!-- growl -->
     <script src="./scripts/vendor/angular/angular-growl.min.js"></script>
+    <!-- chance -->
+    <script src="./scripts/vendor/chance.js"></script>
 
     <!-- lb services -->
     <script src="./scripts/modules/common/lb-services.js"></script>
@@ -126,6 +134,12 @@
     <script src="./scripts/modules/datasource/datasource.controllers.js"></script>
     <script src="./scripts/modules/datasource/datasource.services.js"></script>
     <script src="./scripts/modules/datasource/datasource.directives.js"></script>
+
+    <!-- uiform -->
+    <script src="./scripts/modules/uiform/uiform.module.js"></script>
+    <script src="./scripts/modules/uiform/uiform.controllers.js"></script>
+    <script src="./scripts/modules/uiform/uiform.services.js"></script>
+    <script src="./scripts/modules/uiform/uiform.directives.js"></script>
 
   </body>
 </html>

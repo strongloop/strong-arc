@@ -3,11 +3,8 @@
   <div model-engine></div>
   <div class="row">
     <div class="col-xs-4">
-      <accordion>
-        <accordion-group heading="{{model.name}}" ng-repeat="model in models">
-          <pre>{{model.props | json}}</pre>
-        </accordion-group>
-      </accordion>
+      <div model-source-list></div>
+
     </div>
     <div class="xs-col-8">
 

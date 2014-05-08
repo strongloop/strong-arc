@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="span2">Field ID: </div>
+  <div class="span4">{{field.field_id}}</div>
+</div>
+<div class="row">
+  <div class="span2">Field Type:</div>
+  <div class="span4">{{field.field_type}}</div>
+</div>
+
+<div class="clear"></div> <hr>
+
+<div class="row">
+  <div class="span2">Field Title:</div>
+  <div class="span4">
+    <input type="text" ng-model="field.fieldValue" value="{{field.fieldValue}}">
+  </div>
+</div>
+<div class="row">
+  <div class="span2">Field Default Value:</div>
+  <div class="span4">
+    <input type="text" ng-model="field.fieldValue" value="{{field.fieldValue}}">
+  </div>
+</div>
+<div class="row" ng-show="showAddOptions(field)">
+  <div class="span2">Field Options:</div>
+  <div class="span6">
+    <div ng-repeat="option in field.field_options">
+      <input type="text" ng-model="option.option_title" value="{{option.option_title}}">
+      <a class="btn btn-danger btn-mini right" type="button" ng-click="deleteOption(field, option)">
+        <i class="icon-minus icon-white"></i></a>
+      <span class="label label-inverse">Value: {{ option.option_value }}</span>
+    </div>
+    <button class="btn btn-primary btn-small" type="button" ng-click="addOption(field)">
+      <i class="icon-plus icon-white"></i> Add Option</button>
+  </div>
+</div>
+<div class="row">
+  <div class="span2">Required:</div>
+  <div class="span4">
+    <label>
+      <input type="radio" ng-value="true" ng-selected ng-model="field.required"/>
+      &nbsp; Yes
+    </label>
+    <label>
+      <input type="radio" ng-value="false" ng-model="field.required"/>
+      &nbsp; No
+    </label>
+  </div>
+</div>

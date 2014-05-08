@@ -11,6 +11,7 @@ var app = angular.module('app', [
   'Api',
   'Auth',
   'Model',
+  'UIForm',
   'Datasource',
   'ui.bootstrap',
   'ui.utils',
@@ -54,6 +55,11 @@ app.config([
         url: '/model',
         controller: 'ModelMainController',
         templateUrl: './scripts/modules/model/templates/model.main.html'
+      }).
+      state('uiform', {
+        url: '/uiform',
+        controller: 'UIFormMainController',
+        templateUrl: './scripts/modules/uiform/templates/uiform.main.html'
       }).
       state('profile', {
         url: '/profile',

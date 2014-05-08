@@ -297,7 +297,6 @@ Model.directive('modelOptionsEditor', [
  *   MODEL RELATIONS EDITOR
  *
  * */
-
 Model.directive('modelRelationsEditor', [
   function() {
     return {
@@ -493,6 +492,12 @@ Model.directive('modelDatasourceEditor', [
     }
   }
 ]);
+/*
+*
+*
+* Schema Model Composer
+*
+* */
 Model.directive('schemaModelComposer', [
   function() {
     return {
@@ -533,28 +538,74 @@ Model.directive('schemaModelComposer', [
       }
     }
   }
-
 ]);
+/*
+*
+* Model Extension Editor
+*
+* */
 Model.directive('modelExtensionEditor', [
   function() {
     return {
       templateUrl: './scripts/modules/model/templates/model.extension.editor.html',
       link: function(scope, elem, attrs) {
-        scope.isExtensionEditorActive = true;
+        scope.isExtensionEditorActive = function() {
+          return true;
+        }
 
       }
     }
   }
 ]);
+/*
+*
+* Model Scopes Editor
+*
+* */
 Model.directive('modelScopesEditor', [
   function() {
     return {
       templateUrl: './scripts/modules/model/templates/model.scopes.editor.html',
       link: function(scope, elem, attrs) {
-        scope.isScopesEditorActive = true;
+        scope.isScopesEditorActive = function(){
+          return true;
+        }
       }
     }
   }
 ]);
+/*
+ *
+ * Model List
+ *
+ * */
+Model.directive('modelSourceList', [
+  function() {
+    return {
+      templateUrl: './scripts/modules/model/templates/models.source.list.html',
+      link: function(scope, elem, attrs) {
+        scope.$watch('models', function(models) {
+          scope.dmodels = models;
+        }, true);
+        scope.showSampleForm = function() {
+          console.log('show the sample form');
 
+        }
+      }
+    }
+  }
+]);
+Model.directive('modelSampleForm', [
+  function() {
+    return {
+      template: '<div uiform-form-builder ></div>',
+      link: function(scope, elem, attrs) {
+        scope.$watch('model.properties', function(uiFormFields) {
+          console.log('UIForm Form Builder: ' + JSON.stringify(uiFormFields));
+          scope.formFields = uiFormFields;
+        }, true);
+      }
+    }
+  }
+]);
 

@@ -142,7 +142,7 @@ Model.service('ModelService', [
       }
       return isUnique;
 
-    }
+    };
     return svc;
   }
 ]);
