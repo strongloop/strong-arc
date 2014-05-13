@@ -1,0 +1,437 @@
+{
+  "email": {
+    "options": {
+      "base": "Email"
+    },
+    "dataSource": "mail",
+    "public": false
+  },
+  "user": {
+    "options": {
+      "base": "User",
+      "scopes": {
+        "admins": {
+          "where": {
+            "admin": true
+          }
+        },
+        "partners": {
+          "where": {
+            "partner": true
+          }
+        },
+        "advertisers": {
+          "where": {
+            "advertiser": true
+          }
+        },
+        "publishers": {
+          "where": {
+            "publisher": true
+          }
+        }
+      },
+      "relations": {
+        "accessTokens": {
+          "model": "accessToken",
+          "type": "hasMany",
+          "foreignKey": "userId"
+        },
+        "channels": {
+          "model": "channel",
+          "type": "hasMany",
+          "foreignKey": "userId"
+        },
+        "templates": {
+          "model": "template",
+          "type": "hasMany",
+          "foreignKey": "userId"
+        }
+      }
+    },
+    "properties": {
+      "id": {
+        "type": "string",
+        "id": true
+      },
+      "admin": {
+        "type": "boolean"
+      },
+      "partner": {
+        "type": "boolean"
+      },
+      "advertiser": {
+        "type": "boolean"
+      },
+      "publisher": {
+        "type": "boolean"
+      }
+    },
+    "dataSource": "mongodb",
+    "public": true
+  },
+  "accessToken": {
+    "options": {
+      "base": "AccessToken"
+    },
+    "dataSource": "mongodb",
+    "public": true
+  },
+  "application": {
+    "options": {
+      "base": "Application"
+    },
+    "properties": {
+      "id": {
+        "type": "string",
+        "id": true,
+        "generated": true
+      }
+    },
+    "dataSource": "mongodb",
+    "public": true
+  },
+  "acl": {
+    "options": {
+      "base": "ACL"
+    },
+    "properties": {
+      "id": {
+        "type": "string",
+        "id": true,
+        "generated": true
+      }
+    },
+    "dataSource": "mongodb",
+    "public": true
+  },
+  "roleMapping": {
+    "options": {
+      "base": "RoleMapping"
+    },
+    "properties": {
+      "id": {
+        "type": "string",
+        "id": true,
+        "generated": true
+      }
+    },
+    "dataSource": "mongodb",
+    "public": false
+  },
+  "role": {
+    "options": {
+      "base": "Role",
+      "relations": {
+        "principals": {
+          "type": "hasMany",
+          "model": "roleMapping",
+          "foreignKey": "roleId"
+        }
+      }
+    },
+    "properties": {
+      "id": {
+        "type": "string",
+        "id": true,
+        "generated": true
+      }
+    },
+    "dataSource": "mongodb",
+    "public": true
+  },
+  "scope": {
+    "options": {
+      "base": "Scope"
+    },
+    "properties": {
+      "id": {
+        "type": "string",
+        "id": true,
+        "generated": true
+      }
+    },
+    "dataSource": "mongodb",
+    "public": true
+  },
+  "push": {
+    "options": {
+      "base": "Push",
+      "plural": "push"
+    },
+    "properties": {
+      "id": {
+        "type": "string",
+        "id": true,
+        "generated": true
+      }
+    },
+    "dataSource": "push"
+  },
+  "installation": {
+    "options": {
+      "base": "Installation"
+    },
+    "dataSource": "mongodb",
+    "public": true
+  },
+  "notification": {
+    "options": {
+      "base": "Notification"
+    },
+    "properties": {
+      "id": {
+        "type": "string",
+        "id": true,
+        "generated": true
+      }
+    },
+    "dataSource": "mongodb",
+    "public": true
+  },
+  "channel": {
+    "options": {
+      "relations": {
+        "categories": {
+          "model": "category",
+          "type": "hasAndBelongsToMany",
+          "foreignKey": "categoryId"
+        },
+        "ads": {
+          "model": "ad",
+          "type": "hasMany",
+          "foreignKey": "channelId"
+        },
+        "pricing": {
+          "model": "pricing",
+          "type": "belongsTo",
+          "foreignKey": "pricingId"
+        }
+      }
+    },
+    "properties": {
+      "id": {
+        "type": "string",
+        "id": true
+      },
+      "userId": {
+        "type": "string"
+      },
+      "pricingId": {
+        "type": "string"
+      },
+      "type": {
+        "type": "string"
+      },
+      "keywords": {
+        "type": "array"
+      },
+      "meta": {
+        "type": "string"
+      },
+      "created": {
+        "type": "date"
+      },
+      "modified": {
+        "type": "date"
+      }
+    },
+    "public": true,
+    "dataSource": "mongodb",
+    "plural": "channels"
+  },
+  "category": {
+    "options": {
+      "relations": {
+        "channels": {
+          "model": "channel",
+          "type": "hasAndBelongsToMany",
+          "foreignKey": "categoryId"
+        },
+        "templates": {
+          "model": "template",
+          "type": "hasAndBelongsToMany",
+          "foreignKey": "templateId"
+        }
+      }
+
+    },
+    "properties": {
+      "id": {
+        "type": "string",
+        "id": true
+      },
+      "name": {
+        "type": "string"
+      },
+      "created": {
+        "type": "date"
+      },
+      "modified": {
+        "type": "date"
+      }
+    },
+    "public": true,
+    "dataSource": "mongodb",
+    "plural": "categories"
+  },
+  "ad": {
+    "options": {
+      "relations": {
+        "channel": {
+          "model": "channel",
+          "type": "belongsTo",
+          "foreignKey": "channelId"
+        }
+      }
+    },
+    "properties": {
+      "id": {
+        "type": "string",
+        "id": true
+      },
+      "channelId": {
+        "type": "string"
+      },
+      "alt": {
+        "type": "string"
+      },
+      "url": {
+        "type": "string"
+      },
+      "width": {
+        "type": "number"
+      },
+      "height": {
+        "type": "number"
+      },
+      "views": {
+        "type": "number"
+      },
+      "ctr": {
+        "type": "number"
+      },
+      "created": {
+        "type": "date"
+      },
+      "modified": {
+        "type": "date"
+      }
+    },
+    "public": true,
+    "dataSource": "mongodb",
+    "plural": "ads"
+  },
+  "template": {
+    "options": {
+      "relations": {
+        "channel": {
+          "model": "channel",
+          "type": "belongsTo",
+          "foreignKey": "channelId"
+        },
+        "categories": {
+          "model": "category",
+          "type": "hasAndBelongsToMany",
+          "foreignKey": "categoryId"
+        }
+      }
+    },
+    "properties": {
+      "id": {
+        "type": "string",
+        "id": true
+      },
+      "userId": {
+        "type": "string"
+      },
+      "map": {
+        "type": "object"
+      },
+      "channelId": {
+        "type": "string"
+      },
+      "html": {
+        "type": "string"
+      },
+      "keywords": {
+        "type": "array"
+      },
+      "created": {
+        "type": "date"
+      },
+      "modified": {
+        "type": "date"
+      }
+    },
+    "public": true,
+    "dataSource": "mongodb",
+    "plural": "templates"
+  },
+  "pricing": {
+    "options": {
+      "relations": {
+        "type": {
+          "model": "pricingType",
+          "type": "belongsTo",
+          "foreignKey": "pricingTypeId"
+        },
+        "channels": {
+          "model": "channel",
+          "type": "hasMany",
+          "foreignKey": "pricingId"
+        }
+      }
+    },
+    "properties": {
+      "id": {
+        "type": "string",
+        "id": true
+      },
+      "pricingTypeId": {
+        "type": "string"
+      },
+      "bid": {
+        "type": "number"
+      },
+      "created": {
+        "type": "date"
+      },
+      "modified": {
+        "type": "date"
+      }
+    },
+    "public": true,
+    "dataSource": "mongodb",
+    "plural": "pricings"
+  },
+  "pricingType": {
+    "options": {
+      "relations": {
+        "pricings": {
+          "model": "pricing",
+          "type": "hasMany",
+          "foreignKey": "pricingTypeId"
+        }
+      }
+    },
+    "properties": {
+      "id": {
+        "type": "string",
+        "id": true
+      },
+      "name": {
+        "type": "string"
+      },
+      "created": {
+        "type": "date"
+      },
+      "modified": {
+        "type": "date"
+      }
+    },
+    "public": true,
+    "dataSource": "mongodb",
+    "plural": "pricingTypes"
+  }
+}
