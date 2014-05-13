@@ -9,6 +9,7 @@ var app = angular.module('app', [
   'Profile',
   'Common',
   'Api',
+  'Layout',
   'Auth',
   'Model',
   'UIForm',
@@ -70,6 +71,11 @@ app.config([
         url: '/login',
         controller: 'LoginController',
         templateUrl: './scripts/modules/profile/templates/login.html'
+      }).
+      state('layout', {
+        url: '/layout',
+        controller: 'LayoutMainController',
+        templateUrl: './scripts/modules/layout/templates/layout.main.html'
       }).
       state('register', {
         url: '/register',

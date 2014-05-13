@@ -600,9 +600,9 @@ Model.directive('modelSampleForm', [
     return {
       template: '<div uiform-form-builder ></div>',
       link: function(scope, elem, attrs) {
-        scope.$watch('model.properties', function(uiFormFields) {
-          console.log('UIForm Form Builder: ' + JSON.stringify(uiFormFields));
-          scope.formFields = uiFormFields;
+        scope.$watch('dmodels', function(models) {
+          console.log('UIForm Form Builder: ' + JSON.stringify(models));
+          scope.formFields = models;
         }, true);
       }
     }

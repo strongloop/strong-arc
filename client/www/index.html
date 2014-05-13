@@ -33,6 +33,9 @@
             <li ng-class="{ active: isActive('/model')}">
               <a ui-sref="model">Models</a>
             </li>
+            <li ng-class="{ active: isActive('/layout')}">
+              <a ui-sref="layout">Layouts</a>
+            </li>
             <li ng-class="{ active: isActive('/uiform')}">
               <a ui-sref="uiform">Forms</a>
             </li>
@@ -128,6 +131,12 @@
     <script src="./scripts/modules/model/model.controllers.js"></script>
     <script src="./scripts/modules/model/model.services.js"></script>
     <script src="./scripts/modules/model/model.directives.js"></script>
+
+    <!-- layout -->
+    <script src="./scripts/modules/layout/layout.module.js"></script>
+    <script src="./scripts/modules/layout/layout.controllers.js"></script>
+    <script src="./scripts/modules/layout/layout.services.js"></script>
+    <script src="./scripts/modules/layout/layout.directives.js"></script>
 
     <!-- datasource -->
     <script src="./scripts/modules/datasource/datasource.module.js"></script>
