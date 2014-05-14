@@ -123,3 +123,27 @@ api
     margin-left: 0;
     opacity: 1;
 }
+/*
+
+    drag and drop demo
+
+*/
+.bin {
+    min-height: 150px;
+    min-width: 150px;
+    float: left;
+    border: 1px solid red;
+    padding: 20px;
+}
+.item {
+    min-height: 150px;
+    min-width: 150px;
+    background: blue;
+    float: right;
+}
+.drag {
+    opacity: 0.5;
+}
+.over {
+    background: red;
+}

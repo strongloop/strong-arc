@@ -5,6 +5,8 @@ var app = angular.module('app', [
   'ngSanitize',
   'ngAnimate',
   'angular-growl',
+  'ui.tree',
+  'angularBootstrapNavTree',
   'lbServices',
   'Profile',
   'Common',
@@ -40,7 +42,7 @@ app.config([
       state('home', {
         url: '/',
         controller: 'HomeMainController',
-        templateUrl: './scripts/modules/app/templates/home.main.html'
+        templateUrl: './scripts/modules/app/templates/app.main.html'
       }).
       state('api', {
         url: '/api',
