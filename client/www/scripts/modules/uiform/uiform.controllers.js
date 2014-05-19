@@ -25,11 +25,6 @@ UIForm.controller('UIFormMainController',[
           required:true
         },
         {
-          fieldName:'description',
-          fieldType:'textarea',
-          fieldLabel:'Description'
-        },
-        {
           fieldName:'lastUpdate',
           fieldType:'date',
           fieldLabel:'Last Update'

@@ -1,7 +1,6 @@
 <accordion>
-  <accordion-group heading="{{model.name}}" ng-repeat="model in models">
+  <accordion-group heading="{{model.name}}" ng-repeat="model in dmodels">
     <input type="button" ng-click="showSampleForm()" value="show sample form" ng-model="model">
-    <div model-sample-form ng-model="model"></div>
     <pre>{{ model.props | json }}</pre>
   </accordion-group>
 </accordion>

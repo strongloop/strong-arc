@@ -5,6 +5,10 @@ body{
 .container{
     max-width:1200px;
 }
+.btn:focus, .btn:active:focus, .btn.active:focus {
+    outline: transparent;
+    outline-color: transparent;
+}
 ul{
     list-style:none;
     padding:0;
@@ -125,25 +129,207 @@ api
 }
 /*
 
-    drag and drop demo
+    ide container
 
 */
-.bin {
-    min-height: 150px;
-    min-width: 150px;
-    float: left;
-    border: 1px solid red;
-    padding: 20px;
+.top-level-container {
+    border: 1px solid #cccccc;
+    border-radius: .6rem;
+    /*padding:.5rem;*/
+    /*height:600px;*/
+    overflow:scroll;
+
 }
-.item {
-    min-height: 150px;
-    min-width: 150px;
-    background: blue;
-    float: right;
+
+
+/*
+
+Main Tree Nav
+
+*/
+#MainNavSearchContainer {
+
 }
-.drag {
-    opacity: 0.5;
+.nav-search-list {
+    padding:0;
+    margin:0;
 }
-.over {
-    background: red;
+.nav-search-list li {
+    display:inline;
 }
+.main-search-input {
+    border:1px solid #dddddd;
+    border-radius:.4rem;
+    width:10rem;
+}
+/*
+
+
+    Model Instance Editor
+
+*/
+.table-header-cell {
+    padding-left:1.4rem;
+}
+.model-instance-outer-container {
+    max-width:80rem;
+    padding:1.3rem;
+    border: 1px solid #eeeeee;
+    border-radius:2rem;
+}
+.model-instance-header {
+    display:inline;
+}
+.is-closed {
+    display: none;
+}
+.is-open {
+    display: block;
+}
+.model-instance-header-btn {
+    text-align: left;
+    padding-left:4rem;
+}
+.model-instance-editor-input {
+    border:1px solid #dddddd;
+    border-radius:.3rem;
+    margin:.4rem;
+}
+.model-instance-container {
+
+}
+.model-instance-details-container [data-state="isOpen"] {
+    display:block;
+}
+.model-instance-details-container [data-state="isClosed"] {
+    display:none;
+}
+/*
+
+    Data Table Grid
+
+*/
+[data-ui-type="table"] {
+    display: table;
+}
+[data-ui-type="row"] {display: table-row;}
+[data-ui-type="cell"] {
+    display: table-cell;
+}
+/*
+
+    model properties table
+
+*/
+.model-instance-property-list [data-ui-type="cell"] {
+    text-align:center;
+    padding:0;
+    margin:0;
+}
+
+.props-data-type-cell {
+    width:7rem;
+    text-align:center;
+
+}
+.props-name-cell {
+    width:18rem;
+}
+.props-name-cell .btn{
+    text-align: left;
+    padding-left:2rem;
+}
+.props-isid-cell{
+    width:3rem;
+    text-align:center;
+}
+.props-default-value-cell{
+    width:18rem;
+}
+.props-validation-cell{
+    width:7rem;
+    text-align:center;
+}
+.props-map-cell{
+    width:5rem;
+    text-align:center;
+}
+.props-connection-cell{
+    width:5rem;
+    text-align:center;
+}
+.model-details-pocket-editor-container {
+    border-right:1px solid #e1e1e1;
+    border-bottom:1px solid #e1e1e1;
+    border-left:1px solid #e1e1e1;
+    border-radius:1.3rem;
+    padding-left:2rem;
+
+}
+.model-instance-property-table-header-row {
+    background-color:#08592B;
+    color:#ffffff;
+    font-size:110%;
+}
+/*
+
+    Model Properties
+
+*/
+.pocket-editor-table [data-ui-type="cell"] {
+    text-align: left;
+    vertical-align: top;
+    white-space: nowrap;
+}
+
+
+/*
+
+    Pocket Popover
+
+*/
+.pocket-popover-container {
+    position: relative;
+}
+.pocket-popover {
+    position:absolute;
+    padding:1rem;
+    border:1px solid #dddddd;
+    border-radius:2rem;
+    background-color:#efefef;
+    z-index: 4000;
+}
+.popover-header-container {
+
+}
+.popover-content-container {
+
+}
+/*
+
+    FunDoo Rating Demo
+
+*/
+.rating{
+    color: #a9a9a9;
+    margin: 0;
+    padding: 0;
+}
+
+ul.rating {
+    display: inline-block;
+}
+
+.rating li {
+    list-style-type: none;
+    display: inline-block;
+    padding: 1px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.rating .filled {
+    color: #21568b;
+}
+

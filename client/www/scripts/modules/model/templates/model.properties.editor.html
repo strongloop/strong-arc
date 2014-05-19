@@ -1,0 +1,95 @@
+<div class="container-fluid">
+  <input ng-click="togglePropertyView()" type="button" class="model-instance-header-btn btn btn-default btn-block" value="Properties" />
+  <div ng-show="isPropertyViewActive">
+    <div data-ui-type="table">
+      <div data-ui-type="row" class="model-instance-property-table-header-row">
+        <span data-ui-type="cell" class="props-name-cell table-header-cell">Name</span>
+        <span data-ui-type="cell" class="props-data-type-cell table-header-cell">Type</span>
+        <span data-ui-type="cell" class="props-isid-cell table-header-cell">Id</span>
+        <span data-ui-type="cell" class="props-default-value-cell table-header-cell"></span>
+        <span data-ui-type="cell" class="props-validation-cell">Validate</span>
+        <span data-ui-type="cell" class="props-map-cell table-header-cell">Map</span>
+        <span data-ui-type="cell" class="props-map-cell table-header-cell header">Rel.</span>
+      </div>
+    </div>
+    <ul class="model-instance-property-list">
+      <li ng-repeat="property in currModel.properties">
+        <div class="model-instance-container">
+          <div data-ui-type="table">
+            <div data-ui-type="row">
+            <span data-ui-type="cell" class="props-name-cell">
+              <input type="button"
+                     value="{{ property.name }}"
+                     class="btn btn-sm btn-default btn-block"
+                     ng-click="isCollapsed = !isCollapsed">
+            </span>
+            <span data-ui-type="cell" class="props-data-type-cell">
+              <input type="button" class="btn btn-sm btn-default" value="{{ property.props.type }}">
+            </span>
+            <span data-ui-type="cell" class="props-isid-cell">
+              <input type="checkbox">
+            </span>
+            <span data-ui-type="cell" class="props-default-value-cell">
+              <input type="text" class="model-instance-editor-input" placeholder="default value" value="{{ property.props.default }}">
+            </span>
+            <span data-ui-type="cell" class="props-validation-cell">
+              <pocket-editor-popover>
+                <div property-validation-editor></div>
+              </pocket-editor-popover>
+            </span>
+            <span data-ui-type="cell" class="props-map-cell">
+              <pocket-editor-popover>
+                <div property-map-editor></div>
+              </pocket-editor-popover>
+            </span>
+            <span data-ui-type="cell" class="props-connection-cell">
+              <button class="btn btn-link" ng-click="isThisCollapsed = !isThisCollapsed">
+                <span class="glyphicon glyphicon-flash"></span>
+              </button>
+
+            </span>
+            </div>
+          </div>
+          <div collapse="isCollapsed" class="model-details-pocket-editor-container">
+
+            <div data-ui-type="table" class="pocket-editor-table">
+              <div data-ui-type="row">
+                <div data-ui-type="cell">
+                  <label>Name</label>
+                </div>
+                <div data-ui-type="cell">
+                  <input type="text" ng-model="property.name" class="model-instance-editor-input">
+                </div>
+              </div>
+              <div data-ui-type="row">
+                <div data-ui-type="cell">
+                  <label>Is ID</label>
+                </div>
+                <div data-ui-type="cell">
+                  <pocket-editor-popover target="property.id.editor">
+                    <div property-id-editor></div>
+                  </pocket-editor-popover>
+                </div>
+              </div>
+              <div data-ui-type="row">
+                <div data-ui-type="cell">
+                  <label>Comments</label>
+                </div>
+                <div data-ui-type="cell">
+                  <textarea class="model-instance-editor-input"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div collapse="isThisCollapsed">
+            <h4>connection</h4>
+            <label>target model<input type="text" placehoder="search models"></label>
+            <label>target property<input type="text" placehoder="search properties"></label>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+
+</div>

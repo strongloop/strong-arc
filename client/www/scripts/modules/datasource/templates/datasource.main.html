@@ -1,13 +1,13 @@
-<div class="container" data-id="DatasourceMainContainer">
-  <h1>Datasources</h1>
-  <input type="button" ng-click="openDatasourceForm()" value="+ new" />
+<div class="container-fluid" data-id="DatasourceMainContainer">
   <div class="row">
     <div class="col-xs-5">
+      <h1>Datasources</h1>
+      <input type="button" ng-click="openDatasourceForm()" class="btn btn-sm btn-primary" value="new datasource" />
       <div datasource-editor-form ng-show="isShowDatasourceForm"></div>
       <accordion>
         <accordion-group heading="{{datasource.name}}" ng-repeat="datasource in datasources">
-          <input type="button" value="get db schema" ng-click="loadSchema(datasoruce.name)" ng-model="datasource" />
-          <input type="button" value="test connection" />
+          <input type="button" value="get db schema" class="btn btn-sm btn-primary" ng-click="loadSchema(datasoruce.name)" ng-model="datasource" />
+          <input type="button" value="test connection" class="btn btn-sm btn-info" />
           <pre>{{datasource | json}}</pre>
         </accordion-group>
       </accordion>
@@ -16,8 +16,8 @@
       <div loading-indicator ng-show="isDsTablesLoadingIndicatorVisible"></div>
       <div schema-model-composer="apiSourceTables" ng-show="isSchemaModelComposerVisible()"></div>
       <div ng-show="isDsTableGridVisible">
-        <input type="button" ng-click="selectAll()" value="select all" />
-        <input type="button" ng-click="generateModels()" value="get table schemas" />
+        <input type="button" ng-click="selectAll()" class="btn btn-sm btn-info" value="select all" />
+        <input type="button" ng-click="generateModels()" class="btn btn-sm btn-primary" value="get table schemas" />
         <strong>Filter:</strong> </string><input type="text" ng-model="filterOptions.filterText" />
         <div class="datasource-list-grid gridStyle" ng-grid="dsTablesGridOptions"></div>
       </div>

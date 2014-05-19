@@ -6,7 +6,6 @@
     <link rel="stylesheet" type="text/css" href="./style/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="./style/ng-grid.min.css">
     <link rel="stylesheet" type="text/css" href="./style/jquery-ui.css">
-    <link rel="stylesheet" type="text/css" href="./style/angular-ui-tree.css">
     <link rel="stylesheet" type="text/css" href="./style/abn_tree.css">
 
     <link rel="stylesheet" type="text/css" href="./style/angular-growl.min.css">
@@ -28,20 +27,9 @@
         </div>
         <div class="collapse navbar-collapse" ng-controller="MainNavController">
           <ul class="nav navbar-nav">
-            <li ng-class="{ active: isActive('/api')}">
-              <a ui-sref="api">Apis</a></li>
-            <li ng-class="{ active: isActive('/datasource')}">
-              <a ui-sref="datasource">Datasources</a>
-            </li>
-            <li ng-class="{ active: isActive('/model')}">
-              <a ui-sref="model">Models</a>
-            </li>
-            <li ng-class="{ active: isActive('/layout')}">
-              <a ui-sref="layout">Layouts</a>
-            </li>
-            <li ng-class="{ active: isActive('/uiform')}">
-              <a ui-sref="uiform">Forms</a>
-            </li>
+            <!--<li ng-class="{ active: isActive('/api')}">-->
+              <!--<a ui-sref="api">Apis</a>-->
+            <!--</li>-->
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li lb-greeting-nav-item></li>
@@ -58,11 +46,43 @@
       </div>
     </div>
 
-    <div class="container">
+    <div class="container-fluid" ng-controller="IDEController">
+      <div class="row">
+        <div class="col-xs-2 top-level-container">
 
-      <div ui-view></div>
+          <div main-nav-tree></div>
 
+        </div>
+        <div class="col-xs-10">
+          <div class="row">
+            <div class="col-xs-11 top-level-container">
+
+
+                <div ui-view autoscroll="false"></div>
+
+
+
+            </div>
+            <div class="col-xs-1 top-level-container">
+
+              <input type="button" value="properties" class="btn btn-sm btn-info">
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 top-level-container">
+
+              <h2>Data</h2>
+              <input type="button" value="launch explorer" class="btn btn-lg btn-primary" >
+
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+
+
 
     <!-- growl notification placeholder -->
     <div growl></div>
@@ -73,12 +93,17 @@
     <!-- jquery -->
     <script src="./scripts/vendor/jquery/jquery-2.0.0.js"></script>
 
+    <!-- react -->
+    <script src="./scripts/vendor/react/react-addon.0.10.0.js"></script>
+    <script src="./scripts/vendor/react/JSXTransformer.js"></script>
+
     <!-- d3 -->
     <script src="./scripts/vendor/d3/d3.js"></script>
     <script src="./scripts/vendor/d3/d3.layout.js"></script>
 
     <!-- string -->
     <script src="./scripts/vendor/string.min.js"></script>
+
     <!-- growl -->
     <script src="./scripts/vendor/angular/angular-growl.min.js"></script>
     <!-- chance -->
@@ -87,19 +112,21 @@
     <!-- lb services -->
     <script src="./scripts/modules/common/lb-services.js"></script>
 
-    <!-- angular plugins -->
+    <!-- angular plugins and directives -->
     <script src="./scripts/vendor/angular/ui-utils.js"></script>
     <script src="./scripts/vendor/angular/angular-animate.js"></script>
     <script src="./scripts/vendor/angular/angular-ui-router.js"></script>
     <script src="./scripts/vendor/angular/angular-touch.js"></script>
     <script src="./scripts/vendor/angular/angular-sanitize.js"></script>
     <script src="./scripts/vendor/angular/ng-grid.js"></script>
-    <script src="./scripts/vendor/angular/angular-ui-tree.js"></script>
-    <script src="./scripts/vendor/angular/abn_tree_directive.js"></script>
     <script src="./scripts/vendor/angular/checklist-model.js"></script>
     <script src="./scripts/vendor/angular/ui-bootstrap.js"></script>
     <script src="./scripts/vendor/angular/ui-bootstrap-tpls.js"></script>
     <script src="./scripts/vendor/angular/angular-resource.js"></script>
+
+    <!-- bootstrap (popover) -->
+    <script src="./scripts/vendor/bootstrap.js"></script>
+
 
     <!-- app -->
     <script src="./scripts/app.js"></script>
@@ -133,12 +160,21 @@
 
     <!-- model -->
     <script src="./scripts/modules/model/model.module.js"></script>
+    <script type="text/jsx" src="./scripts/modules/model/model.react.js"></script>
     <script src="./scripts/modules/model/model.controllers.js"></script>
     <script src="./scripts/modules/model/model.services.js"></script>
     <script src="./scripts/modules/model/model.directives.js"></script>
 
+    <!-- property -->
+    <script src="./scripts/modules/property/property.module.js"></script>
+    <script type="text/jsx" src="./scripts/modules/property/property.react.js"></script>
+    <script src="./scripts/modules/property/property.controllers.js"></script>
+    <script src="./scripts/modules/property/property.services.js"></script>
+    <script src="./scripts/modules/property/property.directives.js"></script>
+
     <!-- layout -->
     <script src="./scripts/modules/layout/layout.module.js"></script>
+    <script type="text/jsx" src="./scripts/modules/layout/layout.react.js"></script>
     <script src="./scripts/modules/layout/layout.controllers.js"></script>
     <script src="./scripts/modules/layout/layout.services.js"></script>
     <script src="./scripts/modules/layout/layout.directives.js"></script>

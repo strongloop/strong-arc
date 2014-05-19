@@ -133,7 +133,8 @@
   "modeldef": {
     "properties": {
       "id": {
-        "type": "string"
+        "type": "string",
+        "id": true
       },
       "name": {
         "type": "string"

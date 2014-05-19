@@ -1,37 +1,42 @@
-<div data-id="ModelSchemaComposerContainer">
-  <h2>Model Schema Composer</h2>
-  <ul>
-    <li ng-repeat="item in collection">
-      <h4>Source table: {{ item.name }}</h4>
-      <input type="button" disabled="disabled" value="select all" />
-      <input type="button" value="generate model" ng-click="generateModelFromDataSource()">
-      <table class="model-schema-editor-source-table-table">
-        <thead>
-        <tr>
-          <th>
+<div class="container-fluid" data-id="ModelSchemaComposerContainer">
+  <div class="row">
+    <h2>Model Schema Composer</h2>
+  </div>
+  <div class="row">
+    <ul>
+      <li ng-repeat="item in collection">
+        <h4>Source table: {{ item.name }}</h4>
+        <input type="button" disabled="disabled" value="select all" class="btn btn-sm btn-default" />
+        <input type="button" value="generate model" class="btn btn-sm btn-primary" ng-click="generateModelFromDataSource()">
+        <table class="model-schema-editor-source-table-table">
+          <thead>
+          <tr>
+            <th>
 
-          </th>
-          <th>
-            col name
-          </th>
-          <th>
-            data type
-          </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="property in item.properties">
-          <td>
-            <input type="checkbox" checklist-model="newModel.properties" checklist-value="property">
-          </td>
-          <td>{{ property.columnName }}</td>
-          <td>{{ property.dataType }}</td>
-        </tr>
-        </tbody>
-      </table>
-      <ul>
-        <li ng-repeat="prop in newModel.properties">{{ prop.columnName }}</li>
-      </ul>
-    </li>
-  </ul>
+            </th>
+            <th>
+              col name
+            </th>
+            <th>
+              data type
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="property in item.properties">
+            <td>
+              <input type="checkbox" checked="checked">
+            </td>
+            <td>{{ property.columnName }}</td>
+            <td>{{ property.dataType }}</td>
+          </tr>
+          </tbody>
+        </table>
+        <ul>
+          <li ng-repeat="prop in newModel.properties">{{ prop.columnName }}</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
 </div>

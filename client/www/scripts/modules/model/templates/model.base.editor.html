@@ -1,0 +1,35 @@
+<div class="container-fluid">
+  <button ng-click="toggleModelInstanceDetailView()" class="btn btn-default btn-block">Model Details</button>
+  <div data-ui-type="table" class="model-instance-details-container" data-state="isClosed">
+    <div data-ui-type="row">
+      <div data-ui-type="cell">
+        <label>plural</label>
+      </div>
+      <div data-ui-type="cell">
+        <input type="text" class="model-instance-editor-input" ng-model="currModel.plural">
+      </div>
+    </div>
+    <div data-ui-type="row">
+      <div data-ui-type="cell">
+        <label>datasource</label>
+      </div>
+      <div data-ui-type="cell">
+        <input type="text" class="model-instance-editor-input" ng-model="currModel.datasource">
+      </div>
+    </div>
+    <div data-ui-type="row">
+      <div data-ui-type="cell">
+        <label>base model</label>
+      </div>
+      <div data-ui-type="cell">
+        <input type="text" class="model-instance-editor-input" ng-model="currProperty.options.base">
+      </div>
+    </div>
+    <div data-ui-type="row">
+      <div data-ui-type="cell">&nbsp;</div>
+      <div data-ui-type="cell">
+        <label><input type="checkbox" class="model-instance-editor-input" ng-model="currProperty.public">public</label>
+      </div>
+    </div>
+  </div>
+</div>

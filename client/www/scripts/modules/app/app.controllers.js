@@ -1,4 +1,161 @@
 // Copyright StrongLoop 2014
+app.controller('IDEController', [
+  '$scope',
+  '$state',
+  '$location',
+  'ModelService',
+  function($scope, $state, $location, ModelService) {
+    var apple_selected, tree, treedata_avm, treedata_geography;
+    $scope.my_tree_handler = function(branch) {
+      var _ref;
+      $scope.output = "Module: " + branch.name;
+
+      if ((_ref = branch.data) != null ? _ref.description : void 0) {
+        return $scope.output += '(' + branch.data.description + ')';
+      }
+      if (branch.stateName) {
+        $state.transitionTo(branch.stateName);
+      } else {
+//        $state.transitionTo('' + branch.name);
+        $location.path('/model/' + branch.name);
+      }
+
+    };
+
+
+
+
+    var treedata_api_nav = [
+      {
+        name: 'Models',
+        stateName: 'model',
+        children: [
+          {
+            name: 'Properties',
+            children: ['data type', 'default']
+          }, {
+            name: 'ACL',
+            children: ['allow all', 'restrict']
+          }, {
+            name: 'Relations',
+            children: ['has many', 'belongs to']
+          }
+        ]
+      },
+      {
+        name: 'Datasources',
+        stateName: 'datasource',
+        children: [
+          {
+            name: 'Mongo Prod 1',
+            children: ['type', 'properties', 'connection']
+          }, {
+            name: 'prod apn customer',
+            children: ['type', 'properties', 'connection']
+          }, {
+            name: 'MySQL WP reg',
+            children: ['type', 'properties', 'connection']
+          }
+        ]
+      },
+      {
+        name: 'Forms',
+        stateName: 'uiform'
+      },
+      {
+        name: 'Layouts',
+        stateName: 'layout'
+      }
+    ];
+    $scope.my_data = treedata_api_nav;
+    $scope.models = [];
+
+
+    $scope.models = ModelService.getAllModels({});
+    $scope.models.$promise.
+      then(function (result) {
+
+        var core = result[0];
+
+        var log = [];
+        var models = [];
+        angular.forEach(core, function(value, key){
+          this.push(key + ': ' + value);
+          models.push({name:key,children:value});
+        }, log);
+
+
+
+        var treedata_api_nav = [
+          {
+            name: 'Models',
+            stateName: 'model',
+            children: [
+              {
+                name: 'Properties',
+                children: ['data type', 'default']
+              }, {
+                name: 'ACL',
+                children: ['allow all', 'restrict']
+              }, {
+                name: 'Relations',
+                children: ['has many', 'belongs to']
+              }
+            ]
+          },
+          {
+            name: 'Datasources',
+            stateName: 'datasource',
+            children: [
+              {
+                name: 'Mongo Prod 1',
+                children: ['type', 'properties', 'connection']
+              }, {
+                name: 'prod apn customer',
+                children: ['type', 'properties', 'connection']
+              }, {
+                name: 'MySQL WP reg',
+                children: ['type', 'properties', 'connection']
+              }
+            ]
+          },
+          {
+            name: 'Forms',
+            stateName: 'uiform'
+          },
+          {
+            name: 'Layouts',
+            stateName: 'layout'
+          }
+        ];
+
+
+
+
+
+
+
+
+
+        for (var i = 0;i < treedata_api_nav.length;i++) {
+          if (treedata_api_nav[i].name === 'Models') {
+            treedata_api_nav[i].children = models;
+            break;
+          }
+        }
+
+
+
+
+
+
+        $scope.models = treedata_api_nav;
+
+
+      });
+
+  }
+]);
 app.controller('HomeMainController',[
   '$scope',
   '$location',
@@ -6,139 +163,6 @@ app.controller('HomeMainController',[
     var viewModel = {};
     viewModel.message = 'StrongLoop API Studio';
     $scope.viewModel = viewModel;
-
-
-
-    var apple_selected, tree, treedata_avm, treedata_geography;
-    $scope.my_tree_handler = function(branch) {
-      var _ref;
-      $scope.output = "You selected: " + branch.label;
-      if ((_ref = branch.data) != null ? _ref.description : void 0) {
-        return $scope.output += '(' + branch.data.description + ')';
-      }
-    };
-    apple_selected = function(branch) {
-      return $scope.output = "APPLE! : " + branch.label;
-    };
-
-    treedata_avm = [
-      {
-        label: 'Animal',
-        children: [
-          {
-            label: 'Dog',
-            data: {
-              description: "man's best friend"
-            }
-          }, {
-            label: 'Cat',
-            data: {
-              description: "Felis catus"
-            }
-          }, {
-            label: 'Hippopotamus',
-            data: {
-              description: "hungry, hungry"
-            }
-          }, {
-            label: 'Chicken',
-            children: ['White Leghorn', 'Rhode Island Red', 'Jersey Giant']
-          }
-        ]
-      }, {
-        label: 'Vegetable',
-        data: {
-          definition: "A plant or part of a plant used as food, typically as accompaniment to meat or fish, such as a cabbage, potato, carrot, or bean.",
-          data_can_contain_anything: true
-        },
-        onSelect: function(branch) {
-          return $scope.output = "Vegetable: " + branch.data.definition;
-        },
-        children: [
-          {
-            label: 'Oranges'
-          }, {
-            label: 'Apples',
-            children: [
-              {
-                label: 'Granny Smith',
-                onSelect: apple_selected
-              }, {
-                label: 'Red Delicous',
-                onSelect: apple_selected
-              }, {
-                label: 'Fuji',
-                onSelect: apple_selected
-              }
-            ]
-          }
-        ]
-      }, {
-        label: 'Mineral',
-        children: [
-          {
-            label: 'Rock',
-            children: ['Igneous', 'Sedimentary', 'Metamorphic']
-          }, {
-            label: 'Metal',
-            children: ['Aluminum', 'Steel', 'Copper']
-          }, {
-            label: 'Plastic',
-            children: [
-              {
-                label: 'Thermoplastic',
-                children: ['polyethylene', 'polypropylene', 'polystyrene', ' polyvinyl chloride']
-              }, {
-                label: 'Thermosetting Polymer',
-                children: ['polyester', 'polyurethane', 'vulcanized rubber', 'bakelite', 'urea-formaldehyde']
-              }
-            ]
-          }
-        ]
-      }
-    ];
-    treedata_geography = [
-      {
-        label: 'North America',
-        children: [
-          {
-            label: 'Canada',
-            children: ['Toronto', 'Vancouver']
-          }, {
-            label: 'USA',
-            children: ['New York', 'Los Angeles']
-          }, {
-            label: 'Mexico',
-            children: ['Mexico City', 'Guadalajara']
-          }
-        ]
-      }, {
-        label: 'South America',
-        children: [
-          {
-            label: 'Venezuela',
-            children: ['Caracas', 'Maracaibo']
-          }, {
-            label: 'Brazil',
-            children: ['Sao Paulo', 'Rio de Janeiro']
-          }, {
-            label: 'Argentina',
-            children: ['Buenos Aires', 'Cordoba']
-          }
-        ]
-      }
-    ];
-    $scope.my_data = treedata_avm;
-
-
-
-
-
-
-
-
-
-
 
 
   }

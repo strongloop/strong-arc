@@ -5,12 +5,11 @@ var app = angular.module('app', [
   'ngSanitize',
   'ngAnimate',
   'angular-growl',
-  'ui.tree',
-  'angularBootstrapNavTree',
   'lbServices',
   'Profile',
   'Common',
   'Api',
+  'Property',
   'Layout',
   'Auth',
   'Model',
@@ -42,7 +41,7 @@ app.config([
       state('home', {
         url: '/',
         controller: 'HomeMainController',
-        templateUrl: './scripts/modules/app/templates/app.main.html'
+        templateUrl: './scripts/modules/app/templates/home.main.html'
       }).
       state('api', {
         url: '/api',
@@ -58,6 +57,11 @@ app.config([
         url: '/model',
         controller: 'ModelMainController',
         templateUrl: './scripts/modules/model/templates/model.main.html'
+      }).
+      state('model.instance', {
+        url: '/:name',
+        controller: 'ModelInstanceController',
+        templateUrl: './scripts/modules/model/templates/model.instance.html'
       }).
       state('uiform', {
         url: '/uiform',

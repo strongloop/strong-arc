@@ -1,4 +1,4 @@
-<div class="container"  id="ModelFormContainer">
+<div class="container-fluid"  id="ModelFormContainer">
   <div class="row">
     <div class="col-xs-6">
       <form name="ModelForm" role="form">
@@ -7,7 +7,6 @@
           <em ng-show="checkUniqueStatus()" class="warning-message">name must be unique</em>
           <input type="text"
                  placeholder="enter unique model name"
-                 autofocus="autofocus"
                  name="ModelName"
                  ng-change="modelNameUpdate()"
                  ng-model="currModel.display"

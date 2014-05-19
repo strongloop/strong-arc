@@ -3,6 +3,19 @@ Layout.controller('LayoutMainController', [
   '$scope',
   function($scope) {
     console.log('Layout Main Controller');
+
+
+    /*
+    *
+    * fundoo example
+    *
+    * */
+    $scope.rating = 5;
+    $scope.saveRatingToServer = function(rating) {
+      console.log('Rating selected - ' + rating);
+    };
+
+
     var isEnabledAddRowControls = false;
     var isShowColumnConfigForm = false;
     $scope.currLayout = {};

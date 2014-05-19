@@ -1,0 +1,11 @@
+<div class="pocket-popover-container" data-name="{{ editorName }}">
+  <button class="btn btn-link" type="button" ng-click="togglePopover()">
+    <span ng-class="{'glyphicon glyphicon-eye-open': isPocketPopoverActive, 'glyphicon glyphicon-eye-close': !isPocketPopoverActive}" class=""></span>
+  </button>
+  <div ng-show="isPocketPopoverActive" class="pocket-popover">
+    <div class="popover-content-container">
+      <div ng-transclude></div>
+    </div>
+  </div>
+
+</div>

@@ -121,17 +121,30 @@ Model.directive('modelEngine', [
               }
             }
           }
-
-
         };
-
-
-
       }
     }
   }
 ]);
 /*
+*
+*
+*   MODEL INSTANCE HEADER
+*
+* */
+Model.directive('modelInstanceHeader', [
+  function() {
+    return {
+      restrict: 'A',
+      link: function(scope, el, attrs) {
+        scope.$watch('currModelName', function(name) {
+          React.renderComponent(Model.ModelTitleHeader({scope: scope}), el[0]);
+        });
+      }
+    }
+  }
+]);
+ /*
  *
  *
  *   MODEL PROPERTY EDITOR
@@ -499,7 +512,8 @@ Model.directive('modelDatasourceEditor', [
 *
 * */
 Model.directive('schemaModelComposer', [
-  function() {
+  '$state',
+  function($state) {
     return {
       templateUrl: './scripts/modules/model/templates/model.schema.composer.html',
       transclude: true,
@@ -510,13 +524,17 @@ Model.directive('schemaModelComposer', [
         console.log('Schema Composer link function: ' + scope.apiSourceTables);
 
 
+        scope.property = 'checked';
         scope.generateModelFromDataSource = function() {
-          confirm('generate model?');
+          if (confirm('generate model?')) {
+            $state.transitionTo('uiform', {name:'test'});
+          }
         };
         scope.collection = [];
         scope.$watch('apiSourceTables', function(sourceTables) {
           console.log('hell ya: ' + sourceTables);
           scope.collection = sourceTables;
+          scope.property = 'checked';
         }, true);
 
         scope.getTableData = function(item) {
@@ -595,6 +613,81 @@ Model.directive('modelSourceList', [
     }
   }
 ]);
+/*
+ *
+ * MODEL INSTANCE EDITOR
+ *
+ * */
+Model.directive('modelPropertiesEditor',[
+  function() {
+    return {
+      templateUrl: './scripts/modules/model/templates/model.properties.editor.html',
+      link: function(scope, element, attrs) {
+        scope.isCollapsed = true;
+        scope.isThisCollapsed = true;
+      }
+    }
+  }
+]);
+/*
+ *
+ * MODEL BASE EDITOR
+ *
+ * */
+Model.directive('modelBaseEditor',[
+  function() {
+    return {
+//      templateUrl: './scripts/modules/model/templates/model.base.editor.html',
+      link: function(scope, el, attrs) {
+        scope.isModelInstanceBasePropertiesActive = false;
+
+        scope.toggleModelDetailView = function() {
+          scope.isModelInstanceBasePropertiesActive = !scope.isModelInstanceBasePropertiesActive;
+        };
+
+        scope.currProperty = {};
+
+        scope.$watch('isModelInstanceBasePropertiesActive', function(val) {
+            React.renderComponent(Model.PropertyBaseEditor({scope: scope, isModelInstanceBasePropertiesActive: val}), el[0]);
+
+        });
+      }
+    }
+  }
+]);
+
+/*
+*
+* Pocket Editor Popover
+*
+* */
+Model.directive('pocketEditorPopover',[
+  function() {
+    return {
+      restrict: "E",
+      replace: true,
+      transclude: true,
+      templateUrl: './scripts/modules/model/templates/editor.popover.html',
+      scope: {
+        editorName: '@name'
+      },
+      link: function (scope, el, attrs) {
+        scope.isPocketPopoverActive = false;
+        scope.togglePopover = function() {
+          scope.isPocketPopoverActive = !scope.isPocketPopoverActive;
+        }
+      }
+    };
+  }
+]);
+
+
+
+/*
+*
+* MODEL SAMPLE FORM
+*
+* */
 Model.directive('modelSampleForm', [
   function() {
     return {

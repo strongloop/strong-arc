@@ -16,7 +16,21 @@ Model.service('ModelService', [
           var log = [];
           var models = [];
           angular.forEach(core, function(value, key){
-            this.push(key + ': ' + value);
+           // this.push(key + ': ' + value);
+            var lProperties = [];
+            if (value.properties) {
+              angular.forEach(value.properties, function(value, key){
+                lProperties.push({name:key,props:value});
+              });
+              value.properties = lProperties;
+            }
+            var lOptions = [];
+            if (value.options) {
+              angular.forEach(value.options, function(value, key){
+                lOptions.push({name:key,props:value});
+              });
+              value.options = lProperties;
+            }
             models.push({name:key,props:value});
           }, log);
 
