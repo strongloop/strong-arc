@@ -1,6 +1,8 @@
 'use strict';
 
 var urlBase = "/api";
+var authBase = urlBase;
+//var authBase = "http://0.0.0.0:3000/api";
 
 /**
  * @ngdoc overview
@@ -72,13 +74,13 @@ module.factory(
          *
          * The response body contains properties of the AccessToken created on login.
          * Depending on the value of `include` parameter, the body may contain additional properties:
-         * 
+         *
          *   - `user` - `{User}` - Data of the currently logged in user. (`include=user`)
-         * 
+         *
          *
          */
         "login": {
-          url: urlBase + "/users/login",
+          url: authBase + "/users/login",
           method: "POST",
           interceptor: {
             response: function(response) {
@@ -124,7 +126,7 @@ module.factory(
          * This method returns no data.
          */
         "logout": {
-          url: urlBase + "/users/logout",
+          url: authBase + "/users/logout",
           method: "POST",
           interceptor: {
             response: function(response) {
@@ -148,11 +150,11 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `uid` – `{string}` - 
+         *  - `uid` – `{string}` -
          *
-         *  - `token` – `{string}` - 
+         *  - `token` – `{string}` -
          *
-         *  - `redirect` – `{string}` - 
+         *  - `redirect` – `{string}` -
          *
          * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -414,7 +416,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{*=}` - 
+         *  - `exists` – `{*=}` -
          */
         "exists": {
           url: urlBase + "/users/:id/exists",
@@ -629,7 +631,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` - 
+         *  - `count` – `{number=}` -
          */
         "count": {
           url: urlBase + "/users/count",
@@ -683,7 +685,7 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `filter` – `{object=}` - 
+         *  - `filter` – `{object=}` -
          *
          * @param {Function(Array.<Object>, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -971,7 +973,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{*=}` - 
+         *  - `exists` – `{*=}` -
          */
         "exists": {
           url: urlBase + "/accessTokens/:id/exists",
@@ -1186,7 +1188,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` - 
+         *  - `count` – `{number=}` -
          */
         "count": {
           url: urlBase + "/accessTokens/count",
@@ -1240,7 +1242,7 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `refresh` – `{boolean=}` - 
+         *  - `refresh` – `{boolean=}` -
          *
          * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1424,7 +1426,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{*=}` - 
+         *  - `exists` – `{*=}` -
          */
         "exists": {
           url: urlBase + "/applications/:id/exists",
@@ -1639,7 +1641,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` - 
+         *  - `count` – `{number=}` -
          */
         "count": {
           url: urlBase + "/applications/count",
@@ -2012,7 +2014,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{*=}` - 
+         *  - `exists` – `{*=}` -
          */
         "exists": {
           url: urlBase + "/installations/:id/exists",
@@ -2227,7 +2229,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` - 
+         *  - `count` – `{number=}` -
          */
         "count": {
           url: urlBase + "/installations/count",
@@ -2433,7 +2435,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{*=}` - 
+         *  - `exists` – `{*=}` -
          */
         "exists": {
           url: urlBase + "/notifications/:id/exists",
@@ -2648,7 +2650,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` - 
+         *  - `count` – `{number=}` -
          */
         "count": {
           url: urlBase + "/notifications/count",
@@ -2854,7 +2856,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{*=}` - 
+         *  - `exists` – `{*=}` -
          */
         "exists": {
           url: urlBase + "/apidefinitions/:id/exists",
@@ -3069,7 +3071,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` - 
+         *  - `count` – `{number=}` -
          */
         "count": {
           url: urlBase + "/apidefinitions/count",
@@ -3275,7 +3277,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{*=}` - 
+         *  - `exists` – `{*=}` -
          */
         "exists": {
           url: urlBase + "/modeldefs/:id/exists",
@@ -3490,7 +3492,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` - 
+         *  - `count` – `{number=}` -
          */
         "count": {
           url: urlBase + "/modeldefs/count",
@@ -3696,7 +3698,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{*=}` - 
+         *  - `exists` – `{*=}` -
          */
         "exists": {
           url: urlBase + "/datasourcedefs/:id/exists",
@@ -3911,7 +3913,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` - 
+         *  - `count` – `{number=}` -
          */
         "count": {
           url: urlBase + "/datasourcedefs/count",
@@ -3945,7 +3947,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `schema` – `{array=}` - 
+         *  - `schema` – `{array=}` -
          */
         "discoverschema": {
           url: urlBase + "/datasourcedefs/discoverschema",
@@ -3979,7 +3981,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `name` – `{string=}` - 
+         *  - `name` – `{string=}` -
          */
         "alldefinitions": {
           url: urlBase + "/datasourcedefs/alldefinitions",

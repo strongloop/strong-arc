@@ -7,6 +7,7 @@ var app = angular.module('app', [
   'angular-growl',
   'lbServices',
   'Profile',
+  'Canvas',
   'Common',
   'Api',
   'Property',
@@ -82,6 +83,11 @@ app.config([
         url: '/layout',
         controller: 'LayoutMainController',
         templateUrl: './scripts/modules/layout/templates/layout.main.html'
+      }).
+      state('canvas', {
+        url: '/canvas',
+        controller: 'CanvasMainController',
+        templateUrl: './scripts/modules/canvas/templates/canvas.main.html'
       }).
       state('register', {
         url: '/register',

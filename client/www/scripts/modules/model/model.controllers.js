@@ -5,28 +5,19 @@ Model.controller('ModelMainController', [
   function($scope, ModelService) {
     console.log('Model Main Controller');
 
-   // $scope.models = ModelService.getAllModels();
-    $scope.models = [];
-
-
-    $scope.models = ModelService.getAllModels();
+    $scope.models = []; // placeholder for returned promise
+    $scope.models = ModelService.getAllModels(); // service wrapper call
     $scope.models.$promise.
       then(function (result) {
-
-        var core = result[0];
-
-        var log = [];
-        var models = [];
-        angular.forEach(core, function(value, key){
+        var ctx = [];
+        var models = []; // temp array to build nav collection
+        angular.forEach(result[0], function(value, key){
           this.push(key + ': ' + value);
-          models.push({name:key,props:value});
-        }, log);
-        $scope.models = models;
-
-
-      });
-
-
+          models.push({name:key,props:value}); // add named object to array
+        }, ctx);
+        $scope.models = models; // assign to scope variable for rendering
+      }
+    );
   }
 ]);
 Model.controller('ModelInstanceController', [
@@ -55,9 +46,7 @@ Model.controller('ModelInstanceController', [
     var models = ModelService.getAllModels();
     models.$promise.
       then(function (result) {
-
         var core = result[0];
-
         var log = [];
         var models = [];
         angular.forEach(core, function(value, key){

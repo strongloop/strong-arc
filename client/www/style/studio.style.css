@@ -305,10 +305,51 @@ Main Tree Nav
 .popover-content-container {
 
 }
+
+/*
+
+    API Canvas View
+
+*/
+.api-canvas-view-container {
+    background:#eeeeee;
+    border:1px solid red;
+    position:relative;
+    height:700px;
+
+}
+.canvas-model-container {
+    position:absolute;
+    border:1px solid #444444;
+    margin:2rem;
+    padding:1rem;
+    background-color:#ffffff;
+    border-radius:1.6rem;
+    width:200px;
+}
+.canvas-footer {
+    clear:both;
+}
+.model-connection-point {
+    width:20px;
+    height:20px;
+    background-color:green;
+    /*position:absolute;*/
+    /*bottom:0;*/
+    /*right:0;*/
+}
+.model-body {
+    display:none;
+}
+
+
+
+
+
 /*
 
     FunDoo Rating Demo
-
+    [marked for deletion]
 */
 .rating{
     color: #a9a9a9;

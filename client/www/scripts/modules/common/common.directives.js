@@ -16,6 +16,11 @@ Common.directive('loadingIndicator', [
     }
   }
 ]);
+/*
+*
+* Heavily borrowed from https://github.com/nickperkinslondon/angular-bootstrap-nav-tree
+*
+* */
 Common.directive('mainNavTree', [
   '$timeout', function($timeout) {
     return {
@@ -45,18 +50,18 @@ Common.directive('mainNavTree', [
           attrs.iconLeaf = 'icon-cog  glyphicon glyphicon-cog  fa fa-file';
         }
         if (attrs.expandLevel == null) {
-          attrs.expandLevel = '3';
+          attrs.expandLevel = '1';
         }
         expand_level = parseInt(attrs.expandLevel, 10);
         if (!scope.treeData) {
-          alert('no treeData defined for the tree!');
+          console.warn('no treeData defined for the tree!');
           return;
         }
         if (scope.treeData.length == null) {
           if (treeData.name != null) {
             scope.treeData = [treeData];
           } else {
-            alert('treeData should be an array of root branches');
+            console.warn('treeData should be an array of root branches');
             return;
           }
         }
