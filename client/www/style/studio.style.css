@@ -2,9 +2,22 @@ body{
     font-size:16px;
     padding-top: 65px;
 }
-.container{
-    max-width:1200px;
+
+/*
+
+    Data Table Grid
+
+*/
+[data-ui-type="table"] {
+    display: table;
+    table-layout:fixed;
 }
+[data-ui-type="row"] {display: table-row;}
+[data-ui-type="cell"] {
+    display: table-cell;
+}
+
+
 .btn:focus, .btn:active:focus, .btn.active:focus {
     outline: transparent;
     outline-color: transparent;
@@ -38,6 +51,85 @@ code {
 .growl{
     top:60px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+    ide container
+
+*/
+[data-id="MainBody"] {
+
+    width:100%;
+}
+[data-id="MainSidebarContainer"] {
+    width:22rem;
+}
+[data-id="MainContentContainer"] {
+
+}
+.top-level-container {
+    border: 1px solid #cccccc;
+    border-radius: .6rem;
+    /*padding:.5rem;*/
+    /*height:600px;*/
+    overflow:scroll;
+
+}
+
+
+
+
+
+
+
+
+
+/*
+    Nav Tree
+
+*/
+.branch-leaf-list.is-open {
+    display:block;
+}
+.branch-leaf-list.is-closed {
+    display:none;
+}
+.branch-leaf-list li {
+    line-height: 1;
+}
+.nav-tree-item {
+    display:inline-block;
+    border:0;
+    background:transparent;
+    text-align:left;
+    padding:0;
+}
+.nav-tree-root {
+    background: #444444;
+    color: #ffffff;
+    padding-left:1rem;
+}
+.tree-branch {
+    background: #eeeeee;
+    padding-left:2rem;
+}
+.tree-node {
+    padding-left:3rem;
+}
+
+
 /*
 
     Datasource
@@ -59,6 +151,53 @@ code {
     border:1px solid #eeeeee;
 
 }
+/*
+
+    Model Editor Tabs
+
+*/
+[data-id="MainContentContainer"] {
+    width:100%;
+
+}
+.model-editor-title-container {
+    width:100%;
+    background-color:#f1f1f1;
+    border-top:1px solid #dddddd;
+    border-bottom:1px solid #dddddd;
+    font-size:80%;
+    margin:0 auto 0 auto;
+    text-align: center;
+}
+.model-editor-tabs-view-container {
+    border-bottom:1px solid #dddddd;
+}
+.model-editor-tabs-list {
+    padding:0;
+    margin:0;
+
+}
+.model-editor-tabs-list li {
+    display:inline-block;
+    border-left:1px solid #f1f1f1;
+    border-right:1px solid #666666;
+    border-top:1px solid #cccccc;
+}
+.model-editor-tabs-list .model-edit-tab-item-container {
+    background-color:#dddddd;
+}
+.model-edit-tab-item-button {
+    font-size:80%;
+    font-family:monospace, sans-serif;
+    border:0;
+    background:transparent;
+}
+.model-edit-tab-close-button {
+    font-size:75%;
+    border:0;
+    background:transparent;
+}
+
 /*
 
 api
@@ -127,19 +266,7 @@ api
     margin-left: 0;
     opacity: 1;
 }
-/*
 
-    ide container
-
-*/
-.top-level-container {
-    border: 1px solid #cccccc;
-    border-radius: .6rem;
-    /*padding:.5rem;*/
-    /*height:600px;*/
-    overflow:scroll;
-
-}
 
 
 /*
@@ -168,10 +295,32 @@ Main Tree Nav
     Model Instance Editor
 
 */
-.table-header-cell {
-    padding-left:1.4rem;
+.sample-show-hide {
+    /*padding:10px;*/
+    /*border:1px solid black;*/
+    /*background:white;*/
 }
-.model-instance-outer-container {
+
+.sample-show-hide.ng-hide-add, .sample-show-hide.ng-hide-remove {
+    -webkit-transition:all linear 0.5s;
+    -moz-transition:all linear 0.5s;
+    -o-transition:all linear 0.5s;
+    transition:all linear 0.5s;
+    display:block!important;
+}
+
+.sample-show-hide.ng-hide-add.ng-hide-add-active,
+.sample-show-hide.ng-hide-remove {
+    opacity:0;
+}
+
+.sample-show-hide.ng-hide-add,
+.sample-show-hide.ng-hide-remove.ng-hide-remove-active {
+    opacity:1;
+}
+
+
+.model-editor-body-container {
     max-width:80rem;
     padding:1.3rem;
     border: 1px solid #eeeeee;
@@ -195,37 +344,62 @@ Main Tree Nav
     border-radius:.3rem;
     margin:.4rem;
 }
-.model-instance-container {
 
-}
 .model-instance-details-container [data-state="isOpen"] {
     display:block;
 }
 .model-instance-details-container [data-state="isClosed"] {
     display:none;
 }
-/*
 
-    Data Table Grid
-
-*/
-[data-ui-type="table"] {
-    display: table;
-}
-[data-ui-type="row"] {display: table-row;}
-[data-ui-type="cell"] {
-    display: table-cell;
-}
 /*
 
     model properties table
 
 */
+.property-list-header{
+    margin:0 auto 0 auto;
+    width:90%;
+}
+.model-instance-container.is-open {
+    background-color:#fafafa;
+    padding-bottom:1.4rem;
+    border:1px solid #aaaaaa;
+    border-radius:1rem;
+}
+.model-instance-container [data-ui-type="table"]{
+    width:100%;
+    /*border-right:1px solid #aaaaaa;*/
+    /*border-left:1px solid #aaaaaa;*/
+}
+.model-instance-property-list {
+    margin:0 auto 0 auto;
+    width:90%;
+}
+
+.model-instance-container .model-instance-property-table-header-row {
+    background-color:#d2ebb5;
+    color:#444444;
+    font-size:110%;
+}
+.model-instance-property-table-header-row [data-ui-type="cell"] {
+
+
+
+}
+
 .model-instance-property-list [data-ui-type="cell"] {
     text-align:center;
     padding:0;
     margin:0;
 }
+.model-instance-property-list .table-header-cell {
+    padding-left:1.4rem;
+    padding-top:.6rem;
+    padding-bottom:.6rem;
+    padding-right:.4rem;
+}
+
 
 .props-data-type-cell {
     width:7rem;
@@ -233,21 +407,22 @@ Main Tree Nav
 
 }
 .props-name-cell {
-    width:18rem;
+    width:300px;
+    padding-left:2rem;
 }
 .props-name-cell .btn{
     text-align: left;
     padding-left:2rem;
 }
-.props-isid-cell{
+.props-isindex-cell{
     width:3rem;
     text-align:center;
 }
 .props-default-value-cell{
     width:18rem;
 }
-.props-validation-cell{
-    width:7rem;
+.props-required-cell{
+    width:3rem;
     text-align:center;
 }
 .props-map-cell{
@@ -259,21 +434,29 @@ Main Tree Nav
     text-align:center;
 }
 .model-details-pocket-editor-container {
-    border-right:1px solid #e1e1e1;
-    border-bottom:1px solid #e1e1e1;
+    margin:.6rem auto 1rem auto;
+    width:90%;
     border-left:1px solid #e1e1e1;
-    border-radius:1.3rem;
-    padding-left:2rem;
+    border-bottom:1px solid #e1e1e1;
+    border-top-left-radius:1.3rem;
+    border-bottom-left-radius:1.3rem;
+    border-bottom-rigtht-radius:1.3rem;
+    padding-left:1.1rem;
 
 }
-.model-instance-property-table-header-row {
-    background-color:#08592B;
-    color:#ffffff;
-    font-size:110%;
+.model-details-pocket-editor-container .tab-box-body {
+    background:transparent;
+    border-right:1px solid #e1e1e1;
+    border-top:1px solid #e1e1e1;
+    border-top-right-radius:1.3rem;
+    border-bottom-rigtht-radius:1.3rem;
+    border-bottom-rigtht-radius:1.3rem;
+    padding:.4rem;
 }
+
 /*
 
-    Model Properties
+    Model Properties / Pocket Editor
 
 */
 .pocket-editor-table [data-ui-type="cell"] {
@@ -281,7 +464,12 @@ Main Tree Nav
     vertical-align: top;
     white-space: nowrap;
 }
+.model-config-tab-list {
 
+}
+.model-config-tab-list li {
+    display:inline-block;
+}
 
 /*
 

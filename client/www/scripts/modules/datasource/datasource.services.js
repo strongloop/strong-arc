@@ -20,6 +20,7 @@ Datasource.service('DatasourceService', [
           }, log);
 
           // $scope.models = models;
+          window.localStorage.setItem('ApiDatasources', JSON.stringify(core));
           return datasources;
         },
         function(response) {
@@ -28,6 +29,13 @@ Datasource.service('DatasourceService', [
         }
 
       );
+    };
+    svc.getDatasourceByName = function(name) {
+
+      if (window.localStorage.getItem('ApiDatasources')) {
+        var currDSCollection = JSON.parse(window.localStorage.getItem('ApiDatasources'));
+        return currDSCollection[name];
+      }
     };
     svc.createDatasourceDef = function(datasourceDefObj) {
       return Datasourcedef.create(datasourceDefObj);

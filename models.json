@@ -102,6 +102,7 @@
     "properties": {
       "id": {
         "type": "string",
+        "doc": "This is a test string for the comments of a property",
         "id": true
       },
       "name": {

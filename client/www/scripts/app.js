@@ -8,6 +8,7 @@ var app = angular.module('app', [
   'lbServices',
   'Profile',
   'Canvas',
+  'IA',
   'Common',
   'Api',
   'Property',
@@ -44,6 +45,11 @@ app.config([
         controller: 'HomeMainController',
         templateUrl: './scripts/modules/app/templates/home.main.html'
       }).
+      state('models', {
+        url: '/models',
+        templateUrl: './scripts/modules/model/templates/model.main.html',
+        controller: 'ModelEditorMainController'
+      }).
       state('api', {
         url: '/api',
         controller: 'ApiMainController',
@@ -56,18 +62,13 @@ app.config([
       }).
       state('model', {
         url: '/model',
-        controller: 'ModelMainController',
+        controller: 'ModelEditorMainController',
         templateUrl: './scripts/modules/model/templates/model.main.html'
       }).
       state('model.instance', {
         url: '/:name',
         controller: 'ModelInstanceController',
         templateUrl: './scripts/modules/model/templates/model.instance.html'
-      }).
-      state('uiform', {
-        url: '/uiform',
-        controller: 'UIFormMainController',
-        templateUrl: './scripts/modules/uiform/templates/uiform.main.html'
       }).
       state('profile', {
         url: '/profile',
@@ -78,11 +79,6 @@ app.config([
         url: '/login',
         controller: 'LoginController',
         templateUrl: './scripts/modules/profile/templates/login.html'
-      }).
-      state('layout', {
-        url: '/layout',
-        controller: 'LayoutMainController',
-        templateUrl: './scripts/modules/layout/templates/layout.main.html'
       }).
       state('canvas', {
         url: '/canvas',

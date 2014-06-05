@@ -1,15 +1,12 @@
-<div class="container-fluid" data-id="ModelMainContainer">
-  <div class="row">
-    <div ui-view></div>
-    <h1>Models</h1>
-
+<div  data-id="ModelEditorMainContainer">
+  <div class="model-editor-title-container">
+    {{ activeModel.name }}
   </div>
-  <div class="row">
-    <div model-engine></div>
+  <div class="model-editor-tabs-view-container">
+    <div sl-model-editor-tabs-view></div>
   </div>
-<div class="row">
-  <div model-source-list></div>
-</div>
-
-
+  <div class="model-editor-body-container">
+      <div model-base-editor></div>
+      <div model-properties-editor></div>
+  </div>
 </div>

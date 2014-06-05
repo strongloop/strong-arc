@@ -47,29 +47,15 @@
       </div>
     </div>
 
-    <div class="container-fluid" ng-controller="IDEController">
-      <div class="row">
-        <div class="col-xs-2 top-level-container">
+    <div data-ui-type="table" data-id="MainBody" ng-controller="IDEController">
+      <div data-ui-type="row">
+        <div data-ui-type="cell" data-id="MainSidebarContainer" class="top-level-container">
 
           <div main-nav-tree></div>
 
         </div>
-        <div class="col-xs-10">
-          <div class="row">
-            <div class="top-level-container">
-
-                <div ui-view autoscroll="false"></div>
-
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-12 top-level-container">
-
-              <h2>Data</h2>
-              <input type="button" value="launch explorer" class="btn btn-lg btn-primary" >
-
-            </div>
-          </div>
+        <div data-ui-type="cell" data-id="MainContentContainer" class="top-level-container">
+          <div ui-view autoscroll="false"></div>
         </div>
       </div>
     </div>
@@ -152,6 +138,13 @@
     <script src="./scripts/modules/model/model.controllers.js"></script>
     <script src="./scripts/modules/model/model.services.js"></script>
     <script src="./scripts/modules/model/model.directives.js"></script>
+
+    <!-- ia -->
+    <script src="./scripts/modules/ia/ia.module.js"></script>
+    <script type="text/jsx" src="./scripts/modules/ia/ia.react.js"></script>
+    <script src="./scripts/modules/ia/ia.controllers.js"></script>
+    <script src="./scripts/modules/ia/ia.services.js"></script>
+    <script src="./scripts/modules/ia/ia.directives.js"></script>
 
     <!-- canvas -->
     <script src="./scripts/modules/canvas/canvas.module.js"></script>

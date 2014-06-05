@@ -1,4 +1,21 @@
 // Copyright StrongLoop 2014
+/*
+*
+*   Model Editor Main Controller
+*
+* */
+Model.controller('ModelEditorMainController', [
+  '$scope',
+  'ModelService',
+  'IAService',
+  function($scope, ModelService, IAService) {
+    console.log('Model Editor Main Controller');
+
+    $scope.activeModel = {
+      name: IAService.getActiveModelInstance().name
+    };
+  }
+]);
 Model.controller('ModelMainController', [
   '$scope',
   'ModelService',
@@ -41,6 +58,9 @@ Model.controller('ModelInstanceController', [
 
     $scope.togglePropertyView = function() {
       $scope.isPropertyViewActive = !$scope.isPropertyViewActive;
+    };
+    $scope.updatePropertyDoc = function(a) {
+      console.log('CHANGING CHANGING');
     };
 
     var models = ModelService.getAllModels();

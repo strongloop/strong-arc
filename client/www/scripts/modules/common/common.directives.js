@@ -152,6 +152,7 @@ Common.directive('mainNavTree', [
         scope.tree_rows = [];
         on_treeData_change = function() {
           var add_branch_to_list, root_branch, _i, _len, _ref, _results;
+          // make sure each branch has a unique id
           for_each_branch(function(b, level) {
             if (!b.uid) {
               return b.uid = "" + Math.random();
@@ -196,10 +197,12 @@ Common.directive('mainNavTree', [
                   return _results;
                 })();
               }
-            } else {
+            }
+            else {
               return branch.children = [];
             }
           });
+          // recursive method to build the tree structure
           add_branch_to_list = function(level, branch, visible) {
             var child, child_visible, tree_icon, _i, _len, _ref, _results;
             if (branch.expanded == null) {
@@ -207,10 +210,12 @@ Common.directive('mainNavTree', [
             }
             if (!branch.children || branch.children.length === 0) {
               tree_icon = attrs.iconLeaf;
-            } else {
+            }
+            else {
               if (branch.expanded) {
                 tree_icon = attrs.iconCollapse;
-              } else {
+              }
+              else {
                 tree_icon = attrs.iconExpand;
               }
             }

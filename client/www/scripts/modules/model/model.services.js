@@ -35,6 +35,7 @@ Model.service('ModelService', [
           }, log);
 
          // $scope.models = models;
+          window.localStorage.setItem('ApiModels', JSON.stringify(core));
           return models;
         },
         function(response) {
@@ -43,6 +44,15 @@ Model.service('ModelService', [
         }
 
       );
+    };
+    svc.getModelByName = function(name) {
+
+      if (window.localStorage.getItem('ApiModels')) {
+        var currModelCollection = JSON.parse(window.localStorage.getItem('ApiModels'));
+        var targetModel = currModelCollection[name];
+        targetModel.name = name;
+        return targetModel;
+      }
     };
     svc.getExistingModelNames = function() {
       return [

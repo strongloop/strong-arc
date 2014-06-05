@@ -7,8 +7,12 @@
 Property.directive('propertyValidationEditor', [
   function() {
     return {
-      templateUrl: './scripts/modules/property/templates/property.validation.editor.html',
+    //  templateUrl: './scripts/modules/property/templates/property.validation.editor.html',
       link: function(scope, el, attrs) {
+
+        scope.$watch('property.props.validation', function(config) {
+          React.renderComponent(PropertyValidationEditor({scope: scope}), el[0]);
+        })
 
       }
     }
@@ -22,13 +26,13 @@ Property.directive('propertyValidationEditor', [
 Property.directive('propertyIdEditor', [
   function() {
     return {
-      templateUrl: './scripts/modules/property/templates/property.id.editor.html',
+     // templateUrl: './scripts/modules/property/templates/property.id.editor.html',
       link: function(scope, el, attrs) {
 
-        if (scope.property.props.id){
+        scope.$watch('property.props.id', function(config) {
+          React.renderComponent(PropertyIdEditor({scope:scope}), el[0]);
+        });
 
-        }
-        console.log('Property Id Editor: ' + scope.property.name);
       }
     }
   }
@@ -41,9 +45,10 @@ Property.directive('propertyIdEditor', [
 Property.directive('propertyMapEditor', [
   function() {
     return {
-      templateUrl: './scripts/modules/property/templates/property.map.editor.html',
       link: function(scope, el, attrs) {
-
+        scope.$watch('property.props.map', function(config) {
+          React.renderComponent(PropertyMapEditor({scope:scope}), el[0]);
+        });
       }
     }
   }
@@ -56,9 +61,11 @@ Property.directive('propertyMapEditor', [
 Property.directive('propertyFormatEditor', [
   function() {
     return {
-      templateUrl: './scripts/modules/property/templates/property.format.editor.html',
+     // templateUrl: './scripts/modules/property/templates/property.format.editor.html',
       link: function(scope, el, attrs) {
-
+        scope.$watch('property.props.format', function(config) {
+          React.renderComponent(PropertyFormatEditor({scope:scope}), el[0]);
+        });
       }
     }
   }
