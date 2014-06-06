@@ -10,9 +10,7 @@ var app = angular.module('app', [
   'Canvas',
   'IA',
   'Common',
-  'Api',
   'Property',
-  'Layout',
   'Auth',
   'Model',
   'UIForm',
@@ -59,6 +57,11 @@ app.config([
         url: '/datasource',
         controller: 'DatasourceMainController',
         templateUrl: './scripts/modules/datasource/templates/datasource.main.html'
+      }).
+      state('uiform', {
+        url: '/uiform',
+        controller: 'UIFormMainController',
+        templateUrl: './scripts/modules/uiform/templates/uiform.main.html'
       }).
       state('model', {
         url: '/model',

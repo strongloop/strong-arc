@@ -15,6 +15,7 @@ body{
 [data-ui-type="row"] {display: table-row;}
 [data-ui-type="cell"] {
     display: table-cell;
+    vertical-align:top;
 }
 
 

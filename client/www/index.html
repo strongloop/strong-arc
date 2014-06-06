@@ -6,7 +6,6 @@
     <link rel="stylesheet" type="text/css" href="./style/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="./style/ng-grid.min.css">
     <link rel="stylesheet" type="text/css" href="./style/jquery-ui.css">
-    <link rel="stylesheet" type="text/css" href="./style/abn_tree.css">
     <link rel="stylesheet" type="text/css" href="./style/angular-growl.min.css">
     <link rel="stylesheet" type="text/css" href="./style/studio.style.css">
 
@@ -26,7 +25,7 @@
           </button>
           <a class="navbar-brand" href="#">API Studio</a>
         </div>
-        <div class="collapse navbar-collapse" ng-controller="MainNavController">
+        <div class="collapse navbar-collapse" ng-controller="GlobalNavController">
           <ul class="nav navbar-nav">
             <!--<li ng-class="{ active: isActive('/api')}">-->
               <!--<a ui-sref="api">Apis</a>-->
@@ -51,7 +50,8 @@
       <div data-ui-type="row">
         <div data-ui-type="cell" data-id="MainSidebarContainer" class="top-level-container">
 
-          <div main-nav-tree></div>
+          <div instance-search></div>
+          <div sl-ia-main-nav></div>
 
         </div>
         <div data-ui-type="cell" data-id="MainContentContainer" class="top-level-container">
@@ -126,12 +126,6 @@
     <script src="./scripts/modules/auth/auth.services.js"></script>
     <script src="./scripts/modules/auth/auth.directives.js"></script>
 
-    <!-- api -->
-    <script src="./scripts/modules/api/api.module.js"></script>
-    <script src="./scripts/modules/api/api.controllers.js"></script>
-    <script src="./scripts/modules/api/api.services.js"></script>
-    <script src="./scripts/modules/api/api.directives.js"></script>
-
     <!-- model -->
     <script src="./scripts/modules/model/model.module.js"></script>
     <script type="text/jsx" src="./scripts/modules/model/model.react.js"></script>
@@ -159,13 +153,6 @@
     <script src="./scripts/modules/property/property.controllers.js"></script>
     <script src="./scripts/modules/property/property.services.js"></script>
     <script src="./scripts/modules/property/property.directives.js"></script>
-
-    <!-- layout -->
-    <script src="./scripts/modules/layout/layout.module.js"></script>
-    <script type="text/jsx" src="./scripts/modules/layout/layout.react.js"></script>
-    <script src="./scripts/modules/layout/layout.controllers.js"></script>
-    <script src="./scripts/modules/layout/layout.services.js"></script>
-    <script src="./scripts/modules/layout/layout.directives.js"></script>
 
     <!-- datasource -->
     <script src="./scripts/modules/datasource/datasource.module.js"></script>

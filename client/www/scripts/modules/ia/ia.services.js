@@ -6,13 +6,13 @@ IA.service('IAService', [
     var svc = {};
 
     svc.setPreviewModelInstance = function(instance) {
-      return AppStorageService.setItem('previewModelInstance', instance);
+      return AppStorageService.setItem('previewInstance', instance);
     };
     svc.clearPreviewModelInstance = function() {
-      return AppStorageService.removeItem('previewModelInstance');
+      return AppStorageService.removeItem('previewInstance');
     };
     svc.getPreviewModelInstance = function() {
-      return AppStorageService.getItem('previewModelInstance');
+      return AppStorageService.getItem('previewInstance');
     };
     svc.setActiveModelInstance = function(instance) {
       return AppStorageService.setItem('activeModelInstance', instance);

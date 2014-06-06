@@ -1,16 +1,10 @@
 // Copyright StrongLoop 2014
-
 IA.directive('slIaMainNav', [
   'ModelService',
   'DatasourceService',
   'IAService',
   function(ModelService, DatasourceService, IAService) {
     return {
-      controller: function($scope, $location) {
-
-
-        //$scope.clearModelPreview();
-      },
       link: function(scope, el, attrs) {
 
         var renderComp = function() {

@@ -7,26 +7,6 @@ app.controller('IDEController', [
   '$location',
   'ModelService',
   function($scope, $state, IAService, DatasourceService, $location, ModelService) {
-    var apple_selected, tree, treedata_avm, treedata_geography;
-    $scope.my_tree_handler = function(branch) {
-      var _ref;
-      $scope.output = "Module: " + branch.name;
-
-      if ((_ref = branch.data) != null ? _ref.description : void 0) {
-        return $scope.output += '(' + branch.data.description + ')';
-      }
-      if (branch.stateName) {
-        $state.transitionTo(branch.stateName);
-      } else {
-//        $state.transitionTo('' + branch.name);
-        $location.path('/model/' + branch.name);
-      }
-
-    };
-
-
-
-
 
 
     // Datasources
@@ -247,39 +227,6 @@ app.controller('IDEController', [
 
 
 
-
-    var treedata_api_nav = [
-      {
-        name: 'Models',
-        stateName: 'model',
-        children: []
-      },
-      {
-        name: 'Datasources',
-        stateName: 'datasource',
-        children: [
-          {
-            name: 'Mongo Prod 1',
-            children: ['type', 'properties', 'connection']
-          }, {
-            name: 'prod apn customer',
-            children: ['type', 'properties', 'connection']
-          }, {
-            name: 'MySQL WP reg',
-            children: ['type', 'properties', 'connection']
-          }
-        ]
-      },
-      {
-        name: 'Forms',
-        stateName: 'uiform'
-      },
-      {
-        name: 'Layouts',
-        stateName: 'layout'
-      }
-    ];
-    $scope.my_data = treedata_api_nav;
     $scope.models = [];
 
 
@@ -379,7 +326,10 @@ app.controller('HomeMainController',[
 
   }
 ]);
-app.controller('MainNavController',[
+/*
+*
+* */
+app.controller('GlobalNavController',[
   '$scope',
   'ProfileService',
   '$location',
@@ -389,6 +339,11 @@ app.controller('MainNavController',[
     };
   }
 ]);
+/*
+*
+* Need to confirm if this is used in the canvas view
+*
+* */
 app.controller('DragDropCtrl', function($scope) {
   $scope.handleDrop = function() {
     console.log('Item has been dropped');

@@ -7,7 +7,6 @@
 Property.directive('propertyValidationEditor', [
   function() {
     return {
-    //  templateUrl: './scripts/modules/property/templates/property.validation.editor.html',
       link: function(scope, el, attrs) {
 
         scope.$watch('property.props.validation', function(config) {
@@ -26,7 +25,6 @@ Property.directive('propertyValidationEditor', [
 Property.directive('propertyIdEditor', [
   function() {
     return {
-     // templateUrl: './scripts/modules/property/templates/property.id.editor.html',
       link: function(scope, el, attrs) {
 
         scope.$watch('property.props.id', function(config) {
@@ -61,7 +59,6 @@ Property.directive('propertyMapEditor', [
 Property.directive('propertyFormatEditor', [
   function() {
     return {
-     // templateUrl: './scripts/modules/property/templates/property.format.editor.html',
       link: function(scope, el, attrs) {
         scope.$watch('property.props.format', function(config) {
           React.renderComponent(PropertyFormatEditor({scope:scope}), el[0]);
