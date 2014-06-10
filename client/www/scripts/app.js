@@ -43,15 +43,14 @@ app.config([
         controller: 'HomeMainController',
         templateUrl: './scripts/modules/app/templates/home.main.html'
       }).
-      state('models', {
-        url: '/models',
-        templateUrl: './scripts/modules/model/templates/model.main.html',
-        controller: 'ModelEditorMainController'
-      }).
-      state('api', {
-        url: '/api',
-        controller: 'ApiMainController',
-        templateUrl: './scripts/modules/api/templates/api.main.html'
+//      state('studio', {
+//        url: '/studio',
+//        template: '<div sl-ia-main-content></div>',
+//        controller: 'IDEController'
+//      }).
+      state('studio', {
+        url: '/studio',
+        template: '<div sl-ia-main-content></div>'
       }).
       state('datasource', {
         url: '/datasource',
@@ -63,16 +62,6 @@ app.config([
         controller: 'UIFormMainController',
         templateUrl: './scripts/modules/uiform/templates/uiform.main.html'
       }).
-      state('model', {
-        url: '/model',
-        controller: 'ModelEditorMainController',
-        templateUrl: './scripts/modules/model/templates/model.main.html'
-      }).
-      state('model.instance', {
-        url: '/:name',
-        controller: 'ModelInstanceController',
-        templateUrl: './scripts/modules/model/templates/model.instance.html'
-      }).
       state('profile', {
         url: '/profile',
         controller: 'ProfileMainController',
@@ -82,11 +71,6 @@ app.config([
         url: '/login',
         controller: 'LoginController',
         templateUrl: './scripts/modules/profile/templates/login.html'
-      }).
-      state('canvas', {
-        url: '/canvas',
-        controller: 'CanvasMainController',
-        templateUrl: './scripts/modules/canvas/templates/canvas.main.html'
       }).
       state('register', {
         url: '/register',

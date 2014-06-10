@@ -51,7 +51,7 @@ Model.controller('ModelInstanceController', [
     $scope.currModel = {};
     $scope.currModel.name = $scope.currModelName;
 
-    $scope.isCollapsed = true;
+    $scope.isCollapsed = false;
     $scope.isThisCollapsed = true;
 
     $scope.isPropertyViewActive = true;

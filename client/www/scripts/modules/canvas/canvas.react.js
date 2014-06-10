@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 Canvas.MainCanvasContainer = React.createClass({
   render: function() {
+    var scope = this.props.scope;
 
     var curX = 10;
     var curY = 10;
@@ -30,8 +31,8 @@ Canvas.MainCanvasContainer = React.createClass({
         left: curY + 'px'
       };
 
-      if (!modelDef.props.properties){
-        modelDef.props.properties = [];
+      if (!modelDef.children.properties){
+        modelDef.children.properties = [];
       }
       if (instanceIndex > maxRowInstanceCount) {
         instanceIndex = 1;
@@ -43,10 +44,10 @@ Canvas.MainCanvasContainer = React.createClass({
       return (<div className="canvas-model-container" id="model_container_{name}" style={containerStyle}>
         <div className="model-header">
           <h3 className="model-header-title">{modelDef.name}</h3>
-          <button type="button" class="btn btn-sm btn-default">V</button>
+          <button type="button" className="btn btn-sm btn-default">V</button>
         </div>
         <div className="model-body">
-          <ul>{modelDef.props.properties.map(createModelProperty)}</ul>
+          <ul>{modelDef.children.properties.map(createModelProperty)}</ul>
         </div>
         <div className="model-connection-point"></div>
       </div>);
@@ -55,8 +56,8 @@ Canvas.MainCanvasContainer = React.createClass({
 
 
     return (
-      <div data-id="ReactPlumberInstanceContainer" className="api-canvas-view-container">
-        {this.props.scope.models.map(createCanvasModel)}
+      <div className="api-canvas-view-container">
+        {scope.$parent.mainNavModels.map(createCanvasModel)}
       </div>
       );
 

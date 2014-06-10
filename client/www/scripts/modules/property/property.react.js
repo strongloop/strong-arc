@@ -5,7 +5,7 @@
 PropertyFormatEditor = React.createClass({
   render: function() {
     return (
-      <div class="container-fluid">
+      <div className="container-fluid">
       Property Format Editor
         <div data-ui-type="table" className="pocket-editor-table">
           <div data-ui-type="row">
@@ -71,9 +71,9 @@ PropertyFormatEditor = React.createClass({
 PropertyMapEditor = React.createClass({
   render: function() {
     return (
-      <div class="container-fluid">
+      <div className="container-fluid">
       Property Map Editor
-        <div data-ui-type="table" class="pocket-editor-table">
+        <div data-ui-type="table" className="pocket-editor-table">
           <div data-ui-type="row">
             <div data-ui-type="cell">
               <input type="text" value="FIRST_NAME" />
@@ -85,7 +85,7 @@ PropertyMapEditor = React.createClass({
               <input type="text" placeholder="property name" />
             </div>
             <div data-ui-type="cell">
-              <button class="btn btn-default btn-xs">String</button>
+              <button className="btn btn-default btn-xs">String</button>
             </div>
           </div>
         </div>
@@ -198,6 +198,7 @@ PropertyValidationEditor = React.createClass({
 PropertyIdEditor = React.createClass({
   render: function() {
     var scope = this.props.scope;
+    var property = this.props.property;
 
     var isIdChangeHandler = function(event) {
       scope.$apply(function() {

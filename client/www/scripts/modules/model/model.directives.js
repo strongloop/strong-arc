@@ -1,5 +1,23 @@
 // Copyright StrongLoop 2014
+/*
+ *
+ * Model Editor Main
+ *
+ * */
+Model.directive('slModelEditorMain',[
+  function() {
+    return {
+      replace: true,
+      templateUrl: './scripts/modules/model/templates/model.editor.main.html',
+      link: function(scope, element, attrs) {
 
+        console.log('sl-model-editor-main');
+
+
+      }
+    }
+  }
+]);
 /*
 *
 *
@@ -10,17 +28,58 @@ Model.directive('modelInstanceHeader', [
   function() {
     return {
       restrict: 'A',
+      replace: true,
       link: function(scope, el, attrs) {
-        scope.$watch('currModelName', function(name) {
+        scope.$watch('activeModelInstance', function(newVal, oldVal) {
           React.renderComponent(ModelTitleHeader({scope: scope}), el[0]);
         });
       }
     }
   }
 ]);
+
 /*
-*   Property Comments Editor
+*
+* Model Editor Tabs View
+*
 * */
+Model.directive('slModelEditorTabsView', [
+  'IAService',
+  function(IAService) {
+    return {
+      link: function(scope, el, attrs) {
+
+        function renderComp(){
+          var tabItems = [];
+
+          for (var i = 0;i < scope.currentOpenModelNames.length;i++) {
+            var isActive = false;
+            if (scope.currentOpenModelNames[i] === IAService.getActiveModelInstance().name) {
+              isActive = true;
+            }
+            tabItems.push({
+              name:scope.currentOpenModelNames[i],
+              isActive:isActive
+            });
+          }
+
+          React.renderComponent(ModelEditorTabsView({scope:scope, tabItems:tabItems}), el[0]);
+        }
+
+        scope.$watch('activeModelInstance', function(newVal, oldVal) {
+          renderComp();
+        });
+//        scope = scope.$parent;
+        scope.$watch('currentOpenModelNames', function(newNames, oldNames) {
+          renderComp();
+        });
+      }
+    }
+  }
+]);
+/*
+ *   Property Comments Editor
+ * */
 Model.directive('propertyCommentEditor', [
   function() {
     return {
@@ -35,11 +94,11 @@ Model.directive('propertyCommentEditor', [
     }
   }
 ]);
- /*
-*
-* property-connection-editor
-*
-* */
+/*
+ *
+ * property-connection-editor
+ *
+ * */
 Model.directive('propertyConnectionEditor', [
   function() {
     return {
@@ -189,11 +248,11 @@ Model.directive('modelAclEditor', [
 ]);
 
 /*
-*
-*
-* Schema Model Composer
-*
-* */
+ *
+ *
+ * Schema Model Composer
+ *
+ * */
 Model.directive('schemaModelComposer', [
   '$state',
   function($state) {
@@ -234,15 +293,15 @@ Model.directive('schemaModelComposer', [
         };
         scope.checkFirst = function() {
           scope.newModel.properties.splice(0, scope.newModel.properties.length);
-         // scope.user.roles.push(scope.roles[0]);
+          // scope.user.roles.push(scope.roles[0]);
         };
       }
     }
   }
 ]);
 /*
-* Property Name Editor
-* */
+ * Property Name Editor
+ * */
 Model.directive('propertyNameEditor', [
   function() {
     return {
@@ -264,11 +323,15 @@ Model.directive('propertyNameEditor', [
 Model.directive('modelPropertiesEditor',[
   function() {
     return {
-      templateUrl: './scripts/modules/model/templates/model.properties.editor.html',
-      link: function(scope, element, attrs) {
-//        scope = scope.$parent;
-        scope.isCollapsed = true;
-        scope.isThisCollapsed = true;
+    //  templateUrl: './scripts/modules/model/templates/model.properties.editor.html',
+      link: function(scope, el, attrs) {
+
+        scope.$watch('activeModelInstance.properties', function(properties) {
+          if (!properties){
+            properties = [];
+          }
+          React.renderComponent(ModelPropertiesEditor({scope:scope, properties:properties}), el[0]);
+        });
       }
     }
   }
@@ -283,7 +346,7 @@ Model.directive('modelBaseEditor',[
     return {
       link: function(scope, el, attrs) {
 
-       // scope = scope.$parent;
+        // scope = scope.$parent;
         scope.isModelInstanceBasePropertiesActive = false;
 
         scope.toggleModelDetailView = function() {
@@ -292,19 +355,18 @@ Model.directive('modelBaseEditor',[
 
         scope.currProperty = {};
 
-        scope.$watch('isModelInstanceBasePropertiesActive', function(val) {
-          React.renderComponent(ModelDetailEditor({scope: scope, isModelInstanceBasePropertiesActive: val}), el[0]);
-        });
+
         scope.$watch('activeModelInstance', function(val) {
-          React.renderComponent(ModelDetailEditor({scope: scope, isModelInstanceBasePropertiesActive: val}), el[0]);
+          var model = scope.activeModelInstance;
+          React.renderComponent(ModelDetailEditor({scope: scope, model: model }), el[0]);
         });
       }
     }
   }
 ]);
 /*
-*   Model Property Pocket Editor
-* */
+ *   Model Property Pocket Editor
+ * */
 Model.directive('modelPropertyPocketEditor', [
   function() {
     return {
@@ -316,10 +378,10 @@ Model.directive('modelPropertyPocketEditor', [
 ]);
 
 /*
-*
-* Pocket Editor Popover
-*
-* */
+ *
+ * Pocket Editor Popover
+ *
+ * */
 Model.directive('pocketEditorPopover',[
   function() {
     return {
@@ -341,27 +403,41 @@ Model.directive('pocketEditorPopover',[
 ]);
 
 /*
-*   Model Pocket Editor Container
-* */
+ *   Model Pocket Editor Container
+ * */
 Model.directive('modelPocketEditorContainer', [
   function() {
     return {
-     link: function(scope, el, attrs) {
+      link: function(scope, el, attrs) {
 
-       scope.$watch('property', function(config) {
-         React.renderComponent(ModelPocketEditorContainer({scope:scope}), el[0]);
-       });
+        scope.$watch('activeModelInstance', function(model) {
+          React.renderComponent(ModelPocketEditorContainer({scope:scope}), el[0]);
+        });
 
-     }
+      }
     }
   }
 ]);
-
 /*
 *
-* MODEL SAMPLE FORM
+*   Model Instance Editor
 *
 * */
+Model.directive('slModelInstanceEditor', [
+  function() {
+    return {
+      templateUrl: './scripts/modules/model/templates/model.instance.editor.html',
+      link: function(scope, el, attrs) {
+
+      }
+    }
+  }
+]);
+ /*
+ *
+ * MODEL SAMPLE FORM
+ *
+ * */
 Model.directive('modelSampleForm', [
   function() {
     return {
@@ -371,45 +447,6 @@ Model.directive('modelSampleForm', [
           console.log('UIForm Form Builder: ' + JSON.stringify(models));
           scope.formFields = models;
         }, true);
-      }
-    }
-  }
-]);
-/*
-*
-* Model Editor Tabs View
-*
-* */
-Model.directive('slModelEditorTabsView', [
-  'IAService',
-  function(IAService) {
-    return {
-      link: function(scope, el, attrs) {
-
-//        scope = scope.$parent;
-        scope.$watch('currentOpenModelNames', function(newNames, oldNames) {
-          var active = IAService.getActiveModelInstance();
-          var tabItems = [];
-          var sourceItems = [];
-          if (scope.currentOpenModelNames) {
-            sourceItems = scope.currentOpenModelNames;
-          }
-          else {
-            sourceItems = scope.$parent.currentOpenModelNames;
-          }
-          for (var i = 0;i < sourceItems.length;i++) {
-            var isActive = false;
-            if (sourceItems[i] === IAService.getActiveModelInstance().name) {
-              isActive = true;
-            }
-            tabItems.push({
-              name:sourceItems[i],
-              isActive:isActive
-            });
-          }
-
-          React.renderComponent(ModelEditorTabsView({scope:scope, tabItems:tabItems}), el[0]);
-        });
       }
     }
   }

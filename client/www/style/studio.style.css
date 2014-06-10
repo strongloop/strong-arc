@@ -1,6 +1,6 @@
 body{
     font-size:16px;
-    padding-top: 65px;
+    padding-top: 51px;
 }
 
 /*
@@ -19,7 +19,7 @@ body{
 }
 
 
-.btn:focus, .btn:active:focus, .btn.active:focus {
+button:focus, button:active:focus, .btn:focus, .btn:active:focus, .btn.active:focus {
     outline: transparent;
     outline-color: transparent;
 }
@@ -79,13 +79,15 @@ code {
 }
 [data-id="MainContentContainer"] {
 
+
+
 }
 .top-level-container {
-    border: 1px solid #cccccc;
+    border: 0px solid #cccccc;
     border-radius: .6rem;
     /*padding:.5rem;*/
-    /*height:600px;*/
-    overflow:scroll;
+    /*height:600px;
+    overflow:scroll;*/
 
 }
 
@@ -101,15 +103,6 @@ code {
     Nav Tree
 
 */
-.branch-leaf-list.is-open {
-    display:block;
-}
-.branch-leaf-list.is-closed {
-    display:none;
-}
-.branch-leaf-list li {
-    line-height: 1;
-}
 .nav-tree-item {
     display:inline-block;
     border:0;
@@ -121,16 +114,92 @@ code {
     background: #444444;
     color: #ffffff;
     padding-left:1rem;
+    font-size:120%;
 }
 .tree-branch {
-    background: #eeeeee;
-    padding-left:2rem;
+    background: #888888;
+    padding:.4rem .2rem .2rem 2rem;
+    color:#ffffff;
+    font-size:110%;
 }
 .tree-node {
     padding-left:3rem;
+    border-top:1px solid #fefefe;
+    border-bottom:1px solid #dedede;
+}
+
+.branch-leaf-list.is-open {
+    display:block;
+}
+.branch-leaf-list .btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active {
+    background: transparent;
+}
+.branch-leaf-list.is-closed {
+    display:none;
+}
+.branch-leaf-list li {
+    line-height: 1;
+}
+.branch-leaf-list li.is-open {
+    background-color:#d7eed7;
+}
+.branch-leaf-list li.is-selected {
+    background-color:#eeeeee;
+    border-color:blue;
+}
+.branch-leaf-list li.is-active {
+    background-color:#5cb85c;
+}
+.branch-leaf-list li.is-active button{
+    color:#ffffff;
 }
 
 
+
+
+/*
+
+    Main Content
+
+*/
+.main-content-item-container {
+    position:absolute;
+    width:100%;
+    min-height:3000px;
+    border-left:1px solid red;
+}
+[data-id="IAMainContentContainer"] {
+    position:relative;
+}
+[data-id="ModelEditorMainContainer"] {
+    z-index: 130;
+    background-color:#ffffff;
+
+}
+[data-id="CanvasApiContainer"] {
+    z-index: 80;
+}
+[data-id="PreviewInstanceContainer"] {
+    z-index: 111;
+    position:absolute;
+    top:0;
+    left:0;
+    background-color: #ffffff;
+    height:700px;
+    width:100%;
+}
+[data-id="PreviewBackgroundBlur"] {
+    position:absolute;
+    top:2rem;
+    background:rgba(223, 230, 200, .43);
+    width:100%;
+    padding-top:2.6rem;
+}
+.preview-instance-body-container {
+    border-top:3px solid #dddddd;
+    padding-top:1rem;
+    background:#ffffff;
+}
 /*
 
     Datasource
@@ -152,6 +221,7 @@ code {
     border:1px solid #eeeeee;
 
 }
+
 /*
 
     Model Editor Tabs
@@ -167,25 +237,33 @@ code {
     border-top:1px solid #dddddd;
     border-bottom:1px solid #dddddd;
     font-size:80%;
-    margin:0 auto 0 auto;
+    margin:0 auto .5rem auto;
     text-align: center;
 }
 .model-editor-tabs-view-container {
-    border-bottom:1px solid #dddddd;
+    border-bottom:0px solid #dddddd;
 }
 .model-editor-tabs-list {
-    padding:0;
+    padding: 0 0 0.3em 0;
     margin:0;
+    line-height: .9;
 
 }
 .model-editor-tabs-list li {
-    display:inline-block;
+    display:inline;
+    padding:.3rem;
+    padding-bottom:.5rem;
     border-left:1px solid #f1f1f1;
     border-right:1px solid #666666;
     border-top:1px solid #cccccc;
+    border-bottom:0px solid #cccccc;
 }
 .model-editor-tabs-list .model-edit-tab-item-container {
     background-color:#dddddd;
+}
+.model-editor-tabs-list .model-edit-tab-item-container.is-active {
+    background-color:#ffffff;
+    border-bottom: 2px solid #fff;
 }
 .model-edit-tab-item-button {
     font-size:80%;
@@ -198,6 +276,8 @@ code {
     border:0;
     background:transparent;
 }
+
+
 
 /*
 
@@ -232,6 +312,12 @@ api
 #LoginMainContainer form {
     margin:0 5rem 0 5rem;
 }
+/*
+
+    Main Nav Context Menu
+
+*/
+
 /*
 
     models
@@ -324,8 +410,8 @@ Main Tree Nav
 .model-editor-body-container {
     max-width:80rem;
     padding:1.3rem;
-    border: 1px solid #eeeeee;
-    border-radius:2rem;
+    border-top:1px solid #cccccc;
+
 }
 .model-instance-header {
     display:inline;

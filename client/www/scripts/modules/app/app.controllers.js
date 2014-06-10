@@ -8,17 +8,30 @@ app.controller('IDEController', [
   'ModelService',
   function($scope, $state, IAService, DatasourceService, $location, ModelService) {
 
+    $scope.mainContentZIndexes = {
+      ModelEditorMainContainer: 101,
+      PreviewInstanceContainer: 100,
+      CanvasApiContainer: 130
+    };
 
     // Datasources
-    $scope.mainNavDatasources = [];
-    $scope.mainNavModels = [];
+    $scope.mainNavDatasources = []; // initialized further down
+    $scope.mainNavModels = [];  // initialized further down
     $scope.currentOpenModelNames = IAService.getOpenModelNames();
-    $scope.activeDatasources = [];
-    $scope.currentSelectedCollection = [];
+    $scope.activeDatasources = [];  // TODO
+    $scope.currentSelectedCollection = IAService.clearSelectedModelNames();
     $scope.activeModelInstance = IAService.getActiveModelInstance();
-    $scope.previewInstance = {};
+    $scope.previewInstance = IAService.clearPreviewModelInstance();
     $scope.isModelsActive = true;
     $scope.isDataSourcesActive = true;
+    $scope.currentModelSelections = IAService.clearSelectedModelNames();
+
+    $scope.selectModel = function(modelName) {
+      $scope.currentModelSelections = IAService.addToCurrentModelSelections(modelName);
+    };
+    $scope.clearSelectedModels = function() {
+      $scope.currentModelSelections = IAService.clearSelectedModelNames();
+    };
 
     $scope.clearModelPreview = function() {
       $scope.previewInstance = {};
@@ -37,10 +50,14 @@ app.controller('IDEController', [
      * */
     $scope.navTreeItemDblClicked = function(type, target) {
       console.log('dbl clicked!!: ' + target);
+
       $scope.activeModelInstance = IAService.activateModelByName(target);
       $scope.clearModelPreview();
       $scope.currentOpenModelNames = IAService.getOpenModelNames();
-     // $location.path('/models');
+      jQuery('[data-id="ModelEditorMainContainer"]').css('z-index', 112);
+      jQuery('[data-id="CanvasApiContainer"]').css('z-index', 110);
+      jQuery('[data-id="PreviewInstanceContainer"]').css('z-index', 111);
+      $scope.clearSelectedModels();
     };
 
     /*
@@ -48,6 +65,19 @@ app.controller('IDEController', [
      * */
     $scope.navTreeBranchClicked = function(type) {
       console.log('Tree Branch Clicked');
+      // change the z-index on the main content to bring the
+      // canvas to the fore
+      // get reference to the following:
+      /*
+       [data-id="ModelEditorMainContainer"]
+       [data-id="CanvasApiContainer"]
+       [data-id="PreviewInstanceContainer"]
+      *
+      * */
+      jQuery('[data-id="ModelEditorMainContainer"]').css('z-index', 110);
+      jQuery('[data-id="CanvasApiContainer"]').css('z-index', 112);
+      jQuery('[data-id="PreviewInstanceContainer"]').css('z-index', 111);
+      $scope.clearSelectedModels();
 
     };
 
@@ -59,10 +89,24 @@ app.controller('IDEController', [
 
         $scope.activeModelInstance = IAService.activateModelByName(modelName);
       }
+      $scope.clearSelectedModels();
     };
     $scope.modelEditTabItemCloseClicked = function(modelName) {
-      $scope.currentOpenModelNames = IAService.closeModelByName(modelName);
 
+      $scope.currentOpenModelNames = IAService.closeModelByName(modelName);
+      // reset the active instance and reset tabs and nav
+      if ($scope.activeModelInstance.name === modelName) {
+        if ($scope.currentOpenModelNames.length === 0) {
+          $scope.aciveModelInstance = {};
+        }
+        else {
+
+          // active the first instance by default
+          $scope.activeModelInstance = IAService.activateModelByName($scope.currentOpenModelNames[0]);
+
+        }
+      }
+      $scope.clearSelectedModels();
     };
 
     /*
@@ -76,6 +120,20 @@ app.controller('IDEController', [
      * */
     $scope.openInstances = function() {
 
+    };
+    $scope.openSelectedModels = function() {
+      var selectedModels = IAService.getCurrentModelSelections();
+      if (selectedModels) {
+        $scope.clearModelPreview();
+        for (var i = 0; i < selectedModels.length;i++) {
+          $scope.activeModelInstance = IAService.activateModelByName(selectedModels[i]);
+        }
+        $scope.currentOpenModelNames = IAService.getOpenModelNames();
+        jQuery('[data-id="ModelEditorMainContainer"]').css('z-index', 112);
+        jQuery('[data-id="CanvasApiContainer"]').css('z-index', 110);
+        jQuery('[data-id="PreviewInstanceContainer"]').css('z-index', 111);
+        $scope.clearSelectedModels();
+      }
     };
 
 
@@ -94,12 +152,45 @@ app.controller('IDEController', [
      -- if not then clear current selected collection
 
      */
-    $scope.navTreeItemClicked = function(type, target, multiSelect) {
+    $scope.navTreeItemClicked = function(type, targetName, multiSelect) {
 
       switch (type){
 
         case 'model':
-          $scope.previewInstance = ModelService.getModelByName(target);
+          var isOpen = false;
+          var openModelNames = $scope.currentOpenModelNames;
+          var targetModel = ModelService.getModelByName(targetName);
+          if (openModelNames && (openModelNames.indexOf(targetName) === -1)) {
+            // mode is not open so preview it
+            $scope.previewInstance = targetModel;
+            jQuery('[data-id="ModelEditorMainContainer"]').css('z-index', 111);
+            jQuery('[data-id="CanvasApiContainer"]').css('z-index', 110);
+            jQuery('[data-id="PreviewInstanceContainer"]').css('z-index', 112);
+          }
+          else {
+            // model is open
+            // make sure it isn't currently active
+            if ($scope.activeModelInstance.name !== targetName) {
+              jQuery('[data-id="ModelEditorMainContainer"]').css('z-index', 112);
+              jQuery('[data-id="CanvasApiContainer"]').css('z-index', 110);
+              jQuery('[data-id="PreviewInstanceContainer"]').css('z-index', 111);
+              $scope.activeModelInstance = IAService.activateModelByName(targetName);
+              $scope.clearModelPreview();
+              $scope.clearSelectedModels();
+            }
+
+
+          }
+
+
+          /*
+          * cases:
+          * - item is not open: open preview view of item
+          * - item is open and active: do nothing
+          * - item is open but not active: activate item
+          *
+          * */
+          $scope.previewInstance = ModelService.getModelByName(targetName);
           break;
         case 'datasource':
           $scope.previewInstance = DatasourceService.getDatasourceByName(target);
@@ -194,124 +285,6 @@ app.controller('IDEController', [
         $scope.mainNavModels = mainNavModels;
       }
     );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    $scope.models = [];
-
-
-    $scope.models = ModelService.getAllModels({});
-    $scope.models.$promise.
-      then(function (result) {
-
-        var core = result[0];
-
-        var log = [];
-        var models = [];
-        angular.forEach(core, function(value, key){
-          this.push(key + ': ' + value);
-          models.push({name:key,children:value});
-        }, log);
-
-
-
-        var treedata_api_nav = [
-          {
-            name: 'Models',
-            stateName: 'model',
-            children: [
-              {
-                name: 'Properties',
-                children: ['data type', 'default']
-              }, {
-                name: 'ACL',
-                children: ['allow all', 'restrict']
-              }, {
-                name: 'Relations',
-                children: ['has many', 'belongs to']
-              }
-            ]
-          },
-          {
-            name: 'Datasources',
-            stateName: 'datasource',
-            children: [
-              {
-                name: 'Mongo Prod 1',
-                children: ['type', 'properties', 'connection']
-              }, {
-                name: 'prod apn customer',
-                children: ['type', 'properties', 'connection']
-              }, {
-                name: 'MySQL WP reg',
-                children: ['type', 'properties', 'connection']
-              }
-            ]
-          },
-          {
-            name: 'Forms',
-            stateName: 'uiform'
-          },
-          {
-            name: 'Layouts',
-            stateName: 'layout'
-          }
-        ];
-
-
-
-
-
-
-
-
-
-        for (var i = 0;i < treedata_api_nav.length;i++) {
-          if (treedata_api_nav[i].name === 'Models') {
-            treedata_api_nav[i].children = models;
-            break;
-          }
-        }
-
-
-
-
-
-
-        $scope.models = treedata_api_nav;
-
-
-      });
 
   }
 ]);

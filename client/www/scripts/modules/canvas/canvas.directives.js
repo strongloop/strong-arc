@@ -1,4 +1,60 @@
 // Copyright StrongLoop 2014
+/*
+*
+*   Canvas API View
+*
+* */
+Canvas.directive('slCanvasApiView', [
+  function() {
+    return {
+      replace: true,
+      template: '<div></div>',
+      link: function(scope, el, attrs) {
+
+
+        var iaInstance = jsPlumb.getInstance({
+          PaintStyle:{
+            lineWidth:2,
+            strokeStyle:'#ff45f1',
+            outlineColor:'black',
+            outlineWidth:1
+          },
+          Connector:[ 'Bezier', { curviness: 30 } ],
+          Endpoint:[ 'Dot', { radius:2 } ],
+          EndpointStyle : { fillStyle: '#567567'  },
+          Anchor : [ 0.5, 0.5, 1, 1 ]
+        });
+        iaInstance.setContainer(el[0]);
+
+        jsPlumb.ready(function() {
+
+          scope.$watch('mainNavModels', function(mainNavModels) {
+            if (!mainNavModels.$promise && (mainNavModels.length > 0)){
+              var dataset = {
+                name: 'x',
+                children: mainNavModels
+              };
+              React.renderComponent(Canvas.MainCanvasContainer({scope: scope}), el[0]);
+
+              jsPlumb.makeSource($('.model-connection-point'), {
+                connector: 'StateMachine'
+              });
+              jsPlumb.makeTarget($('.model-connection-point'), {
+                anchor: 'Continuous'
+              });
+
+              jsPlumb.draggable($('.canvas-model-container'), {
+                containment: 'PlumberInstanceContainer'
+              });
+
+            }
+          });
+
+        });
+      }
+    }
+  }
+]);
 Canvas.directive('canvasReactPlumber', [
   function() {
     return {
@@ -23,11 +79,11 @@ Canvas.directive('canvasReactPlumber', [
 
         jsPlumb.ready(function() {
 
-          scope.$watch('models', function(models) {
-            if (!models.$promise && (models.length > 0)){
+          scope.$watch('mainNavModels', function(mainNavModels) {
+            if (!mainNavModels.$promise && (mainNavModels.length > 0)){
               var dataset = {
                 name: 'x',
-                children: models
+                children: mainNavModels
               };
               React.renderComponent(Canvas.MainCanvasContainer({scope: scope}), el[0]);
 

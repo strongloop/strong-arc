@@ -24,6 +24,35 @@ IA.service('IAService', [
       }
       return {};
     };
+    svc.addToCurrentModelSelections = function(modelName) {
+      var currentSelectedModelNames = AppStorageService.getItem('currentSelectedModelNames');
+      var modelRef = {};
+      // check if there are already some model instances open
+      if (!currentSelectedModelNames) {
+
+        currentSelectedModelNames = [];
+      }
+      // net new so add to list of open models
+      // instantiate model by name
+      // set as active model
+      if (currentSelectedModelNames.indexOf(modelName) === -1) {
+        currentSelectedModelNames.push(modelName);
+        AppStorageService.setItem('currentSelectedModelNames', currentSelectedModelNames);
+      }
+      return currentSelectedModelNames;
+    };
+    svc.getCurrentModelSelections = function() {
+      var currentSelectedModelNames = AppStorageService.getItem('currentSelectedModelNames');
+      if (!currentSelectedModelNames) {
+        currentSelectedModelNames = [];
+      }
+      return currentSelectedModelNames;
+    };
+    svc.clearSelectedModelNames = function() {
+      var currentSelectedModelNames = [];
+      AppStorageService.setItem('currentSelectedModelNames', currentSelectedModelNames);
+      return currentSelectedModelNames;
+    };
     svc.getOpenModelNames = function() {
       var retModels = AppStorageService.getItem('currentOpenModelNames');
       if (!retModels) {

@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="./style/ng-grid.min.css">
     <link rel="stylesheet" type="text/css" href="./style/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="./style/angular-growl.min.css">
+    <link rel="stylesheet" type="text/css" href="./style/jquery.contextMenu.css">
     <link rel="stylesheet" type="text/css" href="./style/studio.style.css">
 
   </head>
@@ -54,9 +55,11 @@
           <div sl-ia-main-nav></div>
 
         </div>
-        <div data-ui-type="cell" data-id="MainContentContainer" class="top-level-container">
-          <div ui-view autoscroll="false"></div>
-        </div>
+        <div data-ui-type="cell"
+             data-id="MainContentContainer"
+             ui-view
+             autoscroll="false"
+             class="top-level-container"></div>
       </div>
     </div>
 
@@ -70,6 +73,7 @@
     <script src="./scripts/vendor/jquery/jquery-2.0.0.js"></script>
     <script src="./scripts/vendor/jquery/jquery-ui-1.10.4.custom.js"></script>
     <script src="./scripts/vendor/jquery/jquery.jsPlumb-1.6.2.js"></script>
+    <script src="./scripts/vendor/jquery/jquery.contextMenu.js"></script>
 
     <!-- react -->
     <script src="./scripts/vendor/react/react-addon.0.10.0.js"></script>
@@ -110,6 +114,7 @@
 
     <!-- common -->
     <script src="./scripts/modules/common/common.module.js"></script>
+    <script type="text/jsx" src="./scripts/modules/common/common.react.js"></script>
     <script src="./scripts/modules/common/common.controllers.js"></script>
     <script src="./scripts/modules/common/common.directives.js"></script>
     <script src="./scripts/modules/common/common.services.js"></script>
