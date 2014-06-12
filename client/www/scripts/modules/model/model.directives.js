@@ -37,7 +37,6 @@ Model.directive('modelInstanceHeader', [
     }
   }
 ]);
-
 /*
 *
 * Model Editor Tabs View
@@ -77,6 +76,174 @@ Model.directive('slModelEditorTabsView', [
     }
   }
 ]);
+
+
+
+/*
+ *
+ * MODEL BASE EDITOR  (DETAILS)
+ *
+ * */
+Model.directive('modelBaseEditor',[
+  function() {
+    return {
+      link: function(scope, el, attrs) {
+
+        // scope = scope.$parent;
+        scope.isModelInstanceBasePropertiesActive = false;
+
+        scope.toggleModelDetailView = function() {
+          console.log('toggle model detail view')
+          scope.isModelInstanceBasePropertiesActive = !scope.isModelInstanceBasePropertiesActive;
+        };
+
+        scope.currProperty = {};
+
+        scope.$watch('isModelInstanceBasePropertiesActive', function(val) {
+          var model = scope.activeModelInstance;
+          React.renderComponent(ModelDetailEditor({scope: scope, model: model }), el[0]);
+        });
+
+        scope.$watch('activeModelInstance', function(val) {
+          var model = scope.activeModelInstance;
+          React.renderComponent(ModelDetailEditor({scope: scope, model: model }), el[0]);
+        });
+      }
+    }
+  }
+]);
+/*
+ *
+ * MODEL PROPERTIES EDITOR
+ *
+ * */
+Model.directive('modelPropertiesEditor',[
+  function() {
+    return {
+    //  templateUrl: './scripts/modules/model/templates/model.properties.editor.html',
+      link: function(scope, el, attrs) {
+
+        scope.isModelInstancePropertiesActive = false;
+
+        scope.toggleModelPropertiesView = function() {
+          console.log('toggle model properties view')
+          scope.isModelInstancePropertiesActive = !scope.isModelInstancePropertiesActive;
+        };
+        scope.$watch('isModelInstancePropertiesActive', function(val) {
+          var properties = [];
+          if (scope.activeModelInstance.properties) {
+            properties = scope.activeModelInstance.properties;
+          }
+          React.renderComponent(ModelPropertiesEditor({scope:scope, properties:properties}), el[0]);
+        });
+
+        scope.$watch('activeModelInstance.properties', function(properties) {
+          if (!properties){
+            properties = [];
+          }
+          else {
+            scope.isModelInstancePropertiesActive = true;
+          }
+          React.renderComponent(ModelPropertiesEditor({scope:scope, properties:properties}), el[0]);
+        });
+        scope.$watch('activeModelInstance', function(model) {
+          if (!model.properties){
+            model.properties = [];
+          }
+          React.renderComponent(ModelPropertiesEditor({scope:scope, properties:model.properties}), el[0]);
+        });
+      }
+    }
+  }
+]);
+
+/*
+ *   Model Property Pocket Editor
+ * */
+Model.directive('modelPropertyPocketEditor', [
+  function() {
+    return {
+      link: function(scope, el, attrs) {
+        React.renderComponent(ModelPropertyPocketEditor({scope:scope}), el[0]);
+      }
+    }
+  }
+]);
+
+/*
+ *
+ * Pocket Editor Popover
+ *
+ * */
+Model.directive('pocketEditorPopover',[
+  function() {
+    return {
+      restrict: "E",
+      replace: true,
+      transclude: true,
+      templateUrl: './scripts/modules/model/templates/editor.popover.html',
+      scope: {
+        editorName: '@name'
+      },
+      link: function (scope, el, attrs) {
+        scope.isPocketPopoverActive = false;
+        scope.togglePopover = function() {
+          scope.isPocketPopoverActive = !scope.isPocketPopoverActive;
+        }
+      }
+    };
+  }
+]);
+
+/*
+ *   Model Pocket Editor Container
+ * */
+Model.directive('modelPocketEditorContainer', [
+  function() {
+    return {
+      link: function(scope, el, attrs) {
+
+        scope.$watch('activeModelInstance', function(model) {
+          React.renderComponent(ModelPocketEditorContainer({scope:scope}), el[0]);
+        });
+
+      }
+    }
+  }
+]);
+/*
+*
+*   Model Instance Editor
+*
+* */
+Model.directive('slModelInstanceEditor', [
+  function() {
+    return {
+      templateUrl: './scripts/modules/model/templates/model.instance.editor.html',
+      link: function(scope, el, attrs) {
+
+      }
+    }
+  }
+]);
+ /*
+ *
+ * MODEL SAMPLE FORM
+ *
+ * */
+Model.directive('modelSampleForm', [
+  function() {
+    return {
+      template: '<div uiform-form-builder ></div>',
+      link: function(scope, elem, attrs) {
+        scope.$watch('dmodels', function(models) {
+          console.log('UIForm Form Builder: ' + JSON.stringify(models));
+          scope.formFields = models;
+        }, true);
+      }
+    }
+  }
+]);
 /*
  *   Property Comments Editor
  * */
@@ -110,7 +277,6 @@ Model.directive('propertyConnectionEditor', [
     }
   }
 ]);
-
 /*
  *
  *
@@ -315,139 +481,3 @@ Model.directive('propertyNameEditor', [
   }
 ]);
 
-/*
- *
- * MODEL PROPERTIES EDITOR
- *
- * */
-Model.directive('modelPropertiesEditor',[
-  function() {
-    return {
-    //  templateUrl: './scripts/modules/model/templates/model.properties.editor.html',
-      link: function(scope, el, attrs) {
-
-        scope.$watch('activeModelInstance.properties', function(properties) {
-          if (!properties){
-            properties = [];
-          }
-          React.renderComponent(ModelPropertiesEditor({scope:scope, properties:properties}), el[0]);
-        });
-      }
-    }
-  }
-]);
-/*
- *
- * MODEL BASE EDITOR
- *
- * */
-Model.directive('modelBaseEditor',[
-  function() {
-    return {
-      link: function(scope, el, attrs) {
-
-        // scope = scope.$parent;
-        scope.isModelInstanceBasePropertiesActive = false;
-
-        scope.toggleModelDetailView = function() {
-          scope.isModelInstanceBasePropertiesActive = !scope.isModelInstanceBasePropertiesActive;
-        };
-
-        scope.currProperty = {};
-
-
-        scope.$watch('activeModelInstance', function(val) {
-          var model = scope.activeModelInstance;
-          React.renderComponent(ModelDetailEditor({scope: scope, model: model }), el[0]);
-        });
-      }
-    }
-  }
-]);
-/*
- *   Model Property Pocket Editor
- * */
-Model.directive('modelPropertyPocketEditor', [
-  function() {
-    return {
-      link: function(scope, el, attrs) {
-        React.renderComponent(ModelPropertyPocketEditor({scope:scope}), el[0]);
-      }
-    }
-  }
-]);
-
-/*
- *
- * Pocket Editor Popover
- *
- * */
-Model.directive('pocketEditorPopover',[
-  function() {
-    return {
-      restrict: "E",
-      replace: true,
-      transclude: true,
-      templateUrl: './scripts/modules/model/templates/editor.popover.html',
-      scope: {
-        editorName: '@name'
-      },
-      link: function (scope, el, attrs) {
-        scope.isPocketPopoverActive = false;
-        scope.togglePopover = function() {
-          scope.isPocketPopoverActive = !scope.isPocketPopoverActive;
-        }
-      }
-    };
-  }
-]);
-
-/*
- *   Model Pocket Editor Container
- * */
-Model.directive('modelPocketEditorContainer', [
-  function() {
-    return {
-      link: function(scope, el, attrs) {
-
-        scope.$watch('activeModelInstance', function(model) {
-          React.renderComponent(ModelPocketEditorContainer({scope:scope}), el[0]);
-        });
-
-      }
-    }
-  }
-]);
-/*
-*
-*   Model Instance Editor
-*
-* */
-Model.directive('slModelInstanceEditor', [
-  function() {
-    return {
-      templateUrl: './scripts/modules/model/templates/model.instance.editor.html',
-      link: function(scope, el, attrs) {
-
-      }
-    }
-  }
-]);
- /*
- *
- * MODEL SAMPLE FORM
- *
- * */
-Model.directive('modelSampleForm', [
-  function() {
-    return {
-      template: '<div uiform-form-builder ></div>',
-      link: function(scope, elem, attrs) {
-        scope.$watch('dmodels', function(models) {
-          console.log('UIForm Form Builder: ' + JSON.stringify(models));
-          scope.formFields = models;
-        }, true);
-      }
-    }
-  }
-]);

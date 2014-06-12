@@ -1,149 +1,11 @@
 /** @jsx React.DOM */
-var ModelPropertiesEditor = React.createClass({
+/*
+ *   Model Title Header
+ * */
+ModelTitleHeader = React.createClass({
   render: function() {
-    var scope = this.props.scope;
-
-    var getRowItem = function(rowData) {
-      return (
-        <li >
-          <div >
-            <div data-ui-type="table">
-              <div data-ui-type="row">
-                <span data-ui-type="cell" className="props-name-cell">
-                  <input type="button"
-                    value={ rowData.name }
-                    className="btn btn-sm btn-default btn-block" />
-                </span>
-                <span data-ui-type="cell" className="props-data-type-cell">
-                  <input type="button"
-                    className="btn btn-sm btn-default"
-                    value={rowData.props.type} />
-                </span>
-                <span data-ui-type="cell" className="props-isindex-cell">
-                  <input type="checkbox" />
-                </span>
-                <span data-ui-type="cell" className="props-default-value-cell">
-                  <input type="text"
-                    className="model-instance-editor-input"
-                    placeholder="default value" />
-                </span>
-                <span data-ui-type="cell" className="props-required-cell">
-                  <input type="checkbox" />
-                </span>
-                <span data-ui-type="cell" className="props-connection-cell">
-                  <button className="btn btn-link">
-                    <span className="glyphicon glyphicon-flash"></span>
-                  </button>
-
-                </span>
-              </div>
-            </div>
-            <ModelPocketEditorContainer scope={scope} property={rowData} />
-            <div collapse="isThisCollapsed">
-              <div property-connection-editor></div>
-            </div>
-          </div>
-        </li>
-        );
-    };
-
-
-
     return (
-      <div>
-        <input type="button" className="model-instance-header-btn btn btn-default btn-block" value="Properties" />
-        <div >
-          <div className="model-instance-container property-list-header">
-            <div data-ui-type="table">
-              <div data-ui-type="row" className="model-instance-property-table-header-row">
-                <span data-ui-type="cell" className="props-name-cell table-header-cell" title="property name">name</span>
-                <span data-ui-type="cell" className="props-data-type-cell table-header-cell" title="data type">type</span>
-                <span data-ui-type="cell" className="props-isid-cell table-header-cell" title="is index">index</span>
-                <span data-ui-type="cell" className="props-default-value-cell table-header-cell" title="default value"></span>
-                <span data-ui-type="cell" className="props-required-cell" title="required">req</span>
-                <span data-ui-type="cell" className="props-map-cell table-header-cell header" title="relations">rel.</span>
-              </div>
-            </div>
-          </div>
-          <ul className="model-instance-property-list">
-            {this.props.properties.map(getRowItem)}
-          </ul>
-          </div>
-
-
-        </div>
-
-      );
-  }
-});
-var ModelPropertiesView = React.createClass({
-  render: function() {
-    var scope = this.props.scope;
-    var mode = 'preview';
-
-    var getRowItem = function(rowData) {
-      return (
-        <li >
-          <div >
-            <div data-ui-type="table">
-              <div data-ui-type="row">
-                <span data-ui-type="cell" className="props-name-cell">
-                  <input type="button"
-                  value={ rowData.name }
-                  className="btn btn-sm btn-default btn-block" />
-                </span>
-                <span data-ui-type="cell" className="props-data-type-cell">
-                  {rowData.props.type}
-                </span>
-                <span data-ui-type="cell" className="props-isindex-cell">
-                  <input type="checkbox" readonly />
-                </span>
-                <span data-ui-type="cell" className="props-default-value-cell">
-                  [default value]
-                </span>
-                <span data-ui-type="cell" className="props-required-cell">
-                  <input type="checkbox" />
-                </span>
-                <span data-ui-type="cell" className="props-connection-cell">
-                  <button className="btn btn-link">
-                    <span className="glyphicon glyphicon-flash"></span>
-                  </button>
-
-                </span>
-              </div>
-            </div>
-            <ModelPocketEditorContainer scope={scope} property={rowData} mode={mode} />
-          </div>
-        </li>
-        );
-    };
-
-
-
-    return (
-      <div>
-        <input type="button" className="model-instance-header-btn btn btn-default btn-block" value="Properties" />
-        <div >
-          <div className="model-instance-container property-list-header">
-            <div data-ui-type="table">
-              <div data-ui-type="row" className="model-instance-property-table-header-row">
-                <span data-ui-type="cell" className="props-name-cell table-header-cell" title="property name">name</span>
-                <span data-ui-type="cell" className="props-data-type-cell table-header-cell" title="data type">type</span>
-                <span data-ui-type="cell" className="props-isid-cell table-header-cell" title="is index">index</span>
-                <span data-ui-type="cell" className="props-default-value-cell table-header-cell" title="default value"></span>
-                <span data-ui-type="cell" className="props-required-cell" title="required">req</span>
-                <span data-ui-type="cell" className="props-map-cell table-header-cell header" title="relations">rel.</span>
-              </div>
-            </div>
-          </div>
-          <ul className="model-instance-property-list">
-            {this.props.properties.map(getRowItem)}
-          </ul>
-        </div>
-
-
-      </div>
-
+      <span>{this.props.scope.activeModelInstance.name}</span>
       );
   }
 });
@@ -202,19 +64,237 @@ var ModelEditorTabsView = React.createClass({
       );
   }
 });
+
 /*
-*   Model Title Header
-* */
-ModelTitleHeader = React.createClass({
+ *
+ *   MODEL PROPERTIES
+ *
+ *
+ * */
+var ModelPropertiesEditor = React.createClass({
+
+  getInitialState: function() {
+    return {isOpen:false};
+  },
+  shouldComponentUpdate: function(nextProps, nextState) {
+
+    // return this.state.isOpen !== nextState.isOpen;
+    return true;
+  },
+
   render: function() {
+
+    var that = this;
+
+    var scope = this.props.scope;
+    var properties = this.props.properties;
+    var cx = React.addons.classSet;
+
+//    if (this.props.uiState) {
+//      if (this.props.uiState.isOpen) {
+//        this.setState({isOpen:isOpen});
+//      }
+//    }
+
+
+
+
+    var classes = cx({
+      'row is-open': this.state.isOpen,
+      'row is-closed': !this.state.isOpen
+    });
+
+    var clickHandler = function(event) {
+      var isOpenState = !that.state.isOpen;
+      that.setState({isOpen:isOpenState});
+    };
+
+
+    var items = [];
+    var items = properties.map(function (item) {
+      return  (<ModelPropertyRowDetail rowData={item} scope={scope} />);
+    });
+
+
     return (
-      <span>{this.props.scope.activeModelInstance.name}</span>
-    );
+      <div>
+        <input type="button" onClick={clickHandler} className="model-instance-header-btn btn btn-default btn-block" value="Properties" />
+        <div className={classes} >
+          <div className="model-instance-container property-list-header">
+            <div data-ui-type="table">
+              <div data-ui-type="row" className="model-instance-property-table-header-row">
+                <span data-ui-type="cell" className="props-name-cell table-header-cell" title="property name">name</span>
+                <span data-ui-type="cell" className="props-data-type-cell table-header-cell" title="data type">type</span>
+                <span data-ui-type="cell" className="props-isid-cell table-header-cell" title="is index">index</span>
+                <span data-ui-type="cell" className="props-default-value-cell table-header-cell" title="default value"></span>
+                <span data-ui-type="cell" className="props-required-cell" title="required">req</span>
+                <span data-ui-type="cell" className="props-map-cell table-header-cell header" title="relations">rel.</span>
+              </div>
+            </div>
+          </div>
+          <ul className="model-instance-property-list">
+            {items}
+          </ul>
+        </div>
+
+
+      </div>
+
+      );
+  }
+});
+var ModelPropertyRowDetail = React.createClass({
+  getInitialState: function() {
+    return {
+      rowData:this.props.rowData,
+      isOpen:false
+    };
+  },
+  render: function() {
+
+    var that = this;
+    var scope = this.props.scope;
+
+
+    var cx = React.addons.classSet;
+
+    var togglePropertiesView = function(property) {
+      that.setState({isOpen:!that.state.isOpen});
+    };
+
+    var pClasses = cx({
+      'property-detail is-open': that.state.isOpen,
+      'property-detail is-closed': !that.state.isOpen
+    });
+
+    var rowData = this.state.rowData;
+    return (
+      <li >
+        <div >
+          <div data-ui-type="table">
+            <div data-ui-type="row">
+              <span data-ui-type="cell" className="props-name-cell">
+                <input type="button"
+                value={ rowData.name }
+                onClick={togglePropertiesView}
+                className="btn btn-sm btn-default btn-block" />
+              </span>
+              <span data-ui-type="cell" className="props-data-type-cell">
+                <input type="button"
+                className="btn btn-sm btn-default"
+                value={rowData.props.type} />
+              </span>
+              <span data-ui-type="cell" className="props-isindex-cell">
+                <input type="checkbox" />
+              </span>
+              <span data-ui-type="cell" className="props-default-value-cell">
+                <input type="text"
+                className="model-instance-editor-input"
+                placeholder="default value" />
+              </span>
+              <span data-ui-type="cell" className="props-required-cell">
+                <input type="checkbox" />
+              </span>
+              <span data-ui-type="cell" className="props-connection-cell">
+                <button className="btn btn-link">
+                  <span className="glyphicon glyphicon-flash"></span>
+                </button>
+
+              </span>
+            </div>
+          </div>
+          <div className={pClasses}>
+            <ModelPocketEditorContainer scope={scope} property={rowData} />
+          </div>
+
+
+        </div>
+      </li>
+      );
+  }
+});
+
+
+/*
+ *
+ *   MODEL PROPERTIES VIEW
+ *
+ * */
+var ModelPropertiesView = React.createClass({
+  render: function() {
+    var scope = this.props.scope;
+    var properties = this.props.properties;
+    var mode = 'preview';
+
+    var getRowItem = function(rowData) {
+      return (
+        <li >
+          <div >
+            <div data-ui-type="table">
+              <div data-ui-type="row">
+                <span data-ui-type="cell" className="props-name-cell">
+                  <input type="button"
+                  value={ rowData.name }
+                  className="btn btn-sm btn-default btn-block" />
+                </span>
+                <span data-ui-type="cell" className="props-data-type-cell">
+                  {rowData.props.type}
+                </span>
+                <span data-ui-type="cell" className="props-isindex-cell">
+                  <input type="checkbox" readonly />
+                </span>
+                <span data-ui-type="cell" className="props-default-value-cell">
+                [default value]
+                </span>
+                <span data-ui-type="cell" className="props-required-cell">
+                  <input type="checkbox" />
+                </span>
+                <span data-ui-type="cell" className="props-connection-cell">
+                  <button className="btn btn-link">
+                    <span className="glyphicon glyphicon-flash"></span>
+                  </button>
+
+                </span>
+              </div>
+            </div>
+            <ModelPocketEditorContainer scope={scope} property={rowData} mode={mode} />
+          </div>
+        </li>
+        );
+    };
+
+
+
+    return (
+      <div>
+        <input type="button" className="model-instance-header-btn btn btn-default btn-block" value="Properties" />
+        <div >
+          <div className="model-instance-container property-list-header">
+            <div data-ui-type="table">
+              <div data-ui-type="row" className="model-instance-property-table-header-row">
+                <span data-ui-type="cell" className="props-name-cell table-header-cell" title="property name">name</span>
+                <span data-ui-type="cell" className="props-data-type-cell table-header-cell" title="data type">type</span>
+                <span data-ui-type="cell" className="props-isid-cell table-header-cell" title="is index">index</span>
+                <span data-ui-type="cell" className="props-default-value-cell table-header-cell" title="default value"></span>
+                <span data-ui-type="cell" className="props-required-cell" title="required">req</span>
+                <span data-ui-type="cell" className="props-map-cell table-header-cell header" title="relations">rel.</span>
+              </div>
+            </div>
+          </div>
+          <ul className="model-instance-property-list">
+            {properties.map(getRowItem)}
+          </ul>
+        </div>
+
+
+      </div>
+
+      );
   }
 });
 /*
-*   Property Comment Editor
-* */
+ *   Property Comment Editor
+ * */
 PropertyCommentEditor = React.createClass({
   render: function() {
     var scope = this.props.scope;
@@ -226,15 +306,15 @@ PropertyCommentEditor = React.createClass({
     };
 
     return (
-        <textarea onChange={updatePropertyDoc} className="model-instance-editor-input">
+      <textarea onChange={updatePropertyDoc} className="model-instance-editor-input">
           {this.props.doc}
-        </textarea>
+      </textarea>
       );
   }
 });
 /*
-* property name editor
-* */
+ * property name editor
+ * */
 PropertyNameEditor = React.createClass({
 //  getInitialState: function() {
 //   // return {value: this.props.scope.property.name};
@@ -300,8 +380,8 @@ var ModelPocketEditorMiscView = React.createClass({
   }
 });
 /*
-*   Model Pocket Editor Container
-* */
+ *   Model Pocket Editor Container
+ * */
 var ModelPocketEditorContainer = React.createClass({
   getInitialState: function() {
     return {
@@ -389,9 +469,9 @@ var ModelPocketEditorContainer = React.createClass({
       );
   }
 });
-   /*
-*   Property Connection Editor
-* */
+/*
+ *   Property Connection Editor
+ * */
 PropertyConnectionEditor = React.createClass({
   render: function() {
     var scope = this.props.scope;
@@ -400,19 +480,19 @@ PropertyConnectionEditor = React.createClass({
         <h4>Connection</h4>
         <label>target model</label>
         <input type="text"
-                placeholder="search models" />
+        placeholder="search models" />
         <label>target property</label>
         <input type="text" placeholder="search properties" />
       </div>
-    );
+      );
   }
 });
 
 /*
-* ModelPropertyPocketEditor
-*
-* marked for deletion
-* */
+ * ModelPropertyPocketEditor
+ *
+ * marked for deletion
+ * */
 //ModelPropertyPocketEditor = React.createClass({
 //  render: function() {
 //    return (
@@ -431,8 +511,8 @@ PropertyConnectionEditor = React.createClass({
 //  }
 //});
 /*
-*   Model Detail Preview
-* */
+ *   Model Detail Preview
+ * */
 
 ModelDetailView = React.createClass({
   render: function() {
@@ -528,20 +608,26 @@ ModelDetailView = React.createClass({
 });
 
 /*
-*   Model Detail Editor
-* */
+ *   Model Detail Editor
+ * */
 ModelDetailEditor = React.createClass({
 
   render: function() {
+    var scope = this.props.scope;
     var model = this.props.model;
     var cx = React.addons.classSet;
 
     var classes = cx({
-//      'row is-open': this.props.scope.isModelInstanceBasePropertiesActive,
-//      'row is-closed': !this.props.scope.isModelInstanceBasePropertiesActive
+      'row is-open': this.props.scope.isModelInstanceBasePropertiesActive,
+      'row is-closed': !this.props.scope.isModelInstanceBasePropertiesActive
     });
 
-    var clickHandler = this.props.scope.$apply.bind(this.props.scope, this.props.scope.toggleModelDetailView.bind(null, 0));
+    var clickHandler = function(event) {
+      scope.$apply(function() {
+        scope.toggleModelDetailView();
+      });
+    };
+//    this.props.scope, this.props.scope.toggleModelDetailView.bind(null, 0));
 
     return (
       <div className="container-fluid">
@@ -591,7 +677,7 @@ ModelDetailEditor = React.createClass({
             <div data-ui-type="table" >
               <div data-ui-type="row">
                 <div data-ui-type="cell">
-                <label>Indexes</label>
+                  <label>Indexes</label>
                 </div>
                 <div data-ui-type="cell">
                   <input type="button" value="edit" className="btn btn-default" />

@@ -2,8 +2,8 @@
 var CommonPreviewInstanceContainer = React.createClass({
   render: function() {
     var scope = this.props.scope;
-    var properties = scope.previewInstance.properties;
     var instance = scope.previewInstance;
+    var properties = instance.properties;
     if (!properties) {
       properties = [];
     }

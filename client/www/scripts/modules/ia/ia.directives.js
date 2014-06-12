@@ -48,7 +48,7 @@ IA.directive('slIaMainNav', [
           $timeout(function() {
 
             React.renderComponent(IAMainNavContainer({scope:scope}), el[0]);
-          }, 100);
+          }, 1000);
 
 
         };
@@ -89,7 +89,7 @@ IA.directive('slIaMainNav', [
 IA.directive('slIaMainContent', [
   function() {
     return {
-      templateUrl: './scripts/modules/ia/templates/ia.main.html',
+      templateUrl: './scripts/modules/ia/templates/ia.main.content.html',
       link: function(scope, el, attrs) {
 
       }

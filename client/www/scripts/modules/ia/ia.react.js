@@ -6,6 +6,9 @@ IAMainNavContainer = React.createClass({
       that.props.scope.openSelectedModels();
     });
   },
+  componentWillMount: function() {
+    console.log('IAMainNavContainerWillMount');
+  },
   componentDidMount:function(){
     $.contextMenu({
       // define which elements trigger this menu

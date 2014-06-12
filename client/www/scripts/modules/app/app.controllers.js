@@ -55,8 +55,9 @@ app.controller('IDEController', [
       $scope.clearModelPreview();
       $scope.currentOpenModelNames = IAService.getOpenModelNames();
       jQuery('[data-id="ModelEditorMainContainer"]').css('z-index', 112);
-      jQuery('[data-id="CanvasApiContainer"]').css('z-index', 110);
+      jQuery('[data-id="CanvasApiContainer"]').css('z-index', 113);
       jQuery('[data-id="PreviewInstanceContainer"]').css('z-index', 111);
+      jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
       $scope.clearSelectedModels();
     };
 
@@ -75,7 +76,8 @@ app.controller('IDEController', [
       *
       * */
       jQuery('[data-id="ModelEditorMainContainer"]').css('z-index', 110);
-      jQuery('[data-id="CanvasApiContainer"]').css('z-index', 112);
+      jQuery('[data-id="CanvasApiContainer"]').css('z-index', 113);
+      jQuery('[data-id="CanvasApiContainer"]').transition({ x: 0 });
       jQuery('[data-id="PreviewInstanceContainer"]').css('z-index', 111);
       $scope.clearSelectedModels();
 
@@ -130,7 +132,8 @@ app.controller('IDEController', [
         }
         $scope.currentOpenModelNames = IAService.getOpenModelNames();
         jQuery('[data-id="ModelEditorMainContainer"]').css('z-index', 112);
-        jQuery('[data-id="CanvasApiContainer"]').css('z-index', 110);
+        jQuery('[data-id="CanvasApiContainer"]').css('z-index', 113);
+        jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
         jQuery('[data-id="PreviewInstanceContainer"]').css('z-index', 111);
         $scope.clearSelectedModels();
       }
@@ -164,7 +167,8 @@ app.controller('IDEController', [
             // mode is not open so preview it
             $scope.previewInstance = targetModel;
             jQuery('[data-id="ModelEditorMainContainer"]').css('z-index', 111);
-            jQuery('[data-id="CanvasApiContainer"]').css('z-index', 110);
+            jQuery('[data-id="CanvasApiContainer"]').css('z-index', 113);
+            jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
             jQuery('[data-id="PreviewInstanceContainer"]').css('z-index', 112);
           }
           else {
@@ -172,7 +176,8 @@ app.controller('IDEController', [
             // make sure it isn't currently active
             if ($scope.activeModelInstance.name !== targetName) {
               jQuery('[data-id="ModelEditorMainContainer"]').css('z-index', 112);
-              jQuery('[data-id="CanvasApiContainer"]').css('z-index', 110);
+              jQuery('[data-id="CanvasApiContainer"]').css('z-index', 113);
+              jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
               jQuery('[data-id="PreviewInstanceContainer"]').css('z-index', 111);
               $scope.activeModelInstance = IAService.activateModelByName(targetName);
               $scope.clearModelPreview();
