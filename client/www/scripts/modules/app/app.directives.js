@@ -6,13 +6,7 @@ app.directive('greetingMain', [
     }
   }
 ]);
-app.directive('instanceSearch', [
-  function() {
-    return  {
-      templateUrl: './scripts/modules/app/templates/instance.search.html'
-    }
-  }
-]);
+
 
 
 app.directive('draggable', function() {

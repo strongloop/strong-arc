@@ -34,7 +34,9 @@ Datasource.service('DatasourceService', [
 
       if (window.localStorage.getItem('ApiDatasources')) {
         var currDSCollection = JSON.parse(window.localStorage.getItem('ApiDatasources'));
-        return currDSCollection[name];
+        var targetDS = currDSCollection[name];
+        targetDS.name = name;
+        return targetDS;
       }
     };
     svc.createDatasourceDef = function(datasourceDefObj) {

@@ -11,10 +11,10 @@ var CommonPreviewInstanceContainer = React.createClass({
 
     return (
       <div>
-        <div className="model-editor-title-container">
+        <div className=" editor-title-container">
           <span>{scope.$parent.previewInstance.name}</span>
         </div>
-        <div className="model-editor-tabs-container">
+        <div className=" editor-tabs-container">
           <ModelEditorTabsView scope={scope} tabItems={this.props.tabItems} />
         </div>
         <div data-id="PreviewBackgroundBlur">

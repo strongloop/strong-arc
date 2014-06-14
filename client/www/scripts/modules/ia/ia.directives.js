@@ -48,7 +48,7 @@ IA.directive('slIaMainNav', [
           $timeout(function() {
 
             React.renderComponent(IAMainNavContainer({scope:scope}), el[0]);
-          }, 1000);
+          }, 140);
 
 
         };
@@ -82,6 +82,16 @@ IA.directive('slIaMainNav', [
   }
 ]);
 /*
+*
+* */
+IA.directive('slIaMainSearch', [
+  function() {
+    return  {
+      templateUrl: './scripts/modules/ia/templates/ia.main.search.html'
+    }
+  }
+]);
+ /*
  *
  *   IA Main Content
  *

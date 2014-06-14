@@ -90,7 +90,7 @@ Model.directive('modelBaseEditor',[
       link: function(scope, el, attrs) {
 
         // scope = scope.$parent;
-        scope.isModelInstanceBasePropertiesActive = false;
+        scope.isModelInstanceBasePropertiesActive = true;
 
         scope.toggleModelDetailView = function() {
           console.log('toggle model detail view')
@@ -123,7 +123,7 @@ Model.directive('modelPropertiesEditor',[
     //  templateUrl: './scripts/modules/model/templates/model.properties.editor.html',
       link: function(scope, el, attrs) {
 
-        scope.isModelInstancePropertiesActive = false;
+        scope.isModelInstancePropertiesActive = true;
 
         scope.toggleModelPropertiesView = function() {
           console.log('toggle model properties view')

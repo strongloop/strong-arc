@@ -42,15 +42,15 @@ var ModelEditorTabsView = React.createClass({
     }
 
     items = this.props.tabItems.map(function(item) {
-      var classNameVar = 'model-edit-tab-item-container';
+      var classNameVar = ' edit-tab-item-container';
       if (item.isActive) {
         classNameVar += ' is-active';
       }
 
       return (
         <li className={classNameVar}>
-          <button onClick={clickModelEditTabItem} className="model-edit-tab-item-button" data-name={item.name}>{item.name}</button>
-          <button onClick={clickModelEditorTabClose} className="model-edit-tab-close-button" data-name={item.name}>
+          <button onClick={clickModelEditTabItem} className=" edit-tab-item-button" data-name={item.name}>{item.name}</button>
+          <button onClick={clickModelEditorTabClose} className=" edit-tab-close-button" data-name={item.name}>
             <span className="glyphicon glyphicon-remove" data-name={item.name}></span>
           </button>
         </li>
@@ -59,7 +59,7 @@ var ModelEditorTabsView = React.createClass({
 
     return (
       <div>
-        <ul className="model-editor-tabs-list">{items}</ul>
+        <ul className=" editor-tabs-list">{items}</ul>
       </div>
       );
   }
@@ -74,7 +74,7 @@ var ModelEditorTabsView = React.createClass({
 var ModelPropertiesEditor = React.createClass({
 
   getInitialState: function() {
-    return {isOpen:false};
+    return {isOpen:true};
   },
   shouldComponentUpdate: function(nextProps, nextState) {
 
@@ -125,10 +125,10 @@ var ModelPropertiesEditor = React.createClass({
               <div data-ui-type="row" className="model-instance-property-table-header-row">
                 <span data-ui-type="cell" className="props-name-cell table-header-cell" title="property name">name</span>
                 <span data-ui-type="cell" className="props-data-type-cell table-header-cell" title="data type">type</span>
-                <span data-ui-type="cell" className="props-isid-cell table-header-cell" title="is index">index</span>
                 <span data-ui-type="cell" className="props-default-value-cell table-header-cell" title="default value"></span>
                 <span data-ui-type="cell" className="props-required-cell" title="required">req</span>
-                <span data-ui-type="cell" className="props-map-cell table-header-cell header" title="relations">rel.</span>
+                <span data-ui-type="cell" className="props-index-cell table-header-cell" title="is index">index</span>
+                <span data-ui-type="cell" className="props-comments-cell table-header-cell header" title="comments">comments</span>
               </div>
             </div>
           </div>
@@ -184,9 +184,6 @@ var ModelPropertyRowDetail = React.createClass({
                 className="btn btn-sm btn-default"
                 value={rowData.props.type} />
               </span>
-              <span data-ui-type="cell" className="props-isindex-cell">
-                <input type="checkbox" />
-              </span>
               <span data-ui-type="cell" className="props-default-value-cell">
                 <input type="text"
                 className="model-instance-editor-input"
@@ -195,11 +192,11 @@ var ModelPropertyRowDetail = React.createClass({
               <span data-ui-type="cell" className="props-required-cell">
                 <input type="checkbox" />
               </span>
-              <span data-ui-type="cell" className="props-connection-cell">
-                <button className="btn btn-link">
-                  <span className="glyphicon glyphicon-flash"></span>
-                </button>
-
+              <span data-ui-type="cell" className="props-index-cell">
+                <input type="checkbox" />
+              </span>
+              <span data-ui-type="cell" className="props-comments-cell">
+                <textarea className="property-doc-textarea model-instance-editor-input" ></textarea>
               </span>
             </div>
           </div>
@@ -385,7 +382,7 @@ var ModelPocketEditorMiscView = React.createClass({
 var ModelPocketEditorContainer = React.createClass({
   getInitialState: function() {
     return {
-      targetView: 'misc',
+      targetView: 'id',
       mode: this.props.mode || null
     };
   },
@@ -393,10 +390,6 @@ var ModelPocketEditorContainer = React.createClass({
     var tView = this.state.targetView;
     var viewFragment = '';
     switch (tView){
-      case 'misc':
-        viewFragment = (<ModelPocketEditorMiscView scope={this.props.scope} property={this.props.property} mode={this.state.mode} />);
-
-        break;
       case 'id':
         viewFragment = (<PropertyIdEditor scope={this.props.scope} property={this.props.property} mode={this.state.mode} />);
 
@@ -418,7 +411,7 @@ var ModelPocketEditorContainer = React.createClass({
         break;
 
       default:
-        viewFragment = (<ModelPocketEditorMiscView scope={this.props.scope} property={this.props.property} mode={this.state.mode} />);
+        viewFragment = (<div>hmmm... we don't seem to be able to find the view you're looking for</div>);
 
     }
     return viewFragment;
@@ -442,9 +435,6 @@ var ModelPocketEditorContainer = React.createClass({
 
         <div>
           <ul className="model-config-tab-list">
-            <li>
-              <input type="button" data-target="misc" onClick={this.pocketEditorTabSelect} className="btn btn-default btn-sm" value="misc" />
-            </li>
             <li>
               <input type="button" data-target="id" onClick={this.pocketEditorTabSelect} className="btn btn-default btn-sm" value="id config" />
             </li>
@@ -488,28 +478,7 @@ PropertyConnectionEditor = React.createClass({
   }
 });
 
-/*
- * ModelPropertyPocketEditor
- *
- * marked for deletion
- * */
-//ModelPropertyPocketEditor = React.createClass({
-//  render: function() {
-//    return (
-//      <div className="model-pocket-editor-container">
-//        <div className="model-pocket-editor-tab-container">
-//
-//          <div>
-//            <PropertyIdEditor scope={this.props.scope}  />
-//            <PropertyValidationEditor />
-//            <PropertyMapEditor />
-//          </div>
-//
-//        </div>
-//      </div>
-//      );
-//  }
-//});
+
 /*
  *   Model Detail Preview
  * */
@@ -527,7 +496,7 @@ ModelDetailView = React.createClass({
     var clickHandler = this.props.scope.$apply.bind(this.props.scope, this.props.scope.toggleModelDetailView.bind(null, 0));
 
     return (
-      <div className="container-fluid">
+      <div>
         <input onClick={clickHandler} type="button" className="model-instance-header-btn btn btn-default btn-block" value="Details" />
         <div className={classes}>
           <div className="col-xs-6">
@@ -540,14 +509,7 @@ ModelDetailView = React.createClass({
                   {model.plural}
                 </div>
               </div>
-              <div data-ui-type="row">
-                <div data-ui-type="cell">
-                  <label>datasource</label>
-                </div>
-                <div data-ui-type="cell">
-                 {model.dataSource}
-                </div>
-              </div>
+
               <div data-ui-type="row">
                 <div data-ui-type="cell">
                   <label>base model</label>
@@ -572,6 +534,14 @@ ModelDetailView = React.createClass({
           </div>
           <div className="col-xs-6">
             <div data-ui-type="table" >
+              <div data-ui-type="row">
+                <div data-ui-type="cell">
+                  <label>datasource</label>
+                </div>
+                <div data-ui-type="cell">
+                 {model.dataSource}
+                </div>
+              </div>
               <div data-ui-type="row">
                 <div data-ui-type="cell">
                   <label>Indexes</label>
@@ -618,8 +588,8 @@ ModelDetailEditor = React.createClass({
     var cx = React.addons.classSet;
 
     var classes = cx({
-      'row is-open': this.props.scope.isModelInstanceBasePropertiesActive,
-      'row is-closed': !this.props.scope.isModelInstanceBasePropertiesActive
+      'model-detail-pocket-container is-open': this.props.scope.isModelInstanceBasePropertiesActive,
+      'model-detail-pocket-container is-closed': !this.props.scope.isModelInstanceBasePropertiesActive
     });
 
     var clickHandler = function(event) {
@@ -630,80 +600,79 @@ ModelDetailEditor = React.createClass({
 //    this.props.scope, this.props.scope.toggleModelDetailView.bind(null, 0));
 
     return (
-      <div className="container-fluid">
+      <div>
         <input onClick={clickHandler} type="button" className="model-instance-header-btn btn btn-default btn-block" value="Details" />
-        <div className={classes}>
-          <div className="col-xs-6">
-            <div data-ui-type="table" >
-              <div data-ui-type="row">
-                <div data-ui-type="cell">
-                  <label>plural</label>
+        <div data-ui-type="table" className={classes}>
+          <div data-ui-type="row">
+            <div data-ui-type="cell">
+              <div data-ui-type="table" >
+                <div data-ui-type="row">
+                  <div data-ui-type="cell">
+                    <label>plural</label>
+                  </div>
+                  <div data-ui-type="cell">
+                    <input type="text" value={model.plural} className="model-instance-editor-input" ng-model={model.plural} />
+                  </div>
                 </div>
-                <div data-ui-type="cell">
-                  <input type="text" value={model.plural} className="model-instance-editor-input" ng-model={model.plural} />
+                <div data-ui-type="row">
+                  <div data-ui-type="cell">
+                    <label>base model</label>
+                  </div>
+                  <div data-ui-type="cell">
+                    <input type="text" className="model-instance-editor-input"  />
+                  </div>
+                </div>
+                <div data-ui-type="row">
+                  <div data-ui-type="cell"><label>public</label></div>
+                  <div data-ui-type="cell">
+                    <input type="checkbox" className="model-instance-editor-input" value={model.public} />
+                  </div>
+                </div>
+                <div data-ui-type="row">
+                  <div data-ui-type="cell"><label>strict</label></div>
+                  <div data-ui-type="cell">
+                    <input type="checkbox" className="model-instance-editor-input" />
+                  </div>
                 </div>
               </div>
-              <div data-ui-type="row">
-                <div data-ui-type="cell">
-                  <label>datasource</label>
+            </div>
+            <div data-ui-type="cell">
+              <div data-ui-type="table" >
+                <div data-ui-type="row">
+                  <div data-ui-type="cell">
+                    <label>datasource</label>
+                  </div>
+                  <div data-ui-type="cell">
+                    <input type="text" className="model-instance-editor-input" value={model.dataSource} />
+                  </div>
                 </div>
-                <div data-ui-type="cell">
-                  <input type="text" className="model-instance-editor-input" value={model.dataSource} />
+                <div data-ui-type="row">
+                  <div data-ui-type="cell">
+                    <label>Indexes</label>
+                  </div>
+                  <div data-ui-type="cell">
+                    <input type="button" value="edit" className="btn btn-default" />
+                  </div>
                 </div>
-              </div>
-              <div data-ui-type="row">
-                <div data-ui-type="cell">
-                  <label>base model</label>
+                <div data-ui-type="row">
+                  <div data-ui-type="cell">
+                    <label>Scopes</label>
+                  </div>
+                  <div data-ui-type="cell">
+                    <input type="button" value="edit" className="btn btn-default" />
+                  </div>
                 </div>
-                <div data-ui-type="cell">
-                  <input type="text" className="model-instance-editor-input"  />
-                </div>
-              </div>
-              <div data-ui-type="row">
-                <div data-ui-type="cell"><label>public</label></div>
-                <div data-ui-type="cell">
-                  <input type="checkbox" className="model-instance-editor-input" value={model.public} />
-                </div>
-              </div>
-              <div data-ui-type="row">
-                <div data-ui-type="cell"><label>strict</label></div>
-                <div data-ui-type="cell">
-                  <input type="checkbox" className="model-instance-editor-input" />
+                <div data-ui-type="row">
+                  <div data-ui-type="cell">
+                    <label>Access Control</label>
+                  </div>
+                  <div data-ui-type="cell">
+                    <input type="button" value="edit" className="btn btn-default" />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="col-xs-6">
-            <div data-ui-type="table" >
-              <div data-ui-type="row">
-                <div data-ui-type="cell">
-                  <label>Indexes</label>
-                </div>
-                <div data-ui-type="cell">
-                  <input type="button" value="edit" className="btn btn-default" />
-                </div>
-              </div>
-              <div data-ui-type="row">
-                <div data-ui-type="cell">
-                  <label>Scopes</label>
-                </div>
-                <div data-ui-type="cell">
-                  <input type="button" value="edit" className="btn btn-default" />
-                </div>
-              </div>
-              <div data-ui-type="row">
-                <div data-ui-type="cell">
-                  <label>Access Control</label>
-                </div>
-                <div data-ui-type="cell">
-                  <input type="button" value="edit" className="btn btn-default" />
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-
         </div>
       </div>
       );

@@ -18,22 +18,35 @@ app.controller('IDEController', [
     $scope.mainNavDatasources = []; // initialized further down
     $scope.mainNavModels = [];  // initialized further down
     $scope.currentOpenModelNames = IAService.getOpenModelNames();
-    $scope.activeDatasources = [];  // TODO
+    $scope.currentOpenDatasourceNames = IAService.getOpenDatasourceNames();
     $scope.currentSelectedCollection = IAService.clearSelectedModelNames();
     $scope.activeModelInstance = IAService.getActiveModelInstance();
+    $scope.activeDatasourceInstance = IAService.getActiveModelInstance();
     $scope.previewInstance = IAService.clearPreviewModelInstance();
     $scope.isModelsActive = true;
     $scope.isDataSourcesActive = true;
     $scope.currentModelSelections = IAService.clearSelectedModelNames();
+    $scope.currentDatasourceSelections = IAService.clearSelectedDatasourceNames();
 
-    $scope.selectModel = function(modelName) {
-      $scope.currentModelSelections = IAService.addToCurrentModelSelections(modelName);
+    $scope.selectModel = function(name) {
+      $scope.currentModelSelections = IAService.addToCurrentModelSelections(name);
+    };
+    $scope.selectDatasource = function(name) {
+      $scope.currentModelSelections = IAService.addToCurrentModelSelections(name);
     };
     $scope.clearSelectedModels = function() {
       $scope.currentModelSelections = IAService.clearSelectedModelNames();
     };
+    $scope.clearSelectedDatasources = function() {
+      $scope.currentDatasourceSelections = IAService.clearSelectedDatasourceNames();
+    };
 
     $scope.clearModelPreview = function() {
+      $scope.previewInstance = {};
+      IAService.clearPreviewModelInstance();
+      $scope.currentSelectedCollection = [];
+    };
+    $scope.clearDatasourcePreview = function() {
       $scope.previewInstance = {};
       IAService.clearPreviewModelInstance();
       $scope.currentSelectedCollection = [];
@@ -51,14 +64,36 @@ app.controller('IDEController', [
     $scope.navTreeItemDblClicked = function(type, target) {
       console.log('dbl clicked!!: ' + target);
 
-      $scope.activeModelInstance = IAService.activateModelByName(target);
-      $scope.clearModelPreview();
-      $scope.currentOpenModelNames = IAService.getOpenModelNames();
-      jQuery('[data-id="ModelEditorMainContainer"]').css('z-index', 112);
-      jQuery('[data-id="CanvasApiContainer"]').css('z-index', 113);
-      jQuery('[data-id="PreviewInstanceContainer"]').css('z-index', 111);
-      jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
-      $scope.clearSelectedModels();
+      switch(type) {
+
+        case 'model':
+          $scope.activeModelInstance = IAService.activateModelByName(target);
+          $scope.clearModelPreview();
+          $scope.currentOpenModelNames = IAService.getOpenModelNames();
+          jQuery('[data-id="ModelEditorMainContainer"]').css('z-index', 112);
+          jQuery('[data-id="DatsourceEditorMainContainer"]').css('z-index', 111);
+          jQuery('[data-id="CanvasApiContainer"]').css('z-index', 113);
+          jQuery('[data-id="PreviewInstanceContainer"]').css('z-index', 111);
+          jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
+          $scope.clearSelectedModels();
+          break;
+
+        case 'datasource':
+          $scope.activeDatasourceInstance = IAService.activateDatasourceByName(target);
+          $scope.clearDatasourcePreview();
+          $scope.currentOpenDatasourceNames = IAService.getOpenDatasourceNames();
+          jQuery('[data-id="ModelEditorMainContainer"]').css('z-index', 111);
+          jQuery('[data-id="DatasourceEditorMainContainer"]').css('z-index', 112);
+          jQuery('[data-id="CanvasApiContainer"]').css('z-index', 113);
+          jQuery('[data-id="PreviewInstanceContainer"]').css('z-index', 111);
+          jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
+          $scope.clearSelectedDatasources();
+          break;
+        default:
+
+      }
+
+
     };
 
     /*
@@ -76,6 +111,7 @@ app.controller('IDEController', [
       *
       * */
       jQuery('[data-id="ModelEditorMainContainer"]').css('z-index', 110);
+      jQuery('[data-id="DatasourceEditorMainContainer"]').css('z-index', 110);
       jQuery('[data-id="CanvasApiContainer"]').css('z-index', 113);
       jQuery('[data-id="CanvasApiContainer"]').transition({ x: 0 });
       jQuery('[data-id="PreviewInstanceContainer"]').css('z-index', 111);
@@ -83,21 +119,31 @@ app.controller('IDEController', [
 
     };
 
-    $scope.modelEditTabItemClicked = function(modelName) {
+    $scope.modelEditTabItemClicked = function(name) {
       var currentOpenModelNames = IAService.getOpenModelNames();
       // defensive check to make sure the component is initialized
       if (currentOpenModelNames && currentOpenModelNames.length > 0){
         // only if the model isn't currently active
 
-        $scope.activeModelInstance = IAService.activateModelByName(modelName);
+        $scope.activeModelInstance = IAService.activateModelByName(name);
       }
       $scope.clearSelectedModels();
     };
-    $scope.modelEditTabItemCloseClicked = function(modelName) {
+    $scope.datasourceEditTabItemClicked = function(name) {
+      var currentOpenDatasourceNames = IAService.getOpenDatasourceNames();
+      // defensive check to make sure the component is initialized
+      if (currentOpenDatasourceNames && currentOpenDatasourceNames.length > 0){
+        // only if the model isn't currently active
 
-      $scope.currentOpenModelNames = IAService.closeModelByName(modelName);
+        $scope.activeDatasourceInstance = IAService.activateDatasourceByName(name);
+      }
+      $scope.clearSelectedDatasources();
+    };
+    $scope.modelEditTabItemCloseClicked = function(name) {
+
+      $scope.currentOpenModelNames = IAService.closeModelByName(name);
       // reset the active instance and reset tabs and nav
-      if ($scope.activeModelInstance.name === modelName) {
+      if ($scope.activeModelInstance.name === name) {
         if ($scope.currentOpenModelNames.length === 0) {
           $scope.aciveModelInstance = {};
         }
@@ -109,6 +155,23 @@ app.controller('IDEController', [
         }
       }
       $scope.clearSelectedModels();
+    };
+    $scope.datasourceEditTabItemCloseClicked = function(name) {
+
+      $scope.currentOpenDatasourceNames = IAService.closeDatasourceByName(name);
+      // reset the active instance and reset tabs and nav
+      if ($scope.activeDatasourceInstance.name === name) {
+        if ($scope.currentOpenDatasourceNames.length === 0) {
+          $scope.aciveDatasoruceInstance = {};
+        }
+        else {
+
+          // active the first instance by default
+          $scope.aciveDatasoruceInstance = IAService.activateDatasourceByName($scope.currentOpenDatasourceNames[0]);
+
+        }
+      }
+      $scope.clearSelectedDatasources();
     };
 
     /*
@@ -132,10 +195,27 @@ app.controller('IDEController', [
         }
         $scope.currentOpenModelNames = IAService.getOpenModelNames();
         jQuery('[data-id="ModelEditorMainContainer"]').css('z-index', 112);
+        jQuery('[data-id="DatasourceEditorMainContainer"]').css('z-index', 112);
         jQuery('[data-id="CanvasApiContainer"]').css('z-index', 113);
         jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
         jQuery('[data-id="PreviewInstanceContainer"]').css('z-index', 111);
         $scope.clearSelectedModels();
+      }
+    };
+    $scope.openSelectedDatasources = function() {
+      var selectedDatasources = IAService.getCurrentDatasourceSelections();
+      if (selectedDatasources) {
+        $scope.clearDatasourcePreview();
+        for (var i = 0; i < selectedDatasourcess.length;i++) {
+          $scope.activeDatasourceInstance = IAService.activateDatasourceByName(selectedDatasources[i]);
+        }
+        $scope.currentOpenDatasourcelNames = IAService.getOpenDatasourceNames();
+        jQuery('[data-id="ModelEditorMainContainer"]').css('z-index', 112);
+        jQuery('[data-id="DatasourceEditorMainContainer"]').css('z-index', 112);
+        jQuery('[data-id="CanvasApiContainer"]').css('z-index', 113);
+        jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
+        jQuery('[data-id="PreviewInstanceContainer"]').css('z-index', 111);
+        $scope.clearSelectedDatasources();
       }
     };
 
@@ -160,13 +240,13 @@ app.controller('IDEController', [
       switch (type){
 
         case 'model':
-          var isOpen = false;
           var openModelNames = $scope.currentOpenModelNames;
           var targetModel = ModelService.getModelByName(targetName);
           if (openModelNames && (openModelNames.indexOf(targetName) === -1)) {
             // mode is not open so preview it
             $scope.previewInstance = targetModel;
             jQuery('[data-id="ModelEditorMainContainer"]').css('z-index', 111);
+            jQuery('[data-id="ModelDatasourceMainContainer"]').css('z-index', 111);
             jQuery('[data-id="CanvasApiContainer"]').css('z-index', 113);
             jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
             jQuery('[data-id="PreviewInstanceContainer"]').css('z-index', 112);
@@ -176,6 +256,7 @@ app.controller('IDEController', [
             // make sure it isn't currently active
             if ($scope.activeModelInstance.name !== targetName) {
               jQuery('[data-id="ModelEditorMainContainer"]').css('z-index', 112);
+              jQuery('[data-id="ModelDatasourceMainContainer"]').css('z-index', 111);
               jQuery('[data-id="CanvasApiContainer"]').css('z-index', 113);
               jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
               jQuery('[data-id="PreviewInstanceContainer"]').css('z-index', 111);
@@ -198,7 +279,7 @@ app.controller('IDEController', [
           $scope.previewInstance = ModelService.getModelByName(targetName);
           break;
         case 'datasource':
-          $scope.previewInstance = DatasourceService.getDatasourceByName(target);
+          //$scope.previewInstance = DatasourceService.getDatasourceByName(target);
           break;
 
         default:

@@ -9,6 +9,7 @@ var app = angular.module('app', [
   'Profile',
   'Canvas',
   'IA',
+  'UI',
   'Common',
   'Property',
   'Auth',

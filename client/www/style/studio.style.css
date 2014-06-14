@@ -27,6 +27,9 @@ ul{
     list-style:none;
     padding:0;
 }
+label {
+    font-weight: normal;
+}
 
 pre {
     background-color: #F8F8F8;
@@ -76,6 +79,8 @@ code {
 }
 [data-id="MainSidebarContainer"] {
     width:22rem;
+    padding-right:1.5rem;
+    padding-left:.5rem;
 }
 [data-id="MainContentContainer"] {
 
@@ -95,7 +100,26 @@ code {
 
 
 
+/*
 
+Main Search
+
+*/
+#MainNavSearchContainer {
+
+}
+.nav-search-list {
+    padding:0;
+    margin:0;
+}
+.nav-search-list li {
+    display:inline;
+}
+.main-search-input {
+    border:1px solid #dddddd;
+    border-radius:.4rem;
+    width:17rem;
+}
 
 
 
@@ -111,21 +135,29 @@ code {
     padding:0;
 }
 .nav-tree-root {
-    background: #444444;
-    color: #ffffff;
+    background: #ffffff;
+    color: #444444;
     padding-left:1rem;
+    margin-top:.2rem;
+    margin-bottom:.3rem;
+    border-top:1px solid #dddddd;
+    border-bottom:1px solid #dddddd;
     font-size:120%;
 }
 .tree-branch {
-    background: #888888;
+    background: #f9f9f9;
     padding:.4rem .2rem .2rem 2rem;
-    color:#ffffff;
-    font-size:110%;
+    color:#444444;
+    font-size:112%;
+    font-weight:900;
+    border:1px solid #c5f9b8;
+    border-radius:.4rem;
 }
 .tree-node {
     padding-left:3rem;
     border-top:1px solid #fefefe;
     border-bottom:1px solid #dedede;
+    font-size:100%;
 }
 
 .branch-leaf-list.is-open {
@@ -166,13 +198,18 @@ code {
     position:absolute;
     width:100%;
     min-height:3000px;
-    border-left:1px solid red;
+    border-left:1px solid #dddddd;
 }
 [data-id="IAMainContentContainer"] {
     position:relative;
 }
 [data-id="ModelEditorMainContainer"] {
     z-index: 130;
+    background-color:#ffffff;
+
+}
+[data-id="DatasourceEditorMainContainer"] {
+    z-index: 129;
     background-color:#ffffff;
 
 }
@@ -231,47 +268,50 @@ code {
     width:100%;
 
 }
-.model-editor-title-container {
+.editor-title-container {
     width:100%;
     background-color:#f1f1f1;
     border-top:1px solid #dddddd;
     border-bottom:1px solid #dddddd;
-    font-size:80%;
+    font-size:90%;
+    letter-spacing: .1rem;
+    font-style:oblique;
     margin:0 auto .5rem auto;
     text-align: center;
+    padding:.3rem 0 .3rem 0;
 }
-.model-editor-tabs-view-container {
+.editor-tabs-view-container {
     border-bottom:0px solid #dddddd;
 }
-.model-editor-tabs-list {
+.editor-tabs-list {
     padding: 0 0 0.3em 0;
     margin:0;
     line-height: .9;
 
 }
-.model-editor-tabs-list li {
+.editor-tabs-list li {
     display:inline;
     padding:.3rem;
-    padding-bottom:.5rem;
+    padding-bottom:.7rem;
     border-left:1px solid #f1f1f1;
     border-right:1px solid #666666;
     border-top:1px solid #cccccc;
     border-bottom:0px solid #cccccc;
 }
-.model-editor-tabs-list .model-edit-tab-item-container {
-    background-color:#dddddd;
+.editor-tabs-list .edit-tab-item-container {
+    background-color:#d7eed7;
 }
-.model-editor-tabs-list .model-edit-tab-item-container.is-active {
+.editor-tabs-list .edit-tab-item-container.is-active {
     background-color:#ffffff;
     border-bottom: 2px solid #fff;
 }
-.model-edit-tab-item-button {
-    font-size:80%;
+.edit-tab-item-button {
+    font-size:100%;
     font-family:monospace, sans-serif;
     border:0;
     background:transparent;
 }
-.model-edit-tab-close-button {
+.edit-tab-close-button {
     font-size:75%;
     border:0;
     background:transparent;
@@ -281,22 +321,9 @@ code {
 
 /*
 
-api
+    Registration
 
 */
-.api-list-grid {
-    border: 1px solid rgb(212,212,212);
-    width: 400px;
-    height: 300px
-}
-.datasource-list-grid {
-    border: 1px solid rgb(212,212,212);
-    min-height: 1000px
-}
-.api-grid-ctrl-col{
-    text-align: center;
-    margin:0 auto 0 auto;
-}
 #RegisterMainContainer {
 
 }
@@ -356,26 +383,7 @@ api
 
 
 
-/*
 
-Main Tree Nav
-
-*/
-#MainNavSearchContainer {
-
-}
-.nav-search-list {
-    padding:0;
-    margin:0;
-}
-.nav-search-list li {
-    display:inline;
-}
-.main-search-input {
-    border:1px solid #dddddd;
-    border-radius:.4rem;
-    width:10rem;
-}
 /*
 
 
@@ -407,8 +415,12 @@ Main Tree Nav
 }
 
 
+
+[data-id="ModelEditorInstanceContainer"] {
+    max-width:90rem;
+}
 .model-editor-body-container {
-    max-width:80rem;
+
     padding:1.3rem;
     border-top:1px solid #cccccc;
 
@@ -425,6 +437,9 @@ Main Tree Nav
 .model-instance-header-btn {
     text-align: left;
     padding-left:4rem;
+    border:1px solid #f1f1f1;
+    border-radius:.2rem;
+    margin:.5rem .4rem .5rem 0;
 }
 .model-instance-editor-input {
     border:1px solid #dddddd;
@@ -471,7 +486,7 @@ Main Tree Nav
 }
 .model-instance-property-table-header-row [data-ui-type="cell"] {
 
-
+border-left:1px solid #eeeeee;
 
 }
 
@@ -494,31 +509,33 @@ Main Tree Nav
 
 }
 .props-name-cell {
-    width:300px;
+    width:26rem;
     padding-left:2rem;
 }
 .props-name-cell .btn{
     text-align: left;
     padding-left:2rem;
 }
-.props-isindex-cell{
-    width:3rem;
+.props-index-cell{
+    width:5rem;
     text-align:center;
 }
 .props-default-value-cell{
     width:18rem;
 }
 .props-required-cell{
-    width:3rem;
-    text-align:center;
-}
-.props-map-cell{
     width:5rem;
     text-align:center;
 }
-.props-connection-cell{
-    width:5rem;
-    text-align:center;
+
+.property-doc-textarea {
+    height:2.6rem;
+    padding-left:.3rem;
+    width:22rem;
+}
+.model-detail-pocket-container {
+    width:90%;
+    margin:0 auto 0 auto;
 }
 .model-details-pocket-editor-container {
     margin:.6rem auto 1rem auto;
