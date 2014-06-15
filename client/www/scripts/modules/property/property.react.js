@@ -2,7 +2,7 @@
 /*
 *   Property Format Editor
 * */
-PropertyFormatEditor = React.createClass({
+var PropertyFormatEditor = (PropertyFormatEditor = React).createClass({
   render: function() {
     return (
       <div >
@@ -68,7 +68,7 @@ PropertyFormatEditor = React.createClass({
  /*
 *   Property Map Editor
 * */
-PropertyMapEditor = React.createClass({
+var PropertyMapEditor = (PropertyMapEditor = React).createClass({
   render: function() {
     return (
       <div >
@@ -101,7 +101,7 @@ PropertyMapEditor = React.createClass({
 /*
  *   Property Validation Editor
  * */
-PropertyValidationEditor = React.createClass({
+var PropertyValidationEditor = (PropertyValidationEditor = React).createClass({
   render: function() {
     return (
       <div >
@@ -195,7 +195,7 @@ PropertyValidationEditor = React.createClass({
 /*
  *   Property Id Editor
  * */
-PropertyIdEditor = React.createClass({
+var PropertyIdEditor = (PropertyIdEditor = React).createClass({
   render: function() {
     var scope = this.props.scope;
     var property = this.props.property;

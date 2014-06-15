@@ -2,14 +2,14 @@
 /*
  *   Model Title Header
  * */
-ModelTitleHeader = React.createClass({
+var ModelTitleHeader = (ModelTitleHeader = React).createClass({
   render: function() {
     return (
       <span>{this.props.scope.activeModelInstance.name}</span>
       );
   }
 });
-var ModelEditorTabsView = React.createClass({
+var ModelEditorTabsView = (ModelEditorTabsView = React).createClass({
   render: function() {
     var scope = this.props.scope;
     var cx = React.addons.classSet;
@@ -71,7 +71,7 @@ var ModelEditorTabsView = React.createClass({
  *
  *
  * */
-var ModelPropertiesEditor = React.createClass({
+var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
 
   getInitialState: function() {
     return {isOpen:true};
@@ -143,7 +143,7 @@ var ModelPropertiesEditor = React.createClass({
       );
   }
 });
-var ModelPropertyRowDetail = React.createClass({
+var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
   getInitialState: function() {
     return {
       rowData:this.props.rowData,
@@ -217,7 +217,7 @@ var ModelPropertyRowDetail = React.createClass({
  *   MODEL PROPERTIES VIEW
  *
  * */
-var ModelPropertiesView = React.createClass({
+var ModelPropertiesView = (ModelPropertiesView = React).createClass({
   render: function() {
     var scope = this.props.scope;
     var properties = this.props.properties;
@@ -292,7 +292,7 @@ var ModelPropertiesView = React.createClass({
 /*
  *   Property Comment Editor
  * */
-PropertyCommentEditor = React.createClass({
+var PropertyCommentEditor = (PropertyCommentEditor = React).createClass({
   render: function() {
     var scope = this.props.scope;
 
@@ -312,7 +312,7 @@ PropertyCommentEditor = React.createClass({
 /*
  * property name editor
  * */
-PropertyNameEditor = React.createClass({
+var PropertyNameEditor = (PropertyNameEditor = React).createClass({
 //  getInitialState: function() {
 //   // return {value: this.props.scope.property.name};
 //  },
@@ -350,7 +350,7 @@ PropertyNameEditor = React.createClass({
       );
   }
 });
-var ModelPocketEditorMiscView = React.createClass({
+var ModelPocketEditorMiscView = (ModelPocketEditorMiscView = React).createClass({
   render: function() {
     return (
       <div data-ui-type="table" className="pocket-editor-table">
@@ -379,7 +379,7 @@ var ModelPocketEditorMiscView = React.createClass({
 /*
  *   Model Pocket Editor Container
  * */
-var ModelPocketEditorContainer = React.createClass({
+var ModelPocketEditorContainer = (ModelPocketEditorContainer = React).createClass({
   getInitialState: function() {
     return {
       targetView: 'id',
@@ -462,7 +462,7 @@ var ModelPocketEditorContainer = React.createClass({
 /*
  *   Property Connection Editor
  * */
-PropertyConnectionEditor = React.createClass({
+var PropertyConnectionEditor = (PropertyConnectionEditor = React).createClass({
   render: function() {
     var scope = this.props.scope;
     return (
@@ -483,7 +483,7 @@ PropertyConnectionEditor = React.createClass({
  *   Model Detail Preview
  * */
 
-ModelDetailView = React.createClass({
+var ModelDetailView = (ModelDetailView = React).createClass({
   render: function() {
     var model = this.props.model;
     var cx = React.addons.classSet;
@@ -580,7 +580,7 @@ ModelDetailView = React.createClass({
 /*
  *   Model Detail Editor
  * */
-ModelDetailEditor = React.createClass({
+var ModelDetailEditor = (ModelDetailEditor = React).createClass({
 
   render: function() {
     var scope = this.props.scope;

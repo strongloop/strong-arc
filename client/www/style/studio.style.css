@@ -204,20 +204,20 @@ Main Search
     position:relative;
 }
 [data-id="ModelEditorMainContainer"] {
-    z-index: 130;
+    z-index: 111;
     background-color:#ffffff;
 
 }
 [data-id="DatasourceEditorMainContainer"] {
-    z-index: 129;
+    z-index: 110;
     background-color:#ffffff;
 
 }
 [data-id="CanvasApiContainer"] {
-    z-index: 80;
+    z-index: 115;
 }
 [data-id="PreviewInstanceContainer"] {
-    z-index: 111;
+    z-index: 112;
     position:absolute;
     top:0;
     left:0;
@@ -239,7 +239,7 @@ Main Search
 }
 /*
 
-    Datasource
+    Discovery
 
 */
 .model-schema-editor-source-table-table {
@@ -258,6 +258,19 @@ Main Search
     border:1px solid #eeeeee;
 
 }
+/*
+
+    Datasource
+
+*/
+[data-id="DatasourceEditorInstanceContainer"] {
+    border-top:1px solid #eeeeee;
+    padding:3rem 0 0 4rem;
+}
+form[name="DatasourceForm"] {
+    max-width:60rem;
+}
+
 
 /*
 

@@ -46,6 +46,7 @@ Datasource.directive('slDatasourceEditorTabsView', [
   'IAService',
   function(IAService) {
     return {
+      replace:true,
       link: function(scope, el, attrs) {
 
         function renderComp(){
@@ -84,6 +85,7 @@ Datasource.directive('slDatasourceEditorTabsView', [
 Datasource.directive('slDatasourceInstanceEditor', [
   function() {
     return {
+      replace:true,
       templateUrl: './scripts/modules/datasource/templates/datasource.instance.editor.html',
       link: function(scope, el, attrs) {
 
@@ -95,7 +97,7 @@ Datasource.directive('datasourceEditorForm', [
   'DatasourceService',
   function(DatasourceService) {
     return {
-    //  templateUrl: './scripts/modules/datasource/templates/datasource.form.html',
+      replace:true,
       link: function(scope, el, attrs) {
         console.log('data source form');
 

@@ -1,5 +1,5 @@
 /** @jsx React.DOM */
-Canvas.MainCanvasContainer = React.createClass({
+Canvas.MainCanvasContainer = (Canvas.MainCanvasContainer = React).createClass({
   render: function() {
     var scope = this.props.scope;
 

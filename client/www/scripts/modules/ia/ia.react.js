@@ -1,5 +1,5 @@
 /** @jsx React.DOM */
-IAMainNavContainer = React.createClass({
+var IAMainNavContainer = (IAMainNavContainer = React).createClass({
   openSelectedModels:function(key, opt) {
     var that = this;
     that.props.scope.$apply(function () {
@@ -43,7 +43,7 @@ IAMainNavContainer = React.createClass({
       );
   }
 });
-IAMainModelNav = React.createClass({
+var IAMainModelNav = (IAMainModelNav = React).createClass({
 
   render: function() {
     var scope = this.props.scope;
@@ -122,7 +122,7 @@ IAMainModelNav = React.createClass({
       );
   }
 });
-IAMainDatasourceNav = React.createClass({
+var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
 
   render: function() {
     var scope = this.props.scope;
@@ -160,7 +160,7 @@ IAMainDatasourceNav = React.createClass({
     });
     return (
       <div>
-        <input onClick={singleClickItem} type="button" data-name="datasources_root" className="btn btn-default btn-block nav-tree-item tree-branch" value="Datasources" />
+        <input onClick={clickBranch} type="button" data-name="datasources_root" className="btn btn-default btn-block nav-tree-item tree-branch" value="Datasources" />
         <ul className={classes}>{items}</ul>
       </div>
       );

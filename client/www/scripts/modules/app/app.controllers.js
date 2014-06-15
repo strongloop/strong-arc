@@ -14,17 +14,17 @@ app.controller('IDEController', [
       CanvasApiContainer: 130
     };
 
-    // Datasources
     $scope.mainNavDatasources = []; // initialized further down
     $scope.mainNavModels = [];  // initialized further down
     $scope.currentOpenModelNames = IAService.getOpenModelNames();
     $scope.currentOpenDatasourceNames = IAService.getOpenDatasourceNames();
     $scope.currentSelectedCollection = IAService.clearSelectedModelNames();
     $scope.activeModelInstance = IAService.getActiveModelInstance();
-    $scope.activeDatasourceInstance = IAService.getActiveModelInstance();
-    $scope.previewInstance = IAService.clearPreviewModelInstance();
     $scope.isModelsActive = true;
     $scope.isDataSourcesActive = true;
+    $scope.activeDatasourceInstance = IAService.getActiveModelInstance();
+    $scope.previewInstance = IAService.clearPreviewModelInstance();
+    $scope.editorUIPriority = IAService.getEditorUIPriority();
     $scope.currentModelSelections = IAService.clearSelectedModelNames();
     $scope.currentDatasourceSelections = IAService.clearSelectedDatasourceNames();
 
@@ -67,7 +67,9 @@ app.controller('IDEController', [
       switch(type) {
 
         case 'model':
+
           $scope.activeModelInstance = IAService.activateModelByName(target);
+          $scope.editorUIPriority = IAService.setEditorUIPriority('model');
           $scope.clearModelPreview();
           $scope.currentOpenModelNames = IAService.getOpenModelNames();
           jQuery('[data-id="ModelEditorMainContainer"]').css('z-index', 112);
@@ -80,6 +82,7 @@ app.controller('IDEController', [
 
         case 'datasource':
           $scope.activeDatasourceInstance = IAService.activateDatasourceByName(target);
+          $scope.editorUIPriority = IAService.setEditorUIPriority('datasource');
           $scope.clearDatasourcePreview();
           $scope.currentOpenDatasourceNames = IAService.getOpenDatasourceNames();
           jQuery('[data-id="ModelEditorMainContainer"]').css('z-index', 111);
@@ -108,13 +111,27 @@ app.controller('IDEController', [
        [data-id="ModelEditorMainContainer"]
        [data-id="CanvasApiContainer"]
        [data-id="PreviewInstanceContainer"]
-      *
-      * */
-      jQuery('[data-id="ModelEditorMainContainer"]').css('z-index', 110);
-      jQuery('[data-id="DatasourceEditorMainContainer"]').css('z-index', 110);
-      jQuery('[data-id="CanvasApiContainer"]').css('z-index', 113);
+       *
+       * */
+
       jQuery('[data-id="CanvasApiContainer"]').transition({ x: 0 });
-      jQuery('[data-id="PreviewInstanceContainer"]').css('z-index', 111);
+      switch(type) {
+        case 'model':
+          $scope.editorUIPriority = IAService.setEditorUIPriority('model');
+          jQuery('[data-id="ModelEditorMainContainer"]').css('z-index', 111);
+          jQuery('[data-id="DatasourceEditorMainContainer"]').css('z-index', 110);
+          break;
+
+        case 'datasource':
+          $scope.editorUIPriority = IAService.setEditorUIPriority('datasource');
+          jQuery('[data-id="ModelEditorMainContainer"]').css('z-index', 110);
+          jQuery('[data-id="DatasourceEditorMainContainer"]').css('z-index', 111);
+          break;
+
+        default:
+      }
+
+
       $scope.clearSelectedModels();
 
     };
@@ -270,12 +287,12 @@ app.controller('IDEController', [
 
 
           /*
-          * cases:
-          * - item is not open: open preview view of item
-          * - item is open and active: do nothing
-          * - item is open but not active: activate item
-          *
-          * */
+           * cases:
+           * - item is not open: open preview view of item
+           * - item is open and active: do nothing
+           * - item is open but not active: activate item
+           *
+           * */
           $scope.previewInstance = ModelService.getModelByName(targetName);
           break;
         case 'datasource':
@@ -371,6 +388,7 @@ app.controller('IDEController', [
         $scope.mainNavModels = mainNavModels;
       }
     );
+
 
   }
 ]);

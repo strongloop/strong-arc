@@ -6,6 +6,18 @@ IA.service('IAService', [
   function(AppStorageService, ModelService, DatasourceService) {
     var svc = {};
 
+    svc.getEditorUIPriority = function() {
+      var editorUIPriority = AppStorageService.getItem('editorUIPriority');
+      if (!editorUIPriority) {
+        editorUIPriority = 'model';
+      }
+      return editorUIPriority;
+    };
+    svc.setEditorUIPriority = function(branch) {
+      if (branch) {
+        AppStorageService.setItem('editorUIPriority', branch);
+      }
+    };
     svc.setPreviewModelInstance = function(instance) {
       return AppStorageService.setItem('previewInstance', instance);
     };
