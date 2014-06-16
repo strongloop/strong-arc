@@ -156,7 +156,20 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
     };
 
     var items = scope.mainNavDatasources.map(function(item) {
-      return (<li key={item.name}><button onDoubleClick={dblClickItem} onClick={singleClickItem} data-name={item.name} className="btn btn-default btn-block nav-tree-item tree-node">{item.name}</button></li>);
+      var classNameVar = 'reactor-ui-context';
+      if (item.isActive) {
+        classNameVar += ' is-active';
+      }
+      else if (item.isOpen) {
+        classNameVar += ' is-open';
+      }
+      else if (item.isSelected) {
+        classNameVar += ' is-selected'
+      }
+      return (
+        <li key={item.name} className={classNameVar}>
+          <button onDoubleClick={dblClickItem} onClick={singleClickItem} data-name={item.name} className="btn btn-default btn-block nav-tree-item tree-node">{item.name}</button>
+        </li>);
     });
     return (
       <div>

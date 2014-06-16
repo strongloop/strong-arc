@@ -13,6 +13,7 @@ IA.directive('slIaMainNav', [
 
 
         function processActiveNavState() {
+          // models
           var openModelNames = scope.currentOpenModelNames;
           var currActiveModelInstanceName = scope.activeModelInstance.name;
 
@@ -40,6 +41,33 @@ IA.directive('slIaMainNav', [
 
 
           }
+          // datasources
+          var openDatasourceNames = scope.currentOpenDatasourceNames;
+          var currActiveDatasourceInstanceName = scope.activeDatasourceInstance.name;
+          for (var h = 0;h < scope.mainNavDatasources.length;h++){
+            var localDSInstance = scope.mainNavDatasources[h];
+            localDSInstance.isActive = false;
+            localDSInstance.isOpen = false;
+            localDSInstance.isSelected = false;
+
+            for (var r = 0;r < openDatasourceNames.length;r++) {
+              if (openDatasourceNames[r] === localDSInstance.name) {
+                localDSInstance.isOpen = true;
+                break;
+              }
+            }
+            if (currActiveDatasourceInstanceName === localDSInstance.name) {
+              localDSInstance.isActive = true;
+            }
+            for (var w = 0;w < scope.currentDatasourceSelections.length;w++) {
+              if (scope.currentDatasourceSelections[w] === localDSInstance.name) {
+                localDSInstance.isSelected = true;
+                break;
+              }
+            }
+
+
+          }
         }
 
         var renderComp = function() {
@@ -57,13 +85,24 @@ IA.directive('slIaMainNav', [
           renderComp();
         });
         scope.$watch('currentOpenModelNames', function(newVal, oldVal) {
-            processActiveNavState();
-            renderComp();
+          processActiveNavState();
+          renderComp();
         });
         scope.$watch('activeModelInstance', function(newVal, oldVal) {
-
-            processActiveNavState();
-            renderComp();
+          processActiveNavState();
+          renderComp();
+        });
+        scope.$watch('currentDatasourceSelections', function(newVal, oldVal) {
+          processActiveNavState();
+          renderComp();
+        });
+        scope.$watch('currentOpenDatasourceNames', function(newVal, oldVal) {
+          processActiveNavState();
+          renderComp();
+        });
+        scope.$watch('activeDatasourceInstance', function(newVal, oldVal) {
+          processActiveNavState();
+          renderComp();
         });
         scope.$watch('mainNavModels', function(mainNavModels) {
           if (!mainNavModels.$promise) {

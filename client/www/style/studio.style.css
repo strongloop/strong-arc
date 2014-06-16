@@ -217,7 +217,7 @@ Main Search
     z-index: 115;
 }
 [data-id="PreviewInstanceContainer"] {
-    z-index: 112;
+    z-index: 113;
     position:absolute;
     top:0;
     left:0;
