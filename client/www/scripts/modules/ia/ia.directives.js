@@ -44,29 +44,32 @@ IA.directive('slIaMainNav', [
           // datasources
           var openDatasourceNames = scope.currentOpenDatasourceNames;
           var currActiveDatasourceInstanceName = scope.activeDatasourceInstance.name;
-          for (var h = 0;h < scope.mainNavDatasources.length;h++){
-            var localDSInstance = scope.mainNavDatasources[h];
-            localDSInstance.isActive = false;
-            localDSInstance.isOpen = false;
-            localDSInstance.isSelected = false;
+          if (scope.mainNavDatasources.length){
 
-            for (var r = 0;r < openDatasourceNames.length;r++) {
-              if (openDatasourceNames[r] === localDSInstance.name) {
-                localDSInstance.isOpen = true;
-                break;
+
+            for (var h = 0;h < scope.mainNavDatasources.length;h++){
+              var localDSInstance = scope.mainNavDatasources[h];
+              localDSInstance.isActive = false;
+              localDSInstance.isOpen = false;
+              localDSInstance.isSelected = false;
+
+              for (var r = 0;r < openDatasourceNames.length;r++) {
+                if (openDatasourceNames[r] === localDSInstance.name) {
+                  localDSInstance.isOpen = true;
+                  break;
+                }
               }
-            }
-            if (currActiveDatasourceInstanceName === localDSInstance.name) {
-              localDSInstance.isActive = true;
-            }
-            for (var w = 0;w < scope.currentDatasourceSelections.length;w++) {
-              if (scope.currentDatasourceSelections[w] === localDSInstance.name) {
-                localDSInstance.isSelected = true;
-                break;
+              if (currActiveDatasourceInstanceName === localDSInstance.name) {
+                localDSInstance.isActive = true;
               }
+              for (var w = 0;w < scope.currentDatasourceSelections.length;w++) {
+                if (scope.currentDatasourceSelections[w] === localDSInstance.name) {
+                  localDSInstance.isSelected = true;
+                  break;
+                }
+              }
+
             }
-
-
           }
         }
 
@@ -75,7 +78,10 @@ IA.directive('slIaMainNav', [
           console.log('||||   RENDER COMPONENT');
           $timeout(function() {
 
-            React.renderComponent(IAMainNavContainer({scope:scope}), el[0]);
+            if (!scope.mainNavDatasources.$promise) {
+              React.renderComponent(IAMainNavContainer({scope:scope}), el[0]);
+            }
+
           }, 140);
 
 
@@ -112,6 +118,7 @@ IA.directive('slIaMainNav', [
         });
         scope.$watch('mainNavDatasources', function(mainNavDatasources) {
           if (!mainNavDatasources.$promise) {
+            processActiveNavState();
             renderComp();
           }
         });

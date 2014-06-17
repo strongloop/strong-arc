@@ -26,6 +26,7 @@ var IAMainNavContainer = (IAMainNavContainer = React).createClass({
     });
   },
   render: function() {
+
     var scope = this.props.scope;
     var singleClickItem = function(event) {
       if (event.target.attributes['data-name']){
@@ -46,6 +47,7 @@ var IAMainNavContainer = (IAMainNavContainer = React).createClass({
 var IAMainModelNav = (IAMainModelNav = React).createClass({
 
   render: function() {
+
     var scope = this.props.scope;
 
     var modelSelectedCollection = [];
@@ -155,7 +157,8 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
       }
     };
 
-    var items = scope.mainNavDatasources.map(function(item) {
+    var datasourceItemRenderer = function(item) {
+
       var classNameVar = 'reactor-ui-context';
       if (item.isActive) {
         classNameVar += ' is-active';
@@ -170,12 +173,15 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
         <li key={item.name} className={classNameVar}>
           <button onDoubleClick={dblClickItem} onClick={singleClickItem} data-name={item.name} className="btn btn-default btn-block nav-tree-item tree-node">{item.name}</button>
         </li>);
-    });
+
+
+    };
     return (
       <div>
         <input onClick={clickBranch} type="button" data-name="datasources_root" className="btn btn-default btn-block nav-tree-item tree-branch" value="Datasources" />
-        <ul className={classes}>{items}</ul>
+        <ul className={classes}>{scope.mainNavDatasources.map(datasourceItemRenderer)}</ul>
       </div>
       );
   }
 });
+

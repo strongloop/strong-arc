@@ -6,6 +6,9 @@ IA.service('IAService', [
   function(AppStorageService, ModelService, DatasourceService) {
     var svc = {};
 
+    svc.getViewportWidth = function() {
+      return (window.innerWidth - 40);
+    };
     svc.getEditorUIPriority = function() {
       var editorUIPriority = AppStorageService.getItem('editorUIPriority');
       if (!editorUIPriority) {
@@ -15,6 +18,20 @@ IA.service('IAService', [
     };
     svc.setEditorUIPriority = function(branch) {
       if (branch) {
+        switch (branch) {
+          case 'model':
+            jQuery('[data-id="ModelEditorMainContainer"]').show(250);
+            jQuery('[data-id="DatsourceEditorMainContainer"]').hide(250);
+            break;
+
+          case 'datasource':
+            jQuery('[data-id="ModelEditorMainContainer"]').hide(250);
+            jQuery('[data-id="DatsourceEditorMainContainer"]').show(250);
+            break;
+
+          default:
+
+        }
         AppStorageService.setItem('editorUIPriority', branch);
       }
     };
@@ -188,6 +205,29 @@ IA.service('IAService', [
       var newActiveDatasource = DatasourceService.getDatasourceByName(name);
       svc.setActiveDatasourceInstance(newActiveDatasource);
       return newActiveDatasource;
+    };
+    svc.setCanvasViewXPos = function(x) {
+      try{
+        var xPos = parseInt(x);
+        if ((xPos > 0) && (xPos < (svc.getViewportWidth() + 1))){
+          AppStorageService.setItem('canvasViewXPos', x);
+        }
+      }
+      catch(e){
+        console.warn('unable to save canvas view x pos: ' + e);
+      }
+    };
+    svc.getCanvasViewXPos = function() {
+
+      var posX = AppStorageService.getItem('canvasViewXPos');
+      if (!posX) {
+        posX = svc.getViewportWidth();
+      }
+      posX = parseInt(posX);
+      svc.setCanvasViewXPos(posX);
+
+      return posX;
+
     };
     return svc;
   }

@@ -204,26 +204,32 @@ Main Search
     position:relative;
 }
 [data-id="ModelEditorMainContainer"] {
-    z-index: 111;
+    /*z-index: 111;*/
     background-color:#ffffff;
 
 }
 [data-id="DatasourceEditorMainContainer"] {
-    z-index: 110;
+    /*z-index: 110;*/
     background-color:#ffffff;
 
 }
 [data-id="CanvasApiContainer"] {
     z-index: 115;
+    position:absolute;
+    background:#eeeeee;
+    border:1px solid #444444;
+    height:2000px;
 }
+
 [data-id="PreviewInstanceContainer"] {
     z-index: 113;
     position:absolute;
     top:0;
     left:0;
     background-color: #ffffff;
-    height:700px;
+    height:1200px;
     width:100%;
+    display:none;
 }
 [data-id="PreviewBackgroundBlur"] {
     position:absolute;
@@ -616,13 +622,7 @@ border-left:1px solid #eeeeee;
     API Canvas View
 
 */
-.api-canvas-view-container {
-    background:#eeeeee;
-    border:1px solid red;
-    position:relative;
-    height:700px;
 
-}
 .canvas-model-container {
     position:absolute;
     border:1px solid #444444;

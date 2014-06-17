@@ -5,12 +5,44 @@
 *
 * */
 Canvas.directive('slCanvasApiView', [
-  function() {
+  'IAService',
+  function(IAService) {
     return {
       replace: true,
-      template: '<div></div>',
+      template: '<div ></div>',
       link: function(scope, el, attrs) {
 
+        var draggableCanvas = null;
+        el.on('mousedown', function(event) {
+          draggableCanvas = jQuery('[data-id="CanvasApiContainer"]');
+          console.log('draggableCanvas');
+        });
+        el.on('mousemove', function(event) {
+          if (event.which === 1) {
+            if (draggableCanvas) {
+              var currentX = draggableCanvas.offset().left;
+              var mouseDiff = (currentX - 100);
+
+              console.log('mouse is down mouseDiff: ' + mouseDiff);
+
+              // console.log(el);
+
+//              draggableCanvas.css({left: mouseDiff});
+              draggableCanvas.offset({left: mouseDiff})
+              //jQuery('[data-id="CanvasApiContainer"]').left = event.clientX;
+            }
+
+          }
+        });
+        $(document).on('mouseup', function(event) {
+          console.log('STOP MOUSE DRAG');
+         // IAService.setCanvasViewXPos(el.left);
+          draggableCanvas = null;
+        });
+//        el.on('mouseup', function(event) {
+//          console.log('STOP MOUSE DRAG');
+//          IAService.setCanvasViewXPos(el.left);
+//        });
 
         var iaInstance = jsPlumb.getInstance({
           PaintStyle:{
