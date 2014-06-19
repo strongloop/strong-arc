@@ -66,6 +66,25 @@ Datasource.service('DatasourceService', [
 
       );
     }
+    svc.getDiscoveryModalConfig = function(name) {
+      return {
+        templateUrl: './scripts/modules/app/templates/discovery.modal.html',
+        windowClass: 'app-modal-window',
+        controller: function ($scope, $modalInstance) {
+
+          $scope.targetDiscoveryDSName = name;
+
+          $scope.ok = function () {
+            $modalInstance.close();
+          };
+
+          $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+          };
+        },
+        size: 'lg'
+      }
+    };
     return svc;
   }
 ]);

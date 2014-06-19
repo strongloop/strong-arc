@@ -1,9 +1,10 @@
 // Copyright StrongLoop 2014
 IA.service('IAService', [
+  '$modal',
   'AppStorageService',
   'ModelService',
   'DatasourceService',
-  function(AppStorageService, ModelService, DatasourceService) {
+  function($modal, AppStorageService, ModelService, DatasourceService) {
     var svc = {};
 
     svc.getViewportWidth = function() {
@@ -228,6 +229,9 @@ IA.service('IAService', [
 
       return posX;
 
+    };
+    svc.openModal = function(config) {
+      return $modal.open(config);
     };
     return svc;
   }

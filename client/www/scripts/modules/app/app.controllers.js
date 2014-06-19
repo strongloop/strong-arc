@@ -391,43 +391,12 @@ app.controller('IDEController', [
     * Datasouce discovery flow kickoff
     *
     * */
-    $scope.items = ['item1', 'item2', 'item3'];
     $scope.createModelsFromDS = function(name) {
-      console.log('CREATE MODELS FROM DS: ' + name);
+
       // open a modal window and trigger the discovery flow
-      var modalInstance = $modal.open({
-        templateUrl: './scripts/modules/app/templates/discovery.modal.html',
-        windowClass: 'app-modal-window',
-        controller: function ($scope, $modalInstance, items) {
+      var modalConfig = DatasourceService.getDiscoveryModalConfig(name);
+      var modalInstance = IAService.openModal(modalConfig);
 
-          $scope.targetDiscoveryDSName = name;
-
-
-          $scope.ok = function () {
-            console.log('||  close discovery modal - generate the models and show editor view');
-            //$modalInstance.close($scope.selected.item);
-            $modalInstance.close();
-          };
-
-          $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-          };
-        },
-        size: 'lg',
-        resolve: {
-          items: function () {
-            return $scope.items;
-          }
-        }
-      });
-
-      modalInstance.result.then(function (selectedItem) {
-          $scope.selected = selectedItem;
-        },
-        function () {
-          console.log('Modal dismissed at: ' + new Date());
-        }
-      );
     };
 
 
