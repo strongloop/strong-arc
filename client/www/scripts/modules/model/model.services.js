@@ -45,6 +45,13 @@ Model.service('ModelService', [
 
       );
     };
+    svc.generateModelsFromSchema = function(schemaCollection) {
+      if (schemaCollection && schemaCollection.length > 0) {
+        for (var i = 0;i < schemaCollection.length;i++) {
+          console.log('create this Model: ' + JSON.stringify(schemaCollection[i]));
+        }
+      }
+    };
     svc.getModelByName = function(name) {
 
       if (window.localStorage.getItem('ApiModels')) {

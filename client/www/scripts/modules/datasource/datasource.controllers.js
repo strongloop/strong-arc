@@ -83,11 +83,8 @@ Datasource.controller('DatasourceMainController', [
       multiSelect: true,
       filterOptions: $scope.filterOptions
     };
-    $scope.generateModels = function() {
-      console.log('generate models' + $scope.dsTablesGridOptions.selectedItems);
-      $scope.apiSourceTables = $scope.dsTablesGridOptions.selectedItems;
 
-    };
+
     $scope.$on('ngGridEventData', function(){
       //$scope.dsTablesGridOptions.selectRow(0, true);
     });

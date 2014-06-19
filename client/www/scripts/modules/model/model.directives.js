@@ -421,7 +421,8 @@ Model.directive('modelAclEditor', [
  * */
 Model.directive('schemaModelComposer', [
   '$state',
-  function($state) {
+  '$modal',
+  function($state, $modal) {
     return {
       templateUrl: './scripts/modules/model/templates/model.schema.composer.html',
       transclude: true,
@@ -435,7 +436,9 @@ Model.directive('schemaModelComposer', [
         scope.property = 'checked';
         scope.generateModelFromDataSource = function() {
           if (confirm('generate model?')) {
-            $state.transitionTo('uiform', {name:'test'});
+           // $state.transitionTo('uiform', {name:'test'});
+            console.log('|| Create the LB models and open the model editor view');
+            console.log('close the modal window');
           }
         };
         scope.collection = [];

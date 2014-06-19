@@ -7,7 +7,8 @@ app.controller('IDEController', [
   '$location',
   '$timeout',
   'ModelService',
-  function($scope, $state, IAService, DatasourceService, $location, $timeout, ModelService) {
+  '$modal',
+  function($scope, $state, IAService, DatasourceService, $location, $timeout, ModelService, $modal) {
 
 //    $scope.mainContentZIndexes = {
 //      ModelEditorMainContainer: 101,
@@ -77,8 +78,6 @@ app.controller('IDEController', [
           $scope.clearModelPreview();
           $scope.currentOpenModelNames = IAService.getOpenModelNames();
           IAService.setEditorUIPriority('model');
-
-
           $scope.clearSelectedModels();
           break;
 
@@ -330,33 +329,15 @@ app.controller('IDEController', [
       }
 
     };
-//    $scope.openInstance = function(type, name) {
-//      if (type && name){
-//        switch(type) {
-//          case 'model':
-//            //var tModel = ModelService.getModelByName(name);
-//            IAService.setEditorUIPriority('model');
-//            $scope.currentOpenModelNames.push(name);
-//            $scope.activeModelInstance = ModelService.getModelByName(name);
-//
-//            break;
-//
-//          case 'datasource':
-//            var tDatasource = ModelService.getDatasourceByName(name);
-//            IAService.setEditorUIPriority('datasource');
-//            $scope.a.push(tDatasource);
-//            $scope.activeDatasourceInstance = DatasourceService.getDatasourceByName(name);
-//
-//            break;
-//
-//          default:
-//        }
-//       // IAService.setActiveModelInstance($scope.activeModelInstance);
-//        $scope.clearModelPreview();
-//        $scope.clearDatasourcePreview();
-//      }
-//
-//    };
+
+    $scope.createModelViewRequest = function() {
+      console.log('CREATE NEW MODEL');
+      $scope.activeModelInstance = {name:'new model'};
+      $scope.editorUIPriority = IAService.setEditorUIPriority('model');
+      $scope.currentOpenModelNames = IAService.getOpenModelNames();
+      $scope.clearModelPreview();
+      $scope.clearSelectedModels();
+    };
 
 
 
@@ -405,6 +386,60 @@ app.controller('IDEController', [
     );
 
 
+    /*
+    *
+    * Datasouce discovery flow kickoff
+    *
+    * */
+    $scope.items = ['item1', 'item2', 'item3'];
+    $scope.createModelsFromDS = function(name) {
+      console.log('CREATE MODELS FROM DS: ' + name);
+      // open a modal window and trigger the discovery flow
+      var modalInstance = $modal.open({
+        templateUrl: './scripts/modules/app/templates/discovery.modal.html',
+        windowClass: 'app-modal-window',
+        controller: function ($scope, $modalInstance, items) {
+
+          $scope.targetDiscoveryDSName = name;
+
+
+          $scope.ok = function () {
+            console.log('||  close discovery modal - generate the models and show editor view');
+            //$modalInstance.close($scope.selected.item);
+            $modalInstance.close();
+          };
+
+          $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+          };
+        },
+        size: 'lg',
+        resolve: {
+          items: function () {
+            return $scope.items;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (selectedItem) {
+          $scope.selected = selectedItem;
+        },
+        function () {
+          console.log('Modal dismissed at: ' + new Date());
+        }
+      );
+    };
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -415,6 +450,8 @@ app.controller('IDEController', [
 
   }
 ]);
+
+
 app.controller('HomeMainController',[
   '$scope',
   '$location',

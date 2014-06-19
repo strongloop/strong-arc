@@ -51,10 +51,10 @@ Common.directive('focusOn', function() {
     });
   };
 });
-Common.directive('loadingIndicator', [
+Common.directive('slCommonLoadingIndicator', [
   function() {
     return {
-      template: '<img src="./images/mf_progress_radar.gif" /><p>discovering schema...</p>'
+      template: '<div class="loading-indicator"><img src="./images/mf_progress_radar.gif" /><p>discovering schema...</p></div>'
     }
   }
 ]);

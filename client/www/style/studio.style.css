@@ -95,9 +95,30 @@ code {
     overflow:scroll;*/
 
 }
+/*
 
+    Loading Indicator
 
+*/
+.loading-indicator {
+    width:180px;
+    height:180px;
+    margin:35px auto 0 auto;
 
+}
+/*
+
+    Modal Window
+
+*/
+.app-modal-window .modal-dialog {
+    width: 1000px;
+
+}
+.app-modal-window .modal-dialog .modal-body {
+    height: 550px;
+    overflow:scroll;
+}
 
 
 /*
@@ -186,8 +207,19 @@ Main Search
     color:#ffffff;
 }
 
+/*
 
+    Main Controls
 
+*/
+[data-id="IAMainControlsContainer"] {
+    position:absolute;
+    bottom:0;
+}
+
+[data-id="DatasourceDiscoveryContainer"] {
+    min-height:800px;
+}
 
 /*
 
@@ -251,7 +283,8 @@ Main Search
 .model-schema-editor-source-table-table {
     border:1px solid #dddddd;
     border-radius:4px;
-    width:100%
+    width:45rem;
+    margin:0 auto 0 auto;
 
 }
 .model-schema-editor-source-table-table th {
@@ -263,6 +296,10 @@ Main Search
     font-size:125%;
     border:1px solid #eeeeee;
 
+}
+.discovery-schema-selected-table-list {
+    width:50rem;
+    margin:0 auto 0 auto;
 }
 /*
 

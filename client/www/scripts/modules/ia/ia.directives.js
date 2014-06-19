@@ -6,11 +6,8 @@ IA.directive('slIaMainNav', [
   '$timeout',
   function(ModelService, DatasourceService, IAService, $timeout) {
     return {
+      replace: true,
       link: function(scope, el, attrs) {
-
-
-
-
 
         function processActiveNavState() {
           // models
@@ -38,8 +35,6 @@ IA.directive('slIaMainNav', [
                 break;
               }
             }
-
-
           }
           // datasources
           var openDatasourceNames = scope.currentOpenDatasourceNames;
@@ -68,14 +63,11 @@ IA.directive('slIaMainNav', [
                   break;
                 }
               }
-
             }
           }
         }
 
         var renderComp = function() {
-
-          console.log('||||   RENDER COMPONENT');
           $timeout(function() {
 
             if (!scope.mainNavDatasources.$promise) {
@@ -129,6 +121,8 @@ IA.directive('slIaMainNav', [
 ]);
 /*
 *
+*   Main Search
+*
 * */
 IA.directive('slIaMainSearch', [
   function() {
@@ -137,7 +131,31 @@ IA.directive('slIaMainSearch', [
     }
   }
 ]);
- /*
+/*
+*
+*   Main Controls
+*
+* */
+IA.directive('slIaMainControls', [
+  '$timeout',
+  function($timeout) {
+    return  {
+      replace: true,
+      template:'<div data-id="IAMainControlsContainer"></div>',
+      link: function(scope, el, attrs) {
+
+        scope.$watch('activeModelInstance', function(instance) {
+          $timeout(function() {
+            React.renderComponent(IAMainControls({scope:scope}), el[0]);
+          }, 200);
+
+        });
+
+      }
+    }
+  }
+]);
+/*
  *
  *   IA Main Content
  *

@@ -1,30 +1,12 @@
 /** @jsx React.DOM */
+/*
+*
+*   Main Nav Container
+*
+* */
 var IAMainNavContainer = (IAMainNavContainer = React).createClass({
-  openSelectedModels:function(key, opt) {
-    var that = this;
-    that.props.scope.$apply(function () {
-      that.props.scope.openSelectedModels();
-    });
-  },
-  componentWillMount: function() {
-    console.log('IAMainNavContainerWillMount');
-  },
-  componentDidMount:function(){
-    $.contextMenu({
-      // define which elements trigger this menu
-      selector: ".reactor-ui-context",
-      // define the elements of the menu
-      items: {
-        openSelectedModels: {name: "open", callback: this.openSelectedModels}
-      },
-      events: {
-        show: function(opt, event) {
-          console.log(opt.sourceEvent.target);
-        }
-      }
-      // there's more, have a look at the demos and docs...
-    });
-  },
+
+
   render: function() {
 
     var scope = this.props.scope;
@@ -44,8 +26,34 @@ var IAMainNavContainer = (IAMainNavContainer = React).createClass({
       );
   }
 });
+/*
+*
+*   Model Main Nav
+*
+* */
 var IAMainModelNav = (IAMainModelNav = React).createClass({
-
+  openSelectedModels:function(key, opt) {
+    var that = this;
+    that.props.scope.$apply(function () {
+      that.props.scope.openSelectedModels();
+    });
+  },
+  componentDidMount:function(){
+    var menuItems = {};
+    menuItems.openSelectedModels = {name: "open", callback: this.openSelectedModels};
+    $.contextMenu({
+      // define which elements trigger this menu
+      selector: ".model-node",
+      // define the elements of the menu
+      items: menuItems,
+      events: {
+        show: function(opt, event) {
+          console.log('|    HEY HEY:  ' + opt.sourceEvent.target);
+        }
+      }
+      // there's more, have a look at the demos and docs...
+    });
+  },
   render: function() {
 
     var scope = this.props.scope;
@@ -100,7 +108,7 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
     };
 
     var items = scope.mainNavModels.map(function(item) {
-      var classNameVar = 'reactor-ui-context';
+      var classNameVar = 'model-node ';
       if (item.isActive) {
         classNameVar += ' is-active';
       }
@@ -124,8 +132,57 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
       );
   }
 });
+/*
+*
+*   Datasource Main Nav
+*
+* */
 var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
+  openSelectedModels:function(key, opt) {
+    var that = this;
+    that.props.scope.$apply(function () {
+      that.props.scope.openSelectedModels();
+    });
+  },
+  createModelsFromDS: function(options) {
+    var that = this;
+    var x = options;
 
+  },
+  componentDidMount:function(){
+    var menuItems = {};
+    var that = this;
+    var currentDSName = null;
+
+    menuItems.openSelectedModels = {name: "open", callback: this.openSelectedModels};
+    menuItems.createModelsFromDS = {
+      name: "create models",
+      callback: function(key, opt) {
+        console.log('||  ' + opt.sourceEvent.target.attributes['data-name'].value);
+        var dsName = opt.sourceEvent.target.attributes['data-name'].value;
+        if (dsName){
+          that.props.scope.$apply(function () {
+
+            that.props.scope.createModelsFromDS(dsName);
+          });
+        }
+
+      }
+    };
+    $.contextMenu({
+      // define which elements trigger this menu
+      selector: '.datasource-node',
+      // define the elements of the menu
+      items: menuItems,
+      events: {
+        show: function(opt, event) {
+          currentDSName = opt.sourceEvent.target.attributes['data-name'].value;
+          console.log('|    HEY HEY:  ' + currentDSName);
+        }
+      }
+      // there's more, have a look at the demos and docs...
+    });
+  },
   render: function() {
     var scope = this.props.scope;
 
@@ -159,7 +216,7 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
 
     var datasourceItemRenderer = function(item) {
 
-      var classNameVar = 'reactor-ui-context';
+      var classNameVar = 'datasource-node';
       if (item.isActive) {
         classNameVar += ' is-active';
       }
@@ -173,13 +230,33 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
         <li key={item.name} className={classNameVar}>
           <button onDoubleClick={dblClickItem} onClick={singleClickItem} data-name={item.name} className="btn btn-default btn-block nav-tree-item tree-node">{item.name}</button>
         </li>);
-
-
     };
     return (
       <div>
         <input onClick={clickBranch} type="button" data-name="datasources_root" className="btn btn-default btn-block nav-tree-item tree-branch" value="Datasources" />
         <ul className={classes}>{scope.mainNavDatasources.map(datasourceItemRenderer)}</ul>
+      </div>
+      );
+  }
+});
+/*
+*
+* Main Controls
+*
+* */
+var IAMainControls = (IAMainControls = React).createClass({
+  render: function() {
+    var scope = this.props.scope;
+    var createModelViewRequest = function() {
+      scope.$apply(function() {
+        scope.createModelViewRequest();
+      });
+    };
+    return (
+      <div>
+        <button onClick={createModelViewRequest} type="button" class="btn btn-default">
+          New Model
+        </button>
       </div>
       );
   }
