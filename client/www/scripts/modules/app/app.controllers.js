@@ -30,7 +30,6 @@ app.controller('IDEController', [
     $scope.editorUIPriority = IAService.getEditorUIPriority();
     $scope.currentModelSelections = IAService.clearSelectedModelNames();
     $scope.currentDatasourceSelections = IAService.clearSelectedDatasourceNames();
-
     $scope.selectModel = function(name) {
       $scope.currentModelSelections = IAService.addToCurrentModelSelections(name);
     };
@@ -332,6 +331,14 @@ app.controller('IDEController', [
 
     $scope.createModelViewRequest = function() {
       console.log('CREATE NEW MODEL');
+      var modelName = 'newModel2';
+      var newModel = {
+        "name": modelName,
+        "public": true,
+        "datasource": "ds",
+        "plural": modelName + "s"
+      };
+      ModelService.createModel(newModel);
       $scope.activeModelInstance = {name:'new model'};
       $scope.editorUIPriority = IAService.setEditorUIPriority('model');
       $scope.currentOpenModelNames = IAService.getOpenModelNames();
@@ -350,17 +357,17 @@ app.controller('IDEController', [
     $scope.mainNavModels.$promise.
       then(function (result) {
 
-          var core = result[0];
-
-          var log = [];
-          var mainNavModels = [];
-          angular.forEach(core, function(value, key){
-            this.push(key + ': ' + value);
-            mainNavModels.push({name:key,children:value});
-
-
-          }, log);
-          $scope.mainNavModels = mainNavModels;
+//          var core = result[0];
+//
+//          var log = [];
+//          var mainNavModels = [];
+//          angular.forEach(core, function(value, key){
+//            this.push(key + ': ' + value);
+//            mainNavModels.push({name:key,children:value});
+//
+//
+//          }, log);
+          $scope.mainNavModels = result;
         }
       ).then(function() {
         /*
@@ -399,7 +406,17 @@ app.controller('IDEController', [
 
     };
 
-
+    /*
+    *
+    * Update Model Detail Property Value
+    *
+    * */
+    $scope.updateModelDetailProperty = function(name, value) {
+      if (name && value) {
+        $scope.activeModelInstance[name] = value;
+        ModelService.updateModelInstance($scope.activeModelInstance);
+      }
+    };
 
 
 

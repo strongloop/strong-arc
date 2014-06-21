@@ -154,9 +154,18 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
     var that = this;
     var currentDSName = null;
 
+    var isDiscoverable = false;
+
     menuItems.openSelectedModels = {name: "open", callback: this.openSelectedModels};
     menuItems.createModelsFromDS = {
       name: "create models",
+      disabled: function(key, opt) {
+        isDiscoverable = opt.sourceEvent.target.attributes['data-is-discoverable'].value;
+        if (isDiscoverable == 'true') {
+          return false;
+        }
+        return true;
+      },
       callback: function(key, opt) {
         console.log('||  ' + opt.sourceEvent.target.attributes['data-name'].value);
         var dsName = opt.sourceEvent.target.attributes['data-name'].value;
@@ -169,6 +178,8 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
 
       }
     };
+
+
     $.contextMenu({
       // define which elements trigger this menu
       selector: '.datasource-node',
@@ -177,7 +188,7 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
       events: {
         show: function(opt, event) {
           currentDSName = opt.sourceEvent.target.attributes['data-name'].value;
-          console.log('|    HEY HEY:  ' + currentDSName);
+
         }
       }
       // there's more, have a look at the demos and docs...
@@ -214,8 +225,13 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
       }
     };
 
+    // Datasource menu items
     var datasourceItemRenderer = function(item) {
 
+      var isDiscoverable = false;
+      if (item.isDiscoverable) {
+        isDiscoverable = item.isDiscoverable;
+      }
       var classNameVar = 'datasource-node';
       if (item.isActive) {
         classNameVar += ' is-active';
@@ -228,9 +244,10 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
       }
       return (
         <li key={item.name} className={classNameVar}>
-          <button onDoubleClick={dblClickItem} onClick={singleClickItem} data-name={item.name} className="btn btn-default btn-block nav-tree-item tree-node">{item.name}</button>
+          <button onDoubleClick={dblClickItem} data-is-discoverable={isDiscoverable} onClick={singleClickItem} data-name={item.name} className="btn btn-default btn-block nav-tree-item tree-node">{item.name}</button>
         </li>);
     };
+    // Main return
     return (
       <div>
         <input onClick={clickBranch} type="button" data-name="datasources_root" className="btn btn-default btn-block nav-tree-item tree-branch" value="Datasources" />
@@ -252,11 +269,40 @@ var IAMainControls = (IAMainControls = React).createClass({
         scope.createModelViewRequest();
       });
     };
+    var renderAppViewRequest = function() {
+      window.open(
+        'http://0.0.0.0:3003/#/uiform',
+        '_blank'
+      );
+
+    };
     return (
-      <div>
-        <button onClick={createModelViewRequest} type="button" class="btn btn-default">
-          New Model
+      <div data-id="IAMainControlsContainer">
+        <button onClick={createModelViewRequest} type="button" className="btn btn-default">
+        New Model
         </button>
+        <button onClick={renderAppViewRequest} type="button" className="btn btn-default">
+        Render App
+        </button>
+        <div data-ui-type="table">
+          <div data-ui-type="row">
+            <div data-ui-type="cell">
+              <button className="btn btn-default btn-control-ds" title="oracle connector">ocl</button>
+            </div>
+            <div data-ui-type="cell">
+              <button className="btn btn-default btn-control-ds" title="mssql connector">msq</button>
+            </div>
+            <div data-ui-type="cell">
+              <button className="btn btn-default btn-control-ds" title="mysql connector">myq</button>
+            </div>
+            <div data-ui-type="cell">
+              <button className="btn btn-default btn-control-ds" title="postgres connector">pst</button>
+            </div>
+            <div data-ui-type="cell">
+              <button className="btn btn-default btn-control-ds" title="mongodb connector">mngo</button>
+            </div>
+          </div>
+        </div>
       </div>
       );
   }

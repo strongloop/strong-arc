@@ -6,8 +6,8 @@ var baseModels = require('../models.json');
 var ModelDefs = app.models.modeldef;
 var ds = require('loopback-datasource-juggler').DataSource;
 
-ModelDefs.beforeRemote('find', function(ctx, user, next) {
-
-  ctx.res.send(200, [baseModels]);
-
-});
+//ModelDefs.beforeRemote('find', function(ctx, user, next) {
+//
+//  ctx.res.send(200, [baseModels]);
+//
+//});

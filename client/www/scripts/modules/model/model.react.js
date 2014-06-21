@@ -592,6 +592,15 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
       'model-detail-pocket-container is-closed': !this.props.scope.isModelInstanceBasePropertiesActive
     });
 
+    var updateModelDetailProperty = function(event) {
+      if (event.target.attributes.id) {
+        var modelDetailProperty = event.target.attributes['data-name'].value;
+        var modelDetailValue = event.target.value;
+        scope.$apply(function() {
+          scope.updateModelDetailProperty(modelDetailProperty, modelDetailValue);
+        });
+      }
+    };
     var clickHandler = function(event) {
       scope.$apply(function() {
         scope.toggleModelDetailView();
@@ -601,6 +610,12 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
 
     return (
       <div>
+        <div data-ui-type="cell">
+          <label>name</label>
+        </div>
+        <div data-ui-type="cell">
+          <input type="text" onKeyUp={updateModelDetailProperty} data-name="name" id="ModelName" name="ModelName" value={model.name} className="model-instance-editor-input" />
+        </div>
         <input onClick={clickHandler} type="button" className="model-instance-header-btn btn btn-default btn-block" value="Details" />
         <div data-ui-type="table" className={classes}>
           <div data-ui-type="row">
@@ -611,7 +626,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                     <label>plural</label>
                   </div>
                   <div data-ui-type="cell">
-                    <input type="text" value={model.plural} className="model-instance-editor-input" ng-model={model.plural} />
+                    <input type="text" value={model.plural} className="model-instance-editor-input" />
                   </div>
                 </div>
                 <div data-ui-type="row">

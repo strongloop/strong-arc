@@ -6,13 +6,24 @@ Model.service('ModelService', [
     var svc = {};
 
   //  var deferred = $q.defer();
+    svc.createModel = function(config) {
+      Modeldef.create(config, function(response) {
+          console.log('good create model def: ' + response);
+
+      },
+      function(response){
+        console.log('bad create model def: ' + response);
+      });
+    };
     svc.getAllModels = function() {
       return Modeldef.query({},
         function(response) {
 
        //   console.log('good get model defs: '+ response);
 
-          var core = response[0];
+          // add create model to this for new model
+
+          var core = response;
           var log = [];
           var models = [];
           angular.forEach(core, function(value, key){
@@ -34,6 +45,7 @@ Model.service('ModelService', [
             models.push({name:key,props:value});
           }, log);
 
+
          // $scope.models = models;
           window.localStorage.setItem('ApiModels', JSON.stringify(core));
           return models;
@@ -45,6 +57,9 @@ Model.service('ModelService', [
 
       );
     };
+    svc.updateModelInstance = function(model) {
+      return Modeldef.upsert(model);
+    };
     svc.generateModelsFromSchema = function(schemaCollection) {
       if (schemaCollection && schemaCollection.length > 0) {
         for (var i = 0;i < schemaCollection.length;i++) {
@@ -53,13 +68,19 @@ Model.service('ModelService', [
       }
     };
     svc.getModelByName = function(name) {
-
+      var targetModel = null;
       if (window.localStorage.getItem('ApiModels')) {
         var currModelCollection = JSON.parse(window.localStorage.getItem('ApiModels'));
-        var targetModel = currModelCollection[name];
-        targetModel.name = name;
-        return targetModel;
+        //var targetModel = currModelCollection[name];
+        for (var i = 0;i < currModelCollection.length;i++) {
+          if (currModelCollection[i].name === name) {
+            targetModel = currModelCollection[i];
+            targetModel.name = name;
+            break;
+          }
+        }
       }
+      return targetModel;
     };
     svc.getExistingModelNames = function() {
       return [

@@ -1,7 +1,9 @@
 {
   "version": "0.0.1",
   "main": "app.js",
-  "bin": "server.js",
+  "bin": {
+    "strongloop-api-studio": "server.js"
+  },
   "scripts": {
     "start": "node app.js"
   },
@@ -15,11 +17,28 @@
     "loopback-connector-mysql": "^1.2.0",
     "gulp": "^3.6.2",
     "gulp-changed": "^0.3.0",
-    "gulp-minify-html": "^0.1.3"
+    "gulp-minify-html": "^0.1.3",
+    "loopback-explorer": "~1.1.0",
+    "loopback-push-notification": "~1.2.0"
   },
   "optionalDependencies": {
     "loopback-explorer": "~1.1.0",
     "loopback-push-notification": "~1.2.0"
   },
-  "name": "strongloop-api-studio"
+  "name": "strongloop-api-studio",
+  "description": "strongloop-api-studio =====================",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/strongloop/strongloop-api-studio.git"
+  },
+  "keywords": [
+    "studio",
+    "loopback"
+  ],
+  "author": "Sean Brookes",
+  "bugs": {
+    "url": "https://github.com/strongloop/strongloop-api-studio/issues"
+  },
+  "homepage": "https://github.com/strongloop/strongloop-api-studio"
 }

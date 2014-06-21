@@ -5,6 +5,9 @@ Datasource.service('DatasourceService', [
   function(Datasourcedef, $q) {
     var svc = {};
     //  var deferred = $q.defer();
+    svc.getDiscoverableDatasourceConnectors = function() {
+      return ['loopback-connector-mssql', 'loopback-connector-oracle', 'loopback-connector-mysql', 'loopback-connector-postgresql']
+    };
     svc.getAllDatasources = function() {
       return Datasourcedef.alldefinitions({},
         function(response) {

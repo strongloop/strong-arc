@@ -78,7 +78,7 @@ code {
     width:100%;
 }
 [data-id="MainSidebarContainer"] {
-    width:22rem;
+    width:26rem;
     padding-right:1.5rem;
     padding-left:.5rem;
 }
@@ -215,10 +215,24 @@ Main Search
 [data-id="IAMainControlsContainer"] {
     position:absolute;
     bottom:0;
+    text-align: center;
+    width:25rem;
+}
+[data-id="IAMainControlsContainer"] button{
+    /*display:block;*/
+}
+[data-id="IAMainControlsContainer"] [data-ui-type="table"]{
+    width:90%;
+    margin:0 auto 0 auto;
 }
 
 [data-id="DatasourceDiscoveryContainer"] {
     min-height:800px;
+}
+.btn-control-ds {
+    border:0;
+    background:transparent;
+    font-size:80%;
 }
 
 /*

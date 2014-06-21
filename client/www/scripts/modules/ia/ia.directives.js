@@ -41,22 +41,37 @@ IA.directive('slIaMainNav', [
           var currActiveDatasourceInstanceName = scope.activeDatasourceInstance.name;
           if (scope.mainNavDatasources.length){
 
+            var discoverableDatasources = DatasourceService.getDiscoverableDatasourceConnectors();
 
             for (var h = 0;h < scope.mainNavDatasources.length;h++){
               var localDSInstance = scope.mainNavDatasources[h];
               localDSInstance.isActive = false;
               localDSInstance.isOpen = false;
               localDSInstance.isSelected = false;
+              localDSInstance.isDiscoverable = false;
 
+              // is it discoverable
+              if (localDSInstance.children && localDSInstance.children.connector) {
+                for (var w = 0;w < discoverableDatasources.length;w++) {
+                  if (localDSInstance.children.connector === discoverableDatasources[w]) {
+                    localDSInstance.isDiscoverable = true;
+                    break;
+                  }
+                }
+              }
+
+              // is it open
               for (var r = 0;r < openDatasourceNames.length;r++) {
                 if (openDatasourceNames[r] === localDSInstance.name) {
                   localDSInstance.isOpen = true;
                   break;
                 }
               }
+              // is it active
               if (currActiveDatasourceInstanceName === localDSInstance.name) {
                 localDSInstance.isActive = true;
               }
+              // is it selected
               for (var w = 0;w < scope.currentDatasourceSelections.length;w++) {
                 if (scope.currentDatasourceSelections[w] === localDSInstance.name) {
                   localDSInstance.isSelected = true;
@@ -141,7 +156,6 @@ IA.directive('slIaMainControls', [
   function($timeout) {
     return  {
       replace: true,
-      template:'<div data-id="IAMainControlsContainer"></div>',
       link: function(scope, el, attrs) {
 
         scope.$watch('activeModelInstance', function(instance) {
