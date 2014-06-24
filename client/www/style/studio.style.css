@@ -533,6 +533,16 @@ form[name="DatasourceForm"] {
     margin:0 auto 0 auto;
     width:90%;
 }
+.btn-model-property-spinner {
+    border:0;
+}
+.btn-new-model-property {
+    border:0;
+    background:transparent;
+    color:blue;
+    display:inline-block;
+    margin:0 auto 0 6rem;
+}
 .model-instance-container.is-open {
     background-color:#fafafa;
     padding-bottom:1.4rem;

@@ -7,7 +7,8 @@
     "defaultForType": "mongodb",
     "connector": "loopback-connector-mongodb",
     "database": "apistudio",
-    "url": "mongodb://heroku_app26598360:d8teh5hqpn0l88lfb9kgug94v9@ds041188.mongolab.com:41188/heroku_app26598360"
+    "host": "localhost",
+    "port": 27017
   },
   "apmDev": {
     "defaultForType": "mysql",

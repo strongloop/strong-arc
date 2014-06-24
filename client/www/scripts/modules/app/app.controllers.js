@@ -23,6 +23,7 @@ app.controller('IDEController', [
     $scope.currentSelectedCollection = IAService.clearSelectedModelNames();
     $scope.activeModelInstance = IAService.getActiveModelInstance();
     $scope.canvasViewXPos = IAService.getCanvasViewXPos();
+    $scope.activeModelPropertiesChanged = false;
     $scope.isModelsActive = true;
     $scope.isDataSourcesActive = true;
     $scope.activeDatasourceInstance = IAService.getActiveDatasourceInstance();
@@ -414,9 +415,26 @@ app.controller('IDEController', [
     $scope.updateModelDetailProperty = function(name, value) {
       if (name && value) {
         $scope.activeModelInstance[name] = value;
+        if (name === 'name') {
+          $scope.activeModelInstance['plural'] = value + 's';
+        }
         ModelService.updateModelInstance($scope.activeModelInstance);
+        $scope.activeModelInstance = IAService.activateModelByName($scope.activeModelInstance.name);
       }
     };
+    $scope.createNewProperty = function() {
+      console.log('create new property');
+      var xModel = $scope.activeModelInstance;
+      if (!xModel.properties){
+        xModel.properties = [];
+      }
+      xModel.properties.push({name:'property-name', props: { type:'string'}});
+
+      $scope.activeModelInstance = xModel;
+
+      $scope.activeModelPropertiesChanged = !$scope.activeModelPropertiesChanged;
+    };
+
 
 
 

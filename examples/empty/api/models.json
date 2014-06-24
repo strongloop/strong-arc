@@ -1,0 +1,8 @@
+{
+  "user": {
+    "dataSource": "db"
+  },
+  "access-token": {
+    "dataSource": "db"
+  }
+}

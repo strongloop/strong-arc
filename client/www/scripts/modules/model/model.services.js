@@ -2,7 +2,8 @@
 Model.service('ModelService', [
   'Modeldef',
   '$q',
-  function(Modeldef, $q) {
+  'AppStorageService',
+  function(Modeldef, $q, AppStorageService) {
     var svc = {};
 
   //  var deferred = $q.defer();
@@ -58,6 +59,14 @@ Model.service('ModelService', [
       );
     };
     svc.updateModelInstance = function(model) {
+      var apiModels = AppStorageService.getItem('ApiModels');
+      for (var i = 0;i < apiModels.length;i++) {
+        if (apiModels[i].name === model.name) {
+          apiModels[i] = model;
+          break;
+        }
+      }
+      AppStorageService.setItem('ApiModels', apiModels);
       return Modeldef.upsert(model);
     };
     svc.generateModelsFromSchema = function(schemaCollection) {

@@ -1,0 +1,12 @@
+{
+  "db": {
+    "appName": "api",
+    "defaultForType": "db",
+    "connector": "memory"
+  },
+  "mail": {
+    "appName": "api",
+    "defaultForType": "mail",
+    "connector": "mail"
+  }
+}

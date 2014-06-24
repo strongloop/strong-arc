@@ -146,6 +146,16 @@ Model.directive('modelPropertiesEditor',[
           }
           React.renderComponent(ModelPropertiesEditor({scope:scope, properties:properties}), el[0]);
         });
+
+        scope.$watch('activeModelPropertiesChanged', function(val) {
+          if (!scope.activeModelInstance.properties){
+            scope.activeModelInstance.properties = [];
+          }
+          else {
+            scope.isModelInstancePropertiesActive = true;
+          }
+          React.renderComponent(ModelPropertiesEditor({scope:scope, properties:scope.activeModelInstance.properties}), el[0]);
+        });
         scope.$watch('activeModelInstance', function(model) {
           if (!model.properties){
             model.properties = [];
