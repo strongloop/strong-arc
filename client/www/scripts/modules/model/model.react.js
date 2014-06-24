@@ -377,6 +377,17 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
       );
   }
 });
+var DataTypeSelect = (DataTypeSelect = React).createClass({
+  render: function() {
+
+    var dataTypes = ['array','buffer','date','geopoint','string','number','boolean','object','any'];
+
+    var options = dataTypes.map(function(type) {
+      return (<option value={type}>{type}</option>)
+    });
+    return (<select value={this.props.value}>{options}</select>);
+  }
+});
 var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
   getInitialState: function() {
     return {
@@ -414,8 +425,8 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
     var that = this;
     var scope = that.props.scope;
     var model = that.state.model;
-
     var cx = React.addons.classSet;
+
 
     var togglePropertiesView = function(property) {
       that.setState({isOpen:!that.state.isOpen});
@@ -445,9 +456,7 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
                 <input ref="propName" data-name="ModelPropertyName" type="text" onChange={this.checkSubmitModelProperty} value={model.name} />
               </span>
               <span data-ui-type="cell" className="props-data-type-cell">
-                <input type="button"
-                className="btn btn-sm btn-default"
-                value={model.props.type} />
+                <DataTypeSelect value={model.props.type} />
               </span>
               <span data-ui-type="cell" className="props-default-value-cell">
                 <input type="text"
