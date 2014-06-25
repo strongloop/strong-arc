@@ -9,6 +9,63 @@ var ModelTitleHeader = (ModelTitleHeader = React).createClass({
       );
   }
 });
+var ModelCreateTabsView = (ModelCreateTabsView = React).createClass({
+  render: function() {
+    var scope = this.props.scope;
+    this.props.tabItems.push({
+      isActive:true,
+      name:'newModel'
+    });
+    var cx = React.addons.classSet;
+
+    var clickModelEditTabItem = function(event) {
+      if (event.target.attributes['data-name']){
+        // test to see if tab not already 'active'
+        scope.$apply(function () {
+          scope.modelEditTabItemClicked(event.target.attributes['data-name'].value);
+        });
+      }
+    };
+    var clickModelEditorTabClose = function(event) {
+      if (event.target.attributes['data-name']){
+        // test to see if tab not already 'active'
+        scope.$apply(function () {
+          scope.modelEditTabItemCloseClicked(event.target.attributes['data-name'].value);
+        });
+      }
+    };
+    var items = [];
+    var iterator;
+    if (scope.currentOpenModelNames) {
+      iterator = scope.currentOpenModelNames;
+    }
+    else {
+      iterator = scope.$parent.currentOpenModelNames;
+    }
+
+    items = this.props.tabItems.map(function(item) {
+      var classNameVar = ' edit-tab-item-container';
+      if (item.isActive) {
+        classNameVar += ' is-active';
+      }
+
+      return (
+        <li className={classNameVar}>
+          <button onClick={clickModelEditTabItem} className=" edit-tab-item-button" data-name={item.name}>{item.name}</button>
+          <button onClick={clickModelEditorTabClose} className=" edit-tab-close-button" data-name={item.name}>
+            <span className="glyphicon glyphicon-remove" data-name={item.name}></span>
+          </button>
+        </li>
+        );
+    });
+
+    return (
+      <div>
+        <ul className=" editor-tabs-list">{items}</ul>
+      </div>
+      );
+  }
+});
 var ModelEditorTabsView = (ModelEditorTabsView = React).createClass({
   render: function() {
     var scope = this.props.scope;
@@ -159,7 +216,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                     <label>datasource</label>
                   </div>
                   <div data-ui-type="cell">
-                    <input type="text" value={model.datasource} onChange={this.handleChange} className="model-instance-editor-input" />
+                    <input type="text" value={model.dataSource} onChange={this.handleChange} className="model-instance-editor-input" />
                   </div>
                 </div>
                 <div data-ui-type="row">
@@ -344,7 +401,7 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
 
 
     var items = [];
-    var items = properties.map(function (item) {
+    items = properties.map(function (item) {
       return  (<ModelPropertyRowDetail rowData={item} scope={scope} />);
     });
 
@@ -751,6 +808,63 @@ var PropertyConnectionEditor = (PropertyConnectionEditor = React).createClass({
       );
   }
 });
+/*
+ *
+ *   NEW MODEL
+ *
+ * */
+var NewModelForm = (NewModelForm = React).createClass({
+  getInitialState: function() {
+    return this.props.scope.newModelInstance;
+  },
+  newModelNameInput: function(event) {
+    var that = this;
+    var scope = that.props.scope;
+    var targetValue = event.target.value;
+    //console.log('new model name request: ' + event.target.value);
 
+    if (targetValue) {
+      // check to see if it is valid (no spaces, no invalid characters etc.
+      // then check to see if it is unique
+      scope.$apply(function() {
+        scope.processModelNameInput(targetValue);
+      });
+    }
+
+  },
+  componentWillReceiveProps: function(nextProps) {
+    this.setState(nextProps.scope.newModelInstance);
+    console.log('Component will receive props');
+  },
+  render:function() {
+
+    var scope = this.props.scope;
+    var model = this.state;
+
+    var uniqueWarningCss = 'new-model-name';
+
+    var uniqueText = '';
+    if (model.isUnique) {
+      uniqueWarningCss += ' is-unique';
+      uniqueText = 'unique name';
+    }
+    else {
+      uniqueWarningCss += ' is-duplicate';
+      uniqueText = 'duplicate name';
+    }
+
+    return (
+      <div>
+        <form>
+          <label>Model name</label>
+          <input placeholder="model name" value={model.name} onChange={this.newModelNameInput} type="text" />
+          <span className={uniqueWarningCss}>{uniqueText}</span>
+          <br />
+          <button className="btn btn-primary">create</button>
+        </form>
+      </div>
+      );
+  }
+});
 
 

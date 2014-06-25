@@ -7,7 +7,18 @@ app.directive('greetingMain', [
   }
 ]);
 
-
+app.directive('slAppChooser', [
+  function() {
+    return {
+      replace:true,
+      link:function(scope, el, attrs) {
+        scope.$watch('wsComps', function(apps) {
+          React.renderComponent(AppSelection({scope:scope}), el[0]);
+        }, true);
+      }
+    }
+  }
+]);
 
 app.directive('draggable', function() {
   return function(scope, element) {

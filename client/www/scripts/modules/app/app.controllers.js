@@ -25,6 +25,7 @@ app.controller('IDEController', [
     $scope.canvasViewXPos = IAService.getCanvasViewXPos();
     $scope.activeModelPropertiesChanged = false;
     $scope.isModelsActive = true;
+    $scope.newModelInstance = {name: '', isUnique:false};  // used by the new model view to reference change events when creating new models
     $scope.isDataSourcesActive = true;
     $scope.activeDatasourceInstance = IAService.getActiveDatasourceInstance();
     $scope.previewInstance = IAService.clearPreviewModelInstance();
@@ -331,12 +332,11 @@ app.controller('IDEController', [
     };
 
     $scope.createModelViewRequest = function() {
-      console.log('CREATE NEW MODEL');
-      var modelName = 'newModel2';
+      var modelName = 'newModel4';
       var newModel = {
         "name": modelName,
+        "componentName": "api",
         "public": true,
-        "datasource": "ds",
         "plural": modelName + "s"
       };
       ModelService.createModel(newModel);
@@ -348,6 +348,26 @@ app.controller('IDEController', [
     };
 
 
+
+    /*
+    *
+    *   New Model Name Input Processing
+    *
+    * */
+    $scope.processModelNameInput = function(input) {
+      $scope.newModelInstance.name = input;
+      var modelCount = $scope.mainNavModels.length;
+      $scope.newModelInstance.isUnique = true;
+      for (var i = 0;i < modelCount;i++) {
+        var modelInstance = $scope.mainNavModels[i];
+        var compString = modelInstance.name.substr(0, input.length);
+        if (compString === input) {
+          $scope.newModelInstance.isUnique = false;
+          break;
+        }
+      }
+
+    };
 
 
     // Models
@@ -374,22 +394,24 @@ app.controller('IDEController', [
         /*
          * Datasources
          * */
-        $scope.mainNavDatasources = DatasourceService.getAllDatasources({});
-        $scope.mainNavDatasources.$promise.
-          then(function (result) {
 
-            var core = result.name[0];
+        $scope.mainNavDatasources = [];
+//        $scope.mainNavDatasources = DatasourceService.getAllDatasources({});
+//        $scope.mainNavDatasources.$promise.
+//          then(function (result) {
 //
-            var log = [];
-            var datasources = [];
-            angular.forEach(core, function(value, key){
-              //this.push(key + ': ' + value);
-              datasources.push({name:key,children:value});
-            }, log);
-            $scope.mainNavDatasources = datasources;
-
-
-          });
+//            var core = result.name[0];
+////
+//            var log = [];
+//            var datasources = [];
+//            angular.forEach(core, function(value, key){
+//              //this.push(key + ': ' + value);
+//              datasources.push({name:key,children:value});
+//            }, log);
+//            $scope.mainNavDatasources = datasources;
+//
+//
+//          });
       }
     );
 
@@ -459,10 +481,21 @@ app.controller('IDEController', [
 app.controller('HomeMainController',[
   '$scope',
   '$location',
-  function($scope, $location){
+  'ComponentDefinition',
+  function($scope, $location, ComponentDefinition){
     var viewModel = {};
     viewModel.message = 'StrongLoop API Studio';
     $scope.viewModel = viewModel;
+
+    $scope.wsComps = ComponentDefinition.query({});
+    $scope.wsComps.$promise.
+      then(function(result) {
+
+          console.log('Component DEFINITION GET WORKED: ' + JSON.stringify(result) );
+        $scope.wsComps = result;
+        var x = $scope.wsComps;
+      }
+    );
 
 
   }
@@ -490,3 +523,4 @@ app.controller('DragDropCtrl', function($scope) {
     console.log('Item has been dropped');
   }
 });
+

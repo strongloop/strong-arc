@@ -1,14 +1,15 @@
 // Copyright StrongLoop 2014
 Model.service('ModelService', [
   'Modeldef',
+  'ModelDefinition',
   '$q',
   'AppStorageService',
-  function(Modeldef, $q, AppStorageService) {
+  function(Modeldef, ModelDefinition, $q, AppStorageService) {
     var svc = {};
 
   //  var deferred = $q.defer();
     svc.createModel = function(config) {
-      Modeldef.create(config, function(response) {
+      ModelDefinition.create(config, function(response) {
           console.log('good create model def: ' + response);
 
       },
@@ -17,7 +18,7 @@ Model.service('ModelService', [
       });
     };
     svc.getAllModels = function() {
-      return Modeldef.query({},
+      return ModelDefinition.query({},
         function(response) {
 
        //   console.log('good get model defs: '+ response);
@@ -48,6 +49,48 @@ Model.service('ModelService', [
 
 
          // $scope.models = models;
+          window.localStorage.setItem('ApiModels', JSON.stringify(core));
+          return models;
+        },
+        function(response) {
+          console.log('bad get model defs');
+
+        }
+
+      );
+    };
+    svc.getAllModelsBak = function() {
+      return Modeldef.query({},
+        function(response) {
+
+          //   console.log('good get model defs: '+ response);
+
+          // add create model to this for new model
+
+          var core = response;
+          var log = [];
+          var models = [];
+          angular.forEach(core, function(value, key){
+            // this.push(key + ': ' + value);
+            var lProperties = [];
+            if (value.properties) {
+              angular.forEach(value.properties, function(value, key){
+                lProperties.push({name:key,props:value});
+              });
+              value.properties = lProperties;
+            }
+            var lOptions = [];
+            if (value.options) {
+              angular.forEach(value.options, function(value, key){
+                lOptions.push({name:key,props:value});
+              });
+              value.options = lProperties;
+            }
+            models.push({name:key,props:value});
+          }, log);
+
+
+          // $scope.models = models;
           window.localStorage.setItem('ApiModels', JSON.stringify(core));
           return models;
         },

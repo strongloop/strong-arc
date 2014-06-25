@@ -6,6 +6,7 @@ var app = angular.module('app', [
   'ngAnimate',
   'angular-growl',
   'lbServices',
+  'slServices',
   'Profile',
   'Canvas',
   'IA',

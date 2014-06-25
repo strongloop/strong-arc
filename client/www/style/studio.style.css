@@ -543,6 +543,12 @@ form[name="DatasourceForm"] {
     display:inline-block;
     margin:0 auto 0 6rem;
 }
+.new-model-name.is-duplicate {
+    background:yellow;
+}
+.new-model-name.is-unique {
+    background:green;
+}
 .model-instance-container.is-open {
     background-color:#fafafa;
     padding-bottom:1.4rem;

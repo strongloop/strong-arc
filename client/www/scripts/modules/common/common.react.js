@@ -1,4 +1,30 @@
 /** @jsx React.DOM */
+
+var CommonCreateInstanceContainer = (CommonCreateInstanceContainer = React).createClass({
+  render: function() {
+    var scope = this.props.scope;
+    var instance = scope.newModelInstance;
+    var properties = [];
+    if (instance && instance.properties) {
+      properties = instance.properties;
+    }
+
+
+
+    return (
+      <div>
+        <div className=" editor-title-container">
+          <span>{instance.name}s</span>
+        </div>
+        <div className=" editor-tabs-container">
+          <ModelCreateTabsView scope={scope} tabItems={this.props.tabItems} />
+        </div>
+
+        <NewModelForm scope={scope} />
+
+      </div>);
+  }
+});
 var CommonPreviewInstanceContainer = (CommonPreviewInstanceContainer = React).createClass({
   render: function() {
     var scope = this.props.scope;

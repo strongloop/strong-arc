@@ -1,5 +1,44 @@
 // Copyright StrongLoop 2014
+/*
+ *
+ *   Instance Create
+ *
+ * */
+Common.directive('slCommonInstanceCreate', [
+  'IAService',
+  function(IAService) {
+    return {
+      replace: true,
+      link: function(scope, el, attrs) {
+        function renderComp(){
+          var tabItems = [];
 
+          for (var i = 0;i < scope.currentOpenModelNames.length;i++) {
+            var isActive = false;
+            if (scope.currentOpenModelNames[i] === IAService.getActiveModelInstance().name) {
+              isActive = true;
+            }
+            tabItems.push({
+              name:scope.currentOpenModelNames[i],
+              isActive:isActive
+            });
+          }
+
+          React.renderComponent(CommonCreateInstanceContainer({scope:scope, tabItems:tabItems}), el[0]);
+        }
+
+        scope.$watch('newModelInstance', function(newVal, oldVal) {
+          renderComp();
+        }, true);
+
+
+//        scope.$watch('previewInstance', function(newVal, oldVal) {
+//          React.renderComponent(CommonPreviewInstanceContainer({scope:scope}), el[0]);
+//        });
+      }
+    }
+  }
+]);
 /*
 *
 *   Instance Preview

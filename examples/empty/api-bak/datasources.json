@@ -1,12 +1,12 @@
 {
   "db": {
-    "componentName": "api",
+    "appName": "api",
     "defaultForType": "db",
     "connector": "memory",
     "configFile": "api/datasources.json"
   },
   "mail": {
-    "componentName": "api",
+    "appName": "api",
     "defaultForType": "mail",
     "connector": "mail",
     "configFile": "api/datasources.json"

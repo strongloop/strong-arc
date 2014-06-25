@@ -1,6 +1,6 @@
-(function(window, angular, undefined) {'use strict';
+'use strict';
 
-var urlBase = "/api";
+var urlBase = "http://0.0.0.0:4000/api";
 
 /**
  * @ngdoc overview
@@ -12,16 +12,16 @@ var urlBase = "/api";
  * the models exposed by the LoopBack server via the REST API.
  *
  */
-var module = angular.module("lbServices", ['ngResource']);
+var module = angular.module("slServices", ['ngResource']);
 
 /**
  * @ngdoc object
- * @name lbServices.AppDefinition
+ * @name lbServices.ComponentDefinition
  * @object
  *
  * @description
  *
- * A $resource object for interacting with the `AppDefinition` model.
+ * A $resource object for interacting with the `ComponentDefinition` model.
  *
  * ## Example
  *
@@ -31,17 +31,16 @@ var module = angular.module("lbServices", ['ngResource']);
  *
  */
 module.factory(
-  "AppDefinition",
-  ['LoopBackResource', 'LoopBackAuth', '$injector', function(Resource, LoopBackAuth, $injector) {
-    var R = Resource(
-      urlBase + "/AppDefinitions/:id",
+  "ComponentDefinition",
+  ['LoopBackResource', 'LoopBackAuth', function(Resource, LoopBackAuth) {
+    return Resource(
+      urlBase + "/ComponentDefinitions/:id",
       { 'id': '@id' },
       {
-
         /**
          * @ngdoc method
-         * @name lbServices.AppDefinition#create
-         * @methodOf lbServices.AppDefinition
+         * @name lbServices.ComponentDefinition#create
+         * @methodOf lbServices.ComponentDefinition
          *
          * @description
          *
@@ -68,18 +67,17 @@ module.factory(
          *
          * <em>
          * (The remote method definition does not provide any description.
-         * This usually means the response is a `AppDefinition` object.)
+         * This usually means the response is a `ComponentDefinition` object.)
          * </em>
          */
         "create": {
-          url: urlBase + "/AppDefinitions",
+          url: urlBase + "/ComponentDefinitions",
           method: "POST",
         },
-
         /**
          * @ngdoc method
-         * @name lbServices.AppDefinition#updateOrCreate
-         * @methodOf lbServices.AppDefinition
+         * @name lbServices.ComponentDefinition#updateOrCreate
+         * @methodOf lbServices.ComponentDefinition
          *
          * @description
          *
@@ -106,18 +104,17 @@ module.factory(
          *
          * <em>
          * (The remote method definition does not provide any description.
-         * This usually means the response is a `AppDefinition` object.)
+         * This usually means the response is a `ComponentDefinition` object.)
          * </em>
          */
         "updateOrCreate": {
-          url: urlBase + "/AppDefinitions",
+          url: urlBase + "/ComponentDefinitions",
           method: "PUT",
         },
-
         /**
          * @ngdoc method
-         * @name lbServices.AppDefinition#exists
-         * @methodOf lbServices.AppDefinition
+         * @name lbServices.ComponentDefinition#exists
+         * @methodOf lbServices.ComponentDefinition
          *
          * @description
          *
@@ -139,17 +136,16 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{*=}` - 
+         *  - `exists` – `{*=}` -
          */
         "exists": {
-          url: urlBase + "/AppDefinitions/:id/exists",
+          url: urlBase + "/ComponentDefinitions/:id/exists",
           method: "GET",
         },
-
         /**
          * @ngdoc method
-         * @name lbServices.AppDefinition#findById
-         * @methodOf lbServices.AppDefinition
+         * @name lbServices.ComponentDefinition#findById
+         * @methodOf lbServices.ComponentDefinition
          *
          * @description
          *
@@ -171,18 +167,17 @@ module.factory(
          *
          * <em>
          * (The remote method definition does not provide any description.
-         * This usually means the response is a `AppDefinition` object.)
+         * This usually means the response is a `ComponentDefinition` object.)
          * </em>
          */
         "findById": {
-          url: urlBase + "/AppDefinitions/:id",
+          url: urlBase + "/ComponentDefinitions/:id",
           method: "GET",
         },
-
         /**
          * @ngdoc method
-         * @name lbServices.AppDefinition#find
-         * @methodOf lbServices.AppDefinition
+         * @name lbServices.ComponentDefinition#find
+         * @methodOf lbServices.ComponentDefinition
          *
          * @description
          *
@@ -204,19 +199,18 @@ module.factory(
          *
          * <em>
          * (The remote method definition does not provide any description.
-         * This usually means the response is a `AppDefinition` object.)
+         * This usually means the response is a `ComponentDefinition` object.)
          * </em>
          */
         "find": {
-          url: urlBase + "/AppDefinitions",
+          url: urlBase + "/ComponentDefinitions",
           method: "GET",
           isArray: true,
         },
-
         /**
          * @ngdoc method
-         * @name lbServices.AppDefinition#findOne
-         * @methodOf lbServices.AppDefinition
+         * @name lbServices.ComponentDefinition#findOne
+         * @methodOf lbServices.ComponentDefinition
          *
          * @description
          *
@@ -238,18 +232,17 @@ module.factory(
          *
          * <em>
          * (The remote method definition does not provide any description.
-         * This usually means the response is a `AppDefinition` object.)
+         * This usually means the response is a `ComponentDefinition` object.)
          * </em>
          */
         "findOne": {
-          url: urlBase + "/AppDefinitions/findOne",
+          url: urlBase + "/ComponentDefinitions/findOne",
           method: "GET",
         },
-
         /**
          * @ngdoc method
-         * @name lbServices.AppDefinition#destroyById
-         * @methodOf lbServices.AppDefinition
+         * @name lbServices.ComponentDefinition#destroyById
+         * @methodOf lbServices.ComponentDefinition
          *
          * @description
          *
@@ -272,14 +265,13 @@ module.factory(
          * This method returns no data.
          */
         "destroyById": {
-          url: urlBase + "/AppDefinitions/:id",
+          url: urlBase + "/ComponentDefinitions/:id",
           method: "DELETE",
         },
-
         /**
          * @ngdoc method
-         * @name lbServices.AppDefinition#count
-         * @methodOf lbServices.AppDefinition
+         * @name lbServices.ComponentDefinition#count
+         * @methodOf lbServices.ComponentDefinition
          *
          * @description
          *
@@ -301,17 +293,16 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` - 
+         *  - `count` – `{number=}` -
          */
         "count": {
-          url: urlBase + "/AppDefinitions/count",
+          url: urlBase + "/ComponentDefinitions/count",
           method: "GET",
         },
-
         /**
          * @ngdoc method
-         * @name lbServices.AppDefinition#prototype$updateAttributes
-         * @methodOf lbServices.AppDefinition
+         * @name lbServices.ComponentDefinition#prototype$updateAttributes
+         * @methodOf lbServices.ComponentDefinition
          *
          * @description
          *
@@ -319,7 +310,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - AppDefinition id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Object} postData Request data.
          *
@@ -337,19 +329,17 @@ module.factory(
          *
          * <em>
          * (The remote method definition does not provide any description.
-         * This usually means the response is a `AppDefinition` object.)
+         * This usually means the response is a `ComponentDefinition` object.)
          * </em>
          */
         "prototype$updateAttributes": {
-          url: urlBase + "/AppDefinitions/:id",
+          url: urlBase + "/ComponentDefinitions/:id",
           method: "PUT",
         },
-
         /**
          * @ngdoc method
-         * @name lbServices.AppDefinition#prototype$__get__models
-         * @methodOf lbServices.AppDefinition
-         * @deprecated Use AppDefinition.models() instead.
+         * @name lbServices.ComponentDefinition#prototype$__get__models
+         * @methodOf lbServices.ComponentDefinition
          *
          * @description
          *
@@ -357,9 +347,7 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - AppDefinition id
-         *
-         *  - `filter` – `{object=}` - 
+         *  - `filter` – `{object=}` -
          *
          * @param {Function(Array.<Object>, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -373,20 +361,18 @@ module.factory(
          *
          * <em>
          * (The remote method definition does not provide any description.
-         * This usually means the response is a `AppDefinition` object.)
+         * This usually means the response is a `ComponentDefinition` object.)
          * </em>
          */
         "prototype$__get__models": {
-          url: urlBase + "/AppDefinitions/:id/models",
+          url: urlBase + "/ComponentDefinitions/:id/models",
           method: "GET",
           isArray: true,
         },
-
         /**
          * @ngdoc method
-         * @name lbServices.AppDefinition#prototype$__create__models
-         * @methodOf lbServices.AppDefinition
-         * @deprecated Use AppDefinition.models.create() instead.
+         * @name lbServices.ComponentDefinition#prototype$__create__models
+         * @methodOf lbServices.ComponentDefinition
          *
          * @description
          *
@@ -394,7 +380,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - AppDefinition id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Object} postData Request data.
          *
@@ -412,19 +399,17 @@ module.factory(
          *
          * <em>
          * (The remote method definition does not provide any description.
-         * This usually means the response is a `AppDefinition` object.)
+         * This usually means the response is a `ComponentDefinition` object.)
          * </em>
          */
         "prototype$__create__models": {
-          url: urlBase + "/AppDefinitions/:id/models",
+          url: urlBase + "/ComponentDefinitions/:id/models",
           method: "POST",
         },
-
         /**
          * @ngdoc method
-         * @name lbServices.AppDefinition#prototype$__delete__models
-         * @methodOf lbServices.AppDefinition
-         * @deprecated Use AppDefinition.models.destroyAll() instead.
+         * @name lbServices.ComponentDefinition#prototype$__delete__models
+         * @methodOf lbServices.ComponentDefinition
          *
          * @description
          *
@@ -432,7 +417,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - AppDefinition id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -446,19 +432,17 @@ module.factory(
          *
          * <em>
          * (The remote method definition does not provide any description.
-         * This usually means the response is a `AppDefinition` object.)
+         * This usually means the response is a `ComponentDefinition` object.)
          * </em>
          */
         "prototype$__delete__models": {
-          url: urlBase + "/AppDefinitions/:id/models",
+          url: urlBase + "/ComponentDefinitions/:id/models",
           method: "DELETE",
         },
-
         /**
          * @ngdoc method
-         * @name lbServices.AppDefinition#prototype$__get__datasources
-         * @methodOf lbServices.AppDefinition
-         * @deprecated Use AppDefinition.datasources() instead.
+         * @name lbServices.ComponentDefinition#prototype$__get__datasources
+         * @methodOf lbServices.ComponentDefinition
          *
          * @description
          *
@@ -466,9 +450,7 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - AppDefinition id
-         *
-         *  - `filter` – `{object=}` - 
+         *  - `filter` – `{object=}` -
          *
          * @param {Function(Array.<Object>, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -482,20 +464,18 @@ module.factory(
          *
          * <em>
          * (The remote method definition does not provide any description.
-         * This usually means the response is a `AppDefinition` object.)
+         * This usually means the response is a `ComponentDefinition` object.)
          * </em>
          */
         "prototype$__get__datasources": {
-          url: urlBase + "/AppDefinitions/:id/datasources",
+          url: urlBase + "/ComponentDefinitions/:id/datasources",
           method: "GET",
           isArray: true,
         },
-
         /**
          * @ngdoc method
-         * @name lbServices.AppDefinition#prototype$__create__datasources
-         * @methodOf lbServices.AppDefinition
-         * @deprecated Use AppDefinition.datasources.create() instead.
+         * @name lbServices.ComponentDefinition#prototype$__create__datasources
+         * @methodOf lbServices.ComponentDefinition
          *
          * @description
          *
@@ -503,7 +483,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - AppDefinition id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Object} postData Request data.
          *
@@ -521,19 +502,17 @@ module.factory(
          *
          * <em>
          * (The remote method definition does not provide any description.
-         * This usually means the response is a `AppDefinition` object.)
+         * This usually means the response is a `ComponentDefinition` object.)
          * </em>
          */
         "prototype$__create__datasources": {
-          url: urlBase + "/AppDefinitions/:id/datasources",
+          url: urlBase + "/ComponentDefinitions/:id/datasources",
           method: "POST",
         },
-
         /**
          * @ngdoc method
-         * @name lbServices.AppDefinition#prototype$__delete__datasources
-         * @methodOf lbServices.AppDefinition
-         * @deprecated Use AppDefinition.datasources.destroyAll() instead.
+         * @name lbServices.ComponentDefinition#prototype$__delete__datasources
+         * @methodOf lbServices.ComponentDefinition
          *
          * @description
          *
@@ -541,7 +520,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - AppDefinition id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -555,246 +535,15 @@ module.factory(
          *
          * <em>
          * (The remote method definition does not provide any description.
-         * This usually means the response is a `AppDefinition` object.)
+         * This usually means the response is a `ComponentDefinition` object.)
          * </em>
          */
         "prototype$__delete__datasources": {
-          url: urlBase + "/AppDefinitions/:id/datasources",
+          url: urlBase + "/ComponentDefinitions/:id/datasources",
           method: "DELETE",
-        },
-
-        // INTERNAL. Use DataSourceDefinition.app() instead.
-        "::get::DataSourceDefinition::app": {
-          url: urlBase + "/DataSourceDefinitions/:id/app",
-          method: "GET",
         },
       }
     );
-
-
-        /**
-         * @ngdoc method
-         * @name lbServices.AppDefinition#models
-         * @methodOf lbServices.AppDefinition
-         * @deprecated Use AppDefinition.models() instead.
-         *
-         * @description
-         *
-         * Queries models of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - AppDefinition id
-         *
-         *  - `filter` – `{object=}` - 
-         *
-         * @param {Function(Array.<Object>, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Array.<Object>} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
-        R.models = function() {
-          var TargetResource = $injector.get("ModelDefinition");
-          var action = TargetResource["::get::AppDefinition::models"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.AppDefinition#models.create
-         * @methodOf lbServices.AppDefinition
-         * @deprecated Use AppDefinition.models.create() instead.
-         *
-         * @description
-         *
-         * Creates a new instance in models of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - AppDefinition id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
-        R.models.create = function() {
-          var TargetResource = $injector.get("ModelDefinition");
-          var action = TargetResource["::create::AppDefinition::models"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.AppDefinition#models.destroyAll
-         * @methodOf lbServices.AppDefinition
-         * @deprecated Use AppDefinition.models.destroyAll() instead.
-         *
-         * @description
-         *
-         * Deletes all models of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - AppDefinition id
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
-        R.models.destroyAll = function() {
-          var TargetResource = $injector.get("ModelDefinition");
-          var action = TargetResource["::delete::AppDefinition::models"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.AppDefinition#datasources
-         * @methodOf lbServices.AppDefinition
-         * @deprecated Use AppDefinition.datasources() instead.
-         *
-         * @description
-         *
-         * Queries datasources of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - AppDefinition id
-         *
-         *  - `filter` – `{object=}` - 
-         *
-         * @param {Function(Array.<Object>, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Array.<Object>} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `DataSourceDefinition` object.)
-         * </em>
-         */
-        R.datasources = function() {
-          var TargetResource = $injector.get("DataSourceDefinition");
-          var action = TargetResource["::get::AppDefinition::datasources"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.AppDefinition#datasources.create
-         * @methodOf lbServices.AppDefinition
-         * @deprecated Use AppDefinition.datasources.create() instead.
-         *
-         * @description
-         *
-         * Creates a new instance in datasources of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - AppDefinition id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `DataSourceDefinition` object.)
-         * </em>
-         */
-        R.datasources.create = function() {
-          var TargetResource = $injector.get("DataSourceDefinition");
-          var action = TargetResource["::create::AppDefinition::datasources"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.AppDefinition#datasources.destroyAll
-         * @methodOf lbServices.AppDefinition
-         * @deprecated Use AppDefinition.datasources.destroyAll() instead.
-         *
-         * @description
-         *
-         * Deletes all datasources of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - AppDefinition id
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `DataSourceDefinition` object.)
-         * </em>
-         */
-        R.datasources.destroyAll = function() {
-          var TargetResource = $injector.get("DataSourceDefinition");
-          var action = TargetResource["::delete::AppDefinition::datasources"];
-          return action.apply(R, arguments);
-        };
-
-    return R;
   }]);
 
 /**
@@ -815,12 +564,11 @@ module.factory(
  */
 module.factory(
   "ModelDefinition",
-  ['LoopBackResource', 'LoopBackAuth', '$injector', function(Resource, LoopBackAuth, $injector) {
-    var R = Resource(
+  ['LoopBackResource', 'LoopBackAuth', function(Resource, LoopBackAuth) {
+    return Resource(
       urlBase + "/ModelDefinitions/:id",
       { 'id': '@id' },
       {
-
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#create
@@ -858,7 +606,6 @@ module.factory(
           url: urlBase + "/ModelDefinitions",
           method: "POST",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#updateOrCreate
@@ -896,7 +643,6 @@ module.factory(
           url: urlBase + "/ModelDefinitions",
           method: "PUT",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#exists
@@ -922,13 +668,12 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{*=}` - 
+         *  - `exists` – `{*=}` -
          */
         "exists": {
           url: urlBase + "/ModelDefinitions/:id/exists",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#findById
@@ -961,7 +706,6 @@ module.factory(
           url: urlBase + "/ModelDefinitions/:id",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#find
@@ -995,7 +739,6 @@ module.factory(
           method: "GET",
           isArray: true,
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#findOne
@@ -1028,7 +771,6 @@ module.factory(
           url: urlBase + "/ModelDefinitions/findOne",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#destroyById
@@ -1058,7 +800,6 @@ module.factory(
           url: urlBase + "/ModelDefinitions/:id",
           method: "DELETE",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#count
@@ -1084,13 +825,12 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` - 
+         *  - `count` – `{number=}` -
          */
         "count": {
           url: urlBase + "/ModelDefinitions/count",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#prototype$updateAttributes
@@ -1102,7 +842,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - ModelDefinition id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Object} postData Request data.
          *
@@ -1127,12 +868,10 @@ module.factory(
           url: urlBase + "/ModelDefinitions/:id",
           method: "PUT",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#prototype$__get__methods
          * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.methods() instead.
          *
          * @description
          *
@@ -1140,9 +879,7 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - ModelDefinition id
-         *
-         *  - `filter` – `{object=}` - 
+         *  - `filter` – `{object=}` -
          *
          * @param {Function(Array.<Object>, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1164,12 +901,10 @@ module.factory(
           method: "GET",
           isArray: true,
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#prototype$__create__methods
          * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.methods.create() instead.
          *
          * @description
          *
@@ -1177,7 +912,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - ModelDefinition id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Object} postData Request data.
          *
@@ -1202,12 +938,10 @@ module.factory(
           url: urlBase + "/ModelDefinitions/:id/methods",
           method: "POST",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#prototype$__delete__methods
          * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.methods.destroyAll() instead.
          *
          * @description
          *
@@ -1215,7 +949,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - ModelDefinition id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1236,12 +971,10 @@ module.factory(
           url: urlBase + "/ModelDefinitions/:id/methods",
           method: "DELETE",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#prototype$__get__relations
          * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.relations() instead.
          *
          * @description
          *
@@ -1249,9 +982,7 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - ModelDefinition id
-         *
-         *  - `filter` – `{object=}` - 
+         *  - `filter` – `{object=}` -
          *
          * @param {Function(Array.<Object>, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1273,12 +1004,10 @@ module.factory(
           method: "GET",
           isArray: true,
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#prototype$__create__relations
          * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.relations.create() instead.
          *
          * @description
          *
@@ -1286,7 +1015,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - ModelDefinition id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Object} postData Request data.
          *
@@ -1311,12 +1041,10 @@ module.factory(
           url: urlBase + "/ModelDefinitions/:id/relations",
           method: "POST",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#prototype$__delete__relations
          * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.relations.destroyAll() instead.
          *
          * @description
          *
@@ -1324,7 +1052,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - ModelDefinition id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1345,12 +1074,10 @@ module.factory(
           url: urlBase + "/ModelDefinitions/:id/relations",
           method: "DELETE",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#prototype$__get__accessControls
          * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.accessControls() instead.
          *
          * @description
          *
@@ -1358,9 +1085,7 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - ModelDefinition id
-         *
-         *  - `filter` – `{object=}` - 
+         *  - `filter` – `{object=}` -
          *
          * @param {Function(Array.<Object>, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1382,12 +1107,10 @@ module.factory(
           method: "GET",
           isArray: true,
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#prototype$__create__accessControls
          * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.accessControls.create() instead.
          *
          * @description
          *
@@ -1395,7 +1118,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - ModelDefinition id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Object} postData Request data.
          *
@@ -1420,12 +1144,10 @@ module.factory(
           url: urlBase + "/ModelDefinitions/:id/accessControls",
           method: "POST",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#prototype$__delete__accessControls
          * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.accessControls.destroyAll() instead.
          *
          * @description
          *
@@ -1433,7 +1155,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - ModelDefinition id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1454,12 +1177,10 @@ module.factory(
           url: urlBase + "/ModelDefinitions/:id/accessControls",
           method: "DELETE",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#prototype$__get__properties
          * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.properties() instead.
          *
          * @description
          *
@@ -1467,9 +1188,7 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - ModelDefinition id
-         *
-         *  - `filter` – `{object=}` - 
+         *  - `filter` – `{object=}` -
          *
          * @param {Function(Array.<Object>, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1491,12 +1210,10 @@ module.factory(
           method: "GET",
           isArray: true,
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#prototype$__create__properties
          * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.properties.create() instead.
          *
          * @description
          *
@@ -1504,7 +1221,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - ModelDefinition id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Object} postData Request data.
          *
@@ -1529,12 +1247,10 @@ module.factory(
           url: urlBase + "/ModelDefinitions/:id/properties",
           method: "POST",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#prototype$__delete__properties
          * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.properties.destroyAll() instead.
          *
          * @description
          *
@@ -1542,7 +1258,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - ModelDefinition id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1563,12 +1280,10 @@ module.factory(
           url: urlBase + "/ModelDefinitions/:id/properties",
           method: "DELETE",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#prototype$__get__validations
          * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.validations() instead.
          *
          * @description
          *
@@ -1576,9 +1291,7 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - ModelDefinition id
-         *
-         *  - `filter` – `{object=}` - 
+         *  - `filter` – `{object=}` -
          *
          * @param {Function(Array.<Object>, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1600,12 +1313,10 @@ module.factory(
           method: "GET",
           isArray: true,
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#prototype$__create__validations
          * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.validations.create() instead.
          *
          * @description
          *
@@ -1613,7 +1324,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - ModelDefinition id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Object} postData Request data.
          *
@@ -1638,12 +1350,10 @@ module.factory(
           url: urlBase + "/ModelDefinitions/:id/validations",
           method: "POST",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#prototype$__delete__validations
          * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.validations.destroyAll() instead.
          *
          * @description
          *
@@ -1651,7 +1361,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - ModelDefinition id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1672,12 +1383,10 @@ module.factory(
           url: urlBase + "/ModelDefinitions/:id/validations",
           method: "DELETE",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#prototype$__get__views
          * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.views() instead.
          *
          * @description
          *
@@ -1685,9 +1394,7 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - ModelDefinition id
-         *
-         *  - `filter` – `{object=}` - 
+         *  - `filter` – `{object=}` -
          *
          * @param {Function(Array.<Object>, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1709,12 +1416,10 @@ module.factory(
           method: "GET",
           isArray: true,
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#prototype$__create__views
          * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.views.create() instead.
          *
          * @description
          *
@@ -1722,7 +1427,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - ModelDefinition id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Object} postData Request data.
          *
@@ -1747,12 +1453,10 @@ module.factory(
           url: urlBase + "/ModelDefinitions/:id/views",
           method: "POST",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#prototype$__delete__views
          * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.views.destroyAll() instead.
          *
          * @description
          *
@@ -1760,7 +1464,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - ModelDefinition id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1781,715 +1486,8 @@ module.factory(
           url: urlBase + "/ModelDefinitions/:id/views",
           method: "DELETE",
         },
-
-        // INTERNAL. Use AppDefinition.models() instead.
-        "::get::AppDefinition::models": {
-          url: urlBase + "/AppDefinitions/:id/models",
-          method: "GET",
-          isArray: true,
-        },
-
-        // INTERNAL. Use AppDefinition.models.create() instead.
-        "::create::AppDefinition::models": {
-          url: urlBase + "/AppDefinitions/:id/models",
-          method: "POST",
-        },
-
-        // INTERNAL. Use AppDefinition.models.destroyAll() instead.
-        "::delete::AppDefinition::models": {
-          url: urlBase + "/AppDefinitions/:id/models",
-          method: "DELETE",
-        },
-
-        // INTERNAL. Use DataSourceDefinition.models() instead.
-        "::get::DataSourceDefinition::models": {
-          url: urlBase + "/DataSourceDefinitions/:id/models",
-          method: "GET",
-          isArray: true,
-        },
-
-        // INTERNAL. Use DataSourceDefinition.models.create() instead.
-        "::create::DataSourceDefinition::models": {
-          url: urlBase + "/DataSourceDefinitions/:id/models",
-          method: "POST",
-        },
-
-        // INTERNAL. Use DataSourceDefinition.models.destroyAll() instead.
-        "::delete::DataSourceDefinition::models": {
-          url: urlBase + "/DataSourceDefinitions/:id/models",
-          method: "DELETE",
-        },
       }
     );
-
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#methods
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.methods() instead.
-         *
-         * @description
-         *
-         * Queries methods of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - ModelDefinition id
-         *
-         *  - `filter` – `{object=}` - 
-         *
-         * @param {Function(Array.<Object>, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Array.<Object>} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelMethod` object.)
-         * </em>
-         */
-        R.methods = function() {
-          var TargetResource = $injector.get("ModelMethod");
-          var action = TargetResource["::get::ModelDefinition::methods"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#methods.create
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.methods.create() instead.
-         *
-         * @description
-         *
-         * Creates a new instance in methods of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - ModelDefinition id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelMethod` object.)
-         * </em>
-         */
-        R.methods.create = function() {
-          var TargetResource = $injector.get("ModelMethod");
-          var action = TargetResource["::create::ModelDefinition::methods"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#methods.destroyAll
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.methods.destroyAll() instead.
-         *
-         * @description
-         *
-         * Deletes all methods of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - ModelDefinition id
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelMethod` object.)
-         * </em>
-         */
-        R.methods.destroyAll = function() {
-          var TargetResource = $injector.get("ModelMethod");
-          var action = TargetResource["::delete::ModelDefinition::methods"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#relations
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.relations() instead.
-         *
-         * @description
-         *
-         * Queries relations of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - ModelDefinition id
-         *
-         *  - `filter` – `{object=}` - 
-         *
-         * @param {Function(Array.<Object>, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Array.<Object>} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelRelation` object.)
-         * </em>
-         */
-        R.relations = function() {
-          var TargetResource = $injector.get("ModelRelation");
-          var action = TargetResource["::get::ModelDefinition::relations"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#relations.create
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.relations.create() instead.
-         *
-         * @description
-         *
-         * Creates a new instance in relations of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - ModelDefinition id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelRelation` object.)
-         * </em>
-         */
-        R.relations.create = function() {
-          var TargetResource = $injector.get("ModelRelation");
-          var action = TargetResource["::create::ModelDefinition::relations"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#relations.destroyAll
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.relations.destroyAll() instead.
-         *
-         * @description
-         *
-         * Deletes all relations of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - ModelDefinition id
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelRelation` object.)
-         * </em>
-         */
-        R.relations.destroyAll = function() {
-          var TargetResource = $injector.get("ModelRelation");
-          var action = TargetResource["::delete::ModelDefinition::relations"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#accessControls
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.accessControls() instead.
-         *
-         * @description
-         *
-         * Queries accessControls of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - ModelDefinition id
-         *
-         *  - `filter` – `{object=}` - 
-         *
-         * @param {Function(Array.<Object>, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Array.<Object>} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelAccessControl` object.)
-         * </em>
-         */
-        R.accessControls = function() {
-          var TargetResource = $injector.get("ModelAccessControl");
-          var action = TargetResource["::get::ModelDefinition::accessControls"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#accessControls.create
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.accessControls.create() instead.
-         *
-         * @description
-         *
-         * Creates a new instance in accessControls of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - ModelDefinition id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelAccessControl` object.)
-         * </em>
-         */
-        R.accessControls.create = function() {
-          var TargetResource = $injector.get("ModelAccessControl");
-          var action = TargetResource["::create::ModelDefinition::accessControls"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#accessControls.destroyAll
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.accessControls.destroyAll() instead.
-         *
-         * @description
-         *
-         * Deletes all accessControls of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - ModelDefinition id
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelAccessControl` object.)
-         * </em>
-         */
-        R.accessControls.destroyAll = function() {
-          var TargetResource = $injector.get("ModelAccessControl");
-          var action = TargetResource["::delete::ModelDefinition::accessControls"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#properties
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.properties() instead.
-         *
-         * @description
-         *
-         * Queries properties of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - ModelDefinition id
-         *
-         *  - `filter` – `{object=}` - 
-         *
-         * @param {Function(Array.<Object>, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Array.<Object>} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelProperty` object.)
-         * </em>
-         */
-        R.properties = function() {
-          var TargetResource = $injector.get("ModelProperty");
-          var action = TargetResource["::get::ModelDefinition::properties"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#properties.create
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.properties.create() instead.
-         *
-         * @description
-         *
-         * Creates a new instance in properties of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - ModelDefinition id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelProperty` object.)
-         * </em>
-         */
-        R.properties.create = function() {
-          var TargetResource = $injector.get("ModelProperty");
-          var action = TargetResource["::create::ModelDefinition::properties"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#properties.destroyAll
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.properties.destroyAll() instead.
-         *
-         * @description
-         *
-         * Deletes all properties of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - ModelDefinition id
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelProperty` object.)
-         * </em>
-         */
-        R.properties.destroyAll = function() {
-          var TargetResource = $injector.get("ModelProperty");
-          var action = TargetResource["::delete::ModelDefinition::properties"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#validations
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.validations() instead.
-         *
-         * @description
-         *
-         * Queries validations of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - ModelDefinition id
-         *
-         *  - `filter` – `{object=}` - 
-         *
-         * @param {Function(Array.<Object>, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Array.<Object>} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `PropertyValidation` object.)
-         * </em>
-         */
-        R.validations = function() {
-          var TargetResource = $injector.get("PropertyValidation");
-          var action = TargetResource["::get::ModelDefinition::validations"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#validations.create
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.validations.create() instead.
-         *
-         * @description
-         *
-         * Creates a new instance in validations of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - ModelDefinition id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `PropertyValidation` object.)
-         * </em>
-         */
-        R.validations.create = function() {
-          var TargetResource = $injector.get("PropertyValidation");
-          var action = TargetResource["::create::ModelDefinition::validations"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#validations.destroyAll
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.validations.destroyAll() instead.
-         *
-         * @description
-         *
-         * Deletes all validations of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - ModelDefinition id
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `PropertyValidation` object.)
-         * </em>
-         */
-        R.validations.destroyAll = function() {
-          var TargetResource = $injector.get("PropertyValidation");
-          var action = TargetResource["::delete::ModelDefinition::validations"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#views
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.views() instead.
-         *
-         * @description
-         *
-         * Queries views of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - ModelDefinition id
-         *
-         *  - `filter` – `{object=}` - 
-         *
-         * @param {Function(Array.<Object>, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Array.<Object>} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ViewDefinition` object.)
-         * </em>
-         */
-        R.views = function() {
-          var TargetResource = $injector.get("ViewDefinition");
-          var action = TargetResource["::get::ModelDefinition::views"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#views.create
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.views.create() instead.
-         *
-         * @description
-         *
-         * Creates a new instance in views of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - ModelDefinition id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ViewDefinition` object.)
-         * </em>
-         */
-        R.views.create = function() {
-          var TargetResource = $injector.get("ViewDefinition");
-          var action = TargetResource["::create::ModelDefinition::views"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#views.destroyAll
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.views.destroyAll() instead.
-         *
-         * @description
-         *
-         * Deletes all views of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - ModelDefinition id
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ViewDefinition` object.)
-         * </em>
-         */
-        R.views.destroyAll = function() {
-          var TargetResource = $injector.get("ViewDefinition");
-          var action = TargetResource["::delete::ModelDefinition::views"];
-          return action.apply(R, arguments);
-        };
-
-    return R;
   }]);
 
 /**
@@ -2510,12 +1508,11 @@ module.factory(
  */
 module.factory(
   "ModelMethod",
-  ['LoopBackResource', 'LoopBackAuth', '$injector', function(Resource, LoopBackAuth, $injector) {
-    var R = Resource(
+  ['LoopBackResource', 'LoopBackAuth', function(Resource, LoopBackAuth) {
+    return Resource(
       urlBase + "/ModelMethods/:id",
       { 'id': '@id' },
       {
-
         /**
          * @ngdoc method
          * @name lbServices.ModelMethod#create
@@ -2553,7 +1550,6 @@ module.factory(
           url: urlBase + "/ModelMethods",
           method: "POST",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelMethod#updateOrCreate
@@ -2591,7 +1587,6 @@ module.factory(
           url: urlBase + "/ModelMethods",
           method: "PUT",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelMethod#exists
@@ -2617,13 +1612,12 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{*=}` - 
+         *  - `exists` – `{*=}` -
          */
         "exists": {
           url: urlBase + "/ModelMethods/:id/exists",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelMethod#findById
@@ -2656,7 +1650,6 @@ module.factory(
           url: urlBase + "/ModelMethods/:id",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelMethod#find
@@ -2690,7 +1683,6 @@ module.factory(
           method: "GET",
           isArray: true,
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelMethod#findOne
@@ -2723,7 +1715,6 @@ module.factory(
           url: urlBase + "/ModelMethods/findOne",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelMethod#destroyById
@@ -2753,7 +1744,6 @@ module.factory(
           url: urlBase + "/ModelMethods/:id",
           method: "DELETE",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelMethod#count
@@ -2779,13 +1769,12 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` - 
+         *  - `count` – `{number=}` -
          */
         "count": {
           url: urlBase + "/ModelMethods/count",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelMethod#prototype$updateAttributes
@@ -2797,7 +1786,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - ModelMethod id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Object} postData Request data.
          *
@@ -2822,30 +1812,8 @@ module.factory(
           url: urlBase + "/ModelMethods/:id",
           method: "PUT",
         },
-
-        // INTERNAL. Use ModelDefinition.methods() instead.
-        "::get::ModelDefinition::methods": {
-          url: urlBase + "/ModelDefinitions/:id/methods",
-          method: "GET",
-          isArray: true,
-        },
-
-        // INTERNAL. Use ModelDefinition.methods.create() instead.
-        "::create::ModelDefinition::methods": {
-          url: urlBase + "/ModelDefinitions/:id/methods",
-          method: "POST",
-        },
-
-        // INTERNAL. Use ModelDefinition.methods.destroyAll() instead.
-        "::delete::ModelDefinition::methods": {
-          url: urlBase + "/ModelDefinitions/:id/methods",
-          method: "DELETE",
-        },
       }
     );
-
-
-    return R;
   }]);
 
 /**
@@ -2866,12 +1834,11 @@ module.factory(
  */
 module.factory(
   "ModelRelation",
-  ['LoopBackResource', 'LoopBackAuth', '$injector', function(Resource, LoopBackAuth, $injector) {
-    var R = Resource(
+  ['LoopBackResource', 'LoopBackAuth', function(Resource, LoopBackAuth) {
+    return Resource(
       urlBase + "/ModelRelations/:id",
       { 'id': '@id' },
       {
-
         /**
          * @ngdoc method
          * @name lbServices.ModelRelation#create
@@ -2909,7 +1876,6 @@ module.factory(
           url: urlBase + "/ModelRelations",
           method: "POST",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelRelation#updateOrCreate
@@ -2947,7 +1913,6 @@ module.factory(
           url: urlBase + "/ModelRelations",
           method: "PUT",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelRelation#exists
@@ -2973,13 +1938,12 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{*=}` - 
+         *  - `exists` – `{*=}` -
          */
         "exists": {
           url: urlBase + "/ModelRelations/:id/exists",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelRelation#findById
@@ -3012,7 +1976,6 @@ module.factory(
           url: urlBase + "/ModelRelations/:id",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelRelation#find
@@ -3046,7 +2009,6 @@ module.factory(
           method: "GET",
           isArray: true,
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelRelation#findOne
@@ -3079,7 +2041,6 @@ module.factory(
           url: urlBase + "/ModelRelations/findOne",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelRelation#destroyById
@@ -3109,7 +2070,6 @@ module.factory(
           url: urlBase + "/ModelRelations/:id",
           method: "DELETE",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelRelation#count
@@ -3135,13 +2095,12 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` - 
+         *  - `count` – `{number=}` -
          */
         "count": {
           url: urlBase + "/ModelRelations/count",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelRelation#prototype$updateAttributes
@@ -3153,7 +2112,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - ModelRelation id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Object} postData Request data.
          *
@@ -3178,30 +2138,8 @@ module.factory(
           url: urlBase + "/ModelRelations/:id",
           method: "PUT",
         },
-
-        // INTERNAL. Use ModelDefinition.relations() instead.
-        "::get::ModelDefinition::relations": {
-          url: urlBase + "/ModelDefinitions/:id/relations",
-          method: "GET",
-          isArray: true,
-        },
-
-        // INTERNAL. Use ModelDefinition.relations.create() instead.
-        "::create::ModelDefinition::relations": {
-          url: urlBase + "/ModelDefinitions/:id/relations",
-          method: "POST",
-        },
-
-        // INTERNAL. Use ModelDefinition.relations.destroyAll() instead.
-        "::delete::ModelDefinition::relations": {
-          url: urlBase + "/ModelDefinitions/:id/relations",
-          method: "DELETE",
-        },
       }
     );
-
-
-    return R;
   }]);
 
 /**
@@ -3222,12 +2160,11 @@ module.factory(
  */
 module.factory(
   "ModelAccessControl",
-  ['LoopBackResource', 'LoopBackAuth', '$injector', function(Resource, LoopBackAuth, $injector) {
-    var R = Resource(
+  ['LoopBackResource', 'LoopBackAuth', function(Resource, LoopBackAuth) {
+    return Resource(
       urlBase + "/ModelAccessControls/:id",
       { 'id': '@id' },
       {
-
         /**
          * @ngdoc method
          * @name lbServices.ModelAccessControl#create
@@ -3265,7 +2202,6 @@ module.factory(
           url: urlBase + "/ModelAccessControls",
           method: "POST",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelAccessControl#updateOrCreate
@@ -3303,7 +2239,6 @@ module.factory(
           url: urlBase + "/ModelAccessControls",
           method: "PUT",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelAccessControl#exists
@@ -3329,13 +2264,12 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{*=}` - 
+         *  - `exists` – `{*=}` -
          */
         "exists": {
           url: urlBase + "/ModelAccessControls/:id/exists",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelAccessControl#findById
@@ -3368,7 +2302,6 @@ module.factory(
           url: urlBase + "/ModelAccessControls/:id",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelAccessControl#find
@@ -3402,7 +2335,6 @@ module.factory(
           method: "GET",
           isArray: true,
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelAccessControl#findOne
@@ -3435,7 +2367,6 @@ module.factory(
           url: urlBase + "/ModelAccessControls/findOne",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelAccessControl#destroyById
@@ -3465,7 +2396,6 @@ module.factory(
           url: urlBase + "/ModelAccessControls/:id",
           method: "DELETE",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelAccessControl#count
@@ -3491,13 +2421,12 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` - 
+         *  - `count` – `{number=}` -
          */
         "count": {
           url: urlBase + "/ModelAccessControls/count",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelAccessControl#prototype$updateAttributes
@@ -3509,7 +2438,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - ModelAccessControl id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Object} postData Request data.
          *
@@ -3534,30 +2464,8 @@ module.factory(
           url: urlBase + "/ModelAccessControls/:id",
           method: "PUT",
         },
-
-        // INTERNAL. Use ModelDefinition.accessControls() instead.
-        "::get::ModelDefinition::accessControls": {
-          url: urlBase + "/ModelDefinitions/:id/accessControls",
-          method: "GET",
-          isArray: true,
-        },
-
-        // INTERNAL. Use ModelDefinition.accessControls.create() instead.
-        "::create::ModelDefinition::accessControls": {
-          url: urlBase + "/ModelDefinitions/:id/accessControls",
-          method: "POST",
-        },
-
-        // INTERNAL. Use ModelDefinition.accessControls.destroyAll() instead.
-        "::delete::ModelDefinition::accessControls": {
-          url: urlBase + "/ModelDefinitions/:id/accessControls",
-          method: "DELETE",
-        },
       }
     );
-
-
-    return R;
   }]);
 
 /**
@@ -3578,12 +2486,11 @@ module.factory(
  */
 module.factory(
   "ModelProperty",
-  ['LoopBackResource', 'LoopBackAuth', '$injector', function(Resource, LoopBackAuth, $injector) {
-    var R = Resource(
+  ['LoopBackResource', 'LoopBackAuth', function(Resource, LoopBackAuth) {
+    return Resource(
       urlBase + "/ModelProperties/:id",
       { 'id': '@id' },
       {
-
         /**
          * @ngdoc method
          * @name lbServices.ModelProperty#create
@@ -3621,7 +2528,6 @@ module.factory(
           url: urlBase + "/ModelProperties",
           method: "POST",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelProperty#updateOrCreate
@@ -3659,7 +2565,6 @@ module.factory(
           url: urlBase + "/ModelProperties",
           method: "PUT",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelProperty#exists
@@ -3685,13 +2590,12 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{*=}` - 
+         *  - `exists` – `{*=}` -
          */
         "exists": {
           url: urlBase + "/ModelProperties/:id/exists",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelProperty#findById
@@ -3724,7 +2628,6 @@ module.factory(
           url: urlBase + "/ModelProperties/:id",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelProperty#find
@@ -3758,7 +2661,6 @@ module.factory(
           method: "GET",
           isArray: true,
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelProperty#findOne
@@ -3791,7 +2693,6 @@ module.factory(
           url: urlBase + "/ModelProperties/findOne",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelProperty#destroyById
@@ -3821,7 +2722,6 @@ module.factory(
           url: urlBase + "/ModelProperties/:id",
           method: "DELETE",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelProperty#count
@@ -3847,13 +2747,12 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` - 
+         *  - `count` – `{number=}` -
          */
         "count": {
           url: urlBase + "/ModelProperties/count",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ModelProperty#prototype$updateAttributes
@@ -3865,7 +2764,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - ModelProperty id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Object} postData Request data.
          *
@@ -3890,30 +2790,8 @@ module.factory(
           url: urlBase + "/ModelProperties/:id",
           method: "PUT",
         },
-
-        // INTERNAL. Use ModelDefinition.properties() instead.
-        "::get::ModelDefinition::properties": {
-          url: urlBase + "/ModelDefinitions/:id/properties",
-          method: "GET",
-          isArray: true,
-        },
-
-        // INTERNAL. Use ModelDefinition.properties.create() instead.
-        "::create::ModelDefinition::properties": {
-          url: urlBase + "/ModelDefinitions/:id/properties",
-          method: "POST",
-        },
-
-        // INTERNAL. Use ModelDefinition.properties.destroyAll() instead.
-        "::delete::ModelDefinition::properties": {
-          url: urlBase + "/ModelDefinitions/:id/properties",
-          method: "DELETE",
-        },
       }
     );
-
-
-    return R;
   }]);
 
 /**
@@ -3934,12 +2812,11 @@ module.factory(
  */
 module.factory(
   "DatabaseColumn",
-  ['LoopBackResource', 'LoopBackAuth', '$injector', function(Resource, LoopBackAuth, $injector) {
-    var R = Resource(
+  ['LoopBackResource', 'LoopBackAuth', function(Resource, LoopBackAuth) {
+    return Resource(
       urlBase + "/DatabaseColumns/:id",
       { 'id': '@id' },
       {
-
         /**
          * @ngdoc method
          * @name lbServices.DatabaseColumn#create
@@ -3977,7 +2854,6 @@ module.factory(
           url: urlBase + "/DatabaseColumns",
           method: "POST",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.DatabaseColumn#updateOrCreate
@@ -4015,7 +2891,6 @@ module.factory(
           url: urlBase + "/DatabaseColumns",
           method: "PUT",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.DatabaseColumn#exists
@@ -4041,13 +2916,12 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{*=}` - 
+         *  - `exists` – `{*=}` -
          */
         "exists": {
           url: urlBase + "/DatabaseColumns/:id/exists",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.DatabaseColumn#findById
@@ -4080,7 +2954,6 @@ module.factory(
           url: urlBase + "/DatabaseColumns/:id",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.DatabaseColumn#find
@@ -4114,7 +2987,6 @@ module.factory(
           method: "GET",
           isArray: true,
         },
-
         /**
          * @ngdoc method
          * @name lbServices.DatabaseColumn#findOne
@@ -4147,7 +3019,6 @@ module.factory(
           url: urlBase + "/DatabaseColumns/findOne",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.DatabaseColumn#destroyById
@@ -4177,7 +3048,6 @@ module.factory(
           url: urlBase + "/DatabaseColumns/:id",
           method: "DELETE",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.DatabaseColumn#count
@@ -4203,13 +3073,12 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` - 
+         *  - `count` – `{number=}` -
          */
         "count": {
           url: urlBase + "/DatabaseColumns/count",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.DatabaseColumn#prototype$updateAttributes
@@ -4221,7 +3090,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - DatabaseColumn id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Object} postData Request data.
          *
@@ -4248,9 +3118,6 @@ module.factory(
         },
       }
     );
-
-
-    return R;
   }]);
 
 /**
@@ -4271,12 +3138,11 @@ module.factory(
  */
 module.factory(
   "PropertyValidation",
-  ['LoopBackResource', 'LoopBackAuth', '$injector', function(Resource, LoopBackAuth, $injector) {
-    var R = Resource(
+  ['LoopBackResource', 'LoopBackAuth', function(Resource, LoopBackAuth) {
+    return Resource(
       urlBase + "/PropertyValidations/:id",
       { 'id': '@id' },
       {
-
         /**
          * @ngdoc method
          * @name lbServices.PropertyValidation#create
@@ -4314,7 +3180,6 @@ module.factory(
           url: urlBase + "/PropertyValidations",
           method: "POST",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.PropertyValidation#updateOrCreate
@@ -4352,7 +3217,6 @@ module.factory(
           url: urlBase + "/PropertyValidations",
           method: "PUT",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.PropertyValidation#exists
@@ -4378,13 +3242,12 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{*=}` - 
+         *  - `exists` – `{*=}` -
          */
         "exists": {
           url: urlBase + "/PropertyValidations/:id/exists",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.PropertyValidation#findById
@@ -4417,7 +3280,6 @@ module.factory(
           url: urlBase + "/PropertyValidations/:id",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.PropertyValidation#find
@@ -4451,7 +3313,6 @@ module.factory(
           method: "GET",
           isArray: true,
         },
-
         /**
          * @ngdoc method
          * @name lbServices.PropertyValidation#findOne
@@ -4484,7 +3345,6 @@ module.factory(
           url: urlBase + "/PropertyValidations/findOne",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.PropertyValidation#destroyById
@@ -4514,7 +3374,6 @@ module.factory(
           url: urlBase + "/PropertyValidations/:id",
           method: "DELETE",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.PropertyValidation#count
@@ -4540,13 +3399,12 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` - 
+         *  - `count` – `{number=}` -
          */
         "count": {
           url: urlBase + "/PropertyValidations/count",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.PropertyValidation#prototype$updateAttributes
@@ -4558,7 +3416,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - PropertyValidation id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Object} postData Request data.
          *
@@ -4583,30 +3442,8 @@ module.factory(
           url: urlBase + "/PropertyValidations/:id",
           method: "PUT",
         },
-
-        // INTERNAL. Use ModelDefinition.validations() instead.
-        "::get::ModelDefinition::validations": {
-          url: urlBase + "/ModelDefinitions/:id/validations",
-          method: "GET",
-          isArray: true,
-        },
-
-        // INTERNAL. Use ModelDefinition.validations.create() instead.
-        "::create::ModelDefinition::validations": {
-          url: urlBase + "/ModelDefinitions/:id/validations",
-          method: "POST",
-        },
-
-        // INTERNAL. Use ModelDefinition.validations.destroyAll() instead.
-        "::delete::ModelDefinition::validations": {
-          url: urlBase + "/ModelDefinitions/:id/validations",
-          method: "DELETE",
-        },
       }
     );
-
-
-    return R;
   }]);
 
 /**
@@ -4627,12 +3464,11 @@ module.factory(
  */
 module.factory(
   "ViewDefinition",
-  ['LoopBackResource', 'LoopBackAuth', '$injector', function(Resource, LoopBackAuth, $injector) {
-    var R = Resource(
+  ['LoopBackResource', 'LoopBackAuth', function(Resource, LoopBackAuth) {
+    return Resource(
       urlBase + "/ViewDefinitions/:id",
       { 'id': '@id' },
       {
-
         /**
          * @ngdoc method
          * @name lbServices.ViewDefinition#create
@@ -4670,7 +3506,6 @@ module.factory(
           url: urlBase + "/ViewDefinitions",
           method: "POST",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ViewDefinition#updateOrCreate
@@ -4708,7 +3543,6 @@ module.factory(
           url: urlBase + "/ViewDefinitions",
           method: "PUT",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ViewDefinition#exists
@@ -4734,13 +3568,12 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{*=}` - 
+         *  - `exists` – `{*=}` -
          */
         "exists": {
           url: urlBase + "/ViewDefinitions/:id/exists",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ViewDefinition#findById
@@ -4773,7 +3606,6 @@ module.factory(
           url: urlBase + "/ViewDefinitions/:id",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ViewDefinition#find
@@ -4807,7 +3639,6 @@ module.factory(
           method: "GET",
           isArray: true,
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ViewDefinition#findOne
@@ -4840,7 +3671,6 @@ module.factory(
           url: urlBase + "/ViewDefinitions/findOne",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ViewDefinition#destroyById
@@ -4870,7 +3700,6 @@ module.factory(
           url: urlBase + "/ViewDefinitions/:id",
           method: "DELETE",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ViewDefinition#count
@@ -4896,13 +3725,12 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` - 
+         *  - `count` – `{number=}` -
          */
         "count": {
           url: urlBase + "/ViewDefinitions/count",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ViewDefinition#prototype$updateAttributes
@@ -4914,7 +3742,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - ViewDefinition id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Object} postData Request data.
          *
@@ -4939,12 +3768,10 @@ module.factory(
           url: urlBase + "/ViewDefinitions/:id",
           method: "PUT",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ViewDefinition#prototype$__get__children
          * @methodOf lbServices.ViewDefinition
-         * @deprecated Use ViewDefinition.children() instead.
          *
          * @description
          *
@@ -4952,9 +3779,7 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - ViewDefinition id
-         *
-         *  - `filter` – `{object=}` - 
+         *  - `filter` – `{object=}` -
          *
          * @param {Function(Array.<Object>, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -4976,12 +3801,10 @@ module.factory(
           method: "GET",
           isArray: true,
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ViewDefinition#prototype$__create__children
          * @methodOf lbServices.ViewDefinition
-         * @deprecated Use ViewDefinition.children.create() instead.
          *
          * @description
          *
@@ -4989,7 +3812,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - ViewDefinition id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Object} postData Request data.
          *
@@ -5014,12 +3838,10 @@ module.factory(
           url: urlBase + "/ViewDefinitions/:id/children",
           method: "POST",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.ViewDefinition#prototype$__delete__children
          * @methodOf lbServices.ViewDefinition
-         * @deprecated Use ViewDefinition.children.destroyAll() instead.
          *
          * @description
          *
@@ -5027,7 +3849,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - ViewDefinition id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -5048,160 +3871,8 @@ module.factory(
           url: urlBase + "/ViewDefinitions/:id/children",
           method: "DELETE",
         },
-
-        // INTERNAL. Use ModelDefinition.views() instead.
-        "::get::ModelDefinition::views": {
-          url: urlBase + "/ModelDefinitions/:id/views",
-          method: "GET",
-          isArray: true,
-        },
-
-        // INTERNAL. Use ModelDefinition.views.create() instead.
-        "::create::ModelDefinition::views": {
-          url: urlBase + "/ModelDefinitions/:id/views",
-          method: "POST",
-        },
-
-        // INTERNAL. Use ModelDefinition.views.destroyAll() instead.
-        "::delete::ModelDefinition::views": {
-          url: urlBase + "/ModelDefinitions/:id/views",
-          method: "DELETE",
-        },
-
-        // INTERNAL. Use ViewDefinition.children() instead.
-        "::get::ViewDefinition::children": {
-          url: urlBase + "/ViewDefinitions/:id/children",
-          method: "GET",
-          isArray: true,
-        },
-
-        // INTERNAL. Use ViewDefinition.children.create() instead.
-        "::create::ViewDefinition::children": {
-          url: urlBase + "/ViewDefinitions/:id/children",
-          method: "POST",
-        },
-
-        // INTERNAL. Use ViewDefinition.children.destroyAll() instead.
-        "::delete::ViewDefinition::children": {
-          url: urlBase + "/ViewDefinitions/:id/children",
-          method: "DELETE",
-        },
       }
     );
-
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ViewDefinition#children
-         * @methodOf lbServices.ViewDefinition
-         * @deprecated Use ViewDefinition.children() instead.
-         *
-         * @description
-         *
-         * Queries children of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - ViewDefinition id
-         *
-         *  - `filter` – `{object=}` - 
-         *
-         * @param {Function(Array.<Object>, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Array.<Object>} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ViewDefinition` object.)
-         * </em>
-         */
-        R.children = function() {
-          var TargetResource = $injector.get("ViewDefinition");
-          var action = TargetResource["::get::ViewDefinition::children"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ViewDefinition#children.create
-         * @methodOf lbServices.ViewDefinition
-         * @deprecated Use ViewDefinition.children.create() instead.
-         *
-         * @description
-         *
-         * Creates a new instance in children of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - ViewDefinition id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ViewDefinition` object.)
-         * </em>
-         */
-        R.children.create = function() {
-          var TargetResource = $injector.get("ViewDefinition");
-          var action = TargetResource["::create::ViewDefinition::children"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ViewDefinition#children.destroyAll
-         * @methodOf lbServices.ViewDefinition
-         * @deprecated Use ViewDefinition.children.destroyAll() instead.
-         *
-         * @description
-         *
-         * Deletes all children of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - ViewDefinition id
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ViewDefinition` object.)
-         * </em>
-         */
-        R.children.destroyAll = function() {
-          var TargetResource = $injector.get("ViewDefinition");
-          var action = TargetResource["::delete::ViewDefinition::children"];
-          return action.apply(R, arguments);
-        };
-
-    return R;
   }]);
 
 /**
@@ -5222,12 +3893,11 @@ module.factory(
  */
 module.factory(
   "DataSourceDefinition",
-  ['LoopBackResource', 'LoopBackAuth', '$injector', function(Resource, LoopBackAuth, $injector) {
-    var R = Resource(
+  ['LoopBackResource', 'LoopBackAuth', function(Resource, LoopBackAuth) {
+    return Resource(
       urlBase + "/DataSourceDefinitions/:id",
       { 'id': '@id' },
       {
-
         /**
          * @ngdoc method
          * @name lbServices.DataSourceDefinition#create
@@ -5265,7 +3935,6 @@ module.factory(
           url: urlBase + "/DataSourceDefinitions",
           method: "POST",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.DataSourceDefinition#updateOrCreate
@@ -5303,7 +3972,6 @@ module.factory(
           url: urlBase + "/DataSourceDefinitions",
           method: "PUT",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.DataSourceDefinition#exists
@@ -5329,13 +3997,12 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{*=}` - 
+         *  - `exists` – `{*=}` -
          */
         "exists": {
           url: urlBase + "/DataSourceDefinitions/:id/exists",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.DataSourceDefinition#findById
@@ -5368,7 +4035,6 @@ module.factory(
           url: urlBase + "/DataSourceDefinitions/:id",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.DataSourceDefinition#find
@@ -5402,7 +4068,6 @@ module.factory(
           method: "GET",
           isArray: true,
         },
-
         /**
          * @ngdoc method
          * @name lbServices.DataSourceDefinition#findOne
@@ -5435,7 +4100,6 @@ module.factory(
           url: urlBase + "/DataSourceDefinitions/findOne",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.DataSourceDefinition#destroyById
@@ -5465,7 +4129,6 @@ module.factory(
           url: urlBase + "/DataSourceDefinitions/:id",
           method: "DELETE",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.DataSourceDefinition#count
@@ -5491,13 +4154,12 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` - 
+         *  - `count` – `{number=}` -
          */
         "count": {
           url: urlBase + "/DataSourceDefinitions/count",
           method: "GET",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.DataSourceDefinition#prototype$updateAttributes
@@ -5509,7 +4171,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - DataSourceDefinition id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Object} postData Request data.
          *
@@ -5534,12 +4197,10 @@ module.factory(
           url: urlBase + "/DataSourceDefinitions/:id",
           method: "PUT",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.DataSourceDefinition#prototype$__get__models
          * @methodOf lbServices.DataSourceDefinition
-         * @deprecated Use DataSourceDefinition.models() instead.
          *
          * @description
          *
@@ -5547,9 +4208,7 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - DataSourceDefinition id
-         *
-         *  - `filter` – `{object=}` - 
+         *  - `filter` – `{object=}` -
          *
          * @param {Function(Array.<Object>, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -5571,12 +4230,10 @@ module.factory(
           method: "GET",
           isArray: true,
         },
-
         /**
          * @ngdoc method
          * @name lbServices.DataSourceDefinition#prototype$__create__models
          * @methodOf lbServices.DataSourceDefinition
-         * @deprecated Use DataSourceDefinition.models.create() instead.
          *
          * @description
          *
@@ -5584,7 +4241,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - DataSourceDefinition id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Object} postData Request data.
          *
@@ -5609,12 +4267,10 @@ module.factory(
           url: urlBase + "/DataSourceDefinitions/:id/models",
           method: "POST",
         },
-
         /**
          * @ngdoc method
          * @name lbServices.DataSourceDefinition#prototype$__delete__models
          * @methodOf lbServices.DataSourceDefinition
-         * @deprecated Use DataSourceDefinition.models.destroyAll() instead.
          *
          * @description
          *
@@ -5622,7 +4278,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - DataSourceDefinition id
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -5643,22 +4300,18 @@ module.factory(
           url: urlBase + "/DataSourceDefinitions/:id/models",
           method: "DELETE",
         },
-
         /**
          * @ngdoc method
-         * @name lbServices.DataSourceDefinition#prototype$__get__app
+         * @name lbServices.DataSourceDefinition#prototype$__get__component
          * @methodOf lbServices.DataSourceDefinition
-         * @deprecated Use DataSourceDefinition.app() instead.
          *
          * @description
          *
-         * Fetches belongsTo relation app
+         * Fetches belongsTo relation component
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `id` – `{*=}` - DataSourceDefinition id
-         *
-         *  - `refresh` – `{boolean=}` - 
+         *  - `refresh` – `{boolean=}` -
          *
          * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -5675,182 +4328,12 @@ module.factory(
          * This usually means the response is a `DataSourceDefinition` object.)
          * </em>
          */
-        "prototype$__get__app": {
-          url: urlBase + "/DataSourceDefinitions/:id/app",
+        "prototype$__get__component": {
+          url: urlBase + "/DataSourceDefinitions/:id/component",
           method: "GET",
-        },
-
-        // INTERNAL. Use AppDefinition.datasources() instead.
-        "::get::AppDefinition::datasources": {
-          url: urlBase + "/AppDefinitions/:id/datasources",
-          method: "GET",
-          isArray: true,
-        },
-
-        // INTERNAL. Use AppDefinition.datasources.create() instead.
-        "::create::AppDefinition::datasources": {
-          url: urlBase + "/AppDefinitions/:id/datasources",
-          method: "POST",
-        },
-
-        // INTERNAL. Use AppDefinition.datasources.destroyAll() instead.
-        "::delete::AppDefinition::datasources": {
-          url: urlBase + "/AppDefinitions/:id/datasources",
-          method: "DELETE",
         },
       }
     );
-
-
-        /**
-         * @ngdoc method
-         * @name lbServices.DataSourceDefinition#models
-         * @methodOf lbServices.DataSourceDefinition
-         * @deprecated Use DataSourceDefinition.models() instead.
-         *
-         * @description
-         *
-         * Queries models of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - DataSourceDefinition id
-         *
-         *  - `filter` – `{object=}` - 
-         *
-         * @param {Function(Array.<Object>, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Array.<Object>} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
-        R.models = function() {
-          var TargetResource = $injector.get("ModelDefinition");
-          var action = TargetResource["::get::DataSourceDefinition::models"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.DataSourceDefinition#models.create
-         * @methodOf lbServices.DataSourceDefinition
-         * @deprecated Use DataSourceDefinition.models.create() instead.
-         *
-         * @description
-         *
-         * Creates a new instance in models of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - DataSourceDefinition id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
-        R.models.create = function() {
-          var TargetResource = $injector.get("ModelDefinition");
-          var action = TargetResource["::create::DataSourceDefinition::models"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.DataSourceDefinition#models.destroyAll
-         * @methodOf lbServices.DataSourceDefinition
-         * @deprecated Use DataSourceDefinition.models.destroyAll() instead.
-         *
-         * @description
-         *
-         * Deletes all models of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - DataSourceDefinition id
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
-        R.models.destroyAll = function() {
-          var TargetResource = $injector.get("ModelDefinition");
-          var action = TargetResource["::delete::DataSourceDefinition::models"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.DataSourceDefinition#app
-         * @methodOf lbServices.DataSourceDefinition
-         * @deprecated Use DataSourceDefinition.app() instead.
-         *
-         * @description
-         *
-         * Fetches belongsTo relation app
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*=}` - DataSourceDefinition id
-         *
-         *  - `refresh` – `{boolean=}` - 
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `AppDefinition` object.)
-         * </em>
-         */
-        R.app = function() {
-          var TargetResource = $injector.get("AppDefinition");
-          var action = TargetResource["::get::DataSourceDefinition::app"];
-          return action.apply(R, arguments);
-        };
-
-    return R;
   }]);
 
 
@@ -5889,9 +4372,9 @@ module
       return localStorage[key] || sessionStorage[key] || null;
     }
   })
-  .config(['$httpProvider', function($httpProvider) {
+  .config(function($httpProvider) {
     $httpProvider.interceptors.push('LoopBackAuthRequestInterceptor');
-  }])
+  })
   .factory('LoopBackAuthRequestInterceptor', [ '$q', 'LoopBackAuth',
     function($q, LoopBackAuth) {
       return {
@@ -5930,5 +4413,3 @@ module
       return resource;
     };
   }]);
-
-})(window, window.angular);

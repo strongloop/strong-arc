@@ -262,13 +262,37 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
 *
 * */
 var IAMainControls = (IAMainControls = React).createClass({
+  getInitialState: function() {
+    return {
+      showNewModel: false,
+      newModelText: 'new model'
+    };
+  },
   render: function() {
     var scope = this.props.scope;
+    var that = this;
     var createModelViewRequest = function() {
-      scope.$apply(function() {
-        scope.createModelViewRequest();
-      });
+//      scope.$apply(function() {
+//        scope.createModelViewRequest();
+//      });
+      console.log('||  CREATE NEW MODEL');
+
+//      var oldNewModelState = that.state.showNewModel;
+//      var newModelText = that.state.newModelText;
+//      var newState = !oldNewModelState;
+//      if (newState === true) {
+//        newModelText = 'cancel';
+//      }
+//      else {
+//        newModelText = 'new model';
+//      }
+//      that.setState({
+//        showNewModel:newState,
+//        newModelText: newModelText
+//      });
+
     };
+
     var renderAppViewRequest = function() {
       window.open(
         'http://0.0.0.0:3003/#/uiform',
@@ -279,7 +303,7 @@ var IAMainControls = (IAMainControls = React).createClass({
     return (
       <div data-id="IAMainControlsContainer">
         <button onClick={createModelViewRequest} type="button" className="btn btn-default">
-        New Model
+        {that.state.newModelText}
         </button>
         <button onClick={renderAppViewRequest} type="button" className="btn btn-default">
         Render App
