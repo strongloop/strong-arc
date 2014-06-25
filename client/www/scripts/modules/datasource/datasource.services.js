@@ -1,29 +1,34 @@
 // Copyright StrongLoop 2014
 Datasource.service('DatasourceService', [
   'Datasourcedef',
+  'DataSourceDefinition',
   '$q',
-  function(Datasourcedef, $q) {
+  function(Datasourcedef, DataSourceDefinition, $q) {
     var svc = {};
     //  var deferred = $q.defer();
     svc.getDiscoverableDatasourceConnectors = function() {
       return ['loopback-connector-mssql', 'loopback-connector-oracle', 'loopback-connector-mysql', 'loopback-connector-postgresql']
     };
     svc.getAllDatasources = function() {
-      return Datasourcedef.alldefinitions({},
+      return DataSourceDefinition.query({},
         function(response) {
+          var datasources = [];
+          if (response && response.length) {
+            datasources = response;
+          }
 
          // console.log('good get datasource defs: '+ response);
 
-          var core = response.name[0];
-          var log = [];
-          var datasources = [];
-          angular.forEach(core, function(value, key){
-            this.push(key + ': ' + value);
-            datasources.push({name:key,props:value});
-          }, log);
+//          var core = response.name[0];
+//          var log = [];
+//          var datasources = [];
+//          angular.forEach(core, function(value, key){
+//            this.push(key + ': ' + value);
+//            datasources.push({name:key,props:value});
+//          }, log);
 
           // $scope.models = models;
-          window.localStorage.setItem('ApiDatasources', JSON.stringify(core));
+          window.localStorage.setItem('ApiDatasources', JSON.stringify(datasources));
           return datasources;
         },
         function(response) {

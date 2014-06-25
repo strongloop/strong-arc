@@ -391,27 +391,30 @@ app.controller('IDEController', [
           $scope.mainNavModels = result;
         }
       ).then(function() {
-        /*
-         * Datasources
-         * */
+    /*
+     *
+     *
+     * Datasources
+     *
+     *
+     * */
+        //$scope.mainNavDatasources = [];
+        $scope.mainNavDatasources = DatasourceService.getAllDatasources({});
+        $scope.mainNavDatasources.$promise.
+          then(function (result) {
 
-        $scope.mainNavDatasources = [];
-//        $scope.mainNavDatasources = DatasourceService.getAllDatasources({});
-//        $scope.mainNavDatasources.$promise.
-//          then(function (result) {
-//
 //            var core = result.name[0];
-////
+//
 //            var log = [];
 //            var datasources = [];
 //            angular.forEach(core, function(value, key){
 //              //this.push(key + ': ' + value);
 //              datasources.push({name:key,children:value});
 //            }, log);
-//            $scope.mainNavDatasources = datasources;
-//
-//
-//          });
+            $scope.mainNavDatasources = result;
+
+
+          });
       }
     );
 

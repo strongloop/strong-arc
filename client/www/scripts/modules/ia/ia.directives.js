@@ -85,9 +85,9 @@ IA.directive('slIaMainNav', [
         var renderComp = function() {
           $timeout(function() {
 
-            if (!scope.mainNavDatasources.$promise) {
+          //  if (!scope.mainNavDatasources.$promise) {
               React.renderComponent(IAMainNavContainer({scope:scope}), el[0]);
-            }
+          //  }
 
           }, 140);
 
@@ -96,39 +96,39 @@ IA.directive('slIaMainNav', [
         scope.$watch('currentModelSelections', function(newVal, oldVal) {
           processActiveNavState();
           renderComp();
-        });
+        }, true);
         scope.$watch('currentOpenModelNames', function(newVal, oldVal) {
           processActiveNavState();
           renderComp();
-        });
+        }, true);
         scope.$watch('activeModelInstance', function(newVal, oldVal) {
           processActiveNavState();
           renderComp();
-        });
+        }, true);
         scope.$watch('currentDatasourceSelections', function(newVal, oldVal) {
           processActiveNavState();
           renderComp();
-        });
+        }, true);
         scope.$watch('currentOpenDatasourceNames', function(newVal, oldVal) {
           processActiveNavState();
           renderComp();
-        });
+        }, true);
         scope.$watch('activeDatasourceInstance', function(newVal, oldVal) {
           processActiveNavState();
           renderComp();
-        });
+        }, true);
         scope.$watch('mainNavModels', function(mainNavModels) {
           if (!mainNavModels.$promise) {
             processActiveNavState();
             renderComp();
           }
-        });
+        }, true);
         scope.$watch('mainNavDatasources', function(mainNavDatasources) {
           if (!mainNavDatasources.$promise) {
             processActiveNavState();
             renderComp();
           }
-        });
+        }, true);
 
       }
     }

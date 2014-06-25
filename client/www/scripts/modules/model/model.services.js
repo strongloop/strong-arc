@@ -7,7 +7,6 @@ Model.service('ModelService', [
   function(Modeldef, ModelDefinition, $q, AppStorageService) {
     var svc = {};
 
-  //  var deferred = $q.defer();
     svc.createModel = function(config) {
       ModelDefinition.create(config, function(response) {
           console.log('good create model def: ' + response);
@@ -206,9 +205,6 @@ Model.service('ModelService', [
       return returnObj[0];
 
     };
-//    svc.translateToObjLitDialtect = function(struct) {
-//
-//    };
     svc.isModelUnique = function(modelRef) {
 
       if(modelRef && modelRef.name){

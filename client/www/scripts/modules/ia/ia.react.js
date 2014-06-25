@@ -308,6 +308,7 @@ var IAMainControls = (IAMainControls = React).createClass({
         <button onClick={renderAppViewRequest} type="button" className="btn btn-default">
         Render App
         </button>
+        <div>New datasource</div>
         <div data-ui-type="table">
           <div data-ui-type="row">
             <div data-ui-type="cell">
