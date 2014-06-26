@@ -41,16 +41,18 @@ Canvas.MainCanvasContainer = (Canvas.MainCanvasContainer = React).createClass({
       curX = (modelContainerWidth * instanceIndex);
       curY = (modelContainerHeight * rowIndex);
       instanceIndex++;
-      return (<div className="canvas-model-container" id="model_container_{name}" style={containerStyle}>
-        <div className="model-header">
-          <h3 className="model-header-title">{modelDef.name}</h3>
-          <button type="button" className="btn btn-sm btn-default">V</button>
+      return (
+        <div className="canvas-model-container" id="model_container_{name}" style={containerStyle}>
+          <div className="model-header">
+            <h3 className="model-header-title">{modelDef.name}</h3>
+          </div>
+          <div className="model-body">
+            <p>Properties</p>
+            <ul>{modelDef.properties.map(createModelProperty)}</ul>
+          </div>
+          <div className="model-connection-point"></div>
         </div>
-        <div className="model-body">
-          <ul>{modelDef.properties.map(createModelProperty)}</ul>
-        </div>
-        <div className="model-connection-point"></div>
-      </div>);
+        );
     };
     // return <div>{this.props.items.map(createCanvasModel)}</ul>;
 

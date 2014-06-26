@@ -263,8 +263,21 @@ Main Search
     z-index: 115;
     position:absolute;
     background:#eeeeee;
-    border:1px solid #444444;
+    /*border:1px solid #444444;*/
+    /*border-left: 2rem solid #cccccc;*/
     height:2000px;
+    border-width: 0 0 0 3rem;
+    border-style: solid;
+    -webkit-border-image:
+        -webkit-gradient(linear, 100% 0, 0 0, from(rgba(200, 200, 200, 1)), to(rgba(0, 0, 0, 0))) 1 100%;
+    -webkit-border-image:
+        -webkit-linear-gradient(right, rgba(200, 200, 200, 1), rgba(0, 0, 0, 0)) 1 100%;
+    -moz-border-image:
+        -moz-linear-gradient(right, rgba(200, 200, 200, 1), rgba(0, 0, 0, 0)) 1 100%;
+    -o-border-image:
+        -o-linear-gradient(right, rgba(200, 200, 200, 1), rgba(0, 0, 0, 0)) 1 100%;
+    border-image:
+        linear-gradient(to right, rgba(200, 200, 200, 1), rgba(0, 0, 0, 0)) 1 100%;
 }
 
 [data-id="PreviewInstanceContainer"] {
@@ -692,12 +705,22 @@ border-left:1px solid #eeeeee;
 
 .canvas-model-container {
     position:absolute;
-    border:1px solid #444444;
+    border:1px solid #dddddd;
     margin:2rem;
-    padding:1rem;
+    padding:.4rem;
     background-color:#ffffff;
-    border-radius:1.6rem;
+    border-radius:1rem;
     width:200px;
+}
+.canvas-model-container .model-header {
+    text-align: center;
+}
+.canvas-model-container .model-header-title {
+    padding:0;
+    margin:0;
+    font-size:110%;
+    color:#777777;
+
 }
 .ia-drag-view-title-container {
     position:absolute;
@@ -718,7 +741,12 @@ border-left:1px solid #eeeeee;
 .model-connection-point {
     width:20px;
     height:20px;
-    background-color:green;
+    background-color:#ffffff;
+    border:2px solid #dddddd;
+    border-radius:.7rem;
+    position:relative;
+    margin-left:-10px;
+    height:3rem;
     /*position:absolute;*/
     /*bottom:0;*/
     /*right:0;*/
@@ -764,8 +792,9 @@ ul.rating {
     top:0;
     left:350px;
     border:1px solid grey;
-    height:60px;
+    height:40px;
     width:400px;
-    background:#eeeeee;
+    background:transparent;
     z-index:3040;
+    color:#ffffff;
 }

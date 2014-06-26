@@ -17,13 +17,13 @@ Canvas.directive('slCanvasApiView', [
 
         var iaInstance = jsPlumb.getInstance({
           PaintStyle:{
-            lineWidth:2,
-            strokeStyle:'#ff45f1',
-            outlineColor:'black',
-            outlineWidth:1
+            lineWidth:1,
+            strokeStyle:'#eeeeee',
+            outlineColor:'pink',
+            outlineWidth:0
           },
           Connector:[ 'Bezier', { curviness: 30 } ],
-          Endpoint:[ 'Dot', { radius:2 } ],
+          Endpoint:[ 'Dot', { radius:1 } ],
           EndpointStyle : { fillStyle: '#567567'  },
           Anchor : [ 0.5, 0.5, 1, 1 ]
         });

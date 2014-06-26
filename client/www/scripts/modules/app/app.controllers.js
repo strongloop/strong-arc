@@ -474,7 +474,7 @@ app.controller('IDEController', [
 
     $timeout(function(){
       jQuery('[data-id="CanvasApiContainer"]').transition({ x: $scope.canvasViewXPos });
-    }, 2000);
+    }, 600);
 
 
   }
