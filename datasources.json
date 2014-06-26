@@ -19,6 +19,15 @@
     "username": "root",
     "password": ""
   },
+  "icarmysql": {
+    "defaultForType": "mysql",
+    "connector": "loopback-connector-mysql",
+    "host": "demo.strongloop.com",
+    "port": 3306,
+    "database": "demo",
+    "username": "demo",
+    "password": "L00pBack"
+  },
   "push": {
     "defaultForType": "push",
     "connector": "loopback-push-notification",

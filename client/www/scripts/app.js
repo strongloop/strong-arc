@@ -101,6 +101,7 @@ var app = angular.module('app', [
   'slServices',
   'Profile',
   'Canvas',
+  'Explorer',
   'IA',
   'UI',
   'Common',

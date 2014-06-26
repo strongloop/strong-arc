@@ -4,11 +4,12 @@ app.controller('IDEController', [
   '$state',
   'IAService',
   'DatasourceService',
+  'ExplorerService',
   '$location',
   '$timeout',
   'ModelService',
   '$modal',
-  function($scope, $state, IAService, DatasourceService, $location, $timeout, ModelService, $modal) {
+  function($scope, $state, IAService, DatasourceService, ExplorerService, $location, $timeout, ModelService, $modal) {
 
 //    $scope.mainContentZIndexes = {
 //      ModelEditorMainContainer: 101,
@@ -22,6 +23,14 @@ app.controller('IDEController', [
     $scope.currentOpenDatasourceNames = IAService.getOpenDatasourceNames();
     $scope.currentSelectedCollection = IAService.clearSelectedModelNames();
     $scope.activeModelInstance = IAService.getActiveModelInstance();
+    $scope.explorerResources = ExplorerService.getExplorerResources(); // for the api explorer
+    $scope.explorerResources.
+      then(function(result) {
+        $scope.explorerResources = result;
+      });
+
+
+
     $scope.canvasViewXPos = IAService.getCanvasViewXPos();
     $scope.activeModelPropertiesChanged = false;
     $scope.isModelsActive = true;
