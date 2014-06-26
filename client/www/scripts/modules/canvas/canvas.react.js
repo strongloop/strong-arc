@@ -31,8 +31,8 @@ Canvas.MainCanvasContainer = (Canvas.MainCanvasContainer = React).createClass({
         left: curY + 'px'
       };
 
-      if (!modelDef.children.properties){
-        modelDef.children.properties = [];
+      if (!modelDef.properties){
+        modelDef.properties = [];
       }
       if (instanceIndex > maxRowInstanceCount) {
         instanceIndex = 1;
@@ -47,7 +47,7 @@ Canvas.MainCanvasContainer = (Canvas.MainCanvasContainer = React).createClass({
           <button type="button" className="btn btn-sm btn-default">V</button>
         </div>
         <div className="model-body">
-          <ul>{modelDef.children.properties.map(createModelProperty)}</ul>
+          <ul>{modelDef.properties.map(createModelProperty)}</ul>
         </div>
         <div className="model-connection-point"></div>
       </div>);
@@ -57,7 +57,10 @@ Canvas.MainCanvasContainer = (Canvas.MainCanvasContainer = React).createClass({
 
     return (
       <div className="api-canvas-view-container">
-        {scope.$parent.mainNavModels.map(createCanvasModel)}
+        <div className="ia-drag-view-title-container">
+          <span className="title">canvas</span>
+        </div>
+        {scope.mainNavModels.map(createCanvasModel)}
       </div>
       );
 

@@ -1,4 +1,67 @@
 // Copyright StrongLoop 2014
+(function($) {
+  $.fn.drags = function(opt) {
+
+    opt = $.extend({handle:"",cursor:"move"}, opt);
+
+    if(opt.handle === "") {
+      var $el = this;
+    } else {
+      var $el = this.find(opt.handle);
+    }
+
+    return $el.css('cursor', opt.cursor).on("mousedown", function(e) {
+
+
+      // make sure it is the left button before doing anything
+      if (e.which === 1) {
+        if(opt.handle === "") {
+          var $drag = $(this).addClass('draggable');
+        } else {
+          var $drag = $(this).addClass('active-handle').parent().addClass('draggable');
+        }
+        var originalY = $drag.offset().top;
+        console.log('original y: ' + originalY);
+        var z_idx = $drag.css('z-index'),
+          drg_h = $drag.outerHeight(),
+          drg_w = $drag.outerWidth(),
+          pos_y = originalY,
+          pos_x = $drag.offset().left + drg_w - e.pageX;
+        $drag.css('z-index', 1000).parents().on("mousemove", function(e) {
+          var currX = e.pageX + pos_x - drg_w;
+          $('.draggable').offset({
+            top:originalY,
+            left:currX
+          }).on("mouseup", function() {
+              $(this).removeClass('draggable').css('z-index', z_idx);
+              console.log('mouseup y: ' + originalY);
+
+          });
+          console.log('Current Canvas X: ' + currX);
+          jQuery('#CoordinateInstrumentationContainer #CanvasX').text(currX);
+          var sideWidth = jQuery('[data-id="MainSidebarContainer"]').outerWidth();
+          jQuery('#CoordinateInstrumentationContainer #SidebarWidth').text(sideWidth);
+        });
+
+
+
+
+        e.preventDefault(); // disable selection
+      }
+
+
+
+    }).on("mouseup", function() {
+        if(opt.handle === "") {
+          $(this).removeClass('draggable');
+        } else {
+          $(this).removeClass('active-handle').parent().removeClass('draggable');
+        }
+      });
+
+  }
+})(jQuery);
+
 var app = angular.module('app', [
   'ui.router',
   'ngResource',

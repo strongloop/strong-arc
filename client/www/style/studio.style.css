@@ -699,6 +699,19 @@ border-left:1px solid #eeeeee;
     border-radius:1.6rem;
     width:200px;
 }
+.ia-drag-view-title-container {
+    position:absolute;
+    top:0;
+    left:0;
+    padding:0;
+    margin:0;
+    background:#000000;
+    width:100%;
+}
+.ia-drag-view-title-container .title{
+    color:silver;
+    font-size:75%;
+}
 .canvas-footer {
     clear:both;
 }
@@ -746,3 +759,13 @@ ul.rating {
     color: #21568b;
 }
 
+#CoordinateInstrumentationContainer {
+    position:absolute;
+    top:0;
+    left:350px;
+    border:1px solid grey;
+    height:60px;
+    width:400px;
+    background:#eeeeee;
+    z-index:3040;
+}

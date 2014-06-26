@@ -48,10 +48,9 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
       items: menuItems,
       events: {
         show: function(opt, event) {
-          console.log('|    HEY HEY:  ' + opt.sourceEvent.target);
+
         }
       }
-      // there's more, have a look at the demos and docs...
     });
   },
   render: function() {

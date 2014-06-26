@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>StrongLoop Studio Architecture Documentation</title>
+</head>
+<body>
+  <img src="images/EditorViewComposition.png" />
+
+<div>
+  <h3>typical navigation event:</h3>
+  <ul>
+    <li>
+      - I as a user click on something to indicate I want to do something to some instance of something
+    </li>
+    <li>
+      - UI request event
+      <ul>
+        <li>
+          -- instance (model/datasource)
+        </li>
+        <li>
+          -- type of request (mode)
+        </li>
+      </ul>
+    </li>
+    <li>
+      - call the Editor View Component
+    </li>
+    <li>
+      - set the style and content of title bar
+    </li>
+    <li>
+      - set the list of items for the tabs bar (including mods for context)
+    </li>
+    <li>
+      - fetch the relevant content component
+      <ul>
+        <li>
+          -- create
+        </li>
+        <li>
+          -- preview
+        </li>
+        <li>
+          -- edit
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+</div>
+</body>
+</html>
