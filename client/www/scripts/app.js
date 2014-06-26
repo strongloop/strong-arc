@@ -22,26 +22,55 @@
         }
         var originalY = $drag.offset().top;
         console.log('original y: ' + originalY);
-        var z_idx = $drag.css('z-index'),
-          drg_h = $drag.outerHeight(),
-          drg_w = $drag.outerWidth(),
-          pos_y = originalY,
-          pos_x = $drag.offset().left + drg_w - e.pageX;
-        $drag.css('z-index', 1000).parents().on("mousemove", function(e) {
-          var currX = e.pageX + pos_x - drg_w;
-          $('.draggable').offset({
-            top:originalY,
-            left:currX
-          }).on("mouseup", function() {
-              $(this).removeClass('draggable').css('z-index', z_idx);
-              console.log('mouseup y: ' + originalY);
+        var z_idx = $drag.css('z-index');
+        var drg_h = $drag.outerHeight();
+        var drg_w = $drag.outerWidth();
+        var pos_y = originalY;
+        var pos_x = $drag.offset().left + drg_w - e.pageX;
 
-          });
-          console.log('Current Canvas X: ' + currX);
-          jQuery('#CoordinateInstrumentationContainer #CanvasX').text(currX);
-          var sideWidth = jQuery('[data-id="MainSidebarContainer"]').outerWidth();
-          jQuery('#CoordinateInstrumentationContainer #SidebarWidth').text(sideWidth);
+        console.log('-----------------------------');
+        console.log('| leading edge  ' + $drag.offset().left); //($drag.offset().left)
+        console.log('| cursor location  ' + e.pageX); //(e.pageX)
+        console.log('-----------------------------');
+        $drag.css('z-index', 1000);
+        $drag.parents().on("mousemove", function(e) {
+          if (e.which === 1){
+            console.log('-----------------------------');
+            console.log('| leading edge ' + $drag.offset().left);
+            console.log('| cursor location ' + e.pageX);
+            console.log('| pos_x ' + pos_x);
+            console.log('| canvas width (static) ' + drg_w);
+            console.log('-----------------------------');
+            var currX = e.pageX + pos_x - drg_w;
+            var sideWidth = jQuery('[data-id="MainSidebarContainer"]').outerWidth();
+            if (currX >= sideWidth) {
+              $('.draggable').offset({
+                top:originalY,
+                left:currX
+              });
+
+              jQuery('#CoordinateInstrumentationContainer #CanvasX').text(currX);
+
+              jQuery('#CoordinateInstrumentationContainer #SidebarWidth').text(sideWidth);
+            }
+            else {
+              $('.draggable').offset({
+                top:originalY,
+                left:sideWidth
+              });
+            }
+
+          }
+
         });
+        $drag.css('z-index', 1000);
+        $drag.parents().on("mouseup", function() {
+          $(this).removeClass('draggable').css('z-index', z_idx);
+          console.log('mouseup y: ' + originalY);
+
+        });
+
+
 
 
 
