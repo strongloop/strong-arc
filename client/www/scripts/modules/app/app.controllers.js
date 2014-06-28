@@ -23,11 +23,11 @@ app.controller('IDEController', [
     $scope.currentOpenDatasourceNames = IAService.getOpenDatasourceNames();
     $scope.currentSelectedCollection = IAService.clearSelectedModelNames();
     $scope.activeModelInstance = IAService.getActiveModelInstance();
-    $scope.explorerResources = ExplorerService.getExplorerResources(); // for the api explorer
-    $scope.explorerResources.
-      then(function(result) {
+    $scope.explorerResources = ExplorerService.getEResources().then(function(result) {
         $scope.explorerResources = result;
       });
+    //$scope.eResources = ExplorerService.getExplorerResources(); // for the api explorer
+
 
 
 
@@ -78,7 +78,7 @@ app.controller('IDEController', [
      * */
     $scope.navTreeItemDblClicked = function(type, target) {
       console.log('dbl clicked!!: ' + target);
-      jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
+    //  jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
       switch(type) {
 
         case 'model':
@@ -120,21 +120,21 @@ app.controller('IDEController', [
        [data-id="PreviewInstanceContainer"]
        *
        * */
-
-      jQuery('[data-id="CanvasApiContainer"]').transition({ x: 0 });
-      switch(type) {
-        case 'model':
-          $scope.editorUIPriority = IAService.setEditorUIPriority('model');
-
-          break;
-
-        case 'datasource':
-          $scope.editorUIPriority = IAService.setEditorUIPriority('datasource');
-
-          break;
-
-        default:
-      }
+      IAService.showCanvasView();
+      //jQuery('[data-id="CanvasApiContainer"]').transition({ x: 0 });
+//      switch(type) {
+//        case 'model':
+//          $scope.editorUIPriority = IAService.setEditorUIPriority('model');
+//
+//          break;
+//
+//        case 'datasource':
+//          $scope.editorUIPriority = IAService.setEditorUIPriority('datasource');
+//
+//          break;
+//
+//        default:
+//      }
 
 
       $scope.clearSelectedModels();
@@ -218,7 +218,7 @@ app.controller('IDEController', [
         $scope.currentOpenModelNames = IAService.getOpenModelNames();
         IAService.setEditorUIPriority('model');
 
-        jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
+        //jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
         $scope.clearSelectedModels();
       }
     };
@@ -232,7 +232,7 @@ app.controller('IDEController', [
         $scope.currentOpenDatasourcelNames = IAService.getOpenDatasourceNames();
         IAService.setEditorUIPriority('datasource');
 
-        jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
+        //jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
         $scope.clearSelectedDatasources();
       }
     };
@@ -267,7 +267,7 @@ app.controller('IDEController', [
            * */
 
           IAService.setEditorUIPriority('model');
-          jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
+          //jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
           var openModelNames = $scope.currentOpenModelNames;
           var targetModel = ModelService.getModelByName(targetName);
           if (openModelNames && (openModelNames.indexOf(targetName) === -1)) {
@@ -282,6 +282,12 @@ app.controller('IDEController', [
               $scope.activeModelInstance = IAService.activateModelByName(targetName);
               $scope.clearModelPreview();
               $scope.clearSelectedModels();
+            }
+            else {
+              // active model instance was clicked
+              // if the model editor view is open > close it
+              IAService.toggleEditorView();
+              // if the model editor view is closed > open it
             }
 
 
@@ -299,7 +305,7 @@ app.controller('IDEController', [
            *
            * */
           IAService.setEditorUIPriority('datasource');
-          jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
+          //jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
           var openDatasourceNames = $scope.currentOpenDatasourceNames;
           var targetDatasource = DatasourceService.getDatasourceByName(targetName);
           if (openDatasourceNames && (openDatasourceNames.indexOf(targetName) === -1)) {
@@ -383,21 +389,35 @@ app.controller('IDEController', [
 
 
 
-    $scope.mainNavModels = ModelService.getAllModels({});
+    $scope.mainNavModels = ModelService.getAllModels();
     $scope.mainNavModels.$promise.
       then(function (result) {
 
-//          var core = result[0];
-//
-//          var log = [];
-//          var mainNavModels = [];
-//          angular.forEach(core, function(value, key){
-//            this.push(key + ': ' + value);
-//            mainNavModels.push({name:key,children:value});
-//
-//
-//          }, log);
-          $scope.mainNavModels = result;
+        var models = [];
+        var log = [];
+        var modelListObj = result[0];
+        angular.forEach(modelListObj, function(value, key){
+          // this.push(key + ': ' + value);
+          var lProperties = [];
+          if (value.properties) {
+            angular.forEach(value.properties, function(value, key){
+              lProperties.push({name:key,props:value});
+            });
+            value.properties = lProperties;
+          }
+          var lOptions = [];
+          if (value.options) {
+            angular.forEach(value.options, function(value, key){
+              lOptions.push({name:key,props:value});
+            });
+            value.options = lOptions;
+
+          }
+
+          models.push({name:key,props:value});
+        }, log);
+
+          $scope.mainNavModels = models;
         }
       ).then(function() {
     /*
@@ -412,15 +432,15 @@ app.controller('IDEController', [
         $scope.mainNavDatasources.$promise.
           then(function (result) {
 
-//            var core = result.name[0];
-//
-//            var log = [];
-//            var datasources = [];
-//            angular.forEach(core, function(value, key){
-//              //this.push(key + ': ' + value);
-//              datasources.push({name:key,children:value});
-//            }, log);
-            $scope.mainNavDatasources = result;
+            var core = result[0];
+
+            var log = [];
+            var datasources = [];
+            angular.forEach(core, function(value, key){
+              //this.push(key + ': ' + value);
+              datasources.push({name:key,children:value});
+            }, log);
+            $scope.mainNavDatasources = datasources;
 
 
           });
@@ -480,10 +500,10 @@ app.controller('IDEController', [
 
 
 
-
-    $timeout(function(){
-      jQuery('[data-id="CanvasApiContainer"]').transition({ x: $scope.canvasViewXPos });
-    }, 600);
+//
+//    $timeout(function(){
+//      jQuery('[data-id="CanvasApiContainer"]').transition({ x: $scope.canvasViewXPos });
+//    }, 1000);
 
 
   }

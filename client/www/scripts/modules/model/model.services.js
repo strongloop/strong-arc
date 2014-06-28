@@ -17,18 +17,23 @@ Model.service('ModelService', [
       });
     };
     svc.getAllModels = function() {
-      return ModelDefinition.query({},
+      //return ModelDefinition.query({},
+      return Modeldef.query({},
         function(response) {
-
+          var log = [];
+          var models = [];
        //   console.log('good get model defs: '+ response);
 
           // add create model to this for new model
 
-          var core = response;
-          var log = [];
-          var models = [];
-          angular.forEach(core, function(value, key){
-           // this.push(key + ': ' + value);
+          // raw models.json load
+          /*
+          * the list of models comes back as an object inside
+          * the first element of an array
+          * */
+          var modelListObj = response[0];
+          angular.forEach(modelListObj, function(value, key){
+            // this.push(key + ': ' + value);
             var lProperties = [];
             if (value.properties) {
               angular.forEach(value.properties, function(value, key){
@@ -41,14 +46,44 @@ Model.service('ModelService', [
               angular.forEach(value.options, function(value, key){
                 lOptions.push({name:key,props:value});
               });
-              value.options = lProperties;
+              value.options = lOptions;
+
             }
+
             models.push({name:key,props:value});
           }, log);
 
+          /*
+          *
+          * API code
+          *
+          * */
+
+//          var core = response;
+//
+//          angular.forEach(core, function(value, key){
+//           // this.push(key + ': ' + value);
+//            var lProperties = [];
+//            if (value.properties) {
+//              angular.forEach(value.properties, function(value, key){
+//                lProperties.push({name:key,props:value});
+//              });
+//              value.properties = lProperties;
+//            }
+//            var lOptions = [];
+//            if (value.options) {
+//              angular.forEach(value.options, function(value, key){
+//                lOptions.push({name:key,props:value});
+//              });
+//              value.options = lProperties;
+//            }
+//            models.push({name:key,props:value});
+//          }, log);
+
 
          // $scope.models = models;
-          window.localStorage.setItem('ApiModels', JSON.stringify(core));
+          // cache the models
+          window.localStorage.setItem('ApiModels', JSON.stringify(models));
           return models;
         },
         function(response) {
@@ -130,6 +165,9 @@ Model.service('ModelService', [
             break;
           }
         }
+      }
+      else {
+        console.log('request to get model data from localstorage cache failed so no model is returned');
       }
       return targetModel;
     };

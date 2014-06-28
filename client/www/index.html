@@ -51,9 +51,26 @@
       <div data-ui-type="row">
         <div data-ui-type="cell" data-id="MainSidebarContainer" class="top-level-container">
 
-          <div sl-ia-main-search></div>
-          <div sl-ia-main-nav></div>
-          <div sl-ia-main-controls></div>
+          <div data-ui-type="table">
+            <div data-ui-type="row">
+              <div data-ui-type="cell">
+                <div sl-ia-main-search data-id="MainSearchContainer"></div>
+              </div>
+            </div>
+            <div data-ui-type="row" class="xyz">
+              <div data-ui-type="cell">
+                <div sl-ia-main-nav data-id="MainNavContainer"></div>
+              </div>
+            </div>
+            <div data-ui-type="row">
+              <div data-ui-type="cell">
+                <div sl-ia-main-controls data-id="MainControlsContainer"></div>
+              </div>
+            </div>
+          </div>
+
+
+
 
         </div>
         <div data-ui-type="cell"
@@ -79,6 +96,8 @@
     <script src="./scripts/vendor/jquery/jquery.contextMenu.js"></script>
     <script src="./scripts/vendor/jquery/jquery.transit.min.js"></script>
 
+    <script src="./scripts/vendor/underscore-min.js"></script>
+
     <!-- angular -->
     <script src="./scripts/vendor/angular/angular.js"></script>
 
@@ -97,8 +116,8 @@
     <script src="./scripts/vendor/chance.js"></script>
 
     <!-- lb services -->
-    <script src="./scripts/modules/common/lb-services.js"></script>
     <script src="./scripts/modules/common/workspace.js"></script>
+    <script src="./scripts/modules/common/lb-services.js"></script>
 
     <!-- angular plugins and directives -->
     <script src="./scripts/vendor/angular/ui-utils.js"></script>

@@ -54,7 +54,11 @@ DataSourceDefs.alldefinitions = function(fn){
 
   fn(err, [baseDataSources]);
 };
+DataSourceDefs.beforeRemote('find', function(ctx, user, next) {
 
+  ctx.res.send(200, [baseDataSources]);
+
+});
 
 loopback.remoteMethod(
   DataSourceDefs.alldefinitions,

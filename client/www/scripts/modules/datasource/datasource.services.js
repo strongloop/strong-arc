@@ -10,22 +10,23 @@ Datasource.service('DatasourceService', [
       return ['loopback-connector-mssql', 'loopback-connector-oracle', 'loopback-connector-mysql', 'loopback-connector-postgresql']
     };
     svc.getAllDatasources = function() {
-      return DataSourceDefinition.query({},
+     // return DataSourceDefinition.query({},
+      return Datasourcedef.query({},
         function(response) {
           var datasources = [];
-          if (response && response.length) {
-            datasources = response;
-          }
+//          if (response && response.length) {
+//            datasources = response;
+//          }
 
          // console.log('good get datasource defs: '+ response);
 
-//          var core = response.name[0];
-//          var log = [];
-//          var datasources = [];
-//          angular.forEach(core, function(value, key){
-//            this.push(key + ': ' + value);
-//            datasources.push({name:key,props:value});
-//          }, log);
+          var core = response[0];
+          var log = [];
+          var datasources = [];
+          angular.forEach(core, function(value, key){
+            this.push(key + ': ' + value);
+            datasources.push({name:key,props:value});
+          }, log);
 
           // $scope.models = models;
           window.localStorage.setItem('ApiDatasources', JSON.stringify(datasources));

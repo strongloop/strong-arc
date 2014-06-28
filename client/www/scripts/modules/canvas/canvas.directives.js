@@ -12,7 +12,7 @@ Canvas.directive('slCanvasApiView', [
       template: '<div ></div>',
       link: function(scope, el, attrs) {
 
-        jQuery('[data-id="CanvasApiContainer"]').drags();
+        //jQuery('[data-id="CanvasApiContainer"]').drags();
 
 
         var iaInstance = jsPlumb.getInstance({

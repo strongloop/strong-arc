@@ -90,6 +90,40 @@
 
   }
 })(jQuery);
+var setUI = function() {
+  var headerHeight = 50;
+  var searchHeight = jQuery('[data-id="MainSearchContainer"]').height();
+  var mainControlsHeight = jQuery('[data-id="MainControlsContainer"]').height();
+  var jWindowHeight = $(window).height();
+  var navHeight = (jWindowHeight - headerHeight - searchHeight - mainControlsHeight);
+  jQuery('[data-id="MainNavContainer"]').css('height', navHeight);
+  jQuery('.main-content-item-container').css('height', (jWindowHeight - headerHeight));
+};
+var triggerResizeUpdate = function(event) {
+  var that = this;
+  that.working = false;
+  setTimeout(function(event) {
+    if (that.working !== true) {
+      //var navBarHeight = $('.navbar').height();ds
+
+
+//      console.log('||   ');
+//      console.log('||  height -----  ');
+//      console.log('||  jWindowHeight  ' + jWindowHeight);
+//      console.log('||  navHeight  ' + navHeight);
+
+      setUI();
+
+      that.working = true;
+    }
+  }, 400);
+
+
+
+};
+window.onresize = function(event) {
+  this.triggerResizeUpdate(event);
+};
 
 var app = angular.module('app', [
   'ui.router',

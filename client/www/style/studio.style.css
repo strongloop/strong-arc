@@ -1,6 +1,10 @@
 body{
     font-size:16px;
     padding-top: 51px;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    overflow:hidden;
 }
 
 /*
@@ -143,7 +147,35 @@ Main Search
 }
 
 
+/*[data-id="MainNavSearch"] {*/
+    /*position:fixed;*/
+    /*top:0;*/
+/*}*/
+[data-id="MainNavContainer"] {
+    /*background-color:orange;*/
+    /*margin-bottom:400px;*/
+    /*padding-bottom:400px;*/
+    overflow: scroll;
+}
+[data-id="MainControlsContainer"] {
+    background-color:#ffffff;
+    /*position:fixed;*/
+    /*bottom:0;*/
+}
+/*
 
+    Main Controls
+
+*/
+/*[data-id="IAMainControlsContainer"] {*/
+    /*border-top:1px solid #444444;*/
+    /*padding-top:.6rem;*/
+    /*background-color:#ffffff;*/
+    /*position: fixed;*/
+    /*bottom: 0;*/
+    /*text-align: center;*/
+    /*width:25rem;*/
+/*}*/
 /*
     Nav Tree
 
@@ -207,17 +239,7 @@ Main Search
     color:#ffffff;
 }
 
-/*
 
-    Main Controls
-
-*/
-[data-id="IAMainControlsContainer"] {
-    position:absolute;
-    bottom:0;
-    text-align: center;
-    width:25rem;
-}
 [data-id="IAMainControlsContainer"] button{
     /*display:block;*/
 }
@@ -243,8 +265,9 @@ Main Search
 .main-content-item-container {
     position:absolute;
     width:100%;
-    min-height:3000px;
-    border-left:1px solid #dddddd;
+    /*min-height:3000px;*/
+    border-left:0px solid #dddddd;
+    overflow:scroll;
 }
 [data-id="IAMainContentContainer"] {
     position:relative;
@@ -252,20 +275,41 @@ Main Search
 [data-id="ModelEditorMainContainer"] {
     /*z-index: 111;*/
     background-color:#ffffff;
+    width:0;
 
 }
 [data-id="DatasourceEditorMainContainer"] {
     /*z-index: 110;*/
     background-color:#ffffff;
+    width:0;
 
 }
 [data-id="CanvasApiContainer"] {
-    z-index: 115;
     position:absolute;
     background:#eeeeee;
     /*border:1px solid #444444;*/
     /*border-left: 2rem solid #cccccc;*/
-    height:2000px;
+    /*height:2000px;*/
+    /*border-width: 0 0 0 3rem;*/
+    border-style: solid;
+    /*-webkit-border-image:*/
+        /*-webkit-gradient(linear, 100% 0, 0 0, from(rgba(200, 200, 200, 1)), to(rgba(0, 0, 0, 0))) 1 100%;*/
+    /*-webkit-border-image:*/
+        /*-webkit-linear-gradient(right, rgba(200, 200, 200, 1), rgba(0, 0, 0, 0)) 1 100%;*/
+    /*-moz-border-image:*/
+        /*-moz-linear-gradient(right, rgba(200, 200, 200, 1), rgba(0, 0, 0, 0)) 1 100%;*/
+    /*-o-border-image:*/
+        /*-o-linear-gradient(right, rgba(200, 200, 200, 1), rgba(0, 0, 0, 0)) 1 100%;*/
+    /*border-image:*/
+        /*linear-gradient(to right, rgba(200, 200, 200, 1), rgba(0, 0, 0, 0)) 1 100%;*/
+}
+[data-id="ExplorerContainer"] {
+    z-index: 118;
+    position:absolute;
+    background:#eeeeee;
+    /*border:1px solid #444444;*/
+    /*border-left: 2rem solid #cccccc;*/
+    /*height:2000px;*/
     border-width: 0 0 0 3rem;
     border-style: solid;
     -webkit-border-image:
@@ -279,14 +323,13 @@ Main Search
     border-image:
         linear-gradient(to right, rgba(200, 200, 200, 1), rgba(0, 0, 0, 0)) 1 100%;
 }
-
 [data-id="PreviewInstanceContainer"] {
     z-index: 113;
     position:absolute;
     top:0;
     left:0;
     background-color: #ffffff;
-    height:1200px;
+    /*height:1200px;*/
     width:100%;
     display:none;
 }
@@ -757,8 +800,51 @@ border-left:1px solid #eeeeee;
 
 
 
+/*
+    Explorer View
 
 
+*/
+.explorer-view-body {
+    padding-top:2rem;
+}
+
+.explorer-model-list {
+
+}
+
+.explorer-model-list button {
+    text-align: left;
+    padding-left:2rem;
+}
+.btn-explorer-property-toggle {
+    border:0;
+    background:transparent;
+    color:blue;
+    text-decoration: underline;
+}
+.explorer-endpoint-title {
+    background:#ffffff;
+    padding-left:1rem;
+    color:blue;
+    font-size:110%;
+
+}
+.explorer-endpoint-container {
+    padding-left:2rem;
+}
+.explorer-api-detail-item {
+    margin-top:2rem;
+    margin-bottom:2.3rem;
+}
+.explorer-parameters-container {
+    border:1px solid #dddddd;
+    border-radius:1rem;
+    padding:.6rem;
+}
+.explorer-parameters-list {
+    margin-left:4rem;
+}
 /*
 
     FunDoo Rating Demo

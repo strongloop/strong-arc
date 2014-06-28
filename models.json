@@ -200,5 +200,184 @@
     "public": true,
     "dataSource": "mongodb",
     "plural": "datasourcedefs"
+  },
+  "dealer": {
+    "options": {
+      "relations": {
+        "reservations": {
+          "model": "reservation",
+          "type": "hasMany",
+          "foreignKey": "dealerId"
+        },
+        "rates": {
+          "model": "rate",
+          "type": "hasMany",
+          "foreignKey": "dealerId"
+        }
+      }
+    },
+    "properties": {
+      "id": {
+        "type": "string",
+        "id": true
+      },
+      "name": {
+        "type": "string"
+      },
+      "address": {
+        "type": "string"
+      },
+      "city": {
+        "type": "string"
+      },
+      "state": {
+        "type": "string"
+      },
+      "country": {
+        "type": "string"
+      },
+      "postalzip": {
+        "type": "string"
+      },
+      "phone": {
+        "type": "string"
+      },
+      "url": {
+        "type": "string"
+      },
+      "location": {
+        "type": "geopoint"
+      },
+      "created": {
+        "type": "date"
+      },
+      "lastupdate": {
+        "type": "date"
+      }
+    },
+    "public": true,
+    "dataSource": "db",
+    "plural": "dealers"
+  },
+  "car": {
+    "options": {
+      "relations": {
+        "reservations": {
+          "model": "reservation",
+          "type": "hasMany",
+          "foreignKey": "carId"
+        }
+      }
+    },
+    "properties": {
+      "id": {
+        "type": "string",
+        "id": true
+      },
+      "vin": {
+        "type": "string"
+      },
+      "dealerId": {
+        "type": "string"
+      },
+      "year": {
+        "type": "number"
+      },
+      "make": {
+        "type": "string"
+      },
+      "model": {
+        "type": "string"
+      },
+      "image": {
+        "type": "string"
+      },
+      "carClass": {
+        "type": "string"
+      },
+      "color": {
+        "type": "string"
+      },
+      "created": {
+        "type": "date"
+      },
+      "lastupdate": {
+        "type": "date"
+      }
+    },
+    "public": true,
+    "dataSource": "db",
+    "plural": "cars"
+  },
+  "reservation": {
+    "options": {
+      "relations": {
+        "car": {
+          "model": "car",
+          "type": "belongsTo",
+          "foreignKey": "carId"
+        },
+        "dealer": {
+          "model": "dealer",
+          "type": "belongsTo",
+          "foreignKey": "dealerId"
+        }
+
+      }
+    },
+    "properties": {
+      "id": {
+        "type": "number",
+        "id": true,
+        "generated": true
+      },
+      "customerId": {
+        "type": "string"
+      },
+      "dealerId": {
+        "type": "string"
+      },
+      "carId": {
+        "type": "string"
+      },
+      "fromDate": {
+        "type": "date"
+      },
+      "toDate": {
+        "type": "date"
+      }
+    },
+    "public": true,
+    "dataSource": "db",
+    "plural": "reservations"
+  },
+  "rate": {
+    "options": {
+      "relations": {
+        "dealer": {
+          "model": "dealer",
+          "type": "belongsTo",
+          "foreignKey": "dealerId"
+        }
+      }
+    },
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "dealerId": {
+        "type": "string"
+      },
+      "carClass": {
+        "type": "string"
+      },
+      "rate": {
+        "type": "number"
+      }
+    },
+    "public": true,
+    "dataSource": "db",
+    "plural": "rates"
   }
+
 }

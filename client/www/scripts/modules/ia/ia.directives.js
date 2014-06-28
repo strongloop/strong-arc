@@ -180,6 +180,7 @@ IA.directive('slIaMainContent', [
       templateUrl: './scripts/modules/ia/templates/ia.main.content.html',
       link: function(scope, el, attrs) {
 
+        setUI();
       }
     }
   }

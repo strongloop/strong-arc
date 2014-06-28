@@ -21,13 +21,13 @@ IA.service('IAService', [
       if (branch) {
         switch (branch) {
           case 'model':
-            jQuery('[data-id="ModelEditorMainContainer"]').show(250);
-            jQuery('[data-id="DatsourceEditorMainContainer"]').hide(250);
+            jQuery('[data-id="ModelEditorMainContainer"]').animate({width: 1000}, 500 );
+            jQuery('[data-id="DatsourceEditorMainContainer"]').animate({width: 0}, 500 );
             break;
 
           case 'datasource':
-            jQuery('[data-id="ModelEditorMainContainer"]').hide(250);
-            jQuery('[data-id="DatsourceEditorMainContainer"]').show(250);
+            jQuery('[data-id="ModelEditorMainContainer"]').animate({width: 0}, 500 );
+            jQuery('[data-id="DatsourceEditorMainContainer"]').animate({width: 1000}, 500 );
             break;
 
           default:
@@ -229,6 +229,27 @@ IA.service('IAService', [
 
       return posX;
 
+    };
+    svc.showModelEditorView = function() {
+      jQuery('[data-id="ModelEditorMainContainer"]').animate({width: 1000}, 500 );
+      jQuery('[data-id="DatsourceEditorMainContainer"]').animate({width: 0}, 500 );
+    };
+    svc.showCanvasView = function() {
+      // hide all slide outs that may be open
+      jQuery('[data-id="DatsourceEditorMainContainer"]').animate({width: 0}, 500 );
+      jQuery('[data-id="ModelEditorMainContainer"]').animate({width: 0}, 500 );
+      jQuery('[data-id="PreviewInstanceMainContainer"]').animate({width: 0}, 500 );
+      jQuery('[data-id="ExplorerContainer"]').animate({width: 0}, 500 );
+
+    };
+    svc.toggleEditorView = function() {
+      var modelEditorWidth = jQuery('[data-id="ModelEditorMainContainer"]').width();
+      if (modelEditorWidth > 0) {
+        svc.showCanvasView();
+      }
+      else {
+        svc.showModelEditorView();
+      }
     };
     svc.openModal = function(config) {
       return $modal.open(config);

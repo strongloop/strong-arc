@@ -4,7 +4,7 @@ Explorer.directive('slExplorerView', [
     return {
       replace:true,
       link: function(scope, el, attrs) {
-
+        jQuery('[data-id="ExplorerContainer"]').drags();
         scope.$watch('explorerResources', function(models) {
           React.renderComponent(ExplorerMain({scope:scope}), el[0]);
         }, true);
