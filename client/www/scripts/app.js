@@ -208,6 +208,14 @@ app.factory('requestInterceptor', [
         if (window.localStorage.getItem('accessToken')) {
           config.headers.authorization = window.localStorage.getItem('accessToken');
         }
+        else{
+          // allow users to get to home view
+          // any other navigation requires login
+          if ($location.path() !== '/'){
+            $location.nextAfterLogin = $location.path();
+            $location.path('/login');
+          }
+        }
         return config || $q.when(config);
       },
       responseError: function(rejection) {
