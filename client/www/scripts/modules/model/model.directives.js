@@ -131,13 +131,13 @@ Model.directive('modelPropertiesEditor',[
         };
         scope.$watch('isModelInstancePropertiesActive', function(val) {
           var properties = [];
-          if (scope.activeModelInstance.properties) {
-            properties = scope.activeModelInstance.properties;
+          if (scope.activeModelInstance.props.properties) {
+            properties = scope.activeModelInstance.props.properties;
           }
           React.renderComponent(ModelPropertiesEditor({scope:scope, properties:properties}), el[0]);
         });
 
-        scope.$watch('activeModelInstance.properties', function(properties) {
+        scope.$watch('activeModelInstance.props.properties', function(properties) {
           if (!properties){
             properties = [];
           }
@@ -148,19 +148,19 @@ Model.directive('modelPropertiesEditor',[
         });
 
         scope.$watch('activeModelPropertiesChanged', function(val) {
-          if (!scope.activeModelInstance.properties){
-            scope.activeModelInstance.properties = [];
+          if (!scope.activeModelInstance.props.properties){
+            scope.activeModelInstance.props.properties = [];
           }
           else {
             scope.isModelInstancePropertiesActive = true;
           }
-          React.renderComponent(ModelPropertiesEditor({scope:scope, properties:scope.activeModelInstance.properties}), el[0]);
+          React.renderComponent(ModelPropertiesEditor({scope:scope, properties:scope.activeModelInstance.props.properties}), el[0]);
         });
         scope.$watch('activeModelInstance', function(model) {
-          if (!model.properties){
-            model.properties = [];
+          if (!model.props.properties){
+            model.props.properties = [];
           }
-          React.renderComponent(ModelPropertiesEditor({scope:scope, properties:model.properties}), el[0]);
+          React.renderComponent(ModelPropertiesEditor({scope:scope, properties:model.props.properties}), el[0]);
         });
       }
     }

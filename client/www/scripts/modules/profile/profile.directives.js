@@ -63,7 +63,7 @@ Profile.directive('lbRegisterNavItem', [
   'NavigationService',
   function (ProfileService, $location, NavigationService) {
     return{
-      template: '<li ng-hide="isUserAuth()"><a ui-sref="register">register</a></li>',
+      template: '<li ng-hide="isUserAuth()"><a href="https://strongloop.com/register/" target="_blank">register</a></li>',
       link: function(scope,element, attribs) {
         scope.isUserAuth = function () {
           return ProfileService.getCurrentUserId();

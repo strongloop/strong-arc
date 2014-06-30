@@ -33,7 +33,7 @@ Profile.controller('LoginController', [
           // TODO make a more robust API call here
           window.localStorage.setItem('currentUserId', $scope.loginResult.userId);
           window.localStorage.setItem('accessToken', $scope.loginResult.id);
-          $location.path('/home');
+          $location.path('/studio');
 
           //$location.path('/');
         },

@@ -61,7 +61,22 @@ code {
 }
 
 
+.navbar-inverse {
+    background-color:#7dbd33;
+}
+.navbar-inverse .navbar-brand {
+    color:#ffffff;
+}
+.navbar-inverse .navbar-nav > li > a {
+    color:#ffffff;
+}
 
+.jumbotron {
+    background-color:#ffffff;
+}
+.img-main-splash {
+    width:100%;
+}
 
 
 
@@ -835,8 +850,10 @@ border-left:1px solid #eeeeee;
     display:block;
     margin-left:2.5rem;
 }
-.explorer-model-list button {
+.explorer-model-list button.btn-explorer-model-main,  .explorer-model-list button.explorer-endpoint-title{
     text-align: left;
+    padding:0;
+    margin:0;
     padding-left:2rem;
 }
 .btn-explorer-property-toggle {
@@ -859,8 +876,30 @@ border-left:1px solid #eeeeee;
     padding-left:2rem;
 }
 .explorer-api-detail-item {
-    margin:.5rem 0 0 0;
 
+    border-bottom:1px solid #aaaaaa;
+    padding:0;
+    margin:0;
+}
+.explorer-api-method {
+    display:inline-block;
+    width:6rem;
+    font-size:80%;
+    padding:.6rem;
+    color:#444444;
+}
+
+.explorer-api-method-POST {
+    background-color:#cccccc;
+}
+.explorer-api-method-GET {
+    background-color:#999999;
+}
+.explorer-api-method-PUT {
+    background-color:#777777;
+}
+.explorer-api-method-DELETE {
+    background-color:#555555;
 }
 .explorer-parameters-container {
     border:1px solid #dddddd;
@@ -875,6 +914,15 @@ border-left:1px solid #eeeeee;
     padding:1rem;
 
 }
+.explorer-api-textarea {
+    height:150px;
+    width:400px;
+}
+.btn-explorer-api-submit {
+    display:block;
+}
+
+
 /*
 
     FunDoo Rating Demo
@@ -904,6 +952,7 @@ ul.rating {
 }
 
 #CoordinateInstrumentationContainer {
+    display:none;
     position:absolute;
     top:0;
     left:350px;

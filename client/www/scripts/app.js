@@ -104,13 +104,6 @@ var triggerResizeUpdate = function(event) {
   that.working = false;
   setTimeout(function(event) {
     if (that.working !== true) {
-      //var navBarHeight = $('.navbar').height();ds
-
-
-//      console.log('||   ');
-//      console.log('||  height -----  ');
-//      console.log('||  jWindowHeight  ' + jWindowHeight);
-//      console.log('||  navHeight  ' + navHeight);
 
       setUI();
 
@@ -172,14 +165,10 @@ app.config([
         controller: 'HomeMainController',
         templateUrl: './scripts/modules/app/templates/home.main.html'
       }).
-//      state('studio', {
-//        url: '/studio',
-//        template: '<div sl-ia-main-content></div>',
-//        controller: 'IDEController'
-//      }).
       state('studio', {
         url: '/studio',
-        template: '<div sl-ia-main-content></div>'
+        templateUrl: './scripts/modules/app/templates/studio.main.html',
+        controller: 'IDEController'
       }).
       state('datasource', {
         url: '/datasource',

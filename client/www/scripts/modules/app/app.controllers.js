@@ -26,12 +26,11 @@ app.controller('IDEController', [
     $scope.explorerResources = ExplorerService.getEResources().then(function(result) {
         $scope.explorerResources = result;
       });
-    //$scope.eResources = ExplorerService.getExplorerResources(); // for the api explorer
 
 
 
 
-    $scope.canvasViewXPos = IAService.getCanvasViewXPos();
+    $scope.explorerViewXPos = IAService.getExplorerViewXPos();
     $scope.activeModelPropertiesChanged = false;
     $scope.isModelsActive = true;
     $scope.newModelInstance = {name: '', isUnique:false};  // used by the new model view to reference change events when creating new models
@@ -501,9 +500,9 @@ app.controller('IDEController', [
 
 
 //
-//    $timeout(function(){
-//      jQuery('[data-id="CanvasApiContainer"]').transition({ x: $scope.canvasViewXPos });
-//    }, 1000);
+    $timeout(function(){
+      jQuery('[data-id="ExplorerContainer"]').transition({ x: $scope.explorerViewXPos });
+    }, 1000);
 
 
   }

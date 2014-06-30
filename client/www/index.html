@@ -24,7 +24,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">API Studio</a>
+          <a class="navbar-brand" href="#">StrongLoop</a>
         </div>
         <div class="collapse navbar-collapse" ng-controller="GlobalNavController">
           <ul class="nav navbar-nav">
@@ -37,9 +37,6 @@
             <li lb-register-nav-item></li>
             <li><a href="http://loopback.io" target="_new">docs</a>
             </li>
-            <li>
-              <a href="/explorer" target="_new">explorer</a>
-            </li>
             <li lb-login-nav-item></li>
             <li lb-logout-nav-item></li>
           </ul>
@@ -47,39 +44,8 @@
       </div>
     </div>
 
-    <div data-ui-type="table" data-id="MainBody" ng-controller="IDEController">
-      <div data-ui-type="row">
-        <div data-ui-type="cell" data-id="MainSidebarContainer" class="top-level-container">
 
-          <div data-ui-type="table">
-            <div data-ui-type="row">
-              <div data-ui-type="cell">
-                <div sl-ia-main-search data-id="MainSearchContainer"></div>
-              </div>
-            </div>
-            <div data-ui-type="row" class="xyz">
-              <div data-ui-type="cell">
-                <div sl-ia-main-nav data-id="MainNavContainer"></div>
-              </div>
-            </div>
-            <div data-ui-type="row">
-              <div data-ui-type="cell">
-                <div sl-ia-main-controls data-id="MainControlsContainer"></div>
-              </div>
-            </div>
-          </div>
-
-
-
-
-        </div>
-        <div data-ui-type="cell"
-             data-id="MainContentContainer"
-             ui-view
-             autoscroll="false"
-             class="top-level-container"></div>
-      </div>
-    </div>
+    <div ui-view autoscroll="false"></div>
 
     <div id="CoordinateInstrumentationContainer">
       <p > canvas x-pos: <span id="CanvasX"></span></p>
