@@ -25,14 +25,14 @@
         }
       ]
     },
-    "dataSource": "mongodb",
+    "dataSource": "db",
     "public": true
   },
   "accessToken": {
     "options": {
       "base": "AccessToken"
     },
-    "dataSource": "mongodb",
+    "dataSource": "db",
     "public": true
   },
   "application": {
@@ -46,14 +46,14 @@
     "options": {
       "base": "ACL"
     },
-    "dataSource": "mongodb",
+    "dataSource": "db",
     "public": false
   },
   "roleMapping": {
     "options": {
       "base": "RoleMapping"
     },
-    "dataSource": "mongodb",
+    "dataSource": "db",
     "public": false
   },
   "role": {
@@ -67,14 +67,14 @@
         }
       }
     },
-    "dataSource": "mongodb",
+    "dataSource": "db",
     "public": false
   },
   "scope": {
     "options": {
       "base": "Scope"
     },
-    "dataSource": "mongodb",
+    "dataSource": "db",
     "public": false
   },
   "push": {
