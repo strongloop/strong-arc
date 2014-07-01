@@ -212,9 +212,8 @@ app.factory('requestInterceptor', [
           // allow users to get to home view
           // any other navigation requires login
           if ($location.path() !== '/'){
-            // comment this out for deployment to heroku for designers
-//            $location.nextAfterLogin = $location.path();
-//            $location.path('/login');
+            $location.nextAfterLogin = $location.path();
+            $location.path('/login');
           }
         }
         return config || $q.when(config);
