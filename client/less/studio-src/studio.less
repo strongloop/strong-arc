@@ -291,6 +291,9 @@ Main Search
   /*z-index: 111;*/
   background-color:#ffffff;
   width:0;
+  border-color:#dddddd;
+  border-width: 0 1.8rem 0 0;
+  border-style: solid;
 
 }
 [data-id="DatasourceEditorMainContainer"] {
@@ -301,42 +304,17 @@ Main Search
 }
 [data-id="CanvasApiContainer"] {
   position:absolute;
-  background:#eeeeee;
-  /*border:1px solid #444444;*/
-  /*border-left: 2rem solid #cccccc;*/
-  /*height:2000px;*/
-  /*border-width: 0 0 0 3rem;*/
+  background:#eeeeee; /* TODO variable  */
   border-style: solid;
-  /*-webkit-border-image:*/
-  /*-webkit-gradient(linear, 100% 0, 0 0, from(rgba(200, 200, 200, 1)), to(rgba(0, 0, 0, 0))) 1 100%;*/
-  /*-webkit-border-image:*/
-  /*-webkit-linear-gradient(right, rgba(200, 200, 200, 1), rgba(0, 0, 0, 0)) 1 100%;*/
-  /*-moz-border-image:*/
-  /*-moz-linear-gradient(right, rgba(200, 200, 200, 1), rgba(0, 0, 0, 0)) 1 100%;*/
-  /*-o-border-image:*/
-  /*-o-linear-gradient(right, rgba(200, 200, 200, 1), rgba(0, 0, 0, 0)) 1 100%;*/
-  /*border-image:*/
-  /*linear-gradient(to right, rgba(200, 200, 200, 1), rgba(0, 0, 0, 0)) 1 100%;*/
+  margin-left:1.8rem; /* TODO variable  */
+
 }
 [data-id="ExplorerContainer"] {
-  z-index: 118;
-  position:absolute;
-  background:#eeeeee;
-  /*border:1px solid #444444;*/
-  /*border-left: 2rem solid #cccccc;*/
-  /*height:2000px;*/
-  border-width: 0 0 0 3rem;
+  width:0;
+  background:#ffffff;
+  border-color:#dddddd;
+  border-width: 0 1.8rem 0 0;
   border-style: solid;
-  -webkit-border-image:
-    -webkit-gradient(linear, 100% 0, 0 0, from(rgba(200, 200, 200, 1)), to(rgba(0, 0, 0, 0))) 1 100%;
-  -webkit-border-image:
-    -webkit-linear-gradient(right, rgba(200, 200, 200, 1), rgba(0, 0, 0, 0)) 1 100%;
-  -moz-border-image:
-    -moz-linear-gradient(right, rgba(200, 200, 200, 1), rgba(0, 0, 0, 0)) 1 100%;
-  -o-border-image:
-    -o-linear-gradient(right, rgba(200, 200, 200, 1), rgba(0, 0, 0, 0)) 1 100%;
-  border-image:
-    linear-gradient(to right, rgba(200, 200, 200, 1), rgba(0, 0, 0, 0)) 1 100%;
 }
 [data-id="PreviewInstanceContainer"] {
   z-index: 113;
@@ -833,6 +811,9 @@ form[name="DatasourceForm"] {
 .explorer-model.is-closed {
   display:none;
 }
+.explorer-model.is-active {
+  background:#dddddd;
+}
 .explorer-model-api-parameters {
   margin-left:4rem;
 }
@@ -871,6 +852,10 @@ form[name="DatasourceForm"] {
 }
 .btn-explorer-model-main {
   font-size:130%;
+}
+.btn-explorer-model-main.is-active {
+  background:#444444;
+  color:#ffffff;
 }
 .explorer-api-container {
   padding-left:2rem;

@@ -268,8 +268,9 @@ var IAMainControls = (IAMainControls = React).createClass({
     };
   },
   render: function() {
-    var scope = this.props.scope;
     var that = this;
+    var scope = that.props.scope;
+
     var createModelViewRequest = function() {
 //      scope.$apply(function() {
 //        scope.createModelViewRequest();
@@ -299,14 +300,20 @@ var IAMainControls = (IAMainControls = React).createClass({
       );
 
     };
+    var showExplorerViewRequest = function() {
+      scope.$apply(function() {
+        scope.showExplorerViewRequest();
+      });
+    };
     return (
       <div data-id="IAMainControlsContainer">
-        <button onClick={createModelViewRequest} type="button" className="btn btn-default">
+        <button onClick={createModelViewRequest} type="button" className="btn btn-sm btn-default">
         {that.state.newModelText}
         </button>
-        <button onClick={renderAppViewRequest} type="button" className="btn btn-default">
+        <button onClick={renderAppViewRequest} type="button" className="btn btn-default btn-sm">
         Render App
         </button>
+        <button className="btn btn-default btn-sm" onClick={showExplorerViewRequest}>Explorer</button>
         <div>New datasource</div>
         <div data-ui-type="table">
           <div data-ui-type="row">

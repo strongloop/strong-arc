@@ -285,7 +285,7 @@ app.controller('IDEController', [
             else {
               // active model instance was clicked
               // if the model editor view is open > close it
-              IAService.toggleEditorView();
+              IAService.showModelEditorView();
               // if the model editor view is closed > open it
             }
 
@@ -491,6 +491,9 @@ app.controller('IDEController', [
 
 
 
+    $scope.showExplorerViewRequest = function() {
+      IAService.showExplorerView();
+    }
 
 
 
@@ -501,6 +504,7 @@ app.controller('IDEController', [
 
 //
     $timeout(function(){
+      window.setUI();
     //  jQuery('[data-id="ExplorerContainer"]').transition({ x: $scope.explorerViewXPos });
     }, 1000);
 

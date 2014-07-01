@@ -1,12 +1,12 @@
 /** @jsx React.DOM */
 /*
-*
-*   Explorer Main
-*
-* */
+ *
+ *   Explorer Main
+ *
+ * */
 var ExplorerMain = (ExplorerMain = React).createClass({
 
-  render: function() {
+  render: function () {
     var scope = this.props.scope;
     var explorerResources = scope.explorerResources;
     var cx = React.addons.classSet;
@@ -18,11 +18,10 @@ var ExplorerMain = (ExplorerMain = React).createClass({
 //    });
 
 
-
     var items = (<div />);
     if (explorerResources.map) {
-      items = explorerResources.map(function(resource) {
-        return <ExploreModelApiEndPointListItem apiResource={resource} />
+      items = explorerResources.map(function (resource) {
+        return <ExploreModelApiEndPointListItem apiResource={resource} scope={scope} />
 
       });
     }
@@ -34,107 +33,142 @@ var ExplorerMain = (ExplorerMain = React).createClass({
      *
      * */
     return (
-        <div className="explorer-view-container">
-          <div className="ia-drag-view-title-container">
-            <span className="title">explorer</span>
-          </div>
-          <div className="explorer-view-body">
-            <ul className="explorer-model-list">{items}</ul>
-          </div>
+      <div className="explorer-view-container">
+        <div className="ia-drag-view-title-container">
+          <span className="title">explorer</span>
         </div>
+        <div className="explorer-view-body">
+          <ul className="explorer-model-list">{items}</ul>
+        </div>
+      </div>
       );
   }
 });
 /*
-*
-* API End Point List Item
-*
-* */
+ *
+ * API End Point List Item
+ *
+ * */
 var ExploreModelApiEndPointListItem = (ExploreModelApiEndPointListItem = React).createClass({
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       isOpen: false
     };
   },
-  render: function() {
-   var cx = React.addons.classSet;
-   var that = this;
+  getNameFromPath: function(resource) {
+    var rawPath = resource.path;
+    var parts = rawPath.split("/");
+    var returnPath = parts[(parts.length - 1)];
 
-   var mainClasses = cx({
-     'explorer-model is-open': this.state.isOpen,
-     'explorer-model is-closed': !this.state.isOpen
-   });
+    return returnPath;
+  },
+  getSingularlarVersion: function(name) {
+    // if the last letter of the name is an 's'
+    var retVal = '';
 
-   var resource = this.props.apiResource;
-   var config = JSON.stringify(resource.config);
+    if (name) {
+      var originalLength = name.length;
+      var testCharacter = name[(originalLength - 1)]
+      if (testCharacter.toLowerCase() === 's') {
+        retVal = name.slice(0, (originalLength - 1));
+      }
+    }
 
-   var apis = resource.config.apis.map(function(api) {
-     var apiDetails = api.operations[0];
+    return retVal;
+    // slice it off and return the string
+  },
+  render: function () {
 
-     // api endpoint injection
-     return (
-       <li className="explorer-api-detail-item">
-         <ExploreModelApiEndPoint apiDetails={apiDetails} api={api} />
-       </li>
-       );
-
-
-   });
-   var getNameFromPath = function(resource) {
-     var rawPath = resource.path;
-     var parts = rawPath.split("/");
-     var returnPath = parts[(parts.length - 1)];
-
-     return returnPath;
-   };
-
-   var explorerMainModelClicked = function(event) {
-     var isOpenState = !that.state.isOpen;
-     that.setState({isOpen:isOpenState});
-   };
+    var cx = React.addons.classSet;
+    var that = this;
 
 
-   return (
-     <li>
-       <button onClick={explorerMainModelClicked} className="btn btn-default btn-block btn-explorer-model-main">/{getNameFromPath(resource)}</button>
-       <div className={mainClasses}>
-         <div data-ui-type="table" className="explorer-api-endpoint-summary-table item-row-table">
-           <div data-ui-type="row">
-             <div data-ui-type="cell">
-               Name
-             </div>
-             <div data-ui-type="cell">
+    var resource = that.props.apiResource;
+    var resourceName = that.getNameFromPath(resource);
+    var singularResouceName = that.getSingularlarVersion(resourceName);
+    var config = JSON.stringify(resource.config);
+
+    var apis = resource.config.apis.map(function (api) {
+      var apiDetails = api.operations[0];
+
+      // api endpoint injection
+      return (
+        <li className="explorer-api-detail-item">
+          <ExploreModelApiEndPoint apiDetails={apiDetails} api={api} />
+        </li>
+        );
+
+
+    });
+
+
+
+
+
+    var explorerMainModelClicked = function (event) {
+      var isOpenState = !that.state.isOpen;
+      that.setState({isOpen: isOpenState});
+    };
+
+//    var mainClasses = cx({
+//      'explorer-model is-open': this.state.isOpen,
+//      'explorer-model is-closed': !this.state.isOpen
+//    });
+    var mainClasses = '';
+    var modelButtonClass = 'btn btn-default btn-block btn-explorer-model-main'
+
+    if (this.state.isOpen) {
+      mainClasses = 'explorer-model is-open';
+    }
+    else {
+      mainClasses = 'explorer-model is-closed'
+    }
+    if (that.props.scope.activeModelInstance.name === singularResouceName) {
+      mainClasses = 'explorer-model is-open is-active';
+      modelButtonClass += ' is-active';
+
+    }
+    return (
+      <li>
+        <button onClick={explorerMainModelClicked} className={modelButtonClass}>/{resourceName}</button>
+        <div className={mainClasses}>
+          <div data-ui-type="table" className="explorer-api-endpoint-summary-table item-row-table">
+            <div data-ui-type="row">
+              <div data-ui-type="cell">
+              Name
+              </div>
+              <div data-ui-type="cell">
               Path
-             </div>
-             <div data-ui-type="cell"  >
-                Method
-             </div>
-             <div data-ui-type="cell">
+              </div>
+              <div data-ui-type="cell"  >
+              Method
+              </div>
+              <div data-ui-type="cell">
               Summary
-             </div>
-           </div>
+              </div>
+            </div>
 
-         </div>
-         <ul>{apis}</ul>
-     </div>
-     </li>
-     );
+          </div>
+          <ul>{apis}</ul>
+        </div>
+      </li>
+      );
 
 
- }
+  }
 });
 /*
-*
-* API End Point
-*
-* */
+ *
+ * API End Point
+ *
+ * */
 var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       isApiOpenState: false
     };
   },
-  render: function() {
+  render: function () {
     var that = this;
     var apiDetails = that.props.apiDetails;
     var api = that.props.api;
@@ -143,9 +177,9 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
       'explorer-model-api-details is-open': that.state.isApiOpenState,
       'explorer-model-api-details is-closed': !that.state.isApiOpenState
     });
-    var explorerModelApiClicked = function(event) {
+    var explorerModelApiClicked = function (event) {
       var isApiOpenState = !that.state.isApiOpenState;
-      that.setState({isApiOpenState:isApiOpenState})
+      that.setState({isApiOpenState: isApiOpenState})
     };
     var endPointMethod = 'explorer-api-endpoint-httpmethod-cell explorer-api-method-' + apiDetails.httpMethod;
 
@@ -193,17 +227,17 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
   }
 });
 /*
-*
-* API Parameters
-*
-* */
+ *
+ * API Parameters
+ *
+ * */
 var ExplorerModelApiParameters = (ExplorerModelApiParameters = React).createClass({
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       isParamsOpenState: false
     };
   },
-  render: function() {
+  render: function () {
     var cx = React.addons.classSet;
     var that = this;
     var parametersClasses = cx({
@@ -211,24 +245,36 @@ var ExplorerModelApiParameters = (ExplorerModelApiParameters = React).createClas
       'explorer-model-api-parameters is-closed': !this.state.isParamsOpenState
     });
 
-    var parameters = this.props.parameters.map(function(param) {
+    var parameters = this.props.parameters.map(function (param) {
       return (
         <li>
           <ul className="explorer-parameter-item-parameter-list">
-            <li>name: <em>{param.name}</em></li>
-            <li>paramType: <em>{param.paramType}</em></li>
-            <li>description: <em>{param.description}</em></li>
-            <li>dataType: <em>{param.dataType}</em></li>
-            <li>required: <em>{param.required}</em></li>
-            <li>allowMultiple: <em>{param.allowMultiple}</em></li>
+            <li>name:
+              <em>{param.name}</em>
+            </li>
+            <li>paramType:
+              <em>{param.paramType}</em>
+            </li>
+            <li>description:
+              <em>{param.description}</em>
+            </li>
+            <li>dataType:
+              <em>{param.dataType}</em>
+            </li>
+            <li>required:
+              <em>{param.required}</em>
+            </li>
+            <li>allowMultiple:
+              <em>{param.allowMultiple}</em>
+            </li>
           </ul>
         </li>
         );
     });
 
-    var explorerModelApiParametersClicked = function(event) {
+    var explorerModelApiParametersClicked = function (event) {
       var isParamsOpenState = !that.state.isParamsOpenState;
-      that.setState({isParamsOpenState:isParamsOpenState});
+      that.setState({isParamsOpenState: isParamsOpenState});
     };
 
     return (

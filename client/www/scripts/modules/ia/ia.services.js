@@ -232,17 +232,50 @@ IA.service('IAService', [
       return 1000;
 
     };
-    svc.showModelEditorView = function() {
-      jQuery('[data-id="ModelEditorMainContainer"]').animate({width: 1000}, 500 );
-      jQuery('[data-id="DatsourceEditorMainContainer"]').animate({width: 0}, 500 );
-      window.setUI();
-    };
-    svc.showCanvasView = function() {
-      // hide all slide outs that may be open
+    svc.clearViews = function() {
       jQuery('[data-id="DatsourceEditorMainContainer"]').animate({width: 0}, 500 );
       jQuery('[data-id="ModelEditorMainContainer"]').animate({width: 0}, 500 );
       jQuery('[data-id="PreviewInstanceMainContainer"]').animate({width: 0}, 500 );
-//      jQuery('[data-id="ExplorerContainer"]').animate({width: 0}, 500 );
+      jQuery('[data-id="ExplorerContainer"]').animate({width: 0}, 500 );
+    }
+    svc.showModelEditorView = function() {
+      //svc.clearViews();
+      jQuery('[data-id="ExplorerContainer"]').animate({width: 0}, 500 );
+      //svc.setEditorUIPriority('model');
+      if (svc.isViewOpen('ModelEditorMainContainer')){
+        jQuery('[data-id="ModelEditorMainContainer"]').animate({width: 0}, 500 );
+      }
+      else {
+        jQuery('[data-id="ModelEditorMainContainer"]').animate({width: 1000}, 500 );
+      }
+     // jQuery('[data-id="ModelEditorMainContainer"]').animate({width: 1000}, 500 );
+    };
+    svc.showDatasourceEditorView = function() {
+//      svc.clearViews();
+//      jQuery('[data-id="DatasourceEditorMainContainer"]').animate({width: 1000}, 500 );
+      svc.setEditorUIPriority('datasource');
+      jQuery('[data-id="ExplorerContainer"]').animate({width: 0}, 500 );
+
+    };
+    svc.showCanvasView = function() {
+      // hide all slide outs that may be open
+      svc.clearViews();
+    };
+    svc.isViewOpen = function(viewId) {
+      var xWidth = jQuery('[data-id="' + viewId + '"]').width();
+      if (parseInt(xWidth) > 0) {
+        return true;
+      }
+      return false;
+    };
+    svc.showExplorerView = function() {
+      //svc.clearViews();
+      if (svc.isViewOpen('ExplorerContainer')){
+        jQuery('[data-id="ExplorerContainer"]').animate({width: 0}, 500 );
+      }
+      else {
+        jQuery('[data-id="ExplorerContainer"]').animate({width: 1000}, 500 );
+      }
 
     };
     svc.toggleEditorView = function() {
