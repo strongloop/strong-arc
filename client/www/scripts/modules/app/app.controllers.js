@@ -501,7 +501,7 @@ app.controller('IDEController', [
 
 //
     $timeout(function(){
-      jQuery('[data-id="ExplorerContainer"]').transition({ x: $scope.explorerViewXPos });
+    //  jQuery('[data-id="ExplorerContainer"]').transition({ x: $scope.explorerViewXPos });
     }, 1000);
 
 

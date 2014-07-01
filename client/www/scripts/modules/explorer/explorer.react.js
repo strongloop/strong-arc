@@ -98,8 +98,25 @@ var ExploreModelApiEndPointListItem = (ExploreModelApiEndPointListItem = React).
      <li>
        <button onClick={explorerMainModelClicked} className="btn btn-default btn-block btn-explorer-model-main">/{getNameFromPath(resource)}</button>
        <div className={mainClasses}>
+         <div data-ui-type="table" className="explorer-api-endpoint-summary-table item-row-table">
+           <div data-ui-type="row">
+             <div data-ui-type="cell">
+               Name
+             </div>
+             <div data-ui-type="cell">
+              Path
+             </div>
+             <div data-ui-type="cell"  >
+                Method
+             </div>
+             <div data-ui-type="cell">
+              Summary
+             </div>
+           </div>
+
+         </div>
          <ul>{apis}</ul>
-       </div>
+     </div>
      </li>
      );
 
@@ -130,11 +147,29 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
       var isApiOpenState = !that.state.isApiOpenState;
       that.setState({isApiOpenState:isApiOpenState})
     };
-    var endPointMethod = 'explorer-api-method explorer-api-method-' + apiDetails.httpMethod;
+    var endPointMethod = 'explorer-api-endpoint-httpmethod-cell explorer-api-method-' + apiDetails.httpMethod;
 
     return (
       <div>
-        <button onClick={explorerModelApiClicked} className="btn btn-block explorer-endpoint-title"><span className={endPointMethod}>{apiDetails.httpMethod}</span> {apiDetails.nickname}</button>
+
+        <div data-ui-type="table" className="explorer-api-endpoint-summary-table item-row-table">
+          <div data-ui-type="row">
+            <div data-ui-type="cell">
+              <button onClick={explorerModelApiClicked} className="btn btn-block explorer-endpoint-title">{apiDetails.nickname}</button>
+            </div>
+            <div data-ui-type="cell">
+              {api.path}
+            </div>
+            <div data-ui-type="cell"  className={endPointMethod}>
+              {apiDetails.httpMethod}
+            </div>
+            <div data-ui-type="cell">
+              {apiDetails.summary}
+            </div>
+          </div>
+
+        </div>
+
         <div className={apiClasses} data-ui-type="table">
 
           <div data-ui-type="row">

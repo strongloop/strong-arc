@@ -62,7 +62,7 @@ code {
 
 
 .navbar-inverse {
-    background-color:#7dbd33;
+    background-color:#08592B;
 }
 .navbar-inverse .navbar-brand {
     color:#ffffff;
@@ -874,6 +874,15 @@ border-left:1px solid #eeeeee;
 }
 .explorer-api-container {
     padding-left:2rem;
+}
+.explorer-api-endpoint-summary-table {
+    width:90%;
+    margin-left:3rem;
+    background-color:#ffffff;
+}
+.explorer-api-endpoint-httpmethod-cell {
+    width:8rem;
+    padding:.5rem 0 .5rem 1.4rem;
 }
 .explorer-api-detail-item {
 
