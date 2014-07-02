@@ -7,6 +7,24 @@ IA.service('IAService', [
   function($modal, AppStorageService, ModelService, DatasourceService) {
     var svc = {};
 
+    svc.getContainerWidth = function(selector) {
+      if (selector) {
+        return jQuery(selector).width();
+      }
+      return 0;
+    };
+    svc.openContainer = function(selector) {
+      var mainWidth = svc.getMainContentWidth();
+      jQuery(selector).animate({width: mainWidth}, 500 );
+
+    };
+    svc.closeContainer = function(selector) {
+      return jQuery(selector).animate({width: 0}, 500 );
+
+    };
+    svc.getMainContentWidth = function() {
+      return svc.getContainerWidth('[data-id="MainContentContainer"]');
+    };
     svc.getViewportWidth = function() {
       return (window.innerWidth - 40);
     };
@@ -17,26 +35,7 @@ IA.service('IAService', [
       }
       return editorUIPriority;
     };
-    svc.setEditorUIPriority = function(branch) {
-      if (branch) {
-        switch (branch) {
-          case 'model':
-            jQuery('[data-id="ModelEditorMainContainer"]').animate({width: 1000}, 500 );
-            jQuery('[data-id="DatsourceEditorMainContainer"]').animate({width: 0}, 500 );
-            break;
 
-          case 'datasource':
-            jQuery('[data-id="ModelEditorMainContainer"]').animate({width: 0}, 500 );
-            jQuery('[data-id="DatsourceEditorMainContainer"]').animate({width: 1000}, 500 );
-            break;
-
-          default:
-
-        }
-        window.setUI();
-        AppStorageService.setItem('editorUIPriority', branch);
-      }
-    };
     svc.setPreviewModelInstance = function(instance) {
       return AppStorageService.setItem('previewInstance', instance);
     };
@@ -233,20 +232,40 @@ IA.service('IAService', [
 
     };
     svc.clearViews = function() {
-      jQuery('[data-id="DatsourceEditorMainContainer"]').animate({width: 0}, 500 );
-      jQuery('[data-id="ModelEditorMainContainer"]').animate({width: 0}, 500 );
-      jQuery('[data-id="PreviewInstanceMainContainer"]').animate({width: 0}, 500 );
-      jQuery('[data-id="ExplorerContainer"]').animate({width: 0}, 500 );
-    }
+      svc.closeContainer('[data-id="DatsourceEditorMainContainer"]');
+      svc.closeContainer('[data-id="ModelEditorMainContainer"]');
+      svc.closeContainer('[data-id="PreviewInstanceMainContainer"]');
+      svc.closeContainer('[data-id="ExplorerContainer"]');
+    };
+    svc.setEditorUIPriority = function(branch) {
+      if (branch) {
+        switch (branch) {
+          case 'model':
+            svc.openContainer('[data-id="ModelEditorMainContainer"]');
+            svc.closeContainer('[data-id="DatsourceEditorMainContainer"]');
+            break;
+
+          case 'datasource':
+            svc.openContainer('[data-id="DatsourceEditorMainContainer"]');
+            svc.closeContainer('[data-id="ModelEditorMainContainer"]');
+            break;
+
+          default:
+
+        }
+        window.setUI();
+        AppStorageService.setItem('editorUIPriority', branch);
+      }
+    };
     svc.showModelEditorView = function() {
       //svc.clearViews();
-      jQuery('[data-id="ExplorerContainer"]').animate({width: 0}, 500 );
+      svc.closeContainer('[data-id="ExplorerContainer"]');
       //svc.setEditorUIPriority('model');
       if (svc.isViewOpen('ModelEditorMainContainer')){
-        jQuery('[data-id="ModelEditorMainContainer"]').animate({width: 0}, 500 );
+        svc.closeContainer('[data-id="ModelEditorMainContainer"]');
       }
       else {
-        jQuery('[data-id="ModelEditorMainContainer"]').animate({width: 1000}, 500 );
+        svc.openContainer('[data-id="ModelEditorMainContainer"]');
       }
      // jQuery('[data-id="ModelEditorMainContainer"]').animate({width: 1000}, 500 );
     };
@@ -254,7 +273,7 @@ IA.service('IAService', [
 //      svc.clearViews();
 //      jQuery('[data-id="DatasourceEditorMainContainer"]').animate({width: 1000}, 500 );
       svc.setEditorUIPriority('datasource');
-      jQuery('[data-id="ExplorerContainer"]').animate({width: 0}, 500 );
+      svc.closeContainer('[data-id="ExplorerContainer"]');
 
     };
     svc.showCanvasView = function() {
@@ -271,15 +290,15 @@ IA.service('IAService', [
     svc.showExplorerView = function() {
       //svc.clearViews();
       if (svc.isViewOpen('ExplorerContainer')){
-        jQuery('[data-id="ExplorerContainer"]').animate({width: 0}, 500 );
+        svc.closeContainer('[data-id="ExplorerContainer"]');
       }
       else {
-        jQuery('[data-id="ExplorerContainer"]').animate({width: 1000}, 500 );
+        svc.openContainer('[data-id="ExplorerContainer"]');
       }
 
     };
     svc.toggleEditorView = function() {
-      var modelEditorWidth = jQuery('[data-id="ModelEditorMainContainer"]').width();
+      var modelEditorWidth = svc.getContainerWidth('ModelEditorMainContainer');
       if (modelEditorWidth > 0) {
         svc.showCanvasView();
       }
