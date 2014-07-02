@@ -212,8 +212,8 @@ app.factory('requestInterceptor', [
           // allow users to get to home view
           // any other navigation requires login
           if ($location.path() !== '/'){
-            $location.nextAfterLogin = $location.path();
-            $location.path('/login');
+//            $location.nextAfterLogin = $location.path();
+//            $location.path('/login');
           }
         }
         return config || $q.when(config);
@@ -223,8 +223,8 @@ app.factory('requestInterceptor', [
         if (rejection.status == 401) {
           //AppAuth.currentUser = null;
           // save the current location so that login can redirect back
-          $location.nextAfterLogin = $location.path();
-          $location.path('/login');
+//          $location.nextAfterLogin = $location.path();
+//          $location.path('/login');
         }
         return $q.reject(rejection);
       }
