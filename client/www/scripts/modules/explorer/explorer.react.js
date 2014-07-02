@@ -217,42 +217,47 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
 
     var modelProperties = [];
     if (modelDef.props && modelDef.props.properties) {
-      modelProperties = modelDef.props.properties.map(function(property) {
-        switch (property.props.props.type) {
-          case 'string':
-            return (<div className="form-group"><label>{property.props.name}</label><input className="form-control" type="text" id={property.props.name} /></div>);
-            break;
-          case 'number':
-            return (<div className="form-group"><label>{property.props.name}</label><input className="form-control" type="text" id={property.props.name} /></div>);
-            break;
+      if ((apiDetails.httpMethod === 'POST') || (apiDetails.httpMethod === 'PUT')) {
+        modelProperties = modelDef.props.properties.map(function(property) {
+          var reqVal = property.props.props.required;
+          var labelClass = '';
+          if (reqVal) {
+            labelClass = 'is-required';
+          }
+          switch (property.props.props.type) {
+            case 'string':
+              return (<div className="form-group"><label className={labelClass}>{property.props.name}</label><input required={property.props.props.required} className="form-control" type="text" id={property.props.name} /></div>);
+              break;
+            case 'number':
+              return (<div className="form-group"><label className={labelClass}>{property.props.name}</label><input className="form-control" type="text" id={property.props.name} /></div>);
+              break;
 
-          case 'date':
-            return (<div className="form-group"><label>{property.props.name}</label><input className="form-control" type="date" id={property.props.name} /></div>);
-            break;
-          case 'array':
-            return (<div className="form-group"><label>{property.props.name}</label><textarea className="form-control" id={property.props.name} ></textarea></div>);
-            break;
-          case 'object':
-            return (<div className="form-group"><label>{property.props.name}</label><textarea className="form-control" id={property.props.name} ></textarea></div>);
-            break;
-          case 'any':
-            return (<div className="form-group"><label>{property.props.name}</label><textarea className="form-control" id={property.props.name} ></textarea></div>);
-            break;
+            case 'date':
+              return (<div className="form-group"><label className={labelClass}>{property.props.name}</label><input className="form-control" type="date" id={property.props.name} /></div>);
+              break;
+            case 'array':
+              return (<div className="form-group"><label className={labelClass}>{property.props.name}</label><textarea className="form-control" id={property.props.name} ></textarea></div>);
+              break;
+            case 'object':
+              return (<div className="form-group"><label className={labelClass}>{property.props.name}</label><textarea className="form-control" id={property.props.name} ></textarea></div>);
+              break;
+            case 'any':
+              return (<div className="form-group"><label className={labelClass}>{property.props.name}</label><textarea className="form-control" id={property.props.name} ></textarea></div>);
+              break;
 
-          default:
-            return (<div className="form-group"><label>{property.props.name}</label><input className="form-control" type="text" id={property.props.name} /></div>);
+            default:
+              return (<div className="form-group"><label className={labelClass}>{property.props.name}</label><input className="form-control" type="text" id={property.props.name} /></div>);
 
-            break;
+              break;
 
-        }
-//        if (property.props.props.type === 'string') {
-//          return (<div><label>{property.props.name}</label><input type="text" id={property.props.name} /></div>);
-//        }
-//        if (property.props.props.type === 'number') {
-//          return (<div><label>{property.props.name}</label><input type="number" id={property.props.name} /></div>);
-//        }
+          }
 
-      });
+        });
+      }
+      if (api.path.indexOf('{id}') !== -1){
+        modelProperties = (<div className="form-group"><label className="is-required">id</label><input required="required" className="form-control" type="text" id="id" /></div>);
+
+      }
     };
 
 
@@ -286,6 +291,7 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
               <form className="explorer-endpoint-form" role="form">
                 <button onClick={sendExplorerRequest} className="btn btn-default btn-explorer-api-submit">try it out</button>
                 {modelProperties}
+                <button onClick={sendExplorerRequest} className="btn btn-default btn-explorer-api-submit">try it out</button>
               </form>
             </div>
             <div data-ui-type="cell">
@@ -293,7 +299,7 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
               <div>method: {apiDetails.httpMethod}</div>
               <div>response class: {apiDetails.responseClass}</div>
               <div>summary: {apiDetails.summary}</div>
-              <div>errorResponses: {apiDetails.errorResponses}</div>
+
 
 
               <textarea className="explorer-api-textarea"></textarea>

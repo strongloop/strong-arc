@@ -112,7 +112,7 @@ var PropertyValidationEditor = (PropertyValidationEditor = React).createClass({
               <label>Required</label>
             </div>
             <div data-ui-type="cell">
-              <input type="checkbox" />
+              <input type="checkbox" checked={this.props.property.props.required}/>
               </div>
             </div>
             <div data-ui-type="row">

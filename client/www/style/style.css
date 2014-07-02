@@ -6591,6 +6591,9 @@ form[name="DatasourceForm"] {
   border-radius: 2rem;
   padding: 1rem;
 }
+.explorer-endpoint-form label.is-required {
+  color: red;
+}
 .explorer-api-textarea {
   height: 150px;
   width: 400px;
