@@ -85,8 +85,15 @@ var ExploreModelApiEndPointListItem = (ExploreModelApiEndPointListItem = React).
 
 
     var resource = that.props.apiResource;
+    var modelDef = {};
     var resourceName = that.getNameFromPath(resource);
-    var singularResouceName = that.getSingularlarVersion(resourceName);
+    var singularResourceName = that.getSingularlarVersion(resourceName);
+    for (var i = 0;i < scope.mainNavModels.length;i++){
+      if (scope.mainNavModels[i].name === singularResourceName) {
+        modelDef = scope.mainNavModels[i];
+        break;
+      }
+    }
     var config = JSON.stringify(resource.config);
 
     var apis = resource.config.apis.map(function (api) {
@@ -95,7 +102,7 @@ var ExploreModelApiEndPointListItem = (ExploreModelApiEndPointListItem = React).
       // api endpoint injection
       return (
         <li className="explorer-api-detail-item">
-          <ExploreModelApiEndPoint apiDetails={apiDetails} api={api} scope={scope} />
+          <ExploreModelApiEndPoint modelDef={modelDef} apiDetails={apiDetails} api={api} scope={scope} />
         </li>
         );
 
@@ -124,7 +131,7 @@ var ExploreModelApiEndPointListItem = (ExploreModelApiEndPointListItem = React).
     else {
       mainClasses = 'explorer-model is-closed'
     }
-    if (that.props.scope.activeModelInstance.name === singularResouceName) {
+    if (that.props.scope.activeModelInstance.name === singularResourceName) {
       mainClasses = 'explorer-model is-open is-active';
       modelButtonClass += ' is-active';
 
@@ -183,6 +190,7 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
   render: function () {
     var that = this;
     var scope = that.props.scope;
+    var modelDef = that.props.modelDef;
     var apiDetails = that.props.apiDetails;
     var api = that.props.api;
     var cx = React.addons.classSet;
@@ -206,6 +214,47 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
         scope.explorerApiRequest(explorerRequestObj);
       });
     };
+
+    var modelProperties = [];
+    if (modelDef.props && modelDef.props.properties) {
+      modelProperties = modelDef.props.properties.map(function(property) {
+        switch (property.props.props.type) {
+          case 'string':
+            return (<div className="form-group"><label>{property.props.name}</label><input className="form-control" type="text" id={property.props.name} /></div>);
+            break;
+          case 'number':
+            return (<div className="form-group"><label>{property.props.name}</label><input className="form-control" type="text" id={property.props.name} /></div>);
+            break;
+
+          case 'date':
+            return (<div className="form-group"><label>{property.props.name}</label><input className="form-control" type="date" id={property.props.name} /></div>);
+            break;
+          case 'array':
+            return (<div className="form-group"><label>{property.props.name}</label><textarea className="form-control" id={property.props.name} ></textarea></div>);
+            break;
+          case 'object':
+            return (<div className="form-group"><label>{property.props.name}</label><textarea className="form-control" id={property.props.name} ></textarea></div>);
+            break;
+          case 'any':
+            return (<div className="form-group"><label>{property.props.name}</label><textarea className="form-control" id={property.props.name} ></textarea></div>);
+            break;
+
+          default:
+            return (<div className="form-group"><label>{property.props.name}</label><input className="form-control" type="text" id={property.props.name} /></div>);
+
+            break;
+
+        }
+//        if (property.props.props.type === 'string') {
+//          return (<div><label>{property.props.name}</label><input type="text" id={property.props.name} /></div>);
+//        }
+//        if (property.props.props.type === 'number') {
+//          return (<div><label>{property.props.name}</label><input type="number" id={property.props.name} /></div>);
+//        }
+
+      });
+    };
+
 
 
     return (
@@ -234,20 +283,21 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
 
           <div data-ui-type="row">
             <div data-ui-type="cell">
+              <form className="explorer-endpoint-form" role="form">
+                <button onClick={sendExplorerRequest} className="btn btn-default btn-explorer-api-submit">try it out</button>
+                {modelProperties}
+              </form>
+            </div>
+            <div data-ui-type="cell">
               <div>path: {api.path}</div>
               <div>method: {apiDetails.httpMethod}</div>
               <div>response class: {apiDetails.responseClass}</div>
               <div>summary: {apiDetails.summary}</div>
               <div>errorResponses: {apiDetails.errorResponses}</div>
 
-            </div>
 
-            <div data-ui-type="cell">
-              <ExplorerModelApiParameters parameters={apiDetails.parameters} />
-            </div>
-            <div data-ui-type="cell">
               <textarea className="explorer-api-textarea"></textarea>
-              <button onClick={sendExplorerRequest} className="btn btn-default btn-explorer-api-submit">try it out</button>
+
             </div>
           </div>
         </div>

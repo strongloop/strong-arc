@@ -6582,6 +6582,9 @@ form[name="DatasourceForm"] {
   border-radius: 1rem;
   padding: .6rem;
 }
+.explorer-endpoint-form {
+  padding: 4rem;
+}
 .explorer-parameter-item-parameter-list {
   border: 1px solid #888888;
   margin: 1rem;

@@ -184,7 +184,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                     <label>plural</label>
                   </div>
                   <div data-ui-type="cell">
-                    <input type="text" value={model.plural} onChange={this.handleChange} data-name="plural" id="ModelPlural" name="ModelPlural" className="model-instance-editor-input" />
+                    <input type="text" value={model.props.plural} onChange={this.handleChange} data-name="plural" id="ModelPlural" name="ModelPlural" className="model-instance-editor-input" />
                   </div>
                 </div>
                 <div data-ui-type="row">
@@ -198,13 +198,13 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                 <div data-ui-type="row">
                   <div data-ui-type="cell"><label>public</label></div>
                   <div data-ui-type="cell">
-                    <input type="checkbox" checked={model.public} className="model-instance-editor-input" />
+                    <input type="checkbox" checked={model.props.public} className="model-instance-editor-input" />
                   </div>
                 </div>
                 <div data-ui-type="row">
                   <div data-ui-type="cell"><label>strict</label></div>
                   <div data-ui-type="cell">
-                    <input type="checkbox" checked={model.strict} className="model-instance-editor-input" />
+                    <input type="checkbox" checked={model.props.strict} className="model-instance-editor-input" />
                   </div>
                 </div>
               </div>
@@ -216,7 +216,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                     <label>datasource</label>
                   </div>
                   <div data-ui-type="cell">
-                    <input type="text" value={model.dataSource} onChange={this.handleChange} className="model-instance-editor-input" />
+                    <input type="text" value={model.props.dataSource} onChange={this.handleChange} className="model-instance-editor-input" />
                   </div>
                 </div>
                 <div data-ui-type="row">

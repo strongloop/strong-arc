@@ -106,7 +106,8 @@
         "id": true
       },
       "name": {
-        "type": "string"
+        "type": "string",
+        "required": true
       },
       "display": {
         "type": "string"
@@ -138,7 +139,8 @@
         "id": true
       },
       "name": {
-        "type": "string"
+        "type": "string",
+        "required": true
       },
       "display": {
         "type": "string"
@@ -222,7 +224,8 @@
         "id": true
       },
       "name": {
-        "type": "string"
+        "type": "string",
+        "required": true
       },
       "address": {
         "type": "string"
@@ -281,7 +284,8 @@
         "type": "string"
       },
       "year": {
-        "type": "number"
+        "type": "number",
+        "required": true
       },
       "make": {
         "type": "string"
@@ -332,19 +336,24 @@
         "generated": true
       },
       "customerId": {
-        "type": "string"
+        "type": "string",
+        "required": true
       },
       "dealerId": {
-        "type": "string"
+        "type": "string",
+        "required": true
       },
       "carId": {
-        "type": "string"
+        "type": "string",
+        "required": true
       },
       "fromDate": {
-        "type": "date"
+        "type": "date",
+        "required": true
       },
       "toDate": {
-        "type": "date"
+        "type": "date",
+        "required": true
       }
     },
     "public": true,

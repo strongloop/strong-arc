@@ -125,7 +125,7 @@ var triggerResizeUpdate = function(event) {
 
       that.working = true;
     }
-  }, 400);
+  }, 250);
 
 
 

@@ -26,10 +26,6 @@ app.controller('IDEController', [
     $scope.explorerResources = ExplorerService.getEResources().then(function(result) {
         $scope.explorerResources = result;
       });
-
-
-
-
     $scope.explorerViewXPos = IAService.getExplorerViewXPos();
     $scope.activeModelPropertiesChanged = false;
     $scope.isModelsActive = true;
@@ -52,7 +48,6 @@ app.controller('IDEController', [
     $scope.clearSelectedDatasources = function() {
       $scope.currentDatasourceSelections = IAService.clearSelectedDatasourceNames();
     };
-
     $scope.clearModelPreview = function() {
       $scope.previewInstance = {};
       IAService.clearPreviewModelInstance();
@@ -139,7 +134,6 @@ app.controller('IDEController', [
       $scope.clearSelectedModels();
 
     };
-
     $scope.modelEditTabItemClicked = function(name) {
       var currentOpenModelNames = IAService.getOpenModelNames();
       // defensive check to make sure the component is initialized
@@ -344,7 +338,6 @@ app.controller('IDEController', [
       }
 
     };
-
     $scope.createModelViewRequest = function() {
       var modelName = 'newModel4';
       var newModel = {
