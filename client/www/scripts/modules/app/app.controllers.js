@@ -493,11 +493,14 @@ app.controller('IDEController', [
 
     $scope.showExplorerViewRequest = function() {
       IAService.showExplorerView();
-    }
+    };
 
 
 
 
+    $scope.explorerApiRequest = function(requestObj) {
+      console.log('explorer api request:  ' + JSON.stringify(requestObj));
+    };
 
 
 

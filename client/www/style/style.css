@@ -6502,9 +6502,6 @@ form[name="DatasourceForm"] {
 .explorer-model.is-active {
   background: #dddddd;
 }
-.explorer-model-api-parameters {
-  margin-left: 4rem;
-}
 .explorer-model-api-parameters.is-open {
   display: block;
 }

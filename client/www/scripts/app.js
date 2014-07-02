@@ -98,6 +98,22 @@ var setUI = function() {
   var navHeight = (jWindowHeight - headerHeight - searchHeight - mainControlsHeight);
   jQuery('[data-id="MainNavContainer"]').css('height', navHeight);
   jQuery('.main-content-item-container').css('height', (jWindowHeight - headerHeight));
+  // any open views need to follow the width of the container
+  var editorWidth = jQuery('[data-id="ModelEditorMainContainer"]').width();
+  var contentWidth = jQuery('[data-id="IAMainContentContainer"]').width();
+  if (editorWidth > 0) {
+    // track the container width
+    jQuery('[data-id="ModelEditorMainContainer"]').css('width', contentWidth);
+
+  }
+  var explorerWidth = jQuery('[data-id="ExplorerContainer"]').width();
+  if (explorerWidth > 0) {
+    // track the container width
+    jQuery('[data-id="ExplorerContainer"]').css('width', contentWidth);
+
+  }
+
+
 };
 var triggerResizeUpdate = function(event) {
   var that = this;

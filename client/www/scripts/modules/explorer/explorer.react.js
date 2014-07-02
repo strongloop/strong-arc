@@ -81,6 +81,7 @@ var ExploreModelApiEndPointListItem = (ExploreModelApiEndPointListItem = React).
 
     var cx = React.addons.classSet;
     var that = this;
+    var scope = that.props.scope;
 
 
     var resource = that.props.apiResource;
@@ -94,7 +95,7 @@ var ExploreModelApiEndPointListItem = (ExploreModelApiEndPointListItem = React).
       // api endpoint injection
       return (
         <li className="explorer-api-detail-item">
-          <ExploreModelApiEndPoint apiDetails={apiDetails} api={api} />
+          <ExploreModelApiEndPoint apiDetails={apiDetails} api={api} scope={scope} />
         </li>
         );
 
@@ -161,6 +162,17 @@ var ExploreModelApiEndPointListItem = (ExploreModelApiEndPointListItem = React).
  *
  * API End Point
  *
+ *
+ * In order to provide a better ux than the existing swagger
+ * we need a reference to the model definition so we can
+ * generate a form based on the property names and data types
+ *
+ * then we can post that data through to the app controller
+ *
+ * need to distinguish between the various http methods and parameter types
+ *
+ *
+ *
  * */
 var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
   getInitialState: function () {
@@ -170,6 +182,7 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
   },
   render: function () {
     var that = this;
+    var scope = that.props.scope;
     var apiDetails = that.props.apiDetails;
     var api = that.props.api;
     var cx = React.addons.classSet;
@@ -182,6 +195,18 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
       that.setState({isApiOpenState: isApiOpenState})
     };
     var endPointMethod = 'explorer-api-endpoint-httpmethod-cell explorer-api-method-' + apiDetails.httpMethod;
+
+    var sendExplorerRequest = function() {
+      var explorerRequestObj = {
+        path: api.path,
+        method: apiDetails.httpMethod,
+        data:{name:'hello'}
+      };
+      scope.$apply(function() {
+        scope.explorerApiRequest(explorerRequestObj);
+      });
+    };
+
 
     return (
       <div>
@@ -204,24 +229,27 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
 
         </div>
 
+
         <div className={apiClasses} data-ui-type="table">
 
           <div data-ui-type="row">
-            <div data-ui-type="cell">
-              <textarea className="explorer-api-textarea"></textarea>
-              <button className="btn btn-default btn-explorer-api-submit">try it out</button>
-            </div>
             <div data-ui-type="cell">
               <div>path: {api.path}</div>
               <div>method: {apiDetails.httpMethod}</div>
               <div>response class: {apiDetails.responseClass}</div>
               <div>summary: {apiDetails.summary}</div>
               <div>errorResponses: {apiDetails.errorResponses}</div>
-              <ExplorerModelApiParameters parameters={apiDetails.parameters} />
+
             </div>
 
+            <div data-ui-type="cell">
+              <ExplorerModelApiParameters parameters={apiDetails.parameters} />
+            </div>
+            <div data-ui-type="cell">
+              <textarea className="explorer-api-textarea"></textarea>
+              <button onClick={sendExplorerRequest} className="btn btn-default btn-explorer-api-submit">try it out</button>
+            </div>
           </div>
-
         </div>
       </div>);
   }
@@ -234,7 +262,7 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
 var ExplorerModelApiParameters = (ExplorerModelApiParameters = React).createClass({
   getInitialState: function () {
     return {
-      isParamsOpenState: false
+      isParamsOpenState: true
     };
   },
   render: function () {
