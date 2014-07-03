@@ -488,6 +488,12 @@ app.controller('IDEController', [
     };
 
 
+    function isPayloadTypeRequest(rObj) {
+      if ((rObj.method === 'POST') || (rObj.method === 'PUT')) {
+        return true;
+      }
+      return false;
+    }
 
 
     // TODO - refactor this into a service
@@ -495,9 +501,22 @@ app.controller('IDEController', [
       console.log('explorer api request:  ' + JSON.stringify(requestObj));
       var config = {
         method: requestObj.method,
-        url: '/api' + requestObj.path,
-        data: requestObj.data
+        url: '/api' + requestObj.path
       };
+      if (requestObj.path.indexOf('{id}') !== -1) {
+
+        if (requestObj.data.id) {
+
+          config.url = '/api' + requestObj.path.replace('{id}', requestObj.data.id);
+        }
+
+      }
+      if (isPayloadTypeRequest(requestObj)) {
+        config.data = requestObj.data;
+      }
+
+
+
       $http(config).
         success( function(response) {
           $scope.currentExplorerApiResponse = response;
