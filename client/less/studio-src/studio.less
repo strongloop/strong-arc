@@ -98,8 +98,7 @@ code {
 }
 [data-id="MainSidebarContainer"] {
   width:26rem;
-  padding-right:1.5rem;
-  padding-left:.5rem;
+  background-color:@main-sidebar-bg-color;
 }
 [data-id="MainContentContainer"] {
 
@@ -108,7 +107,7 @@ code {
 }
 .top-level-container {
   border: 0px solid #cccccc;
-  border-radius: .6rem;
+
   /*padding:.5rem;*/
   /*height:600px;
   overflow:scroll;*/
@@ -150,15 +149,17 @@ Main Search
 }
 .nav-search-list {
   padding:0;
-  margin:0;
+  width:90%;
+  margin:0 auto 0 auto;
 }
 .nav-search-list li {
   display:inline;
 }
 .main-search-input {
-  border:1px solid #dddddd;
-  border-radius:.4rem;
-  width:17rem;
+  border:1px solid #ffffff;
+  background-color:#444444;
+  border-radius:1rem;
+  width:20rem;
 }
 
 
@@ -167,13 +168,13 @@ Main Search
 /*top:0;*/
 /*}*/
 [data-id="MainNavContainer"] {
-  /*background-color:orange;*/
-  /*margin-bottom:400px;*/
-  /*padding-bottom:400px;*/
+  background-color:@main-nav-bg-color;
+  color:@main-nav-default-color;
   overflow: scroll;
 }
 [data-id="MainControlsContainer"] {
-  background-color:#ffffff;
+  background-color:@main-sidebar-bg-color;
+  color:#ffffff;
   /*position:fixed;*/
   /*bottom:0;*/
 }
@@ -203,29 +204,24 @@ Main Search
   padding:0;
 }
 .nav-tree-root {
-  background: #ffffff;
-  color: #444444;
+  background: @main-nav-root-default-bg-color;
+  color: @main-nav-root-default-color;
   padding-left:1rem;
   margin-top:.2rem;
   margin-bottom:.3rem;
-  border-top:1px solid #dddddd;
-  border-bottom:1px solid #dddddd;
   font-size:120%;
 }
 .tree-branch {
-  background: #f9f9f9;
+  background: @main-nav-branch-default-bg-color;
   padding:.4rem .2rem .2rem 2rem;
-  color:#444444;
+  color: @brand-primary;
   font-size:112%;
   font-weight:900;
-  border:1px solid #c5f9b8;
-  border-radius:.4rem;
 }
 .tree-node {
   padding-left:3rem;
-  border-top:1px solid #fefefe;
-  border-bottom:1px solid #dedede;
   font-size:100%;
+  color: @main-nav-node-default-color;
 }
 
 .branch-leaf-list.is-open {
@@ -241,7 +237,7 @@ Main Search
   line-height: 1;
 }
 .branch-leaf-list li.is-open {
-  background-color:#d7eed7;
+  background-color:@main-nav-node-item-open-bg-color;
 }
 .branch-leaf-list li.is-selected {
   background-color:#eeeeee;
@@ -270,6 +266,7 @@ Main Search
   border:0;
   background:transparent;
   font-size:80%;
+  color:@btn-control-ds-default-color;
 }
 
 /*
@@ -286,6 +283,7 @@ Main Search
 }
 [data-id="IAMainContentContainer"] {
   position:relative;
+  background-color:@main-content-bg-color;
 }
 [data-id="ModelEditorMainContainer"] {
   /*z-index: 111;*/
@@ -304,7 +302,6 @@ Main Search
 }
 [data-id="CanvasApiContainer"] {
   position:absolute;
-  background:#eeeeee; /* TODO variable  */
   border-style: solid;
   margin-left:1.8rem; /* TODO variable  */
 
