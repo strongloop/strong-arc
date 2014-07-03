@@ -170,7 +170,8 @@ Main Search
 [data-id="MainNavContainer"] {
   background-color:@main-nav-bg-color;
   color:@main-nav-default-color;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x:auto;
 }
 [data-id="MainControlsContainer"] {
   background-color:@main-sidebar-bg-color;
@@ -828,6 +829,9 @@ form[name="DatasourceForm"] {
   display:block;
   margin-left:2.5rem;
   width:90%;
+}
+.explorer-model-list button.btn-explorer-model-main {
+  border:0;
 }
 .explorer-model-list button.btn-explorer-model-main,  .explorer-model-list button.explorer-endpoint-title{
   text-align: left;
