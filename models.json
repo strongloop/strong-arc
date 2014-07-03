@@ -39,7 +39,7 @@
     "options": {
       "base": "Application"
     },
-    "dataSource": "mongodb",
+    "dataSource": "db",
     "public": true
   },
   "acl": {
@@ -129,7 +129,7 @@
       }
     },
     "public": true,
-    "dataSource": "mongodb",
+    "dataSource": "db",
     "plural": "apidefinitions"
   },
   "modeldef": {
@@ -162,7 +162,7 @@
       }
     },
     "public": true,
-    "dataSource": "mongodb",
+    "dataSource": "db",
     "plural": "modeldefs"
   },
   "datasourcedef": {
@@ -200,7 +200,7 @@
       }
     },
     "public": true,
-    "dataSource": "mongodb",
+    "dataSource": "db",
     "plural": "datasourcedefs"
   },
   "dealer": {
