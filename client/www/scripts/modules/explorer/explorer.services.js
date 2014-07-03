@@ -10,22 +10,22 @@ Explorer.service('ExplorerService', [
 
 
 
-
     var resourceUrls = [
-      "http://0.0.0.0:3003/api/swagger/users",
-      "http://0.0.0.0:3003/api/swagger/accessTokens",
-      "http://0.0.0.0:3003/api/swagger/applications",
-      "http://0.0.0.0:3003/api/swagger/push",
-      "http://0.0.0.0:3003/api/swagger/installations",
-      "http://0.0.0.0:3003/api/swagger/notifications",
-      "http://0.0.0.0:3003/api/swagger/apidefinitions",
-      "http://0.0.0.0:3003/api/swagger/modeldefs",
-      "http://0.0.0.0:3003/api/swagger/datasourcedefs",
-      "http://0.0.0.0:3003/api/swagger/dealers",
-      "http://0.0.0.0:3003/api/swagger/cars",
-      "http://0.0.0.0:3003/api/swagger/reservations",
-      "http://0.0.0.0:3003/api/swagger/rates"
+      "/api/swagger/users",
+      "/api/swagger/accessTokens",
+      "/api/swagger/applications",
+      "/api/swagger/push",
+      "/api/swagger/installations",
+      "/api/swagger/notifications",
+      "/api/swagger/apidefinitions",
+      "/api/swagger/modeldefs",
+      "/api/swagger/datasourcedefs",
+      "/api/swagger/dealers",
+      "/api/swagger/cars",
+      "/api/swagger/reservations",
+      "/api/swagger/rates"
     ];
+
 
     var promises = []
     for (var i = 0;i < resourceUrls.length;i++){

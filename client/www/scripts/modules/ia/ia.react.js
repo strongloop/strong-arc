@@ -205,21 +205,21 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
     var clickBranch = function(event) {
       if (event.target.attributes['data-name']){
         scope.$apply(function () {
-          scope.navTreeBranchClicked('datasource');
+     //     scope.navTreeBranchClicked('datasource');
         });
       }
     };
     var singleClickItem = function(event) {
       if (event.target.attributes['data-name']){
         scope.$apply(function () {
-          scope.navTreeItemClicked('datasource', event.target.attributes['data-name'].value, event.metaKey);
+       //   scope.navTreeItemClicked('datasource', event.target.attributes['data-name'].value, event.metaKey);
         });
       }
     };
     var dblClickItem = function(event) {
       if (event.target.attributes['data-name']){
         scope.$apply(function () {
-          scope.navTreeItemDblClicked('datasource', event.target.attributes['data-name'].value);
+         // scope.navTreeItemDblClicked('datasource', event.target.attributes['data-name'].value);
         });
       }
     };
@@ -295,7 +295,7 @@ var IAMainControls = (IAMainControls = React).createClass({
 
     var renderAppViewRequest = function() {
       window.open(
-        'http://0.0.0.0:3003/#/uiform',
+        '/#uiform',
         '_blank'
       );
 
