@@ -14,9 +14,13 @@ Explorer.directive('slExplorerView', [
         scope.$watch('mainNavModels', function(instance) {
           React.renderComponent(ExplorerMain({scope:scope}), el[0]);
         }, true);
-        scope.$watch('currentExplorerApiResponse', function(response) {
+        scope.$watch('latestExplorerEndPointResponses', function(response) {
           React.renderComponent(ExplorerMain({scope:scope}), el[0]);
         }, true);
+        scope.$watch('explorerDataModelChanged', function(response) {
+          React.renderComponent(ExplorerMain({scope:scope}), el[0]);
+        }, true);
+
 
       }
     }

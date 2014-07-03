@@ -190,9 +190,17 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
   render: function () {
     var that = this;
     var scope = that.props.scope;
+
+
     var modelDef = that.props.modelDef;
     var apiDetails = that.props.apiDetails;
     var api = that.props.api;
+    var currentResponseValue = {};
+    if (scope.latestExplorerEndPointResponses) {
+      if (scope.latestExplorerEndPointResponses[apiDetails.nickname]) {
+        currentResponseValue = scope.latestExplorerEndPointResponses[apiDetails.nickname];
+      }
+    }
     var cx = React.addons.classSet;
     var apiClasses = cx({
       'explorer-model-api-details is-open': that.state.isApiOpenState,
@@ -206,11 +214,13 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
 
     var sendExplorerRequest = function(event) {
       var theForm = event.target.form;
+      var sourceEndPoint = event.target.attributes['data-name'].value;
 
       var requestData = {};
       var explorerRequestObj = {
         path: api.path,
         method: apiDetails.httpMethod,
+        endPoint: sourceEndPoint,
         data: {}
       };
       for (var i = 0;i < theForm.length;i++) {
@@ -271,6 +281,11 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
       }
     };
 
+    var userFriendlyName = apiDetails.nickname;
+    var tArray = apiDetails.nickname.split('_');
+    if (tArray.length === 2) {
+      userFriendlyName = tArray[1];
+    }
 
 
     return (
@@ -279,7 +294,7 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
         <div data-ui-type="table" className="explorer-api-endpoint-summary-table item-row-table">
           <div data-ui-type="row">
             <div data-ui-type="cell">
-              <button onClick={explorerModelApiClicked} className="btn btn-block explorer-endpoint-title">{apiDetails.nickname}</button>
+              <button onClick={explorerModelApiClicked} className="btn btn-block explorer-endpoint-title" title={apiDetails.nickname}>{userFriendlyName}</button>
             </div>
             <div data-ui-type="cell">
               {api.path}
@@ -301,13 +316,13 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
             <div data-ui-type="row">
               <div data-ui-type="cell">
                 <form className="explorer-endpoint-form" role="form">
-                  <button onClick={sendExplorerRequest} className="btn btn-default btn-explorer-api-submit">try it out</button>
+                  <button data-name={apiDetails.nickname} onClick={sendExplorerRequest} className="btn btn-default btn-explorer-api-submit">try it out</button>
                   {modelProperties}
-                  <button onClick={sendExplorerRequest} className="btn btn-default btn-explorer-api-submit">try it out</button>
+                  <button data-name={apiDetails.nickname} onClick={sendExplorerRequest} className="btn btn-default btn-explorer-api-submit">try it out</button>
                 </form>
               </div>
               <div data-ui-type="cell">
-                <textarea className="explorer-api-textarea" value={JSON.stringify(scope.currentExplorerApiResponse)}></textarea>
+                <textarea  className="explorer-api-textarea" value={JSON.stringify(currentResponseValue)}></textarea>
               </div>
             </div>
           </div>

@@ -27,8 +27,10 @@ app.controller('IDEController', [
     $scope.explorerResources = ExplorerService.getEResources().then(function(result) {
         $scope.explorerResources = result;
       });
+    $scope.latestExplorerEndPointResponses = []; // array of named responses for explorer endpoints to hold latest server responses
     $scope.explorerViewXPos = IAService.getExplorerViewXPos();
     $scope.activeModelPropertiesChanged = false;
+    $scope.explorerDataModelChanged = false; // dirty toggle for triggering renders on the react components
     $scope.isModelsActive = true;
     $scope.newModelInstance = {name: '', isUnique:false};  // used by the new model view to reference change events when creating new models
     $scope.currentExplorerApiResponse = {};
@@ -519,10 +521,13 @@ app.controller('IDEController', [
 
       $http(config).
         success( function(response) {
-          $scope.currentExplorerApiResponse = response;
+          //$scope.currentExplorerApiResponse = response;
+          $scope.latestExplorerEndPointResponses[requestObj.endPoint] = response;
+          $scope.explorerDataModelChanged = !$scope.explorerDataModelChanged;
         }).
         error(function(response) {
-          $scope.currentExplorerApiResponse = response;
+          $scope.latestExplorerEndPointResponses[requestObj.endPoint] = response;
+          $scope.explorerDataModelChanged = !$scope.explorerDataModelChanged;
         });
 
 
