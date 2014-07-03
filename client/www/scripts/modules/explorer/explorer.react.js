@@ -204,15 +204,26 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
     };
     var endPointMethod = 'explorer-api-endpoint-httpmethod-cell explorer-api-method-' + apiDetails.httpMethod;
 
-    var sendExplorerRequest = function() {
+    var sendExplorerRequest = function(event) {
+      var theForm = event.target.form;
+
+      var requestData = {};
       var explorerRequestObj = {
         path: api.path,
         method: apiDetails.httpMethod,
-        data:{name:'hello'}
+        data: {}
       };
+      for (var i = 0;i < theForm.length;i++) {
+        if (theForm[i].value) {
+          console.log('Processing Form : ' + theForm[i].name + ' = ' + theForm[i].value);
+          requestData[theForm[i].name] = theForm[i].value;
+        }
+      }
+      explorerRequestObj.data = requestData;
       scope.$apply(function() {
         scope.explorerApiRequest(explorerRequestObj);
       });
+      return false;
     };
 
     var modelProperties = [];
@@ -226,27 +237,27 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
           }
           switch (property.props.props.type) {
             case 'string':
-              return (<div className="form-group"><label className={labelClass}>{property.props.name}</label><input required={property.props.props.required} className="form-control" type="text" id={property.props.name} /></div>);
+              return (<div className="form-group"><label className={labelClass}>{property.props.name}</label><input required={property.props.props.required} className="form-control" type="text" name={property.props.name} /></div>);
               break;
             case 'number':
-              return (<div className="form-group"><label className={labelClass}>{property.props.name}</label><input className="form-control" type="text" id={property.props.name} /></div>);
+              return (<div className="form-group"><label className={labelClass}>{property.props.name}</label><input className="form-control" type="text" name={property.props.name} /></div>);
               break;
 
             case 'date':
-              return (<div className="form-group"><label className={labelClass}>{property.props.name}</label><input className="form-control" type="date" id={property.props.name} /></div>);
+              return (<div className="form-group"><label className={labelClass}>{property.props.name}</label><input className="form-control" type="date" name={property.props.name} /></div>);
               break;
             case 'array':
-              return (<div className="form-group"><label className={labelClass}>{property.props.name}</label><textarea className="form-control" id={property.props.name} ></textarea></div>);
+              return (<div className="form-group"><label className={labelClass}>{property.props.name}</label><textarea className="form-control" name={property.props.name} ></textarea></div>);
               break;
             case 'object':
-              return (<div className="form-group"><label className={labelClass}>{property.props.name}</label><textarea className="form-control" id={property.props.name} ></textarea></div>);
+              return (<div className="form-group"><label className={labelClass}>{property.props.name}</label><textarea className="form-control" name={property.props.name} ></textarea></div>);
               break;
             case 'any':
-              return (<div className="form-group"><label className={labelClass}>{property.props.name}</label><textarea className="form-control" id={property.props.name} ></textarea></div>);
+              return (<div className="form-group"><label className={labelClass}>{property.props.name}</label><textarea className="form-control" name={property.props.name} ></textarea></div>);
               break;
 
             default:
-              return (<div className="form-group"><label className={labelClass}>{property.props.name}</label><input className="form-control" type="text" id={property.props.name} /></div>);
+              return (<div className="form-group"><label className={labelClass}>{property.props.name}</label><input className="form-control" type="text" name={property.props.name} /></div>);
 
               break;
 
@@ -255,7 +266,7 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
         });
       }
       if (api.path.indexOf('{id}') !== -1){
-        modelProperties = (<div className="form-group"><label className="is-required">id</label><input required="required" className="form-control" type="text" id="id" /></div>);
+        modelProperties = (<div className="form-group"><label className="is-required">id</label><input required="required" className="form-control" type="text" name="id" /></div>);
 
       }
     };
@@ -276,7 +287,7 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
             <div data-ui-type="cell"  className={endPointMethod}>
               {apiDetails.httpMethod}
             </div>
-            <div data-ui-type="cell">
+            <div data-ui-type="cell" className="explorer-endpoint-summary-text">
               {apiDetails.summary}
             </div>
           </div>
@@ -284,26 +295,20 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
         </div>
 
 
-        <div className={apiClasses} data-ui-type="table">
+        <div className={apiClasses}>
 
-          <div data-ui-type="row">
-            <div data-ui-type="cell">
-              <form className="explorer-endpoint-form" role="form">
-                <button onClick={sendExplorerRequest} className="btn btn-default btn-explorer-api-submit">try it out</button>
-                {modelProperties}
-                <button onClick={sendExplorerRequest} className="btn btn-default btn-explorer-api-submit">try it out</button>
-              </form>
-            </div>
-            <div data-ui-type="cell">
-              <div>path: {api.path}</div>
-              <div>method: {apiDetails.httpMethod}</div>
-              <div>response class: {apiDetails.responseClass}</div>
-              <div>summary: {apiDetails.summary}</div>
-
-
-
-              <textarea className="explorer-api-textarea"></textarea>
-
+          <div data-ui-type="table">
+            <div data-ui-type="row">
+              <div data-ui-type="cell">
+                <form className="explorer-endpoint-form" role="form">
+                  <button onClick={sendExplorerRequest} className="btn btn-default btn-explorer-api-submit">try it out</button>
+                  {modelProperties}
+                  <button onClick={sendExplorerRequest} className="btn btn-default btn-explorer-api-submit">try it out</button>
+                </form>
+              </div>
+              <div data-ui-type="cell">
+                <textarea className="explorer-api-textarea" value={JSON.stringify(scope.currentExplorerApiResponse)}></textarea>
+              </div>
             </div>
           </div>
         </div>

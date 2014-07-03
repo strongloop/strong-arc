@@ -2,6 +2,7 @@
 app.controller('IDEController', [
   '$scope',
   '$state',
+  '$http',
   'IAService',
   'DatasourceService',
   'ExplorerService',
@@ -9,7 +10,7 @@ app.controller('IDEController', [
   '$timeout',
   'ModelService',
   '$modal',
-  function($scope, $state, IAService, DatasourceService, ExplorerService, $location, $timeout, ModelService, $modal) {
+  function($scope, $state, $http, IAService, DatasourceService, ExplorerService, $location, $timeout, ModelService, $modal) {
 
 //    $scope.mainContentZIndexes = {
 //      ModelEditorMainContainer: 101,
@@ -30,6 +31,7 @@ app.controller('IDEController', [
     $scope.activeModelPropertiesChanged = false;
     $scope.isModelsActive = true;
     $scope.newModelInstance = {name: '', isUnique:false};  // used by the new model view to reference change events when creating new models
+    $scope.currentExplorerApiResponse = {};
     $scope.isDataSourcesActive = true;
     $scope.activeDatasourceInstance = IAService.getActiveDatasourceInstance();
     $scope.previewInstance = IAService.clearPreviewModelInstance();
@@ -378,9 +380,6 @@ app.controller('IDEController', [
 
 
     // Models
-
-
-
     $scope.mainNavModels = ModelService.getAllModels();
     $scope.mainNavModels.$promise.
       then(function (result) {
@@ -491,8 +490,28 @@ app.controller('IDEController', [
 
 
 
+    // TODO - refactor this into a service
     $scope.explorerApiRequest = function(requestObj) {
       console.log('explorer api request:  ' + JSON.stringify(requestObj));
+      var config = {
+        method: requestObj.method,
+        url: '/api' + requestObj.path,
+        data: requestObj.data
+      };
+      $http(config).
+        success( function(response) {
+          $scope.currentExplorerApiResponse = response;
+        }).
+        error(function(response) {
+          $scope.currentExplorerApiResponse = response;
+        });
+
+
+//
+//      $scope.currentExplorerApiResponse = ExplorerService.xApiRequest(requestObj, function(response) {
+//        console.log('jesus');
+//      });
+//      var x = 'asdfasdf';
     };
 
 

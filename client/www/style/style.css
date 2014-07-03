@@ -6514,6 +6514,7 @@ form[name="DatasourceForm"] {
 .explorer-model-api-details.is-open {
   display: block;
   margin-left: 2.5rem;
+  width: 90%;
 }
 .explorer-model-list button.btn-explorer-model-main,
 .explorer-model-list button.explorer-endpoint-title {
@@ -6569,13 +6570,13 @@ form[name="DatasourceForm"] {
   background-color: #cccccc;
 }
 .explorer-api-method-GET {
-  background-color: #999999;
+  background-color: #aaaaaa;
 }
 .explorer-api-method-PUT {
-  background-color: #777777;
+  background-color: #eeeeee;
 }
 .explorer-api-method-DELETE {
-  background-color: #555555;
+  background-color: #bbbbbb;
 }
 .explorer-parameters-container {
   border: 1px solid #dddddd;
@@ -6584,6 +6585,13 @@ form[name="DatasourceForm"] {
 }
 .explorer-endpoint-form {
   padding: 4rem;
+  width: 400px;
+}
+.explorer-endpoint-summary-text {
+  font-size: 75%;
+  color: #333333;
+  margin: .2rem 1rem .2rem 1rem;
+  display: inline-block;
 }
 .explorer-parameter-item-parameter-list {
   border: 1px solid #888888;

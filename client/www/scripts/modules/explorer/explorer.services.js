@@ -95,6 +95,42 @@ Explorer.service('ExplorerService', [
 
     };
 
+    svc.xApiRequest = function(reqObj) {
+    //  var defer = $q.defer;
+      if (reqObj.method && reqObj.path) {
+        delete reqObj.data.id;
+
+
+        var defer = $q.defer;
+
+
+
+        var config = {
+          method: reqObj.method,
+          url: '/api' + reqObj.path,
+          data: reqObj.data
+        };
+        return $http(config).
+          success(function(data, status, headers, config) {
+            // this callback will be called asynchronously
+            // when the response is available
+            console.log('Good api request' + data);
+           // defer.resolve(data);
+            return data;
+          }).
+          error(function(data, status, headers, config) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+            console.log('Bad api request' + data);
+            defer.reject(data);
+          });
+        return defer.promise;
+
+      }
+
+
+
+    };
 
     return svc;
   }
