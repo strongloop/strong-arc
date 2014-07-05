@@ -217,7 +217,6 @@ Main Search
   padding:.4rem .2rem .2rem 2rem;
   color: @brand-primary;
   font-size:112%;
-  font-weight:900;
 }
 .tree-node {
   padding-left:3rem;
@@ -286,19 +285,12 @@ Main Search
   position:relative;
   background-color:@main-content-bg-color;
 }
-[data-id="ModelEditorMainContainer"] {
-  /*z-index: 111;*/
+[data-id="CommonInstanceContainer"] {
   background-color:#ffffff;
   width:0;
   border-color:#dddddd;
   border-width: 0 1.8rem 0 0;
   border-style: solid;
-
-}
-[data-id="DatasourceEditorMainContainer"] {
-  /*z-index: 110;*/
-  background-color:#ffffff;
-  width:0;
 
 }
 [data-id="CanvasApiContainer"] {
@@ -385,7 +377,7 @@ form[name="DatasourceForm"] {
   width:100%;
 
 }
-.editor-title-container {
+.instance-title-container {
   width:100%;
   background-color:#f1f1f1;
   border-top:1px solid #dddddd;
@@ -397,16 +389,16 @@ form[name="DatasourceForm"] {
   text-align: center;
   padding:.3rem 0 .3rem 0;
 }
-.editor-tabs-view-container {
+.instance-tabs-view-container {
   border-bottom:0px solid #dddddd;
 }
-.editor-tabs-list {
+.instance-tabs-list {
   padding: 0 0 0.3em 0;
   margin:0;
   line-height: .9;
 
 }
-.editor-tabs-list li {
+.instance-tabs-list li {
   display:inline;
   padding:.3rem;
   padding-bottom:.7rem;
@@ -415,20 +407,20 @@ form[name="DatasourceForm"] {
   border-top:1px solid #cccccc;
   border-bottom:0px solid #cccccc;
 }
-.editor-tabs-list .edit-tab-item-container {
+.instance-tabs-list .instance-tab-item-container {
   background-color:#d7eed7;
 }
-.editor-tabs-list .edit-tab-item-container.is-active {
+.instance-tabs-list .instance-tab-item-container.is-active {
   background-color:#ffffff;
   border-bottom: 2px solid #fff;
 }
-.edit-tab-item-button {
+.instance-tab-item-button {
   font-size:100%;
   font-family:monospace, sans-serif;
   border:0;
   background:transparent;
 }
-.edit-tab-close-button {
+.instance-tab-close-button {
   font-size:75%;
   border:0;
   background:transparent;

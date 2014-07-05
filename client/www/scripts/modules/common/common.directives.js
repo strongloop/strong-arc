@@ -1,5 +1,111 @@
 // Copyright StrongLoop 2014
 /*
+*
+* Common Instance Container
+*
+* holds:
+* - title view
+* - tabs view
+* - content view
+*
+*
+*
+*
+* */
+Common.directive('slCommonInstanceContainer', [
+  function() {
+    return {
+      templateUrl: './scripts/modules/common/templates/common.instance.container.html',
+      controller: function() {
+        console.log('wtf??');
+      },
+      link: function(scope, el, attrs) {
+
+      }
+    }
+  }
+]);
+/*
+*
+*   Common Instance Title View
+*
+* */
+Common.directive('slCommonInstanceTitleView', [
+  function() {
+    return {
+      link: function(scope, el, attrs) {
+        scope.$watch('activeModelInstance', function(newVal, oldVal) {
+          React.renderComponent(CommonInstanceTitleView({scope: scope}), el[0]);
+        });
+      }
+    }
+  }
+]);
+
+/*
+*
+*   Common Instance Tabs View
+*
+* */
+Common.directive('slCommonInstanceTabsView', [
+  'IAService',
+  function(IAService) {
+    return {
+      link: function(scope, el, attrs) {
+        function renderComp(){
+          var tabItems = [];
+
+          for (var i = 0;i < scope.openInstanceRefs.length;i++) {
+            var isActive = false;
+            if (scope.openInstanceRefs[i].name === scope.activeInstance.name) {
+              isActive = true;
+            }
+            tabItems.push({
+              name:scope.openInstanceRefs[i].name,
+              isActive:isActive
+            });
+          }
+
+          React.renderComponent(CommonInstanceTabsView({scope:scope, tabItems:tabItems}), el[0]);
+        }
+
+        scope.$watch('activeInstance', function(newVal, oldVal) {
+          renderComp();
+        });
+//        scope = scope.$parent;
+        scope.$watch('openInstanceRefs', function(newNames, oldNames) {
+          renderComp();
+        });
+      }
+    }
+  }
+]);
+/*
+*
+*   Common Instance Content View Container
+*
+*   - model form view
+*   - model preview
+*   - datasource form view
+*   - datasource preview
+*
+* */
+Common.directive('slCommonInstanceContentView', [
+  function() {
+    return {
+      link: function(scope, el, attrs) {
+
+      }
+    }
+  }
+]);
+
+
+
+
+
+
+/*
  *
  *   Instance Create
  *

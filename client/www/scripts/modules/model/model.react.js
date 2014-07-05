@@ -2,131 +2,14 @@
 /*
  *   Model Title Header
  * */
-var ModelTitleHeader = (ModelTitleHeader = React).createClass({
-  render: function() {
-    return (
-      <span>{this.props.scope.activeModelInstance.name}</span>
-      );
-  }
-});
-var ModelCreateTabsView = (ModelCreateTabsView = React).createClass({
-  render: function() {
-    var scope = this.props.scope;
-    this.props.tabItems.push({
-      isActive:true,
-      name:'newModel'
-    });
-    var cx = React.addons.classSet;
-
-    var clickModelEditTabItem = function(event) {
-      if (event.target.attributes['data-name']){
-        // test to see if tab not already 'active'
-        scope.$apply(function () {
-          scope.modelEditTabItemClicked(event.target.attributes['data-name'].value);
-        });
-      }
-    };
-    var clickModelEditorTabClose = function(event) {
-      if (event.target.attributes['data-name']){
-        // test to see if tab not already 'active'
-        scope.$apply(function () {
-          scope.modelEditTabItemCloseClicked(event.target.attributes['data-name'].value);
-        });
-      }
-    };
-    var items = [];
-    var iterator;
-    if (scope.currentOpenModelNames) {
-      iterator = scope.currentOpenModelNames;
-    }
-    else {
-      iterator = scope.$parent.currentOpenModelNames;
-    }
-
-    items = this.props.tabItems.map(function(item) {
-      var classNameVar = ' edit-tab-item-container';
-      if (item.isActive) {
-        classNameVar += ' is-active';
-      }
-
-      return (
-        <li className={classNameVar}>
-          <button onClick={clickModelEditTabItem} className=" edit-tab-item-button" data-name={item.name}>{item.name}</button>
-          <button onClick={clickModelEditorTabClose} className=" edit-tab-close-button" data-name={item.name}>
-            <span className="glyphicon glyphicon-remove" data-name={item.name}></span>
-          </button>
-        </li>
-        );
-    });
-
-    return (
-      <div>
-        <ul className=" editor-tabs-list">{items}</ul>
-      </div>
-      );
-  }
-});
-var ModelEditorTabsView = (ModelEditorTabsView = React).createClass({
-  render: function() {
-    var scope = this.props.scope;
-    var cx = React.addons.classSet;
 
 
-
-    var clickModelEditTabItem = function(event) {
-      if (event.target.attributes['data-name']){
-        // test to see if tab not already 'active'
-        scope.$apply(function () {
-          scope.modelEditTabItemClicked(event.target.attributes['data-name'].value);
-        });
-      }
-    };
-    var clickModelEditorTabClose = function(event) {
-      if (event.target.attributes['data-name']){
-        // test to see if tab not already 'active'
-        scope.$apply(function () {
-          scope.modelEditTabItemCloseClicked(event.target.attributes['data-name'].value);
-        });
-      }
-    };
-    var items = [];
-    var iterator;
-    if (scope.currentOpenModelNames) {
-      iterator = scope.currentOpenModelNames;
-    }
-    else {
-      iterator = scope.$parent.currentOpenModelNames;
-    }
-
-    items = this.props.tabItems.map(function(item) {
-      var classNameVar = ' edit-tab-item-container';
-      if (item.isActive) {
-        classNameVar += ' is-active';
-      }
-
-      return (
-        <li className={classNameVar}>
-          <button onClick={clickModelEditTabItem} className=" edit-tab-item-button" data-name={item.name}>{item.name}</button>
-          <button onClick={clickModelEditorTabClose} className=" edit-tab-close-button" data-name={item.name}>
-            <span className="glyphicon glyphicon-remove" data-name={item.name}></span>
-          </button>
-        </li>
-        );
-    });
-
-    return (
-      <div>
-        <ul className=" editor-tabs-list">{items}</ul>
-      </div>
-      );
-  }
-});
 /*
  *   Model Detail Editor
  * */
 var ModelDetailEditor = (ModelDetailEditor = React).createClass({
   getInitialState: function() {
-    return this.props.scope.activeModelInstance;
+    return this.props.scope.activeInstance;
   },
 
   handleChange: function(event) {
@@ -149,7 +32,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
     console.log('Component will receive props');
   },
 //  componentWillUpdate: function(nextProps, nextState) {
-//    this.setState(nextProps.scope.activeModelInstance);
+//    this.setState(nextProps.scope.activeInstance);
 //  },
   render: function() {
     var scope = this.props.scope;
@@ -172,7 +55,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
           <label>name</label>
         </div>
         <div data-ui-type="cell">
-          <input type="text" value={scope.activeModelInstance.name} data-name="name" id="ModelName" name="ModelName" className="model-instance-editor-input" />
+          <input type="text" value={scope.activeInstance.name} data-name="name" id="ModelName" name="ModelName" className="model-instance-editor-input" />
         </div>
         <input onClick={clickHandler} type="button" className="model-instance-header-btn btn btn-default btn-block" value="Details" />
         <div data-ui-type="table" className={classes}>

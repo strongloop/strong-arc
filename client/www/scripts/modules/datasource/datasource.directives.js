@@ -1,82 +1,5 @@
 // Copyright StrongLoop 2014
-/*
- *
- * Datasource Editor Main
- *
- * */
-Datasource.directive('slDatasourceEditorMain',[
-  function() {
-    return {
-      replace: true,
-      templateUrl: './scripts/modules/datasource/templates/datasource.editor.main.html',
-      link: function(scope, element, attrs) {
 
-        console.log('sl-datasource-editor-main');
-
-
-      }
-    }
-  }
-]);
-/*
- *
- *
- *   DATASOURCE INSTANCE HEADER
- *
- * */
-Datasource.directive('slDatasourceInstanceHeader', [
-  function() {
-    return {
-      restrict: 'A',
-      replace: true,
-      link: function(scope, el, attrs) {
-        scope.$watch('activeDatasourceInstance', function(newVal, oldVal) {
-          React.renderComponent(DatasourceTitleHeader({scope: scope}), el[0]);
-        });
-      }
-    }
-  }
-]);
-/*
- *
- * Datasource Editor Tabs View
- *
- * */
-Datasource.directive('slDatasourceEditorTabsView', [
-  'IAService',
-  function(IAService) {
-    return {
-      replace:true,
-      link: function(scope, el, attrs) {
-
-        function renderComp(){
-          var tabItems = [];
-
-          for (var i = 0;i < scope.currentOpenDatasourceNames.length;i++) {
-            var isActive = false;
-            if (scope.currentOpenDatasourceNames[i] === IAService.getActiveDatasourceInstance().name) {
-              isActive = true;
-            }
-            tabItems.push({
-              name:scope.currentOpenDatasourceNames[i],
-              isActive:isActive
-            });
-          }
-
-          React.renderComponent(DatasourceEditorTabsView({scope:scope, tabItems:tabItems}), el[0]);
-        }
-
-        scope.$watch('activeDatasourceInstance', function(newVal, oldVal) {
-          renderComp();
-        });
-//        scope = scope.$parent;
-        scope.$watch('currentOpenDatasourceNames', function(newNames, oldNames) {
-          renderComp();
-        });
-      }
-    }
-  }
-]);
 /*
  *
  *   Datasource Discovery
@@ -283,6 +206,13 @@ Datasource.directive('slDatasourceDiscovery', [
  *   Datasource Instance Editor
  *
  * */
+
+/*
+*
+* marked for deletion = convert directly to form directive below
+*
+*
+* */
 Datasource.directive('slDatasourceInstanceEditor', [
   function() {
     return {

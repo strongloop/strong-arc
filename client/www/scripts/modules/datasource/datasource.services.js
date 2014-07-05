@@ -43,9 +43,11 @@ Datasource.service('DatasourceService', [
 
       if (window.localStorage.getItem('ApiDatasources')) {
         var currDSCollection = JSON.parse(window.localStorage.getItem('ApiDatasources'));
-        var targetDS = currDSCollection[name];
-        targetDS.name = name;
-        return targetDS;
+        for (var i = 0;i < currDSCollection.length;i++) {
+          if (currDSCollection[i].name === name) {
+            return currDSCollection[i];
+          }
+        }
       }
     };
     svc.createDatasourceDef = function(datasourceDefObj) {

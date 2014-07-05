@@ -7,6 +7,8 @@ IA.service('IAService', [
   function($modal, AppStorageService, ModelService, DatasourceService) {
     var svc = {};
 
+    var currentlySelected = [];
+
     svc.getContainerWidth = function(selector) {
       if (selector) {
         return jQuery(selector).width();
@@ -20,7 +22,6 @@ IA.service('IAService', [
     };
     svc.closeContainer = function(selector) {
       return jQuery(selector).animate({width: 0}, 500 );
-
     };
     svc.getMainContentWidth = function() {
       return svc.getContainerWidth('[data-id="MainContentContainer"]');
@@ -28,185 +29,235 @@ IA.service('IAService', [
     svc.getViewportWidth = function() {
       return (window.innerWidth - 40);
     };
-    svc.getEditorUIPriority = function() {
-      var editorUIPriority = AppStorageService.getItem('editorUIPriority');
-      if (!editorUIPriority) {
-        editorUIPriority = 'model';
-      }
-      return editorUIPriority;
-    };
 
-    svc.setPreviewModelInstance = function(instance) {
-      return AppStorageService.setItem('previewInstance', instance);
+
+
+
+   // instances
+
+    svc.getOpenInstanceRefs = function() {
+      var retRefs = AppStorageService.getItem('openInstanceRefs');
+      if (!retRefs) {
+        retRefs = [];
+      }
+      return retRefs;
     };
-    svc.setPreviewDatasourceInstance = function(instance) {
-      return AppStorageService.setItem('previewInstance', instance);
+    svc.closeInstanceByName = function(name) {
+      var sourceInstances = svc.getOpenInstanceRefs();
+      for (var i = 0;i < sourceInstances.length;i++) {
+        if (sourceInstances[i].name === name) {
+          sourceInstances.splice(i, 1);
+          break;
+        }
+      }
+      AppStorageService.setItem('openInstanceRefs', sourceInstances);
+      return sourceInstances;
     };
-    svc.clearPreviewModelInstance = function() {
-      return AppStorageService.removeItem('previewInstance');
+    svc.activateInstanceByName = function(name, type) {
+      var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
+
+      var newInstance = {};
+      var isOpen = false;
+      var instanceType = type;
+
+      if (openInstanceRefs) {
+        // first check if it is open already
+        for (var i = 0;i < openInstanceRefs.length;i++) {
+
+          if (openInstanceRefs[i].name === name) {
+            isOpen = true;
+            instanceType = openInstanceRefs[i].type;
+            break;
+
+          }
+        }
+      }
+
+
+
+      // activate instance from respective repository
+      switch(instanceType) {
+
+        case 'model':
+          newInstance = ModelService.getModelByName(name);
+          newInstance.type = 'model';
+          break;
+
+        case 'datasource':
+          newInstance = DatasourceService.getDatasourceByName(name);
+          newInstance.type = 'datasource';
+          break;
+
+        default:
+          // there is no instance type
+          console.warn('trying to open instance by name but no type available: ' + name);
+
+
+      }
+
+      // set as active and update open refs if necessary
+      if (newInstance) {
+        svc.setActiveInstance(newInstance.name, instanceType);
+        if (!isOpen) {
+          var currRefs = AppStorageService.getItem('openInstanceRefs');
+          if (!currRefs) {
+            currRefs = [];
+            AppStorageService.setItem('openInstanceRefs', currRefs);
+          }
+          currRefs.push({name:name,type:instanceType});
+          AppStorageService.setItem('openInstanceRefs', currRefs);
+        }
+      }
+
+      return newInstance;
+
     };
-    svc.clearPreviewDatasourceInstance = function() {
-      return AppStorageService.removeItem('previewInstance');
+    svc.setActiveInstance = function(instance, type) {
+      var targetInstance = {};
+      var name = instance;
+      if (instance.name) {
+        name = instance.name;
+      }
+
+
+      if (type === 'model') {
+        targetInstance = ModelService.getModelByName(name);
+      }
+      else if (type === 'datasource') {
+        targetInstance = DatasourceService.getDatasourceByName(name);
+      }
+      targetInstance.type = type;
+      return AppStorageService.setItem('activeInstance', targetInstance);
     };
-    svc.getPreviewModelInstance = function() {
-      return AppStorageService.getItem('previewInstance');
-    };
-    svc.getPreviewDatasourceInstance = function() {
-      return AppStorageService.getItem('previewInstance');
-    };
-    svc.setActiveModelInstance = function(instance) {
-      return AppStorageService.setItem('activeModelInstance', instance);
-    };
-    svc.setActiveDatasourceInstance = function(instance) {
-      return AppStorageService.setItem('activeDatasourceInstance', instance);
-    };
-    svc.getActiveModelInstance = function() {
-      var instance = AppStorageService.getItem('activeModelInstance');
+    svc.getActiveInstance = function() {
+      var instance = AppStorageService.getItem('activeInstance');
       if (instance) {
         return instance;
       }
       return {};
     };
-    svc.getActiveDatasourceInstance = function() {
-      var instance = AppStorageService.getItem('activeDatasourceInstance');
-      if (instance) {
-        return instance;
+    /*
+    *
+    * Helpers
+    *
+    * */
+    svc.getOpenModelNames =  function() {
+      var retVal = [];
+      var sourceInstances = svc.getOpenInstanceRefs();
+      for (var i = 0;i < sourceInstances.length;i++) {
+        if (sourceInstances[i].type === 'model') {
+          retVal.push(sourceInstances[i].name);
+        }
       }
-      return {};
+      return retVal;
     };
-    svc.addToCurrentModelSelections = function(modelName) {
-      var currentSelectedModelNames = AppStorageService.getItem('currentSelectedModelNames');
-      var modelRef = {};
-      // check if there are already some model instances open
-      if (!currentSelectedModelNames) {
+    svc.getOpenDatasourceNames =  function() {
+      var retVal = [];
+      var sourceInstances = svc.getOpenInstanceRefs();
+      for (var i = 0;i < sourceInstances.length;i++) {
+        if (sourceInstances[i].type === 'datasource') {
+          retVal.push(sourceInstances[i].name);
+        }
+      }
+      return retVal;
+    };
+    svc.getInstanceType = function(instance) {
+      var instanceName = instance;
+      if(instance.type) {
+        return instance.type;
+      }
+      else {
+        if (instance.name) {
+          instanceName = instance.name;
+        }
+        var dsDefs = DatasourceService.getAllDatasources();
+        for (var i = 0;i < dsDefs.length;i++) {
+          if (dsDefs[i].name === instanceName) {
+            return 'datasource';
+          }
+        }
+        return 'model';
+      }
+    };
 
-        currentSelectedModelNames = [];
+
+
+
+    /*
+     *
+     * Selections
+     *
+     * */
+    svc.addToCurrentInstanceSelections = function(instanceName, type) {
+
+      // check if there are already some model instances open
+      if (!currentlySelected) {
+
+        currentlySelected = [];
       }
       // net new so add to list of open models
       // instantiate model by name
-      // set as active model
-      if (currentSelectedModelNames.indexOf(modelName) === -1) {
-        currentSelectedModelNames.push(modelName);
-        AppStorageService.setItem('currentSelectedModelNames', currentSelectedModelNames);
-      }
-      return currentSelectedModelNames;
-    };
-    svc.addToCurrentDatasourceSelections = function(datasourceName) {
-      var currentSelectedDatasourceNames = AppStorageService.getItem('currentSelectedDatasourceNames');
-      // check if there are already some model instances open
-      if (!currentSelectedDatasourceNames) {
-
-        currentSelectedDatasourceNames = [];
-      }
-      // net new so add to list of open models
-      // instantiate model by name
-      // set as active model
-      if (currentSelectedDatasourceNames.indexOf(datasourceName) === -1) {
-        currentSelectedDatasourceNames.push(datasourceName);
-        AppStorageService.setItem('currentSelectedDatasourceNames', currentSelectedDatasourceNames);
-      }
-      return currentSelectedDatasourceNames;
-    };
-    svc.getCurrentModelSelections = function() {
-      var currentSelectedModelNames = AppStorageService.getItem('currentSelectedModelNames');
-      if (!currentSelectedModelNames) {
-        currentSelectedModelNames = [];
-      }
-      return currentSelectedModelNames;
-    };
-    svc.getCurrentDatasourceSelections = function() {
-      var currentSelectedDatasourceNames = AppStorageService.getItem('currentSelectedDatasourceNames');
-      if (!currentSelectedDatasourceNames) {
-        currentSelectedDatasourceNames = [];
-      }
-      return currentSelectedDatasourceNames;
-    };
-    svc.clearSelectedModelNames = function() {
-      var currentSelectedModelNames = [];
-      AppStorageService.setItem('currentSelectedModelNames', currentSelectedModelNames);
-      return currentSelectedModelNames;
-    };
-    svc.clearSelectedDatasourceNames = function() {
-      var currentSelectedDatasourceNames = [];
-      AppStorageService.setItem('currentSelectedDatasourceNames', currentSelectedDatasourceNames);
-      return currentSelectedDatasourceNames;
-    };
-    svc.getOpenModelNames = function() {
-      var retModels = AppStorageService.getItem('currentOpenModelNames');
-      if (!retModels) {
-        retModels = [];
-      }
-      return retModels;
-    };
-    svc.getOpenDatasourceNames = function() {
-      var retDatasoruces = AppStorageService.getItem('currentOpenDatasourceNames');
-      if (!retDatasoruces) {
-        retDatasoruces = [];
-      }
-      return retDatasoruces;
-    };
-    svc.closeModelByName = function(name) {
-      var currentOpenModelNames = AppStorageService.getItem('currentOpenModelNames');
-      if (currentOpenModelNames && (currentOpenModelNames.length > 0)) {
-        currentOpenModelNames.splice(currentOpenModelNames.indexOf(name), 1);
-        AppStorageService.setItem('currentOpenModelNames', currentOpenModelNames);
-      }
-      return currentOpenModelNames;
-    };
-    svc.closeDatasourceByName = function(name) {
-      var currentOpenDatasourceNames = AppStorageService.getItem('currentOpenDatasourceNames');
-      if (currentOpenDatasourceNames && (currentOpenDatasourceNames.length > 0)) {
-        currentOpenDatasourceNames.splice(currentOpenDatasourceNames.indexOf(name), 1);
-        AppStorageService.setItem('currentOpenDatasourceNames', currentOpenDatasourceNames);
-      }
-      return currentOpenDatasourceNames;
-    };
-    svc.activateModelByName = function(name) {
-      var currentOpenModelNames = AppStorageService.getItem('currentOpenModelNames');
-      var modelRef = {};
-      // check if there are already some model instances open
-      if (currentOpenModelNames) {
-        // net new so add to list of open models
-        // instantiate model by name
-        // set as active model
-        if (currentOpenModelNames.indexOf(name) === -1) {
-          currentOpenModelNames.push(name);
-          AppStorageService.setItem('currentOpenModelNames', currentOpenModelNames);
-        }
-      }
-      else {
-        // there are no current open models
-        currentOpenModelNames = [name];
-        AppStorageService.setItem('currentOpenModelNames', currentOpenModelNames);
+      // set as active instance
+      if (currentlySelected.indexOf(instanceName) === -1) {
+        currentlySelected.push(instanceName);
 
       }
-      var newActiveModel = ModelService.getModelByName(name);
-      svc.setActiveModelInstance(newActiveModel);
-      return newActiveModel;
+      return currentlySelected;
     };
-    svc.activateDatasourceByName = function(name) {
-      var currentOpenDatasourceNames = AppStorageService.getItem('currentOpenDatasourceNames');
-
-      // check if there are already some model instances open
-      if (currentOpenDatasourceNames) {
-        // net new so add to list of open models
-        // instantiate model by name
-        // set as active model
-        if (currentOpenDatasourceNames.indexOf(name) === -1) {
-          currentOpenDatasourceNames.push(name);
-          AppStorageService.setItem('currentOpenDatasourceNames', currentOpenDatasourceNames);
-        }
-      }
-      else {
-        // there are no current open models
-        currentOpenDatasourceNames = [name];
-        AppStorageService.setItem('currentOpenDatasourceNames', currentOpenDatasourceNames);
-
-      }
-      var newActiveDatasource = DatasourceService.getDatasourceByName(name);
-      svc.setActiveDatasourceInstance(newActiveDatasource);
-      return newActiveDatasource;
+    svc.getCurrentInstanceSelections = function() {
+      return currentlySelected;
     };
+    svc.clearInstanceSelections = function() {
+      currentlySelected = [];
+      return currentlySelected;
+    };
+
+    /*
+     *
+     * end Selections
+     *
+     *
+     * */
+
+/*
+* preview
+* */
+
+
+
+    svc.setPreviewInstance = function(instance) {
+      return AppStorageService.setItem('previewInstance', instance);
+    };
+    svc.clearPreviewInstance = function() {
+      return AppStorageService.removeItem('previewInstance');
+    };
+    svc.getPreviewInstance = function() {
+      return AppStorageService.getItem('previewInstance');
+    };
+
+    /*
+    *
+    * end new preview
+    *
+    * */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     svc.setExplorerViewXPos = function(x) {
       try{
         var xPos = parseInt(x);
@@ -232,54 +283,24 @@ IA.service('IAService', [
 
     };
     svc.clearViews = function() {
-      svc.closeContainer('[data-id="DatsourceEditorMainContainer"]');
-      svc.closeContainer('[data-id="ModelEditorMainContainer"]');
+      svc.closeContainer('[data-id="CommonInstanceContainer"]');
       svc.closeContainer('[data-id="PreviewInstanceMainContainer"]');
       svc.closeContainer('[data-id="ExplorerContainer"]');
-    };
-    svc.setEditorUIPriority = function(branch) {
-      if (branch) {
-        switch (branch) {
-          case 'model':
-            svc.openContainer('[data-id="ModelEditorMainContainer"]');
-            svc.closeContainer('[data-id="DatsourceEditorMainContainer"]');
-            break;
-
-          case 'datasource':
-            svc.openContainer('[data-id="DatsourceEditorMainContainer"]');
-            svc.closeContainer('[data-id="ModelEditorMainContainer"]');
-            break;
-
-          default:
-
-        }
-        window.setUI();
-        AppStorageService.setItem('editorUIPriority', branch);
-      }
-    };
-    svc.showModelEditorView = function() {
-      //svc.clearViews();
-      svc.closeContainer('[data-id="ExplorerContainer"]');
-      //svc.setEditorUIPriority('model');
-      if (svc.isViewOpen('ModelEditorMainContainer')){
-        svc.closeContainer('[data-id="ModelEditorMainContainer"]');
-      }
-      else {
-        svc.openContainer('[data-id="ModelEditorMainContainer"]');
-      }
-     // jQuery('[data-id="ModelEditorMainContainer"]').animate({width: 1000}, 500 );
-    };
-    svc.showDatasourceEditorView = function() {
-//      svc.clearViews();
-//      jQuery('[data-id="DatasourceEditorMainContainer"]').animate({width: 1000}, 500 );
-      svc.setEditorUIPriority('datasource');
-      svc.closeContainer('[data-id="ExplorerContainer"]');
-
     };
     svc.showCanvasView = function() {
       // hide all slide outs that may be open
       svc.clearViews();
     };
+    svc.showInstanceView = function() {
+      //svc.clearViews();
+      svc.closeContainer('[data-id="ExplorerContainer"]');
+
+        svc.openContainer('[data-id="CommonInstanceContainer"]');
+
+
+      // jQuery('[data-id="ModelEditorMainContainer"]').animate({width: 1000}, 500 );
+    };
+
     svc.isViewOpen = function(viewId) {
       var xWidth = jQuery('[data-id="' + viewId + '"]').width();
       if (parseInt(xWidth) > 0) {
@@ -297,6 +318,7 @@ IA.service('IAService', [
       }
 
     };
+    // rename
     svc.toggleEditorView = function() {
       var modelEditorWidth = svc.getContainerWidth('ModelEditorMainContainer');
       if (modelEditorWidth > 0) {

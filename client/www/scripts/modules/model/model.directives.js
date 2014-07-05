@@ -3,81 +3,8 @@
  *
  * Model Editor Main
  *
+ *
  * */
-Model.directive('slModelEditorMain',[
-  function() {
-    return {
-      replace: true,
-      templateUrl: './scripts/modules/model/templates/model.editor.main.html',
-      link: function(scope, element, attrs) {
-
-        console.log('sl-model-editor-main');
-
-
-      }
-    }
-  }
-]);
-/*
-*
-*
-*   MODEL INSTANCE HEADER
-*
-* */
-Model.directive('modelInstanceHeader', [
-  function() {
-    return {
-      restrict: 'A',
-      replace: true,
-      link: function(scope, el, attrs) {
-        scope.$watch('activeModelInstance', function(newVal, oldVal) {
-          React.renderComponent(ModelTitleHeader({scope: scope}), el[0]);
-        });
-      }
-    }
-  }
-]);
-/*
-*
-* Model Editor Tabs View
-*
-* */
-Model.directive('slModelEditorTabsView', [
-  'IAService',
-  function(IAService) {
-    return {
-      link: function(scope, el, attrs) {
-
-        function renderComp(){
-          var tabItems = [];
-
-          for (var i = 0;i < scope.currentOpenModelNames.length;i++) {
-            var isActive = false;
-            if (scope.currentOpenModelNames[i] === IAService.getActiveModelInstance().name) {
-              isActive = true;
-            }
-            tabItems.push({
-              name:scope.currentOpenModelNames[i],
-              isActive:isActive
-            });
-          }
-
-          React.renderComponent(ModelEditorTabsView({scope:scope, tabItems:tabItems}), el[0]);
-        }
-
-        scope.$watch('activeModelInstance', function(newVal, oldVal) {
-          renderComp();
-        });
-//        scope = scope.$parent;
-        scope.$watch('currentOpenModelNames', function(newNames, oldNames) {
-          renderComp();
-        });
-      }
-    }
-  }
-]);
-
-
 
 /*
  *
@@ -100,12 +27,12 @@ Model.directive('modelBaseEditor',[
         scope.currProperty = {};
 
         scope.$watch('isModelInstanceBasePropertiesActive', function(val) {
-          var model = scope.activeModelInstance;
+          var model = scope.activeInstance;
           React.renderComponent(ModelDetailEditor({scope: scope, model: model }), el[0]);
         });
 
-        scope.$watch('activeModelInstance', function(val) {
-          var model = scope.activeModelInstance;
+        scope.$watch('activeInstance', function(val) {
+          var model = scope.activeInstance;
           React.renderComponent(ModelDetailEditor({scope: scope, model: model }), el[0]);
         });
       }
@@ -131,13 +58,13 @@ Model.directive('modelPropertiesEditor',[
         };
         scope.$watch('isModelInstancePropertiesActive', function(val) {
           var properties = [];
-          if (scope.activeModelInstance.props.properties) {
-            properties = scope.activeModelInstance.props.properties;
+          if (scope.activeInstance.props.properties) {
+            properties = scope.activeInstance.props.properties;
           }
           React.renderComponent(ModelPropertiesEditor({scope:scope, properties:properties}), el[0]);
         });
 
-        scope.$watch('activeModelInstance.props.properties', function(properties) {
+        scope.$watch('activeInstance.props.properties', function(properties) {
           if (!properties){
             properties = [];
           }
@@ -148,15 +75,15 @@ Model.directive('modelPropertiesEditor',[
         });
 
         scope.$watch('activeModelPropertiesChanged', function(val) {
-          if (!scope.activeModelInstance.props.properties){
-            scope.activeModelInstance.props.properties = [];
+          if (!scope.activeInstance.props.properties){
+            scope.activeInstance.props.properties = [];
           }
           else {
             scope.isModelInstancePropertiesActive = true;
           }
-          React.renderComponent(ModelPropertiesEditor({scope:scope, properties:scope.activeModelInstance.props.properties}), el[0]);
+          React.renderComponent(ModelPropertiesEditor({scope:scope, properties:scope.activeInstance.props.properties}), el[0]);
         });
-        scope.$watch('activeModelInstance', function(model) {
+        scope.$watch('activeInstance', function(model) {
           if (!model.props.properties){
             model.props.properties = [];
           }
@@ -213,7 +140,7 @@ Model.directive('modelPocketEditorContainer', [
     return {
       link: function(scope, el, attrs) {
 
-        scope.$watch('activeModelInstance', function(model) {
+        scope.$watch('activeInstance', function(model) {
           React.renderComponent(ModelPocketEditorContainer({scope:scope}), el[0]);
         });
 
@@ -230,6 +157,9 @@ Model.directive('slModelInstanceEditor', [
   function() {
     return {
       templateUrl: './scripts/modules/model/templates/model.instance.editor.html',
+      controller: function($scope) {
+        console.log('Model Instance Editor');
+      },
       link: function(scope, el, attrs) {
 
       }

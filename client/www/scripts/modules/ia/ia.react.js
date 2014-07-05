@@ -60,10 +60,6 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
     var modelSelectedCollection = [];
     var cx = React.addons.classSet;
 
-    var classes = cx({
-      ' branch-leaf-list is-open': this.props.scope.isModelsActive,
-      ' branch-leaf-list is-closed': !this.props.scope.isModelsActive
-    });
 
     var clickBranch = function(event) {
       if (event.target.attributes['data-name']){
@@ -74,29 +70,12 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
     };
 
     var singleClickItem = function(event) {
-
       if (event.target.attributes['data-name']){
         var clickModelName = event.target.attributes['data-name'].value;
-        if (event.metaKey) {
-          console.log('meta key clicked: ' + clickModelName);
-
-          scope.$apply(function () {
-            scope.selectModel(clickModelName);
-          });
-//          modelSelectedCollection.push(clickModelName);
-//          console.log('selected collection: ' + JSON.stringify(modelSelectedCollection));
-        }
-        else {
-          // clear selected
-          scope.$apply(function () {
-            scope.clearSelectedModels();
-            scope.selectModel(clickModelName);
-            scope.navTreeItemClicked('model', clickModelName, event.metaKey);
-          });
-        }
-
+        scope.$apply(function () {
+          scope.navTreeItemClicked('model', clickModelName, event.metaKey);
+        });
       }
-
     };
     var dblClickItem = function(event) {
       if (event.target.attributes['data-name']){
@@ -126,7 +105,7 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
     return (
       <div>
         <input onClick={clickBranch} data-name="model_root" className="btn btn-default btn-block nav-tree-item tree-branch" type="button" value="Models" />
-        <ul className={classes}>{items}</ul>
+        <ul className="branch-leaf-list is-open">{items}</ul>
       </div>
       );
   }
@@ -198,10 +177,6 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
 
     var cx = React.addons.classSet;
 
-    var classes = cx({
-      'branch-leaf-list is-open': this.props.scope.isDataSourcesActive,
-      'branch-leaf-list is-closed': !this.props.scope.isDataSourcesActive
-    });
     var clickBranch = function(event) {
       if (event.target.attributes['data-name']){
         scope.$apply(function () {
@@ -211,15 +186,16 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
     };
     var singleClickItem = function(event) {
       if (event.target.attributes['data-name']){
+        var clickDSName = event.target.attributes['data-name'].value;
         scope.$apply(function () {
-       //   scope.navTreeItemClicked('datasource', event.target.attributes['data-name'].value, event.metaKey);
+          scope.navTreeItemClicked('datasource', clickDSName, event.metaKey);
         });
       }
     };
     var dblClickItem = function(event) {
       if (event.target.attributes['data-name']){
         scope.$apply(function () {
-         // scope.navTreeItemDblClicked('datasource', event.target.attributes['data-name'].value);
+          scope.navTreeItemDblClicked('datasource', event.target.attributes['data-name'].value);
         });
       }
     };
@@ -250,7 +226,7 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
     return (
       <div>
         <input onClick={clickBranch} type="button" data-name="datasources_root" className="btn btn-default btn-block nav-tree-item tree-branch" value="Datasources" />
-        <ul className={classes}>{scope.mainNavDatasources.map(datasourceItemRenderer)}</ul>
+        <ul className="branch-leaf-list is-open">{scope.mainNavDatasources.map(datasourceItemRenderer)}</ul>
       </div>
       );
   }

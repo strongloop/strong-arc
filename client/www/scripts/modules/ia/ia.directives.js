@@ -8,11 +8,17 @@ IA.directive('slIaMainNav', [
     return {
       replace: true,
       link: function(scope, el, attrs) {
-
+        var openModelNames = IAService.getOpenModelNames();
+        var openDatasourceNames = scope.currentOpenDatasourceNames;
         function processActiveNavState() {
           // models
-          var openModelNames = scope.currentOpenModelNames;
-          var currActiveModelInstanceName = scope.activeModelInstance.name;
+
+          var currActiveModelInstanceName = '';
+
+          if (scope.activeInstance && (IAService.getInstanceType(scope.activeInstance) === 'model')) {
+            currActiveModelInstanceName = scope.activeInstance.name;
+          }
+
 
           for (var x = 0;x < scope.mainNavModels.length;x++){
             var localInstance = scope.mainNavModels[x];
@@ -29,8 +35,8 @@ IA.directive('slIaMainNav', [
             if (currActiveModelInstanceName === localInstance.name) {
               localInstance.isActive = true;
             }
-            for (var k = 0;k < scope.currentModelSelections.length;k++) {
-              if (scope.currentModelSelections[k] === localInstance.name) {
+            for (var k = 0;k < scope.currentSelectedCollection.length;k++) {
+              if (scope.currentSelectedCollection[k] === localInstance.name) {
                 localInstance.isSelected = true;
                 break;
               }
@@ -38,7 +44,11 @@ IA.directive('slIaMainNav', [
           }
           // datasources
           var openDatasourceNames = scope.currentOpenDatasourceNames;
-          var currActiveDatasourceInstanceName = scope.activeDatasourceInstance.name;
+          var currActiveDatasourceInstanceName = '';
+          if (scope.activeInstance && (IAService.getInstanceType(scope.activeInstance) === 'datasource')) {
+            currActiveDatasourceInstanceName = scope.activeInstance.name;
+          }
+
           if (scope.mainNavDatasources.length){
 
             var discoverableDatasources = DatasourceService.getDiscoverableDatasourceConnectors();
@@ -72,8 +82,8 @@ IA.directive('slIaMainNav', [
                 localDSInstance.isActive = true;
               }
               // is it selected
-              for (var w = 0;w < scope.currentDatasourceSelections.length;w++) {
-                if (scope.currentDatasourceSelections[w] === localDSInstance.name) {
+              for (var w = 0;w < scope.currentSelectedCollection.length;w++) {
+                if (scope.currentSelectedCollection[w] === localDSInstance.name) {
                   localDSInstance.isSelected = true;
                   break;
                 }
@@ -93,19 +103,15 @@ IA.directive('slIaMainNav', [
 
 
         };
-        scope.$watch('currentModelSelections', function(newVal, oldVal) {
+        scope.$watch('currentSelectedCollection', function(newVal, oldVal) {
           processActiveNavState();
           renderComp();
         }, true);
-        scope.$watch('currentOpenModelNames', function(newVal, oldVal) {
+        scope.$watch('openInstanceRefs', function(newVal, oldVal) {
           processActiveNavState();
           renderComp();
         }, true);
-        scope.$watch('activeModelInstance', function(newVal, oldVal) {
-          processActiveNavState();
-          renderComp();
-        }, true);
-        scope.$watch('currentDatasourceSelections', function(newVal, oldVal) {
+        scope.$watch('activeInstance', function(newVal, oldVal) {
           processActiveNavState();
           renderComp();
         }, true);
@@ -113,7 +119,7 @@ IA.directive('slIaMainNav', [
           processActiveNavState();
           renderComp();
         }, true);
-        scope.$watch('activeDatasourceInstance', function(newVal, oldVal) {
+        scope.$watch('currentOpenModelNames', function(newVal, oldVal) {
           processActiveNavState();
           renderComp();
         }, true);
@@ -158,7 +164,7 @@ IA.directive('slIaMainControls', [
       replace: true,
       link: function(scope, el, attrs) {
 
-        scope.$watch('activeModelInstance', function(instance) {
+        scope.$watch('activeInstance', function(instance) {
           $timeout(function() {
             React.renderComponent(IAMainControls({scope:scope}), el[0]);
           }, 200);
@@ -182,6 +188,47 @@ IA.directive('slIaMainContent', [
 
         setUI();
       }
+    }
+  }
+]);
+/*
+*
+* slIAInstanceContainer
+*
+*
+* */
+IA.directive('slIAInstanceContainer', [
+  function() {
+    return {
+      templateUrl: './scripts/modules/ia/templates/ia.instance.container.html',
+      link: function(scope, el, attrs) {
+
+      }
+    }
+  }
+]);
+/*
+*
+*   slIAClearDbNavItem
+*
+* */
+IA.directive('slIaCleardbNavItem', [
+  'AppStorageService',
+  'growl',
+  function(AppStorageService, growl) {
+    return {
+      template: '<li><a href="#" ng-click="clearDB()">r</a></li>',
+      controller: function($scope) {
+
+        $scope.clearDB = function() {
+          console.log('clear the cache');
+          if (confirm('clear local cache?')) {
+            AppStorageService.clearStorage();
+            growl.addSuccessMessage("cleared studio caches");
+          }
+        }
+      },
+      replace: true
     }
   }
 ]);

@@ -99,11 +99,11 @@ var setUI = function() {
   jQuery('[data-id="MainNavContainer"]').css('height', navHeight);
   jQuery('.main-content-item-container').css('height', (jWindowHeight - headerHeight));
   // any open views need to follow the width of the container
-  var editorWidth = jQuery('[data-id="ModelEditorMainContainer"]').width();
+  var editorWidth = jQuery('[data-id="CommonInstanceContainer"]').width();
   var contentWidth = jQuery('[data-id="IAMainContentContainer"]').width();
   if (editorWidth > 0) {
     // track the container width
-    jQuery('[data-id="ModelEditorMainContainer"]').css('width', contentWidth);
+    jQuery('[data-id="CommonInstanceContainer"]').css('width', contentWidth);
 
   }
   var explorerWidth = jQuery('[data-id="ExplorerContainer"]').width();
@@ -184,7 +184,7 @@ app.config([
       state('studio', {
         url: '/studio',
         templateUrl: './scripts/modules/app/templates/studio.main.html',
-        controller: 'IDEController'
+        controller: 'StudioController'
       }).
       state('datasource', {
         url: '/datasource',

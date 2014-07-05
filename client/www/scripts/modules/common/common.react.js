@@ -25,6 +25,74 @@ var CommonCreateInstanceContainer = (CommonCreateInstanceContainer = React).crea
       </div>);
   }
 });
+/*
+ *
+ * Instance Title  View
+ *
+ * */
+var CommonInstanceTitleView = (CommonInstanceTitleView = React).createClass({
+  render: function() {
+    return (
+      <span>{this.props.scope.activeInstance.name}</span>
+      );
+  }
+});
+
+/*
+ *
+ * Instance Container Tabs View
+ *
+ * */
+var CommonInstanceTabsView = (CommonInstanceTabsView = React).createClass({
+  render: function() {
+    var scope = this.props.scope;
+    var cx = React.addons.classSet;
+
+    var clickInstanceTabItem = function(event) {
+      if (event.target.attributes['data-name']){
+        // test to see if tab not already 'active'
+        scope.$apply(function () {
+          scope.instanceTabItemClicked(event.target.attributes['data-name'].value);
+        });
+      }
+    };
+    var clickInstanceTabClose = function(event) {
+      if (event.target.attributes['data-name']){
+        // test to see if tab not already 'active'
+        scope.$apply(function () {
+          scope.instanceTabItemCloseClicked(event.target.attributes['data-name'].value);
+        });
+      }
+    };
+    var items = [];
+    var iterator;
+    if (scope.openInstanceRefs) {
+      iterator = scope.openInstanceRefs;
+    }
+
+    items = this.props.tabItems.map(function(item) {
+      var classNameVar = ' instance-tab-item-container';
+      if (item.isActive) {
+        classNameVar += ' is-active';
+      }
+
+      return (
+        <li className={classNameVar}>
+          <button onClick={clickInstanceTabItem} className=" instance-tab-item-button" data-name={item.name}>{item.name}</button>
+          <button onClick={clickInstanceTabClose} className=" instance-tab-close-button" data-name={item.name}>
+            <span className="glyphicon glyphicon-remove" data-name={item.name}></span>
+          </button>
+        </li>
+        );
+    });
+
+    return (
+      <div>
+        <ul className=" instance-tabs-list">{items}</ul>
+      </div>
+      );
+  }
+});
 var CommonPreviewInstanceContainer = (CommonPreviewInstanceContainer = React).createClass({
   render: function() {
     var scope = this.props.scope;

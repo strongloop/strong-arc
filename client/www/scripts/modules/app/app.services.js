@@ -15,14 +15,31 @@ app.service('AppService', [
 app.service('AppStorageService', [
   function() {
     var svc = {};
+
+    var getSlScope = function() {
+      var slScope = window.localStorage.getItem('slScope');
+      if (!slScope) {
+        return {};
+      }
+      return JSON.parse(slScope);
+    };
+
     svc.setItem = function(itemName, item) {
-      return window.localStorage.setItem(itemName, JSON.stringify(item));
+      var localScope = getSlScope();
+      localScope[itemName] = item;
+      return window.localStorage.setItem('slScope', JSON.stringify(localScope));
     };
     svc.getItem = function(itemName) {
-      return JSON.parse(window.localStorage.getItem(itemName));
+      var localScope = getSlScope();
+      return localScope[itemName];
     };
     svc.removeItem = function(itemName) {
-      return window.localStorage.removeItem(itemName);
+      var localScope = getSlScope();
+      delete localScope[itemName];
+      return localScope;
+    };
+    svc.clearStorage = function() {
+      return window.localStorage.setItem('slScope', JSON.stringify({}));
     };
     return svc;
   }

@@ -1,5 +1,5 @@
 // Copyright StrongLoop 2014
-app.controller('IDEController', [
+app.controller('StudioController', [
   '$scope',
   '$state',
   '$http',
@@ -12,376 +12,71 @@ app.controller('IDEController', [
   '$modal',
   function($scope, $state, $http, IAService, DatasourceService, ExplorerService, $location, $timeout, ModelService, $modal) {
 
-//    $scope.mainContentZIndexes = {
-//      ModelEditorMainContainer: 101,
-//      PreviewInstanceContainer: 100,
-//      CanvasApiContainer: 130
-//    };
-
+    /*
+     *
+     * Base Instance Collections
+     *
+     * */
     $scope.mainNavDatasources = []; // initialized further down
     $scope.mainNavModels = [];  // initialized further down
-    $scope.currentOpenModelNames = IAService.getOpenModelNames();
-    $scope.currentOpenDatasourceNames = IAService.getOpenDatasourceNames();
-    $scope.currentSelectedCollection = IAService.clearSelectedModelNames();
-    $scope.activeModelInstance = IAService.getActiveModelInstance();
-    $scope.explorerResources = ExplorerService.getEResources().then(function(result) {
-        $scope.explorerResources = result;
-      });
-    $scope.latestExplorerEndPointResponses = []; // array of named responses for explorer endpoints to hold latest server responses
-    $scope.explorerViewXPos = IAService.getExplorerViewXPos();
-    $scope.activeModelPropertiesChanged = false;
-    $scope.explorerDataModelChanged = false; // dirty toggle for triggering renders on the react components
-    $scope.isModelsActive = true;
-    $scope.newModelInstance = {name: '', isUnique:false};  // used by the new model view to reference change events when creating new models
-    $scope.currentExplorerApiResponse = {};
-    $scope.isDataSourcesActive = true;
-    $scope.activeDatasourceInstance = IAService.getActiveDatasourceInstance();
-    $scope.previewInstance = IAService.clearPreviewModelInstance();
-    $scope.editorUIPriority = IAService.getEditorUIPriority();
-    $scope.currentModelSelections = IAService.clearSelectedModelNames();
-    $scope.currentDatasourceSelections = IAService.clearSelectedDatasourceNames();
-    $scope.selectModel = function(name) {
-      $scope.currentModelSelections = IAService.addToCurrentModelSelections(name);
-    };
-    $scope.selectDatasource = function(name) {
-      $scope.currentModelSelections = IAService.addToCurrentModelSelections(name);
-    };
-    $scope.clearSelectedModels = function() {
-      $scope.currentModelSelections = IAService.clearSelectedModelNames();
-    };
-    $scope.clearSelectedDatasources = function() {
-      $scope.currentDatasourceSelections = IAService.clearSelectedDatasourceNames();
-    };
-    $scope.clearModelPreview = function() {
-      $scope.previewInstance = {};
-      IAService.clearPreviewModelInstance();
-      $scope.currentSelectedCollection = [];
-      jQuery('[data-id="PreviewInstanceContainer"]').hide();
-    };
-    $scope.clearDatasourcePreview = function() {
-      $scope.previewInstance = {};
-      IAService.clearPreviewModelInstance();
-      $scope.currentSelectedCollection = [];
-      jQuery('[data-id="PreviewInstanceContainer"]').hide();
-    };
-
-    /*
-     *
-     *   An item has been double clicked.
-     *
-     *   - clear any preview
-     *   - add item to currently active instances
-     *   - set item as the currently active instance
-     *
-     * */
-    $scope.navTreeItemDblClicked = function(type, target) {
-      console.log('dbl clicked!!: ' + target);
-    //  jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
-      switch(type) {
-
-        case 'model':
-
-          $scope.activeModelInstance = IAService.activateModelByName(target);
-          $scope.editorUIPriority = IAService.setEditorUIPriority('model');
-          $scope.clearModelPreview();
-          $scope.currentOpenModelNames = IAService.getOpenModelNames();
-          IAService.setEditorUIPriority('model');
-          $scope.clearSelectedModels();
-          break;
-
-        case 'datasource':
-          $scope.activeDatasourceInstance = IAService.activateDatasourceByName(target);
-          $scope.editorUIPriority = IAService.setEditorUIPriority('datasource');
-          $scope.clearDatasourcePreview();
-          $scope.currentOpenDatasourceNames = IAService.getOpenDatasourceNames();
-          IAService.setEditorUIPriority('datasource');
-          $scope.clearSelectedDatasources();
-          break;
-        default:
-
-      }
-
-
-    };
-
-    /*
-     * branch clicked
-     * */
-    $scope.navTreeBranchClicked = function(type) {
-      console.log('Tree Branch Clicked');
-      // change the z-index on the main content to bring the
-      // canvas to the fore
-      // get reference to the following:
-      /*
-       [data-id="ModelEditorMainContainer"]
-       [data-id="CanvasApiContainer"]
-       [data-id="PreviewInstanceContainer"]
-       *
-       * */
-      IAService.showCanvasView();
-      //jQuery('[data-id="CanvasApiContainer"]').transition({ x: 0 });
-//      switch(type) {
-//        case 'model':
-//          $scope.editorUIPriority = IAService.setEditorUIPriority('model');
-//
-//          break;
-//
-//        case 'datasource':
-//          $scope.editorUIPriority = IAService.setEditorUIPriority('datasource');
-//
-//          break;
-//
-//        default:
-//      }
-
-
-      $scope.clearSelectedModels();
-
-    };
-    $scope.modelEditTabItemClicked = function(name) {
-      var currentOpenModelNames = IAService.getOpenModelNames();
-      // defensive check to make sure the component is initialized
-      if (currentOpenModelNames && currentOpenModelNames.length > 0){
-        // only if the model isn't currently active
-
-        $scope.activeModelInstance = IAService.activateModelByName(name);
-      }
-      $scope.clearSelectedModels();
-    };
-    $scope.datasourceEditTabItemClicked = function(name) {
-      var currentOpenDatasourceNames = IAService.getOpenDatasourceNames();
-      // defensive check to make sure the component is initialized
-      if (currentOpenDatasourceNames && currentOpenDatasourceNames.length > 0){
-        // only if the model isn't currently active
-
-        $scope.activeDatasourceInstance = IAService.activateDatasourceByName(name);
-      }
-      $scope.clearSelectedDatasources();
-    };
-    $scope.modelEditTabItemCloseClicked = function(name) {
-
-      $scope.currentOpenModelNames = IAService.closeModelByName(name);
-      // reset the active instance and reset tabs and nav
-      if ($scope.activeModelInstance.name === name) {
-        if ($scope.currentOpenModelNames.length === 0) {
-          $scope.aciveModelInstance = {};
-        }
-        else {
-
-          // active the first instance by default
-          $scope.activeModelInstance = IAService.activateModelByName($scope.currentOpenModelNames[0]);
-
-        }
-      }
-      $scope.clearSelectedModels();
-    };
-    $scope.datasourceEditTabItemCloseClicked = function(name) {
-
-      $scope.currentOpenDatasourceNames = IAService.closeDatasourceByName(name);
-      // reset the active instance and reset tabs and nav
-      if ($scope.activeDatasourceInstance.name === name) {
-        if ($scope.currentOpenDatasourceNames.length === 0) {
-          $scope.aciveDatasoruceInstance = {};
-        }
-        else {
-
-          // active the first instance by default
-          $scope.aciveDatasoruceInstance = IAService.activateDatasourceByName($scope.currentOpenDatasourceNames[0]);
-
-        }
-      }
-      $scope.clearSelectedDatasources();
-    };
-
-    /*
-     *
-     * get the list of current active instances
-     *
-     * check for a current active instance
-     *
-     * render instance editor view
-     *
-     * */
-    $scope.openInstances = function() {
-
-    };
-    $scope.openSelectedModels = function() {
-      var selectedModels = IAService.getCurrentModelSelections();
-      if (selectedModels) {
-        $scope.clearModelPreview();
-        for (var i = 0; i < selectedModels.length;i++) {
-          $scope.activeModelInstance = IAService.activateModelByName(selectedModels[i]);
-        }
-        $scope.currentOpenModelNames = IAService.getOpenModelNames();
-        IAService.setEditorUIPriority('model');
-
-        //jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
-        $scope.clearSelectedModels();
-      }
-    };
-    $scope.openSelectedDatasources = function() {
-      var selectedDatasources = IAService.getCurrentDatasourceSelections();
-      if (selectedDatasources) {
-        $scope.clearDatasourcePreview();
-        for (var i = 0; i < selectedDatasourcess.length;i++) {
-          $scope.activeDatasourceInstance = IAService.activateDatasourceByName(selectedDatasources[i]);
-        }
-        $scope.currentOpenDatasourcelNames = IAService.getOpenDatasourceNames();
-        IAService.setEditorUIPriority('datasource');
-
-        //jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
-        $scope.clearSelectedDatasources();
-      }
-    };
-
-
-    /*
-     an element on the nav tree has been single left clicked
-     could be:
-     - the app root
-     -- show the 'canvas' view
-     - a 'branch' (datasources or models)
-     -- show filtered canvas view
-     - a 'node' - conceptually a leaf in v1 but could become branch or leaf in future
-     -- show instance property editor view
-
-     control key may be pressed or not
-     -- if pressed, add to current selection collection
-     -- if not then clear current selected collection
-
-     */
-    $scope.navTreeItemClicked = function(type, targetName, multiSelect) {
-
-      switch (type){
-
-        case 'model':
-          /*
-           * cases:
-           * - item is not open: open preview view of item
-           * - item is open and active: do nothing
-           * - item is open but not active: activate item
-           *
-           * */
-
-          IAService.setEditorUIPriority('model');
-          //jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
-          var openModelNames = $scope.currentOpenModelNames;
-          var targetModel = ModelService.getModelByName(targetName);
-          if (openModelNames && (openModelNames.indexOf(targetName) === -1)) {
-            // mode is not open so preview it
-            $scope.previewInstance = targetModel;
-
-          }
-          else {
-            // model is open
-            // make sure it isn't currently active
-            if ($scope.activeModelInstance.name !== targetName) {
-              $scope.activeModelInstance = IAService.activateModelByName(targetName);
-              $scope.clearModelPreview();
-              $scope.clearSelectedModels();
-            }
-            else {
-              // active model instance was clicked
-              // if the model editor view is open > close it
-              IAService.showModelEditorView();
-              // if the model editor view is closed > open it
-            }
-
-
-          }
-
-
-          break;
-        case 'datasource':
-          //$scope.previewInstance = DatasourceService.getDatasourceByName(target);
-          /*
-           * cases:
-           * - item is not open: open preview view of item
-           * - item is open and active: do nothing
-           * - item is open but not active: activate item
-           *
-           * */
-          IAService.setEditorUIPriority('datasource');
-          //jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
-          var openDatasourceNames = $scope.currentOpenDatasourceNames;
-          var targetDatasource = DatasourceService.getDatasourceByName(targetName);
-          if (openDatasourceNames && (openDatasourceNames.indexOf(targetName) === -1)) {
-            // mode is not open so preview it
-            $scope.previewInstance = targetDatasource;
-
-          }
-          else {
-            // model is open
-            // make sure it isn't currently active
-            if ($scope.activeDatasourceInstance.name !== targetName) {
-              $scope.activeDatasourceInstance = IAService.activateDatasourceByName(targetName);
-              $scope.clearDatasourcePreview();
-              $scope.clearSelectedDatasources();
-
-            }
-
-
-          }
-
-          break;
-
-        default:
-
-
-      }
-      IAService.setPreviewModelInstance($scope.previewInstance);
-
-      // control key is pressed
-      if (multiSelect) {
-        $scope.currentSelectedCollection.push($scope.previewInstance);
-      }
-      else{
-        // in preview mode load up the instance in case
-        // the user gives it focus (wants to edit it)
-        $scope.currentSelectedCollection = [$scope.previewInstance];
-      }
-
-    };
-    $scope.createModelViewRequest = function() {
-      var modelName = 'newModel4';
-      var newModel = {
-        "name": modelName,
-        "componentName": "api",
-        "public": true,
-        "plural": modelName + "s"
-      };
-      ModelService.createModel(newModel);
-      $scope.activeModelInstance = {name:'new model'};
-      $scope.editorUIPriority = IAService.setEditorUIPriority('model');
-      $scope.currentOpenModelNames = IAService.getOpenModelNames();
-      $scope.clearModelPreview();
-      $scope.clearSelectedModels();
-    };
-
-
-
+    $scope.instanceType = 'model';
     /*
     *
-    *   New Model Name Input Processing
+    * Transient Data
     *
     * */
-    $scope.processModelNameInput = function(input) {
-      $scope.newModelInstance.name = input;
-      var modelCount = $scope.mainNavModels.length;
-      $scope.newModelInstance.isUnique = true;
-      for (var i = 0;i < modelCount;i++) {
-        var modelInstance = $scope.mainNavModels[i];
-        var compString = modelInstance.name.substr(0, input.length);
-        if (compString === input) {
-          $scope.newModelInstance.isUnique = false;
-          break;
-        }
-      }
+    // new
+    /*
+    *
+    * list of open instances (models/datasources)
+    * collection of light-weight objects to keep UI context
+    * - name
+    * - type
+    * - ?
+    *
+    * needs full IAService implementation (CRUD / utilities)
+    * aim to replace currentOpenModelNames and currentOpenDatasourceNames
+    *
+    * */
+    $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
 
-    };
+    // legacy
+    $scope.currentOpenDatasourceNames = IAService.getOpenDatasourceNames();
+    $scope.currentSelectedCollection = IAService.clearInstanceSelections();
+    $scope.latestExplorerEndPointResponses = []; // array of named responses for explorer endpoints to hold latest server responses
+    $scope.explorerViewXPos = IAService.getExplorerViewXPos();  // for when the user controls it
+    //$scope.editorViewXPos = IAService.getEditorViewXPos();
+    /*
+    *
+    * Dirty Flags
+    *
+    * */
+    $scope.activeModelPropertiesChanged = false;  // dirty flag
+    $scope.explorerDataModelChanged = false; // dirty toggle for triggering renders on the react components
+
+    /*
+    *
+    * MAIN UI STATE
+    *
+    *
+    * this is where the surgery needs to be most deep
+    *
+    * merge the notion of an active datasource instance and an active
+    *
+    * */
+    // new
+    // temporarily assign to model for dev work
+    $scope.activeInstance = IAService.getActiveInstance();  // TODO
+
+    // legacy
+    $scope.previewInstance = IAService.clearPreviewInstance();
 
 
-    // Models
+    /*
+    *
+    * Model and Datasource collections
+    *
+    * */
     $scope.mainNavModels = ModelService.getAllModels();
     $scope.mainNavModels.$promise.
       then(function (result) {
@@ -410,16 +105,16 @@ app.controller('IDEController', [
           models.push({name:key,props:value});
         }, log);
 
-          $scope.mainNavModels = models;
-        }
-      ).then(function() {
-    /*
-     *
-     *
-     * Datasources
-     *
-     *
-     * */
+        $scope.mainNavModels = models;
+      }
+    ).then(function() {
+        /*
+         *
+         *
+         * Datasources
+         *
+         *
+         * */
         //$scope.mainNavDatasources = [];
         $scope.mainNavDatasources = DatasourceService.getAllDatasources({});
         $scope.mainNavDatasources.$promise.
@@ -439,6 +134,361 @@ app.controller('IDEController', [
           });
       }
     );
+    /*
+    *
+    * API Explorer View
+    *
+    * */
+    $scope.explorerResources = ExplorerService.getEResources().then(function(result) {
+      $scope.explorerResources = result;
+    });
+
+
+    /*
+    *
+    * METHODS
+    *
+    * */
+    $scope.selectModel = function(name) {
+      $scope.currentModelSelections = IAService.addToCurrentModelSelections(name);
+    };
+    $scope.selectDatasource = function(name) {
+      $scope.currentModelSelections = IAService.addToCurrentModelSelections(name);
+    };
+    $scope.clearSelectedInstances = function() {
+      $scope.instanceSelections = IAService.clearInstanceSelections();
+    };
+    $scope.clearSelectedDatasources = function() {
+      $scope.currentDatasourceSelections = IAService.clearSelectedDatasourceNames();
+    };
+
+
+    /*
+     *
+     *  NAV CLICK EVENTS
+     *
+     *
+     *
+     *    DOUBLE CLICK
+     *
+     *
+     *   An item has been double clicked.
+     *
+     *   - clear any preview
+     *   - add item to currently active instances
+     *   - set item as the currently active instance
+     *
+     * */
+    $scope.navTreeItemDblClicked = function(type, target) {
+      console.log('dbl clicked!!: ' + target);
+    //  jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
+      switch(type) {
+
+        case 'model':
+
+//          $scope.activeInstance = IAService.setActiveInstance(target, 'model');
+          $scope.activeInstance = IAService.activateInstanceByName(target, 'model');
+
+          $scope.currentOpenModelNames = IAService.getOpenModelNames();
+          $scope.clearSelectedInstances();
+          $scope.instanceType = 'model';
+
+          break;
+
+        case 'datasource':
+          //$scope.activeDatasourceInstance = IAService.setActiveInstance(target, 'datasource');
+          $scope.activeInstance = IAService.activateInstanceByName(target, 'datasource');
+
+          $scope.currentOpenDatasourceNames = IAService.getOpenDatasourceNames();
+          $scope.clearSelectedInstances();
+          $scope.instanceType = 'datasource';
+
+          break;
+        default:
+
+      }
+
+      IAService.showInstanceView();
+    };
+
+    /*
+     * branch clicked
+     * */
+    $scope.navTreeBranchClicked = function(type) {
+      console.log('Tree Branch Clicked');
+      // change the z-index on the main content to bring the
+      // canvas to the fore
+      // get reference to the following:
+      /*
+       [data-id="ModelEditorMainContainer"]
+       [data-id="CanvasApiContainer"]
+       [data-id="PreviewInstanceContainer"]
+       *
+       * */
+      IAService.showCanvasView();
+
+
+
+      $scope.clearSelectedInstances();
+
+    };
+
+    /*
+
+    SINGLE CLICK
+
+
+
+     an element on the nav tree has been single left clicked
+     could be:
+     - the app root
+     -- show the 'canvas' view
+     - a 'branch' (datasources or models)
+     -- show filtered canvas view
+     - a 'node' - conceptually a leaf in v1 but could become branch or leaf in future
+     -- show instance property editor view
+
+     control key may be pressed or not
+     -- if pressed, add to current selection collection
+     -- if not then clear current selected collection
+
+     */
+    $scope.navTreeItemClicked = function(type, targetName, multiSelect) {
+
+      switch (type){
+
+        case 'model':
+          /*
+           * cases:
+           * - item is not open: open preview view of item
+           * - item is open and active: do nothing
+           * - item is open but not active: activate item
+           *
+           * */
+
+          //jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
+          var openModelNames = IAService.getOpenModelNames();
+          var targetModel = ModelService.getModelByName(targetName);
+
+          // check for preview mode
+
+          if (openModelNames && (openModelNames.indexOf(targetName) === -1)) {
+            // mode is not open so preview it
+            $scope.previewInstance = targetModel;
+            $scope.previewInstance.type = 'model';
+            $scope.instanceType = 'model';
+
+          }
+          else {
+            // model is open
+            // make sure it isn't currently active
+            if ($scope.activeInstance.name !== targetName) {
+              $scope.activeInstance = IAService.activateInstanceByName(targetName, 'model');
+              $scope.activeInstance.type = 'model';
+              $scope.instanceType = 'model';
+              $scope.clearSelectedInstances();
+            }
+            else {
+              // active model instance was clicked
+              // if the model editor view is open > close it
+              IAService.showInstanceView();
+              // if the model editor view is closed > open it
+            }
+
+
+          }
+
+
+          break;
+        case 'datasource':
+          //$scope.previewInstance = DatasourceService.getDatasourceByName(target);
+          /*
+           * cases:
+           * - item is not open: open preview view of item
+           * - item is open and active: do nothing
+           * - item is open but not active: activate item
+           *
+           * */
+
+          var openDatasourceNames = IAService.getOpenDatasourceNames();
+          var targetDS = DatasourceService.getDatasourceByName(targetName);
+
+          // check for preview mode
+
+          if (openDatasourceNames && (openDatasourceNames.indexOf(targetName) === -1)) {
+            // mode is not open so preview it
+            $scope.previewInstance = targetDS;
+            $scope.previewInstance.type = 'datasource';
+
+          }
+          else {
+            // ds is open
+            // make sure it isn't currently active
+            if ($scope.activeInstance.name !== targetName) {
+              $scope.activeInstance = IAService.activateInstanceByName(targetName, 'datasource');
+              $scope.activeInstance.type = 'datasource';
+              $scope.instanceType = 'datasource';
+              $scope.clearSelectedInstances();
+            }
+            else {
+              // active model instance was clicked
+              // if the model editor view is open > close it
+              IAService.showInstanceView();
+              // if the model editor view is closed > open it
+            }
+
+
+          }
+
+          break;
+
+        default:
+
+
+      }
+
+
+      // control key is pressed
+      if (multiSelect) {
+        $scope.currentSelectedCollection.push($scope.previewInstance);
+      }
+      else{
+        // in preview mode load up the instance in case
+        // the user gives it focus (wants to edit it)
+        $scope.currentSelectedCollection = [$scope.previewInstance];
+      }
+
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
+    *
+    * CONTENT EDIT TABS CLICK EVENTS
+    *
+    * */
+    $scope.instanceTabItemClicked = function(name) {
+      var openInstanceRefs = IAService.getOpenInstanceRefs();
+      // defensive check to make sure the component is initialized
+      if (openInstanceRefs && openInstanceRefs.length > 0){
+        // only if the model isn't currently active
+        $scope.activeInstance = IAService.activateInstanceByName(name);
+        $scope.instanceType = $scope.activeInstance.type;
+      }
+      $scope.clearSelectedInstances();
+    };
+
+    $scope.instanceTabItemCloseClicked = function(name) {
+
+      $scope.openInstanceRefs = IAService.closeInstanceByName(name);
+      // reset the active instance and reset tabs and nav
+      if ($scope.activeInstance.name === name) {
+        if ($scope.openInstanceRefs.length === 0) {
+          $scope.activeInstance = {};
+        }
+        else {
+
+          // active the first instance by default
+          $scope.activeInstance = IAService.activateInstanceByName($scope.openInstanceRefs[0].name);
+          $scope.activeInstance = IAService.activateInstanceByName($scope.openInstanceRefs[0].name);
+        }
+      }
+      $scope.clearSelectedInstances();
+    };
+
+
+
+
+
+
+    /*
+     *
+     * get the list of current active instances
+     *
+     * check for a current active instance
+     *
+     * render instance editor view
+     *
+     * */
+    $scope.openInstances = function() {
+
+    };
+    $scope.openSelectedModels = function() {
+      var selectedModels = IAService.getCurrentInstanceSelections();
+      if (selectedModels) {
+        for (var i = 0; i < selectedModels.length;i++) {
+          $scope.activeInstance = IAService.activateInstanceByName(selectedModels[i]);
+
+        }
+        $scope.currentOpenModelNames = IAService.getOpenModelNames();
+
+        //jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
+        $scope.clearSelectedInstances();
+      }
+    };
+
+
+
+
+    $scope.createModelViewRequest = function() {
+      var modelName = 'newModel4';
+      var newModel = {
+        "name": modelName,
+        "componentName": "api",
+        "public": true,
+        "plural": modelName + "s"
+      };
+      ModelService.createModel(newModel);
+      $scope.activeInstance = {name:'new instance'};
+      $scope.currentOpenModelNames = IAService.getOpenModelNames();
+      $scope.clearSelectedInstances();
+    };
+
+
+
+    /*
+    *
+    *   New Model Name Input Processing
+    *
+    * */
+    $scope.processModelNameInput = function(input) {
+      $scope.newModelInstance = {};
+      $scope.newModelInstance.name = input;
+      var modelCount = $scope.mainNavModels.length;
+      $scope.newModelInstance.isUnique = true;
+      for (var i = 0;i < modelCount;i++) {
+        var modelInstance = $scope.mainNavModels[i];
+        var compString = modelInstance.name.substr(0, input.length);
+        if (compString === input) {
+          $scope.newModelInstance.isUnique = false;
+          break;
+        }
+      }
+
+    };
+
+
 
 
     /*
@@ -461,23 +511,26 @@ app.controller('IDEController', [
     * */
     $scope.updateModelDetailProperty = function(name, value) {
       if (name && value) {
-        $scope.activeModelInstance[name] = value;
+        $scope.activeInstance[name] = value;
         if (name === 'name') {
-          $scope.activeModelInstance['plural'] = value + 's';
+          $scope.activeInstance['plural'] = value + 's';
         }
-        ModelService.updateModelInstance($scope.activeModelInstance);
-        $scope.activeModelInstance = IAService.activateModelByName($scope.activeModelInstance.name);
+        ModelService.updateModelInstance($scope.activeInstance);
+        $scope.activeInstance = IAService.activateInstanceByName($scope.activeInstance.name);
       }
     };
     $scope.createNewProperty = function() {
       console.log('create new property');
-      var xModel = $scope.activeModelInstance;
+      var xModel = $scope.activeInstance;
       if (!xModel.properties){
         xModel.properties = [];
       }
       xModel.properties.push({name:'property-name', props: { type:'string'}});
 
-      $scope.activeModelInstance = xModel;
+      xModel.type = 'model';
+      $scope.activeInstance = xModel;
+
+
 
       $scope.activeModelPropertiesChanged = !$scope.activeModelPropertiesChanged;
     };
@@ -521,7 +574,6 @@ app.controller('IDEController', [
 
       $http(config).
         success( function(response) {
-          //$scope.currentExplorerApiResponse = response;
           $scope.latestExplorerEndPointResponses[requestObj.endPoint] = response;
           $scope.explorerDataModelChanged = !$scope.explorerDataModelChanged;
         }).
@@ -529,23 +581,7 @@ app.controller('IDEController', [
           $scope.latestExplorerEndPointResponses[requestObj.endPoint] = response;
           $scope.explorerDataModelChanged = !$scope.explorerDataModelChanged;
         });
-
-
-//
-//      $scope.currentExplorerApiResponse = ExplorerService.xApiRequest(requestObj, function(response) {
-//        console.log('jesus');
-//      });
-//      var x = 'asdfasdf';
     };
-
-
-
-
-//
-    $timeout(function(){
-      window.setUI();
-    //  jQuery('[data-id="ExplorerContainer"]').transition({ x: $scope.explorerViewXPos });
-    }, 1000);
 
 
   }

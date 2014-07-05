@@ -21,6 +21,7 @@ var ExplorerMain = (ExplorerMain = React).createClass({
     var items = (<div />);
     if (explorerResources.map) {
       items = explorerResources.map(function (resource) {
+
         return <ExploreModelApiEndPointListItem apiResource={resource} scope={scope} />
 
       });
@@ -81,6 +82,8 @@ var ExploreModelApiEndPointListItem = (ExploreModelApiEndPointListItem = React).
 
     var cx = React.addons.classSet;
     var that = this;
+
+
     var scope = that.props.scope;
 
 
@@ -131,7 +134,7 @@ var ExploreModelApiEndPointListItem = (ExploreModelApiEndPointListItem = React).
     else {
       mainClasses = 'explorer-model is-closed'
     }
-    if (that.props.scope.activeModelInstance.name === singularResourceName) {
+    if (that.props.scope.activeInstance.name === singularResourceName) {
       mainClasses = 'explorer-model is-open is-active';
       modelButtonClass += ' is-active';
 
@@ -163,7 +166,33 @@ var ExploreModelApiEndPointListItem = (ExploreModelApiEndPointListItem = React).
       );
 
 
+
+
+
+
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 });
 /*
  *
