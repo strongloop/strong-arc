@@ -243,6 +243,9 @@ var IAMainControls = (IAMainControls = React).createClass({
       newModelText: 'new model'
     };
   },
+  componentDidMount: function() {
+    window.setUI();
+  },
   render: function() {
     var that = this;
     var scope = that.props.scope;

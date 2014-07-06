@@ -180,7 +180,7 @@ Datasource.directive('slDatasourceDiscovery', [
         $scope.datasources.$promise.
           then(function (result) {
 
-            var core = result.name[0];
+            var core = result[0];
 //
             var log = [];
             var datasources = [];
