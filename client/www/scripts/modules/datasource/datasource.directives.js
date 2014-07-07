@@ -7,23 +7,33 @@
  * */
 Datasource.directive('slDatasourceDiscovery', [
   'ModelService',
-  function(ModelService) {
+  '$timeout',
+  function(ModelService, $timeout) {
     return {
       replace:true,
       templateUrl: './scripts/modules/datasource/templates/datasource.discovery.html',
       controller:  function($scope, DatasourceService) {
         $scope.isDsTablesLoadingIndicatorVisible = true;
         $scope.currentDiscoveryStep = 'selectTables';
+        $scope.schemaTables2 = [];
         $scope.loadSchema = function(dsName) {
 
-          $scope.tables = DatasourceService.getDatasourceTables({'name':'mSql'});
-          $scope.tables.$promise.
+          $scope.schemaTables2 = DatasourceService.getDatasourceTables({'name':'mSql'});
+          $scope.schemaTables2.$promise.
             then(function (result) {
 
 
-              $scope.tables = result.schema;
-              $scope.isDsTablesLoadingIndicatorVisible = false;
-              $scope.isDsTableGridVisible = true;
+              $timeout(function(){
+                $scope.schemaTables2 = result.schema;
+                $scope.isDsTablesLoadingIndicatorVisible = false;
+                $scope.isDsTableGridVisible = true;
+
+                console.log(JSON.stringify($scope.schemaTables2));
+
+                var x = 'y';
+
+              },2000);
+
 
 
             });
@@ -74,7 +84,7 @@ Datasource.directive('slDatasourceDiscovery', [
         }
 
         $scope.dsTablesGridOptions = {
-          data: 'tables',
+          data: 'schemaTables2',
           columnDefs: [
             {field:'name', displayName:'Table'},
             {field:'owner',displayName:'Owner'}
@@ -176,22 +186,22 @@ Datasource.directive('slDatasourceDiscovery', [
 
 
 
-        $scope.datasources = DatasourceService.getAllDatasources({});
-        $scope.datasources.$promise.
-          then(function (result) {
-
-            var core = result[0];
+//        $scope.datasources = DatasourceService.getAllDatasources({});
+//        $scope.datasources.$promise.
+//          then(function (result) {
 //
-            var log = [];
-            var datasources = [];
-            angular.forEach(core, function(value, key){
-              //this.push(key + ': ' + value);
-              datasources.push({name:key,props:value});
-            }, log);
-            $scope.datasources = datasources;
-
-
-          });
+//            var core = result[0];
+////
+//            var log = [];
+//            var datasources = [];
+//            angular.forEach(core, function(value, key){
+//              //this.push(key + ': ' + value);
+//              datasources.push({name:key,props:value});
+//            }, log);
+//            $scope.datasources = datasources;
+//
+//
+//          });
 
 
       },

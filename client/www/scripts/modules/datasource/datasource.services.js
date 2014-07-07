@@ -68,7 +68,11 @@ Datasource.service('DatasourceService', [
 //          }, log);
 
           // $scope.models = models;
+          var x = response.schema;
+          var y = x;
+
           return response.schema;
+
         },
         function(response) {
           console.log('bad get datasource defs');
@@ -76,10 +80,10 @@ Datasource.service('DatasourceService', [
         }
 
       );
-    }
+    };
     svc.getDiscoveryModalConfig = function(name) {
       return {
-        templateUrl: './scripts/modules/app/templates/discovery.modal.html',
+        templateUrl: './scripts/modules/datasource/templates/discovery.modal.html',
         windowClass: 'app-modal-window',
         controller: function ($scope, $modalInstance) {
 

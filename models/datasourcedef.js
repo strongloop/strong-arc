@@ -8,7 +8,7 @@ var DataSource = require('loopback-datasource-juggler').DataSource;
 
 
 DataSourceDefs.discoverschema = function(fn) {
-  var dsName = 'apmDev';
+  var dsName = 'icarmysql';
 
   var ds = app.dataSources[dsName];
 

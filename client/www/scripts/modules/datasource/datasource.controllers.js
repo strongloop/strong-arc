@@ -2,7 +2,8 @@
 Datasource.controller('DatasourceMainController', [
   '$scope',
   'DatasourceService',
-  function($scope, DatasourceService) {
+  '$timeout',
+  function($scope, DatasourceService, $timeout) {
     /*
     *
     *   <button>Get Datasource Operations: dataSource.operations().</button>
@@ -10,7 +11,7 @@ Datasource.controller('DatasourceMainController', [
     * */
 
     console.log('Datasource Main Controller');
-    $scope.datasources = [];
+    $scope.schemaTables = [];
     $scope.apiSourceTables = [];
     $scope.isDsTableGridVisible = false;
     $scope.isDsTablesLoadingIndicatorVisible = false;
@@ -33,35 +34,43 @@ Datasource.controller('DatasourceMainController', [
 
 
 
-
-    $scope.datasources = DatasourceService.getAllDatasources({});
-    $scope.datasources.$promise.
-      then(function (result) {
-
-        var core = result.name[0];
 //
-        var log = [];
-        var datasources = [];
-        angular.forEach(core, function(value, key){
-          //this.push(key + ': ' + value);
-          datasources.push({name:key,props:value});
-        }, log);
-        $scope.datasources = datasources;
-
-
-      });
+//    $scope.datasources = DatasourceService.getAllDatasources({});
+//    $scope.datasources.$promise.
+//      then(function (result) {
+//
+//        var core = result.name[0];
+////
+//        var log = [];
+//        var datasources = [];
+//        angular.forEach(core, function(value, key){
+//          //this.push(key + ': ' + value);
+//          datasources.push({name:key,props:value});
+//        }, log);
+//        $scope.datasources = datasources;
+//
+//
+//      });
 
     $scope.loadSchema = function(dsName) {
       $scope.isDsTablesLoadingIndicatorVisible = true;
 
-      $scope.tables = DatasourceService.getDatasourceTables({'name':'mSql'});
-      $scope.tables.$promise.
+      $scope.schemaTables = DatasourceService.getDatasourceTables({'name':'mSql'});
+      $scope.schemaTables.$promise.
         then(function (result) {
 
 
-          $scope.tables = result.schema;
-          $scope.isDsTablesLoadingIndicatorVisible = false;
-          $scope.isDsTableGridVisible = true;
+
+          $timeout(
+
+            function() {
+              $scope.schemaTables = result.schema;
+              $scope.isDsTablesLoadingIndicatorVisible = false;
+              $scope.isDsTableGridVisible = true;
+            }, 2000
+
+          );
+
 
 
         });
@@ -73,7 +82,7 @@ Datasource.controller('DatasourceMainController', [
 
 
     $scope.dsTablesGridOptions = {
-      data: 'tables',
+      data: 'schemaTables',
       columnDefs: [
         {field:'name', displayName:'Table'},
         {field:'owner',displayName:'Owner'},
