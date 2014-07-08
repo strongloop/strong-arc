@@ -165,31 +165,7 @@ var ExploreModelApiEndPointListItem = (ExploreModelApiEndPointListItem = React).
       </li>
       );
 
-
-
-
-
-
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -224,7 +200,7 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
     var modelDef = that.props.modelDef;
     var apiDetails = that.props.apiDetails;
     var api = that.props.api;
-    var currentResponseValue = {};
+    var currentResponseValue = '';
     if (scope.latestExplorerEndPointResponses) {
       if (scope.latestExplorerEndPointResponses[apiDetails.nickname]) {
         currentResponseValue = scope.latestExplorerEndPointResponses[apiDetails.nickname];
@@ -345,7 +321,7 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
 
         <div className={apiClasses}>
 
-          <div data-ui-type="table">
+          <div data-ui-type="table" className="explorer-item-form-layout">
             <div data-ui-type="row">
               <div data-ui-type="cell">
                 <form className="explorer-endpoint-form" role="form">
