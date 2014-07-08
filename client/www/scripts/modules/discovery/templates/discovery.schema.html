@@ -5,7 +5,7 @@
   <div ng-show="isDsTableGridVisible">
     <span>Select the tables you want to model</span>
     <strong>Filter:</strong> </string><input type="text" ng-model="filterOptions.filterText" />
-    <div class="datasource-list-grid gridStyle" ng-grid="dsTablesGridOptions"></div>
+    <div class="discovery-schema-list-grid" ng-style="getTableStyle()" ng-grid="dsTablesGridOptions"></div>
   </div>
 
 </div>

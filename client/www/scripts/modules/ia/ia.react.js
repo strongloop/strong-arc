@@ -255,24 +255,8 @@ var IAMainControls = (IAMainControls = React).createClass({
     var scope = that.props.scope;
 
     var createModelViewRequest = function() {
-//      scope.$apply(function() {
-//        scope.createModelViewRequest();
-//      });
-      console.log('||  CREATE NEW MODEL');
 
-//      var oldNewModelState = that.state.showNewModel;
-//      var newModelText = that.state.newModelText;
-//      var newState = !oldNewModelState;
-//      if (newState === true) {
-//        newModelText = 'cancel';
-//      }
-//      else {
-//        newModelText = 'new model';
-//      }
-//      that.setState({
-//        showNewModel:newState,
-//        newModelText: newModelText
-//      });
+      console.log('||  CREATE NEW MODEL');
 
     };
 

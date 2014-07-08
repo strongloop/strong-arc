@@ -9,8 +9,8 @@ app.controller('StudioController', [
   '$location',
   '$timeout',
   'ModelService',
-  '$modal',
-  function($scope, $state, $http, IAService, DatasourceService, ExplorerService, $location, $timeout, ModelService, $modal) {
+  'DiscoveryService',
+  function($scope, $state, $http, IAService, DatasourceService, ExplorerService, $location, $timeout, ModelService, DiscoveryService) {
 
     /*
      *
@@ -506,7 +506,7 @@ app.controller('StudioController', [
     $scope.createModelsFromDS = function(name) {
 
       // open a modal window and trigger the discovery flow
-      var modalConfig = DatasourceService.getDiscoveryModalConfig(name);
+      var modalConfig = DiscoveryService.getDiscoveryModalConfig(name);
       var modalInstance = IAService.openModal(modalConfig);
 
     };

@@ -3,7 +3,8 @@ Datasource.controller('DatasourceMainController', [
   '$scope',
   'DatasourceService',
   '$timeout',
-  function($scope, DatasourceService, $timeout) {
+  '$http',
+  function($scope, DatasourceService, $timeout, $http) {
     /*
     *
     *   <button>Get Datasource Operations: dataSource.operations().</button>
@@ -54,6 +55,8 @@ Datasource.controller('DatasourceMainController', [
 
     $scope.loadSchema = function(dsName) {
       $scope.isDsTablesLoadingIndicatorVisible = true;
+
+
 
       $scope.schemaTables = DatasourceService.getDatasourceTables({'name':'mSql'});
       $scope.schemaTables.$promise.

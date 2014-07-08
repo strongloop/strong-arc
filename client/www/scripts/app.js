@@ -153,6 +153,7 @@ var app = angular.module('app', [
   'Model',
   'UIForm',
   'Datasource',
+  'Discovery',
   'ui.bootstrap',
   'ui.utils',
   'checklist-model',
@@ -205,6 +206,11 @@ app.config([
         url: '/login',
         controller: 'LoginController',
         templateUrl: './scripts/modules/profile/templates/login.html'
+      }).
+      state('discovery', {
+        url: '/discovery',
+        controller: 'DiscoveryMainController',
+        templateUrl: './scripts/modules/discovery/templates/discovery.main.html'
       }).
       state('register', {
         url: '/register',
