@@ -154,6 +154,7 @@ app.controller('StudioController', [
       $scope.apiModelsChanged = !$scope.apiModelsChanged;
     };
 
+
     // new schema event
     $scope.$on('newSchemaModelsEvent', function(event, message){
       $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
@@ -456,20 +457,29 @@ app.controller('StudioController', [
     };
 
 
+    function getRandomNumber() {
+      return Math.floor((Math.random() * 100) + 1);
+    }
 
 
     $scope.createModelViewRequest = function() {
-      var modelName = 'newModel4';
+      var modelName = 'newModel_' + getRandomNumber() + '_' + getRandomNumber();
       var newModel = {
         "name": modelName,
-        "componentName": "api",
-        "public": true,
-        "plural": modelName + "s"
+        "type": "model",
+        "props": {
+          "componentName": "api",
+          "public": true,
+          "plural": modelName + "s",
+          "properties": []
+        }
+
       };
       ModelService.createModel(newModel);
       $scope.activeInstance = {name:'new instance'};
       $scope.currentOpenModelNames = IAService.getOpenModelNames();
       $scope.clearSelectedInstances();
+      IAService.showInstanceView();
     };
 
 

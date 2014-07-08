@@ -256,7 +256,9 @@ var IAMainControls = (IAMainControls = React).createClass({
 
     var createModelViewRequest = function() {
 
-      console.log('||  CREATE NEW MODEL');
+      scope.$apply(function() {
+        scope.createModelViewRequest();
+      });
 
     };
 
