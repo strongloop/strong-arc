@@ -8,14 +8,14 @@ IA.directive('slIaMainNav', [
     return {
       replace: true,
       link: function(scope, el, attrs) {
-        var openModelNames = IAService.getOpenModelNames();
-        var openDatasourceNames = scope.currentOpenDatasourceNames;
+
         function processActiveNavState() {
           // models
-
+          var openModelNames = IAService.getOpenModelNames();
+          var openDatasourceNames = scope.currentOpenDatasourceNames;
           var currActiveModelInstanceName = '';
 
-          if (scope.activeInstance && (IAService.getInstanceType(scope.activeInstance) === 'model')) {
+          if (scope.activeInstance.name && (IAService.getInstanceType(scope.activeInstance) === 'model')) {
             currActiveModelInstanceName = scope.activeInstance.name;
           }
 
@@ -107,6 +107,10 @@ IA.directive('slIaMainNav', [
           processActiveNavState();
           renderComp();
         }, true);
+        scope.$watch('apiModelsChanged', function() {
+          processActiveNavState();
+          renderComp();
+        });
         scope.$watch('openInstanceRefs', function(newVal, oldVal) {
           processActiveNavState();
           renderComp();

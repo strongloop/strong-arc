@@ -8,29 +8,51 @@ Model.service('ModelService', [
     var svc = {};
 
     svc.createModel = function(config) {
-      ModelDefinition.create(config, function(response) {
-          console.log('good create model def: ' + response);
+      console.log('good create model def: ' + JSON.stringify(config));
 
-      },
-      function(response){
-        console.log('bad create model def: ' + response);
-      });
+      var existingModels = JSON.parse(window.localStorage.getItem('ApiModels'));
+      if (!existingModels) {
+        existingModels = [];
+      }
+      var isUnique = true;
+      for (var i = 0;i < existingModels.length;i++){
+        if (existingModels[i].name === config.name) {
+          isUnique = false;
+          break;
+        }
+      }
+      if (isUnique) {
+        existingModels.push(config);
+        return window.localStorage.setItem('ApiModels', JSON.stringify(existingModels));
+
+      }
+
+//
+//      var existingModels = AppStorageService.getItem('ApiModels');
+//      if (!existingModels) {
+//        existingModels = [];
+//      }
+//      existingModels.push(config);
+//      return AppStorageService.setItem('ApiModels', existingModels);
+//      ModelDefinition.create(config, function(response) {
+//          console.log('good create model def: ' + response);
+//
+//      },
+//      function(response){
+//        console.log('bad create model def: ' + response);
+//      });
     };
     svc.getAllModels = function() {
       //return ModelDefinition.query({},
-      return Modeldef.query({},
-        function(response) {
-          var log = [];
+      var deferred = $q.defer();
+      var p = Modeldef.query({},
+        function(response){
+
+
+
+
           var models = [];
-       //   console.log('good get model defs: '+ response);
-
-          // add create model to this for new model
-
-          // raw models.json load
-          /*
-          * the list of models comes back as an object inside
-          * the first element of an array
-          * */
+          var log = [];
           var modelListObj = response[0];
           angular.forEach(modelListObj, function(value, key){
             // this.push(key + ': ' + value);
@@ -53,45 +75,24 @@ Model.service('ModelService', [
             models.push({name:key,props:value});
           }, log);
 
-          /*
-          *
-          * API code
-          *
-          * */
+          var x = JSON.parse(window.localStorage.getItem('ApiModels'));
 
-//          var core = response;
-//
-//          angular.forEach(core, function(value, key){
-//           // this.push(key + ': ' + value);
-//            var lProperties = [];
-//            if (value.properties) {
-//              angular.forEach(value.properties, function(value, key){
-//                lProperties.push({name:key,props:value});
-//              });
-//              value.properties = lProperties;
-//            }
-//            var lOptions = [];
-//            if (value.options) {
-//              angular.forEach(value.options, function(value, key){
-//                lOptions.push({name:key,props:value});
-//              });
-//              value.options = lProperties;
-//            }
-//            models.push({name:key,props:value});
-//          }, log);
+         // window.localStorage.setItem('ApiModels', JSON.stringify(models));
+          //var x = JSON.parse(window.localStorage.getItem('ApiModels'));
+          if (!x) {
+
+            x = [];
 
 
-         // $scope.models = models;
-          // cache the models
-          window.localStorage.setItem('ApiModels', JSON.stringify(models));
-          return models;
-        },
-        function(response) {
-          console.log('bad get model defs');
+          }
+          window.localStorage.setItem('ApiModels', JSON.stringify(x));
 
+          deferred.resolve(x);
         }
-
       );
+
+      return deferred.promise;
+
     };
     svc.getAllModelsBak = function() {
       return Modeldef.query({},
@@ -148,15 +149,113 @@ Model.service('ModelService', [
     };
     svc.generateModelsFromSchema = function(schemaCollection) {
       if (schemaCollection && schemaCollection.length > 0) {
+
+        var newOpenInstances = [];
+
         for (var i = 0;i < schemaCollection.length;i++) {
-          console.log('create this Model: ' + JSON.stringify(schemaCollection[i]));
+          var sourceDbModelObj = schemaCollection[i];
+          // model definition object generation from schema
+          // TODO map db source name here
+          var newLBModel = {
+            name: sourceDbModelObj.name,
+            type:'model'
+
+          };
+          // open instances reset
+          newOpenInstances.push({
+            name: sourceDbModelObj.name,
+            type:'model'
+          });
+
+          var modelProps = {
+            public: true,
+            plural: sourceDbModelObj.name + 's',
+            properties: []
+          };
+          newLBModel.props = modelProps;
+
+
+          if (sourceDbModelObj.properties) {
+            for (var k = 0;k < sourceDbModelObj.properties.length;k++){
+              var sourceProperty = sourceDbModelObj.properties[k];
+              var targetDataType = 'string';
+
+              // lock the varchar type
+              if (sourceProperty.dataType.toLowerCase().indexOf('varchar') > -1) {
+                sourceProperty.dataType = 'varchar';
+              }
+
+              // TODO hopefully this conversion will happen in the API
+              switch (sourceProperty.dataType) {
+
+                case 'int':
+                  targetDataType = 'Number';
+                  break;
+
+                case 'varchar':
+                  targetDataType = 'String';
+                  break;
+
+                case 'datetime':
+                  targetDataType = 'Date';
+                  break;
+
+                case 'timestamp':
+                  targetDataType = 'Date';
+                  break;
+
+                case 'char':
+                  targetDataType = 'String';
+                  break;
+
+                case 'tinytext':
+                  targetDataType = 'String';
+                  break;
+
+                case 'longtext':
+                  targetDataType = 'String';
+                  break;
+
+                case 'point':
+                  targetDataType = 'GeoPoint';
+                  break;
+
+                default:
+                  targetDataType = 'String';
+
+              }
+
+              var propertyProps = {
+                type:targetDataType
+              };
+              newLBModel.props.properties.push({
+                name:sourceProperty.columnName,
+                props:propertyProps
+              });
+
+            }
+
+            svc.createModel(newLBModel);
+
+          }
+
+
         }
+        // open the new models
+        AppStorageService.setItem('openInstanceRefs', newOpenInstances);
+        // activate the last one
+        AppStorageService.setItem('activeInstance', newLBModel);
+        // activate the first of the index
+        // IAService.activeInstance = svc.activate
+        //var nm = IAService.activateInstanceByName(newOpenInstances[0], 'model');
+
       }
     };
     svc.getModelByName = function(name) {
       var targetModel = null;
+      var currModelCollection = [];
       if (window.localStorage.getItem('ApiModels')) {
-        var currModelCollection = JSON.parse(window.localStorage.getItem('ApiModels'));
+        currModelCollection = JSON.parse(window.localStorage.getItem('ApiModels'));
         //var targetModel = currModelCollection[name];
         for (var i = 0;i < currModelCollection.length;i++) {
           if (currModelCollection[i].name === name) {
@@ -167,8 +266,22 @@ Model.service('ModelService', [
         }
       }
       else {
-        console.log('request to get model data from localstorage cache failed so no model is returned');
+        if (window.localStorage.getItem('ApiModels')) {
+          currModelCollection = JSON.parse(window.localStorage.getItem('ApiModels'));
+          //var targetModel = currModelCollection[name];
+          for (var i = 0;i < currModelCollection.length;i++) {
+            if (currModelCollection[i].name === name) {
+              targetModel = currModelCollection[i];
+              targetModel.name = name;
+              break;
+            }
+          }
+        }
+        else {
+          console.log('request to get model data from localstorage cache failed so no model is returned');
+        }
       }
+
       return targetModel;
     };
     svc.getExistingModelNames = function() {

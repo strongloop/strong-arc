@@ -8,7 +8,8 @@
 Datasource.directive('slDatasourceDiscovery', [
   'ModelService',
   '$timeout',
-  function(ModelService, $timeout) {
+  '$rootScope',
+  function(ModelService, $timeout, $rootScope) {
     return {
       replace:true,
       templateUrl: './scripts/modules/datasource/templates/datasource.discovery.html',
@@ -28,7 +29,7 @@ Datasource.directive('slDatasourceDiscovery', [
                 $scope.isDsTablesLoadingIndicatorVisible = false;
                 $scope.isDsTableGridVisible = true;
 
-                console.log(JSON.stringify($scope.schemaTables2));
+                //console.log(JSON.stringify($scope.schemaTables2));
 
                 var x = 'y';
 
@@ -95,7 +96,7 @@ Datasource.directive('slDatasourceDiscovery', [
           plugins: [new ngGridFlexibleHeightPlugin()]
         };
         $scope.generateModels = function() {
-          console.log('generate models' + $scope.dsTablesGridOptions.selectedItems);
+          //console.log('generate models' + $scope.dsTablesGridOptions.selectedItems);
           $scope.apiSourceTables = $scope.dsTablesGridOptions.selectedItems;
           $scope.isDsTableGridVisible = false;
           switch($scope.currentDiscoveryStep) {
@@ -110,9 +111,12 @@ Datasource.directive('slDatasourceDiscovery', [
 
             case 'reviewModels':
               $scope.currentDiscoveryStep = 'initialize';
-              console.log('create the following models: '  );
+              // ('create the following models: '  );
               var newModels= ModelService.generateModelsFromSchema($scope.apiSourceTables);
+
               $scope.cancel();
+
+              $rootScope.$broadcast('newSchemaModelsEvent', {});
 
 
               break;
@@ -155,7 +159,7 @@ Datasource.directive('slDatasourceDiscovery', [
          *   <button>Get Datasource Operations: dataSource.operations().</button>
          *               <li><a href="#">ACLSchemas</a></li>
          * */
-        console.log('Datasource Main Controller: DISCOVER THIS: ' + $scope.targetDiscoveryDSName);
+       // console.log('Datasource Main Controller: DISCOVER THIS: ' + $scope.targetDiscoveryDSName);
 
         if ($scope.targetDiscoveryDSName) {
           $scope.loadSchema($scope.targetDiscoveryDSName);
@@ -175,7 +179,7 @@ Datasource.directive('slDatasourceDiscovery', [
           $scope.isShowDatasourceForm = true;
         };
         $scope.saveDatasource = function(dsObj) {
-          console.log('Save Datasource Object: ' + JSON.stringify(dsObj));
+         // console.log('Save Datasource Object: ' + JSON.stringify(dsObj));
         };
         $scope.closeDatasourceForm = function() {
           $scope.isShowDatasourceForm = false;

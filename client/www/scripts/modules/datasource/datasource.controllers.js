@@ -24,7 +24,7 @@ Datasource.controller('DatasourceMainController', [
       $scope.isShowDatasourceForm = true;
     };
     $scope.saveDatasource = function(dsObj) {
-      console.log('Save Datasource Object: ' + JSON.stringify(dsObj));
+      //console.log('Save Datasource Object: ' + JSON.stringify(dsObj));
     };
     $scope.closeDatasourceForm = function() {
       $scope.isShowDatasourceForm = false;

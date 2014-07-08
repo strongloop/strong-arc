@@ -49,89 +49,94 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
         scope.toggleModelDetailView();
       });
     };
-    return (
-      <div>
-        <div data-ui-type="cell">
-          <label>name</label>
-        </div>
-        <div data-ui-type="cell">
-          <input type="text" value={scope.activeInstance.name} data-name="name" id="ModelName" name="ModelName" className="model-instance-editor-input" />
-        </div>
-        <input onClick={clickHandler} type="button" className="model-instance-header-btn btn btn-default btn-block" value="Details" />
-        <div data-ui-type="table" className={classes}>
-          <div data-ui-type="row">
-            <div data-ui-type="cell">
-              <div data-ui-type="table" >
-                <div data-ui-type="row">
-                  <div data-ui-type="cell">
-                    <label>plural</label>
+    var returnVal = (<div />);
+    if (scope.activeInstance.name) {
+      returnVal = (
+        <div>
+          <div data-ui-type="cell">
+            <label>name</label>
+          </div>
+          <div data-ui-type="cell">
+            <input type="text" value={scope.activeInstance.name} data-name="name" id="ModelName" name="ModelName" className="model-instance-editor-input" />
+          </div>
+          <input onClick={clickHandler} type="button" className="model-instance-header-btn btn btn-default btn-block" value="Details" />
+          <div data-ui-type="table" className={classes}>
+            <div data-ui-type="row">
+              <div data-ui-type="cell">
+                <div data-ui-type="table" >
+                  <div data-ui-type="row">
+                    <div data-ui-type="cell">
+                      <label>plural</label>
+                    </div>
+                    <div data-ui-type="cell">
+                      <input type="text" value={model.props.plural} onChange={this.handleChange} data-name="plural" id="ModelPlural" name="ModelPlural" className="model-instance-editor-input" />
+                    </div>
                   </div>
-                  <div data-ui-type="cell">
-                    <input type="text" value={model.props.plural} onChange={this.handleChange} data-name="plural" id="ModelPlural" name="ModelPlural" className="model-instance-editor-input" />
+                  <div data-ui-type="row">
+                    <div data-ui-type="cell">
+                      <label>base model</label>
+                    </div>
+                    <div data-ui-type="cell">
+                      <input type="text" className="model-instance-editor-input"  />
+                    </div>
                   </div>
-                </div>
-                <div data-ui-type="row">
-                  <div data-ui-type="cell">
-                    <label>base model</label>
+                  <div data-ui-type="row">
+                    <div data-ui-type="cell"><label>public</label></div>
+                    <div data-ui-type="cell">
+                      <input type="checkbox" checked={model.props.public} className="model-instance-editor-input" />
+                    </div>
                   </div>
-                  <div data-ui-type="cell">
-                    <input type="text" className="model-instance-editor-input"  />
-                  </div>
-                </div>
-                <div data-ui-type="row">
-                  <div data-ui-type="cell"><label>public</label></div>
-                  <div data-ui-type="cell">
-                    <input type="checkbox" checked={model.props.public} className="model-instance-editor-input" />
-                  </div>
-                </div>
-                <div data-ui-type="row">
-                  <div data-ui-type="cell"><label>strict</label></div>
-                  <div data-ui-type="cell">
-                    <input type="checkbox" checked={model.props.strict} className="model-instance-editor-input" />
+                  <div data-ui-type="row">
+                    <div data-ui-type="cell"><label>strict</label></div>
+                    <div data-ui-type="cell">
+                      <input type="checkbox" checked={model.props.strict} className="model-instance-editor-input" />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div data-ui-type="cell">
-              <div data-ui-type="table" >
-                <div data-ui-type="row">
-                  <div data-ui-type="cell">
-                    <label>datasource</label>
+              <div data-ui-type="cell">
+                <div data-ui-type="table" >
+                  <div data-ui-type="row">
+                    <div data-ui-type="cell">
+                      <label>datasource</label>
+                    </div>
+                    <div data-ui-type="cell">
+                      <input type="text" value={model.props.dataSource} onChange={this.handleChange} className="model-instance-editor-input" />
+                    </div>
                   </div>
-                  <div data-ui-type="cell">
-                    <input type="text" value={model.props.dataSource} onChange={this.handleChange} className="model-instance-editor-input" />
+                  <div data-ui-type="row">
+                    <div data-ui-type="cell">
+                      <label>Indexes</label>
+                    </div>
+                    <div data-ui-type="cell">
+                      <input type="button" value="edit" className="btn btn-default" />
+                    </div>
                   </div>
-                </div>
-                <div data-ui-type="row">
-                  <div data-ui-type="cell">
-                    <label>Indexes</label>
+                  <div data-ui-type="row">
+                    <div data-ui-type="cell">
+                      <label>Scopes</label>
+                    </div>
+                    <div data-ui-type="cell">
+                      <input type="button" value="edit" className="btn btn-default" />
+                    </div>
                   </div>
-                  <div data-ui-type="cell">
-                    <input type="button" value="edit" className="btn btn-default" />
-                  </div>
-                </div>
-                <div data-ui-type="row">
-                  <div data-ui-type="cell">
-                    <label>Scopes</label>
-                  </div>
-                  <div data-ui-type="cell">
-                    <input type="button" value="edit" className="btn btn-default" />
-                  </div>
-                </div>
-                <div data-ui-type="row">
-                  <div data-ui-type="cell">
-                    <label>Access Control</label>
-                  </div>
-                  <div data-ui-type="cell">
-                    <input type="button" value="edit" className="btn btn-default" />
+                  <div data-ui-type="row">
+                    <div data-ui-type="cell">
+                      <label>Access Control</label>
+                    </div>
+                    <div data-ui-type="cell">
+                      <input type="button" value="edit" className="btn btn-default" />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      );
+        );
+    }
+
+    return returnVal;
   }
 });
 /*

@@ -51,6 +51,7 @@ app.controller('StudioController', [
     * Dirty Flags
     *
     * */
+    $scope.apiModelsChanged = false;  // dirty flag
     $scope.activeModelPropertiesChanged = false;  // dirty flag
     $scope.explorerDataModelChanged = false; // dirty toggle for triggering renders on the react components
 
@@ -74,66 +75,54 @@ app.controller('StudioController', [
 
     /*
     *
-    * Model and Datasource collections
+    *
+    *
+    *
+    * MODEL and DATASOURCE collections
+    *
+    *
+    *
+    *
     *
     * */
-    $scope.mainNavModels = ModelService.getAllModels();
-    $scope.mainNavModels.$promise.
+    var loadModels = function() {
+      $scope.mainNavModels = ModelService.getAllModels();
+      $scope.mainNavModels.
+        then(function (result) {
+
+
+
+          $scope.mainNavModels = result;
+          $scope.apiModelsChanged = !$scope.apiModelsChanged;
+        }
+      );
+    };
+    loadModels();
+
+    /*
+     *
+     *
+     * Datasources
+     *
+     *
+     * */
+    //$scope.mainNavDatasources = [];
+    $scope.mainNavDatasources = DatasourceService.getAllDatasources();
+    $scope.mainNavDatasources.$promise.
       then(function (result) {
 
-        var models = [];
+        var core = result[0];
+
         var log = [];
-        var modelListObj = result[0];
-        angular.forEach(modelListObj, function(value, key){
-          // this.push(key + ': ' + value);
-          var lProperties = [];
-          if (value.properties) {
-            angular.forEach(value.properties, function(value, key){
-              lProperties.push({name:key,props:value});
-            });
-            value.properties = lProperties;
-          }
-          var lOptions = [];
-          if (value.options) {
-            angular.forEach(value.options, function(value, key){
-              lOptions.push({name:key,props:value});
-            });
-            value.options = lOptions;
-
-          }
-
-          models.push({name:key,props:value});
+        var datasources = [];
+        angular.forEach(core, function(value, key){
+          //this.push(key + ': ' + value);
+          datasources.push({name:key,children:value});
         }, log);
-
-        $scope.mainNavModels = models;
-      }
-    ).then(function() {
-        /*
-         *
-         *
-         * Datasources
-         *
-         *
-         * */
-        //$scope.mainNavDatasources = [];
-        $scope.mainNavDatasources = DatasourceService.getAllDatasources({});
-        $scope.mainNavDatasources.$promise.
-          then(function (result) {
-
-            var core = result[0];
-
-            var log = [];
-            var datasources = [];
-            angular.forEach(core, function(value, key){
-              //this.push(key + ': ' + value);
-              datasources.push({name:key,children:value});
-            }, log);
-            $scope.mainNavDatasources = datasources;
+        $scope.mainNavDatasources = datasources;
 
 
-          });
-      }
-    );
+      });
     /*
     *
     * API Explorer View
@@ -161,7 +150,21 @@ app.controller('StudioController', [
     $scope.clearSelectedDatasources = function() {
       $scope.currentDatasourceSelections = IAService.clearSelectedDatasourceNames();
     };
+    $scope.setApiModelsDirty = function() {
+      $scope.apiModelsChanged = !$scope.apiModelsChanged;
+    };
 
+    // new schema event
+    $scope.$on('newSchemaModelsEvent', function(event, message){
+      $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
+      $scope.activeInstance = IAService.getActiveInstance();
+
+      // note that the handler is passed the problem domain parameters
+      loadModels();
+      $scope.setApiModelsDirty();
+      IAService.showInstanceView();
+
+    });
 
     /*
      *

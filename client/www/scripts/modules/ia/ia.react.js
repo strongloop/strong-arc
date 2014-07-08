@@ -85,7 +85,11 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
       }
     };
 
-    var items = scope.mainNavModels.map(function(item) {
+    var navModels = [];
+    if (Array.isArray(scope.mainNavModels)) {
+      navModels = scope.mainNavModels;
+    }
+    var items = navModels.map(function(item) {
       var classNameVar = 'model-node ';
       if (item.isActive) {
         classNameVar += ' is-active';

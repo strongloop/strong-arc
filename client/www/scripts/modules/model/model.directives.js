@@ -26,14 +26,18 @@ Model.directive('modelBaseEditor',[
 
         scope.currProperty = {};
 
-        scope.$watch('isModelInstanceBasePropertiesActive', function(val) {
+        function renderComp() {
           var model = scope.activeInstance;
           React.renderComponent(ModelDetailEditor({scope: scope, model: model }), el[0]);
+
+        }
+
+        scope.$watch('isModelInstanceBasePropertiesActive', function(val) {
+          renderComp()
         });
 
         scope.$watch('activeInstance', function(val) {
-          var model = scope.activeInstance;
-          React.renderComponent(ModelDetailEditor({scope: scope, model: model }), el[0]);
+          renderComp()
         });
       }
     }
@@ -58,7 +62,7 @@ Model.directive('modelPropertiesEditor',[
         };
         scope.$watch('isModelInstancePropertiesActive', function(val) {
           var properties = [];
-          if (scope.activeInstance.props.properties) {
+          if (scope.activeInstance.props && scope.activeInstance.props.properties) {
             properties = scope.activeInstance.props.properties;
           }
           React.renderComponent(ModelPropertiesEditor({scope:scope, properties:properties}), el[0]);
@@ -75,11 +79,16 @@ Model.directive('modelPropertiesEditor',[
         });
 
         scope.$watch('activeModelPropertiesChanged', function(val) {
-          if (!scope.activeInstance.props.properties){
-            scope.activeInstance.props.properties = [];
+          if (scope.activeInstance.props) {
+            if (!scope.activeInstance.props.properties){
+              scope.activeInstance.props.properties = [];
+            }
+            else {
+              scope.isModelInstancePropertiesActive = true;
+            }
           }
           else {
-            scope.isModelInstancePropertiesActive = true;
+            scope.activeInstance.props = {properties: []};
           }
           React.renderComponent(ModelPropertiesEditor({scope:scope, properties:scope.activeInstance.props.properties}), el[0]);
         });
@@ -370,7 +379,7 @@ Model.directive('schemaModelComposer', [
         apiSourceTables: '=schemaModelComposer'
       },
       link: function(scope, elem, attrs) {
-        console.log('Schema Composer link function: ' + scope.apiSourceTables);
+       // console.log('Schema Composer link function: ' + scope.apiSourceTables);
 
 
         scope.property = 'checked';
@@ -383,7 +392,7 @@ Model.directive('schemaModelComposer', [
         };
         scope.collection = [];
         scope.$watch('apiSourceTables', function(sourceTables) {
-          console.log('hell ya: ' + sourceTables);
+         // console.log('hell ya: ' + sourceTables);
           scope.collection = sourceTables;
           scope.property = 'checked';
         }, true);
