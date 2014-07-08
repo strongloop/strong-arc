@@ -16,11 +16,14 @@ Common.directive('slCommonInstanceContainer', [
   function() {
     return {
       templateUrl: './scripts/modules/common/templates/common.instance.container.html',
-      controller: function() {
-        console.log('wtf??');
+      controller: function($scope) {
+
+
       },
       link: function(scope, el, attrs) {
-
+        jQuery('[data-id="CommonInstanceContainer"]').dblclick(function() {
+          scope.toggleInstanceContainer();
+        });
       }
     }
   }

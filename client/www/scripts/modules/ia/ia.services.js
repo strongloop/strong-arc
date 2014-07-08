@@ -16,7 +16,8 @@ IA.service('IAService', [
       return 0;
     };
     svc.openContainer = function(selector) {
-      var mainWidth = svc.getMainContentWidth();
+      var dragTabWidth = 20;
+      var mainWidth = (svc.getMainContentWidth() - dragTabWidth);
       jQuery(selector).animate({width: mainWidth}, 500 );
 
     };
@@ -295,7 +296,7 @@ IA.service('IAService', [
       //svc.clearViews();
       svc.closeContainer('[data-id="ExplorerContainer"]');
 
-        svc.openContainer('[data-id="CommonInstanceContainer"]');
+      svc.openContainer('[data-id="CommonInstanceContainer"]');
 
 
       // jQuery('[data-id="ModelEditorMainContainer"]').animate({width: 1000}, 500 );
@@ -319,14 +320,14 @@ IA.service('IAService', [
 
     };
     // rename
-    svc.toggleEditorView = function() {
-      var modelEditorWidth = svc.getContainerWidth('ModelEditorMainContainer');
-      if (modelEditorWidth > 0) {
-        svc.showCanvasView();
+    svc.toggleInstanceView = function() {
+      if (svc.isViewOpen('CommonInstanceContainer')){
+        svc.closeContainer('[data-id="CommonInstanceContainer"]');
       }
       else {
-        svc.showModelEditorView();
+        svc.openContainer('[data-id="CommonInstanceContainer"]');
       }
+
     };
     svc.openModal = function(config) {
       return $modal.open(config);

@@ -165,6 +165,10 @@ app.controller('StudioController', [
       IAService.showInstanceView();
 
     });
+    // toggle instance view
+    $scope.toggleInstanceContainer = function() {
+      IAService.toggleInstanceView();
+    };
 
     /*
      *
