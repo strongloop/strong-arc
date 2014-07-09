@@ -102,23 +102,14 @@ Discovery.directive('slDiscoverySchema', [
           multiSelect: true,
           filterOptions: $scope.filterOptions
         };
-        $scope.getTableStyle= function() {
+        $scope.getTableStyle = function() {
           var rowHeight=30;
           var headerHeight=45;
           return {
             height: 600
           };
         };
-        /*
-         *
-         *   <button>Get Datasource Operations: dataSource.operations().</button>
-         *               <li><a href="#">ACLSchemas</a></li>
-         * */
-        // console.log('Datasource Main Controller: DISCOVER THIS: ' + $scope.targetDiscoveryDSName);
 
-//        if ($scope.targetDiscoveryDSName) {
-//          $scope.loadSchema($scope.targetDiscoveryDSName);
-//        }
 
 
         $scope.datasources = [];

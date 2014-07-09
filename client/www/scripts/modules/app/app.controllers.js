@@ -518,6 +518,9 @@ app.controller('StudioController', [
       // open a modal window and trigger the discovery flow
       var modalConfig = DiscoveryService.getDiscoveryModalConfig(name);
       var modalInstance = IAService.openModal(modalConfig);
+      modalInstance.opened.then(function() {
+        window.setUI();
+      });
 
     };
 

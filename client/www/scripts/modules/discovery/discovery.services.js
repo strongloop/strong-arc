@@ -33,10 +33,11 @@ Discovery.service('DiscoveryService', [
           url:'./scripts/modules/datasource/icars.json'
         };
         $http(htConfig).success(function(response) {
-          console.log('datasource schema resolve');
-          deferred.resolve(response.schema);
+            console.log('datasource schema resolve');
+            deferred.resolve(response.schema);
+          }).error(function(response) {
 
-        });
+          });
       }
 
       return deferred.promise;
