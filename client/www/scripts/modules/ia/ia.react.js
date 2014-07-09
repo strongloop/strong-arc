@@ -19,7 +19,7 @@ var IAMainNavContainer = (IAMainNavContainer = React).createClass({
     };
     return (
       <div>
-        <button data-name="ia_root"  onClick={singleClickItem} className="btn btn-default btn-block nav-tree-item nav-tree-root tree-root">strongloop-api-studio</button>
+        <button data-name="ia_root"  onClick={singleClickItem} className="btn btn-default btn-block nav-tree-item nav-tree-root tree-root">OSCON Demo</button>
         <IAMainModelNav scope={this.props.scope} />
         <IAMainDatasourceNav scope={this.props.scope} />
       </div>
