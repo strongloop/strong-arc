@@ -1,6 +1,5 @@
-strongloop-api-studio
+Strong Studio
 =====================
 
-StrongLoop API Studio project repo
+Strong Studio project repo
 
-Prerequisite: Mongobd server running at localhost:27017
