@@ -1,0 +1,133 @@
+
+/*
+    Explorer View
+
+
+*/
+.explorer-view-body {
+    padding-top: 2rem;
+}
+.explorer-model.is-open {
+    display: block;
+}
+.explorer-model.is-closed {
+    display: none;
+}
+.explorer-model.is-active {
+    background: #dddddd;
+}
+.explorer-model-api-parameters.is-open {
+    display: block;
+}
+.explorer-model-api-parameters.is-closed {
+    display: none;
+}
+.explorer-model-api-details.is-closed {
+    display: none;
+}
+.explorer-model-api-details.is-open {
+    display: block;
+    margin-left: 2.5rem;
+    width: 90%;
+}
+.explorer-model-list button.btn-explorer-model-main {
+    border: 0;
+}
+.explorer-model-list button.btn-explorer-model-main,
+.explorer-model-list button.explorer-endpoint-title {
+    text-align: left;
+    padding: 0;
+    margin: 0;
+    padding-left: 2rem;
+}
+.btn-explorer-property-toggle {
+    border: 0;
+    background: transparent;
+    color: blue;
+    text-decoration: underline;
+}
+.explorer-endpoint-title {
+    background: #ffffff;
+    padding-left: 1rem;
+    color: blue;
+    font-size: 110%;
+}
+.btn-explorer-model-main {
+    font-size: 130%;
+}
+.btn-explorer-model-main.is-active {
+    background: #7dbd33;
+    color: #ffffff;
+}
+.explorer-api-container {
+    padding-left: 2rem;
+}
+.explorer-api-endpoint-summary-table {
+    width: 90%;
+    margin-left: 3rem;
+    background-color: #ffffff;
+}
+.explorer-api-endpoint-httpmethod-cell {
+    width: 8rem;
+    padding: .5rem 0 .5rem 1.4rem;
+}
+.explorer-item-form-layout {
+    width: 100rem;
+}
+.explorer-api-detail-item {
+    border-bottom: 1px solid #aaaaaa;
+    padding: 0;
+    margin: 0;
+}
+.explorer-api-method {
+    display: inline-block;
+    width: 6rem;
+    font-size: 80%;
+    padding: .6rem;
+    color: #444444;
+}
+.explorer-api-method-POST {
+    background-color: #cccccc;
+}
+.explorer-api-method-GET {
+    background-color: #aaaaaa;
+}
+.explorer-api-method-PUT {
+    background-color: #eeeeee;
+}
+.explorer-api-method-DELETE {
+    background-color: #bbbbbb;
+}
+.explorer-parameters-container {
+    border: 1px solid #dddddd;
+    border-radius: 1rem;
+    padding: .6rem;
+}
+.explorer-endpoint-form {
+    padding: 4rem;
+    width: 400px;
+}
+.explorer-endpoint-summary-text {
+    font-size: 75%;
+    color: #333333;
+    margin: .2rem 1rem .2rem 1rem;
+    display: inline-block;
+}
+.explorer-parameter-item-parameter-list {
+    border: 1px solid #888888;
+    margin: 1rem;
+    border-radius: 2rem;
+    padding: 1rem;
+}
+.explorer-endpoint-form label.is-required {
+    color: red;
+}
+.explorer-api-textarea {
+    margin-top: 8%;
+    height: 75%;
+    border: 1px solid #cccccc;
+    width: 400px;
+}
+.btn-explorer-api-submit {
+    display: block;
+}

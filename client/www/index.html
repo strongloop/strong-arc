@@ -8,7 +8,18 @@
     <link rel="stylesheet" type="text/css" href="./style/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="./style/angular-growl.min.css">
     <link rel="stylesheet" type="text/css" href="./style/jquery.contextMenu.css">
-    <link rel="stylesheet" type="text/css" href="./style/style.css">
+
+    <link rel="stylesheet" type="text/css" href="./style/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="./style/dev/main.css">
+    <link rel="stylesheet" type="text/css" href="./style/dev/nav.css">
+    <link rel="stylesheet" type="text/css" href="./style/dev/main.content.css">
+    <link rel="stylesheet" type="text/css" href="./style/dev/discovery.css">
+    <link rel="stylesheet" type="text/css" href="./style/dev/canvas.css">
+    <link rel="stylesheet" type="text/css" href="./style/dev/instance.css">
+    <link rel="stylesheet" type="text/css" href="./style/dev/register.css">
+    <link rel="stylesheet" type="text/css" href="./style/dev/model.css">
+    <link rel="stylesheet" type="text/css" href="./style/dev/explorer.css">
+    <!--<link rel="stylesheet" type="text/css" href="./style/style.css">-->
 
   </head>
   <body ng-app="app">
@@ -34,12 +45,23 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li lb-greeting-nav-item></li>
-            <li lb-register-nav-item></li>
+
             <li>
-              <a href="http://loopback.io" target="_new">docs</a>
+              <a href="http://loopback.io" target="_new" title="documentation"><span class="glyphicon glyphicon-question-sign"></span></a>
             </li>
-            <li lb-login-nav-item></li>
-            <li lb-logout-nav-item></li>
+            <li>
+              <span class="dropdown" on-toggle="toggled(open)">
+                <a href class="dropdown-toggle">
+                  <span class="glyphicon glyphicon-off"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li lb-register-nav-item></li>
+                  <li lb-login-nav-item></li>
+                  <li lb-logout-nav-item></li>
+                </ul>
+              </span>
+            </li>
+
             <li sl-ia-cleardb-nav-item></li>
           </ul>
         </div>
@@ -50,7 +72,7 @@
     <div ui-view autoscroll="false"></div>
 
     <div id="CoordinateInstrumentationContainer">
-      <p > canvas x-pos: <span id="CanvasX"></span></p>
+
     </div>
 
     <!-- growl notification placeholder -->

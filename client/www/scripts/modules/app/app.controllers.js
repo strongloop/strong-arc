@@ -463,21 +463,9 @@ app.controller('StudioController', [
 
 
     $scope.createModelViewRequest = function() {
-      var modelName = 'newModel_' + getRandomNumber() + '_' + getRandomNumber();
-      var newModel = {
-        "name": modelName,
-        "type": "model",
-        "props": {
-          "componentName": "api",
-          "public": true,
-          "plural": modelName + "s",
-          "properties": []
-        }
 
-      };
-      ModelService.createModel(newModel);
-      $scope.activeInstance = {name:'new instance'};
-      $scope.currentOpenModelNames = IAService.getOpenModelNames();
+      $scope.activeInstance = ModelService.createNewModelInstance();
+
       $scope.clearSelectedInstances();
       IAService.showInstanceView();
     };

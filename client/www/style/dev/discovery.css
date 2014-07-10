@@ -1,0 +1,28 @@
+
+/*
+
+    Discovery
+
+*/
+.discovery-schema-list-grid {
+    height: 400px;
+}
+.model-schema-editor-source-table-table {
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    width: 45rem;
+    margin: 0 auto 0 auto;
+}
+.model-schema-editor-source-table-table th {
+    background-color: darkgreen;
+    color: #ffffff;
+    font-weight: bold;
+}
+.model-schema-editor-source-table-table td {
+    font-size: 125%;
+    border: 1px solid #eeeeee;
+}
+.discovery-schema-selected-table-list {
+    width: 50rem;
+    margin: 0 auto 0 auto;
+}

@@ -394,6 +394,17 @@ Model.service('ModelService', [
       return isUnique;
 
     };
+    var defaultModelSchema = {
+      type: 'model',
+      props: {
+        public:true,
+        options:{},
+        properties:[]
+      }
+    };
+    svc.createNewModelInstance = function() {
+      return Object.create(defaultModelSchema);
+    };
     return svc;
   }
 ]);
@@ -401,10 +412,12 @@ Model.service('ModelDefinitionService', [
   function() {
     var svc = {};
     var defaultModelSchema = {
-      public:true,
-      options:{},
-      properties:{},
-      datasource:'db'
+      type: 'model',
+      props: {
+        public:true,
+        options:{},
+        properties:[]
+      }
     };
     // get relation types
     svc.getModelRelationTypes = function() {

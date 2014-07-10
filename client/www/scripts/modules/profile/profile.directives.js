@@ -47,7 +47,7 @@ Profile.directive('lbLoginNavItem', [
   'NavigationService',
   function (ProfileService) {
     return{
-      template: '<li ng-hide="isUserAuth()"><a ui-sref="login">login</a></li>',
+      template: '<li ng-hide="isUserAuth()"><a ui-sref="login" title="login">login</a></li>',
       link: function(scope,element, attribs) {
         scope.isUserAuth = function () {
           return ProfileService.getCurrentUserId();

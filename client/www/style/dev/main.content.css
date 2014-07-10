@@ -1,0 +1,60 @@
+
+/*
+
+    Main Content
+
+*/
+.main-content-item-container {
+    position: absolute;
+    width: 100%;
+    /*min-height:3000px;*/
+    border-left: 0px solid #dddddd;
+    overflow: scroll;
+}
+[data-id="IAMainContentContainer"] {
+    position: relative;
+    background-color: #ffffff;
+}
+[data-id="CommonInstanceContainer"] {
+    background-color: #ffffff;
+    width: 0;
+    border-color: #dddddd;
+    border-width: 0 20px 0 0;
+    border-style: solid;
+    margin-left: 1.5rem;
+}
+[data-id="CanvasApiContainer"] {
+    position: absolute;
+    border-style: solid;
+    margin-left: 1.8rem;
+    /* TODO variable  */
+}
+[data-id="ExplorerContainer"] {
+    width: 0;
+    background: #ffffff;
+    border-color: #dddddd;
+    border-width: 0 20px 0 0;
+    border-style: solid;
+}
+[data-id="PreviewInstanceContainer"] {
+    z-index: 113;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+    /*height:1200px;*/
+    width: 100%;
+    display: none;
+}
+[data-id="PreviewBackgroundBlur"] {
+    position: absolute;
+    top: 2rem;
+    background: rgba(223, 230, 200, 0.43);
+    width: 100%;
+    padding-top: 2.6rem;
+}
+.preview-instance-body-container {
+    border-top: 3px solid #dddddd;
+    padding-top: 1rem;
+    background: #ffffff;
+}

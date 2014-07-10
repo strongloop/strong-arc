@@ -1,0 +1,19 @@
+
+/*
+
+    Registration
+
+*/
+#RegisterMainContainer .center_div,
+#LoginMainContainer .center_div {
+    padding: 4rem;
+    border: 1px solid #eeeeee;
+    border-radius: 1rem;
+    width: 50% /* value of your choice which suits your alignment */;
+}
+#RegisterMainContainer form {
+    margin: 0 3rem 0 3rem;
+}
+#LoginMainContainer form {
+    margin: 0 5rem 0 5rem;
+}

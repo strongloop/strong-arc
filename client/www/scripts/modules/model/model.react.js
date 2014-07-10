@@ -59,7 +59,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
           <div data-ui-type="cell">
             <input type="text" value={scope.activeInstance.name} data-name="name" id="ModelName" name="ModelName" className="model-instance-editor-input" />
           </div>
-          <input onClick={clickHandler} type="button" className="model-instance-header-btn btn btn-default btn-block" value="Details" />
+          <button onClick={clickHandler} type="button" className="model-instance-header-btn btn btn-default btn-block" title="Details" ><span className="glyphicon glyphicon-plus-sign"></span>Details</button>
           <div data-ui-type="table" className={classes}>
             <div data-ui-type="row">
               <div data-ui-type="cell">
@@ -296,7 +296,7 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
 
     return (
       <div>
-        <input type="button" onClick={clickHandler} className="model-instance-header-btn btn btn-default btn-block" value="Properties" />
+        <button type="button" onClick={clickHandler} className="model-instance-header-btn btn btn-default btn-block" title="Properties" ><span className="glyphicon glyphicon-plus-sign"></span>Properties</button>
         <div className={classes} >
           <div className="model-instance-container property-list-header">
             <div data-ui-type="table">
