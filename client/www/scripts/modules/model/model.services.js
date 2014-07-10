@@ -396,6 +396,7 @@ Model.service('ModelService', [
     };
     var defaultModelSchema = {
       type: 'model',
+      name:'new-model',
       props: {
         public:true,
         options:{},
@@ -403,7 +404,16 @@ Model.service('ModelService', [
       }
     };
     svc.createNewModelInstance = function() {
-      return Object.create(defaultModelSchema);
+      var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
+      if (!openInstanceRefs) {
+        openInstanceRefs = [];
+      }
+      openInstanceRefs.push({
+        name: defaultModelSchema.name,
+        type: 'model'
+      });
+      AppStorageService.setItem('openInstanceRefs', openInstanceRefs);
+      return defaultModelSchema;
     };
     return svc;
   }

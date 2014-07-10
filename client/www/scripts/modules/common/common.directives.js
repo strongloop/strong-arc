@@ -37,7 +37,7 @@ Common.directive('slCommonInstanceTitleView', [
   function() {
     return {
       link: function(scope, el, attrs) {
-        scope.$watch('activeModelInstance', function(newVal, oldVal) {
+        scope.$watch('activeInstance', function(newVal, oldVal) {
           React.renderComponent(CommonInstanceTitleView({scope: scope}), el[0]);
         });
       }
@@ -124,7 +124,7 @@ Common.directive('slCommonInstanceCreate', [
 
           for (var i = 0;i < scope.currentOpenModelNames.length;i++) {
             var isActive = false;
-            if (scope.currentOpenModelNames[i] === IAService.getActiveModelInstance().name) {
+            if (scope.currentOpenModelNames[i] === IAService.getActiveInstance().name) {
               isActive = true;
             }
             tabItems.push({
@@ -165,7 +165,7 @@ Common.directive('slCommonInstancePreview', [
 
           for (var i = 0;i < scope.currentOpenModelNames.length;i++) {
             var isActive = false;
-            if (scope.currentOpenModelNames[i] === IAService.getActiveModelInstance().name) {
+            if (scope.currentOpenModelNames[i] === IAService.getActiveInstance().name) {
               isActive = true;
             }
             tabItems.push({

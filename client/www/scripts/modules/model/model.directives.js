@@ -20,7 +20,7 @@ Model.directive('modelBaseEditor',[
         scope.isModelInstanceBasePropertiesActive = true;
 
         scope.toggleModelDetailView = function() {
-          console.log('toggle model detail view')
+          console.log('toggle model detail view');
           scope.isModelInstanceBasePropertiesActive = !scope.isModelInstanceBasePropertiesActive;
         };
 
@@ -33,11 +33,11 @@ Model.directive('modelBaseEditor',[
         }
 
         scope.$watch('isModelInstanceBasePropertiesActive', function(val) {
-          renderComp()
+          renderComp();
         });
 
         scope.$watch('activeInstance', function(val) {
-          renderComp()
+          renderComp();
         });
       }
     }

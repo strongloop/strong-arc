@@ -465,7 +465,7 @@ app.controller('StudioController', [
     $scope.createModelViewRequest = function() {
 
       $scope.activeInstance = ModelService.createNewModelInstance();
-
+      $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
       $scope.clearSelectedInstances();
       IAService.showInstanceView();
     };

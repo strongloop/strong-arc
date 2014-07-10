@@ -33,7 +33,7 @@ var CommonCreateInstanceContainer = (CommonCreateInstanceContainer = React).crea
 var CommonInstanceTitleView = (CommonInstanceTitleView = React).createClass({
   render: function() {
     return (
-      <span>{this.props.scope.activeInstance.name}</span>
+      <span >{this.props.scope.activeInstance.name}</span>
       );
   }
 });
