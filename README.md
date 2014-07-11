@@ -1,4 +1,4 @@
-strongloop-api-studio
+strongloop-studio
 =====================
 
-StrongLoop API Studio project repo
+StrongLoop Studio project repo
