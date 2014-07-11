@@ -4,6 +4,10 @@
     Discovery
 
 */
+.modal-header{
+    text-align: center;
+    font-size:175%;
+}
 .discovery-schema-list-grid {
     height: 400px;
 }
