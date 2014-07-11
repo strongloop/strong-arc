@@ -13,6 +13,16 @@
     width: 45rem;
     margin: 0 auto 0 auto;
 }
+.discovery-schema-grid-label {
+    display:inline-block;
+    margin-bottom:8px;
+}
+.discovery-schema-filter-input {
+    float:right;
+    border:1px solid #dddddd;
+    border-radius:.2rem;
+
+}
 .model-schema-editor-source-table-table th {
     background-color: darkgreen;
     color: #ffffff;
