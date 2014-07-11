@@ -221,7 +221,7 @@ IA.directive('slIaCleardbNavItem', [
   'growl',
   function(AppStorageService, growl) {
     return {
-      template: '<li><a href="#" ng-click="clearDB()">r</a></li>',
+      template: '<li><a href="#" ng-click="clearDB()">reset</a></li>',
       controller: function($scope) {
 
         $scope.clearDB = function() {

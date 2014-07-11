@@ -461,7 +461,24 @@ app.controller('StudioController', [
       return Math.floor((Math.random() * 100) + 1);
     }
 
+    $scope.updateOrCreateModel = function() {
+      var currentModel = $scope.activeInstance;
+      console.log('SAVE or CREATE model: ' + currentModel.name);
+      // check to make sure it is unique
 
+      if (ModelService.isNewModelNameUnique(currentModel.name)) {
+        // call create model
+        console.log('CREATE THE MODEL');
+        // TODO - should be a callback to ensure model created successfully
+        ModelService.createModel(currentModel);
+        return $scope.activeInstance;
+
+
+      }
+      else {
+        console.warn('THE NEW MODEL NAME IS NOT UNIQUE');
+      }
+    }
     $scope.createModelViewRequest = function() {
 
       $scope.activeInstance = ModelService.createNewModelInstance();

@@ -163,11 +163,13 @@ Model.directive('modelPocketEditorContainer', [
 *
 * */
 Model.directive('slModelInstanceEditor', [
-  function() {
+  'ModelService',
+  function(ModelService) {
     return {
       templateUrl: './scripts/modules/model/templates/model.instance.editor.html',
       controller: function($scope) {
         console.log('Model Instance Editor');
+
       },
       link: function(scope, el, attrs) {
 
