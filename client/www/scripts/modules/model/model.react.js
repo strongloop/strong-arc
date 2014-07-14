@@ -44,6 +44,10 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
       'model-detail-pocket-container is-open': this.props.scope.isModelInstanceBasePropertiesActive,
       'model-detail-pocket-container is-closed': !this.props.scope.isModelInstanceBasePropertiesActive
     });
+    var iconClasses = cx({
+      'glyphicon glyphicon-minus-sign': this.props.scope.isModelInstanceBasePropertiesActive,
+      'glyphicon glyphicon-plus-sign': !this.props.scope.isModelInstanceBasePropertiesActive
+    });
     var clickHandler = function(event) {
       scope.$apply(function() {
         scope.toggleModelDetailView();
@@ -59,7 +63,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
           <div data-ui-type="cell">
             <input type="text" value={scope.activeInstance.name} data-name="name" id="ModelName" name="ModelName" className="model-instance-editor-input" />
           </div>
-          <button onClick={clickHandler} type="button" className="model-instance-header-btn btn btn-default btn-block" title="Details" ><span className="glyphicon glyphicon-plus-sign"></span>Details</button>
+          <button onClick={clickHandler} type="button" className="model-instance-header-btn btn btn-default btn-block" title="Details" ><span className={iconClasses}></span>Details</button>
           <div data-ui-type="table" className={classes}>
             <div data-ui-type="row">
               <div data-ui-type="cell">
@@ -281,7 +285,10 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
       'row is-open': this.state.isOpen,
       'row is-closed': !this.state.isOpen
     });
-
+    var iconClasses = cx({
+      'glyphicon glyphicon-minus-sign': this.state.isOpen,
+      'glyphicon glyphicon-plus-sign': !this.state.isOpen
+    });
     var clickHandler = function(event) {
       var isOpenState = !that.state.isOpen;
       that.setState({isOpen:isOpenState});
@@ -296,7 +303,7 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
 
     return (
       <div>
-        <button type="button" onClick={clickHandler} className="model-instance-header-btn btn btn-default btn-block" title="Properties" ><span className="glyphicon glyphicon-plus-sign"></span>Properties</button>
+        <button type="button" onClick={clickHandler} className="model-instance-header-btn btn btn-default btn-block" title="Properties" ><span className={iconClasses}></span>Properties</button>
         <div className={classes} >
           <div className="model-instance-container property-list-header">
             <div data-ui-type="table">

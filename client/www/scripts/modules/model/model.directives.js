@@ -93,6 +93,9 @@ Model.directive('modelPropertiesEditor',[
           React.renderComponent(ModelPropertiesEditor({scope:scope, properties:scope.activeInstance.props.properties}), el[0]);
         });
         scope.$watch('activeInstance', function(model) {
+          if (!model.props) {
+            model.props = {properties:[]};
+          }
           if (!model.props.properties){
             model.props.properties = [];
           }

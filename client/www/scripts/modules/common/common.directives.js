@@ -206,5 +206,24 @@ Common.directive('slCommonLoadingIndicator', [
     }
   }
 ]);
+Common.directive('slCommonDisabledAttrib', [
+  function() {
+    return {
+      restrict: 'A',
+      replace: false,
+      controller: function($scope) {
+        console.log('disabled attribute')
+      },
+      link: function(scope, el, attrs) {
 
+        el.attr('disabled', 'disabled');
+
+        scope.$watch('dsTablesGridOptions.selectedItems', function(items) {
+          console.log('TEST VALU ETST VAOE');
+        });
+        var x = 'y';
+      }
+    };
+  }
+]);
 
