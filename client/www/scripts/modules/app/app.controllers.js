@@ -20,6 +20,8 @@ app.controller('StudioController', [
     $scope.mainNavDatasources = []; // initialized further down
     $scope.mainNavModels = [];  // initialized further down
     $scope.instanceType = 'model';
+    // temporary for testing / dev
+//    $scope.tableSelections = [];
     /*
     *
     * Transient Data

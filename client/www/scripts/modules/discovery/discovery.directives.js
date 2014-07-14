@@ -18,9 +18,14 @@ Discovery.directive('slDiscoverySchema', [
 
         $scope.isDsTablesLoadingIndicatorVisible = true;
         $scope.currentDiscoveryStep = 'selectTables';
+        $scope.showDiscoveryBackButton = false;
+        $scope.nextButtonDisabledTxt = 'disabled="disabled"';
+        $scope.tableSelections = [];
+
 
         $scope.schemaTables3 = [];
 
+//        DiscoveryWizardForm
 
         var dsName = 'icarsmysql';
         $scope.schemaTables3 = DiscoveryService.getSchemaDataFromDatasource(dsName).
@@ -34,22 +39,24 @@ Discovery.directive('slDiscoverySchema', [
           return $scope.apiSourceTables.length > 0;
         };
 
-        $scope.generateModels = function() {
+        $scope.discoveryNexBtnClicked = function() {
           //console.log('generate models' + $scope.dsTablesGridOptions.selectedItems);
           $scope.apiSourceTables = $scope.dsTablesGridOptions.selectedItems;
           $scope.isDsTableGridVisible = false;
           switch($scope.currentDiscoveryStep) {
             case 'initialize':
               $scope.currentDiscoveryStep = 'selectTables';
+              $scope.showDiscoveryBackButton = false;
               break;
 
             case 'selectTables':
               $scope.currentDiscoveryStep = 'reviewModels';
-
+              $scope.showDiscoveryBackButton = true;
               break;
 
             case 'reviewModels':
               $scope.currentDiscoveryStep = 'initialize';
+              $scope.showDiscoveryBackButton = true;
               // ('create the following models: '  );
               var newModels= ModelService.generateModelsFromSchema($scope.apiSourceTables);
 
@@ -66,10 +73,11 @@ Discovery.directive('slDiscoverySchema', [
 
 
         };
-        $scope.viewSchemaTables = function() {
+        $scope.discoveryBackBtnClicked = function() {
           console.log('back to schema');
           $scope.apiSourceTables = [];
           $scope.isDsTableGridVisible = true;
+
           switch($scope.currentDiscoveryStep) {
             case 'initialize':
 
@@ -77,11 +85,13 @@ Discovery.directive('slDiscoverySchema', [
 
             case 'selectTables':
               $scope.currentDiscoveryStep = 'initialize';
+              $scope.showDiscoveryBackButton = false;
 
               break;
 
             case 'reviewModels':
               $scope.currentDiscoveryStep = 'selectTables';
+              $scope.showDiscoveryBackButton = false;
 
               break;
 
@@ -91,6 +101,7 @@ Discovery.directive('slDiscoverySchema', [
         };
         $scope.$on('ngGridEventData', function(){
           //$scope.dsTablesGridOptions.selectRow(0, true);
+
         });
         $scope.dsTablesGridOptions = {
           data: 'schemaTables3',
@@ -98,7 +109,7 @@ Discovery.directive('slDiscoverySchema', [
             {field:'name', displayName:'Table'},
             {field:'owner',displayName:'Owner'}
           ],
-          selectedItems: [],
+          selectedItems:  $scope.tableSelections,
           multiSelect: true,
           filterOptions: $scope.filterOptions
         };
@@ -128,5 +139,35 @@ Discovery.directive('slDiscoverySchema', [
 
       }
     }
+  }
+]);
+Common.directive('slCommonDisabledAttrib', [
+  function() {
+    return {
+      restrict: 'A',
+      replace: false,
+      controller: function($scope) {
+        console.log('disabled attribute');
+        $scope.isDisabled = true;
+      },
+      link: function(scope, el, attrs) {
+
+        el.attr('disabled', 'disabled');
+
+        scope.$watch('tableSelections', function(items) {
+          console.log('TEST VALUe TeST VAluE');
+          if (items){
+            if (items.length && items.length > 0) {
+              el.removeAttr('disabled');
+            }
+            else{
+              el.attr('disabled', 'disabled');
+            }
+          }
+
+        }, true);
+        var x = 'y';
+      }
+    };
   }
 ]);
