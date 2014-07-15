@@ -487,7 +487,7 @@ app.controller('StudioController', [
       else {
         console.warn('THE NEW MODEL NAME IS NOT UNIQUE');
       }
-    }
+    };
     $scope.createModelViewRequest = function() {
 
       $scope.activeInstance = ModelService.createNewModelInstance();
@@ -495,6 +495,13 @@ app.controller('StudioController', [
       $scope.clearSelectedInstances();
       IAService.showInstanceView();
     };
+    $scope.createDatasourceViewRequest = function() {
+      $scope.activeInstance = DatasourceService.createNewDatasourceInstance();
+      $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
+      $scope.clearSelectedInstances();
+      IAService.showInstanceView();
+    };
+
 
 
 

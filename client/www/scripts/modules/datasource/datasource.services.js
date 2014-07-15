@@ -2,8 +2,9 @@
 Datasource.service('DatasourceService', [
   'Datasourcedef',
   'DataSourceDefinition',
+  'AppStorageService',
   '$q',
-  function(Datasourcedef, DataSourceDefinition, $q) {
+  function(Datasourcedef, DataSourceDefinition, AppStorageService, $q) {
     var svc = {};
     //  var deferred = $q.defer();
     svc.getDiscoverableDatasourceConnectors = function() {
@@ -81,7 +82,28 @@ Datasource.service('DatasourceService', [
 
       );
     };
-
+    svc.createNewDatasourceInstance = function() {
+      var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
+      var defaultDatasourceSchema = {
+        name: 'new-datasource',
+        type: 'datasource'
+      };
+      if (!openInstanceRefs) {
+        openInstanceRefs = [];
+      }
+      var doesNewDatasourceExist = false;
+      for (var i = 0;i < openInstanceRefs.length;i++) {
+        if (openInstanceRefs[i].name === 'new-datasource') {
+          doesNewDatasourceExist = true;
+          break;
+        }
+      }
+      if (!doesNewDatasourceExist) {
+        openInstanceRefs.push(defaultDatasourceSchema);
+        AppStorageService.setItem('openInstanceRefs', openInstanceRefs);
+      }
+      return defaultDatasourceSchema;
+    };
     return svc;
   }
 ]);

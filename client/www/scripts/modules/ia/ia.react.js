@@ -114,6 +114,9 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
     var addNewInstanceRequest = function(event) {
       if (event.target.attributes['data-type']){
         console.log('add new: ' + event.target.attributes['data-type'].value);
+        scope.$apply(function() {
+          scope.createModelViewRequest();
+        });
       }
     };
     var navModels = [];
@@ -235,12 +238,6 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
       }
     };
     var singleClickItem = function(event) {
-//      if (event.target.attributes['data-name']){
-//        var clickDSName = event.target.attributes['data-name'].value;
-//        scope.$apply(function () {
-//          scope.navTreeItemClicked('datasource', clickDSName, event.metaKey);
-//        });
-//      }
 
       if (event.target.attributes['data-name'] || event.target.parentElement.attributes['data-name']){
         var val = '';
@@ -258,11 +255,7 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
 
     };
     var dblClickItem = function(event) {
-//      if (event.target.attributes['data-name']){
-//        scope.$apply(function () {
-//          scope.navTreeItemDblClicked('datasource', event.target.attributes['data-name'].value);
-//        });
-//      }
+
       if (event.target.attributes['data-name'] || event.target.parentElement.attributes['data-name']){
         var val = '';
         if (event.target.attributes['data-name']) {
@@ -278,8 +271,17 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
       }
     };
     var addNewInstanceRequest = function(event) {
-      if (event.target.attributes['data-type']){
-        console.log('add new: ' + event.target.attributes['data-type'].value);
+      if (event.target.attributes['data-type'] || event.target.parentElement.attributes['data-type']){
+        var val = '';
+        if (event.target.attributes['data-type']) {
+          val = event.target.attributes['data-type'].value;
+        }
+        else {
+          val = event.target.parentElement.attributes['data-type'].value;
+        }
+        scope.$apply(function() {
+          scope.createDatasourceViewRequest();
+        });
       }
     };
 
@@ -310,7 +312,7 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
       <div>
         <button onClick={clickBranch} type="button" data-name="datasources_root" className="btn btn-default btn-block nav-tree-item tree-branch" title="Datasources"><span className="glyphicon glyphicon-folder-open"></span>Datasources</button>
         <ul className="branch-leaf-list is-open">{scope.mainNavDatasources.map(datasourceItemRenderer)}</ul>
-        <button onClick={addNewInstanceRequest} data-type="model" className="nav-tree-item-addnew"><span className="glyphicon glyphicon-plus-sign"></span>Add New Datasource</button>
+        <button onClick={addNewInstanceRequest} data-type="datasource" className="nav-tree-item-addnew"><span className="glyphicon glyphicon-plus-sign"></span>Add New Datasource</button>
       </div>
       );
   }
