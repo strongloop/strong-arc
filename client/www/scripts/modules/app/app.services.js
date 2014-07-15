@@ -40,6 +40,7 @@ app.service('AppStorageService', [
     };
     svc.clearStorage = function() {
       window.localStorage.removeItem('ApiModels');
+      window.localStorage.removeItem('ApiDatasources');
       return window.localStorage.removeItem('slScope');
     };
     return svc;

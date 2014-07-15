@@ -110,21 +110,33 @@ app.controller('StudioController', [
      * */
     //$scope.mainNavDatasources = [];
     $scope.mainNavDatasources = DatasourceService.getAllDatasources();
-    $scope.mainNavDatasources.$promise.
+    $scope.mainNavDatasources.
       then(function (result) {
 
-        var core = result[0];
 
-        var log = [];
-        var datasources = [];
-        angular.forEach(core, function(value, key){
-          //this.push(key + ': ' + value);
-          datasources.push({name:key,children:value});
-        }, log);
-        $scope.mainNavDatasources = datasources;
+        $scope.mainNavDatasources = result;
 
 
       });
+//    $scope.mainNavDatasources.$promise.
+//      then(function (result) {
+//
+//        var core = result[0];
+//
+//        var log = [];
+//        var datasources = [];
+//        angular.forEach(core, function(value, key){
+//          //this.push(key + ': ' + value);
+//          datasources.push({name:key,children:value});
+//        }, log);
+//        $scope.mainNavDatasources = datasources;
+//
+//
+//      });
+
+
+
+
     /*
     *
     * API Explorer View
@@ -489,17 +501,49 @@ app.controller('StudioController', [
       }
     };
     $scope.createModelViewRequest = function() {
-
+      $scope.instanceType = 'model';
       $scope.activeInstance = ModelService.createNewModelInstance();
       $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
       $scope.clearSelectedInstances();
       IAService.showInstanceView();
     };
     $scope.createDatasourceViewRequest = function() {
+      $scope.instanceType = 'datasource';
       $scope.activeInstance = DatasourceService.createNewDatasourceInstance();
       $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
       $scope.clearSelectedInstances();
       IAService.showInstanceView();
+    };
+    $scope.updateOrCreateDatasource = function(formObj) {
+      var currentDatasource = formObj;
+      console.log('SAVE or CREATE datasource: ' + formObj.name);
+      // check to make sure it is unique
+
+      if (DatasourceService.isNewDatasourceNameUnique(formObj.name)) {
+        // call create model
+        console.log('CREATE THE Datasource: ' + JSON.stringify(formObj));
+        // TODO - should be a callback to ensure model created successfully
+
+
+        var targetDef = {
+          name:formObj.name,
+          type:'datasource'
+        };
+        delete formObj.name;
+        targetDef.props = formObj;
+
+        $scope.activeInstance = DatasourceService.createDatasourceDef(targetDef);
+        $scope.activeInstance = IAService.activateInstanceByName(targetDef.name, 'datasource');
+        $scope.activeInstance.type = 'datasource';
+        $scope.instanceType = 'datasource';
+        $scope.clearSelectedInstances();
+//        return $scope.activeInstance;
+
+
+      }
+      else {
+        console.warn('THE NEW Datasource NAME IS NOT UNIQUE');
+      }
     };
 
 

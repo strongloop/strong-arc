@@ -3,43 +3,49 @@ Datasource.service('DatasourceService', [
   'Datasourcedef',
   'DataSourceDefinition',
   'AppStorageService',
+  '$timeout',
   '$q',
-  function(Datasourcedef, DataSourceDefinition, AppStorageService, $q) {
+  function(Datasourcedef, DataSourceDefinition, AppStorageService, $timeout, $q) {
     var svc = {};
     //  var deferred = $q.defer();
     svc.getDiscoverableDatasourceConnectors = function() {
       return ['loopback-connector-mssql', 'loopback-connector-oracle', 'loopback-connector-mysql', 'loopback-connector-postgresql']
     };
+
     svc.getAllDatasources = function() {
-     // return DataSourceDefinition.query({},
-      return Datasourcedef.query({},
-        function(response) {
-          var datasources = [];
-//          if (response && response.length) {
-//            datasources = response;
-//          }
 
-         // console.log('good get datasource defs: '+ response);
+      var deferred = $q.defer();
 
-          var core = response[0];
-          var log = [];
-          var datasources = [];
-          angular.forEach(core, function(value, key){
-            this.push(key + ': ' + value);
-            datasources.push({name:key,props:value});
-          }, log);
+      var retVal = JSON.parse(window.localStorage.getItem('ApiDatasources'));
+      if (!retVal) {
+        retVal = [];
+      }
+//      $timeout(function() {
+        deferred.resolve(retVal);
+//      }, 500);
 
-          // $scope.models = models;
-          window.localStorage.setItem('ApiDatasources', JSON.stringify(datasources));
-          return datasources;
-        },
-        function(response) {
-          console.log('bad get datasource defs');
-
-        }
-
-      );
+      return deferred.promise;
+//      return Datasourcedef.query({},
+//        function(response) {
+//          var datasources = [];
+//          var core = response[0];
+//          var log = [];
+//          var datasources = [];
+//
+//          angular.forEach(core, function(value, key){
+//            this.push(key + ': ' + value);
+//            datasources.push({name:key,props:value});
+//          }, log);
+//
+//          window.localStorage.setItem('ApiDatasources', JSON.stringify(datasources));
+//          return datasources;
+//        },
+//        function(response) {
+//          console.log('bad get datasource defs');
+//        }
+//      );
     };
+
     svc.getDatasourceByName = function(name) {
 
       if (window.localStorage.getItem('ApiDatasources')) {
@@ -52,7 +58,15 @@ Datasource.service('DatasourceService', [
       }
     };
     svc.createDatasourceDef = function(datasourceDefObj) {
-      return Datasourcedef.create(datasourceDefObj);
+      console.log('Add this data service: ' + JSON.stringify(datasourceDefObj));
+      var currentDatasources = JSON.parse(window.localStorage.getItem('ApiDatasources'));
+      if (!currentDatasources) {
+        currentDatasources = [];
+      }
+      currentDatasources.push(datasourceDefObj);
+      window.localStorage.setItem('ApiDatasources', JSON.stringify(currentDatasources));
+      return datasourceDefObj;
+     // return Datasourcedef.create(datasourceDefObj);
     };
     svc.getDatasourceTables = function(dsName) {
       return Datasourcedef.discoverschema({},
@@ -104,6 +118,25 @@ Datasource.service('DatasourceService', [
       }
       return defaultDatasourceSchema;
     };
+    svc.isNewDatasourceNameUnique = function(name) {
+      var retVar = true;
+
+      var existingDatasources = JSON.parse(window.localStorage.getItem('ApiDatasources'));
+      if (existingDatasources) {
+        for (var i = 0;i < existingDatasources.length;i++) {
+          if (existingDatasources[i].name === name) {
+            retVar = false;
+            break;
+          }
+        }
+      }
+
+      return retVar;
+    };
     return svc;
   }
 ]);
+
+
+
+[{"name":"db","props":{"defaultForType":"db","debug":false}},{"name":"mongodb","props":{"defaultForType":"mongodb","connector":"loopback-connector-mongodb","database":"apistudio","host":"localhost","port":27017,"debug":false,"safe":true,"w":1,"hostname":"localhost","url":"mongodb://localhost:27017/apistudio"}},{"name":"apmDev","props":{"defaultForType":"mysql","connector":"loopback-connector-mysql","database":"apm","host":"localhost","port":3306,"username":"root","password":"","debug":false,"collation":"utf8_general_ci","charset":"utf8","supportBigNumbers":false,"timezone":"local"}},{"name":"icarmysql","props":{"defaultForType":"mysql","connector":"loopback-connector-mysql","host":"demo.strongloop.com","port":3306,"database":"demo","username":"demo","password":"L00pBack","debug":false,"collation":"utf8_general_ci","charset":"utf8","supportBigNumbers":false,"timezone":"local"}},{"name":"push","props":{"defaultForType":"push","connector":"loopback-push-notification","installation":"installation","notification":"notification","application":"application","debug":false}},{"name":"mail","props":{"defaultForType":"mail","debug":false}},{"name":"test","type":"datasource","props":{"defaultForType":"teset","connector":"loopback-connector-oracle","database":"teste","host":"asdfasfd","port":"3423","":"save"}},{"name":"test2","type":"datasource","props":{"defaultForType":"test2","connector":"loopback-connector-mysql","database":"tesr2","host":"asdfasdf","port":"3344","":"save"}}]

@@ -7,98 +7,122 @@
 * */
 var DatasourceEditorView = (DatasourceEditorView = React).createClass({
   render: function() {
+    var scope = this.props.scope;
+
+    var saveHandler = function(event) {
+
+      var theForm = event.target.form;
+
+
+      var requestData = {};
+//      var explorerRequestObj = {
+//        path: api.path,
+//        method: apiDetails.httpMethod,
+//        endPoint: sourceEndPoint,
+//        data: {}
+//      };
+      for (var i = 0;i < theForm.length;i++) {
+        if (theForm[i].value) {
+          console.log('Processing Form : ' + theForm[i].name + ' = ' + theForm[i].value);
+          requestData[theForm[i].name] = theForm[i].value;
+        }
+      }
+
+      if (requestData.name.length > 0) {
+        console.log('submit this form: ' + JSON.stringify(requestData));
+        scope.$apply(function() {
+          scope.updateOrCreateDatasource(requestData);
+        });
+      }
+
+
+
+
+
+    };
+
     return (
       <form name="DatasourceForm" role="form">
         <div className="form-group">
-          <label for="InputDatasourceName">Name</label>
-          <input id="InputDatasourceName"
+          <label for="name">Name</label>
+          <input id="name"
             className="form-control"
-            name="InputDatasourceName"
+            name="name"
             type="text"
-            placeholder="name"
-            ng-model="cDatasource.name" />
+            placeholder="name" required="true" />
         </div>
         <div className="form-group">
-          <label for="InputDefaultForType">Default For Type</label>
-          <input id="InputDefaultForType"
+          <label for="defaultForType">Default For Type</label>
+          <input id="defaultForType"
             className="form-control"
-            name="InputDefaultForType"
+            name="defaultForType"
             type="text"
-            placeholder="default for type"
-            ng-model="cDatasource.defaultForType" />
+            placeholder="default for type" />
         </div>
         <div className="form-group">
-          <label for="InputConnector">Connector</label>
-          <select ng-model="cDatasource.connector"
-            id="InputConnector"
-            name="InputConnector"
-            ng-change="updateCurrDatasourceConnector()">
+          <label for="connector">Connector</label>
+          <select
+            id="connector"
+            name="connector">
             <option value="loopback-connector-mysql">My SQL</option>
             <option value="loopback-connector-mongodb">Mongo DB</option>
             <option value="loopback-connector-oracle">Oracle</option>
           </select>
         </div>
         <div className="form-group">
-          <label for="InputDatabase">Database</label>
-          <input id="InputDatabase"
+          <label for="database">Database</label>
+          <input id="database"
             className="form-control"
-            name="InputDatabase"
+            name="database"
             type="text"
-            placeholder="database name"
-            ng-model="cDatasource.database" />
+            placeholder="database name" />
         </div>
         <div className="form-group">
-          <label for="InputHost">Host</label>
-          <input id="InputHost"
+          <label for="host">Host</label>
+          <input id="host"
             className="form-control"
-            name="InputHost"
+            name="host"
             type="text"
-            placeholder="host"
-            ng-model="cDatasource.host" />
+            placeholder="host" />
         </div>
         <div className="form-group">
-          <label for="InputPort">Port</label>
-          <input id="InputPort"
+          <label for="port">Port</label>
+          <input id="port"
             className="form-control"
-            name="InputPort"
+            name="port"
             type="text"
-            placeholder="port"
-            ng-model="cDatasource.port" />
+            placeholder="port" />
         </div>
         <div className="form-group">
-          <label for="InputUsername">Username</label>
-          <input id="InputUsername"
+          <label for="userName">Username</label>
+          <input id="userName"
             className="form-control"
-            name="InputUsername"
+            name="userName"
             type="text"
-            placeholder="username"
-            ng-model="cDatasource.username" />
+            placeholder="username" />
         </div>
         <div className="form-group">
-          <label for="InputPassword">Password</label>
-          <input id="InputPassword"
+          <label for="password">Password</label>
+          <input id="password"
             className="form-control"
-            name="InputPassword"
+            name="password"
             type="password"
-            placeholder="password"
-            ng-model="cDatasource.password" />
+            placeholder="password" />
         </div>
         <div className="form-group">
-          <label for="InputDebug">Debug</label>
-          <input id="InputDebug"
+          <label for="debug">Debug</label>
+          <input id="debug"
             className="form-control"
-            name="InputDebug"
+            name="debug"
             type="text"
-            placeholder="debug"
-            ng-model="cDatasource.debug" />
+            placeholder="debug" />
         </div>
 
         <div>
           <input type="button"
+            onClick={saveHandler}
             className="primary pull-right"
-            value="save"
-            ng-model="cDatasource"
-            ng-click="saveDatasource()" />
+            value="save" />
         </div>
         <div>&nbsp;</div>
       </form>
