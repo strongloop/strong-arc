@@ -141,7 +141,7 @@ Discovery.directive('slDiscoverySchema', [
     }
   }
 ]);
-Common.directive('slCommonDisabledAttrib', [
+Discovery.directive('slCommonDisabledAttrib', [
   function() {
     return {
       restrict: 'A',

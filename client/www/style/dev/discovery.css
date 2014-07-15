@@ -14,7 +14,7 @@
 .model-schema-editor-source-table-table {
     border: 1px solid #dddddd;
     border-radius: 4px;
-    width: 45rem;
+    width: 100%;
     margin: 0 auto 0 auto;
 }
 .discovery-schema-grid-label {
@@ -28,15 +28,19 @@
 
 }
 .model-schema-editor-source-table-table th {
-    background-color: darkgreen;
-    color: #ffffff;
+    background-color: #eaeaea;
+    color: #444444;
     font-weight: bold;
+    height:30px;
 }
 .model-schema-editor-source-table-table td {
     font-size: 125%;
     border: 1px solid #eeeeee;
 }
 .discovery-schema-selected-table-list {
-    width: 50rem;
+    width: 95%;
     margin: 0 auto 0 auto;
+}
+.discovery-schema-selected-table-list tbody tr:nth-child(odd) {
+    background-color: #f3f3f3;
 }
