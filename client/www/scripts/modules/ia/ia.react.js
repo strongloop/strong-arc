@@ -70,18 +70,45 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
     };
 
     var singleClickItem = function(event) {
-      if (event.target.attributes['data-name']){
-        var clickModelName = event.target.attributes['data-name'].value;
+//      if (event.target.attributes['data-name']){
+//        var clickModelName = event.target.attributes['data-name'].value;
+//        scope.$apply(function () {
+//          scope.navTreeItemClicked('model', clickModelName, event.metaKey);
+//        });
+//      }
+
+
+      if (event.target.attributes['data-name'] || event.target.parentElement.attributes['data-name']){
+        var val = '';
+        if (event.target.attributes['data-name']) {
+          val = event.target.attributes['data-name'].value;
+        }
+        else {
+          val = event.target.parentElement.attributes['data-name'].value;
+        }
         scope.$apply(function () {
-          scope.navTreeItemClicked('model', clickModelName, event.metaKey);
+          scope.navTreeItemClicked('model', val, event.metaKey);
         });
+
       }
+
+
+
     };
     var dblClickItem = function(event) {
-      if (event.target.attributes['data-name']){
+
+      if (event.target.attributes['data-name'] || event.target.parentElement.attributes['data-name']){
+        var val = '';
+        if (event.target.attributes['data-name']) {
+          val = event.target.attributes['data-name'].value;
+        }
+        else {
+          val = event.target.parentElement.attributes['data-name'].value;
+        }
         scope.$apply(function () {
-          scope.navTreeItemDblClicked('model', event.target.attributes['data-name'].value);
+          scope.navTreeItemDblClicked('model', val);
         });
+
       }
     };
     var addNewInstanceRequest = function(event) {

@@ -190,7 +190,7 @@ app.controller('StudioController', [
      *
      * */
     $scope.navTreeItemDblClicked = function(type, target) {
-      console.log('dbl clicked!!: ' + target);
+
     //  jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
       switch(type) {
 
@@ -284,8 +284,15 @@ app.controller('StudioController', [
 
           if (openModelNames && (openModelNames.indexOf(targetName) === -1)) {
             // mode is not open so preview it
-            $scope.previewInstance = targetModel;
-            $scope.previewInstance.type = 'model';
+//            $scope.previewInstance = targetModel;
+//            $scope.previewInstance.type = 'model';
+//            $scope.instanceType = 'model';
+
+            // temporary align with double click to make it functional for demo
+            $scope.activeInstance = IAService.activateInstanceByName(targetName, 'model');
+            $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
+            $scope.currentOpenModelNames = IAService.getOpenModelNames();
+            $scope.clearSelectedInstances();
             $scope.instanceType = 'model';
 
           }

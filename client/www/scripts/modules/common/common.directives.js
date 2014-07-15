@@ -73,6 +73,7 @@ Common.directive('slCommonInstanceTabsView', [
         }
 
         scope.$watch('activeInstance', function(newVal, oldVal) {
+
           renderComp();
         });
 //        scope = scope.$parent;
