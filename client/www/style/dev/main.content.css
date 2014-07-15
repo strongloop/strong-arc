@@ -22,6 +22,17 @@
     border-width: 0 20px 0 0;
     border-style: solid;
     margin-left: 1.5rem;
+    border-style: solid;
+    -webkit-border-image:
+        -webkit-gradient(linear, 0 0, 100% 0, from(#444444), to(rgba(0, 0, 0, .4))) 1 100%;
+    -webkit-border-image:
+        -webkit-linear-gradient(left, #444444, rgba(0, 0, 0, .4)) 1 100%;
+    -moz-border-image:
+        -moz-linear-gradient(left, #444444, rgba(0, 0, 0, .4)) 1 100%;
+    -o-border-image:
+        -o-linear-gradient(left, #444444, rgba(0, 0, 0, .4)) 1 100%;
+    border-image:
+        linear-gradient(to left, #444444, rgba(0, 0, 0, .4)) 1 100%;
 }
 [data-id="CanvasApiContainer"] {
     position: absolute;
@@ -35,6 +46,16 @@
     border-color: #dddddd;
     border-width: 0 20px 0 0;
     border-style: solid;
+    -webkit-border-image:
+        -webkit-gradient(linear, 0 0, 100% 0, from(#444444), to(rgba(0, 0, 0, .4))) 1 100%;
+    -webkit-border-image:
+        -webkit-linear-gradient(left, #444444, rgba(0, 0, 0, .4)) 1 100%;
+    -moz-border-image:
+        -moz-linear-gradient(left, #444444, rgba(0, 0, 0, .4)) 1 100%;
+    -o-border-image:
+        -o-linear-gradient(left, #444444, rgba(0, 0, 0, .4)) 1 100%;
+    border-image:
+        linear-gradient(to left, #444444, rgba(0, 0, 0, .4)) 1 100%;
 }
 [data-id="PreviewInstanceContainer"] {
     z-index: 113;
