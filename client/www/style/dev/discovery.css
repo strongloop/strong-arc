@@ -34,8 +34,17 @@
     height:30px;
 }
 .model-schema-editor-source-table-table td {
-    font-size: 125%;
-    border: 1px solid #eeeeee;
+    font-size: 112%;
+    /*border: 1px solid #eeeeee;*/
+    border-left: 1px solid #bbbbbb;
+    padding-left:4px;
+    color:#444444;
+
+}
+.discovery-table-column {
+    width:460px;
+    width:460px;
+
 }
 .discovery-schema-selected-table-list {
     width: 95%;

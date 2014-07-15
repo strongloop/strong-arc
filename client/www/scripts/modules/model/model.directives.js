@@ -94,7 +94,7 @@ Model.directive('modelPropertiesEditor',[
         });
         scope.$watch('activeInstance', function(model) {
           if (!model.props) {
-            model.props = {properties:[]};
+            model.props = {properties:[]}
           }
           if (!model.props.properties){
             model.props.properties = [];

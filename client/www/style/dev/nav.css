@@ -119,6 +119,11 @@ Main Search
 .branch-leaf-list li.is-active button {
     color: #ffffff;
 }
+/* main nav zebra stripes */
+.branch-leaf-list li:nth-child(odd) {
+    background-color: #999999;
+}
+
 [data-id="IAMainControlsContainer"] button {
     /*display:block;*/
 }
