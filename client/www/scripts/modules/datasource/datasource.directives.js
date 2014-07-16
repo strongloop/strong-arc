@@ -32,37 +32,15 @@ Datasource.directive('datasourceEditorForm', [
       link: function(scope, el, attrs) {
         console.log('data source form');
 
+        scope.$watch('activeInstance', function(instance) {
+          if(instance.type === 'datasource') {
+            if (!instance.props) {
+              scope.activeInstance.props = {};
+            }
+            React.renderComponent(DatasourceEditorView({scope:scope}), el[0]);
 
-        scope.cDatasource = {
-          defaultForType: 'mysql',
-          connector: 'loopback-connector-mysql',
-          database: 'apm',
-          host: 'localhost',
-          port: 3306,
-          username: 'root',
-          password: '',
-          debug: true
-        };
-        scope.saveDatasource = function() {
-          console.log('try to save the data');
-          if (scope.cDatasource && scope.cDatasource.id) {
-            console.log('update datasource ');
-          } else {
-            console.log('create datasource');
-            DatasourceService.createDatasourceDef(scope.cDatasource,
-              function(response) {
-                console.log('good datasource');
-
-              },
-              function(response) {
-                console.log('bad datasource');
-              }
-            );
           }
-        };
-        scope.$watch('activeDatasourceInstance', function(instance) {
-          React.renderComponent(DatasourceEditorView({scope:scope}), el[0]);
-        })
+        }, true);
       }
     }
   }

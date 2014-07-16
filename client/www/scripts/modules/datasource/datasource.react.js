@@ -6,8 +6,33 @@
 *
 * */
 var DatasourceEditorView = (DatasourceEditorView = React).createClass({
+  getInitialState: function() {
+    return this.props.scope.activeInstance;
+  },
+  componentWillReceiveProps: function(nextProps) {
+    this.setState(nextProps.model);
+    console.log('DS editor will receive props');
+  },
+  handleChange: function(event) {
+    var scope = this.props.scope;
+    //this.setState({name: event.target.value});
+    var stateName = event.target.attributes['data-name'].value;
+    var xState = this.state;
+    xState[stateName] = event.target.value;
+    this.setState(xState);
+    console.log('data source form edit handler ');
+//    if (event.target.attributes.id) {
+//      var modelDetailProperty = event.target.attributes['data-name'].value;
+//      var modelDetailValue = event.target.value;
+////      scope.$apply(function() {
+////        scope.updateModelDetailProperty(modelDetailProperty, modelDetailValue);
+////      });
+//    }
+  },
   render: function() {
     var scope = this.props.scope;
+
+    var dsModel = this.state;
 
     var saveHandler = function(event) {
 
@@ -35,10 +60,6 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
         });
       }
 
-
-
-
-
     };
 
     return (
@@ -49,7 +70,11 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
             className="form-control"
             name="name"
             type="text"
-            placeholder="name" required="true" />
+            value={dsModel.name}
+            onChange={this.handleChange}
+            data-name="name"
+            placeholder="name"
+            required="true" />
         </div>
         <div className="form-group">
           <label for="defaultForType">Default For Type</label>
@@ -57,6 +82,9 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
             className="form-control"
             name="defaultForType"
             type="text"
+            value={dsModel.props.defaultForType}
+            onChange={this.handleChange}
+            data-name="defaultForType"
             placeholder="default for type" />
         </div>
         <div className="form-group">
@@ -74,6 +102,9 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
           <input id="database"
             className="form-control"
             name="database"
+            value={dsModel.props.database}
+            onChange={this.handleChange}
+            data-name="database"
             type="text"
             placeholder="database name" />
         </div>
@@ -82,6 +113,9 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
           <input id="host"
             className="form-control"
             name="host"
+            value={dsModel.props.host}
+            onChange={this.handleChange}
+            data-name="host"
             type="text"
             placeholder="host" />
         </div>
@@ -90,6 +124,9 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
           <input id="port"
             className="form-control"
             name="port"
+            value={dsModel.props.port}
+            onChange={this.handleChange}
+            data-name="port"
             type="text"
             placeholder="port" />
         </div>
@@ -99,6 +136,9 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
             className="form-control"
             name="userName"
             type="text"
+            value={dsModel.props.userName}
+            onChange={this.handleChange}
+            data-name="userName"
             placeholder="username" />
         </div>
         <div className="form-group">
@@ -106,16 +146,11 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
           <input id="password"
             className="form-control"
             name="password"
+            value={dsModel.props.password}
+            onChange={this.handleChange}
+            data-name="password"
             type="password"
             placeholder="password" />
-        </div>
-        <div className="form-group">
-          <label for="debug">Debug</label>
-          <input id="debug"
-            className="form-control"
-            name="debug"
-            type="text"
-            placeholder="debug" />
         </div>
 
         <div>

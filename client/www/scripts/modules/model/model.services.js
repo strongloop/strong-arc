@@ -128,7 +128,10 @@ Model.service('ModelService', [
     svc.generateModelsFromSchema = function(schemaCollection) {
       if (schemaCollection && schemaCollection.length > 0) {
 
-        var newOpenInstances = [];
+        var openInstances = AppStorageService.getItem('openInstanceRefs');
+        if (!openInstances) {
+          openInstances = [];
+        }
 
         for (var i = 0;i < schemaCollection.length;i++) {
           var sourceDbModelObj = schemaCollection[i];
@@ -140,7 +143,7 @@ Model.service('ModelService', [
 
           };
           // open instances reset
-          newOpenInstances.push({
+          openInstances.push({
             name: sourceDbModelObj.name,
             type:'model'
           });
@@ -220,7 +223,7 @@ Model.service('ModelService', [
 
         }
         // open the new models
-        AppStorageService.setItem('openInstanceRefs', newOpenInstances);
+        AppStorageService.setItem('openInstanceRefs', openInstances);
         // activate the last one
         AppStorageService.setItem('activeInstance', newLBModel);
         // activate the first of the index

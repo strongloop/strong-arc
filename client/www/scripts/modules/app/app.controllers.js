@@ -173,7 +173,8 @@ app.controller('StudioController', [
     $scope.$on('newSchemaModelsEvent', function(event, message){
       $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
       $scope.activeInstance = IAService.getActiveInstance();
-
+      $scope.instanceType = 'model';
+      $scope.activeInstance.type = 'model';
       // note that the handler is passed the problem domain parameters
       loadModels();
       $scope.setApiModelsDirty();
@@ -533,7 +534,8 @@ app.controller('StudioController', [
 
         var targetDef = {
           name:formObj.name,
-          type:'datasource'
+          type:'datasource',
+          props:{}
         };
         delete formObj.name;
         targetDef.props = formObj;
