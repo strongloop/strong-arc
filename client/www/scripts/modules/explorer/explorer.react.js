@@ -331,7 +331,7 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
                 </form>
               </div>
               <div data-ui-type="cell">
-                <textarea  className="explorer-api-textarea" value={JSON.stringify(currentResponseValue)}></textarea>
+                <textarea  className="explorer-api-textarea" value={JSON.stringify(currentResponseValue, null, 2)}></textarea>
               </div>
             </div>
           </div>
