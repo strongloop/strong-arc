@@ -254,29 +254,29 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
           if (reqVal) {
             labelClass = 'is-required';
           }
-          switch (property.props.type) {
+          switch (property.props.type.toLowerCase()) {
             case 'string':
-              return (<div className="form-group"><label className={labelClass}>{property.name}</label><input required={reqVal} className="form-control" type="text" name={property.props.name} /></div>);
+              return (<div className="form-group"><label className={labelClass}>{property.name}</label><input required={reqVal} className="form-control" type="text" name={property.name} /></div>);
               break;
             case 'number':
-              return (<div className="form-group"><label className={labelClass}>{property.name}</label><input className="form-control" type="text" name={property.props.name} /></div>);
+              return (<div className="form-group"><label className={labelClass}>{property.name}</label><input className="form-control" type="text" name={property.name} /></div>);
               break;
 
             case 'date':
-              return (<div className="form-group"><label className={labelClass}>{property.name}</label><input className="form-control" type="date" name={property.props.name} /></div>);
+              return (<div className="form-group"><label className={labelClass}>{property.name}</label><input className="form-control" type="date" name={property.name} /></div>);
               break;
             case 'array':
-              return (<div className="form-group"><label className={labelClass}>{property.name}</label><textarea className="form-control" name={property.props.name} ></textarea></div>);
+              return (<div className="form-group"><label className={labelClass}>{property.name}</label><textarea className="form-control" name={property.name} ></textarea></div>);
               break;
             case 'object':
-              return (<div className="form-group"><label className={labelClass}>{property.name}</label><textarea className="form-control" name={property.props.name} ></textarea></div>);
+              return (<div className="form-group"><label className={labelClass}>{property.name}</label><textarea className="form-control" name={property.name} ></textarea></div>);
               break;
             case 'any':
-              return (<div className="form-group"><label className={labelClass}>{property.name}</label><textarea className="form-control" name={property.props.name} ></textarea></div>);
+              return (<div className="form-group"><label className={labelClass}>{property.name}</label><textarea className="form-control" name={property.name} ></textarea></div>);
               break;
 
             default:
-              return (<div className="form-group"><label className={labelClass}>{property.name}</label><input className="form-control" type="text" name={property.props.name} /></div>);
+              return (<div className="form-group"><label className={labelClass}>{property.name}</label><input className="form-control" type="text" name={property.name} /></div>);
 
               break;
 
