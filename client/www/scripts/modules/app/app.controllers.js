@@ -514,6 +514,12 @@ app.controller('StudioController', [
       $scope.clearSelectedInstances();
       IAService.showInstanceView();
     };
+    /*
+    *
+    *   CREATE NEW DATASOURCE
+    *
+    *
+    * */
     $scope.updateOrCreateDatasource = function(formObj) {
       var currentDatasource = formObj;
       console.log('SAVE or CREATE datasource: ' + formObj.name);
@@ -533,10 +539,24 @@ app.controller('StudioController', [
         targetDef.props = formObj;
 
         $scope.activeInstance = DatasourceService.createDatasourceDef(targetDef);
-        $scope.activeInstance = IAService.activateInstanceByName(targetDef.name, 'datasource');
-        $scope.activeInstance.type = 'datasource';
-        $scope.instanceType = 'datasource';
-        $scope.clearSelectedInstances();
+       // $scope.activeInstance = IAService.activateInstanceByName(targetDef.name, 'datasource');
+
+        $scope.mainNavDatasources = DatasourceService.getAllDatasources();
+        $scope.mainNavDatasources.
+          then(function (result) {
+
+            // update open refs
+            DatasourceService.updateNewDatasourceName(targetDef.name);
+
+            $scope.mainNavDatasources = result;
+            $scope.activeInstance.type = 'datasource';
+            $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
+            $scope.currentOpenDatasourceNames = IAService.getOpenDatasourceNames();
+            $scope.instanceType = 'datasource';
+            $scope.clearSelectedInstances();
+
+          });
+
 //        return $scope.activeInstance;
 
 

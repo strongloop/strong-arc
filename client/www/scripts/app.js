@@ -147,6 +147,7 @@ var app = angular.module('app', [
   'Explorer',
   'IA',
   'UI',
+  'Demo',
   'Common',
   'Property',
   'Auth',
@@ -187,15 +188,15 @@ app.config([
         templateUrl: './scripts/modules/app/templates/studio.main.html',
         controller: 'StudioController'
       }).
-      state('datasource', {
-        url: '/datasource',
-        controller: 'DatasourceMainController',
-        templateUrl: './scripts/modules/datasource/templates/datasource.main.html'
-      }).
       state('uiform', {
         url: '/uiform',
         controller: 'UIFormMainController',
         templateUrl: './scripts/modules/uiform/templates/uiform.main.html'
+      }).
+      state('demo', {
+        url: '/demo',
+        controller: 'DemoMainController',
+        templateUrl: './scripts/modules/demo/templates/demo.main.html'
       }).
       state('profile', {
         url: '/profile',
@@ -206,11 +207,6 @@ app.config([
         url: '/login',
         controller: 'LoginController',
         templateUrl: './scripts/modules/profile/templates/login.html'
-      }).
-      state('discovery', {
-        url: '/discovery',
-        controller: 'DiscoveryMainController',
-        templateUrl: './scripts/modules/discovery/templates/discovery.main.html'
       }).
       state('register', {
         url: '/register',

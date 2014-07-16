@@ -57,6 +57,20 @@ Datasource.service('DatasourceService', [
         }
       }
     };
+    svc.updateNewDatasourceName = function(newName) {
+      var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
+      if (!openInstanceRefs) {
+        return;
+      }
+      for (var i = 0;i < openInstanceRefs.length;i++) {
+        if (openInstanceRefs[i].name === 'new-datasource') {
+          openInstanceRefs[i].name = newName;
+          break;
+        }
+      }
+      AppStorageService.setItem('openInstanceRefs', openInstanceRefs);
+      return openInstanceRefs;
+    };
     svc.createDatasourceDef = function(datasourceDefObj) {
       console.log('Add this data service: ' + JSON.stringify(datasourceDefObj));
       var currentDatasources = JSON.parse(window.localStorage.getItem('ApiDatasources'));
