@@ -198,6 +198,11 @@ app.config([
         controller: 'DemoMainController',
         templateUrl: './scripts/modules/demo/templates/demo.main.html'
       }).
+      state('demo.detail', {
+        url: "/:modelName",
+        controller: 'DemoMainController',
+        templateUrl: './scripts/modules/demo/templates/demo.main.html'
+      }).
       state('profile', {
         url: '/profile',
         controller: 'ProfileMainController',

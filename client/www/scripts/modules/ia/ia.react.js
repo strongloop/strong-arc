@@ -346,7 +346,7 @@ var IAMainControls = (IAMainControls = React).createClass({
 
     var renderAppViewRequest = function() {
       window.open(
-        '/#uiform',
+        '/#demo',
         '_blank'
       );
 
