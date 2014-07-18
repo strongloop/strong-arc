@@ -31,7 +31,8 @@ Demo.directive('slDemoMainNav', [
   }
 ]);
 Demo.directive('slDemoMainForm', [
-  function() {
+  'ModelService',
+  function(ModelService) {
     return {
       controller: function($scope, $stateParams, ModelService) {
         console.log('Demo Main form directive controller');
@@ -65,6 +66,14 @@ Demo.directive('slDemoMainForm', [
         }, true);
         scope.$watch('curFormData.props', function(data) {
           React.renderComponent(DemoForm({scope:scope}), el[0]);
+        }, true);
+        scope.$watch('modelRef', function(modelRef) {
+          if (modelRef) {
+            // get the model definition
+            scope.curFormData = ModelService.getModelByName(modelRef);
+            React.renderComponent(DemoForm({scope:scope}), el[0]);
+          }
+
         }, true);
         scope.$watch('targetModelDef', function(modelDef) {
           console.log('[form] model ref changed');
@@ -139,16 +148,32 @@ Demo.directive('slDemoMainGrid', [
 
         };
 
-        // load model data
-        $scope.loadModelData($scope.modelRef);
+        if ($scope.modelRef) {
+          // load model data
+          $scope.loadModelData($scope.modelRef);
+        }
+
 
 
 
       },
       link: function(scope, el, attrs) {
+
+        scope.$watch('modelRef', function(modelRef) {
+          console.log('[grid] model ref changed');
+          if (modelRef) {
+            scope.loadModelData(modelRef);
+            scope.demoDataGridOptions = {
+              data: 'modelData',
+              columnDefs:  'colDefs',
+              multiSelect: false
+            };
+          }
+
+        }, true);
         scope.$watch('modelData', function(data) {
           console.log('[grid] model ref changed');
-          scope.demoRestRequest('car');
+//          scope.demoRestRequest('car');
           scope.demoDataGridOptions = {
             data: 'modelData',
             columnDefs:  'colDefs',

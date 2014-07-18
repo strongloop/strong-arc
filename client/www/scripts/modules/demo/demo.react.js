@@ -13,18 +13,7 @@
    },
    componentDidMount:function(){
      var menuItems = {};
-     menuItems.openSelectedModels = {name: "open", callback: this.openSelectedModels};
-     $.contextMenu({
-       // define which elements trigger this menu
-       selector: ".model-node",
-       // define the elements of the menu
-       items: menuItems,
-       events: {
-         show: function(opt, event) {
 
-         }
-       }
-     });
    },
    render: function() {
 
@@ -96,13 +85,12 @@
        }
        return (
          <li className={classNameVar}>
-           <button onClick={singleClickItem} data-name={item.name} className="btn btn-default btn-block nav-tree-item tree-node"><span data-name={item.name} className="glyphicon glyphicon-file"></span>{item.name}</button>
+           <button onClick={singleClickItem} data-name={item.name} className="btn btn-default btn-block "><span data-name={item.name} className="glyphicon glyphicon-file"></span>{item.name}</button>
          </li>
          );
      });
      return (
        <div>
-         <button onClick={clickBranch} data-name="model_root" className="btn btn-default btn-block nav-tree-item tree-branch"  title="Models" ><span className="glyphicon glyphicon-folder-open"></span>Models</button>
          <ul className="branch-leaf-list is-open">{items}</ul>
        </div>
        );
