@@ -127,61 +127,26 @@ Demo.directive('slDemoMainGrid', [
               id:item.entity.id
             };
             $scope.demoRestApiRequest(reqObj);
+            $scope.loadModelData($scope.modelRef);
+            $scope.curFormData = {};
           }
 
         };
         $scope.clearForm = function() {
           console.log('clear the form');
           $scope.formMode = 'new';
+          $scope.curFormData = {};
 
         };
 
-
-
-
-        $scope.demoRestRequest = function(modelRef) {
-          console.log('demo rest request:  ' + modelRef);
-          var config = {
-            method: 'GET',
-            url: '/api/' + modelRef +'s'
-          };
-//          if (isPayloadTypeRequest(requestObj)) {
-//            config.data = requestObj.data;
-//          }
-
-
-
-          $http(config).
-            success( function(response) {
-              $scope.colDefs = [];
-              $scope.modelData = response;
-
-              if (response.length > 0) {
-                var defRow = response[0];
-                angular.forEach(defRow, function(value, key){
-                  $scope.colDefs.push({field:key,displayName:key});
-                });
-                $scope.colDefs.push({field: '', cellTemplate: '<button class="btn btn-sm btn-default" ng-click="demoEdit(row)">Edit</button>'});
-                $scope.colDefs.push({field: '', cellTemplate: '<button class="btn btn-sm btn-default" ng-click="demoDelete(row)">Delete</button>'});
-              }
-//
-//              $scope.colDefs = [
-//                {field:'id', displayName:'id'},
-//                {field:'name', displayName:'name'},
-//                {field:'value',displayName:'value'}
-//              ];
-            }).
-            error(function(response) {
-              console.warn('bad demo rest get request ');
-
-            });
-        };
+        // load model data
+        $scope.loadModelData($scope.modelRef);
 
 
 
       },
       link: function(scope, el, attrs) {
-        scope.$watch('modelData', function(modelRef) {
+        scope.$watch('modelData', function(data) {
           console.log('[grid] model ref changed');
           scope.demoRestRequest('car');
           scope.demoDataGridOptions = {

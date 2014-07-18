@@ -3,7 +3,8 @@ Demo.controller('DemoMainController', [
   '$scope',
   '$stateParams',
   '$http',
-  function($scope, $stateParams, $http) {
+  'ModelService',
+  function($scope, $stateParams, $http, ModelService) {
     console.log('Demo Main Controller');
     $scope.modelRef = $stateParams.modelName;
     $scope.curFormData = {};
@@ -38,11 +39,45 @@ Demo.controller('DemoMainController', [
       $http(config).
         success( function(response) {
           console.log('good demo rest call: ' + response);
+          $scope.loadModelData($scope.modelRef);
+          $scope.curFormData = {};
 
         }).
         error(function(response) {
           console.log('bad demo rest call: ' + response);
         });
-    }
+    };
+    $scope.loadModelData = function(modelRef) {
+      var config = {
+        method: 'GET',
+        url: '/api/' + modelRef +'s'
+      };
+//          if (isPayloadTypeRequest(requestObj)) {
+//            config.data = requestObj.data;
+//          }
+
+
+
+      $http(config).
+        success( function(response) {
+          $scope.colDefs = [];
+          $scope.modelData = response;
+
+          if (response.length > 0) {
+            var defRow = response[0];
+            angular.forEach(defRow, function(value, key){
+              $scope.colDefs.push({field:key,displayName:key});
+            });
+            $scope.colDefs.push({field: '', cellTemplate: '<button class="btn btn-sm btn-default" ng-click="demoEdit(row)">Edit</button>'});
+            $scope.colDefs.push({field: '', cellTemplate: '<button class="btn btn-sm btn-default" ng-click="demoDelete(row)">Delete</button>'});
+          }
+
+        }).
+        error(function(response) {
+          console.warn('bad demo rest get request ');
+
+        });
+      };
+
   }
 ]);
