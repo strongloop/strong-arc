@@ -33,15 +33,25 @@ Demo.directive('slDemoMainNav', [
 Demo.directive('slDemoMainForm', [
   function() {
     return {
-      template: '<div>form: {{modelRef}}</div>',
       controller: function($scope, $stateParams, ModelService) {
         console.log('Demo Main form directive controller');
         $scope.modelRef = $stateParams.modelName;
-        $scope.targetModelDef = {};
+        $scope.currFormData = {};
         if ($scope.modelRef) {
           console.log('slDemoMainForm THIS MODEL: ' + $scope.modelRef);
 
-          $scope.targetModelDef = ModelService.getModelByName($scope.modelRef);
+          $scope.curFormData = ModelService.getModelByName($scope.modelRef);
+          var propertiesCount = 0;
+          if ($scope.currFormData.props && $scope.currFormData.props.properties) {
+
+            propertiesCount = $scope.currFormData.props.properties.length;
+
+          }
+
+          for (var i = 0;i < propertiesCount;i++) {
+
+          }
+
 
           // render form based on model properties
 
@@ -50,9 +60,15 @@ Demo.directive('slDemoMainForm', [
         }
       },
       link: function(scope, el, attrs) {
+        scope.$watch('curFormData', function(data) {
+          React.renderComponent(DemoForm({scope:scope}), el[0]);
+        }, true);
+        scope.$watch('curFormData.props', function(data) {
+          React.renderComponent(DemoForm({scope:scope}), el[0]);
+        }, true);
         scope.$watch('targetModelDef', function(modelDef) {
           console.log('[form] model ref changed');
-          React.renderComponent(DemoForm({scope:scope,modelDef:modelDef}), el[0]);
+          React.renderComponent(DemoForm({scope:scope}), el[0]);
         }, true);
       }
     }
@@ -62,7 +78,7 @@ Demo.directive('slDemoMainGrid', [
   function() {
     return {
       template: '<div class="demo-data-grid"  ng-grid="demoDataGridOptions"></div>',
-      controller: function($scope, $stateParams, $timeout, $http) {
+      controller: function($scope, $stateParams, $timeout, $http, ModelService) {
         console.log('Demo Main Grid directive controller');
         $scope.modelData = {};
 
@@ -81,6 +97,24 @@ Demo.directive('slDemoMainGrid', [
           console.log('EDIT THIS ITEM: ' + JSON.stringify(item.entity));
           $scope.formMode = 'edit';
           $scope.httpMethod = 'PUT';
+          var modelDef = ModelService.getModelByName($scope.modelRef);
+          if (modelDef.props && modelDef.props.properties) {
+            for (var i = 0;i < modelDef.props.properties.length;i++) {
+              if (item.entity[modelDef.props.properties[i].name]) {
+                modelDef.props.properties[i].value = item.entity[modelDef.props.properties[i].name];
+              }
+              else {
+                modelDef.props.properties[i].value = '';
+
+              }
+            }
+          }
+          // get the model definition here
+          // loop over the properties
+          // assign values where they are found
+          // empty values for non
+          $scope.curFormData = modelDef;
+
         };
         $scope.demoDelete = function(item) {
           if (confirm('delete this item?')) {
@@ -127,8 +161,8 @@ Demo.directive('slDemoMainGrid', [
                 angular.forEach(defRow, function(value, key){
                   $scope.colDefs.push({field:key,displayName:key});
                 });
-                $scope.colDefs.push({field: '', cellTemplate: '<button ng-click="demoEdit(row)">Edit</button>'});
-                $scope.colDefs.push({field: '', cellTemplate: '<button ng-click="demoDelete(row)">Delete</button>'});
+                $scope.colDefs.push({field: '', cellTemplate: '<button class="btn btn-sm btn-default" ng-click="demoEdit(row)">Edit</button>'});
+                $scope.colDefs.push({field: '', cellTemplate: '<button class="btn btn-sm btn-default" ng-click="demoDelete(row)">Delete</button>'});
               }
 //
 //              $scope.colDefs = [

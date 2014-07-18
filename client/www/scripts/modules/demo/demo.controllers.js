@@ -6,6 +6,8 @@ Demo.controller('DemoMainController', [
   function($scope, $stateParams, $http) {
     console.log('Demo Main Controller');
     $scope.modelRef = $stateParams.modelName;
+    $scope.curFormData = {};
+
     if ($scope.modelRef) {
       console.log('DEMO THIS MODEL: ' + $scope.modelRef);
     }

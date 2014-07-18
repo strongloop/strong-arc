@@ -115,15 +115,37 @@
 *
 * */
 var DemoForm = (DemoForm = React).createClass({
+  getInitialState: function() {
+    return this.props.scope.curFormData;
+  },
+  componentWillReceiveProps: function(nextProps) {
+    this.setState(nextProps.scope.curFormData);
+  },
+  handleChange: function(event) {
+    var stateName = event.target.attributes['data-name'].value;
+    var xState = this.state;
+    //xState[stateName] = event.target.value;
+    for (var i = 0;i < xState.props.properties.length;i++) {
+      if (xState.props.properties[i].name === stateName) {
+        xState.props.properties[i].value = event.target.value;
+      }
+    }
+    this.setState(xState);
+    console.log('demo form edit handler ');
+
+  },
   render: function() {
     var that = this;
-    var scope = this.props.scope;
-    var modelDef = that.props.modelDef;
+    var scope = that.props.scope;
+    var modelDef = that.state;
+
 
     var sendDemoRequest = function(event) {
       console.log('submit the demo form');
       var theForm = event.target.form;
       var sourceEndPoint = event.target.attributes['data-name'].value;
+
+      var reqMethod = 'POST';
 
       var requestData = {};
       var requestObj = {
@@ -134,7 +156,11 @@ var DemoForm = (DemoForm = React).createClass({
       };
       for (var i = 0;i < theForm.length;i++) {
         if (theForm[i].value) {
-          console.log('Processing Form : ' + theForm[i].name + ' = ' + theForm[i].value);
+          if (theForm[i].name === 'id') {
+            if (theForm[i].value) {
+              requestObj.method = 'PUT';
+            }
+          }
           requestData[theForm[i].name] = theForm[i].value;
         }
       }
@@ -153,51 +179,101 @@ var DemoForm = (DemoForm = React).createClass({
 
     var modelProperties = [];
     if (modelDef.props && modelDef.props.properties) {
-      if ((apiDetails.httpMethod === 'POST') || (apiDetails.httpMethod === 'PUT')) {
-        modelProperties = modelDef.props.properties.map(function(property) {
-          var reqVal = false;
-          if (property.props && property.props.required) {
-            reqVal = property.props.required;
-          }
 
-          var labelClass = '';
-          if (reqVal) {
-            labelClass = 'is-required';
-          }
-          switch (property.props.type.toLowerCase()) {
-            case 'string':
-              return (<div className="form-group"><label className={labelClass}>{property.name}</label><input required={reqVal} className="form-control" type="text" name={property.name} /></div>);
-              break;
-            case 'number':
-              return (<div className="form-group"><label className={labelClass}>{property.name}</label><input className="form-control" type="text" name={property.name} /></div>);
-              break;
+      modelProperties = modelDef.props.properties.map(function(property) {
+        var reqVal = false;
+        if (property.props && property.props.required) {
+          reqVal = property.props.required;
+        }
 
-            case 'date':
-              return (<div className="form-group"><label className={labelClass}>{property.name}</label><input className="form-control" type="date" name={property.name} /></div>);
-              break;
-            case 'array':
-              return (<div className="form-group"><label className={labelClass}>{property.name}</label><textarea className="form-control" name={property.name} ></textarea></div>);
-              break;
-            case 'object':
-              return (<div className="form-group"><label className={labelClass}>{property.name}</label><textarea className="form-control" name={property.name} ></textarea></div>);
-              break;
-            case 'any':
-              return (<div className="form-group"><label className={labelClass}>{property.name}</label><textarea className="form-control" name={property.name} ></textarea></div>);
-              break;
+        var labelClass = '';
+        if (reqVal) {
+          labelClass = 'is-required';
+        }
+        switch (property.props.type.toLowerCase()) {
+          case 'string':
+            return (
+              <div className="form-group">
+                <label className={labelClass}>{property.name}</label>
+                <input required={reqVal}
+                  className="form-control"
+                  type="text"
+                  value={property.value}
+                  onChange={that.handleChange}
+                  data-name={property.name}
+                  name={property.name} />
+              </div>);
+            break;
+          case 'number':
+            return (
+              <div className="form-group">
+                <label className={labelClass}>{property.name}</label>
+                <input className="form-control"
+                  value={property.value}
+                  onChange={that.handleChange}
+                  data-name={property.name}
+                  type="text" name={property.name} />
+              </div>);
+            break;
 
-            default:
-              return (<div className="form-group"><label className={labelClass}>{property.name}</label><input className="form-control" type="text" name={property.name} /></div>);
+          case 'date':
+            return (<div className="form-group">
+              <label className={labelClass}>{property.name}</label>
+              <input className="form-control"
+                value={property.value}
+                onChange={that.handleChange}
+                data-name={property.name}
+                type="date" name={property.name} />
+            </div>);
+            break;
+          case 'array':
+            return (<div className="form-group">
+              <label className={labelClass}>{property.name}</label>
+              <textarea className="form-control"
+                value={property.value}
+                onChange={that.handleChange}
+                data-name={property.name}
+                name={property.name} ></textarea>
+            </div>);
+            break;
+          case 'object':
+            return (<div className="form-group">
+              <label className={labelClass}>{property.name}</label>
+              <textarea
+                className="form-control"
+                value={property.value}
+                onChange={that.handleChange}
+                data-name={property.name}
+                name={property.name} ></textarea>
+            </div>);
+            break;
+          case 'any':
+            return (<div className="form-group">
+              <label className={labelClass}>{property.name}</label>
+              <textarea
+                className="form-control"
+                value={property.value}
+                onChange={that.handleChange}
+                data-name={property.name}
+                name={property.name} ></textarea>
+            </div>);
+            break;
 
-              break;
+          default:
+            return (<div className="form-group">
+              <label className={labelClass}>{property.name}</label>
+              <input className="form-control"
+                value={property.value}
+                onChange={that.handleChange}
+                data-name={property.name}
+                type="text" name={property.name} />
+            </div>);
 
-          }
+            break;
 
-        });
-      }
-//      if (api.path.indexOf('{id}') !== -1){
-//        modelProperties = (<div className="form-group"><label className="is-required">id</label><input required="required" className="form-control" type="text" name="id" /></div>);
-//
-//      }
+        }
+
+      });
     };
    return (
       <form className="explorer-endpoint-form" data-name={scope.name} role="form">
