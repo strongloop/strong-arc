@@ -104,7 +104,6 @@
        <div>
          <button onClick={clickBranch} data-name="model_root" className="btn btn-default btn-block nav-tree-item tree-branch"  title="Models" ><span className="glyphicon glyphicon-folder-open"></span>Models</button>
          <ul className="branch-leaf-list is-open">{items}</ul>
-         <button onClick={addNewInstanceRequest} data-type="model" className="nav-tree-item-addnew"><span className="glyphicon glyphicon-plus-sign"></span>Add New Model</button>
        </div>
        );
    }
@@ -277,7 +276,9 @@ var DemoForm = (DemoForm = React).createClass({
     };
    return (
       <form className="explorer-endpoint-form" data-name={scope.name} role="form">
-                  {modelProperties}
+        <div className="demo-app-form-container">
+          {modelProperties}
+        </div>
         <button data-name={modelDef.name} onClick={clearDemoForm} className="btn btn-default">cancel</button>
         <button data-name={modelDef.name} onClick={sendDemoRequest} className="btn btn-primary">submit</button>
       </form>

@@ -89,7 +89,7 @@ Demo.directive('slDemoMainGrid', [
           data: 'modelData',
           columnDefs: 'colDefs',
           selectedItems:  $scope.tableSelections,
-          multiSelect: true,
+          multiSelect: false,
           filterOptions: $scope.filterOptions
         };
 
