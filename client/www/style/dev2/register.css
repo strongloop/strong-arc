@@ -1,0 +1,26 @@
+/* @override 
+	http://0.0.0.0:3003/style/dev/register.css */
+
+
+/*
+
+    Registration
+
+*/
+
+/*Hack for demo*/
+#RegisterMainContainer .center_div,
+#LoginMainContainer .center_div {
+    padding: 8rem;
+    border: 1px solid #eeeeee;
+    border-radius: 1rem;
+    width: 50% /* value of your choice which suits your alignment */;
+}
+#RegisterMainContainer form {
+    margin: 0 3rem 0 3rem;
+}
+#LoginMainContainer form {
+	margin-top: 4rem !important;
+    margin: 0 5rem 0 5rem;
+}
+/*End hack*/

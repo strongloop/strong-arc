@@ -1,0 +1,154 @@
+/* @override 
+	http://0.0.0.0:3003/style/dev/main.css */
+
+
+body {
+    font-size: 16px;
+    padding-top: 51px;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+/*
+
+    Data Table Grid
+
+*/
+[data-ui-type="table"] {
+    display: table;
+    table-layout: fixed;
+    width:100%;
+}
+[data-ui-type="row"] {
+    display: table-row;
+}
+[data-ui-type="cell"] {
+    display: table-cell;
+    vertical-align: top;
+    
+}
+button:focus,
+button:active:focus,
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus {
+    outline: transparent;
+    outline-color: transparent;
+}
+ul {
+    list-style: none;
+    padding: 0;
+}
+label {
+    font-weight: normal;
+    margin-right: 2rem;
+}
+pre {
+    background-color: #F8F8F8;
+    border: 1px solid #DDD;
+    font-size: 13px;
+    line-height: 19px;
+    overflow: auto;
+    padding: 6px 10px;
+    border-radius: 3px;
+}
+code {
+    color: #000;
+}
+.center_div {
+    margin: 0 auto;
+    width: 80% /* value of your choice which suits your alignment */;
+}
+/*
+
+    growl
+
+*/
+.growl {
+    top: 60px;
+}
+/*
+
+    Header
+
+*/
+.navbar-inverse {
+    background-color: #7dbd33;
+    padding-top: 1.5rem;
+    padding-bottom: 1rem;
+}
+
+/*Hacked for demo*/
+.navbar-inverse .navbar-brand {
+    color: transparent;
+}
+/*End hack*/
+
+.navbar-inverse .navbar-nav > li a {
+    color: #ffffff;
+}
+.navbar-nav > li .dropdown {
+    display:inline-block;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.navbar-nav > li .dropdown-menu a {
+    color:#444444;
+}
+.navbar-nav > li .dropdown a:hover {
+    background:transparent;
+}
+.nav .open > a, .nav .open > a:hover {
+    background:transparent;
+}
+
+
+
+.jumbotron {
+    background-color: #ffffff;
+}
+.img-main-splash {
+    width: 100%;
+}
+/*
+
+    ide container
+
+*/
+[data-id="MainBody"] {
+	margin-top: 2.5rem;
+    width: 100%;
+}
+[data-id="MainSidebarContainer"] {
+    background-color: #444444;
+}
+.top-level-container {
+    border: 0px solid #cccccc;
+    width: 28.5rem;
+    /*padding:.5rem;*/
+    /*height:600px;
+    overflow:scroll;*/
+}
+/*
+
+    Loading Indicator
+
+*/
+.loading-indicator {
+    width: 180px;
+    height: 180px;
+    margin: 35px auto 0 auto;
+}
+/*
+
+    Modal Window
+
+*/
+.app-modal-window .modal-dialog {
+    width: 1000px;
+}
+.app-modal-window .modal-dialog .modal-body {
+    height: 550px;
+    overflow: scroll;
+}

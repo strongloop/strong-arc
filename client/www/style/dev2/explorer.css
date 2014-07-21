@@ -1,0 +1,212 @@
+/* @override
+	http://0.0.0.0:3003/style/dev/explorer.css */
+
+
+/*
+    Explorer View
+
+
+*/
+.explorer-view-body {
+    padding-top: 2rem;
+}
+
+.explorer-model.is-closed {
+    display: none;
+}
+.explorer-model.is-active {
+    background: #dddddd;
+}
+.explorer-model-api-parameters.is-open {
+    display: block;
+}
+.explorer-model-api-parameters.is-closed {
+    display: none;
+}
+.explorer-model-api-details.is-closed {
+    display: none;
+}
+.explorer-model-api-details.is-open {
+    display: block;
+    margin-left: 2.5rem;
+    width: 90%;
+}
+.explorer-model-list button.btn-explorer-model-main {
+    border: 0;
+}
+
+.btn-explorer-property-toggle {
+    border: 0;
+    background: transparent;
+    color: blue;
+    text-decoration: underline;
+}
+
+.btn-explorer-model-main {
+    font-size: 130%;
+}
+.btn-explorer-model-main.is-active {
+    background: #7dbd33;
+    color: #ffffff;
+}
+.explorer-api-container {
+    padding-left: 2rem;
+}
+
+.explorer-api-endpoint-httpmethod-cell {
+    width: 8rem;
+    padding: .5rem 0 .5rem 1.4rem;
+}
+.explorer-item-form-layout {
+    width: 100rem;
+}
+.explorer-api-detail-item {
+    border-bottom: 1px solid #aaaaaa;
+    padding: 0;
+    margin: 0;
+}
+.explorer-api-method {
+    display: inline-block;
+    width: 6rem;
+    font-size: 80%;
+    padding: .6rem;
+    color: #444444;
+}
+.explorer-api-method-POST {
+    background-color: #cccccc;
+}
+.explorer-api-method-GET {
+    background-color: #aaaaaa;
+}
+.explorer-api-method-PUT {
+    background-color: #eeeeee;
+}
+.explorer-api-method-DELETE {
+    background-color: #bbbbbb;
+}
+.explorer-parameters-container {
+    border: 1px solid #dddddd;
+    border-radius: 1rem;
+    padding: .6rem;
+}
+
+.explorer-endpoint-summary-text {
+    font-size: 75%;
+    color: #333333;
+    margin: .2rem 1rem .2rem 1rem;
+    display: inline-block;
+}
+.explorer-parameter-item-parameter-list {
+    border: 1px solid #888888;
+    margin: 1rem;
+    border-radius: 2rem;
+    padding: 1rem;
+}
+.explorer-endpoint-form label.is-required {
+    /*color: red;*/
+}
+
+.btn-explorer-api-submit {
+    display: block;
+}
+
+/*Hack for demo*/
+.model-instance-header-btn {
+	color: #7DBD33;
+	font-size: 12pt;
+	background: none;
+	border: none;
+}
+/*Save Button in properties editor*/
+[ng-click="updateOrCreateModel()"]{
+	background: #7dbc33;
+	border: 1px solid #507a21;
+	color: #ffffff;
+	margin-bottom: 4rem;
+	margin-top: 2rem;
+	margin-right: 3.5rem;
+	padding-left: 1.2rem;
+	float: right;
+	width: 10rem;
+	height: 4rem;
+}
+#connector{
+	margin-left: 2rem;
+}
+/*Save Button in Database editor*/
+.primary{
+	background: #7dbc33;
+	border: 1px solid #507a21;
+	border-radius: 5px;
+	color: #ffffff;
+	width: 10rem;
+	height: 4rem;
+	margin-bottom: 4rem;
+}
+.primary:hover{
+
+}
+
+/* Hack for demo */
+.explorer-model-list button.btn-explorer-model-main,
+.explorer-model-list button.explorer-endpoint-title {
+	font-size: 12pt;
+    text-align: left;
+    padding: 0;
+    margin-top: 0.5rem;
+}
+.explorer-model-list{
+	padding-top: 1rem ;
+	padding-left:2rem;
+	padding-right: 2rem;
+}
+.explorer-endpoint-title {
+    padding-left: 1rem;
+    width: 20rem;
+    margin-top: -0.1rem !important;
+    color: #7DBD33;
+    font-size: 110%;
+}
+.explorer-endpoint-title:hover{
+	color: white;
+	background: #4A90E2;
+}
+.explorer-api-endpoint-summary-table {
+    width: 90%;
+    margin-left: 3rem;
+    margin-top: 1rem;
+    background-color: transparent;
+}
+.explorer-model.is-open {
+	background: rgba(208, 208, 208, 0.31);
+    display: block;
+}
+.item-row-table{
+
+}
+.explorer-endpoint-title{
+	background: transparent;
+}
+.explorer-api-textarea {
+    /*margin-top: 1.6rem;
+    margin-left: -13rem;*/
+    margin-top: 3.1rem;
+    margin-left: 1.7rem;
+    border: 1px solid #cccccc;
+    width: 30rem;
+    height: 30rem;
+}
+.btn-explorer-api-submit {
+	position: relative;
+	top: 6.1rem;
+	left: -10rem;
+
+}
+.explorer-endpoint-form {
+	position: relative;
+	top: -7rem;
+	left: 6rem;
+    padding: 4rem;
+    width: 400px;
+}
+

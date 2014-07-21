@@ -1,0 +1,242 @@
+/* @override
+	http://0.0.0.0:3003/style/dev/nav.css */
+
+
+/*
+
+Main Search
+
+*/
+.nav-search-list {
+    padding: 0;
+    width: 90%;
+    margin: 0 auto 0 auto;
+}
+.nav-search-list li {
+    display: inline;
+}
+.main-search-input {
+	font-weight: lighter;
+    border: 1px solid #808080;
+    background-color: #444444;
+    border-radius: 2rem;
+    width: 25rem;
+    padding-left: 1rem;
+
+}
+/*[data-id="MainNavSearch"] {*/
+/*position:fixed;*/
+/*top:0;*/
+/*}*/
+
+[data-id="MainNavContainer"] {
+	width: 30rem;
+    background-color: #666666;
+    color: #ffffff;
+    overflow-y: scroll;
+    overflow-x: auto;
+    position:relative;
+    padding: none;
+
+}
+[data-id="MainSearchContainer"] {
+	background: #444444;
+	padding-top: 1.7rem;
+	padding-bottom: 1.3rem;
+	border-bottom: 1px solid #7DBD33 !important;
+}
+
+[data-id="MainNavContextHelp"] {
+	color: #4A4A4A;
+	position: absolute;
+	margin-top: -3.3rem;
+	margin-right: 1rem;
+	float: right;
+}
+
+[title="documentation"] {
+	color: #01582A !important;
+}
+
+/*Hacked for demo*/
+.navbar-brand {
+	background-image: url("../../images/hack/logo.png");
+	position:absolute;
+	left:5rem;
+	top: 2.5rem;
+	;
+	width: 212px;
+	height: 35px;
+	background-size: 212px 35px;
+	/*font-family: Ubuntu;
+	font-size: 20pt;
+	color: #01582A !important;*/
+}
+
+
+.navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-brand:focus {
+	color: transparent;
+	/*background-color: transparent;*/
+}
+
+
+/*End hack*/
+
+
+/*
+
+    Main Controls
+
+*/
+/*[data-id="IAMainControlsContainer"] {*/
+/*border-top:1px solid #444444;*/
+/*padding-top:.6rem;*/
+/*background-color:#ffffff;*/
+/*position: fixed;*/
+/*bottom: 0;*/
+/*text-align: center;*/
+/*width:25rem;*/
+/*}*/
+/*
+    Nav Tree
+
+*/
+.nav-tree-item {
+    display: inline-block;
+    border: 0;
+    background: transparent;
+    text-align: left;
+    padding: 0;
+
+}
+/*The project title in the tree nav*/
+.nav-tree-root {
+    color: white;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+    padding-left: 2rem;
+    padding-top: 1rem;
+    padding-bottom: .8rem;
+    font-size: 80%;
+}
+.tree-branch {
+    padding: .4rem .2rem .2rem 2rem;
+    color: #ffffff;
+    font-size: 112%;
+}
+.tree-node {
+    padding-left: 3rem;
+    font-size: 100%;
+    color: #ffffff;
+    margin-left: 2.4rem;
+}
+.nav-tree-item-addnew {
+    border: 0;
+    display: inline-block;
+    background: transparent;
+    color: #BBBBBB;
+    font-size: 80%;
+    margin-top: 0;
+    margin-left: 4.6rem;
+}
+.branch-leaf-list.is-open {
+    display: block;
+}
+
+.branch-leaf-list .btn-default:hover,
+.btn-default:focus,
+.btn-default:active,
+.btn-default.active {
+    background: #4a90e2;
+    color: white;
+}
+
+
+
+.branch-leaf-list.is-closed {
+    display: none;
+}
+.branch-leaf-list li {
+    line-height: 2.1;
+}
+.branch-leaf-list li.is-open {
+    background-color: #888888;
+}
+.branch-leaf-list li.is-selected {
+    background-color: #eeeeee;
+    border-color: #4a90e2;
+}
+.branch-leaf-list li.is-active {
+    background-color: #4a90e2;
+}
+.branch-leaf-list li.is-active button {
+
+    color: #ffffff;
+}
+[data-id="IAMainControlsContainer"] button {
+    /*display:block;*/
+}
+[data-id="IAMainControlsContainer"] [data-ui-type="table"] {
+}
+.main-controls-container {
+    width:90%;
+    margin:0 auto 0 auto;
+}
+
+
+/*Hack for demo*/
+.btn-primary {
+    color: #ffffff;
+    background-color: #7dbd33;
+    border-color: #70a92e;
+    width: 12.5rem;
+    height: 4.8rem;
+    font-size: 13pt;
+    padding-top: 0.7rem;
+    padding-left: 0;
+}
+
+.main-controls-container .btn-primary:hover {
+    color:#689d2a;
+    background-color: #ffffff;
+}
+.main-control-command-label {
+	margin-top: 1.7rem;
+	margin-left: 0.6rem;
+	color: #919191;
+    font-size:75%;
+    display:block;
+}
+.btn-control-ds {
+    border: 0;
+    width: 4.8rem;
+    height: 4.8rem;
+    border-radius: 4px;
+    background: transparent;/*#7DBC31;*/
+    font-size: 80%;
+    color: #ffffff;
+
+}
+.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {
+	background: #75aae8;
+	color: white;
+	/*color: #689d2a;
+	background-color: #ebebeb;
+	border-color: #adadad;*/
+}
+[data-id="MainControlsContainer"] {
+    background-color: #494949;
+    color: #ffffff;
+    width: 28.5rem;
+    height: 22rem;
+    position:fixed;
+    bottom:0;
+    border-top: 1px solid #7DBD33 !important;
+}
+[data-reactid=".2.0"]{
+	text-transform: uppercase;
+	padding-top: 1rem;
+	padding-left: 1.7rem;
+	font-size: 10pt;
+}
+

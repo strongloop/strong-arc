@@ -1,0 +1,262 @@
+/* @override 
+	http://0.0.0.0:3003/style/dev/model.css */
+
+
+/*
+
+    models
+
+*/
+.name-not-unique {
+    background-color: #CFD496;
+}
+.warning-message {
+    line-height: 1.5rem;
+    display: block;
+    color: darkgreen;
+}
+.model-property-editor-container {
+    max-width: 50rem;
+}
+.default-model-editor-controls-list li {
+    display: inline-block;
+    transition: 0.4s all ease-out;
+    -webkit-transition: 0.4s ease-out all;
+}
+.default-model-editor-controls-list li.ng-hide-add,
+.default-model-editor-controls-list li.ng-hide-remove {
+    display: inline-block !important;
+}
+.default-model-editor-controls-list li.ng-hide-remove,
+.default-model-editor-controls-list li.ng-hide-add.ng-hide-add-active {
+    margin-left: -80px;
+    opacity: 0;
+}
+.default-model-editor-controls-list li.ng-hide-remove.ng-hide-remove-active,
+.default-model-editor-controls-list li.ng-hide-add {
+    margin-left: 0;
+    opacity: 1;
+}
+/*
+
+
+    Model Instance Editor
+
+*/
+.sample-show-hide {
+    /*padding:10px;*/
+    /*border:1px solid black;*/
+    /*background:white;*/
+}
+.sample-show-hide.ng-hide-add,
+.sample-show-hide.ng-hide-remove {
+    -webkit-transition: all linear 0.5s;
+    -moz-transition: all linear 0.5s;
+    -o-transition: all linear 0.5s;
+    transition: all linear 0.5s;
+    display: block!important;
+}
+.sample-show-hide.ng-hide-add.ng-hide-add-active,
+.sample-show-hide.ng-hide-remove {
+    opacity: 0;
+}
+.sample-show-hide.ng-hide-add,
+.sample-show-hide.ng-hide-remove.ng-hide-remove-active {
+    opacity: 1;
+}
+[data-id="ModelEditorInstanceContainer"] {
+    max-width: 90rem;
+    margin-left: 2rem;
+    margin-top: 2rem;
+}
+
+.model-editor-body-container {
+    padding: 1.3rem;
+    border-top: 1px solid #cccccc;
+}
+.model-instance-header {
+    display: inline;
+}
+.is-closed {
+    display: none;
+}
+.is-open {
+    display: block;
+}
+.model-instance-header-btn {
+    text-align: left;
+    padding-left: 4rem;
+    border: 1px solid #f1f1f1;
+    border-radius: .2rem;
+    margin: .5rem .4rem .5rem 0;
+}
+.model-instance-editor-input {
+    border: 1px solid #dddddd;
+    font-size: 90%;
+    border-radius: .3rem;
+}
+.model-instance-details-container [data-state="isOpen"] {
+    display: block;
+}
+.model-instance-details-container [data-state="isClosed"] {
+    display: none;
+}
+/*
+
+    model properties table
+
+*/
+.property-list-header {
+    margin: 0 auto 0 auto;
+    width: 90%;
+}
+.btn-model-property-spinner {
+    border: 0;
+}
+
+.new-model-name.is-duplicate {
+    background: yellow;
+}
+.new-model-name.is-unique {
+    background: green;
+}
+.model-instance-container.is-open {
+    background-color: #fafafa;
+    padding-bottom: 1.4rem;
+    border: 1px solid #aaaaaa;
+    border-radius: 1rem;
+}
+.model-instance-container [data-ui-type="table"] {
+    width: 100%;
+    /*border-right:1px solid #aaaaaa;*/
+    /*border-left:1px solid #aaaaaa;*/
+}
+
+.model-instance-container .model-instance-property-table-header-row {
+    background-color: #EEEEEE;
+    color: #888895;
+    font-size: 90%;
+}
+.model-instance-property-table-header-row [data-ui-type="cell"] {
+    border-left: 1px solid #eeeeee;
+}
+.model-instance-property-list [data-ui-type="cell"] {
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+.model-instance-property-list .table-header-cell {
+    padding-left: 1.4rem;
+    padding-top: .6rem;
+    padding-bottom: .6rem;
+    padding-right: .4rem;
+}
+
+.model-details-pocket-editor-container {
+    margin: .6rem auto 1rem auto;
+    width: 90%;
+    border-left: 1px solid #e1e1e1;
+    border-bottom: 1px solid #e1e1e1;
+    border-top-left-radius: 1.3rem;
+    border-bottom-left-radius: 1.3rem;
+    border-bottom-rigtht-radius: 1.3rem;
+    padding-left: 1.1rem;
+}
+.model-details-pocket-editor-container .tab-box-body {
+    background: transparent;
+    border-right: 1px solid #e1e1e1;
+    border-top: 1px solid #e1e1e1;
+    border-top-right-radius: 1.3rem;
+    border-bottom-rigtht-radius: 1.3rem;
+    padding: .4rem;
+}
+/*
+
+    Model Properties / Pocket Editor
+
+*/
+.pocket-editor-table [data-ui-type="cell"] {
+    text-align: left;
+    vertical-align: top;
+    white-space: nowrap;
+}
+.model-config-tab-list li {
+    display: inline-block;
+}
+/*
+
+    Pocket Popover
+
+*/
+.pocket-popover-container {
+    position: relative;
+}
+.pocket-popover {
+    position: absolute;
+    padding: 1rem;
+    border: 1px solid #dddddd;
+    border-radius: 2rem;
+    background-color: #efefef;
+    z-index: 4000;
+}
+
+/*Hack for demo*/
+input {
+	border: none;
+	font-size: 90%;
+}
+.model-detail-pocket-container {
+    width: 90%;
+    margin: 0 auto 0 auto;
+    border-bottom: 1px solid #d1d1d1;
+}
+.model-instance-property-list {
+    margin-top: 1rem;
+    width: 90%; 
+}
+.btn-new-model-property {
+    border: 0;
+    background: transparent;
+    color: #1c1c1c;
+    display: inline-block;
+    margin-left: 5rem;
+}
+.btn-new-model-property:hover {
+    color: #4A90E2;
+}
+.props-data-type-cell {
+    width: 7rem;
+    text-align: center;
+}
+.props-name-cell {
+    width: 25rem;
+    padding-left: 2rem;
+}
+.props-name-cell .btn {
+    text-align: left;
+    padding-left: 2rem;
+}
+.props-index-cell {
+    width: 5rem;
+    text-align: center;
+}
+.props-comments-cell {
+}
+.props-default-value-cell {
+    width: 18rem;
+}
+.props-required-cell {
+    width: 5rem;
+    text-align: center;
+}
+.property-doc-textarea {
+    height: 2.6rem;
+    padding-left: .3rem;
+    width: 22rem;
+}
+
+[data-name="name"] {
+	
+	
+}
+

@@ -1,0 +1,61 @@
+/* @override
+	http://0.0.0.0:3003/style/dev/demo.css */
+
+.demo-data-grid .ngViewport {
+    height:500px;
+}
+.demo-app-nav-container {
+    max-width:300px;
+}
+.demo-app-cell-container {
+	position: absolute;
+	width: 80%;
+	top: 8rem;
+    height:450px;
+    overflow:scroll;
+}
+
+/*Hacks for demo*/
+.demo-app-form-container {
+	position: relative;
+	left: -30rem;
+	top: 7rem;
+    height:450px;
+    width: 50rem;
+    overflow:scroll;
+}
+/*.ngGrid {
+	position: absolute;
+	top: 51rem;
+}*/
+.demo-form-buttons-container {
+    position: absolute;
+    top: 50rem;
+    left: 28rem;
+    width:360px;
+}
+/*Cancel Button*/
+
+.demo-form-buttons-container .demo-cancel-btn{
+    background: #679d29;
+    border: 1px solid #507a21;
+    color: #ffffff;
+    width: 12.5rem;
+    height: 4.8rem;
+    font-size: 13pt;
+}
+.demo-form-buttons-container .demo-cancel-btn:hover{
+	background: #679d29;
+	border: 1px solid #507a21;
+	color: #ffffff;
+}
+/*Submit Button*/
+.demo-form-buttons-container .btn-primary {
+	background: #7dbc33;
+	color: #ffffff;
+	border: 1px solid #cccccc;
+    font-size: 13pt;
+    padding-top: 0.7rem;
+    padding-left: 0;
+}
+/*End hacks*/

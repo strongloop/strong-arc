@@ -1,0 +1,81 @@
+/* @override 
+	http://0.0.0.0:3003/style/dev/instance.css */
+
+
+/*
+
+    Datasource
+
+*/
+
+[data-id="DatasourceEditorInstanceContainer"] {
+    border-top: 1px solid #eeeeee;
+    padding: 3rem 0 0 4rem;
+}
+form[name="DatasourceForm"] {
+    max-width: 60rem;
+}
+/*
+
+    Model Editor Tabs
+
+*/
+[data-id="MainContentContainer"] {
+    width: 100%;
+}
+.instance-title-container {
+    width: 100%;
+    color: black;
+    background-color: #f1f1f1;
+    border-top: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+    letter-spacing: .1rem;
+    text-align: center;
+    padding: 0.7rem 0 .3rem 0;
+}
+.instance-tabs-view-container {
+	top: 5rem;
+    border-bottom: 0px solid #dddddd;
+}
+.instance-tabs-list {
+    padding: 0 0 0.3em 0;
+    margin-top: 1.5rem;
+    border-bottom: 1px solid #CCCCCC;
+    height: 2.5rem;
+    line-height: .9;
+}
+.instance-tabs-list li {
+    display: inline;
+    padding: .3rem;
+    border-left: 1px solid #f1f1f1;
+    border-right: 1px solid #666666;
+    border-top: 1px solid #cccccc;
+    border-bottom: 0px solid #cccccc;
+}
+.instance-tabs-list .instance-tab-item-container {
+	color: #5C5C5C;
+	padding: 1rem 2rem 1rem 2rem; 
+	margin-left: 0.2rem;
+	border: 1px solid #CCCCCC;
+	border-radius: 5px 5px 0 0;
+    background-color: #EDEDED;
+}
+.instance-tabs-list .instance-tab-item-container.is-active {
+    background-color: #ffffff;
+    border-bottom: 2px solid #fff;
+    color:#4a90e2;
+}
+.instance-tab-item-button {
+    font-size: 100%;
+    color: #;
+    padding: ;
+    font-family: helvetica, arial, sans-serif;
+    border: 0;
+    background: transparent;
+}
+.instance-tab-close-button {
+    font-size: 90%;
+    margin-left: 1rem;
+    border: 0;
+    background: transparent;
+}

@@ -1,0 +1,11 @@
+.home-main-greeting-text {
+    width:600px;
+    text-align: center;
+    font-size:320%;
+    margin:0 auto 0 auto;
+}
+.btn-home-greeting-login {
+    border:0;
+    background:transparent;
+    color:#7dbd33;
+}
