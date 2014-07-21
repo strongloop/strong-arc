@@ -19,7 +19,7 @@ var IAMainNavContainer = (IAMainNavContainer = React).createClass({
     };
     return (
       <div>
-        <button data-name="ia_root"  onClick={singleClickItem} className="btn btn-default btn-block nav-tree-item nav-tree-root tree-root">OSCON demo project</button><span data-id="MainNavContextHelp" className="glyphicon glyphicon-question-sign"></span>
+        <button data-name="ia_root"  onClick={singleClickItem} className="btn btn-default btn-block nav-tree-item nav-tree-root tree-root">OSCON demo project</button><div className="main-nav-help"><span data-id="MainNavContextHelp" className="glyphicon glyphicon-question-sign"></span></div>
         <IAMainModelNav scope={this.props.scope} />
         <IAMainDatasourceNav scope={this.props.scope} />
       </div>
@@ -144,7 +144,7 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
       <div>
         <button onClick={clickBranch} data-name="model_root" className="btn btn-default btn-block nav-tree-item tree-branch"  title="Models" ><span className="glyphicon glyphicon-folder-open"></span>Models</button>
         <ul className="branch-leaf-list is-open">{items}</ul>
-        <button onClick={addNewInstanceRequest} data-type="model" className="nav-tree-item-addnew"><span className="glyphicon glyphicon-plus-sign"></span>Add New Model</button>
+        <button onClick={addNewInstanceRequest} data-type="model" className="nav-tree-item-addnew"><span className="glyphicon glyphicon-plus-sign-nav"></span>Add New Model</button>
       </div>
       );
   }
@@ -312,7 +312,7 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
       <div>
         <button onClick={clickBranch} type="button" data-name="datasources_root" className="btn btn-default btn-block nav-tree-item tree-branch" title="Datasources"><span className="glyphicon glyphicon-folder-open"></span>Datasources</button>
         <ul className="branch-leaf-list is-open">{scope.mainNavDatasources.map(datasourceItemRenderer)}</ul>
-        <button onClick={addNewInstanceRequest} data-type="datasource" className="nav-tree-item-addnew"><span className="glyphicon glyphicon-plus-sign"></span>Add New Datasource</button>
+        <button onClick={addNewInstanceRequest} data-type="datasource" className="nav-tree-item-addnew"><span className="glyphicon glyphicon-plus-sign-nav"></span>Add New Datasource</button>
       </div>
       );
   }
@@ -358,7 +358,7 @@ var IAMainControls = (IAMainControls = React).createClass({
     };
     return (
       <div data-id="IAMainControlsContainer">
-        <div>Create</div>
+        <div class="main-controls-title">Create</div>
 
 
         <div className="main-controls-container">
@@ -388,18 +388,23 @@ var IAMainControls = (IAMainControls = React).createClass({
           <div data-ui-type="row">
             <div data-ui-type="cell">
               <button className="btn btn-default btn-control-ds" title="oracle connector"><span className="glyphicon glyphicon-cloud"></span></button>
+              <div class="ds-type-name">oracle</div>
             </div>
             <div data-ui-type="cell">
               <button className="btn btn-default btn-control-ds" title="mssql connector"><span className="glyphicon glyphicon-cloud"></span></button>
+              <div class="ds-type-name">mssql</div>
             </div>
             <div data-ui-type="cell">
               <button className="btn btn-default btn-control-ds" title="mysql connector"><span className="glyphicon glyphicon-cloud"></span></button>
+              <div class="ds-type-name">mysql</div>
             </div>
             <div data-ui-type="cell">
               <button className="btn btn-default btn-control-ds" title="postgres connector"><span className="glyphicon glyphicon-cloud"></span></button>
+              <div class="ds-type-name">postgres</div>
             </div>
             <div data-ui-type="cell">
               <button className="btn btn-default btn-control-ds" title="mongodb connector"><span className="glyphicon glyphicon-cloud"></span></button>
+              <div class="ds-type-name">mongo</div>
             </div>
           </div>
         </div>

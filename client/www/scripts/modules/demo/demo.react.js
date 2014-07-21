@@ -263,12 +263,14 @@ var DemoForm = (DemoForm = React).createClass({
       });
     };
    return (
-      <form className="explorer-endpoint-form" data-name={scope.name} role="form">
+      <form className="demo-endpoint-form" data-name={scope.name} role="form">
         <div className="demo-app-form-container">
           {modelProperties}
         </div>
-        <button data-name={modelDef.name} onClick={clearDemoForm} className="btn btn-default">cancel</button>
-        <button data-name={modelDef.name} onClick={sendDemoRequest} className="btn btn-primary">submit</button>
+        <div class="demo-form-buttons-container">
+          <button data-name={modelDef.name} onClick={clearDemoForm} className="btn btn-default">cancel</button>
+          <button data-name={modelDef.name} onClick={sendDemoRequest} className="btn btn-primary">submit</button>
+        </div>
       </form>
      );
   }

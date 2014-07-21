@@ -325,7 +325,6 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
             <div data-ui-type="row">
               <div data-ui-type="cell">
                 <form className="explorer-endpoint-form" role="form">
-                  <button data-name={apiDetails.nickname} onClick={sendExplorerRequest} className="btn btn-default btn-explorer-api-submit">try it out</button>
                   {modelProperties}
                   <button data-name={apiDetails.nickname} onClick={sendExplorerRequest} className="btn btn-default btn-explorer-api-submit">try it out</button>
                 </form>
