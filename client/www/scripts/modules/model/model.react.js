@@ -332,7 +332,7 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
 var DataTypeSelect = (DataTypeSelect = React).createClass({
   render: function() {
 
-    var dataTypes = ['array','buffer','date','geopoint','string','number','boolean','object','any'];
+    var dataTypes = ['string','array','buffer','date','geopoint','number','boolean','object','any'];
 
     var options = dataTypes.map(function(type) {
       return (<option value={type}>{type}</option>)
