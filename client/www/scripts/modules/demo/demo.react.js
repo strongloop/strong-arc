@@ -263,7 +263,7 @@ var DemoForm = (DemoForm = React).createClass({
       });
     };
    return (
-      <form className="explorer-endpoint-form" data-name={scope.name} role="form">
+      <form  className="explorer-endpoint-form" data-name={scope.name} role="form">
         <div className="demo-app-form-container">
           {modelProperties}
         </div>

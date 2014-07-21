@@ -1,4 +1,4 @@
-/* @override 
+/* @override
 	http://0.0.0.0:3003/style/dev/model.css */
 
 
@@ -212,7 +212,7 @@ input {
 }
 .model-instance-property-list {
     margin-top: 1rem;
-    width: 90%; 
+    width: 90%;
 }
 .btn-new-model-property {
     border: 0;
@@ -227,6 +227,9 @@ input {
 .props-data-type-cell {
     width: 7rem;
     text-align: center;
+}
+.props-name-cell.table-header-cell {
+    width:18rem;
 }
 .props-name-cell {
     width: 25rem;
@@ -256,7 +259,7 @@ input {
 }
 
 [data-name="name"] {
-	
-	
+
+
 }
 

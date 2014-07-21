@@ -1,4 +1,4 @@
-/* @override 
+/* @override
 	http://0.0.0.0:3003/style/dev/icons.css */
 
 @font-face {
@@ -40,46 +40,46 @@
 
 /*Database icon*/
 .glyphicon-cloud:before {
-	content: none;
+    content: "\e601";
 	font-size: 16pt;
 }
 
 /*Hack classes for the database buttons*/
-[title="oracle connector"] {
-	background-image: url("../../images/hack/memory.png");
-	width: 48px;
-	height:  62px;
-	background-size: 48px	62px;
-	background-repeat: no-repeat;
-}
-[title="mssql connector"] {
-	background-image: url("../../images/hack/oracle.png");
-	width: 48px;
-	height:  62px;
-	background-size: 48px	62px;
-	background-repeat: no-repeat;
-}
-[title="mysql connector"] {
-	background-image: url("../../images/hack/mysql.png");
-	width: 48px;
-	height:  62px;
-	background-size: 48px	62px;
-	background-repeat: no-repeat;
-}
-[title="postgres connector"] {
-	background-image: url("../../images/hack/mongo.png");
-	width: 48px;
-	height:  62px;
-	background-size: 48px	62px;
-	background-repeat: no-repeat;
-}
-[title="mongodb connector"] {
-	background-image: url("../../images/hack/salesforce.png");
-	width: 48px;
-	height:  62px;
-	background-size: 48px	62px;
-	background-repeat: no-repeat;
-}
+/*[title="oracle connector"] {*/
+	/*background-image: url("../../images/hack/memory.png");*/
+	/*width: 48px;*/
+	/*height:  62px;*/
+	/*background-size: 48px	62px;*/
+	/*background-repeat: no-repeat;*/
+/*}*/
+/*[title="mssql connector"] {*/
+	/*background-image: url("../../images/hack/oracle.png");*/
+	/*width: 48px;*/
+	/*height:  62px;*/
+	/*background-size: 48px	62px;*/
+	/*background-repeat: no-repeat;*/
+/*}*/
+/*[title="mysql connector"] {*/
+	/*background-image: url("../../images/hack/mysql.png");*/
+	/*width: 48px;*/
+	/*height:  62px;*/
+	/*background-size: 48px	62px;*/
+	/*background-repeat: no-repeat;*/
+/*}*/
+/*[title="postgres connector"] {*/
+	/*background-image: url("../../images/hack/mongo.png");*/
+	/*width: 48px;*/
+	/*height:  62px;*/
+	/*background-size: 48px	62px;*/
+	/*background-repeat: no-repeat;*/
+/*}*/
+/*[title="mongodb connector"] {*/
+	/*background-image: url("../../images/hack/salesforce.png");*/
+	/*width: 48px;*/
+	/*height:  62px;*/
+	/*background-size: 48px	62px;*/
+	/*background-repeat: no-repeat;*/
+/*}*/
 
 /*---- End hack classes ----*/
 

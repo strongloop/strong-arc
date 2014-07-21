@@ -12,9 +12,12 @@
 	width: 80%;
 	top: 8rem;
     height:450px;
-    overflow:scroll;
+    overflow:auto;
 }
-
+.demo-app-cell-container .branch-leaf-list{
+    padding-top:1rem;
+    padding-left:1rem;
+}
 /*Hacks for demo*/
 .demo-app-form-container {
 	position: relative;
@@ -51,11 +54,15 @@
 }
 /*Submit Button*/
 .demo-form-buttons-container .btn-primary {
-	background: #7dbc33;
+	background: #679d29;
 	color: #ffffff;
-	border: 1px solid #cccccc;
+	border: 1px solid #507a21;
     font-size: 13pt;
     padding-top: 0.7rem;
     padding-left: 0;
+}
+.demo-app-nav-container button {
+    text-align: left;
+    padding:1.5rem;
 }
 /*End hacks*/

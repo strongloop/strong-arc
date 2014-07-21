@@ -36,7 +36,7 @@ Main Search
     overflow-y: scroll;
     overflow-x: auto;
     position:relative;
-    padding: none;
+    padding: 0;
 
 }
 [data-id="MainSearchContainer"] {
@@ -200,6 +200,10 @@ Main Search
     color:#689d2a;
     background-color: #ffffff;
 }
+.main-controls-container .btn-default:hover {
+    color:#689d2a;
+    background-color: #ffffff;
+}
 .main-control-command-label {
 	margin-top: 1.7rem;
 	margin-left: 0.6rem;
@@ -212,7 +216,7 @@ Main Search
     width: 4.8rem;
     height: 4.8rem;
     border-radius: 4px;
-    background: transparent;/*#7DBC31;*/
+    background: #7DBC31;
     font-size: 80%;
     color: #ffffff;
 
@@ -224,6 +228,7 @@ Main Search
 	background-color: #ebebeb;
 	border-color: #adadad;*/
 }
+
 [data-id="MainControlsContainer"] {
     background-color: #494949;
     color: #ffffff;
@@ -233,10 +238,16 @@ Main Search
     bottom:0;
     border-top: 1px solid #7DBD33 !important;
 }
-[data-reactid=".2.0"]{
+.main-controls-title {
 	text-transform: uppercase;
 	padding-top: 1rem;
 	padding-left: 1.7rem;
 	font-size: 10pt;
+}
+.main-controls-container [data-ui-type="cell"] {
+    text-align: center;
+}
+.ds-type-name {
+    font-size: 9pt;
 }
 

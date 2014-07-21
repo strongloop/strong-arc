@@ -358,7 +358,7 @@ var IAMainControls = (IAMainControls = React).createClass({
     };
     return (
       <div data-id="IAMainControlsContainer">
-        <div class="main-controls-title">Create</div>
+        <div className="main-controls-title">Create</div>
 
 
         <div className="main-controls-container">
@@ -388,23 +388,23 @@ var IAMainControls = (IAMainControls = React).createClass({
           <div data-ui-type="row">
             <div data-ui-type="cell">
               <button className="btn btn-default btn-control-ds" title="oracle connector"><span className="glyphicon glyphicon-cloud"></span></button>
-              <div class="ds-type-name">oracle</div>
+              <div className="ds-type-name">Oracle</div>
             </div>
             <div data-ui-type="cell">
               <button className="btn btn-default btn-control-ds" title="mssql connector"><span className="glyphicon glyphicon-cloud"></span></button>
-              <div class="ds-type-name">mssql</div>
+              <div className="ds-type-name">MsSQL</div>
             </div>
             <div data-ui-type="cell">
               <button className="btn btn-default btn-control-ds" title="mysql connector"><span className="glyphicon glyphicon-cloud"></span></button>
-              <div class="ds-type-name">mysql</div>
+              <div className="ds-type-name">MySQL</div>
             </div>
             <div data-ui-type="cell">
               <button className="btn btn-default btn-control-ds" title="postgres connector"><span className="glyphicon glyphicon-cloud"></span></button>
-              <div class="ds-type-name">postgres</div>
+              <div className="ds-type-name">Postgres</div>
             </div>
             <div data-ui-type="cell">
               <button className="btn btn-default btn-control-ds" title="mongodb connector"><span className="glyphicon glyphicon-cloud"></span></button>
-              <div class="ds-type-name">mongo</div>
+              <div className="ds-type-name">Mongo</div>
             </div>
           </div>
         </div>
