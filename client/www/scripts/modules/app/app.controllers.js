@@ -698,21 +698,10 @@ app.controller('StudioController', [
 app.controller('HomeMainController',[
   '$scope',
   '$location',
-  'ComponentDefinition',
-  function($scope, $location, ComponentDefinition){
+  function($scope, $location){
     var viewModel = {};
-    viewModel.message = 'StrongLoop API Studio';
+    viewModel.message = 'Strong Studio';
     $scope.viewModel = viewModel;
-
-    $scope.wsComps = ComponentDefinition.query({});
-    $scope.wsComps.$promise.
-      then(function(result) {
-
-          console.log('Component DEFINITION GET WORKED: ' + JSON.stringify(result) );
-        $scope.wsComps = result;
-        var x = $scope.wsComps;
-      }
-    );
 
 
   }

@@ -6,59 +6,78 @@ Model.service('ModelService', [
   'AppStorageService',
   function(Modeldef, ModelDefinition, $q, AppStorageService) {
     var svc = {};
-
     svc.createModel = function(config) {
-      console.log('good create model def: ' + JSON.stringify(config));
 
-     // var existingModels = AppStorageService.getItem('ApiModels');
-      // can't use AppStorageService as the api models are kept in the base localStorage
-      var existingModels = JSON.parse(window.localStorage.getItem('ApiModels'));
-      if (!existingModels) {
-        existingModels = [];
-      }
-      var isUnique = true;
-      for (var i = 0;i < existingModels.length;i++){
-        if (existingModels[i].name === config.name) {
-          isUnique = false;
-          break;
+      if (config.name) {
+        var postData = {};
+        if (config.props) {
+          console.log('config props: ' + JSON.stringify(config.props));
+          postData = config.props;
+          postData.name = config.name;
         }
-      }
-      if (isUnique) {
-        existingModels.push(config);
-//        return AppStorageService.setItem('ApiModels', existingModels);
-        return window.localStorage.setItem('ApiModels', JSON.stringify(existingModels));
-//        var existingModels = JSON.parse(window.localStorage.getItem('ApiModels'));
 
+        ModelDefinition.create(postData, function(response) {
+            console.log('good create model def: ' + response);
+
+          },
+          function(response){
+            console.log('bad create model def: ' + response);
+          });
       }
 
+    };
+//    svc.createModel = function(config) {
+//      console.log('good create model def: ' + JSON.stringify(config));
 //
-//      var existingModels = AppStorageService.getItem('ApiModels');
+//     // var existingModels = AppStorageService.getItem('ApiModels');
+//      // can't use AppStorageService as the api models are kept in the base localStorage
+//      var existingModels = JSON.parse(window.localStorage.getItem('ApiModels'));
 //      if (!existingModels) {
 //        existingModels = [];
 //      }
-//      existingModels.push(config);
-//      return AppStorageService.setItem('ApiModels', existingModels);
-//      ModelDefinition.create(config, function(response) {
-//          console.log('good create model def: ' + response);
+//      var isUnique = true;
+//      for (var i = 0;i < existingModels.length;i++){
+//        if (existingModels[i].name === config.name) {
+//          isUnique = false;
+//          break;
+//        }
+//      }
+//      if (isUnique) {
+//        existingModels.push(config);
+////        return AppStorageService.setItem('ApiModels', existingModels);
+//        return window.localStorage.setItem('ApiModels', JSON.stringify(existingModels));
+////        var existingModels = JSON.parse(window.localStorage.getItem('ApiModels'));
 //
-//      },
-//      function(response){
-//        console.log('bad create model def: ' + response);
-//      });
-    };
+//      }
+//
+////
+////      var existingModels = AppStorageService.getItem('ApiModels');
+////      if (!existingModels) {
+////        existingModels = [];
+////      }
+////      existingModels.push(config);
+////      return AppStorageService.setItem('ApiModels', existingModels);
+////      ModelDefinition.create(config, function(response) {
+////          console.log('good create model def: ' + response);
+////
+////      },
+////      function(response){
+////        console.log('bad create model def: ' + response);
+////      });
+//    };
     svc.getAllModels = function() {
-      //return ModelDefinition.query({},
       var deferred = $q.defer();
-      var p = Modeldef.query({},
-        function(response){
+      var p = ModelDefinition.find({},
+        function(response) {
 
+          //   console.log('good get model defs: '+ response);
 
+          // add create model to this for new model
 
-
-          var models = [];
+          var core = response;
           var log = [];
-          var modelListObj = response[0];
-          angular.forEach(modelListObj, function(value, key){
+          var models = [];
+          angular.forEach(core, function(value, key){
             // this.push(key + ': ' + value);
             var lProperties = [];
             if (value.properties) {
@@ -72,32 +91,118 @@ Model.service('ModelService', [
               angular.forEach(value.options, function(value, key){
                 lOptions.push({name:key,props:value});
               });
-              value.options = lOptions;
-
+              value.options = lProperties;
             }
-
             models.push({name:key,props:value});
           }, log);
 
-          var x = JSON.parse(window.localStorage.getItem('ApiModels'));
 
-         // window.localStorage.setItem('ApiModels', JSON.stringify(models));
-          //var x = JSON.parse(window.localStorage.getItem('ApiModels'));
-          if (!x) {
+          // $scope.models = models;
+          window.localStorage.setItem('ApiModels', JSON.stringify(core));
+          //window.localStorage.setItem('ApiModels', JSON.stringify(x));
 
-            x = [];
+          deferred.resolve(core);
+        },
+        function(response) {
+          console.log('bad get model defs: ' + response);
 
-
-          }
-          window.localStorage.setItem('ApiModels', JSON.stringify(x));
-
-          deferred.resolve(x);
         }
       );
 
       return deferred.promise;
-
+//      return ModelDefinition.query({},
+//        function(response) {
+//
+//          //   console.log('good get model defs: '+ response);
+//
+//          // add create model to this for new model
+//
+//          var core = response;
+//          var log = [];
+//          var models = [];
+//          angular.forEach(core, function(value, key){
+//            // this.push(key + ': ' + value);
+//            var lProperties = [];
+//            if (value.properties) {
+//              angular.forEach(value.properties, function(value, key){
+//                lProperties.push({name:key,props:value});
+//              });
+//              value.properties = lProperties;
+//            }
+//            var lOptions = [];
+//            if (value.options) {
+//              angular.forEach(value.options, function(value, key){
+//                lOptions.push({name:key,props:value});
+//              });
+//              value.options = lProperties;
+//            }
+//            models.push({name:key,props:value});
+//          }, log);
+//
+//
+//          // $scope.models = models;
+//          window.localStorage.setItem('ApiModels', JSON.stringify(core));
+//          return models;
+//        },
+//        function(response) {
+//          console.log('bad get model defs');
+//
+//        }
+//
+//      );
     };
+//    svc.getAllModels = function() {
+//      //return ModelDefinition.query({},
+//      var deferred = $q.defer();
+//      var p = Modeldef.query({},
+//        function(response){
+//
+//
+//
+//
+//          var models = [];
+//          var log = [];
+//          var modelListObj = response[0];
+//          angular.forEach(modelListObj, function(value, key){
+//            // this.push(key + ': ' + value);
+//            var lProperties = [];
+//            if (value.properties) {
+//              angular.forEach(value.properties, function(value, key){
+//                lProperties.push({name:key,props:value});
+//              });
+//              value.properties = lProperties;
+//            }
+//            var lOptions = [];
+//            if (value.options) {
+//              angular.forEach(value.options, function(value, key){
+//                lOptions.push({name:key,props:value});
+//              });
+//              value.options = lOptions;
+//
+//            }
+//
+//            models.push({name:key,props:value});
+//          }, log);
+//
+//          var x = JSON.parse(window.localStorage.getItem('ApiModels'));
+//
+//         // window.localStorage.setItem('ApiModels', JSON.stringify(models));
+//          //var x = JSON.parse(window.localStorage.getItem('ApiModels'));
+//          if (!x) {
+//
+//            x = [];
+//
+//
+//          }
+//          window.localStorage.setItem('ApiModels', JSON.stringify(x));
+//
+//          deferred.resolve(x);
+//        }
+//      );
+//
+//      return deferred.promise;
+//
+//    };
     svc.isNewModelNameUnique = function(name) {
       var retVar = true;
 

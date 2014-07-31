@@ -31,22 +31,46 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
     this.setState(nextProps.model);
     console.log('Component will receive props');
   },
+  handleChange: function(event) {
+    var modelPropertyName = '';
+    console.log('model form edit handler ');
+    if (event.target.attributes['data-name']) {
+      modelPropertyName = event.target.attributes['data-name'].value;
+      var xState = this.state;
+      this.state[modelPropertyName] = event.target.value;
+      this.setState(xState);
+    }
+
+
+
+//    //xState[stateName] = event.target.value;
+//    for (var i = 0;i < xState.props.properties.length;i++) {
+//      if (xState.props.properties[i].name === stateName) {
+//        xState.props.properties[i].value = event.target.value;
+//      }
+//    }
+
+
+
+  },
 //  componentWillUpdate: function(nextProps, nextState) {
 //    this.setState(nextProps.scope.activeInstance);
 //  },
   render: function() {
-    var scope = this.props.scope;
+    var that = this;
+    var scope = that.props.scope;
 
-    var model = this.state;
+    var model = that.state;
+    var modelDef = that.state;
     var cx = React.addons.classSet;
 
     var classes = cx({
-      'model-detail-pocket-container is-open': this.props.scope.isModelInstanceBasePropertiesActive,
-      'model-detail-pocket-container is-closed': !this.props.scope.isModelInstanceBasePropertiesActive
+      'model-detail-pocket-container is-open': that.props.scope.isModelInstanceBasePropertiesActive,
+      'model-detail-pocket-container is-closed': !that.props.scope.isModelInstanceBasePropertiesActive
     });
     var iconClasses = cx({
-      'glyphicon glyphicon-minus-sign': this.props.scope.isModelInstanceBasePropertiesActive,
-      'glyphicon glyphicon-plus-sign': !this.props.scope.isModelInstanceBasePropertiesActive
+      'glyphicon glyphicon-minus-sign': that.props.scope.isModelInstanceBasePropertiesActive,
+      'glyphicon glyphicon-plus-sign': !that.props.scope.isModelInstanceBasePropertiesActive
     });
     var clickHandler = function(event) {
       scope.$apply(function() {
@@ -61,7 +85,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
             <label>name</label>
           </div>
           <div data-ui-type="cell">
-            <input type="text" value={scope.activeInstance.name} data-name="name" id="ModelName" name="ModelName" className="model-instance-editor-input" />
+            <input type="text" value={modelDef.name} onChange={that.handleChange} data-name="name" id="ModelName" name="ModelName" className="model-instance-editor-input" />
           </div>
           <button onClick={clickHandler} type="button" className="model-instance-header-btn btn btn-default btn-block" title="Details" ><span className={iconClasses}></span>Details</button>
           <div data-ui-type="table" className={classes}>
