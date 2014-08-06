@@ -7,21 +7,21 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
     return this.props.scope.activeInstance;
   },
 
-  handleChange: function(event) {
-    var scope = this.props.scope;
-    //this.setState({name: event.target.value});
-    var stateName = event.target.attributes['data-name'].value;
-    var xState = this.state;
-    xState[stateName] = event.target.value;
-    this.setState(xState);
-    if (event.target.attributes.id) {
-      var modelDetailProperty = event.target.attributes['data-name'].value;
-      var modelDetailValue = event.target.value;
-      scope.$apply(function() {
-        scope.updateModelDetailProperty(modelDetailProperty, modelDetailValue);
-      });
-    }
-  },
+//  handleChange: function(event) {
+//    var scope = this.props.scope;
+//    //this.setState({name: event.target.value});
+//    var stateName = event.target.attributes['data-name'].value;
+//    var xState = this.state;
+//    xState[stateName] = event.target.value;
+//    this.setState(xState);
+//    if (event.target.attributes.id) {
+//      var modelDetailProperty = event.target.attributes['data-name'].value;
+//      var modelDetailValue = event.target.value;
+//      scope.$apply(function() {
+//        scope.updateModelDetailProperty(modelDetailProperty, modelDetailValue);
+//      });
+//    }
+//  },
   componentWillReceiveProps: function(nextProps) {
     this.setState(nextProps.model);
     console.log('Component will receive props');
@@ -73,8 +73,22 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
       });
     };
     var saveModelDefinition = function(event) {
-      var test = event.target.form;
-      console.log('hello');
+      var scope = that.props.scope;
+//      var formEls = event.target.form;
+//      if (formEls.length > 0) {
+//        var modelObj = {};
+//        for (var i = 0;i < formEls.length;i++) {
+//          if (formEls[i].attributes['data-name']) {
+//            modelObj[formEls[i].attributes['data-name'].value] = formEls[i].value;
+//          }
+//
+//        }
+//
+//      }
+      console.log('hello: ' + JSON.stringify(that.state));
+      scope.$apply(function() {
+        scope.saveModelRequest(that.state);
+      })
       return false;
     };
     var returnVal = (<div />);
@@ -85,10 +99,22 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
             <label>name</label>
           </div>
           <div data-ui-type="cell">
-            <input type="text" value={modelDef.name} onChange={that.handleChange} data-name="name" id="ModelName" name="ModelName" className="model-instance-editor-input" />
+            <input type="text"
+              value={modelDef.name}
+              onChange={that.handleChange}
+              data-name="name"
+              id="ModelName"
+              name="ModelName"
+              className="model-instance-editor-input" />
           </div>
-          <button onClick={saveModelDefinition} className="btn btn-sm btn-primary model-definition-save-btn" >Save</button>
-          <button onClick={clickHandler} type="button" className="model-instance-header-btn btn btn-default btn-block" title="Details" ><span className={iconClasses}></span>Details</button>
+          <button onClick={saveModelDefinition}
+            className="btn btn-sm btn-primary model-definition-save-btn"
+            data-modelId={modelDef.Id} >Save</button>
+          <button onClick={clickHandler}
+            type="button"
+            className="model-instance-header-btn btn btn-default btn-block"
+            title="Details" >
+            <span className={iconClasses}></span>Details</button>
           <div data-ui-type="table" className={classes}>
             <div data-ui-type="row">
               <div data-ui-type="cell">
@@ -98,7 +124,13 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                       <label>plural</label>
                     </div>
                     <div data-ui-type="cell">
-                      <input type="text" value={modelDef.plural} onChange={this.handleChange} data-name="plural" id="ModelPlural" name="ModelPlural" className="model-instance-editor-input" />
+                      <input type="text"
+                        value={modelDef.plural}
+                        onChange={this.handleChange}
+                        data-name="plural"
+                        id="ModelPlural"
+                        name="ModelPlural"
+                        className="model-instance-editor-input" />
                     </div>
                   </div>
                   <div data-ui-type="row">
@@ -106,19 +138,29 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                       <label>base model</label>
                     </div>
                     <div data-ui-type="cell">
-                      <input type="text" className="model-instance-editor-input"  />
+                      <input type="text"
+                      value={modelDef.base}
+                      onChange={this.handleChange}
+                      data-name="base"
+                      id="ModelBase"
+                      name="ModelBase"
+                      className="model-instance-editor-input" />
                     </div>
                   </div>
                   <div data-ui-type="row">
                     <div data-ui-type="cell"><label>public</label></div>
                     <div data-ui-type="cell">
-                      <input type="checkbox" checked={modelDef.public} className="model-instance-editor-input" />
+                      <input type="checkbox"
+                        checked={modelDef.public}
+                        className="model-instance-editor-input" />
                     </div>
                   </div>
                   <div data-ui-type="row">
                     <div data-ui-type="cell"><label>strict</label></div>
                     <div data-ui-type="cell">
-                      <input type="checkbox" checked={modelDef.strict} className="model-instance-editor-input" />
+                      <input type="checkbox"
+                        checked={modelDef.strict}
+                        className="model-instance-editor-input" />
                     </div>
                   </div>
                 </div>

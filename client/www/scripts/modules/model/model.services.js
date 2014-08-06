@@ -7,24 +7,21 @@ Model.service('ModelService', [
   function(Modeldef, ModelDefinition, $q, AppStorageService) {
     var svc = {};
     svc.createModel = function(config) {
-
+      var deferred = $q.defer();
       if (config.name) {
-        var postData = {};
-        if (config.props) {
-          console.log('config props: ' + JSON.stringify(config.props));
-          postData = config.props;
-          postData.name = config.name;
-          postData.facetName = 'common';
-        }
 
-        ModelDefinition.create(postData, function(response) {
+
+
+        ModelDefinition.create(config, function(response) {
             console.log('good create model def: ' + response);
+            deferred.resolve(response);
 
           },
           function(response){
             console.log('bad create model def: ' + response);
           });
       }
+      return deferred.promise;
 
     };
 
@@ -311,13 +308,17 @@ Model.service('ModelService', [
     };
     var defaultModelSchema = {
       type: 'model',
+      facetName: 'common',
+      strict: false,
+      public: true,
       name:'new-model',
-      props: {
-        public:true,
-        options:{},
-        properties:[]
-      }
+      idInjection: false
     };
+
+
+
+
+
     svc.createNewModelInstance = function() {
       var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
       if (!openInstanceRefs) {
@@ -330,6 +331,7 @@ Model.service('ModelService', [
           break;
         }
       }
+      // create new model schema
       if (!doesNewModelExist) {
         openInstanceRefs.push({
           name: defaultModelSchema.name,

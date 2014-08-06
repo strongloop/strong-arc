@@ -40,8 +40,18 @@ IA.service('IAService', [
 
     svc.getOpenInstanceRefs = function() {
       var retRefs = AppStorageService.getItem('openInstanceRefs');
+      var activeInstance = AppStorageService.getItem('activeInstance');
+      // TODO clean this up
+      // make sure we don't have left overs from an abandoned create new model flow
       if (!retRefs) {
         retRefs = [];
+      }
+      if ((!activeInstance) || (!activeInstance.name)) {
+        if ((retRefs.length === 1) && (retRefs[0].name === 'new-model')) {
+          // clear retRefs
+          retRefs = [];
+          AppStorageService.setItem('openInstanceRefs', retRefs);
+        }
       }
       return retRefs;
     };
@@ -133,7 +143,7 @@ IA.service('IAService', [
       return AppStorageService.setItem('activeInstance', targetInstance);
     };
     svc.getActiveInstance = function() {
-
+      var deferred  = $q.defer();
       // getting the active instance
       // should already pre-exist
       // may already have properties
@@ -150,25 +160,18 @@ IA.service('IAService', [
 
       if (instance) {
 
-        var deferred  = $q.defer();
+
         // get the model definition from the api
         instance = ModelService.getModelById(instance.id).
           then(function(response) {
             deferred.resolve(response);
           });
 
-        return deferred.promise;
-//
-//        var deferred = $q.defer();
-//
-//        if (!instance.properties) {
-//          instance.properties = deferred.promise;
-//          deferred.resolve(PropertyService.getModelProperties(instance.id));
-//        }
-//
-//        return deferred.promise;
       }
-      return {};
+      else {
+        deferred.resolve({});
+      }
+      return deferred.promise;
     };
     /*
     *

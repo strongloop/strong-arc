@@ -60,7 +60,10 @@ Model.directive('modelPropertiesEditor',[
           if (!scope.properties) {
             scope.properties = [];
           }
-          React.renderComponent(ModelPropertiesEditor({scope:scope}), el[0]);
+          if (scope.activeInstance && scope.activeInstance.name) {
+            React.renderComponent(ModelPropertiesEditor({scope:scope}), el[0]);
+          }
+
 
         }
 

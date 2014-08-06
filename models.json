@@ -77,13 +77,6 @@
     "dataSource": "db",
     "public": false
   },
-  "push": {
-    "options": {
-      "base": "Push",
-      "plural": "push"
-    },
-    "dataSource": "push"
-  },
   "installation": {
     "options": {
       "base": "Installation"

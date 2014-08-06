@@ -459,6 +459,21 @@ app.controller('StudioController', [
       return Math.floor((Math.random() * 100) + 1);
     }
 
+    // save model
+    $scope.saveModelRequest = function(config) {
+
+      if (config.id) {
+        // update model
+      }
+      else {
+        // create model
+        ModelService.createModel(config).
+          then(function(response) {
+            $scope.activeInstance = response;
+          }
+        );
+      }
+    };
     $scope.updateOrCreateModel = function() {
       var currentModel = $scope.activeInstance;
       console.log('SAVE or CREATE model: ' + currentModel.name);
@@ -484,6 +499,10 @@ app.controller('StudioController', [
       $scope.clearSelectedInstances();
       IAService.showInstanceView();
     };
+
+
+
+
     $scope.createDatasourceViewRequest = function() {
       $scope.instanceType = 'datasource';
       $scope.activeInstance = DatasourceService.createNewDatasourceInstance();

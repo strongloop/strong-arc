@@ -7,7 +7,7 @@ var started = new Date();
 var workspace = require('loopback-workspace');
 workspace.start();
 workspace.listen(4001);
-process.env.WORKSPACE_DIR = '/Users/seanbrookes/_stacks/projects/temp/testapp';
+//process.env.WORKSPACE_DIR = '/Users/seanbrookes/_stacks/projects/temp/testapp';
 
 //app.use(workspace);
 /*
