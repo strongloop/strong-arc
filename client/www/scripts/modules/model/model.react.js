@@ -1,10 +1,5 @@
 /** @jsx React.DOM */
 /*
- *   Model Title Header
- * */
-
-
-/*
  *   Model Detail Editor
  * */
 var ModelDetailEditor = (ModelDetailEditor = React).createClass({
@@ -77,16 +72,22 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
         scope.toggleModelDetailView();
       });
     };
+    var saveModelDefinition = function(event) {
+      var test = event.target.form;
+      console.log('hello');
+      return false;
+    };
     var returnVal = (<div />);
     if (scope.activeInstance.name) {
       returnVal = (
-        <div>
+        <form role="form">
           <div data-ui-type="cell">
             <label>name</label>
           </div>
           <div data-ui-type="cell">
             <input type="text" value={modelDef.name} onChange={that.handleChange} data-name="name" id="ModelName" name="ModelName" className="model-instance-editor-input" />
           </div>
+          <button onClick={saveModelDefinition} className="btn btn-sm btn-primary model-definition-save-btn" >Save</button>
           <button onClick={clickHandler} type="button" className="model-instance-header-btn btn btn-default btn-block" title="Details" ><span className={iconClasses}></span>Details</button>
           <div data-ui-type="table" className={classes}>
             <div data-ui-type="row">
@@ -97,7 +98,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                       <label>plural</label>
                     </div>
                     <div data-ui-type="cell">
-                      <input type="text" value={model.props.plural} onChange={this.handleChange} data-name="plural" id="ModelPlural" name="ModelPlural" className="model-instance-editor-input" />
+                      <input type="text" value={modelDef.plural} onChange={this.handleChange} data-name="plural" id="ModelPlural" name="ModelPlural" className="model-instance-editor-input" />
                     </div>
                   </div>
                   <div data-ui-type="row">
@@ -111,13 +112,13 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                   <div data-ui-type="row">
                     <div data-ui-type="cell"><label>public</label></div>
                     <div data-ui-type="cell">
-                      <input type="checkbox" checked={model.props.public} className="model-instance-editor-input" />
+                      <input type="checkbox" checked={modelDef.public} className="model-instance-editor-input" />
                     </div>
                   </div>
                   <div data-ui-type="row">
                     <div data-ui-type="cell"><label>strict</label></div>
                     <div data-ui-type="cell">
-                      <input type="checkbox" checked={model.props.strict} className="model-instance-editor-input" />
+                      <input type="checkbox" checked={modelDef.strict} className="model-instance-editor-input" />
                     </div>
                   </div>
                 </div>
@@ -129,7 +130,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                       <label>datasource</label>
                     </div>
                     <div data-ui-type="cell">
-                      <input type="text" value={model.props.dataSource} onChange={this.handleChange} className="model-instance-editor-input" />
+                      <input type="text" value={modelDef.dataSource} onChange={this.handleChange} className="model-instance-editor-input" />
                     </div>
                   </div>
                   <div data-ui-type="row">
@@ -160,112 +161,13 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
               </div>
             </div>
           </div>
-        </div>
+        </form>
         );
     }
 
     return returnVal;
   }
 });
-/*
- *   Model Detail Preview
- * */
-
-var ModelDetailView = (ModelDetailView = React).createClass({
-  render: function() {
-    var model = this.props.model;
-    var cx = React.addons.classSet;
-
-    var classes = cx({
-//      'row is-open': this.props.scope.isModelInstanceBasePropertiesActive,
-//      'row is-closed': !this.props.scope.isModelInstanceBasePropertiesActive
-    });
-
-    var clickHandler = this.props.scope.$apply.bind(this.props.scope, this.props.scope.toggleModelDetailView.bind(null, 0));
-
-    return (
-      <div>
-        <input onClick={clickHandler} type="button" className="model-instance-header-btn btn btn-default btn-block" value="Details" />
-        <div className={classes}>
-          <div className="col-xs-6">
-            <div data-ui-type="table" >
-              <div data-ui-type="row">
-                <div data-ui-type="cell">
-                  <label>plural</label>
-                </div>
-                <div data-ui-type="cell">
-                  {model.plural}
-                </div>
-              </div>
-
-              <div data-ui-type="row">
-                <div data-ui-type="cell">
-                  <label>base model</label>
-                </div>
-                <div data-ui-type="cell">
-
-                </div>
-              </div>
-              <div data-ui-type="row">
-                <div data-ui-type="cell"><label>public</label></div>
-                <div data-ui-type="cell">
-
-                </div>
-              </div>
-              <div data-ui-type="row">
-                <div data-ui-type="cell"><label>strict</label></div>
-                <div data-ui-type="cell">
-
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-xs-6">
-            <div data-ui-type="table" >
-              <div data-ui-type="row">
-                <div data-ui-type="cell">
-                  <label>datasource</label>
-                </div>
-                <div data-ui-type="cell">
-                 {model.dataSource}
-                </div>
-              </div>
-              <div data-ui-type="row">
-                <div data-ui-type="cell">
-                  <label>Indexes</label>
-                </div>
-                <div data-ui-type="cell">
-
-                </div>
-              </div>
-              <div data-ui-type="row">
-                <div data-ui-type="cell">
-                  <label>Scopes</label>
-                </div>
-                <div data-ui-type="cell">
-
-                </div>
-              </div>
-              <div data-ui-type="row">
-                <div data-ui-type="cell">
-                  <label>Access Control</label>
-                </div>
-                <div data-ui-type="cell">
-
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-
-        </div>
-      </div>
-      );
-  }
-});
-
-
 /*
  *
  *   MODEL PROPERTIES
@@ -299,7 +201,7 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
     var that = this;
 
     var scope = this.props.scope;
-    var properties = this.props.properties;
+    var properties = scope.properties;
     var cx = React.addons.classSet;
 
 
@@ -321,7 +223,7 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
 
     var items = [];
     items = properties.map(function (item) {
-      return  (<ModelPropertyRowDetail rowData={item} scope={scope} />);
+      return  (<ModelPropertyRowDetail modelProperty={item} scope={scope} />);
     });
 
 
@@ -353,26 +255,20 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
       );
   }
 });
-var DataTypeSelect = (DataTypeSelect = React).createClass({
-  render: function() {
-
-    var dataTypes = ['string','array','buffer','date','geopoint','number','boolean','object','any'];
-
-    var options = dataTypes.map(function(type) {
-      return (<option value={type}>{type}</option>)
-    });
-    return (<select value={this.props.value}>{options}</select>);
-  }
-});
+/*
+*
+*   Model Property Row Detail Item
+*
+* */
 var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
   getInitialState: function() {
     return {
-      model:this.props.rowData,
+      modelProperty:this.props.modelProperty,
       isOpen:false
     };
   },
   componentWillReceiveProps: function(nextProps) {
-    this.setState({model:nextProps.rowData});
+    this.setState({modelProperty:nextProps.modelProperty});
     console.log('Component will receive props');
   },
   componentDidMount: function() {
@@ -389,18 +285,30 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
 //      console.log('|||    ENTER ');
 //    }
 
-    var tModel = this.state.model;
+    var tModel = this.state.modelProperty;
     tModel.name = event.target.value;
-    this.setState({model:tModel});
+    this.setState({modelProperty:tModel});
   },
-  savePropertyEntry: function() {
-    console.log('|||||    SAVE THE FORM ');
+  triggerModelPropertyUpdate: function(event) {
+    var scope = this.props.scope;
+    if(event.target.attributes['data-name']){
+      var tModelPropertyName = event.target.attributes['data-name'].value;
+      var tModelProperty = this.state.modelProperty;
+      tModelProperty[tModelPropertyName] = event.target.value;
+      this.setState({modelProperty:tModelProperty});
+      var updateModelPropertyConfig = tModelProperty;
+      scope.$apply(function() {
+        scope.updateModelPropertyRequest(updateModelPropertyConfig);
+      });
+      console.log('ok going to save on blur');
+    }
+
   },
   render: function() {
 
     var that = this;
     var scope = that.props.scope;
-    var model = that.state.model;
+    var modelProperty = that.state.modelProperty;
     var cx = React.addons.classSet;
 
 
@@ -419,7 +327,7 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
 
 
     return (
-      <li onKeyUp={this.savePropertyEntry}>
+      <li>
         <div >
           <div data-ui-type="table">
             <div data-ui-type="row">
@@ -429,15 +337,20 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
                   className="btn btn-sm btn-default btn-model-property-spinner">
                   <span className={bClasses}></span>
                 </button>
-                <input ref="propName" data-name="ModelPropertyName" type="text" onChange={this.checkSubmitModelProperty} value={model.name} />
+                <input ref="propName"
+                  data-name="name"
+                  type="text"
+                  onChange={this.checkSubmitModelProperty}
+                  onBlur={this.triggerModelPropertyUpdate}
+                  value={modelProperty.name} />
               </span>
               <span data-ui-type="cell" className="props-data-type-cell">
-                <DataTypeSelect value={model.props.type} />
+                <DataTypeSelect value={modelProperty.type} />
               </span>
               <span data-ui-type="cell" className="props-default-value-cell">
                 <input type="text"
-                className="model-instance-editor-input"
-                placeholder="default value" />
+                  className="model-instance-editor-input"
+                  placeholder="default value" />
               </span>
               <span data-ui-type="cell" className="props-required-cell">
                 <input type="checkbox" />
@@ -451,7 +364,7 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
             </div>
           </div>
           <div className={pClasses}>
-            <ModelPocketEditorContainer scope={scope} property={model} />
+            <ModelPocketEditorContainer scope={scope} property={modelProperty} />
           </div>
 
 
@@ -462,83 +375,20 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
 });
 
 
-/*
- *
- *   MODEL PROPERTIES VIEW
- *
- * */
-var ModelPropertiesView = (ModelPropertiesView = React).createClass({
+
+
+var DataTypeSelect = (DataTypeSelect = React).createClass({
   render: function() {
-    var scope = this.props.scope;
-    var properties = this.props.properties;
-    var mode = 'preview';
 
-    var getRowItem = function(rowData) {
-      return (
-        <li >
-          <div >
-            <div data-ui-type="table">
-              <div data-ui-type="row">
-                <span data-ui-type="cell" className="props-name-cell">
-                  <input type="button"
-                  value={ rowData.name }
-                  className="btn btn-sm btn-default btn-block" />
-                </span>
-                <span data-ui-type="cell" className="props-data-type-cell">
-                  {rowData.props.type}
-                </span>
-                <span data-ui-type="cell" className="props-isindex-cell">
-                  <input type="checkbox" readonly />
-                </span>
-                <span data-ui-type="cell" className="props-default-value-cell">
-                [default value]
-                </span>
-                <span data-ui-type="cell" className="props-required-cell">
-                  <input type="checkbox" />
-                </span>
-                <span data-ui-type="cell" className="props-connection-cell">
-                  <button className="btn btn-link">
-                    <span className="glyphicon glyphicon-flash"></span>
-                  </button>
+    var dataTypes = ['string','array','buffer','date','geopoint','number','boolean','object','any'];
 
-                </span>
-              </div>
-            </div>
-            <ModelPocketEditorContainer scope={scope} property={rowData} mode={mode} />
-          </div>
-        </li>
-        );
-    };
-
-
-
-    return (
-      <div>
-        <input type="button" className="model-instance-header-btn btn btn-default btn-block" value="Properties" />
-        <div >
-          <div className="model-instance-container property-list-header">
-            <div data-ui-type="table">
-              <div data-ui-type="row" className="model-instance-property-table-header-row">
-                <span data-ui-type="cell" className="props-name-cell table-header-cell" title="property name">name</span>
-                <span data-ui-type="cell" className="props-data-type-cell table-header-cell" title="data type">type</span>
-                <span data-ui-type="cell" className="props-isid-cell table-header-cell" title="is index">index</span>
-                <span data-ui-type="cell" className="props-default-value-cell table-header-cell" title="default value"></span>
-                <span data-ui-type="cell" className="props-required-cell" title="required">req</span>
-                <span data-ui-type="cell" className="props-map-cell table-header-cell header" title="relations">rel.</span>
-              </div>
-            </div>
-          </div>
-          <ul className="model-instance-property-list">
-            {properties.map(getRowItem)}
-          </ul>
-        </div>
-
-
-      </div>
-
-      );
+    var options = dataTypes.map(function(type) {
+      return (<option value={type}>{type}</option>)
+    });
+    return (<select value={this.props.value}>{options}</select>);
   }
 });
+
 /*
  *   Property Comment Editor
  * */

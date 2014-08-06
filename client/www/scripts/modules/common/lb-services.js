@@ -14,7 +14,7 @@ var authBase = angBase;
  * the models exposed by the LoopBack server via the REST API.
  *
  */
-var module = angular.module("angServices", ['ngResource']);
+var module = angular.module("oldServices", ['ngResource']);
 
 /**
  * @ngdoc object

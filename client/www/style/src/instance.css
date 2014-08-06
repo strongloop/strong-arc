@@ -1,4 +1,4 @@
-/* @override 
+/* @override
 	http://0.0.0.0:3003/style/dev/instance.css */
 
 
@@ -54,7 +54,7 @@ form[name="DatasourceForm"] {
 }
 .instance-tabs-list .instance-tab-item-container {
 	color: #5C5C5C;
-	padding: 1rem 2rem 1rem 2rem; 
+	padding: 1rem 2rem 1rem 2rem;
 	margin-left: 0.2rem;
 	border: 1px solid #CCCCCC;
 	border-radius: 5px 5px 0 0;
@@ -67,8 +67,8 @@ form[name="DatasourceForm"] {
 }
 .instance-tab-item-button {
     font-size: 100%;
-    color: #;
-    padding: ;
+    /*color: #;*/
+    /*padding: ;*/
     font-family: helvetica, arial, sans-serif;
     border: 0;
     background: transparent;

@@ -15,11 +15,14 @@ IA.directive('slIaMainNav', [
           var openDatasourceNames = scope.currentOpenDatasourceNames;
           var currActiveModelInstanceName = '';
 
-          if (scope.activeInstance.name && (IAService.getInstanceType(scope.activeInstance) === 'model')) {
-            currActiveModelInstanceName = scope.activeInstance.name;
+          if (scope.activeInstance && scope.activeInstance.name) {
+
+
+            if (IAService.getInstanceType(scope.activeInstance) === 'model') {
+              currActiveModelInstanceName = scope.activeInstance.name;
+            }
+
           }
-
-
           for (var x = 0;x < scope.mainNavModels.length;x++){
             var localInstance = scope.mainNavModels[x];
             localInstance.isActive = false;

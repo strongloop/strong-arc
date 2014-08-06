@@ -14,6 +14,7 @@ Model.service('ModelService', [
           console.log('config props: ' + JSON.stringify(config.props));
           postData = config.props;
           postData.name = config.name;
+          postData.facetName = 'common';
         }
 
         ModelDefinition.create(postData, function(response) {
@@ -26,45 +27,7 @@ Model.service('ModelService', [
       }
 
     };
-//    svc.createModel = function(config) {
-//      console.log('good create model def: ' + JSON.stringify(config));
-//
-//     // var existingModels = AppStorageService.getItem('ApiModels');
-//      // can't use AppStorageService as the api models are kept in the base localStorage
-//      var existingModels = JSON.parse(window.localStorage.getItem('ApiModels'));
-//      if (!existingModels) {
-//        existingModels = [];
-//      }
-//      var isUnique = true;
-//      for (var i = 0;i < existingModels.length;i++){
-//        if (existingModels[i].name === config.name) {
-//          isUnique = false;
-//          break;
-//        }
-//      }
-//      if (isUnique) {
-//        existingModels.push(config);
-////        return AppStorageService.setItem('ApiModels', existingModels);
-//        return window.localStorage.setItem('ApiModels', JSON.stringify(existingModels));
-////        var existingModels = JSON.parse(window.localStorage.getItem('ApiModels'));
-//
-//      }
-//
-////
-////      var existingModels = AppStorageService.getItem('ApiModels');
-////      if (!existingModels) {
-////        existingModels = [];
-////      }
-////      existingModels.push(config);
-////      return AppStorageService.setItem('ApiModels', existingModels);
-////      ModelDefinition.create(config, function(response) {
-////          console.log('good create model def: ' + response);
-////
-////      },
-////      function(response){
-////        console.log('bad create model def: ' + response);
-////      });
-//    };
+
     svc.getAllModels = function() {
       var deferred = $q.defer();
       var p = ModelDefinition.find({},
@@ -151,58 +114,7 @@ Model.service('ModelService', [
 //
 //      );
     };
-//    svc.getAllModels = function() {
-//      //return ModelDefinition.query({},
-//      var deferred = $q.defer();
-//      var p = Modeldef.query({},
-//        function(response){
-//
-//
-//
-//
-//          var models = [];
-//          var log = [];
-//          var modelListObj = response[0];
-//          angular.forEach(modelListObj, function(value, key){
-//            // this.push(key + ': ' + value);
-//            var lProperties = [];
-//            if (value.properties) {
-//              angular.forEach(value.properties, function(value, key){
-//                lProperties.push({name:key,props:value});
-//              });
-//              value.properties = lProperties;
-//            }
-//            var lOptions = [];
-//            if (value.options) {
-//              angular.forEach(value.options, function(value, key){
-//                lOptions.push({name:key,props:value});
-//              });
-//              value.options = lOptions;
-//
-//            }
-//
-//            models.push({name:key,props:value});
-//          }, log);
-//
-//          var x = JSON.parse(window.localStorage.getItem('ApiModels'));
-//
-//         // window.localStorage.setItem('ApiModels', JSON.stringify(models));
-//          //var x = JSON.parse(window.localStorage.getItem('ApiModels'));
-//          if (!x) {
-//
-//            x = [];
-//
-//
-//          }
-//          window.localStorage.setItem('ApiModels', JSON.stringify(x));
-//
-//          deferred.resolve(x);
-//        }
-//      );
-//
-//      return deferred.promise;
-//
-//    };
+
     svc.isNewModelNameUnique = function(name) {
       var retVar = true;
 
@@ -219,7 +131,8 @@ Model.service('ModelService', [
       return retVar;
     };
 
-    svc.updateModelInstance = function(model) {
+
+     svc.updateModelInstance = function(model) {
       var apiModels = AppStorageService.getItem('ApiModels');
       for (var i = 0;i < apiModels.length;i++) {
         if (apiModels[i].name === model.name) {
@@ -352,25 +265,35 @@ Model.service('ModelService', [
         }
       }
       else {
-        if (window.localStorage.getItem('ApiModels')) {
-          currModelCollection = JSON.parse(window.localStorage.getItem('ApiModels'));
-          //var targetModel = currModelCollection[name];
-          for (var i = 0;i < currModelCollection.length;i++) {
-            if (currModelCollection[i].name === name) {
-              targetModel = currModelCollection[i];
-              targetModel.name = name;
-              break;
-            }
-          }
-        }
-        else {
+
           console.log('request to get model data from localstorage cache failed so no model is returned');
-        }
+
       }
 
       return targetModel;
     };
+    svc.getModelById = function(modelId) {
+      var targetModel = {};
+      var deferred = $q.defer();
 
+      ModelDefinition.findById({id:modelId},
+        // success
+        function(response) {
+          targetModel = response;
+          ModelDefinition.properties({id:targetModel.id}, function(response) {
+            targetModel.properties = response;
+            deferred.resolve(targetModel);
+          });
+
+        },
+        // fail
+        function(response) {
+          console.log('bad get model definition');
+        }
+      );
+
+      return deferred.promise;
+    };
     svc.isPropertyUnique = function(modelRef, newPropertyName) {
       var isUnique = true;
       var newNameLen = newPropertyName.length;

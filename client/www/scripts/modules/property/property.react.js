@@ -112,7 +112,7 @@ var PropertyValidationEditor = (PropertyValidationEditor = React).createClass({
               <label>Required</label>
             </div>
             <div data-ui-type="cell">
-              <input type="checkbox" checked={this.props.property.props.required}/>
+              <input type="checkbox" checked={this.props.property.required}/>
               </div>
             </div>
             <div data-ui-type="row">
@@ -202,7 +202,7 @@ var PropertyIdEditor = (PropertyIdEditor = React).createClass({
 
     var isIdChangeHandler = function(event) {
       scope.$apply(function() {
-        scope.property.props.id = event.target.checked;
+        scope.property.id = event.target.checked;
       });
     };
     return (
@@ -215,7 +215,7 @@ var PropertyIdEditor = (PropertyIdEditor = React).createClass({
               <label>Is Id</label>
             </div>
             <div data-ui-type="cell">
-              <input type="checkbox" onChange={isIdChangeHandler} checked={property.props.id} />
+              <input type="checkbox" onChange={isIdChangeHandler} checked={property.id} />
               </div>
             </div>
             <div data-ui-type="row">

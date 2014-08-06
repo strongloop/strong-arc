@@ -140,7 +140,7 @@ var app = angular.module('app', [
   'ngSanitize',
   'ngAnimate',
   'angular-growl',
-  'angServices',
+  'oldServices',
   'lbServices',
   'Profile',
   'Canvas',

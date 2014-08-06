@@ -32,9 +32,13 @@ var CommonCreateInstanceContainer = (CommonCreateInstanceContainer = React).crea
  * */
 var CommonInstanceTitleView = (CommonInstanceTitleView = React).createClass({
   render: function() {
-    return (
-      <span >{this.props.scope.activeInstance.name}</span>
-      );
+    var retVal = (<span />);
+    if (this.props.scope.activeInstance) {
+      return (
+        <span >{this.props.scope.activeInstance.name}</span>
+        );
+    }
+    return retVal;
   }
 });
 
@@ -80,7 +84,7 @@ var CommonInstanceTabsView = (CommonInstanceTabsView = React).createClass({
         <li className={classNameVar}>
           <button onClick={clickInstanceTabItem} className=" instance-tab-item-button" data-name={item.name}>{item.name}</button>
           <button onClick={clickInstanceTabClose} className=" instance-tab-close-button" data-name={item.name}>
-            <span className="glyphicon glyphicon-remove" data-name={item.name}></span>
+            <span className="glyphicon glyphicon-remove" data-name={item.name} data-id={item.id}></span>
           </button>
         </li>
         );

@@ -5,12 +5,13 @@ app.controller('StudioController', [
   '$http',
   'IAService',
   'DatasourceService',
+  'PropertyService',
   'ExplorerService',
   '$location',
   '$timeout',
   'ModelService',
   'DiscoveryService',
-  function($scope, $state, $http, IAService, DatasourceService, ExplorerService, $location, $timeout, ModelService, DiscoveryService) {
+  function($scope, $state, $http, IAService, DatasourceService, PropertyService, ExplorerService, $location, $timeout, ModelService, DiscoveryService) {
 
     /*
      *
@@ -20,6 +21,7 @@ app.controller('StudioController', [
     $scope.mainNavDatasources = []; // initialized further down
     $scope.mainNavModels = [];  // initialized further down
     $scope.instanceType = 'model';
+    $scope.activeInstance = {};
     // temporary for testing / dev
 //    $scope.tableSelections = [];
     /*
@@ -69,7 +71,15 @@ app.controller('StudioController', [
     * */
     // new
     // temporarily assign to model for dev work
-    $scope.activeInstance = IAService.getActiveInstance();  // TODO
+   // $scope.activeInstance = IAService.getActiveInstance();  // TODO
+
+    IAService.getActiveInstance().
+      then(function(response) {
+        $scope.activeInstance = response;
+      });
+
+
+
 
     // legacy
     $scope.previewInstance = IAService.clearPreviewInstance();
@@ -118,21 +128,7 @@ app.controller('StudioController', [
 
 
       });
-//    $scope.mainNavDatasources.$promise.
-//      then(function (result) {
-//
-//        var core = result[0];
-//
-//        var log = [];
-//        var datasources = [];
-//        angular.forEach(core, function(value, key){
-//          //this.push(key + ': ' + value);
-//          datasources.push({name:key,children:value});
-//        }, log);
-//        $scope.mainNavDatasources = datasources;
-//
-//
-//      });
+
 
 
 
@@ -393,26 +389,6 @@ app.controller('StudioController', [
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /*
     *
     * CONTENT EDIT TABS CLICK EVENTS
@@ -423,8 +399,12 @@ app.controller('StudioController', [
       // defensive check to make sure the component is initialized
       if (openInstanceRefs && openInstanceRefs.length > 0){
         // only if the model isn't currently active
-        $scope.activeInstance = IAService.activateInstanceByName(name);
-        $scope.instanceType = $scope.activeInstance.type;
+        var targetInstance = IAService.activateInstanceByName(name);
+        IAService.setActiveInstance(targetInstance, 'model');
+        IAService.getActiveInstance().
+          then(function(response) {
+            $scope.activeInstance = response;
+          });
       }
       $scope.clearSelectedInstances();
     };
@@ -446,10 +426,6 @@ app.controller('StudioController', [
       }
       $scope.clearSelectedInstances();
     };
-
-
-
-
 
 
     /*
@@ -626,20 +602,66 @@ app.controller('StudioController', [
         $scope.activeInstance = IAService.activateInstanceByName($scope.activeInstance.name);
       }
     };
-    $scope.createNewProperty = function() {
-      console.log('create new property');
-      var xModel = $scope.activeInstance;
-      if (!xModel.properties){
-        xModel.properties = [];
+
+    $scope.updateModelPropertyRequest = function(modelPropertyConfig) {
+      if (modelPropertyConfig && modelPropertyConfig.modelId && modelPropertyConfig.name) {
+        PropertyService.updateModelProperty(modelPropertyConfig);
+        $scope.activeModelPropertiesChanged = !$scope.activeModelPropertiesChanged;
+
       }
-      xModel.properties.push({name:'property-name', props: { type:'string'}});
+    };
+    $scope.createNewProperty = function() {
 
-      xModel.type = 'model';
-      $scope.activeInstance = xModel;
+      // get model id
+      var modelId = $scope.activeInstance.id;
+      // should get a config (with at least name/type of property)
+
+      var propConfig = {
+        name:'property-name-' + getRandomNumber(),
+        type: 'string',
+        facetName: 'common',
+        modelId: modelId
+      };
+
+      var newProperty = PropertyService.createModelProperty(propConfig);
+      newProperty.
+        then(function (result) {
+
+          $scope.activeInstance.properties.push(result);
+         // $scope.activeInstanceChanged = !$scope.activeInstanceChanged;
+          $scope.activeModelPropertiesChanged = !$scope.activeModelPropertiesChanged;
+          console.log('good add new model property')
+        }
+      );
+
+      // create default object config
+      // post to service
+      // update properties
 
 
 
-      $scope.activeModelPropertiesChanged = !$scope.activeModelPropertiesChanged;
+
+
+
+
+
+
+//
+//
+//
+//      console.log('create new property');
+//      var xModel = $scope.activeInstance;
+//      if (!xModel.properties){
+//        xModel.properties = [];
+//      }
+//      xModel.properties.push({name:'property-name', props: { type:'string'}});
+//
+//      xModel.type = 'model';
+//      $scope.activeInstance = xModel;
+//
+//
+//
+//      $scope.activeModelPropertiesChanged = !$scope.activeModelPropertiesChanged;
     };
 
 
@@ -689,6 +711,7 @@ app.controller('StudioController', [
           $scope.explorerDataModelChanged = !$scope.explorerDataModelChanged;
         });
     };
+
 
 
   }

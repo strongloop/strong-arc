@@ -22,54 +22,38 @@
   <link rel="stylesheet" type="text/css" href="./style/src/explorer.css">
   <link rel="stylesheet" type="text/css" href="./style/src/demo.css">
   <link rel="stylesheet" type="text/css" href="./style/src/icons.css">
+  <link rel="stylesheet" type="text/css" href="./style/src/sean.css">
   <!--<link rel="stylesheet" type="text/css" href="./style/style.css">-->
 
 </head>
 <body ng-app="app">
 
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button"
-              class="navbar-toggle"
-              data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <div class="header-logo-container">
-        <a class="navbar-brand" href="#">StrongLoop</a>
-      </div>
-    </div>
-    <div class="collapse navbar-collapse" ng-controller="GlobalNavController">
-      <ul class="nav navbar-nav">
-        <!--<li ng-class="{ active: isActive('/api')}">-->
-        <!--<a ui-sref="api">Apis</a>-->
-        <!--</li>-->
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li lb-greeting-nav-item></li>
-
+<div class="headerContainer">
+	<div class="branding">
+		<img src="./images/logo.svg" alt="Strongloop logo" class="logo">
+		<div class="wordbrand">StrongLoop</div>
+	</div>
+ 	<div class="navButtons">
+      <ul>
         <li>
           <a href="http://loopback.io" target="_new" title="documentation"><span class="glyphicon glyphicon-question-sign"></span></a>
         </li>
         <li>
-              <span class="dropdown" on-toggle="toggled(open)">
-                <a href class="dropdown-toggle">
-                  <span class="glyphicon glyphicon-off"></span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li lb-register-nav-item></li>
-                  <li lb-login-nav-item></li>
-                  <li lb-logout-nav-item></li>
-                  <li sl-ia-cleardb-nav-item></li>
-                </ul>
-              </span>
+          <span class="dropdown" on-toggle="toggled(open)">
+            <a href class="dropdown-toggle">
+              <span class="glyphicon glyphicon-off"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li lb-register-nav-item></li>
+              <li lb-login-nav-item></li>
+              <li lb-logout-nav-item></li>
+              <li sl-ia-cleardb-nav-item></li>
+            </ul>
+          </span>
         </li>
       </ul>
     </div>
-  </div>
+
 </div>
 
 

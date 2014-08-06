@@ -1,8 +1,8 @@
 (function(window, angular, undefined) {'use strict';
 
-
-  var localHost = "http://0.0.0.0:4001";
+var localHost = "http://0.0.0.0:4001";
   var urlBase = localHost + "/api";
+
 /**
  * @ngdoc overview
  * @name lbServices

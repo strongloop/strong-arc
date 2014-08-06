@@ -19,7 +19,7 @@ var IAMainNavContainer = (IAMainNavContainer = React).createClass({
     };
     return (
       <div>
-        <button data-name="ia_root"  onClick={singleClickItem} className="btn btn-default btn-block nav-tree-item nav-tree-root tree-root">OSCON demo project</button><div className="main-nav-help"><span data-id="MainNavContextHelp" className="glyphicon glyphicon-question-sign"></span></div>
+        <button data-name="ia_root"  onClick={singleClickItem} className="btn btn-default btn-block nav-tree-item nav-tree-root tree-root">OSCON demo project</button><div className="main-nav-help"><span id="mainNavContextHelp" data-id="MainNavContextHelp" className="glyphicon glyphicon-question-sign"></span></div>
         <IAMainModelNav scope={this.props.scope} />
         <IAMainDatasourceNav scope={this.props.scope} />
       </div>
@@ -144,7 +144,7 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
       <div>
         <button onClick={clickBranch} data-name="model_root" className="btn btn-default btn-block nav-tree-item tree-branch"  title="Models" ><span className="glyphicon glyphicon-folder-open"></span>Models</button>
         <ul className="branch-leaf-list is-open">{items}</ul>
-        <button onClick={addNewInstanceRequest} data-type="model" className="nav-tree-item-addnew"><span className="glyphicon glyphicon-plus-sign-nav"></span>Add New Model</button>
+        <button onClick={addNewInstanceRequest} data-type="model" className="nav-tree-item-addnew"><span className="plus">+</span>Add New Model</button>
       </div>
       );
   }
@@ -312,7 +312,7 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
       <div>
         <button onClick={clickBranch} type="button" data-name="datasources_root" className="btn btn-default btn-block nav-tree-item tree-branch" title="Datasources"><span className="glyphicon glyphicon-folder-open"></span>Datasources</button>
         <ul className="branch-leaf-list is-open">{scope.mainNavDatasources.map(datasourceItemRenderer)}</ul>
-        <button onClick={addNewInstanceRequest} data-type="datasource" className="nav-tree-item-addnew"><span className="glyphicon glyphicon-plus-sign-nav"></span>Add New Datasource</button>
+        <button onClick={addNewInstanceRequest} data-type="datasource" className="nav-tree-item-addnew"><span className="plus">+</span>Add New Datasource</button>
       </div>
       );
   }

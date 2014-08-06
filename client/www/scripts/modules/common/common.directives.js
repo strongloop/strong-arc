@@ -21,9 +21,10 @@ Common.directive('slCommonInstanceContainer', [
 
       },
       link: function(scope, el, attrs) {
-        jQuery('[data-id="CommonInstanceContainer"]').dblclick(function() {
+        jQuery('[data-id="InstanceSliderBtn"]').click(function() {
           scope.toggleInstanceContainer();
         });
+
       }
     }
   }
@@ -38,7 +39,10 @@ Common.directive('slCommonInstanceTitleView', [
     return {
       link: function(scope, el, attrs) {
         scope.$watch('activeInstance', function(newVal, oldVal) {
-          React.renderComponent(CommonInstanceTitleView({scope: scope}), el[0]);
+          if (scope.activeInstance) {
+            React.renderComponent(CommonInstanceTitleView({scope: scope}), el[0]);
+          }
+
         });
       }
     }
@@ -56,6 +60,7 @@ Common.directive('slCommonInstanceTabsView', [
     return {
       link: function(scope, el, attrs) {
         function renderComp(){
+
           var tabItems = [];
 
           for (var i = 0;i < scope.openInstanceRefs.length;i++) {
@@ -70,15 +75,19 @@ Common.directive('slCommonInstanceTabsView', [
           }
 
           React.renderComponent(CommonInstanceTabsView({scope:scope, tabItems:tabItems}), el[0]);
+
         }
 
         scope.$watch('activeInstance', function(newVal, oldVal) {
-
-          renderComp();
+          if (scope.activeInstance) {
+            renderComp();
+          }
         });
 //        scope = scope.$parent;
         scope.$watch('openInstanceRefs', function(newNames, oldNames) {
-          renderComp();
+          if (scope.activeInstance) {
+            renderComp();
+          }
         });
       }
     }

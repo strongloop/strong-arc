@@ -3,6 +3,13 @@ var path = require('path');
 var app = module.exports = loopback();
 var started = new Date();
 
+
+var workspace = require('loopback-workspace');
+workspace.start();
+workspace.listen(4001);
+process.env.WORKSPACE_DIR = '/Users/seanbrookes/_stacks/projects/temp/testapp';
+
+//app.use(workspace);
 /*
  * 1. Configure LoopBack models and datasources
  *

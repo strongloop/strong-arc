@@ -4,7 +4,6 @@
 
 body {
     font-size: 16px;
-    padding-top: 51px;
     height: 100%;
     width: 100%;
     margin: 0;
@@ -73,37 +72,54 @@ code {
     Header
 
 */
-.navbar-inverse {
+
+.headerContainer {
+	position: relative;
+	z-index: 1;
     background-color: #7dbd33;
-    padding-top: 1.5rem;
-    padding-bottom: 1rem;
+    padding-top: 2.3rem;
+    padding-right: 3rem;
+	padding-left: 4rem;
+    width: 100%;
+ 	height: 8rem;
+	-moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.49);
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.49);
+}
+.headerContainer li{
+	display: inline-block;
+}
+.navButtons{
+	width: 10rem;
+	position: absolute;
+	right: 2rem;
+	margin-top: 0.7rem;
+}
+.dropdown-menu {
+    min-width: 50px;
+    top: 4rem;
+    left: -1.4rem;
+}
+.branding{
+	width: 25rem;
+	float: left;
+}
+.logo{
+	margin-top: 0.4rem;
+	margin-left: 0.5rem;
+	width: 4rem;
+}
+.wordbrand{
+	font-family: ubuntu;
+	font-size: 20pt;
+	color:  #08592B;
+	float: left;
 }
 
-/*Hacked for demo*/
-.navbar-inverse .navbar-brand {
-    color: transparent;
-}
-/*End hack*/
+/* 
 
-.navbar-inverse .navbar-nav > li a {
-    color: #ffffff;
-}
-.navbar-nav > li .dropdown {
-    display:inline-block;
-    padding-top: 15px;
-    padding-bottom: 15px;
-}
-.navbar-nav > li .dropdown-menu a {
-    color:#444444;
-}
-.navbar-nav > li .dropdown a:hover {
-    background:transparent;
-}
-.nav .open > a, .nav .open > a:hover {
-    background:transparent;
-}
-
-
+	Login screen
+	
+*/
 
 .jumbotron {
     background-color: #ffffff;
@@ -111,13 +127,13 @@ code {
 .img-main-splash {
     width: 100%;
 }
+
 /*
 
     ide container
 
 */
 [data-id="MainBody"] {
-	margin-top: 2.5rem;
     width: 100%;
 }
 [data-id="MainSidebarContainer"] {

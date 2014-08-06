@@ -1,0 +1,13 @@
+.slider-btn {
+    width:20px;
+    height:700px;
+    display:inline-block;
+    background-color: red;
+}
+
+.tab-button-cell {
+    width:25px;
+}
+.common-instance-view-container {
+    overflow-y:scroll;
+}

@@ -1,5 +1,6 @@
 /* @override
-	http://0.0.0.0:3003/style/dev/nav.css */
+	http://0.0.0.0:3003/style/dev/nav.css
+	http://0.0.0.0:3003/style/src/nav.css */
 
 
 /*
@@ -24,13 +25,13 @@ Main Search
     padding-left: 1rem;
 
 }
-/*[data-id="MainNavSearch"] {*/
-/*position:fixed;*/
-/*top:0;*/
-/*}*/
+
+.plus{
+	margin-right: 1rem;
+	font-size: 16pt;
+}
 
 [data-id="MainNavContainer"] {
-	width: 30rem;
     background-color: #666666;
     color: #ffffff;
     overflow-y: scroll;
@@ -62,9 +63,8 @@ Main Search
 .navbar-brand {
 	background-image: url("../../images/hack/logo.png");
 	position:absolute;
-	left:5rem;
+	left:10rem;
 	top: 2.5rem;
-	;
 	width: 212px;
 	height: 35px;
 	background-size: 212px 35px;
@@ -73,6 +73,10 @@ Main Search
 	color: #01582A !important;*/
 }
 
+.header-logo-container{
+	
+	
+}
 
 .navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-brand:focus {
 	color: transparent;
@@ -115,7 +119,7 @@ Main Search
     text-transform: uppercase;
     margin-bottom: 0.3rem;
     padding-left: 2rem;
-    padding-top: 1rem;
+    padding-top: 2rem;
     padding-bottom: .8rem;
     font-size: 80%;
 }
@@ -135,11 +139,13 @@ Main Search
     display: inline-block;
     background: transparent;
     color: #BBBBBB;
-    font-size: 80%;
+    font-size: 90%;
     margin-top: 0;
     margin-left: 4.6rem;
 }
 .branch-leaf-list.is-open {
+	margin-top: -1rem;
+	;
     display: block;
 }
 
@@ -149,6 +155,7 @@ Main Search
 .btn-default.active {
     background: #4a90e2;
     color: white;
+    
 }
 
 
@@ -182,31 +189,37 @@ Main Search
     width:90%;
     margin:0 auto 0 auto;
 }
+#mainNavContextHelp{
+	color: #444444;
+}
 
 
 /*Hack for demo*/
 .btn-primary {
     color: #ffffff;
-    background-color: #7dbd33;
-    border-color: #70a92e;
+    background-color: #7DBD33;
     width: 12.5rem;
     height: 4.8rem;
     font-size: 13pt;
     padding-top: 0.7rem;
     padding-left: 0;
+    border-bottom: 3px solid #66992D;
 }
 
 .main-controls-container .btn-primary:hover {
     color:#689d2a;
     background-color: #ffffff;
+    border-bottom: 3px solid #c7c7c7;
 }
 .main-controls-container .btn-default:hover {
     color:#689d2a;
     background-color: #ffffff;
+    border-bottom: 3px solid #c7c7c7;
 }
 .main-control-command-label {
-	margin-top: 1.7rem;
-	margin-left: 0.6rem;
+	text-align: center;
+	margin-top: 1.5rem;
+	margin-left: 1rem;
 	color: #919191;
     font-size:75%;
     display:block;
@@ -219,7 +232,7 @@ Main Search
     background: #7DBC31;
     font-size: 80%;
     color: #ffffff;
-
+	border-bottom: 3px solid #66992D;
 }
 .btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {
 	background: #75aae8;
@@ -233,7 +246,7 @@ Main Search
     background-color: #494949;
     color: #ffffff;
     width: 28.5rem;
-    height: 22rem;
+    height: 23.5rem;
     position:fixed;
     bottom:0;
     border-top: 1px solid #7DBD33 !important;
@@ -249,5 +262,7 @@ Main Search
 }
 .ds-type-name {
     font-size: 9pt;
+    margin-top: 0.8rem;
+    margin-bottom: 2rem;
 }
 

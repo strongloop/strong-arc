@@ -1,5 +1,6 @@
 /* @override
-	http://0.0.0.0:3003/style/dev/icons.css */
+	http://0.0.0.0:3003/style/dev/icons.css
+	http://0.0.0.0:3003/style/src/icons.css */
 
 @font-face {
 	font-family: 'Strongloop';
@@ -44,45 +45,6 @@
 	font-size: 16pt;
 }
 
-/*Hack classes for the database buttons*/
-/*[title="oracle connector"] {*/
-	/*background-image: url("../../images/hack/memory.png");*/
-	/*width: 48px;*/
-	/*height:  62px;*/
-	/*background-size: 48px	62px;*/
-	/*background-repeat: no-repeat;*/
-/*}*/
-/*[title="mssql connector"] {*/
-	/*background-image: url("../../images/hack/oracle.png");*/
-	/*width: 48px;*/
-	/*height:  62px;*/
-	/*background-size: 48px	62px;*/
-	/*background-repeat: no-repeat;*/
-/*}*/
-/*[title="mysql connector"] {*/
-	/*background-image: url("../../images/hack/mysql.png");*/
-	/*width: 48px;*/
-	/*height:  62px;*/
-	/*background-size: 48px	62px;*/
-	/*background-repeat: no-repeat;*/
-/*}*/
-/*[title="postgres connector"] {*/
-	/*background-image: url("../../images/hack/mongo.png");*/
-	/*width: 48px;*/
-	/*height:  62px;*/
-	/*background-size: 48px	62px;*/
-	/*background-repeat: no-repeat;*/
-/*}*/
-/*[title="mongodb connector"] {*/
-	/*background-image: url("../../images/hack/salesforce.png");*/
-	/*width: 48px;*/
-	/*height:  62px;*/
-	/*background-size: 48px	62px;*/
-	/*background-repeat: no-repeat;*/
-/*}*/
-
-/*---- End hack classes ----*/
-
 /*Folder icon*/
 .glyphicon-folder-open:before {
     content: "\e600";
@@ -101,12 +63,12 @@
 }
 .glyphicon-question-sign:before {
     content: "\e609";
-    font-size: 16pt;
+    font-size: 18pt;
 }
 .glyphicon-off:before {
     content: "\e60a";
     color: #01582A;
-    font-size: 16pt;
+    font-size: 18pt;
     margin-left: 2rem;
 }
 .glyphicon-file:before {

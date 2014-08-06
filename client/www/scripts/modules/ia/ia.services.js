@@ -3,8 +3,10 @@ IA.service('IAService', [
   '$modal',
   'AppStorageService',
   'ModelService',
+  'PropertyService',
   'DatasourceService',
-  function($modal, AppStorageService, ModelService, DatasourceService) {
+  '$q',
+  function($modal, AppStorageService, ModelService, PropertyService, DatasourceService, $q) {
     var svc = {};
 
     var currentlySelected = [];
@@ -22,7 +24,7 @@ IA.service('IAService', [
 
     };
     svc.closeContainer = function(selector) {
-      return jQuery(selector).animate({width: 0}, 500 );
+      return jQuery(selector).animate({width: 60}, 500 );
     };
     svc.getMainContentWidth = function() {
       return svc.getContainerWidth('[data-id="MainContentContainer"]');
@@ -131,9 +133,40 @@ IA.service('IAService', [
       return AppStorageService.setItem('activeInstance', targetInstance);
     };
     svc.getActiveInstance = function() {
+
+      // getting the active instance
+      // should already pre-exist
+      // may already have properties
+      //
+
+
+
+
+
       var instance = AppStorageService.getItem('activeInstance');
+
+
+
+
       if (instance) {
-        return instance;
+
+        var deferred  = $q.defer();
+        // get the model definition from the api
+        instance = ModelService.getModelById(instance.id).
+          then(function(response) {
+            deferred.resolve(response);
+          });
+
+        return deferred.promise;
+//
+//        var deferred = $q.defer();
+//
+//        if (!instance.properties) {
+//          instance.properties = deferred.promise;
+//          deferred.resolve(PropertyService.getModelProperties(instance.id));
+//        }
+//
+//        return deferred.promise;
       }
       return {};
     };
@@ -242,23 +275,6 @@ IA.service('IAService', [
     *
     * */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     svc.setExplorerViewXPos = function(x) {
       try{
         var xPos = parseInt(x);
@@ -304,7 +320,7 @@ IA.service('IAService', [
 
     svc.isViewOpen = function(viewId) {
       var xWidth = jQuery('[data-id="' + viewId + '"]').width();
-      if (parseInt(xWidth) > 0) {
+      if (parseInt(xWidth) > 100) {
         return true;
       }
       return false;
