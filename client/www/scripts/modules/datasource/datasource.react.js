@@ -57,6 +57,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
         console.log('submit this form: ' + JSON.stringify(requestData));
         scope.$apply(function() {
           scope.updateOrCreateDatasource(requestData);
+
         });
       }
 

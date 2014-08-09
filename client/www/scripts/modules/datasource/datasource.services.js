@@ -16,12 +16,20 @@ Datasource.service('DatasourceService', [
 
       var deferred = $q.defer();
 
-      var retVal = JSON.parse(window.localStorage.getItem('ApiDatasources'));
-      if (!retVal) {
-        retVal = [];
-      }
+      DataSourceDefinition.find({},function(response){
+          deferred.resolve(response);
+        },
+        function(response) {
+          console.warn('bad get datasource defninitions')
+        }
+      );
+
+//      var retVal = JSON.parse(window.localStorage.getItem('ApiDatasources'));
+//      if (!retVal) {
+//        retVal = [];
+//      }
 //      $timeout(function() {
-        deferred.resolve(retVal);
+//        deferred.resolve(retVal);
 //      }, 500);
 
       return deferred.promise;
@@ -57,6 +65,20 @@ Datasource.service('DatasourceService', [
         }
       }
     };
+    svc.getDataSourceById = function(dsId) {
+      var deferred = $q.defer();
+
+      DataSourceDefinition.findById({id:dsId},
+        function(response) {
+          deferred.resolve(response);
+        },
+        function(response) {
+          console.warn('bad get datasource by id: ' + dsId + '  ' + response);
+        }
+      );
+
+      return deferred.promise;
+    };
     svc.updateNewDatasourceName = function(newName) {
       var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
       if (!openInstanceRefs) {
@@ -71,6 +93,22 @@ Datasource.service('DatasourceService', [
       AppStorageService.setItem('openInstanceRefs', openInstanceRefs);
       return openInstanceRefs;
     };
+    svc.createDataSourceDefinition = function(config) {
+      var deferred = $q.defer();
+
+      DataSourceDefinition.create({}, config,
+        function(response) {
+          deferred.resolve(response);
+        },
+        function(response) {
+          console.warn('bad create data source definition: ' + response);
+        }
+      );
+
+
+      return deferred.promise;
+    };
+    // obsolete
     svc.createDatasourceDef = function(datasourceDefObj) {
       console.log('Add this data service: ' + JSON.stringify(datasourceDefObj));
       var currentDatasources = JSON.parse(window.localStorage.getItem('ApiDatasources'));
@@ -132,6 +170,7 @@ Datasource.service('DatasourceService', [
       }
       return defaultDatasourceSchema;
     };
+    // dormant for now
     svc.isNewDatasourceNameUnique = function(name) {
       var retVar = true;
 

@@ -65,9 +65,9 @@ IA.directive('slIaMainNav', [
 
               // is it discoverable
              // if (localDSInstance.children && localDSInstance.children.connector) {
-              if (localDSInstance.props && localDSInstance.props.connector) {
+              if (localDSInstance && localDSInstance.connector) {
                 for (var w = 0;w < discoverableDatasources.length;w++) {
-                  if (localDSInstance.props.connector === discoverableDatasources[w]) {
+                  if (localDSInstance.connector === discoverableDatasources[w]) {
                     localDSInstance.isDiscoverable = true;
                     break;
                   }

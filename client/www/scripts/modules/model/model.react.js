@@ -109,7 +109,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
           </div>
           <button onClick={saveModelDefinition}
             className="btn btn-sm btn-primary model-definition-save-btn"
-            data-modelId={modelDef.Id} >Save</button>
+            data-modelId={modelDef.Id} >Hello</button>
           <button onClick={clickHandler}
             type="button"
             className="model-instance-header-btn btn btn-default btn-block"
@@ -166,7 +166,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                 </div>
               </div>
               <div data-ui-type="cell">
-                <div data-ui-type="table" >
+                <div data-ui-type="table"  className="test">
                   <div data-ui-type="row">
                     <div data-ui-type="cell">
                       <label>datasource</label>
@@ -180,7 +180,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                       <label>Indexes</label>
                     </div>
                     <div data-ui-type="cell">
-                      <input type="button" value="edit" className="btn btn-default" />
+                      <input type="button" value="Stacy" className="btn btn-default" />
                     </div>
                   </div>
                   <div data-ui-type="row">
@@ -188,7 +188,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                       <label>Scopes</label>
                     </div>
                     <div data-ui-type="cell">
-                      <input type="button" value="edit" className="btn btn-default" />
+                      <input type="button" value="is" className="btn btn-default" />
                     </div>
                   </div>
                   <div data-ui-type="row">
@@ -196,7 +196,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                       <label>Access Control</label>
                     </div>
                     <div data-ui-type="cell">
-                      <input type="button" value="edit" className="btn btn-default" />
+                      <input type="button" value="cool" className="btn btn-default" />
                     </div>
                   </div>
                 </div>

@@ -81,8 +81,7 @@
     width: 100%;
     padding-top: 2.6rem;
 }
-.preview-instance-body-container {
-    border-top: 3px solid #dddddd;
-    padding-top: 1rem;
-    background: #ffffff;
+.instance-body-container {
+    min-height:800px;
+    overflow-y: auto;
 }

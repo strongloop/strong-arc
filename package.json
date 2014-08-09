@@ -1,4 +1,5 @@
 {
+  "name": "strong-studio",
   "version": "0.0.1",
   "main": "app.js",
   "bin": {
@@ -19,14 +20,12 @@
     "gulp-changed": "^0.3.0",
     "gulp-minify-html": "^0.1.3",
     "loopback-explorer": "~1.1.0",
-    "loopback-push-notification": "~1.2.0",
-    "loopback-workspace": "^3.1.0"
+    "loopback-push-notification": "~1.2.0"
   },
   "optionalDependencies": {
     "loopback-explorer": "~1.1.0",
     "loopback-push-notification": "~1.2.0"
   },
-  "name": "strong-studio",
   "description": "A gui for working with the LoopBack framework",
   "devDependencies": {},
   "repository": {

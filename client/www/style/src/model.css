@@ -1,5 +1,6 @@
 /* @override
-	http://0.0.0.0:3003/style/dev/model.css */
+	http://0.0.0.0:3003/style/dev/model.css
+	http://0.0.0.0:3003/style/src/model.css */
 
 
 /*
@@ -136,8 +137,9 @@
 }
 
 .model-instance-container .model-instance-property-table-header-row {
-    background-color: #EEEEEE;
-    color: #888895;
+    background-color: #EDEDED;
+    height: 46px;
+    color: #999999;
     font-size: 90%;
 }
 .model-instance-property-table-header-row [data-ui-type="cell"] {

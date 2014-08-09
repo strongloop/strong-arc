@@ -1,34 +1,39 @@
 {
   "db": {
+    "name": "db",
     "defaultForType": "db",
     "connector": "memory"
   },
   "mongodb": {
-    "defaultForType": "mongodb",
-    "connector": "loopback-connector-mongodb",
-    "database": "apistudio",
     "host": "localhost",
-    "port": 27017
+    "port": 27017,
+    "database": "apistudio",
+    "name": "mongodb",
+    "defaultForType": "mongodb",
+    "connector": "loopback-connector-mongodb"
   },
   "apmDev": {
-    "defaultForType": "mysql",
-    "connector": "loopback-connector-mysql",
-    "database": "apm",
     "host": "localhost",
     "port": 3306,
+    "database": "apm",
     "username": "root",
-    "password": ""
+    "password": "",
+    "name": "apmDev",
+    "defaultForType": "mysql",
+    "connector": "loopback-connector-mysql"
   },
   "icarmysql": {
-    "defaultForType": "mysql",
-    "connector": "loopback-connector-mysql",
     "host": "demo.strongloop.com",
     "port": 3306,
     "database": "demo",
     "username": "demo",
-    "password": "L00pBack"
+    "password": "L00pBack",
+    "name": "icarmysql",
+    "defaultForType": "mysql",
+    "connector": "loopback-connector-mysql"
   },
   "push": {
+    "name": "push",
     "defaultForType": "push",
     "connector": "loopback-push-notification",
     "installation": "installation",
@@ -36,6 +41,7 @@
     "application": "application"
   },
   "mail": {
+    "name": "mail",
     "defaultForType": "mail",
     "connector": "mail"
   }

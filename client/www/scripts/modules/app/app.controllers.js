@@ -56,6 +56,7 @@ app.controller('StudioController', [
     *
     * */
     $scope.apiModelsChanged = false;  // dirty flag
+    $scope.apiDataSourcesChanged = false;
     $scope.activeModelPropertiesChanged = false;  // dirty flag
     $scope.explorerDataModelChanged = false; // dirty toggle for triggering renders on the react components
 
@@ -110,7 +111,6 @@ app.controller('StudioController', [
       );
     };
     loadModels();
-
     /*
      *
      *
@@ -118,16 +118,29 @@ app.controller('StudioController', [
      *
      *
      * */
+    var loadDataSources = function() {
+      $scope.mainNavDatasources = DatasourceService.getAllDatasources();
+      $scope.mainNavDatasources.
+        then(function (result) {
+
+          $scope.mainNavDatasources = result;
+          $scope.apiDataSourcesChanged = !$scope.apiDataSourcesChanged;
+
+        });
+    }
+    loadDataSources();
+
+
     //$scope.mainNavDatasources = [];
-    $scope.mainNavDatasources = DatasourceService.getAllDatasources();
-    $scope.mainNavDatasources.
-      then(function (result) {
-
-
-        $scope.mainNavDatasources = result;
-
-
-      });
+//    $scope.mainNavDatasources = DatasourceService.getAllDatasources();
+//    $scope.mainNavDatasources.
+//      then(function (result) {
+//
+//
+//        $scope.mainNavDatasources = result;
+//
+//
+//      });
 
 
 
@@ -440,6 +453,22 @@ app.controller('StudioController', [
     $scope.openInstances = function() {
 
     };
+    // delete models
+    $scope.deleteModelDefinitionRequest = function(modelId) {
+      if (modelId){
+
+        if (confirm('delete model?')){
+
+          console.log('delete this model: ' + modelId);
+          ModelService.deleteModel(modelId).
+            then(function(response){
+              loadModels();
+            });
+
+        }
+
+      }
+    };
     $scope.openSelectedModels = function() {
       var selectedModels = IAService.getCurrentInstanceSelections();
       if (selectedModels) {
@@ -518,49 +547,47 @@ app.controller('StudioController', [
     * */
     $scope.updateOrCreateDatasource = function(formObj) {
       var currentDatasource = formObj;
-      console.log('SAVE or CREATE datasource: ' + formObj.name);
-      // check to make sure it is unique
-
-      if (DatasourceService.isNewDatasourceNameUnique(formObj.name)) {
+      if (formObj.name) {
+        console.log('SAVE or CREATE datasource: ' + formObj.name);
+        // check to make sure it is unique
+//
+//      if (DatasourceService.isNewDatasourceNameUnique(formObj.name)) {
         // call create model
+        if (!formObj.facetName) {
+          formObj.facetName = 'server';
+        }
         console.log('CREATE THE Datasource: ' + JSON.stringify(formObj));
         // TODO - should be a callback to ensure model created successfully
 
+//
+//        var targetDef = {
+//          name:formObj.name,
+//          type:'datasource',
+//          props:{}
+//        };
+//        delete formObj.name;
+//        targetDef.props = formObj;
 
-        var targetDef = {
-          name:formObj.name,
-          type:'datasource',
-          props:{}
-        };
-        delete formObj.name;
-        targetDef.props = formObj;
-
-        $scope.activeInstance = DatasourceService.createDatasourceDef(targetDef);
-       // $scope.activeInstance = IAService.activateInstanceByName(targetDef.name, 'datasource');
-
-        $scope.mainNavDatasources = DatasourceService.getAllDatasources();
-        $scope.mainNavDatasources.
-          then(function (result) {
-
-            // update open refs
-            DatasourceService.updateNewDatasourceName(targetDef.name);
-
-            $scope.mainNavDatasources = result;
+        DatasourceService.createDataSourceDefinition(formObj).
+          then(function(response) {
+            $scope.activeInstance = response;
             $scope.activeInstance.type = 'datasource';
-            $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
-            $scope.currentOpenDatasourceNames = IAService.getOpenDatasourceNames();
-            $scope.instanceType = 'datasource';
-            $scope.clearSelectedInstances();
+            loadDataSources();
+          }
+        );
+        // $scope.activeInstance = IAService.activateInstanceByName(targetDef.name, 'datasource');
 
-          });
+
+      }
+
 
 //        return $scope.activeInstance;
 
-
-      }
-      else {
-        console.warn('THE NEW Datasource NAME IS NOT UNIQUE');
-      }
+//
+//      }
+//      else {
+//        console.warn('THE NEW Datasource NAME IS NOT UNIQUE');
+//      }
     };
 
 
@@ -595,10 +622,10 @@ app.controller('StudioController', [
     * Datasouce discovery flow kickoff
     *
     * */
-    $scope.createModelsFromDS = function(name) {
+    $scope.createModelsFromDS = function(id) {
 
       // open a modal window and trigger the discovery flow
-      var modalConfig = DiscoveryService.getDiscoveryModalConfig(name);
+      var modalConfig = DiscoveryService.getDiscoveryModalConfig(id);
       var modalInstance = IAService.openModal(modalConfig);
       modalInstance.opened.then(function() {
         window.setUI();

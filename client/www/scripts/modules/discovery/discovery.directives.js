@@ -21,27 +21,36 @@ Discovery.directive('slDiscoverySchema', [
         $scope.showDiscoveryBackButton = false;
         $scope.nextButtonDisabledTxt = 'disabled="disabled"';
         $scope.tableSelections = [];
+        $scope.targetTables = [];
+        $scope.gTables = [];
 
 
         $scope.schemaTables3 = [];
 
 //        DiscoveryWizardForm
+        var dsName = $scope.targetDiscoveryDSName;
+        if (dsName) {
+          $scope.schemaTables3 = DiscoveryService.getSchemaDataFromDatasource(dsName).
+            then(function(response) {
+              $scope.schemaTables3 = response;
+              $scope.isDsTableGridVisible = true;
+              $scope.isDsTablesLoadingIndicatorVisible = false;
+            });
+        }
 
-        var dsName = 'icarsmysql';
-        $scope.schemaTables3 = DiscoveryService.getSchemaDataFromDatasource(dsName).
-          then(function(response) {
-            $scope.schemaTables3 = response;
-            $scope.isDsTableGridVisible = true;
-            $scope.isDsTablesLoadingIndicatorVisible = false;
-        });
 
         $scope.isSchemaModelComposerVisible = function(){
-          return $scope.apiSourceTables.length > 0;
+          return $scope.targetTables.length > 0;
         };
 
         $scope.discoveryNexBtnClicked = function() {
           //console.log('generate models' + $scope.dsTablesGridOptions.selectedItems);
-          $scope.apiSourceTables = $scope.dsTablesGridOptions.selectedItems;
+          var dsId = 'server.icarmysql-real';
+          $scope.targetTables = $scope.dsTablesGridOptions.selectedItems;
+          $scope.apiSourceTables = DiscoveryService.getModelsFromSchemaSelections(dsName, $scope.targetTables).
+            then(function(response) {
+              $scope.gTables = response.status;
+            });
           $scope.isDsTableGridVisible = false;
           switch($scope.currentDiscoveryStep) {
             case 'initialize':

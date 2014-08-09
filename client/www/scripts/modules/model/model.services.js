@@ -24,6 +24,21 @@ Model.service('ModelService', [
       return deferred.promise;
 
     };
+    svc.deleteModel = function(modelId) {
+      if (modelId) {
+        var deferred = $q.defer();
+
+        ModelDefinition.deleteById({id:modelId},
+          function(response) {
+            deferred.resolve(response);
+          },
+          function(response) {
+            console.warn('bad delete model definition');
+          }
+        );
+        return deferred.promise;
+      }
+    };
 
     svc.getAllModels = function() {
       var deferred = $q.defer();
