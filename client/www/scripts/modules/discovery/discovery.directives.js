@@ -47,9 +47,10 @@ Discovery.directive('slDiscoverySchema', [
           //console.log('generate models' + $scope.dsTablesGridOptions.selectedItems);
           var dsId = 'server.icarmysql-real';
           $scope.targetTables = $scope.dsTablesGridOptions.selectedItems;
-          $scope.apiSourceTables = DiscoveryService.getModelsFromSchemaSelections(dsName, $scope.targetTables).
+          $scope.gTables = DiscoveryService.getModelsFromSchemaSelections(dsName, $scope.targetTables).
             then(function(response) {
-              $scope.gTables = response.status;
+              //$scope.gTables = response.status;
+              $scope.apiSourceTables.push(response.status);
             });
           $scope.isDsTableGridVisible = false;
           switch($scope.currentDiscoveryStep) {
