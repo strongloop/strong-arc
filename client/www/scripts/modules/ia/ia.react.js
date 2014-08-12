@@ -11,9 +11,9 @@ var IAMainNavContainer = (IAMainNavContainer = React).createClass({
 
     var scope = this.props.scope;
     var singleClickItem = function(event) {
-      if (event.target.attributes['data-name']){
+      if (event.target.attributes['data-id']){
         scope.$apply(function () {
-          scope.navTreeItemClicked('root', event.target.attributes['data-name'].value, event.metaKey);
+          scope.navTreeItemClicked('root', event.target.attributes['data-id'].value, event.metaKey);
         });
       }
     };
@@ -100,13 +100,13 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
 //      }
 
 
-      if (event.target.attributes['data-name'] || event.target.parentElement.attributes['data-name']){
+      if (event.target.attributes['data-id'] || event.target.parentElement.attributes['data-id']){
         var val = '';
-        if (event.target.attributes['data-name']) {
-          val = event.target.attributes['data-name'].value;
+        if (event.target.attributes['data-id']) {
+          val = event.target.attributes['data-id'].value;
         }
         else {
-          val = event.target.parentElement.attributes['data-name'].value;
+          val = event.target.parentElement.attributes['data-id'].value;
         }
         scope.$apply(function () {
           scope.navTreeItemClicked('model', val, event.metaKey);
@@ -262,13 +262,13 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
     };
     var singleClickItem = function(event) {
 
-      if (event.target.attributes['data-name'] || event.target.parentElement.attributes['data-name']){
+      if (event.target.attributes['data-id'] || event.target.parentElement.attributes['data-id']){
         var val = '';
-        if (event.target.attributes['data-name']) {
-          val = event.target.attributes['data-name'].value;
+        if (event.target.attributes['data-id']) {
+          val = event.target.attributes['data-id'].value;
         }
         else {
-          val = event.target.parentElement.attributes['data-name'].value;
+          val = event.target.parentElement.attributes['data-id'].value;
         }
         scope.$apply(function () {
           scope.navTreeItemClicked('datasource', val, event.metaKey);

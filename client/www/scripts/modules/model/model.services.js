@@ -168,20 +168,21 @@ Model.service('ModelService', [
           // model definition object generation from schema
           // TODO map db source name here
           var newLBModel = {
+            id: sourceDbModelObj.id,
             name: sourceDbModelObj.name,
             type:'model'
 
           };
           // open instances reset
           openInstances.push({
+            id: sourceDbModelObj.id,
             name: sourceDbModelObj.name,
             type:'model'
           });
 
           var modelProps = {
             public: true,
-            plural: sourceDbModelObj.name + 's',
-            properties: []
+            plural: sourceDbModelObj.name + 's'
           };
           newLBModel.props = modelProps;
 

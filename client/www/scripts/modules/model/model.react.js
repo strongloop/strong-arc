@@ -95,21 +95,23 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
     if (scope.activeInstance.name) {
       returnVal = (
         <form role="form">
-          <div data-ui-type="cell">
-            <label>name</label>
+        	<div className="model-header-container">
+	          <div data-ui-type="cell">
+	            <label>name</label>
+	          </div>
+	          <div data-ui-type="cell">
+	            <input type="text"
+	              value={modelDef.name}
+	              onChange={that.handleChange}
+	              data-name="name"
+	              id="ModelName"
+	              name="ModelName"
+	              className="model-instance-editor-input" />
+	          </div>
+	          <button onClick={saveModelDefinition}
+	            className="model-detail-pocket-button model-save-button"
+	            data-modelId={modelDef.Id} >Save</button>
           </div>
-          <div data-ui-type="cell">
-            <input type="text"
-              value={modelDef.name}
-              onChange={that.handleChange}
-              data-name="name"
-              id="ModelName"
-              name="ModelName"
-              className="model-instance-editor-input" />
-          </div>
-          <button onClick={saveModelDefinition}
-            className="btn btn-sm btn-primary model-definition-save-btn"
-            data-modelId={modelDef.Id} >Hello</button>
           <button onClick={clickHandler}
             type="button"
             className="model-instance-header-btn btn btn-default btn-block"
@@ -117,9 +119,9 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
             <span className={iconClasses}></span>Details</button>
           
           
-          <div>
-	          <ul className="model-detail-text-input-row">
-	          	<li>
+          <div className="model-detail-container">
+	          <div className="model-detail-input-row">
+	          	<div className="model-detail-input-container">
 	          		<div className="model-detail-label">
 	          		  <label>plural</label>
 	          		</div>
@@ -130,8 +132,8 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
 	          		    id="ModelPlural"
 	          		    name="ModelPlural"
 	          		    className="model-instance-editor-input" />
-	          	</li>
-	          	<li>
+	          	</div>
+	          	<div className="model-detail-input-container">
 	          		<div className="model-detail-label">
 	          		  <label>base model</label>
 	          		</div>
@@ -142,41 +144,45 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
 	          		  id="ModelBase"
 	          		  name="ModelBase"
 	          		  className="model-instance-editor-input" />
-	          	</li>
-	          	<li>
+	          	</div>
+	          	<div className="model-detail-input-container">
 	          		<div className="model-detail-label">
 	          		  <label>datasource</label>
 	          		</div>
 	          		<input type="text" value={modelDef.dataSource} onChange={this.handleChange} className="model-instance-editor-input" />
-	          	</li>
-	          </ul>
-	          	
-	          <ul className="model-detail-button-input-row">
-	          	<li className="listNarrow">
+	          	</div>
+	          </div>
+	          
+	          <div className="model-detail-input-row">
+	          	<div className="model-detail-input-container listNarrow">
 	          		<label className="model-detail-label">public</label>
 	          		<input type="checkbox"
 	          		   checked={modelDef.public}
-	          		   className="model-instance-editor-input" />
-	          	</li>
-	          	<li className="listNarrow">
+	          		   className="model-instance-editor-checkbox" />
+	          	</div>
+	          	<div className="model-detail-input-container listNarrow">
 	          		<label className="model-detail-label">strict</label>
 	          		<input type="checkbox"
 	          		    checked={modelDef.strict}
-	          		    className="model-instance-editor-input" />
-	          	</li>
-	          	<li className="listWide">
+	          		    className="model-instance-editor-checkbox" />
+	          	</div>
+	          	<div className="model-detail-input-container listWide">
 	          		<label className="model-detail-label">Indexes</label>
 	          		<input type="button" value="Edit" className="model-detail-pocket-button" />
-	          	</li>
-	          	<li className="listWide">
+	          	</div>
+	          	<div className="model-detail-input-container listWide">
 	          		<label className="model-detail-label">Scopes</label>
 	          		<input type="button" value="Edit" className="model-detail-pocket-button" />
-	          	</li>
-	          	<li className="listWide">
-	          		<label className="model-detail-label">Access Control</label>
-	          		<input type="button" value="Edit" className="model-detail-pocket-button" />
-	          	</li>
-	          </ul>
+	          	</div>
+	          	<div className="model-detail-input-container listWide">
+	              	<div>
+	              		<label className="model-detail-label">Access</label>
+	              		<input type="button" value="Edit" className="model-detail-pocket-button" />
+	          		</div>
+	          	</div>
+	          </div>
+	          	
+	          
           </div>
         </form>
         );

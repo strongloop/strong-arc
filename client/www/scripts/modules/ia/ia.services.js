@@ -47,7 +47,7 @@ IA.service('IAService', [
         retRefs = [];
       }
       if ((!activeInstance) || (!activeInstance.name)) {
-        if ((retRefs.length === 1) && (retRefs[0].name === 'new-model')) {
+        if ((retRefs.length === 1) && (!retRefs[0].id)) {
           // clear retRefs
           retRefs = [];
           AppStorageService.setItem('openInstanceRefs', retRefs);
@@ -55,10 +55,10 @@ IA.service('IAService', [
       }
       return retRefs;
     };
-    svc.closeInstanceByName = function(name) {
+    svc.closeInstanceById = function(id) {
       var sourceInstances = svc.getOpenInstanceRefs();
       for (var i = 0;i < sourceInstances.length;i++) {
-        if (sourceInstances[i].name === name) {
+        if (sourceInstances[i].id === id) {
           sourceInstances.splice(i, 1);
           break;
         }
@@ -66,7 +66,7 @@ IA.service('IAService', [
       AppStorageService.setItem('openInstanceRefs', sourceInstances);
       return sourceInstances;
     };
-    svc.activateInstanceByName = function(name, type) {
+    svc.activateInstanceById = function(id, type) {
       var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
 
       var newInstance = {};
@@ -77,7 +77,7 @@ IA.service('IAService', [
         // first check if it is open already
         for (var i = 0;i < openInstanceRefs.length;i++) {
 
-          if (openInstanceRefs[i].name === name) {
+          if (openInstanceRefs[i].id === id) {
             isOpen = true;
             instanceType = openInstanceRefs[i].type;
             break;
@@ -92,32 +92,32 @@ IA.service('IAService', [
       switch(instanceType) {
 
         case 'model':
-          newInstance = ModelService.getModelByName(name);
+          newInstance = ModelService.getModelById(id);
           newInstance.type = 'model';
           break;
 
         case 'datasource':
-          newInstance = DatasourceService.getDatasourceByName(name);
+          newInstance = DatasourceService.getDataSourceById(id);
           newInstance.type = 'datasource';
           break;
 
         default:
           // there is no instance type
-          console.warn('trying to open instance by name but no type available: ' + name);
+          console.warn('trying to open instance by name but no type available: ' + id);
 
 
       }
 
       // set as active and update open refs if necessary
       if (newInstance) {
-        svc.setActiveInstance(newInstance.name, instanceType);
+        svc.setActiveInstance(newInstance, instanceType);
         if (!isOpen) {
           var currRefs = AppStorageService.getItem('openInstanceRefs');
           if (!currRefs) {
             currRefs = [];
             AppStorageService.setItem('openInstanceRefs', currRefs);
           }
-          currRefs.push({name:name,type:instanceType});
+          currRefs.push({id: newInstance.id, name:newInstance.name,type:instanceType});
           AppStorageService.setItem('openInstanceRefs', currRefs);
         }
       }
@@ -127,20 +127,34 @@ IA.service('IAService', [
     };
     svc.setActiveInstance = function(instance, type) {
       var targetInstance = {};
-      var name = instance;
-      if (instance.name) {
-        name = instance.name;
-      }
-
 
       if (type === 'model') {
-        targetInstance = ModelService.getModelByName(name);
+        targetInstance = instance;
       }
       else if (type === 'datasource') {
-        targetInstance = DatasourceService.getDatasourceByName(name);
+        targetInstance = instance;
       }
       targetInstance.type = type;
-      return AppStorageService.setItem('activeInstance', targetInstance);
+      AppStorageService.setItem('activeInstance', targetInstance);
+      return targetInstance;
+    };
+    svc.updateOpenInstanceRefs = function(instance, type) {
+      // ensure the included instance is in the open instance refs
+      var isAlreadyOpen = false;
+      var currentOpenIntances = svc.getOpenInstanceRefs();
+      if (currentOpenIntances.length) {
+        var x = currentOpenIntances.map(function(instanceRef) {
+            if (instance.name === instanceRef.name) {
+              isAlreadyOpen = true;
+            }
+          }
+        );
+
+      }
+      if (!isAlreadyOpen) {
+        currentOpenIntances.push({id:instance.id, name: instance.name, type: 'model'});
+        AppStorageService.setItem('openInstanceRefs', currentOpenIntances);
+      }
     };
     svc.getActiveInstance = function() {
       var deferred  = $q.defer();

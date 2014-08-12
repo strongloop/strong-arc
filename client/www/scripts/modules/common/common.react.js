@@ -61,10 +61,10 @@ var CommonInstanceTabsView = (CommonInstanceTabsView = React).createClass({
       }
     };
     var clickInstanceTabClose = function(event) {
-      if (event.target.attributes['data-name']){
+      if (event.target.attributes['data-id']){
         // test to see if tab not already 'active'
         scope.$apply(function () {
-          scope.instanceTabItemCloseClicked(event.target.attributes['data-name'].value);
+          scope.instanceTabItemCloseClicked(event.target.attributes['data-id'].value);
         });
       }
     };

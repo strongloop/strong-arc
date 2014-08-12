@@ -285,7 +285,7 @@ app.controller('StudioController', [
      -- if not then clear current selected collection
 
      */
-    $scope.navTreeItemClicked = function(type, targetName, multiSelect) {
+    $scope.navTreeItemClicked = function(type, targetId, multiSelect) {
 
       switch (type){
 
@@ -300,42 +300,21 @@ app.controller('StudioController', [
 
           //jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
           var openModelNames = IAService.getOpenModelNames();
-          var targetModel = ModelService.getModelByName(targetName);
+          var targetModel = ModelService.getModelById(targetId).
+            then(function(targetModel) {
+              IAService.updateOpenInstanceRefs(targetModel, 'model');
+              $scope.activeInstance = IAService.setActiveInstance(targetModel, 'model');
+              $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
+              $scope.currentOpenModelNames = IAService.getOpenModelNames();
+              $scope.clearSelectedInstances();
+              IAService.showInstanceView();
+
+            }
+          );
 
           // check for preview mode
 
-          if (openModelNames && (openModelNames.indexOf(targetName) === -1)) {
-            // mode is not open so preview it
-//            $scope.previewInstance = targetModel;
-//            $scope.previewInstance.type = 'model';
-//            $scope.instanceType = 'model';
 
-            // temporary align with double click to make it functional for demo
-            $scope.activeInstance = IAService.activateInstanceByName(targetName, 'model');
-            $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
-            $scope.currentOpenModelNames = IAService.getOpenModelNames();
-            $scope.clearSelectedInstances();
-            $scope.instanceType = 'model';
-
-          }
-          else {
-            // model is open
-            // make sure it isn't currently active
-            if ($scope.activeInstance.name !== targetName) {
-              $scope.activeInstance = IAService.activateInstanceByName(targetName, 'model');
-              $scope.activeInstance.type = 'model';
-              $scope.instanceType = 'model';
-              $scope.clearSelectedInstances();
-            }
-            else {
-              // active model instance was clicked
-              // if the model editor view is open > close it
-              IAService.showInstanceView();
-              // if the model editor view is closed > open it
-            }
-
-
-          }
 
 
           break;
@@ -387,16 +366,6 @@ app.controller('StudioController', [
       }
 
 
-      // control key is pressed
-      if (multiSelect) {
-        $scope.currentSelectedCollection.push($scope.previewInstance);
-      }
-      else{
-        // in preview mode load up the instance in case
-        // the user gives it focus (wants to edit it)
-        $scope.currentSelectedCollection = [$scope.previewInstance];
-      }
-
     };
 
 
@@ -422,19 +391,19 @@ app.controller('StudioController', [
       $scope.clearSelectedInstances();
     };
 
-    $scope.instanceTabItemCloseClicked = function(name) {
+    $scope.instanceTabItemCloseClicked = function(id) {
 
-      $scope.openInstanceRefs = IAService.closeInstanceByName(name);
+      $scope.openInstanceRefs = IAService.closeInstanceByName(id);
       // reset the active instance and reset tabs and nav
-      if ($scope.activeInstance.name === name) {
+      if ($scope.activeInstance.id === id) {
         if ($scope.openInstanceRefs.length === 0) {
           $scope.activeInstance = {};
         }
         else {
 
           // active the first instance by default
-          $scope.activeInstance = IAService.activateInstanceByName($scope.openInstanceRefs[0].name);
-          $scope.activeInstance = IAService.activateInstanceByName($scope.openInstanceRefs[0].name);
+          $scope.activeInstance = IAService.activateInstanceById($scope.openInstanceRefs[0].id);
+          $scope.activeInstance = IAService.activateInstanceById($scope.openInstanceRefs[0].id);
         }
       }
       $scope.clearSelectedInstances();

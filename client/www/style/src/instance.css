@@ -1,5 +1,6 @@
 /* @override
-	http://0.0.0.0:3003/style/dev/instance.css */
+	http://0.0.0.0:3003/style/dev/instance.css
+	http://0.0.0.0:3003/style/src/instance.css */
 
 
 /*
@@ -39,9 +40,9 @@ form[name="DatasourceForm"] {
 }
 .instance-tabs-list {
     padding: 0 0 0.3em 0;
-    margin-top: 1.5rem;
+    margin-top: 1.7rem;
     border-bottom: 1px solid #CCCCCC;
-    height: 2.5rem;
+    height: 2.9rem;
     line-height: .9;
 }
 .instance-tabs-list li {

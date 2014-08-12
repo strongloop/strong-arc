@@ -189,7 +189,3 @@ Datasource.service('DatasourceService', [
     return svc;
   }
 ]);
-
-
-
-[{"name":"db","props":{"defaultForType":"db","debug":false}},{"name":"mongodb","props":{"defaultForType":"mongodb","connector":"loopback-connector-mongodb","database":"apistudio","host":"localhost","port":27017,"debug":false,"safe":true,"w":1,"hostname":"localhost","url":"mongodb://localhost:27017/apistudio"}},{"name":"apmDev","props":{"defaultForType":"mysql","connector":"loopback-connector-mysql","database":"apm","host":"localhost","port":3306,"username":"root","password":"","debug":false,"collation":"utf8_general_ci","charset":"utf8","supportBigNumbers":false,"timezone":"local"}},{"name":"icarmysql","props":{"defaultForType":"mysql","connector":"loopback-connector-mysql","host":"demo.strongloop.com","port":3306,"database":"demo","username":"demo","password":"L00pBack","debug":false,"collation":"utf8_general_ci","charset":"utf8","supportBigNumbers":false,"timezone":"local"}},{"name":"push","props":{"defaultForType":"push","connector":"loopback-push-notification","installation":"installation","notification":"notification","application":"application","debug":false}},{"name":"mail","props":{"defaultForType":"mail","debug":false}},{"name":"test","type":"datasource","props":{"defaultForType":"teset","connector":"loopback-connector-oracle","database":"teste","host":"asdfasfd","port":"3423","":"save"}},{"name":"test2","type":"datasource","props":{"defaultForType":"test2","connector":"loopback-connector-mysql","database":"tesr2","host":"asdfasdf","port":"3344","":"save"}}]
