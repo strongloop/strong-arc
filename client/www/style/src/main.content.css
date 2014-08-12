@@ -82,6 +82,6 @@
     padding-top: 2.6rem;
 }
 .instance-body-container {
-    min-height:800px;
+    height:600px;
     overflow-y: auto;
 }

@@ -115,93 +115,68 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
             className="model-instance-header-btn btn btn-default btn-block"
             title="Details" >
             <span className={iconClasses}></span>Details</button>
-          <div data-ui-type="table" className={classes}>
-            <div data-ui-type="row">
-              <div data-ui-type="cell">
-                <div data-ui-type="table" >
-                  <div data-ui-type="row">
-                    <div data-ui-type="cell">
-                      <label>plural</label>
-                    </div>
-                    <div data-ui-type="cell">
-                      <input type="text"
-                        value={modelDef.plural}
-                        onChange={this.handleChange}
-                        data-name="plural"
-                        id="ModelPlural"
-                        name="ModelPlural"
-                        className="model-instance-editor-input" />
-                    </div>
-                  </div>
-                  <div data-ui-type="row">
-                    <div data-ui-type="cell">
-                      <label>base model</label>
-                    </div>
-                    <div data-ui-type="cell">
-                      <input type="text"
-                      value={modelDef.base}
-                      onChange={this.handleChange}
-                      data-name="base"
-                      id="ModelBase"
-                      name="ModelBase"
-                      className="model-instance-editor-input" />
-                    </div>
-                  </div>
-                  <div data-ui-type="row">
-                    <div data-ui-type="cell"><label>public</label></div>
-                    <div data-ui-type="cell">
-                      <input type="checkbox"
-                        checked={modelDef.public}
-                        className="model-instance-editor-input" />
-                    </div>
-                  </div>
-                  <div data-ui-type="row">
-                    <div data-ui-type="cell"><label>strict</label></div>
-                    <div data-ui-type="cell">
-                      <input type="checkbox"
-                        checked={modelDef.strict}
-                        className="model-instance-editor-input" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div data-ui-type="cell">
-                <div data-ui-type="table"  className="test">
-                  <div data-ui-type="row">
-                    <div data-ui-type="cell">
-                      <label>datasource</label>
-                    </div>
-                    <div data-ui-type="cell">
-                      <input type="text" value={modelDef.dataSource} onChange={this.handleChange} className="model-instance-editor-input" />
-                    </div>
-                  </div>
-                  <div data-ui-type="row">
-                    <div data-ui-type="cell">
-                      <label>Indexes</label>
-                    </div>
-                    <div data-ui-type="cell">
-                      <input type="button" value="Stacy" className="btn btn-default" />
-                    </div>
-                  </div>
-                  <div data-ui-type="row">
-                    <div data-ui-type="cell">
-                      <label>Scopes</label>
-                    </div>
-                    <div data-ui-type="cell">
-                      <input type="button" value="is" className="btn btn-default" />
-                    </div>
-                  </div>
-                  <div data-ui-type="row">
-                    <div data-ui-type="cell">
-                      <label>Access Control</label>
-                    </div>
-                    <div data-ui-type="cell">
-                      <input type="button" value="cool" className="btn btn-default" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          
+          
+          <div>
+	          <ul className="model-detail-text-input-row">
+	          	<li>
+	          		<div className="model-detail-label">
+	          		  <label>plural</label>
+	          		</div>
+	          		<input type="text"
+	          		 	value={modelDef.plural}
+	          		    onChange={this.handleChange}
+	          		    data-name="plural"
+	          		    id="ModelPlural"
+	          		    name="ModelPlural"
+	          		    className="model-instance-editor-input" />
+	          	</li>
+	          	<li>
+	          		<div className="model-detail-label">
+	          		  <label>base model</label>
+	          		</div>
+	          		<input type="text"
+	          		  value={modelDef.base}
+	          		  onChange={this.handleChange}
+	          		  data-name="base"
+	          		  id="ModelBase"
+	          		  name="ModelBase"
+	          		  className="model-instance-editor-input" />
+	          	</li>
+	          	<li>
+	          		<div className="model-detail-label">
+	          		  <label>datasource</label>
+	          		</div>
+	          		<input type="text" value={modelDef.dataSource} onChange={this.handleChange} className="model-instance-editor-input" />
+	          	</li>
+	          </ul>
+	          	
+	          <ul className="model-detail-button-input-row">
+	          	<li className="listNarrow">
+	          		<label className="model-detail-label">public</label>
+	          		<input type="checkbox"
+	          		   checked={modelDef.public}
+	          		   className="model-instance-editor-input" />
+	          	</li>
+	          	<li className="listNarrow">
+	          		<label className="model-detail-label">strict</label>
+	          		<input type="checkbox"
+	          		    checked={modelDef.strict}
+	          		    className="model-instance-editor-input" />
+	          	</li>
+	          	<li className="listWide">
+	          		<label className="model-detail-label">Indexes</label>
+	          		<input type="button" value="Edit" className="model-detail-pocket-button" />
+	          	</li>
+	          	<li className="listWide">
+	          		<label className="model-detail-label">Scopes</label>
+	          		<input type="button" value="Edit" className="model-detail-pocket-button" />
+	          	</li>
+	          	<li className="listWide">
+	          		<label className="model-detail-label">Access Control</label>
+	          		<input type="button" value="Edit" className="model-detail-pocket-button" />
+	          	</li>
+	          </ul>
           </div>
         </form>
         );

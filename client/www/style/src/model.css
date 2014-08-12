@@ -205,16 +205,63 @@
     z-index: 4000;
 }
 
-/*Hack for demo*/
 input {
 	border: none;
 	font-size: 90%;
 }
 .model-detail-pocket-container {
-    width: 90%;
-    margin: 0 auto 0 auto;
+	background: orange;;
+    width: 80rem;
+    height: 30rem;
+    margin-left: 5.5rem;
     border-bottom: 1px solid #d1d1d1;
 }
+.model-detail-column-layout {
+	width: 30rem;
+	height:	10rem;
+	border: 1px solid #333;
+}
+.model-detail-label {
+	width: 15rem;
+}
+.model-detail-pocket-button {
+	color: #FFFFFF;
+	background-color: #7dbd34;
+	width: 14.5rem;
+	height: 2.5rem;
+	border-radius: 3px;
+	border-bottom: 2px solid #67992d;
+	padding-top: 0.3rem;
+	-moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.36);
+	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.36);
+}
+
+.model-detail-text-input-row{
+	width: 100%;
+}
+
+.model-detail-text-input-row li{
+	display:  inline-block;
+	width: 33%;
+}
+.model-detail-button-input-row{
+	width: 100%;
+}
+.model-detail-button-input-row .li{
+	display:  inline-block;
+}
+.model-detail-button-input-row .listNarrow{
+	width: 20%;
+}
+.model-detail-button-input-row .listWide{
+	width: 40%;
+}
+
+
+.model-detail-pocket-button:hover {
+	background-color: #67992d;
+}
+
 .model-instance-property-list {
     margin-top: 1rem;
     width: 90%;

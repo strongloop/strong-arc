@@ -50,9 +50,9 @@ Discovery.service('DiscoveryService', [
       return deferred.promise;
 
     };
-    svc.getModelFromSchema = function (dsDef, dsId, table) {
+    svc.getModelFromSchema = function (dsDef, dsId, tableName) {
       var deferred = $q.defer();
-      var xyz = dsDef.$prototype$discoverModelDefinition({modelName: table, id: dsId},
+      var xyz = dsDef.$prototype$discoverModelDefinition({modelName: tableName, id: dsId},
         function (response) {
           deferred.resolve(response);
         },
@@ -75,7 +75,10 @@ Discovery.service('DiscoveryService', [
 //      // set up a chain of promises based on the number of tables to get schema's for
       var tableName = tables[0].name;
 
-
+      var modelDefinition = {};
+      var targetRequest = function(p, dsId, tableName) {
+        return svc.getModelFromSchema(p, dsId, tableName);
+      };
       /*
        *
        *
@@ -99,22 +102,47 @@ Discovery.service('DiscoveryService', [
           var x = p;
           var resolution = tables.map(function(table) {
             console.log('|');
-            console.log(JSON.stringify(table));
+            console.log('target table being pushed onto stack' + JSON.stringify(table));
             console.log('|');
-            var modelDefinition = svc.getModelFromSchema(p, dsId, table.name);
+           // var modelDefinition =
 
-            tableModelPromises.push(modelDefinition);
+            var xp = new p.$prototype$discoverModelDefinition({modelName: table.name, id: dsId},
+              function(response) {
+                return {data:response};
+              },
+              function(response) {
+                console.warn('bad discover model: ' + response);
+              }
+            );
 
+            tableModelPromises.push(xp);
 
           });
-
+          var returnArray = [];
           $q.all(tableModelPromises).then(function(result) {
-            console.log('holy fuck it worked:  ' + JSON.stringify(result));
-            var returnArray = [];
-            for (var i = 0;i < result.length;i++) {
-              returnArray.push(result[i].status);
-            }
-            deferred.resolve(returnArray);
+            var tmp = [];
+            var finalArray = [];
+            angular.forEach(result, function(response) {
+              tmp.push(response.status);
+            });
+            var xiii = tmp;
+
+//            for (var i = 0;i < result.length;i++) {
+//              returnArray.push(result[i].status);
+//            }
+            var relList = tmp.map(function(item) {
+              for (property in item) {
+                console.log('KEY: ' + property);
+                finalArray.push(item[property]);
+              }
+
+            });
+//
+//            var aList = returnArray.map(function(key, value) {
+//              console.log(key);
+//            });
+
+            deferred.resolve(finalArray);
 
           });
 

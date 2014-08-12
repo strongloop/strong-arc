@@ -9,8 +9,9 @@ Discovery.directive('slDiscoverySchema', [
   '$timeout',
   '$rootScope',
   'DiscoveryService',
+  'PropertyService',
   '$http',
-  function(ModelService, $timeout, $rootScope, DiscoveryService, $http) {
+  function(ModelService, $timeout, $rootScope, DiscoveryService, PropertyService, $http) {
     return {
       replace:true,
       templateUrl: './scripts/modules/discovery/templates/discovery.schema.html',
@@ -23,6 +24,16 @@ Discovery.directive('slDiscoverySchema', [
         $scope.tableSelections = [];
         $scope.targetTables = [];
         $scope.gTables = [];
+
+
+        $scope.datasources = [];
+        $scope.apiSourceTables = [];
+        $scope.isDsTableGridVisible = false;
+        // $scope.isDsTablesLoadingIndicatorVisible = false;
+
+        $scope.filterOptions = {
+          filterText: ''
+        };
 
 
         $scope.schemaTables3 = [];
@@ -40,7 +51,24 @@ Discovery.directive('slDiscoverySchema', [
 
 
         $scope.isSchemaModelComposerVisible = function(){
-          return $scope.targetTables.length > 0;
+          return $scope.apiSourceTables.length > 0;
+        };
+        var propertyInjectionSet = function(modelId, propNames, propObj) {
+
+          var damn = propNames.map(function(key) {
+            var testObj = propObj[key];
+            console.log(testObj);
+            testObj.name = key;
+            testObj.modelId = modelId;
+            testObj.facetName = 'common';
+            PropertyService.createModelProperty(testObj).
+              then(function(response){
+                console.log('GREAT WE CREATED A Property')
+              }).
+              catch(function error(msg) {
+                console.error('bad WE did not create A Property: ' + msg);
+              });
+          });
         };
 
         $scope.discoveryNexBtnClicked = function() {
@@ -50,7 +78,7 @@ Discovery.directive('slDiscoverySchema', [
           $scope.gTables = DiscoveryService.getModelsFromSchemaSelections(dsName, $scope.targetTables).
             then(function(response) {
               //$scope.gTables = response.status;
-              $scope.apiSourceTables.push(response.status);
+              $scope.apiSourceTables = response;
             });
           $scope.isDsTableGridVisible = false;
           switch($scope.currentDiscoveryStep) {
@@ -68,6 +96,28 @@ Discovery.directive('slDiscoverySchema', [
               $scope.currentDiscoveryStep = 'initialize';
               $scope.showDiscoveryBackButton = true;
               // ('create the following models: '  );
+              $scope.apiSourceTables.map(function(table) {
+                table.facetName = 'common';
+                ModelService.createModel(table).
+                  then(function(response) {
+                    // create properties
+                    var modelId = response.id;
+
+                    var propertiesCollection = [];
+
+                    var propKeys = Object.keys(table.properties);
+
+
+
+                    var newProperty = new propertyInjectionSet(modelId, propKeys, table.properties);
+
+
+
+
+                    $scope.activeInstance = response;
+                  }
+                );
+              });
               var newModels= ModelService.generateModelsFromSchema($scope.apiSourceTables);
 
               $scope.cancel();
@@ -133,22 +183,27 @@ Discovery.directive('slDiscoverySchema', [
 
 
 
-        $scope.datasources = [];
-        $scope.apiSourceTables = [];
-        $scope.isDsTableGridVisible = false;
-        // $scope.isDsTablesLoadingIndicatorVisible = false;
-
-        $scope.filterOptions = {
-          filterText: ''
-        };
-
       },
       link: function(scope, el, attrs) {
 
 
 
+
       }
     }
+  }
+]);
+Discovery.directive('slDiscoveryModelPreview', [
+  function() {
+    return {
+      replace: true,
+      link: function(scope, el, attrs) {
+
+        scope.$watch('apiSourceTables', function(tables) {
+          React.renderComponent(TargetTableModelPreview({scope:scope}), el[0]);
+        },true);
+      }
+    };
   }
 ]);
 Discovery.directive('slCommonDisabledAttrib', [

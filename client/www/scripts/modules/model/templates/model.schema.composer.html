@@ -8,33 +8,33 @@
         <h4>{{ item.name }}</h4>
         <!--<input type="button" disabled="disabled" value="select all" class="btn btn-sm btn-default" />-->
         <!--<input type="button" value="generate model" class="btn btn-sm btn-primary" ng-click="generateModelFromDataSource()">-->
-        <table class="model-schema-editor-source-table-table">
-          <thead>
-          <tr>
-            <th>
+        <!--<table class="model-schema-editor-source-table-table">-->
+          <!--<thead>-->
+          <!--<tr>-->
+            <!--<th>-->
 
-            </th>
-            <th>
-              col name
-            </th>
-            <th>
-              data type
-            </th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr ng-repeat="property in item.properties">
-            <td>
-              <input type="checkbox" checked="checked">
-            </td>
-            <td class="discovery-table-column">{{ property.columnName }}</td>
-            <td class="discovery-table-column">{{ property.dataType }}</td>
-          </tr>
-          </tbody>
-        </table>
-        <ul>
-          <li ng-repeat="prop in newModel.properties">{{ prop.columnName }}</li>
-        </ul>
+            <!--</th>-->
+            <!--<th>-->
+              <!--col name-->
+            <!--</th>-->
+            <!--<th>-->
+              <!--data type-->
+            <!--</th>-->
+          <!--</tr>-->
+          <!--</thead>-->
+          <!--<tbody>-->
+          <!--<tr ng-repeat="property in item.properties">-->
+            <!--<td>-->
+              <!--<input type="checkbox" checked="checked">-->
+            <!--</td>-->
+            <!--<td class="discovery-table-column">{{ property.columnName }}</td>-->
+            <!--<td class="discovery-table-column">{{ property.dataType }}</td>-->
+          <!--</tr>-->
+          <!--</tbody>-->
+        <!--</table>-->
+        <!--<ul>-->
+          <!--<li ng-repeat="prop in newModel.properties">{{ prop.columnName }}</li>-->
+        <!--</ul>-->
       </li>
     </ul>
   </div>
