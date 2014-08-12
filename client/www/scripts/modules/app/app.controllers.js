@@ -376,24 +376,25 @@ app.controller('StudioController', [
     * CONTENT EDIT TABS CLICK EVENTS
     *
     * */
-    $scope.instanceTabItemClicked = function(name) {
+    $scope.instanceTabItemClicked = function(id) {
       var openInstanceRefs = IAService.getOpenInstanceRefs();
       // defensive check to make sure the component is initialized
       if (openInstanceRefs && openInstanceRefs.length > 0){
         // only if the model isn't currently active
-        var targetInstance = IAService.activateInstanceByName(name);
-        IAService.setActiveInstance(targetInstance, 'model');
-        IAService.getActiveInstance().
-          then(function(response) {
-            $scope.activeInstance = response;
-          });
+        var targetInstance = IAService.activateInstanceById(id).
+          then(function(targetInstance) {
+            $scope.activeInstance = targetInstance;
+            $scope.clearSelectedInstances();
+          }
+        );
+
       }
-      $scope.clearSelectedInstances();
+
     };
 
     $scope.instanceTabItemCloseClicked = function(id) {
 
-      $scope.openInstanceRefs = IAService.closeInstanceByName(id);
+      $scope.openInstanceRefs = IAService.closeInstanceById(id);
       // reset the active instance and reset tabs and nav
       if ($scope.activeInstance.id === id) {
         if ($scope.openInstanceRefs.length === 0) {
@@ -402,8 +403,11 @@ app.controller('StudioController', [
         else {
 
           // active the first instance by default
-          $scope.activeInstance = IAService.activateInstanceById($scope.openInstanceRefs[0].id);
-          $scope.activeInstance = IAService.activateInstanceById($scope.openInstanceRefs[0].id);
+          IAService.activateInstanceById($scope.openInstanceRefs[0].id).
+            then(function(instance) {
+              $scope.activeInstance = instance;
+            }
+          );
         }
       }
       $scope.clearSelectedInstances();

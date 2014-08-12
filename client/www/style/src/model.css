@@ -218,6 +218,9 @@ input {
 	height: 7rem;
 	border: 1px solid #333;
 }
+.model-header-name-container {
+	
+}
 .model-detail-container {
 	border-bottom: 1px solid #DDDDDD;
 }

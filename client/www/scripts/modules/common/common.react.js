@@ -53,10 +53,10 @@ var CommonInstanceTabsView = (CommonInstanceTabsView = React).createClass({
     var cx = React.addons.classSet;
 
     var clickInstanceTabItem = function(event) {
-      if (event.target.attributes['data-name']){
+      if (event.target.attributes['data-id']){
         // test to see if tab not already 'active'
         scope.$apply(function () {
-          scope.instanceTabItemClicked(event.target.attributes['data-name'].value);
+          scope.instanceTabItemClicked(event.target.attributes['data-id'].value);
         });
       }
     };
@@ -82,8 +82,8 @@ var CommonInstanceTabsView = (CommonInstanceTabsView = React).createClass({
 
       return (
         <li className={classNameVar}>
-          <button onClick={clickInstanceTabItem} className=" instance-tab-item-button" data-name={item.name}>{item.name}</button>
-          <button onClick={clickInstanceTabClose} className=" instance-tab-close-button" data-name={item.name}>
+          <button onClick={clickInstanceTabItem} className="instance-tab-item-button" data-name={item.name} data-id={item.id}>{item.name}</button>
+          <button onClick={clickInstanceTabClose} className=" instance-tab-close-button" data-name={item.name} data-id={item.id}>
             <span className="glyphicon glyphicon-remove" data-name={item.name} data-id={item.id}></span>
           </button>
         </li>

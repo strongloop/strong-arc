@@ -69,6 +69,7 @@ Common.directive('slCommonInstanceTabsView', [
               isActive = true;
             }
             tabItems.push({
+              id:scope.openInstanceRefs[i].id,
               name:scope.openInstanceRefs[i].name,
               isActive:isActive
             });
@@ -82,13 +83,13 @@ Common.directive('slCommonInstanceTabsView', [
           if (scope.activeInstance) {
             renderComp();
           }
-        });
+        },true);
 //        scope = scope.$parent;
         scope.$watch('openInstanceRefs', function(newNames, oldNames) {
           if (scope.activeInstance) {
             renderComp();
           }
-        });
+        }, true);
       }
     }
   }

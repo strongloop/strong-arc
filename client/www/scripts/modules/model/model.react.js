@@ -96,22 +96,24 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
       returnVal = (
         <form role="form">
         	<div className="model-header-container">
-	          <div data-ui-type="cell">
-	            <label>name</label>
-	          </div>
-	          <div data-ui-type="cell">
-	            <input type="text"
-	              value={modelDef.name}
-	              onChange={that.handleChange}
-	              data-name="name"
-	              id="ModelName"
-	              name="ModelName"
-	              className="model-instance-editor-input" />
-	          </div>
-	          <button onClick={saveModelDefinition}
-	            className="model-detail-pocket-button model-save-button"
-	            data-modelId={modelDef.Id} >Save</button>
-          </div>
+        		<div className="model-header-name-container">
+		          <div data-ui-type="cell">
+		            <label>name</label>
+		          </div>
+		          <div data-ui-type="cell">
+		            <input type="text"
+		              value={modelDef.name}
+		              onChange={that.handleChange}
+		              data-name="name"
+		              id="ModelName"
+		              name="ModelName"
+		              className="model-instance-editor-input" />
+		          </div>
+	            </div>
+	            <button onClick={saveModelDefinition}
+	              className="model-detail-pocket-button model-save-button"
+	              data-modelId={modelDef.Id} >Save</button>
+          	</div>
           <button onClick={clickHandler}
             type="button"
             className="model-instance-header-btn btn btn-default btn-block"
