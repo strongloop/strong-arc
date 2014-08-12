@@ -1,4 +1,4 @@
-/* @override 
+/* @override
 	http://0.0.0.0:3003/style/dev/discovery.css */
 
 
@@ -56,6 +56,20 @@
 .discovery-schema-selected-table-list tbody tr:nth-child(odd) {
     background-color: #f3f3f3;
 }
+
+.discovery-target-model-table .table-header {
+    background-color: #eaeaea;
+    border-bottom: 1px solid #d4d4d4;
+    font-weight:bold;
+}
+.discovery-target-model-table [data-ui-type="cell"] {
+    padding:5px;
+    border:1px solid #eeeeee;
+}
+.discovery-target-model-table [data-ui-type="row"]:nth-of-type(odd) {
+    background-color: rgb(243, 243, 243);
+}
+
 
 /*Hack for demo*/
 

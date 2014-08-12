@@ -49,8 +49,8 @@ var TargetTableModelRowItem = (TargetTableModelRowItem = React).createClass({
         </div>);
     });
 
-    var mainTable = (<div data-ui-type="table">
-      <div data-ui-type="row" class="table-header">
+    var mainTable = (<div data-ui-type="table" className="discovery-target-model-table">
+      <div data-ui-type="row" className="table-header">
         <div data-ui-type="cell">
           name
         </div>
