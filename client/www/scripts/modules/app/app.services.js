@@ -36,7 +36,11 @@ app.service('AppStorageService', [
     svc.removeItem = function(itemName) {
       var localScope = getSlScope();
       delete localScope[itemName];
+      window.localStorage.setItem('slScope', JSON.stringify(localScope));
       return localScope;
+    };
+    svc.clearActiveInstance = function() {
+      svc.removeItem('activeInstance');
     };
     svc.clearStorage = function() {
       window.localStorage.removeItem('ApiModels');

@@ -1,12 +1,12 @@
 // Copyright StrongLoop 2014
 Discovery.service('DiscoveryService', [
-  'DatasourceService',
+  'DataSourceService',
   '$q',
   'DataSourceDefinition',
   'Datasourcedef',
   '$http',
   '$timeout',
-  function (DatasourceService, $q, DataSourceDefinition, Datasourcedef, $http, $timeout) {
+  function (DataSourceService, $q, DataSourceDefinition, Datasourcedef, $http, $timeout) {
     var svc = {};
 
     svc.getSchemaDataFromDatasource = function (dsId) {
@@ -96,7 +96,7 @@ Discovery.service('DiscoveryService', [
        *
        *
        * */
-      var dsDef = DatasourceService.getDataSourceById(dsId).
+      var dsDef = DataSourceService.getDataSourceById(dsId).
         then(function (response) {
           var p = response;
           var x = p;

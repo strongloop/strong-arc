@@ -1,10 +1,10 @@
 // Copyright StrongLoop 2014
 Datasource.controller('DatasourceMainController', [
   '$scope',
-  'DatasourceService',
+  'DataSourceService',
   '$timeout',
   '$http',
-  function($scope, DatasourceService, $timeout, $http) {
+  function($scope, DataSourceService, $timeout, $http) {
     /*
     *
     *   <button>Get Datasource Operations: dataSource.operations().</button>

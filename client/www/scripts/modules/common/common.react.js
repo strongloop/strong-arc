@@ -67,6 +67,9 @@ var CommonInstanceTabsView = (CommonInstanceTabsView = React).createClass({
           scope.instanceTabItemCloseClicked(event.target.attributes['data-id'].value);
         });
       }
+      else if (event.target.attributes['data-name']) {
+        console.log('close the new model tab');
+      }
     };
     var items = [];
     var iterator;
@@ -90,11 +93,13 @@ var CommonInstanceTabsView = (CommonInstanceTabsView = React).createClass({
         );
     });
 
-    return (
-      <div>
-        <ul className=" instance-tabs-list">{items}</ul>
-      </div>
-      );
+    var retVal = (<div />);
+    if (scope.activeInstance.name) {
+      retVal = (<div>
+          <ul className=" instance-tabs-list">{items}</ul>
+        </div>);
+    }
+    return retVal;
   }
 });
 var CommonPreviewInstanceContainer = (CommonPreviewInstanceContainer = React).createClass({

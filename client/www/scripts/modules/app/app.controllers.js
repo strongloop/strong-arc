@@ -4,14 +4,14 @@ app.controller('StudioController', [
   '$state',
   '$http',
   'IAService',
-  'DatasourceService',
+  'DataSourceService',
   'PropertyService',
   'ExplorerService',
   '$location',
   '$timeout',
   'ModelService',
   'DiscoveryService',
-  function($scope, $state, $http, IAService, DatasourceService, PropertyService, ExplorerService, $location, $timeout, ModelService, DiscoveryService) {
+  function($scope, $state, $http, IAService, DataSourceService, PropertyService, ExplorerService, $location, $timeout, ModelService, DiscoveryService) {
 
     /*
      *
@@ -119,7 +119,7 @@ app.controller('StudioController', [
      *
      * */
     var loadDataSources = function() {
-      $scope.mainNavDatasources = DatasourceService.getAllDatasources();
+      $scope.mainNavDatasources = DataSourceService.getAllDatasources();
       $scope.mainNavDatasources.
         then(function (result) {
 
@@ -127,20 +127,9 @@ app.controller('StudioController', [
           $scope.apiDataSourcesChanged = !$scope.apiDataSourcesChanged;
 
         });
-    }
+    };
     loadDataSources();
 
-
-    //$scope.mainNavDatasources = [];
-//    $scope.mainNavDatasources = DatasourceService.getAllDatasources();
-//    $scope.mainNavDatasources.
-//      then(function (result) {
-//
-//
-//        $scope.mainNavDatasources = result;
-//
-//
-//      });
 
 
 
@@ -161,12 +150,6 @@ app.controller('StudioController', [
     * METHODS
     *
     * */
-    $scope.selectModel = function(name) {
-      $scope.currentModelSelections = IAService.addToCurrentModelSelections(name);
-    };
-    $scope.selectDatasource = function(name) {
-      $scope.currentModelSelections = IAService.addToCurrentModelSelections(name);
-    };
     $scope.clearSelectedInstances = function() {
       $scope.instanceSelections = IAService.clearInstanceSelections();
     };
@@ -199,48 +182,38 @@ app.controller('StudioController', [
      *
      *  NAV CLICK EVENTS
      *
-     *
-     *
-     *    DOUBLE CLICK
-     *
-     *
-     *   An item has been double clicked.
-     *
-     *   - clear any preview
-     *   - add item to currently active instances
-     *   - set item as the currently active instance
-     *
      * */
+    // disable double click for now
     $scope.navTreeItemDblClicked = function(type, target) {
 
-    //  jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
-      switch(type) {
-
-        case 'model':
-
-//          $scope.activeInstance = IAService.setActiveInstance(target, 'model');
-          $scope.activeInstance = IAService.activateInstanceByName(target, 'model');
-
-          $scope.currentOpenModelNames = IAService.getOpenModelNames();
-          $scope.clearSelectedInstances();
-          $scope.instanceType = 'model';
-
-          break;
-
-        case 'datasource':
-          //$scope.activeDatasourceInstance = IAService.setActiveInstance(target, 'datasource');
-          $scope.activeInstance = IAService.activateInstanceByName(target, 'datasource');
-
-          $scope.currentOpenDatasourceNames = IAService.getOpenDatasourceNames();
-          $scope.clearSelectedInstances();
-          $scope.instanceType = 'datasource';
-
-          break;
-        default:
-
-      }
-
-      IAService.showInstanceView();
+//    //  jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
+//      switch(type) {
+//
+//        case 'model':
+//
+////          $scope.activeInstance = IAService.setActiveInstance(target, 'model');
+//          $scope.activeInstance = IAService.activateInstanceByName(target, 'model');
+//
+//          $scope.currentOpenModelNames = IAService.getOpenModelNames();
+//          $scope.clearSelectedInstances();
+//          $scope.instanceType = 'model';
+//
+//          break;
+//
+//        case 'datasource':
+//          //$scope.activeDatasourceInstance = IAService.setActiveInstance(target, 'datasource');
+//          $scope.activeInstance = IAService.activateInstanceByName(target, 'datasource');
+//
+//          $scope.currentOpenDatasourceNames = IAService.getOpenDatasourceNames();
+//          $scope.clearSelectedInstances();
+//          $scope.instanceType = 'datasource';
+//
+//          break;
+//        default:
+//
+//      }
+//
+//      IAService.showInstanceView();
     };
 
     /*
@@ -319,7 +292,7 @@ app.controller('StudioController', [
 
           break;
         case 'datasource':
-          //$scope.previewInstance = DatasourceService.getDatasourceByName(target);
+          //$scope.previewInstance = DataSourceService.getDatasourceByName(target);
           /*
            * cases:
            * - item is not open: open preview view of item
@@ -329,7 +302,7 @@ app.controller('StudioController', [
            * */
 
           var openDatasourceNames = IAService.getOpenDatasourceNames();
-          var targetDS = DatasourceService.getDatasourceByName(targetName);
+          var targetDS = DataSourceService.getDatasourceByName(targetName);
 
           // check for preview mode
 
@@ -398,7 +371,9 @@ app.controller('StudioController', [
       // reset the active instance and reset tabs and nav
       if ($scope.activeInstance.id === id) {
         if ($scope.openInstanceRefs.length === 0) {
+          IAService.clearActiveInstance();
           $scope.activeInstance = {};
+
         }
         else {
 
@@ -413,19 +388,6 @@ app.controller('StudioController', [
       $scope.clearSelectedInstances();
     };
 
-
-    /*
-     *
-     * get the list of current active instances
-     *
-     * check for a current active instance
-     *
-     * render instance editor view
-     *
-     * */
-    $scope.openInstances = function() {
-
-    };
     // delete models
     $scope.deleteModelDefinitionRequest = function(modelId) {
       if (modelId){
@@ -497,6 +459,7 @@ app.controller('StudioController', [
     $scope.createModelViewRequest = function() {
       $scope.instanceType = 'model';
       $scope.activeInstance = ModelService.createNewModelInstance();
+      $scope.activeInstance = IAService.setActiveInstance($scope.activeInstance, 'model');
       $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
       $scope.clearSelectedInstances();
       IAService.showInstanceView();
@@ -507,7 +470,7 @@ app.controller('StudioController', [
 
     $scope.createDatasourceViewRequest = function() {
       $scope.instanceType = 'datasource';
-      $scope.activeInstance = DatasourceService.createNewDatasourceInstance();
+      $scope.activeInstance = DataSourceService.createNewDatasourceInstance();
       $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
       $scope.clearSelectedInstances();
       IAService.showInstanceView();
@@ -524,43 +487,23 @@ app.controller('StudioController', [
         console.log('SAVE or CREATE datasource: ' + formObj.name);
         // check to make sure it is unique
 //
-//      if (DatasourceService.isNewDatasourceNameUnique(formObj.name)) {
+//      if (DataSourceService.isNewDatasourceNameUnique(formObj.name)) {
         // call create model
         if (!formObj.facetName) {
           formObj.facetName = 'server';
         }
         console.log('CREATE THE Datasource: ' + JSON.stringify(formObj));
-        // TODO - should be a callback to ensure model created successfully
 
-//
-//        var targetDef = {
-//          name:formObj.name,
-//          type:'datasource',
-//          props:{}
-//        };
-//        delete formObj.name;
-//        targetDef.props = formObj;
 
-        DatasourceService.createDataSourceDefinition(formObj).
+        DataSourceService.createDataSourceDefinition(formObj).
           then(function(response) {
             $scope.activeInstance = response;
             $scope.activeInstance.type = 'datasource';
             loadDataSources();
           }
         );
-        // $scope.activeInstance = IAService.activateInstanceByName(targetDef.name, 'datasource');
-
 
       }
-
-
-//        return $scope.activeInstance;
-
-//
-//      }
-//      else {
-//        console.warn('THE NEW Datasource NAME IS NOT UNIQUE');
-//      }
     };
 
 
@@ -653,34 +596,6 @@ app.controller('StudioController', [
         }
       );
 
-      // create default object config
-      // post to service
-      // update properties
-
-
-
-
-
-
-
-
-
-//
-//
-//
-//      console.log('create new property');
-//      var xModel = $scope.activeInstance;
-//      if (!xModel.properties){
-//        xModel.properties = [];
-//      }
-//      xModel.properties.push({name:'property-name', props: { type:'string'}});
-//
-//      xModel.type = 'model';
-//      $scope.activeInstance = xModel;
-//
-//
-//
-//      $scope.activeModelPropertiesChanged = !$scope.activeModelPropertiesChanged;
     };
 
 

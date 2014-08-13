@@ -60,9 +60,7 @@ Model.directive('modelPropertiesEditor',[
           if (!scope.properties) {
             scope.properties = [];
           }
-          if (scope.activeInstance && scope.activeInstance.name) {
-            React.renderComponent(ModelPropertiesEditor({scope:scope}), el[0]);
-          }
+          React.renderComponent(ModelPropertiesEditor({scope:scope}), el[0]);
 
 
         }
@@ -81,7 +79,7 @@ Model.directive('modelPropertiesEditor',[
             scope.properties = properties;
           }
           renderComp();
-        });
+        }, true);
 
 
         scope.$watch('activeModelPropertiesChanged', function(val) {
@@ -98,21 +96,23 @@ Model.directive('modelPropertiesEditor',[
           }
           renderComp();
 
-        });
+        }, true);
         scope.$watch('activeInstance', function(activeInstance) {
           var properties = [];
-          if (!activeInstance.properties) {
-            activeInstance.properties = properties;
-            scope.properties = properties;
-          }
-          else {
-            scope.properties = activeInstance.properties;
+          if (activeInstance){
+            if (!activeInstance.properties) {
+              activeInstance.properties = properties;
+              scope.properties = properties;
+            }
+            else {
+              scope.properties = activeInstance.properties;
+            }
           }
           if (!scope.properties) {
             scope.properties = properties;
           }
           renderComp();
-        });
+        }, true);
       }
     }
   }

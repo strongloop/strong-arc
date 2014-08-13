@@ -15,7 +15,7 @@ Discovery.directive('slDiscoverySchema', [
     return {
       replace:true,
       templateUrl: './scripts/modules/discovery/templates/discovery.schema.html',
-      controller:  function($scope, DatasourceService) {
+      controller:  function($scope, DataSourceService) {
 
         $scope.isDsTablesLoadingIndicatorVisible = true;
         $scope.currentDiscoveryStep = 'selectTables';

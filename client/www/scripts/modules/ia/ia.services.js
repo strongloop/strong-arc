@@ -4,9 +4,9 @@ IA.service('IAService', [
   'AppStorageService',
   'ModelService',
   'PropertyService',
-  'DatasourceService',
+  'DataSourceService',
   '$q',
-  function($modal, AppStorageService, ModelService, PropertyService, DatasourceService, $q) {
+  function($modal, AppStorageService, ModelService, PropertyService, DataSourceService, $q) {
     var svc = {};
 
     var currentlySelected = [];
@@ -66,6 +66,9 @@ IA.service('IAService', [
       AppStorageService.setItem('openInstanceRefs', sourceInstances);
       return sourceInstances;
     };
+    svc.clearActiveInstance = function() {
+      AppStorageService.clearActiveInstance();
+    };
     svc.activateInstanceById = function(id, type) {
       var deferred = $q.defer();
       var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
@@ -114,7 +117,7 @@ IA.service('IAService', [
           break;
 
         case 'datasource':
-          newInstance = DatasourceService.getDataSourceById(id).
+          newInstance = DataSourceService.getDataSourceById(id).
             then(function(instance) {
               instance.type = 'datasource';
               svc.setActiveInstance(instance, instance.type);
@@ -239,7 +242,7 @@ IA.service('IAService', [
         if (instance.name) {
           instanceName = instance.name;
         }
-        var dsDefs = DatasourceService.getAllDatasources();
+        var dsDefs = DataSourceService.getAllDatasources();
         for (var i = 0;i < dsDefs.length;i++) {
           if (dsDefs[i].name === instanceName) {
             return 'datasource';

@@ -134,12 +134,9 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
       }
     };
     var addNewInstanceRequest = function(event) {
-      if (event.target.attributes['data-type']){
-        console.log('add new: ' + event.target.attributes['data-type'].value);
-        scope.$apply(function() {
-          scope.createModelViewRequest();
-        });
-      }
+      scope.$apply(function() {
+        scope.createModelViewRequest();
+      });
     };
     var navModels = [];
     if (Array.isArray(scope.mainNavModels)) {

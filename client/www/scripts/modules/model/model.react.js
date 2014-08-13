@@ -92,35 +92,34 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
       return false;
     };
     var returnVal = (<div />);
-    if (scope.activeInstance.name) {
+    if (scope.activeInstance && scope.activeInstance.name) {
       returnVal = (
         <form role="form">
         	<div className="model-header-container">
+
+        		<button onClick={saveModelDefinition}
+        		  className="model-detail-pocket-button model-save-button"
+        		  data-modelId={modelDef.Id} >Save</button>
+
         		<div className="model-header-name-container">
-		          <div data-ui-type="cell">
 		            <label>name</label>
-		          </div>
-		          <div data-ui-type="cell">
 		            <input type="text"
 		              value={modelDef.name}
 		              onChange={that.handleChange}
 		              data-name="name"
 		              id="ModelName"
 		              name="ModelName"
-		              className="model-instance-editor-input" />
-		          </div>
+		              className="model-instance-name" />
 	            </div>
-	            <button onClick={saveModelDefinition}
-	              className="model-detail-pocket-button model-save-button"
-	              data-modelId={modelDef.Id} >Save</button>
+
           	</div>
           <button onClick={clickHandler}
             type="button"
             className="model-instance-header-btn btn btn-default btn-block"
             title="Details" >
             <span className={iconClasses}></span>Details</button>
-          
-          
+
+
           <div className="model-detail-container">
 	          <div className="model-detail-input-row">
 	          	<div className="model-detail-input-container">
@@ -154,8 +153,8 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
 	          		<input type="text" value={modelDef.dataSource} onChange={this.handleChange} className="model-instance-editor-input" />
 	          	</div>
 	          </div>
-	          
-	          <div className="model-detail-input-row">
+
+	          <div className="model-detail-button-row">
 	          	<div className="model-detail-input-container listNarrow">
 	          		<label className="model-detail-label">public</label>
 	          		<input type="checkbox"
@@ -183,8 +182,8 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
 	          		</div>
 	          	</div>
 	          </div>
-	          	
-	          
+
+
           </div>
         </form>
         );
@@ -251,33 +250,52 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
       return  (<ModelPropertyRowDetail modelProperty={item} scope={scope} />);
     });
 
+    var retVal = (<div />);
+    if (properties && properties.length) {
+      retVal = (
+        <div>
+          <button type="button" onClick={clickHandler} className="model-instance-header-btn btn btn-default btn-block" title="Properties" ><span className={iconClasses}></span>Properties</button>
+          <div className={classes} >
+            <div className="model-instance-container property-list-header">
+              <div data-ui-type="table">
+                <div data-ui-type="row" className="model-instance-property-table-header-row">
+                  <span data-ui-type="cell" title="property name" className="props-name-header table-header-cell">Name</span>
 
-    return (
-      <div>
-        <button type="button" onClick={clickHandler} className="model-instance-header-btn btn btn-default btn-block" title="Properties" ><span className={iconClasses}></span>Properties</button>
-        <div className={classes} >
-          <div className="model-instance-container property-list-header">
-            <div data-ui-type="table">
-              <div data-ui-type="row" className="model-instance-property-table-header-row">
-                <span data-ui-type="cell" className="props-name-cell table-header-cell" title="property name">name</span>
-                <span data-ui-type="cell" className="props-data-type-cell table-header-cell" title="data type">type</span>
-                <span data-ui-type="cell" className="props-default-value-cell table-header-cell" title="default value"></span>
-                <span data-ui-type="cell" className="props-required-cell" title="required">req</span>
-                <span data-ui-type="cell" className="props-index-cell table-header-cell" title="is index">index</span>
-                <span data-ui-type="cell" className="props-comments-cell table-header-cell header" title="comments">comments</span>
+
+                  <span data-ui-type="cell" title="data type"className="props-data-type-header table-header-cell">Type</span>
+
+                  <span data-ui-type="cell" title="default value" className="props-default-value-header table-header-cell"></span>
+
+
+                  <div data-ui-type="cell" className="props-required-cell table-header-cell">
+                    <div title="required" className="props-required-header">Req</div>
+                  </div>
+
+                  <div data-ui-type="cell" className="props-index-cell table-header-cell">
+                    <div title="is index" className="props-index-header">Index</div>
+                  </div>
+
+                  <div data-ui-type="cell" className="props-comments-cell table-header-cell header">
+                    <div title="comments" className="props-comments-header">Comments</div>
+                  </div>
+
+                </div>
               </div>
             </div>
-          </div>
-          <ul className="model-instance-property-list">
+            <ul className="model-instance-property-list">
             {items}
-          </ul>
-          <button type="button" onClick={this.triggerNewPropertyEditor} className="btn-new-model-property" >New Property</button>
+            </ul>
+            <button type="button" onClick={this.triggerNewPropertyEditor} className="btn-new-model-property" >New Property</button>
+          </div>
+
+
         </div>
 
-
-      </div>
-
       );
+    }
+
+
+    return retVal;
   }
 });
 /*

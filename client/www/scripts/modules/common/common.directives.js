@@ -63,6 +63,12 @@ Common.directive('slCommonInstanceTabsView', [
 
           var tabItems = [];
 
+          // if we have an active instance but no open refs
+          // then we need to fix it by opening the active instance
+          if (scope.openInstanceRefs.length === 0) {
+            IAService.updateOpenInstanceRefs(scope.activeInstance, scope.activeInstance.type);
+          }
+
           for (var i = 0;i < scope.openInstanceRefs.length;i++) {
             var isActive = false;
             if (scope.openInstanceRefs[i].name === scope.activeInstance.name) {
@@ -86,7 +92,16 @@ Common.directive('slCommonInstanceTabsView', [
         },true);
 //        scope = scope.$parent;
         scope.$watch('openInstanceRefs', function(newNames, oldNames) {
-          if (scope.activeInstance) {
+          if ((scope.openInstanceRefs.length > 0) && (!scope.activeInstance.name)){
+            // activate the first open instance
+            IAService.activateInstanceById(scope.openInstanceRefs[0].id, scope.openInstanceRefs[0].type).
+              then(function(instance) {
+                scope.activeInstance = instance;
+                renderComp();
+              }
+            );
+          }
+          else if (scope.activeInstance) {
             renderComp();
           }
         }, true);

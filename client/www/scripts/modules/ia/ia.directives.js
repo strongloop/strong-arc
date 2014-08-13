@@ -1,10 +1,10 @@
 // Copyright StrongLoop 2014
 IA.directive('slIaMainNav', [
   'ModelService',
-  'DatasourceService',
+  'DataSourceService',
   'IAService',
   '$timeout',
-  function(ModelService, DatasourceService, IAService, $timeout) {
+  function(ModelService, DataSourceService, IAService, $timeout) {
     return {
       replace: true,
       link: function(scope, el, attrs) {
@@ -54,7 +54,7 @@ IA.directive('slIaMainNav', [
 
           if (scope.mainNavDatasources.length){
 
-            var discoverableDatasources = DatasourceService.getDiscoverableDatasourceConnectors();
+            var discoverableDatasources = DataSourceService.getDiscoverableDatasourceConnectors();
 
             for (var h = 0;h < scope.mainNavDatasources.length;h++){
               var localDSInstance = scope.mainNavDatasources[h];

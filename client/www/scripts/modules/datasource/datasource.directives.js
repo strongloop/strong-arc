@@ -25,8 +25,8 @@ Datasource.directive('slDatasourceInstanceEditor', [
   }
 ]);
 Datasource.directive('datasourceEditorForm', [
-  'DatasourceService',
-  function(DatasourceService) {
+  'DataSourceService',
+  function(DataSourceService) {
     return {
       replace:true,
       link: function(scope, el, attrs) {

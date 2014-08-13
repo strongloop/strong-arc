@@ -323,6 +323,7 @@ Model.service('ModelService', [
 
     };
     var defaultModelSchema = {
+      id: 'temp.new-model',
       type: 'model',
       facetName: 'common',
       strict: false,
@@ -350,6 +351,7 @@ Model.service('ModelService', [
       // create new model schema
       if (!doesNewModelExist) {
         openInstanceRefs.push({
+          id: defaultModelSchema.id,
           name: defaultModelSchema.name,
           type: 'model'
         });

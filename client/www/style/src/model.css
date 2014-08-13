@@ -114,8 +114,8 @@
 
 */
 .property-list-header {
-    margin: 0 auto 0 auto;
-    width: 90%;
+	margin-left: 4rem;
+	width: 83rem;
 }
 .btn-model-property-spinner {
     border: 0;
@@ -134,30 +134,32 @@
     border-radius: 1rem;
 }
 .model-instance-container [data-ui-type="table"] {
-    width: 100%;
+    
     /*border-right:1px solid #aaaaaa;*/
     /*border-left:1px solid #aaaaaa;*/
 }
 
 .model-instance-container .model-instance-property-table-header-row {
     background-color: #EDEDED;
-    height: 46px;
+    height: 3rem;
     color: #999999;
     font-size: 90%;
 }
 .model-instance-property-table-header-row [data-ui-type="cell"] {
-    border-left: 1px solid #eeeeee;
+    text-transform: capitalize;
+    font-size: 10pt;
+    color: #888888;
 }
 .model-instance-property-list [data-ui-type="cell"] {
     text-align: center;
     padding: 0;
     margin: 0;
 }
-.model-instance-property-list .table-header-cell {
-    padding-left: 1.4rem;
-    padding-top: .6rem;
-    padding-bottom: .6rem;
-    padding-right: .4rem;
+.model-instance-property-list {
+
+}
+.table-header-cell {
+	padding-top: 1rem;
 }
 
 .model-details-pocket-editor-container {
@@ -212,14 +214,31 @@ input {
 	border: none;
 	font-size: 90%;
 }
-
+label {
+	color: #808080;
+}
 .model-header-container {
 	width: 100%;
-	height: 7rem;
-	border: 1px solid #333;
+	min-width: 60rem;
+	height: 6.5rem;
+	border-bottom: 1px solid #DDDDDD;
 }
 .model-header-name-container {
-	
+	display: inline-block;
+	margin-top: 0.7rem;
+	margin-left: 2.5rem;
+	width: 50%;
+	min-width: 40rem;
+}
+.model-header-name-container label{
+	margin-top: 1rem;
+}
+.model-instance-name {
+	font-size: 150%;
+	width: 70%;
+	border: 1px solid #DDDDDD;
+	border-radius: 0.3rem;
+	padding-left: 1rem;
 }
 .model-detail-container {
 	border-bottom: 1px solid #DDDDDD;
@@ -239,9 +258,8 @@ input {
 	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.36);
 }
 .model-save-button {
-	margin-top: -2rem;
 	margin-right: 2rem;
-	display: inline-block;
+	font-size: 14pt;
 	width: 15rem;
 	height: 5rem;
 	float: right;
@@ -252,18 +270,29 @@ input {
 	width: 33%;
 }
 .model-detail-input-row{
-	margin-left: 2.7rem;
-	margin-right: 5rem;
+	margin-left: 5rem;
+	padding-right: 5rem;
 	margin-bottom:	2rem;
 	display:  inline-block;
-	width: 97%;
+	width: 100%;
+	min-width: 50rem;
+	max-width: 90rem;
+}
+.model-detail-button-row{
+	margin-left: 5rem;
+	margin-bottom: 2rem;
+	width: 100%;
+	min-width: 90rem;
+	text-align: justify;
 }
 .listNarrow{
 	width: 10rem;
 	margin-right: 2rem;
 }
 .listWide{
-	width: 18rem;
+	width: 30%;
+	max-width: 20rem;
+	margin-left: 1.1rem;
 }
 
 
@@ -273,7 +302,14 @@ input {
 
 .model-instance-property-list {
     margin-top: 1rem;
-    width: 90%;
+}
+.model-instance-property-list select {
+	font-size: 1.5rem;
+	border: none;
+	background: white;
+	-webkit-appearance: none;
+	height: 2rem;
+	text-transform: capitalize;
 }
 .btn-new-model-property {
     border: 0;
@@ -286,32 +322,45 @@ input {
     color: #4A90E2;
 }
 .props-data-type-cell {
-    width: 7rem;
-    text-align: center;
+    width: 10rem;
 }
-.props-name-cell.table-header-cell {
-    width:18rem;
+.props-data-type-header {
+	width: 4rem;
 }
 .props-name-cell {
     width: 25rem;
-    padding-left: 2rem;
+}
+.props-name-header {
+	width: 20rem;
+	padding-left: 3rem;
 }
 .props-name-cell .btn {
     text-align: left;
     padding-left: 2rem;
 }
 .props-index-cell {
-    width: 5rem;
+    width: 6rem;
     text-align: center;
 }
-.props-comments-cell {
+.props-index-header {
+	margin-left: -8rem;
+}
+.props-comments-cell {	padding-left: 1rem;
+}
+.props-comments-header {
+	margin-left: -4rem;
 }
 .props-default-value-cell {
     width: 18rem;
 }
+.props-default-value-header {
+}
 .props-required-cell {
     width: 5rem;
     text-align: center;
+}
+.props-required-header {
+
 }
 .property-doc-textarea {
     height: 2.6rem;

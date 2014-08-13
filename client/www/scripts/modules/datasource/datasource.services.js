@@ -1,5 +1,5 @@
 // Copyright StrongLoop 2014
-Datasource.service('DatasourceService', [
+Datasource.service('DataSourceService', [
   'Datasourcedef',
   'DataSourceDefinition',
   'AppStorageService',
