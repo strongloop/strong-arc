@@ -1,5 +1,5 @@
-Strong Studio
+strongloop-studio
 =====================
 
-Strong Studio project repo
+StrongLoop Studio project repo
 
