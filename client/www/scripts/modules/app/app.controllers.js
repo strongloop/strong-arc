@@ -1,5 +1,6 @@
 // Copyright StrongLoop 2014
 app.controller('StudioController', [
+  '$rootScope',
   '$scope',
   '$state',
   '$http',
@@ -11,7 +12,7 @@ app.controller('StudioController', [
   '$timeout',
   'ModelService',
   'DiscoveryService',
-  function($scope, $state, $http, IAService, DataSourceService, PropertyService, ExplorerService, $location, $timeout, ModelService, DiscoveryService) {
+  function($rootScope, $scope, $state, $http, IAService, DataSourceService, PropertyService, ExplorerService, $location, $timeout, ModelService, DiscoveryService) {
 
     /*
      *
@@ -60,6 +61,68 @@ app.controller('StudioController', [
     $scope.activeModelPropertiesChanged = false;  // dirty flag
     $scope.explorerDataModelChanged = false; // dirty toggle for triggering renders on the react components
 
+    $scope.$on('IANavEvent', function(event, data) {
+      console.log('IA NAV EVENT PROCESSING');
+      /*
+      *
+      * clean up IA
+      * make sure open instance refs matches with
+      * activeInstance , etc.
+      *
+      *
+      *
+      * */
+      var currActiveInstance = $scope.activeInstance;
+      var openInstanceRefs = IAService.getOpenInstanceRefs();
+
+      // check if there is an active instance
+      if (currActiveInstance && currActiveInstance.id) {
+        var instanceObjRef = {
+          id:currActiveInstance.id,
+          name:currActiveInstance.name,
+          type:currActiveInstance.type
+        };
+        // check if there are open instances and that activeInstance is in it
+        if (openInstanceRefs.length > 0) {
+          var isActiveInstanceOpen = false;
+          // loop over the refs to confirm active instance is in there
+          for (var i = 0;i < openInstanceRefs.length;i++) {
+            if (openInstanceRefs[i].id === currActiveInstance.id) {
+              // active instance is open
+              isActiveInstanceOpen = true;
+              break;
+            }
+          }
+          // if it isn't in there we need to add it
+          if (!isActiveInstanceOpen) {
+            // add active instance to open instance refs
+
+            $scope.openInstanceRefs = IAService.addInstanceRef(instanceObjRef);
+          }
+
+        }
+        else {
+          // we have a mismatch - we have an active instance but no open instance refs
+          // add active instance to openInstanceRefs
+
+          $scope.openInstanceRefs = IAService.addInstanceRef(instanceObjRef);
+        }
+      }
+      else {
+        // there is no active instance so confirm there are no open instance refs
+        if (openInstanceRefs.length > 0) {
+          // we have a mismatch - we have open instances but none are active
+          // set the 0 index open instance ref to the active instance
+          IAService.activateInstanceById(openInstanceRefs[0].id).
+            then(function(instance) {
+              $scope.activeInstance = instance;
+              $rootScope.$broadcast('IANavEvent');
+            }
+          );
+        }
+        // there are no open instances so we're good - everything is closed
+      }
+     });
     /*
     *
     * MAIN UI STATE
@@ -71,7 +134,7 @@ app.controller('StudioController', [
     *
     * */
     // new
-    // temporarily assign to model for dev work
+    // temporarily assign to model for dev work-
    // $scope.activeInstance = IAService.getActiveInstance();  // TODO
 
     IAService.getActiveInstance().
@@ -80,10 +143,6 @@ app.controller('StudioController', [
       });
 
 
-
-
-    // legacy
-    $scope.previewInstance = IAService.clearPreviewInstance();
 
 
     /*
@@ -186,34 +245,6 @@ app.controller('StudioController', [
     // disable double click for now
     $scope.navTreeItemDblClicked = function(type, target) {
 
-//    //  jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
-//      switch(type) {
-//
-//        case 'model':
-//
-////          $scope.activeInstance = IAService.setActiveInstance(target, 'model');
-//          $scope.activeInstance = IAService.activateInstanceByName(target, 'model');
-//
-//          $scope.currentOpenModelNames = IAService.getOpenModelNames();
-//          $scope.clearSelectedInstances();
-//          $scope.instanceType = 'model';
-//
-//          break;
-//
-//        case 'datasource':
-//          //$scope.activeDatasourceInstance = IAService.setActiveInstance(target, 'datasource');
-//          $scope.activeInstance = IAService.activateInstanceByName(target, 'datasource');
-//
-//          $scope.currentOpenDatasourceNames = IAService.getOpenDatasourceNames();
-//          $scope.clearSelectedInstances();
-//          $scope.instanceType = 'datasource';
-//
-//          break;
-//        default:
-//
-//      }
-//
-//      IAService.showInstanceView();
     };
 
     /*
@@ -275,12 +306,12 @@ app.controller('StudioController', [
           var openModelNames = IAService.getOpenModelNames();
           var targetModel = ModelService.getModelById(targetId).
             then(function(targetModel) {
-              IAService.updateOpenInstanceRefs(targetModel, 'model');
               $scope.activeInstance = IAService.setActiveInstance(targetModel, 'model');
               $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
               $scope.currentOpenModelNames = IAService.getOpenModelNames();
               $scope.clearSelectedInstances();
               IAService.showInstanceView();
+              $rootScope.$broadcast('IANavEvent');
 
             }
           );
@@ -327,6 +358,7 @@ app.controller('StudioController', [
               IAService.showInstanceView();
               // if the model editor view is closed > open it
             }
+            $rootScope.$broadcast('IANavEvent');
 
 
           }
@@ -373,6 +405,7 @@ app.controller('StudioController', [
         if ($scope.openInstanceRefs.length === 0) {
           IAService.clearActiveInstance();
           $scope.activeInstance = {};
+          $rootScope.$broadcast('IANavEvent');
 
         }
         else {
@@ -381,6 +414,7 @@ app.controller('StudioController', [
           IAService.activateInstanceById($scope.openInstanceRefs[0].id).
             then(function(instance) {
               $scope.activeInstance = instance;
+              $rootScope.$broadcast('IANavEvent');
             }
           );
         }
@@ -398,6 +432,8 @@ app.controller('StudioController', [
           ModelService.deleteModel(modelId).
             then(function(response){
               loadModels();
+              $rootScope.$broadcast('IANavEvent');
+
             });
 
         }
@@ -415,6 +451,8 @@ app.controller('StudioController', [
 
         //jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
         $scope.clearSelectedInstances();
+        $rootScope.$broadcast('IANavEvent');
+
       }
     };
 
@@ -463,6 +501,8 @@ app.controller('StudioController', [
       $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
       $scope.clearSelectedInstances();
       IAService.showInstanceView();
+      $rootScope.$broadcast('IANavEvent');
+
     };
 
 
@@ -474,6 +514,8 @@ app.controller('StudioController', [
       $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
       $scope.clearSelectedInstances();
       IAService.showInstanceView();
+      $rootScope.$broadcast('IANavEvent');
+
     };
     /*
     *
@@ -500,6 +542,8 @@ app.controller('StudioController', [
             $scope.activeInstance = response;
             $scope.activeInstance.type = 'datasource';
             loadDataSources();
+            $rootScope.$broadcast('IANavEvent');
+
           }
         );
 

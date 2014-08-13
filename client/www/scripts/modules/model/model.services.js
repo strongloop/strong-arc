@@ -254,6 +254,7 @@ Model.service('ModelService', [
 
         }
         // open the new models
+        console.log('(I) SET OPEN INSTANCE REFS: ' + JSON.stringify(openInstances));
         AppStorageService.setItem('openInstanceRefs', openInstances);
         // activate the last one
         AppStorageService.setItem('activeInstance', newLBModel);
@@ -350,11 +351,8 @@ Model.service('ModelService', [
       }
       // create new model schema
       if (!doesNewModelExist) {
-        openInstanceRefs.push({
-          id: defaultModelSchema.id,
-          name: defaultModelSchema.name,
-          type: 'model'
-        });
+        openInstanceRefs.push(defaultModelSchema);
+        console.log('(J) SET OPEN INSTANCE REFS: ' + JSON.stringify(openInstanceRefs));
         AppStorageService.setItem('openInstanceRefs', openInstanceRefs);
       }
       return defaultModelSchema;

@@ -90,6 +90,7 @@ Datasource.service('DataSourceService', [
           break;
         }
       }
+      console.log('(A) SET OPEN INSTANCE REFS: ' + JSON.stringify(openInstanceRefs));
       AppStorageService.setItem('openInstanceRefs', openInstanceRefs);
       return openInstanceRefs;
     };
@@ -166,6 +167,7 @@ Datasource.service('DataSourceService', [
       }
       if (!doesNewDatasourceExist) {
         openInstanceRefs.push(defaultDatasourceSchema);
+        console.log('(B) SET OPEN INSTANCE REFS: ' + JSON.stringify(openInstanceRefs));
         AppStorageService.setItem('openInstanceRefs', openInstanceRefs);
       }
       return defaultDatasourceSchema;

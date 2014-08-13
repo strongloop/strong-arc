@@ -50,6 +50,7 @@ IA.service('IAService', [
         if ((retRefs.length === 1) && (!retRefs[0].id)) {
           // clear retRefs
           retRefs = [];
+          console.log('(C) SET OPEN INSTANCE REFS: ' + JSON.stringify(retRefs));
           AppStorageService.setItem('openInstanceRefs', retRefs);
         }
       }
@@ -63,6 +64,7 @@ IA.service('IAService', [
           break;
         }
       }
+      console.log('(D) SET OPEN INSTANCE REFS: ' + JSON.stringify(sourceInstances));
       AppStorageService.setItem('openInstanceRefs', sourceInstances);
       return sourceInstances;
     };
@@ -104,9 +106,11 @@ IA.service('IAService', [
                 var currRefs = AppStorageService.getItem('openInstanceRefs');
                 if (!currRefs) {
                   currRefs = [];
+                  console.log('(E) SET OPEN INSTANCE REFS: ' + JSON.stringify(currRefs));
                   AppStorageService.setItem('openInstanceRefs', currRefs);
                 }
                 currRefs.push({id: newInstance.id, name:newInstance.name,type:instanceType});
+                console.log('(F) SET OPEN INSTANCE REFS: ' + JSON.stringify(currRefs));
                 AppStorageService.setItem('openInstanceRefs', currRefs);
               }
               deferred.resolve(instance);
@@ -125,9 +129,11 @@ IA.service('IAService', [
                 var currRefs = AppStorageService.getItem('openInstanceRefs');
                 if (!currRefs) {
                   currRefs = [];
+                  console.log('(G) SET OPEN INSTANCE REFS: ' + JSON.stringify(currRefs));
                   AppStorageService.setItem('openInstanceRefs', currRefs);
                 }
                 currRefs.push({id: newInstance.id, name:newInstance.name,type:instanceType});
+                console.log('(H1) SET OPEN INSTANCE REFS: ' + JSON.stringify(currRefs));
                 AppStorageService.setItem('openInstanceRefs', currRefs);
               }
               deferred.resolve(instance);
@@ -159,24 +165,29 @@ IA.service('IAService', [
       AppStorageService.setItem('activeInstance', targetInstance);
       return targetInstance;
     };
-    svc.updateOpenInstanceRefs = function(instance, type) {
-      // ensure the included instance is in the open instance refs
-      var isAlreadyOpen = false;
-      var currentOpenIntances = svc.getOpenInstanceRefs();
-      if (currentOpenIntances.length) {
-        var x = currentOpenIntances.map(function(instanceRef) {
-            if (instance.name === instanceRef.name) {
-              isAlreadyOpen = true;
-            }
+    svc.addInstanceRef = function(instanceRefObj) {
+      if(instanceRefObj.id && instanceRefObj.name && instanceRefObj.type) {
+        var currOpenInstanceRefs = svc.getOpenInstanceRefs();
+        var instanceIsOpen = false;
+        for (var i = 0;i < currOpenInstanceRefs.length;i++) {
+          if (currOpenInstanceRefs[i].id === instanceRefObj.id) {
+            instanceIsOpen = true;
+            return currOpenInstanceRefs;
           }
-        );
+        }
+        if (!instanceIsOpen) {
+          currOpenInstanceRefs.push(instanceRefObj);
+          svc.updateOpenInstanceRefs(currOpenInstanceRefs);
+          return currOpenInstanceRefs;
 
-      }
-      if (!isAlreadyOpen) {
-        currentOpenIntances.push({id:instance.id, name: instance.name, type: 'model'});
-        AppStorageService.setItem('openInstanceRefs', currentOpenIntances);
+        }
       }
     };
+
+    svc.updateOpenInstanceRefs = function(instanceRefs) {
+      AppStorageService.setItem('openInstanceRefs', instanceRefs);
+    };
+
     svc.getActiveInstance = function() {
       var deferred  = $q.defer();
       // getting the active instance

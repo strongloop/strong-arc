@@ -63,11 +63,6 @@ Common.directive('slCommonInstanceTabsView', [
 
           var tabItems = [];
 
-          // if we have an active instance but no open refs
-          // then we need to fix it by opening the active instance
-          if (scope.openInstanceRefs.length === 0) {
-            IAService.updateOpenInstanceRefs(scope.activeInstance, scope.activeInstance.type);
-          }
 
           for (var i = 0;i < scope.openInstanceRefs.length;i++) {
             var isActive = false;
