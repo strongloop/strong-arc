@@ -15,22 +15,13 @@ app.controller('StudioController', [
   function($rootScope, $scope, $state, $http, IAService, DataSourceService, PropertyService, ExplorerService, $location, $timeout, ModelService, DiscoveryService) {
 
     /*
-     *
-     * Base Instance Collections
-     *
+     * Instance Collections
      * */
     $scope.mainNavDatasources = []; // initialized further down
     $scope.mainNavModels = [];  // initialized further down
     $scope.instanceType = 'model';
     $scope.activeInstance = {};
-    // temporary for testing / dev
-//    $scope.tableSelections = [];
-    /*
-    *
-    * Transient Data
-    *
-    * */
-    // new
+
     /*
     *
     * list of open instances (models/datasources)
@@ -61,95 +52,8 @@ app.controller('StudioController', [
     $scope.activeModelPropertiesChanged = false;  // dirty flag
     $scope.explorerDataModelChanged = false; // dirty toggle for triggering renders on the react components
 
-    $scope.$on('IANavEvent', function(event, data) {
-      console.log('IA NAV EVENT PROCESSING');
-      /*
-      *
-      * clean up IA
-      * make sure open instance refs matches with
-      * activeInstance , etc.
-      *
-      *
-      *
-      * */
-      var currActiveInstance = $scope.activeInstance;
-      var openInstanceRefs = IAService.getOpenInstanceRefs();
 
-      console.log('| 1');
-      // check if there is an active instance
-      if (currActiveInstance && currActiveInstance.id) {
-        console.log('| 2');
-        var instanceObjRef = {
-          id:currActiveInstance.id,
-          name:currActiveInstance.name,
-          type:currActiveInstance.type
-        };
-        // check if there are open instances and that activeInstance is in it
-        if (openInstanceRefs.length > 0) {
-          console.log('| 2');
-          var isActiveInstanceOpen = false;
-          // loop over the refs to confirm active instance is in there
-          for (var i = 0;i < openInstanceRefs.length;i++) {
-            if (openInstanceRefs[i].id === currActiveInstance.id) {
-              // active instance is open
-              isActiveInstanceOpen = true;
-              break;
-            }
-          }
-          // if it isn't in there we need to add it
-          if (!isActiveInstanceOpen) {
-            console.log('| 3');
-            // add active instance to open instance refs
-
-            $scope.openInstanceRefs = IAService.addInstanceRef(instanceObjRef);
-          }
-          console.log('| 4');
-
-        }
-        else {
-          // we have a mismatch - we have an active instance but no open instance refs
-          // add active instance to openInstanceRefs
-          console.log('| 5');
-
-          $scope.openInstanceRefs = IAService.addInstanceRef(instanceObjRef);
-        }
-      }
-      else {
-        console.log('| 6');
-        // there is no active instance so confirm there are no open instance refs
-        if (openInstanceRefs.length > 0) {
-          console.log('| 7');
-          // we have a mismatch - we have open instances but none are active
-          // set the 0 index open instance ref to the active instance
-          IAService.activateInstanceById(openInstanceRefs[0].id).
-            then(function(instance) {
-              console.log('| 8');
-              $scope.activeInstance = instance;
-              $rootScope.$broadcast('IANavEvent');
-            }
-          );
-        }
-        else {
-          console.log('| 9');
-          // there are no open instances so we're good - everything is closed
-        }
-
-      }
-     });
-    /*
-    *
-    * MAIN UI STATE
-    *
-    *
-    * this is where the surgery needs to be most deep
-    *
-    * merge the notion of an active datasource instance and an active
-    *
-    * */
-    // new
-    // temporarily assign to model for dev work-
-   // $scope.activeInstance = IAService.getActiveInstance();  // TODO
-
+    // initialize active instance
     IAService.getActiveInstance().
       then(function(response) {
         $scope.activeInstance = response;
@@ -166,9 +70,6 @@ app.controller('StudioController', [
       $scope.mainNavModels = ModelService.getAllModels();
       $scope.mainNavModels.
         then(function (result) {
-
-
-
           $scope.mainNavModels = result;
           $scope.apiModelsChanged = !$scope.apiModelsChanged;
           $rootScope.$broadcast('IANavEvent');
@@ -178,9 +79,7 @@ app.controller('StudioController', [
     loadModels();
     /*
      *
-     *
      * Datasources
-     *
      *
      * */
     var loadDataSources = function() {
@@ -211,11 +110,8 @@ app.controller('StudioController', [
     });
 
 
-    /*
-    *
-    * METHODS
-    *
-    * */
+
+    // Helper methods
     $scope.clearSelectedInstances = function() {
       $scope.instanceSelections = IAService.clearInstanceSelections();
     };
@@ -227,32 +123,12 @@ app.controller('StudioController', [
     };
 
 
-    // new schema event
-    $scope.$on('newSchemaModelsEvent', function(event, message){
-      $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
-      $scope.activeInstance = IAService.getActiveInstance();
-      $scope.instanceType = 'model';
-      $scope.activeInstance.type = 'model';
-      // note that the handler is passed the problem domain parameters
-      loadModels();
-      $scope.setApiModelsDirty();
-      IAService.showInstanceView();
 
-    });
     // toggle instance view
     $scope.toggleInstanceContainer = function() {
       IAService.toggleInstanceView();
     };
 
-    /*
-     *
-     *  NAV CLICK EVENTS
-     *
-     * */
-    // disable double click for now
-    $scope.navTreeItemDblClicked = function(type, target) {
-
-    };
 
     /*
      * branch clicked
@@ -276,26 +152,8 @@ app.controller('StudioController', [
 
     };
 
-    /*
 
-    SINGLE CLICK
-
-
-
-     an element on the nav tree has been single left clicked
-     could be:
-     - the app root
-     -- show the 'canvas' view
-     - a 'branch' (datasources or models)
-     -- show filtered canvas view
-     - a 'node' - conceptually a leaf in v1 but could become branch or leaf in future
-     -- show instance property editor view
-
-     control key may be pressed or not
-     -- if pressed, add to current selection collection
-     -- if not then clear current selected collection
-
-     */
+    // Main Nav Tree Item clicked
     $scope.navTreeItemClicked = function(type, targetId, multiSelect) {
 
       switch (type){
@@ -406,6 +264,11 @@ app.controller('StudioController', [
       $scope.clearSelectedInstances();
     };
 
+
+    /*
+    *
+    * DELETE
+    * */
     // delete models
     $scope.deleteModelDefinitionRequest = function(modelId) {
       if (modelId){
@@ -432,6 +295,10 @@ app.controller('StudioController', [
         }
       }
     };
+
+    /*
+    * Models IA
+    * */
     $scope.openSelectedModels = function() {
       var selectedModels = IAService.getCurrentInstanceSelections();
       if (selectedModels) {
@@ -446,16 +313,19 @@ app.controller('StudioController', [
       }
     };
 
-
-    function getRandomNumber() {
-      return Math.floor((Math.random() * 100) + 1);
-    }
-
     // save model
     $scope.saveModelRequest = function(config) {
 
       if (config.id && (config.id !== CONST.newModelPreId)) {
         // update model
+        ModelService.updateModel(config).
+          then(function(response) {
+            // clear reference to 'new' placeholder in openInstanceRefs
+            IAService.clearOpenNewModelReference();
+            loadModels();
+            $scope.activeInstance = response;
+          }
+        );
       }
       else {
         // double check to clear out 'new' id
@@ -473,24 +343,7 @@ app.controller('StudioController', [
         );
       }
     };
-//    $scope.updateOrCreateModel = function() {
-//      var currentModel = $scope.activeInstance;
-//      console.log('SAVE or CREATE model: ' + currentModel.name);
-//      // check to make sure it is unique
-//
-//      if (ModelService.isNewModelNameUnique(currentModel.name)) {
-//        // call create model
-//        console.log('CREATE THE MODEL');
-//        // TODO - should be a callback to ensure model created successfully
-//        ModelService.createModel(currentModel);
-//        return $scope.activeInstance;
-//
-//
-//      }
-//      else {
-//        console.warn('THE NEW MODEL NAME IS NOT UNIQUE');
-//      }
-//    };
+
     $scope.createModelViewRequest = function() {
       $scope.instanceType = 'model';
       $scope.activeInstance = ModelService.createNewModelInstance();
@@ -502,9 +355,62 @@ app.controller('StudioController', [
 
     };
 
+     // New Model Name Input Processing
+    $scope.processModelNameInput = function(input) {
+      $scope.newModelInstance = {};
+      $scope.newModelInstance.name = input;
+      var modelCount = $scope.mainNavModels.length;
+      $scope.newModelInstance.isUnique = true;
+      for (var i = 0;i < modelCount;i++) {
+        var modelInstance = $scope.mainNavModels[i];
+        var compString = modelInstance.name.substr(0, input.length);
+        if (compString === input) {
+          $scope.newModelInstance.isUnique = false;
+          break;
+        }
+      }
+    };
+    // Model Properties
+    $scope.updateModelPropertyRequest = function(modelPropertyConfig) {
+      if (modelPropertyConfig && modelPropertyConfig.modelId && modelPropertyConfig.name) {
+        PropertyService.updateModelProperty(modelPropertyConfig);
+        $scope.activeModelPropertiesChanged = !$scope.activeModelPropertiesChanged;
+
+      }
+    };
+    $scope.createNewProperty = function() {
+
+      // get model id
+      var modelId = $scope.activeInstance.id;
+      // should get a config (with at least name/type of property)
+
+      var propConfig = {
+        name:'property-name-' + getRandomNumber(),
+        type: 'string',
+        facetName: 'common',
+        modelId: modelId
+      };
+
+      var newProperty = PropertyService.createModelProperty(propConfig);
+      newProperty.
+        then(function (result) {
+
+          $scope.activeInstance.properties.push(result);
+          // $scope.activeInstanceChanged = !$scope.activeInstanceChanged;
+          $scope.activeModelPropertiesChanged = !$scope.activeModelPropertiesChanged;
+          console.log('good add new model property')
+        }
+      );
+
+    };
 
 
-
+    /*
+     *
+     *   Datasource IA
+     *
+     *
+     * */
     $scope.createDatasourceViewRequest = function() {
       $scope.instanceType = 'datasource';
       $scope.activeInstance = DataSourceService.createNewDatasourceInstance();
@@ -514,12 +420,17 @@ app.controller('StudioController', [
       $rootScope.$broadcast('IANavEvent');
 
     };
-    /*
-    *
-    *   CREATE NEW DATASOURCE
-    *
-    *
-    * */
+    // test datasource connection
+    $scope.testDataSourceConnection = function(dsId) {
+
+      DataSourceService.testDataSourceConnection(dsId).
+        then(function(response) {
+          alert('DataSource status: ' + response.status);
+        });
+
+    };
+
+    // save Datasource
     $scope.updateOrCreateDatasource = function(config) {
       var currentDatasource = config;
       if (config.name) {
@@ -554,35 +465,28 @@ app.controller('StudioController', [
 
 
 
-    /*
-    *
-    *   New Model Name Input Processing
-    *
-    * */
-    $scope.processModelNameInput = function(input) {
-      $scope.newModelInstance = {};
-      $scope.newModelInstance.name = input;
-      var modelCount = $scope.mainNavModels.length;
-      $scope.newModelInstance.isUnique = true;
-      for (var i = 0;i < modelCount;i++) {
-        var modelInstance = $scope.mainNavModels[i];
-        var compString = modelInstance.name.substr(0, input.length);
-        if (compString === input) {
-          $scope.newModelInstance.isUnique = false;
-          break;
-        }
-      }
-
-    };
 
 
 
 
     /*
     *
-    * Datasouce discovery flow kickoff
+    * DISCOVERY
     *
     * */
+
+    // new schema event
+    $scope.$on('newSchemaModelsEvent', function(event, message){
+      $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
+      $scope.activeInstance = IAService.getActiveInstance();
+      $scope.instanceType = 'model';
+      $scope.activeInstance.type = 'model';
+      // note that the handler is passed the problem domain parameters
+      loadModels();
+      $scope.setApiModelsDirty();
+      IAService.showInstanceView();
+
+    });
     $scope.createModelsFromDS = function(id) {
 
       // open a modal window and trigger the discovery flow
@@ -594,58 +498,16 @@ app.controller('StudioController', [
 
     };
 
+
+
+
+
+
     /*
     *
-    * Update Model Detail Property Value
+    * EXPLORER
     *
     * */
-    $scope.updateModelDetailProperty = function(name, value) {
-      if (name && value) {
-        $scope.activeInstance[name] = value;
-        if (name === 'name') {
-          $scope.activeInstance['plural'] = value + 's';
-        }
-        ModelService.updateModelInstance($scope.activeInstance);
-        $scope.activeInstance = IAService.activateInstanceByName($scope.activeInstance.name);
-      }
-    };
-
-    $scope.updateModelPropertyRequest = function(modelPropertyConfig) {
-      if (modelPropertyConfig && modelPropertyConfig.modelId && modelPropertyConfig.name) {
-        PropertyService.updateModelProperty(modelPropertyConfig);
-        $scope.activeModelPropertiesChanged = !$scope.activeModelPropertiesChanged;
-
-      }
-    };
-    $scope.createNewProperty = function() {
-
-      // get model id
-      var modelId = $scope.activeInstance.id;
-      // should get a config (with at least name/type of property)
-
-      var propConfig = {
-        name:'property-name-' + getRandomNumber(),
-        type: 'string',
-        facetName: 'common',
-        modelId: modelId
-      };
-
-      var newProperty = PropertyService.createModelProperty(propConfig);
-      newProperty.
-        then(function (result) {
-
-          $scope.activeInstance.properties.push(result);
-         // $scope.activeInstanceChanged = !$scope.activeInstanceChanged;
-          $scope.activeModelPropertiesChanged = !$scope.activeModelPropertiesChanged;
-          console.log('good add new model property')
-        }
-      );
-
-    };
-
-
-
-
     $scope.showExplorerViewRequest = function() {
       IAService.showExplorerView();
     };
@@ -692,6 +554,81 @@ app.controller('StudioController', [
     };
 
 
+    function getRandomNumber() {
+      return Math.floor((Math.random() * 100) + 1);
+    }
+    /*
+     *
+     *   IA STATE CLEANUP LISTENER
+     *
+     * */
+    $scope.$on('IANavEvent', function(event, data) {
+      console.log('IA NAV EVENT PROCESSING');
+
+      var currActiveInstance = $scope.activeInstance;
+      var openInstanceRefs = IAService.getOpenInstanceRefs();
+
+      console.log('| 1');
+      // check if there is an active instance
+      if (currActiveInstance && currActiveInstance.id) {
+        console.log('| 2');
+        var instanceObjRef = {
+          id:currActiveInstance.id,
+          name:currActiveInstance.name,
+          type:currActiveInstance.type
+        };
+        // check if there are open instances and that activeInstance is in it
+        if (openInstanceRefs.length > 0) {
+          console.log('| 2');
+          var isActiveInstanceOpen = false;
+          // loop over the refs to confirm active instance is in there
+          for (var i = 0;i < openInstanceRefs.length;i++) {
+            if (openInstanceRefs[i].id === currActiveInstance.id) {
+              // active instance is open
+              isActiveInstanceOpen = true;
+              break;
+            }
+          }
+          // if it isn't in there we need to add it
+          if (!isActiveInstanceOpen) {
+            console.log('| 3');
+            // add active instance to open instance refs
+
+            $scope.openInstanceRefs = IAService.addInstanceRef(instanceObjRef);
+          }
+          console.log('| 4');
+
+        }
+        else {
+          // we have a mismatch - we have an active instance but no open instance refs
+          // add active instance to openInstanceRefs
+          console.log('| 5');
+
+          $scope.openInstanceRefs = IAService.addInstanceRef(instanceObjRef);
+        }
+      }
+      else {
+        console.log('| 6');
+        // there is no active instance so confirm there are no open instance refs
+        if (openInstanceRefs.length > 0) {
+          console.log('| 7');
+          // we have a mismatch - we have open instances but none are active
+          // set the 0 index open instance ref to the active instance
+          IAService.activateInstanceById(openInstanceRefs[0].id).
+            then(function(instance) {
+              console.log('| 8');
+              $scope.activeInstance = instance;
+              $rootScope.$broadcast('IANavEvent');
+            }
+          );
+        }
+        else {
+          console.log('| 9');
+          // there are no open instances so we're good - everything is closed
+        }
+
+      }
+    });
 
   }
 ]);

@@ -108,16 +108,25 @@ Model.service('ModelService', [
     };
 
 
-    svc.updateModelInstance = function(model) {
-      var apiModels = AppStorageService.getItem('ApiModels');
-      for (var i = 0;i < apiModels.length;i++) {
-        if (apiModels[i].name === model.name) {
-          apiModels[i] = model;
-          break;
-        }
+    svc.updateModel = function(model) {
+      var deferred = $q.defer();
+
+      if (model.id) {
+
+        ModelDefinition.upsert(model,
+          function(response) {
+            deferred.resolve(response);
+          },
+          function(response) {
+            console.warn('bad update model definition: ' + model.id);
+          }
+        );
+
+
       }
-      AppStorageService.setItem('ApiModels', apiModels);
-      return Modeldef.upsert(model);
+
+      return deferred.promise;
+
     };
     svc.generateModelsFromSchema = function(schemaCollection) {
       if (schemaCollection && schemaCollection.length > 0) {

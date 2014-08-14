@@ -219,7 +219,7 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
     });
 
     var retVal = (<div />);
-    if (properties && properties.length) {
+    if (properties) {
       retVal = (
         <div>
           <button type="button" onClick={clickHandler} className="model-instance-header-btn btn btn-default btn-block" title="Properties" ><span className={iconClasses}></span>Properties</button>

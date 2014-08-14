@@ -101,6 +101,27 @@ Datasource.service('DataSourceService', [
 
       return deferred.promise;
     };
+    svc.testDataSourceConnection = function(dsId) {
+      var deferred = $q.defer();
+
+      DataSourceDefinition.findById({id:dsId},
+        function(response) {
+          response.$prototype$testConnection({id:dsId},
+            function(response) {
+              deferred.resolve(response);
+            },
+            function(response) {
+              console.warn('bad test ds connection: ' + response);
+            }
+          );
+        },
+        function(response) {
+          console.log('bad get model def for test connection: ' + response);
+        }
+      );
+
+      return deferred.promise;
+    };
     // obsolete
     svc.createDatasourceDef = function(datasourceDefObj) {
       console.log('Add this data service: ' + JSON.stringify(datasourceDefObj));

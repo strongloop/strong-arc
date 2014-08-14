@@ -20,18 +20,19 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
     xState[stateName] = event.target.value;
     this.setState(xState);
     console.log('data source form edit handler ');
-//    if (event.target.attributes.id) {
-//      var modelDetailProperty = event.target.attributes['data-name'].value;
-//      var modelDetailValue = event.target.value;
-////      scope.$apply(function() {
-////        scope.updateModelDetailProperty(modelDetailProperty, modelDetailValue);
-////      });
-//    }
+
   },
   render: function() {
     var scope = this.props.scope;
 
     var dsModel = this.state;
+
+    var testConnection = function(event) {
+      var dsId = event.target.attributes['data-id'].value;
+      scope.$apply(function() {
+        scope.testDataSourceConnection(dsId);
+      });
+    };
 
     var saveHandler = function(event) {
 
@@ -39,12 +40,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
 
 
       var requestData = {};
-//      var explorerRequestObj = {
-//        path: api.path,
-//        method: apiDetails.httpMethod,
-//        endPoint: sourceEndPoint,
-//        data: {}
-//      };
+
       for (var i = 0;i < theForm.length;i++) {
         if (theForm[i].value) {
           console.log('Processing Form : ' + theForm[i].name + ' = ' + theForm[i].value);
@@ -64,6 +60,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
 
     return (
       <div data-id="DatasourceEditorInstanceContainer" >
+        <button onClick={testConnection} data-id={dsModel.id} >Test Connection</button>
         <form name="DatasourceForm" role="form">
           <input type="hidden" data-name="id" name="id" value={dsModel.id} />
           <div className="form-group">
