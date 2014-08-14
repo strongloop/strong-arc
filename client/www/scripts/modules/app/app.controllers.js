@@ -153,21 +153,13 @@ app.controller('StudioController', [
     IAService.getActiveInstance().
       then(function(response) {
         $scope.activeInstance = response;
-      });
-
-
+      }
+    );
 
 
     /*
     *
-    *
-    *
-    *
     * MODEL and DATASOURCE collections
-    *
-    *
-    *
-    *
     *
     * */
     var loadModels = function() {
@@ -348,47 +340,23 @@ app.controller('StudioController', [
            * */
 
           var openDatasourceNames = IAService.getOpenDatasourceNames();
-          var targetDS = DataSourceService.getDatasourceByName(targetName);
-
-          // check for preview mode
-
-          if (openDatasourceNames && (openDatasourceNames.indexOf(targetName) === -1)) {
-            // mode is not open so preview it
-            $scope.previewInstance = targetDS;
-            $scope.previewInstance.type = 'datasource';
-
-          }
-          else {
-            // ds is open
-            // make sure it isn't currently active
-            if ($scope.activeInstance.name !== targetName) {
-              $scope.activeInstance = IAService.activateInstanceByName(targetName, 'datasource');
-              $scope.activeInstance.type = 'datasource';
-              $scope.instanceType = 'datasource';
+          var targetDataSource = DataSourceService.getDataSourceById(targetId).
+            then(function(targetDataSource) {
+              $scope.activeInstance = IAService.setActiveInstance(targetDataSource, 'datasource');
+              $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
+              $scope.currentOpenDataSourceNames = IAService.getOpenDatasourceNames();
               $scope.clearSelectedInstances();
-            }
-            else {
-              // active model instance was clicked
-              // if the model editor view is open > close it
               IAService.showInstanceView();
-              // if the model editor view is closed > open it
+              $rootScope.$broadcast('IANavEvent');
+
             }
-            $rootScope.$broadcast('IANavEvent');
-
-
-          }
+          );
 
           break;
 
         default:
-
-
       }
-
-
     };
-
-
 
 
     /*
@@ -410,9 +378,7 @@ app.controller('StudioController', [
             $scope.clearSelectedInstances();
           }
         );
-
       }
-
     };
 
     $scope.instanceTabItemCloseClicked = function(id) {
@@ -471,11 +437,9 @@ app.controller('StudioController', [
       if (selectedModels) {
         for (var i = 0; i < selectedModels.length;i++) {
           $scope.activeInstance = IAService.activateInstanceByName(selectedModels[i]);
-
         }
         $scope.currentOpenModelNames = IAService.getOpenModelNames();
 
-        //jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
         $scope.clearSelectedInstances();
         $rootScope.$broadcast('IANavEvent');
 
@@ -501,6 +465,8 @@ app.controller('StudioController', [
         // create model
         ModelService.createModel(config).
           then(function(response) {
+            // clear reference to 'new' placeholder in openInstanceRefs
+            IAService.clearOpenNewModelReference();
             loadModels();
             $scope.activeInstance = response;
           }
@@ -574,6 +540,8 @@ app.controller('StudioController', [
 
         DataSourceService.createDataSourceDefinition(config).
           then(function(response) {
+            // clear reference to 'new' placeholder in openInstanceRefs
+            IAService.clearOpenNewDSReference();
             $scope.activeInstance = response;
             $scope.activeInstance.type = 'datasource';
             loadDataSources();

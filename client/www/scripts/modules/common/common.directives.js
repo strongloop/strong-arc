@@ -72,6 +72,7 @@ Common.directive('slCommonInstanceTabsView', [
             tabItems.push({
               id:scope.openInstanceRefs[i].id,
               name:scope.openInstanceRefs[i].name,
+              type:scope.openInstanceRefs[i].type,
               isActive:isActive
             });
           }
@@ -104,25 +105,7 @@ Common.directive('slCommonInstanceTabsView', [
     }
   }
 ]);
-/*
-*
-*   Common Instance Content View Container
-*
-*   - model form view
-*   - model preview
-*   - datasource form view
-*   - datasource preview
-*
-* */
-Common.directive('slCommonInstanceContentView', [
-  function() {
-    return {
-      link: function(scope, el, attrs) {
 
-      }
-    }
-  }
-]);
 
 
 

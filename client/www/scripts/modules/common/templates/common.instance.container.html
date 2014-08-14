@@ -5,8 +5,8 @@
   <div class="instance-tabs-view-container">
     <div sl-common-instance-tabs-view></div>
   </div>
-  <div class="instance-body-container" ng-switch on="instanceType">
+  <div class="instance-body-container" ng-switch on="activeInstance.type">
     <div ng-switch-when="model" sl-model-instance-editor>/</div>
-    <div ng-switch-when="datasource" sl-datasource-instance-editor>/</div>
+    <div ng-switch-when="datasource" sl-datasource-editor-form>/</div>
   </div>
 </div>

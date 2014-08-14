@@ -71,6 +71,27 @@ IA.service('IAService', [
     svc.clearActiveInstance = function() {
       AppStorageService.clearActiveInstance();
     };
+    svc.clearOpenNewModelReference = function() {
+      var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
+      for (var i = 0;i < openInstanceRefs.length;i++) {
+        if (openInstanceRefs[i].id = CONST.newModelPreId) {
+          openInstanceRefs.splice(i,1);
+          break;
+        }
+      }
+      AppStorageService.setItem('openInstanceRefs', openInstanceRefs);
+    };
+    svc.clearOpenNewDSReference = function() {
+      var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
+      for (var i = 0;i < openInstanceRefs.length;i++) {
+        if (openInstanceRefs[i].id = CONST.newDataSourcePreId) {
+          openInstanceRefs.splice(i,1);
+          break;
+        }
+      }
+      AppStorageService.setItem('openInstanceRefs', openInstanceRefs);
+
+    };
     svc.activateInstanceById = function(id, type) {
       var deferred = $q.defer();
       var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');

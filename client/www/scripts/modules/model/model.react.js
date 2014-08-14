@@ -6,25 +6,8 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
   getInitialState: function() {
     return this.props.scope.activeInstance;
   },
-
-//  handleChange: function(event) {
-//    var scope = this.props.scope;
-//    //this.setState({name: event.target.value});
-//    var stateName = event.target.attributes['data-name'].value;
-//    var xState = this.state;
-//    xState[stateName] = event.target.value;
-//    this.setState(xState);
-//    if (event.target.attributes.id) {
-//      var modelDetailProperty = event.target.attributes['data-name'].value;
-//      var modelDetailValue = event.target.value;
-//      scope.$apply(function() {
-//        scope.updateModelDetailProperty(modelDetailProperty, modelDetailValue);
-//      });
-//    }
-//  },
   componentWillReceiveProps: function(nextProps) {
-    this.setState(nextProps.model);
-    console.log('Component will receive props');
+    this.setState(nextProps.scope.activeInstance);
   },
   handleChange: function(event) {
     var modelPropertyName = '';
