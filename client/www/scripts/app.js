@@ -90,6 +90,15 @@
 
   }
 })(jQuery);
+// Application Constants
+var CONST = {
+  newModelPreId:'sl.temp.new-model',
+  newModelName: 'new-model',
+  newModelFacetName: 'common',
+  newDataSourcePreId:'sl.temp.new-datasource',
+  newDataSourceName: 'new-datasource',
+  newDataSourceFacetName: 'server'
+};
 var setUI = function() {
   var headerHeight = 50;
   var searchHeight = jQuery('[data-id="MainSearchContainer"]').height();

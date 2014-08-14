@@ -28,29 +28,18 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
   },
   handleChange: function(event) {
     var modelPropertyName = '';
-    console.log('model form edit handler ');
+   // console.log('model form edit handler ');
     if (event.target.attributes['data-name']) {
       modelPropertyName = event.target.attributes['data-name'].value;
       var xState = this.state;
       this.state[modelPropertyName] = event.target.value;
       this.setState(xState);
     }
-
-
-
-//    //xState[stateName] = event.target.value;
-//    for (var i = 0;i < xState.props.properties.length;i++) {
-//      if (xState.props.properties[i].name === stateName) {
-//        xState.props.properties[i].value = event.target.value;
-//      }
-//    }
-
-
-
   },
-//  componentWillUpdate: function(nextProps, nextState) {
-//    this.setState(nextProps.scope.activeInstance);
-//  },
+
+  saveFieldValue: function(event) {
+    console.log('SAVE THIS VALUE: ' + event.target.value);
+  },
   render: function() {
     var that = this;
     var scope = that.props.scope;
@@ -228,9 +217,6 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
     var properties = scope.properties;
     var cx = React.addons.classSet;
 
-
-
-
     var classes = cx({
       'row is-open': this.state.isOpen,
       'row is-closed': !this.state.isOpen
@@ -243,7 +229,6 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
       var isOpenState = !that.state.isOpen;
       that.setState({isOpen:isOpenState});
     };
-
 
     var items = [];
     items = properties.map(function (item) {
@@ -261,23 +246,16 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
                 <div data-ui-type="row" className="model-instance-property-table-header-row">
                   <span data-ui-type="cell" title="property name" className="props-name-header table-header-cell">Name</span>
 
-
                   <span data-ui-type="cell" title="data type"className="props-data-type-header table-header-cell">Type</span>
 
                   <span data-ui-type="cell" title="default value" className="props-default-value-header table-header-cell"></span>
 
+                  <span data-ui-type="cell" title="required" className="props-required-header table-header-cell">Req</span>
 
-                  <div data-ui-type="cell" className="props-required-cell table-header-cell">
-                    <div title="required" className="props-required-header">Req</div>
-                  </div>
+                  <span data-ui-type="cell" title="is index" className="props-index-header table-header-cell">Index</span>
 
-                  <div data-ui-type="cell" className="props-index-cell table-header-cell">
-                    <div title="is index" className="props-index-header">Index</div>
-                  </div>
+                  <span data-ui-type="cell" title="comments" className="props-comments-header table-header-cell">Comments</span>
 
-                  <div data-ui-type="cell" className="props-comments-cell table-header-cell header">
-                    <div title="comments" className="props-comments-header">Comments</div>
-                  </div>
 
                 </div>
               </div>

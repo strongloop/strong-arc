@@ -10,9 +10,12 @@ Model.service('ModelService', [
       var deferred = $q.defer();
       if (config.name) {
 
+        // double check to clear out 'new' id
+        if (config.id === CONST.newModelPreId) {
+          delete config.id;
+        }
 
-
-        ModelDefinition.create(config, function(response) {
+        ModelDefinition.create({}, config, function(response) {
             console.log('good create model def: ' + response);
             deferred.resolve(response);
 
@@ -85,46 +88,7 @@ Model.service('ModelService', [
       );
 
       return deferred.promise;
-//      return ModelDefinition.query({},
-//        function(response) {
-//
-//          //   console.log('good get model defs: '+ response);
-//
-//          // add create model to this for new model
-//
-//          var core = response;
-//          var log = [];
-//          var models = [];
-//          angular.forEach(core, function(value, key){
-//            // this.push(key + ': ' + value);
-//            var lProperties = [];
-//            if (value.properties) {
-//              angular.forEach(value.properties, function(value, key){
-//                lProperties.push({name:key,props:value});
-//              });
-//              value.properties = lProperties;
-//            }
-//            var lOptions = [];
-//            if (value.options) {
-//              angular.forEach(value.options, function(value, key){
-//                lOptions.push({name:key,props:value});
-//              });
-//              value.options = lProperties;
-//            }
-//            models.push({name:key,props:value});
-//          }, log);
-//
-//
-//          // $scope.models = models;
-//          window.localStorage.setItem('ApiModels', JSON.stringify(core));
-//          return models;
-//        },
-//        function(response) {
-//          console.log('bad get model defs');
-//
-//        }
-//
-//      );
+
     };
 
     svc.isNewModelNameUnique = function(name) {
@@ -144,7 +108,7 @@ Model.service('ModelService', [
     };
 
 
-     svc.updateModelInstance = function(model) {
+    svc.updateModelInstance = function(model) {
       var apiModels = AppStorageService.getItem('ApiModels');
       for (var i = 0;i < apiModels.length;i++) {
         if (apiModels[i].name === model.name) {
@@ -289,24 +253,30 @@ Model.service('ModelService', [
     svc.getModelById = function(modelId) {
       var targetModel = {};
       var deferred = $q.defer();
+      if (modelId !== CONST.newModelPreId) {
 
-      ModelDefinition.findById({id:modelId},
-        // success
-        function(response) {
-          targetModel = response;
-          ModelDefinition.properties({id:targetModel.id}, function(response) {
-            targetModel.properties = response;
-            deferred.resolve(targetModel);
-          });
 
-        },
-        // fail
-        function(response) {
-          console.log('bad get model definition');
-        }
-      );
+        ModelDefinition.findById({id:modelId},
+          // success
+          function(response) {
+            targetModel = response;
+            ModelDefinition.properties({id:targetModel.id}, function(response) {
+              targetModel.properties = response;
+              deferred.resolve(targetModel);
+            });
 
+          },
+          // fail
+          function(response) {
+            console.log('bad get model definition');
+          }
+        );
+      }
+      else {
+        deferred.resolve(targetModel);
+      }
       return deferred.promise;
+
     };
     svc.isPropertyUnique = function(modelRef, newPropertyName) {
       var isUnique = true;
@@ -324,12 +294,12 @@ Model.service('ModelService', [
 
     };
     var defaultModelSchema = {
-      id: 'temp.new-model',
+      id: CONST.newModelPreId,
       type: 'model',
-      facetName: 'common',
+      facetName: CONST.newModelFacetName,
       strict: false,
       public: true,
-      name:'new-model',
+      name: CONST.newModelName,
       idInjection: false
     };
 
@@ -344,7 +314,7 @@ Model.service('ModelService', [
       }
       var doesNewModelExist = false;
       for (var i = 0;i < openInstanceRefs.length;i++) {
-        if (openInstanceRefs[i].name === 'new-model') {
+        if (openInstanceRefs[i].name === CONST.newModelName) {
           doesNewModelExist = true;
           break;
         }

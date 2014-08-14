@@ -115,7 +115,7 @@
 */
 .property-list-header {
 	margin-left: 4rem;
-	width: 83rem;
+	width: 86rem;
 }
 .btn-model-property-spinner {
     border: 0;
@@ -159,7 +159,7 @@
 
 }
 .table-header-cell {
-	padding-top: 1rem;
+	padding-top: 0.7rem;
 }
 
 .model-details-pocket-editor-container {
@@ -234,7 +234,7 @@ label {
 	margin-top: 1rem;
 }
 .model-instance-name {
-	font-size: 150%;
+	font-size: 120%;
 	width: 70%;
 	border: 1px solid #DDDDDD;
 	border-radius: 0.3rem;
@@ -301,10 +301,12 @@ label {
 }
 
 .model-instance-property-list {
-    margin-top: 1rem;
-}
-.model-instance-property-list select {
+	color: #4A4A4A;
 	font-size: 1.5rem;
+}
+
+.model-instance-property-list select {
+	font-size: 1.4rem;
 	border: none;
 	background: white;
 	-webkit-appearance: none;
@@ -321,47 +323,61 @@ label {
 .btn-new-model-property:hover {
     color: #4A90E2;
 }
-.props-data-type-cell {
-    width: 10rem;
-}
-.props-data-type-header {
-	width: 4rem;
-}
+
+
 .props-name-cell {
     width: 25rem;
+    border-color: #DDDDDD;
+    border-style: solid;
+    border-width: 0 1px 1px 1px;
 }
 .props-name-header {
-	width: 20rem;
-	padding-left: 3rem;
+	width: 20.5rem;
+	padding-left: 2.5rem;
 }
 .props-name-cell .btn {
     text-align: left;
-    padding-left: 2rem;
 }
-.props-index-cell {
-    width: 6rem;
-    text-align: center;
+
+.props-data-type-cell {
+	border-color: #DDDDDD;
+	border-style: solid;
+	border-width: 0 1px 1px 0;
+    width: 10rem;
 }
-.props-index-header {
-	margin-left: -8rem;
+.props-data-type-header {
+	width: 8rem;
 }
-.props-comments-cell {	padding-left: 1rem;
-}
-.props-comments-header {
-	margin-left: -4rem;
-}
+
 .props-default-value-cell {
     width: 18rem;
 }
 .props-default-value-header {
+	width: 19.5rem;
 }
+
 .props-required-cell {
     width: 5rem;
     text-align: center;
 }
 .props-required-header {
-
+	width: 5rem;
 }
+
+.props-index-cell {
+    width: 5rem;
+    text-align: center;
+}
+.props-index-header {
+	width: 8rem;
+}
+
+.props-comments-cell {
+}
+.props-comments-header {
+}
+
+
 .property-doc-textarea {
     height: 2.6rem;
     padding-left: .3rem;

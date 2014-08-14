@@ -75,8 +75,10 @@ app.controller('StudioController', [
       var currActiveInstance = $scope.activeInstance;
       var openInstanceRefs = IAService.getOpenInstanceRefs();
 
+      console.log('| 1');
       // check if there is an active instance
       if (currActiveInstance && currActiveInstance.id) {
+        console.log('| 2');
         var instanceObjRef = {
           id:currActiveInstance.id,
           name:currActiveInstance.name,
@@ -84,6 +86,7 @@ app.controller('StudioController', [
         };
         // check if there are open instances and that activeInstance is in it
         if (openInstanceRefs.length > 0) {
+          console.log('| 2');
           var isActiveInstanceOpen = false;
           // loop over the refs to confirm active instance is in there
           for (var i = 0;i < openInstanceRefs.length;i++) {
@@ -95,32 +98,42 @@ app.controller('StudioController', [
           }
           // if it isn't in there we need to add it
           if (!isActiveInstanceOpen) {
+            console.log('| 3');
             // add active instance to open instance refs
 
             $scope.openInstanceRefs = IAService.addInstanceRef(instanceObjRef);
           }
+          console.log('| 4');
 
         }
         else {
           // we have a mismatch - we have an active instance but no open instance refs
           // add active instance to openInstanceRefs
+          console.log('| 5');
 
           $scope.openInstanceRefs = IAService.addInstanceRef(instanceObjRef);
         }
       }
       else {
+        console.log('| 6');
         // there is no active instance so confirm there are no open instance refs
         if (openInstanceRefs.length > 0) {
+          console.log('| 7');
           // we have a mismatch - we have open instances but none are active
           // set the 0 index open instance ref to the active instance
           IAService.activateInstanceById(openInstanceRefs[0].id).
             then(function(instance) {
+              console.log('| 8');
               $scope.activeInstance = instance;
               $rootScope.$broadcast('IANavEvent');
             }
           );
         }
-        // there are no open instances so we're good - everything is closed
+        else {
+          console.log('| 9');
+          // there are no open instances so we're good - everything is closed
+        }
+
       }
      });
     /*
@@ -166,6 +179,7 @@ app.controller('StudioController', [
 
           $scope.mainNavModels = result;
           $scope.apiModelsChanged = !$scope.apiModelsChanged;
+          $rootScope.$broadcast('IANavEvent');
         }
       );
     };
@@ -184,6 +198,7 @@ app.controller('StudioController', [
 
           $scope.mainNavDatasources = result;
           $scope.apiDataSourcesChanged = !$scope.apiDataSourcesChanged;
+          $rootScope.$broadcast('IANavEvent');
 
         });
     };
@@ -380,6 +395,9 @@ app.controller('StudioController', [
     *
     * CONTENT EDIT TABS CLICK EVENTS
     *
+    * need to add check if there are unsaved changes
+    * before navigating away
+    *
     * */
     $scope.instanceTabItemClicked = function(id) {
       var openInstanceRefs = IAService.getOpenInstanceRefs();
@@ -425,19 +443,27 @@ app.controller('StudioController', [
     // delete models
     $scope.deleteModelDefinitionRequest = function(modelId) {
       if (modelId){
-
         if (confirm('delete model?')){
-
           console.log('delete this model: ' + modelId);
           ModelService.deleteModel(modelId).
             then(function(response){
               loadModels();
-              $rootScope.$broadcast('IANavEvent');
-
-            });
-
+            }
+          );
         }
-
+      }
+    };
+    // delete datasource
+    $scope.deleteDataSourceDefinitionRequest = function(dsId) {
+      if (dsId){
+        if (confirm('delete datasource?')){
+          console.log('delete this datasource: ' + dsId);
+          DataSourceService.deleteDataSource(dsId).
+            then(function(response){
+              loadDataSources();
+            }
+          );
+        }
       }
     };
     $scope.openSelectedModels = function() {
@@ -464,36 +490,41 @@ app.controller('StudioController', [
     // save model
     $scope.saveModelRequest = function(config) {
 
-      if (config.id) {
+      if (config.id && (config.id !== CONST.newModelPreId)) {
         // update model
       }
       else {
+        // double check to clear out 'new' id
+        if (config.id === CONST.newModelPreId) {
+          delete config.id;
+        }
         // create model
         ModelService.createModel(config).
           then(function(response) {
+            loadModels();
             $scope.activeInstance = response;
           }
         );
       }
     };
-    $scope.updateOrCreateModel = function() {
-      var currentModel = $scope.activeInstance;
-      console.log('SAVE or CREATE model: ' + currentModel.name);
-      // check to make sure it is unique
-
-      if (ModelService.isNewModelNameUnique(currentModel.name)) {
-        // call create model
-        console.log('CREATE THE MODEL');
-        // TODO - should be a callback to ensure model created successfully
-        ModelService.createModel(currentModel);
-        return $scope.activeInstance;
-
-
-      }
-      else {
-        console.warn('THE NEW MODEL NAME IS NOT UNIQUE');
-      }
-    };
+//    $scope.updateOrCreateModel = function() {
+//      var currentModel = $scope.activeInstance;
+//      console.log('SAVE or CREATE model: ' + currentModel.name);
+//      // check to make sure it is unique
+//
+//      if (ModelService.isNewModelNameUnique(currentModel.name)) {
+//        // call create model
+//        console.log('CREATE THE MODEL');
+//        // TODO - should be a callback to ensure model created successfully
+//        ModelService.createModel(currentModel);
+//        return $scope.activeInstance;
+//
+//
+//      }
+//      else {
+//        console.warn('THE NEW MODEL NAME IS NOT UNIQUE');
+//      }
+//    };
     $scope.createModelViewRequest = function() {
       $scope.instanceType = 'model';
       $scope.activeInstance = ModelService.createNewModelInstance();
@@ -523,27 +554,29 @@ app.controller('StudioController', [
     *
     *
     * */
-    $scope.updateOrCreateDatasource = function(formObj) {
-      var currentDatasource = formObj;
-      if (formObj.name) {
-        console.log('SAVE or CREATE datasource: ' + formObj.name);
+    $scope.updateOrCreateDatasource = function(config) {
+      var currentDatasource = config;
+      if (config.name) {
+        console.log('SAVE or CREATE datasource: ' + config.name);
         // check to make sure it is unique
 //
 //      if (DataSourceService.isNewDatasourceNameUnique(formObj.name)) {
         // call create model
-        if (!formObj.facetName) {
-          formObj.facetName = 'server';
+        if (!config.facetName) {
+          config.facetName = 'server';
         }
-        console.log('CREATE THE Datasource: ' + JSON.stringify(formObj));
+        console.log('CREATE THE DataSource: ' + JSON.stringify(config));
 
+        // double check to clear out 'new' id
+        if (config.id === CONST.newModelPreId) {
+          delete config.id;
+        }
 
-        DataSourceService.createDataSourceDefinition(formObj).
+        DataSourceService.createDataSourceDefinition(config).
           then(function(response) {
             $scope.activeInstance = response;
             $scope.activeInstance.type = 'datasource';
             loadDataSources();
-            $rootScope.$broadcast('IANavEvent');
-
           }
         );
 

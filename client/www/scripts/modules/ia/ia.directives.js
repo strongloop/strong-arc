@@ -132,16 +132,12 @@ IA.directive('slIaMainNav', [
           renderComp();
         }, true);
         scope.$watch('mainNavModels', function(mainNavModels) {
-          if (!mainNavModels.$promise) {
-            processActiveNavState();
-            renderComp();
-          }
+          processActiveNavState();
+          renderComp();
         }, true);
         scope.$watch('mainNavDatasources', function(mainNavDatasources) {
-          if (!mainNavDatasources.$promise) {
-            processActiveNavState();
-            renderComp();
-          }
+          processActiveNavState();
+          renderComp();
         }, true);
 
       }

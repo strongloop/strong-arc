@@ -98,47 +98,88 @@ IA.service('IAService', [
       switch(instanceType) {
 
         case 'model':
-          newInstance = ModelService.getModelById(id).
-            then(function(instance) {
-              instance.type = 'model';
-              svc.setActiveInstance(instance, instance.type);
-              if (!isOpen) {
-                var currRefs = AppStorageService.getItem('openInstanceRefs');
-                if (!currRefs) {
-                  currRefs = [];
-                  console.log('(E) SET OPEN INSTANCE REFS: ' + JSON.stringify(currRefs));
+          // may be new model instance
+          if (id === CONST.newModelPreId) {
+            // so don't try to initialize against server
+            console.log('TRYING TO ACTIVATE NEW MODEL TAB');
+            deferred.resolve(ModelService.createNewModelInstance());
+          }
+          else {
+            newInstance = ModelService.getModelById(id).
+              then(function(instance) {
+                instance.type = 'model';
+                svc.setActiveInstance(instance, instance.type);
+                if (!isOpen) {
+                  var currRefs = AppStorageService.getItem('openInstanceRefs');
+                  if (!currRefs) {
+                    currRefs = [];
+                    console.log('(E) SET OPEN INSTANCE REFS: ' + JSON.stringify(currRefs));
+                    AppStorageService.setItem('openInstanceRefs', currRefs);
+                  }
+                  currRefs.push({id: newInstance.id, name:newInstance.name,type:instanceType});
+                  console.log('(F) SET OPEN INSTANCE REFS: ' + JSON.stringify(currRefs));
                   AppStorageService.setItem('openInstanceRefs', currRefs);
                 }
-                currRefs.push({id: newInstance.id, name:newInstance.name,type:instanceType});
-                console.log('(F) SET OPEN INSTANCE REFS: ' + JSON.stringify(currRefs));
-                AppStorageService.setItem('openInstanceRefs', currRefs);
-              }
-              deferred.resolve(instance);
+                deferred.resolve(instance);
 
-            }
-          );
+              }
+            );
+          }
+
 
           break;
 
         case 'datasource':
-          newInstance = DataSourceService.getDataSourceById(id).
-            then(function(instance) {
-              instance.type = 'datasource';
-              svc.setActiveInstance(instance, instance.type);
-              if (!isOpen) {
-                var currRefs = AppStorageService.getItem('openInstanceRefs');
-                if (!currRefs) {
-                  currRefs = [];
-                  console.log('(G) SET OPEN INSTANCE REFS: ' + JSON.stringify(currRefs));
+          // may be new model instance
+          if (id === CONST.newDataSourcePreId) {
+            // so don't try to initialize against server
+            console.log('TRYING TO ACTIVATE NEW DS TAB');
+            deferred.resolve(DataSourceService.createNewDatasourceInstance());
+          }
+          else {
+            newInstance = DataSourceService.getDataSourceById(id).
+              then(function(instance) {
+                instance.type = 'datasource';
+                svc.setActiveInstance(instance, instance.type);
+                if (!isOpen) {
+                  var currRefs = AppStorageService.getItem('openInstanceRefs');
+                  if (!currRefs) {
+                    currRefs = [];
+                    console.log('(Ed) SET OPEN INSTANCE REFS: ' + JSON.stringify(currRefs));
+                    AppStorageService.setItem('openInstanceRefs', currRefs);
+                  }
+                  currRefs.push({id: newInstance.id, name:newInstance.name,type:instanceType});
+                  console.log('(Fd) SET OPEN INSTANCE REFS: ' + JSON.stringify(currRefs));
                   AppStorageService.setItem('openInstanceRefs', currRefs);
                 }
-                currRefs.push({id: newInstance.id, name:newInstance.name,type:instanceType});
-                console.log('(H1) SET OPEN INSTANCE REFS: ' + JSON.stringify(currRefs));
-                AppStorageService.setItem('openInstanceRefs', currRefs);
+                deferred.resolve(instance);
+
               }
-              deferred.resolve(instance);
-            }
-          );
+            );
+          }
+
+
+
+
+
+//          newInstance = DataSourceService.getDataSourceById(id).
+//            then(function(instance) {
+//              instance.type = 'datasource';
+//              svc.setActiveInstance(instance, instance.type);
+//              if (!isOpen) {
+//                var currRefs = AppStorageService.getItem('openInstanceRefs');
+//                if (!currRefs) {
+//                  currRefs = [];
+//                  console.log('(G) SET OPEN INSTANCE REFS: ' + JSON.stringify(currRefs));
+//                  AppStorageService.setItem('openInstanceRefs', currRefs);
+//                }
+//                currRefs.push({id: newInstance.id, name:newInstance.name,type:instanceType});
+//                console.log('(H1) SET OPEN INSTANCE REFS: ' + JSON.stringify(currRefs));
+//                AppStorageService.setItem('openInstanceRefs', currRefs);
+//              }
+//              deferred.resolve(instance);
+//            }
+//          );
           break;
 
         default:

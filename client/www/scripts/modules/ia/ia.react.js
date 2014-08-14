@@ -55,8 +55,6 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
       console.warn('error deleting model definition: ' + error);
     }
 
-    var tVal = opt.sourceEvent.currentTarget.attributes['data-id'].value;
-    console.log(tVal);
   },
   componentDidMount:function(){
     var menuItems = {};
@@ -92,13 +90,6 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
     };
 
     var singleClickItem = function(event) {
-//      if (event.target.attributes['data-name']){
-//        var clickModelName = event.target.attributes['data-name'].value;
-//        scope.$apply(function () {
-//          scope.navTreeItemClicked('model', clickModelName, event.metaKey);
-//        });
-//      }
-
 
       if (event.target.attributes['data-id'] || event.target.parentElement.attributes['data-id']){
         var val = '';
@@ -114,25 +105,8 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
 
       }
 
-
-
     };
-    var dblClickItem = function(event) {
 
-      if (event.target.attributes['data-name'] || event.target.parentElement.attributes['data-name']){
-        var val = '';
-        if (event.target.attributes['data-name']) {
-          val = event.target.attributes['data-name'].value;
-        }
-        else {
-          val = event.target.parentElement.attributes['data-name'].value;
-        }
-        scope.$apply(function () {
-          scope.navTreeItemDblClicked('model', val);
-        });
-
-      }
-    };
     var addNewInstanceRequest = function(event) {
       scope.$apply(function() {
         scope.createModelViewRequest();
@@ -155,7 +129,7 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
       }
       return (
         <li className={classNameVar} data-id={item.id} >
-          <button onDoubleClick={dblClickItem} onClick={singleClickItem} data-name={item.name} data-id={item.id} className="btn btn-default btn-block nav-tree-item tree-node"><span data-name={item.name}  data-id={item.id} className="glyphicon glyphicon-file"></span>{item.name}</button>
+          <button onClick={singleClickItem} data-name={item.name} data-id={item.id} className="btn btn-default btn-block nav-tree-item tree-node"><span data-name={item.name}  data-id={item.id} className="glyphicon glyphicon-file"></span>{item.name}</button>
         </li>
         );
     });
@@ -174,7 +148,7 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
 *
 * */
 var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
-  openSelectedModels:function(key, opt) {
+  openSelectedDataSources:function(key, opt) {
     var that = this;
     that.props.scope.$apply(function () {
       that.props.scope.openSelectedModels();
@@ -183,7 +157,24 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
   createModelsFromDS: function(options) {
     var that = this;
     var x = options;
-
+  },
+  deleteSelectedDataSource: function(key, opt) {
+    var scope = this.props.scope;
+    console.log('key: ' + key);
+    console.log('opt' + opt);
+    try{
+      if (opt.sourceEvent.currentTarget.attributes['data-id']){
+        var dsId = opt.sourceEvent.currentTarget.attributes['data-id'].value;
+        scope.$apply(function(){
+          scope.deleteDataSourceDefinitionRequest(dsId);
+        });
+      }
+    }
+    catch(error) {
+      console.warn('error deleting model definition: ' + error);
+    }
+//    var tVal = opt.sourceEvent.currentTarget.attributes['data-id'].value;
+//    console.log(tVal);
   },
   componentDidMount:function(){
     var menuItems = {};
@@ -192,7 +183,7 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
 
     var isDiscoverable = false;
 
-    menuItems.openSelectedModels = {name: "open", callback: this.openSelectedModels};
+    menuItems.openSelectedModels = {name: "open", callback: this.openSelectedDataSources};
     menuItems.createModelsFromDS = {
       name: "create models",
       disabled: function(key, opt) {
@@ -226,7 +217,7 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
 
       }
     };
-
+    menuItems.deleteSelectedDataSource = {name: "delete", callback: this.deleteSelectedDataSource};
 
     $.contextMenu({
       // define which elements trigger this menu
@@ -274,22 +265,7 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
       }
 
     };
-    var dblClickItem = function(event) {
 
-      if (event.target.attributes['data-name'] || event.target.parentElement.attributes['data-name']){
-        var val = '';
-        if (event.target.attributes['data-name']) {
-          val = event.target.attributes['data-name'].value;
-        }
-        else {
-          val = event.target.parentElement.attributes['data-name'].value;
-        }
-        scope.$apply(function () {
-          scope.navTreeItemDblClicked('datasource', val, event.metaKey);
-        });
-
-      }
-    };
     var addNewInstanceRequest = function(event) {
       if (event.target.attributes['data-type'] || event.target.parentElement.attributes['data-type']){
         var val = '';
@@ -323,8 +299,8 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
         classNameVar += ' is-selected'
       }
       return (
-        <li key={item.name} className={classNameVar}>
-          <button onDoubleClick={dblClickItem} data-is-discoverable={isDiscoverable} onClick={singleClickItem} data-name={item.name} data-id={item.id} className="btn btn-default btn-block nav-tree-item tree-node"><span data-is-discoverable={isDiscoverable}  data-name={item.name} className="glyphicon glyphicon-file"></span>{item.name}</button>
+        <li key={item.name} data-id={item.id} className={classNameVar}>
+          <button data-is-discoverable={isDiscoverable} onClick={singleClickItem} data-name={item.name} data-id={item.id} className="btn btn-default btn-block nav-tree-item tree-node"><span data-is-discoverable={isDiscoverable}  data-name={item.name} className="glyphicon glyphicon-file"></span>{item.name}</button>
         </li>);
     };
     // Main return
