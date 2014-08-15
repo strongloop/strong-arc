@@ -5,9 +5,9 @@ var TargetTableModelRowItem = (TargetTableModelRowItem = React).createClass({
     var propertiesObj = that.props.tableProperties;
     var propertiesCollection = [];
 
-    var fuckKeys = Object.keys(propertiesObj);
+    var propertyKeys = Object.keys(propertiesObj);
 
-    var damn = fuckKeys.map(function(key) {
+    var tPropKeys = propertyKeys.map(function(key) {
       var testObj = propertiesObj[key];
       console.log(testObj);
       testObj.name = key;

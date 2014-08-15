@@ -306,8 +306,8 @@ Model.service('ModelService', [
       id: CONST.newModelPreId,
       type: 'model',
       facetName: CONST.newModelFacetName,
-      strict: false,
-      public: true,
+      strict: true,
+      public: false,
       name: CONST.newModelName,
       idInjection: false
     };

@@ -185,10 +185,6 @@ Common.directive('slCommonInstancePreview', [
           renderComp();
         });
 
-
-//        scope.$watch('previewInstance', function(newVal, oldVal) {
-//          React.renderComponent(CommonPreviewInstanceContainer({scope:scope}), el[0]);
-//        });
       }
     }
   }

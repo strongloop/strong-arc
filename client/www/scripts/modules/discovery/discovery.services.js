@@ -127,9 +127,6 @@ Discovery.service('DiscoveryService', [
             });
             var xiii = tmp;
 
-//            for (var i = 0;i < result.length;i++) {
-//              returnArray.push(result[i].status);
-//            }
             var relList = tmp.map(function(item) {
               for (property in item) {
                 console.log('KEY: ' + property);
@@ -137,10 +134,7 @@ Discovery.service('DiscoveryService', [
               }
 
             });
-//
-//            var aList = returnArray.map(function(key, value) {
-//              console.log(key);
-//            });
+
 
             deferred.resolve(finalArray);
 
@@ -151,28 +145,7 @@ Discovery.service('DiscoveryService', [
         });
 
 
-//      var dsDef = DataSourceDefinition.findById({id:dsId},
-//        function(res) {
-//          var x = res;
-//          var t = x;
-//          // slow things down a bit
-//
-//          dsDef.$prototype$discoverModelDefinition({modelName:tableName}, {id:dsId},
-//            function(response) {
-//              var tt = 'tt';
-//              var p = response;
-//              var q = p;
-//              console.log('Got the table results: ' + response);
-//            },
-//            function(response){
-//              console.log('bad get table model def.');
-//            }
-//          );
-//        },
-//        function(res) {
-//          console.log('bad find data source definition by id: ' + dsId);
-//        }
-//      );
+
       return deferred.promise;
     };
     /*

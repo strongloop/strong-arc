@@ -74,14 +74,11 @@ Model.controller('ModelInstanceController', [
           if (key === modelName){
             $scope.currModel = value;
             $scope.currModel.name = modelName;
-//            if (!$scope.currModel.properties) {
-//              $scope.currModel.properties = [];
-//            }
+
             return;
           }
 
         }, log);
-        //$scope.models = models;
 
 
       });

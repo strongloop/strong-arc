@@ -97,7 +97,9 @@ var CONST = {
   newModelFacetName: 'common',
   newDataSourcePreId:'sl.temp.new-datasource',
   newDataSourceName: 'new-datasource',
-  newDataSourceFacetName: 'server'
+  newDataSourceFacetName: 'server',
+  dataSourceType: 'datasource',
+  modelType: 'model'
 };
 var setUI = function() {
   var headerHeight = 50;

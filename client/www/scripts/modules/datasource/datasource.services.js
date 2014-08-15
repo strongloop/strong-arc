@@ -19,17 +19,9 @@ Datasource.service('DataSourceService', [
           deferred.resolve(response);
         },
         function(response) {
-          console.warn('bad get datasource defninitions')
+          console.warn('bad get datasource defninitions: ' + response)
         }
       );
-
-//      var retVal = JSON.parse(window.localStorage.getItem('ApiDatasources'));
-//      if (!retVal) {
-//        retVal = [];
-//      }
-//      $timeout(function() {
-//        deferred.resolve(retVal);
-//      }, 500);
 
       return deferred.promise;
 
@@ -74,7 +66,7 @@ Datasource.service('DataSourceService', [
         return;
       }
       for (var i = 0;i < openInstanceRefs.length;i++) {
-        if (openInstanceRefs[i].name === 'new-datasource') {
+        if (openInstanceRefs[i].name === CONST.newDataSourceName) {
           openInstanceRefs[i].name = newName;
           break;
         }
@@ -143,7 +135,7 @@ Datasource.service('DataSourceService', [
         id: CONST.newDataSourcePreId,
         name: CONST.newDataSourceName,
         facetName: CONST.newDataSourceFacetName,
-        type: 'datasource'
+        type: CONST.dataSourceType
       };
       var doesNewDatasourceExist = false;
       for (var i = 0;i < openInstanceRefs.length;i++) {

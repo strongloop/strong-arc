@@ -449,11 +449,6 @@ var IAMainControls = (IAMainControls = React).createClass({
           </div>
         </div>
 
-
-
-
-
-
         </div>
 
       </div>

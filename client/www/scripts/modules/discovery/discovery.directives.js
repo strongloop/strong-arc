@@ -231,7 +231,6 @@ Discovery.directive('slCommonDisabledAttrib', [
           }
 
         }, true);
-        var x = 'y';
       }
     };
   }

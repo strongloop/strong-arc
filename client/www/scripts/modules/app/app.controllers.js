@@ -265,36 +265,7 @@ app.controller('StudioController', [
     };
 
 
-    /*
-    *
-    * DELETE
-    * */
-    // delete models
-    $scope.deleteModelDefinitionRequest = function(modelId) {
-      if (modelId){
-        if (confirm('delete model?')){
-          console.log('delete this model: ' + modelId);
-          ModelService.deleteModel(modelId).
-            then(function(response){
-              loadModels();
-            }
-          );
-        }
-      }
-    };
-    // delete datasource
-    $scope.deleteDataSourceDefinitionRequest = function(dsId) {
-      if (dsId){
-        if (confirm('delete datasource?')){
-          console.log('delete this datasource: ' + dsId);
-          DataSourceService.deleteDataSource(dsId).
-            then(function(response){
-              loadDataSources();
-            }
-          );
-        }
-      }
-    };
+
 
     /*
     * Models IA
@@ -378,6 +349,20 @@ app.controller('StudioController', [
 
       }
     };
+    // delete models
+    $scope.deleteModelDefinitionRequest = function(modelId) {
+      if (modelId){
+        if (confirm('delete model?')){
+          console.log('delete this model: ' + modelId);
+          ModelService.deleteModel(modelId).
+            then(function(response){
+              loadModels();
+            }
+          );
+        }
+      }
+    };
+
     $scope.createNewProperty = function() {
 
       // get model id
@@ -429,7 +414,19 @@ app.controller('StudioController', [
         });
 
     };
-
+    // delete datasource
+    $scope.deleteDataSourceDefinitionRequest = function(dsId) {
+      if (dsId){
+        if (confirm('delete datasource?')){
+          console.log('delete this datasource: ' + dsId);
+          DataSourceService.deleteDataSource(dsId).
+            then(function(response){
+              loadDataSources();
+            }
+          );
+        }
+      }
+    };
     // save Datasource
     $scope.updateOrCreateDatasource = function(config) {
       var currentDatasource = config;
@@ -462,13 +459,6 @@ app.controller('StudioController', [
       }
     };
 
-
-
-
-
-
-
-
     /*
     *
     * DISCOVERY
@@ -497,9 +487,6 @@ app.controller('StudioController', [
       });
 
     };
-
-
-
 
 
 

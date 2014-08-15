@@ -7,25 +7,25 @@
 * */
 var DatasourceEditorView = (DatasourceEditorView = React).createClass({
   getInitialState: function() {
-    return this.props.scope.activeInstance;
+    return {activeInstance: this.props.scope.activeInstance}
   },
   componentWillReceiveProps: function(nextProps) {
-    this.setState(nextProps.scope.activeInstance);
+    this.setState({activeInstance:nextProps.scope.activeInstance});
   },
   handleChange: function(event) {
     var scope = this.props.scope;
     //this.setState({name: event.target.value});
     var stateName = event.target.attributes['data-name'].value;
-    var xState = this.state;
-    xState[stateName] = event.target.value;
-    this.setState(xState);
+    var xActiveInstance = this.state.activeInstance;
+    xActiveInstance[stateName] = event.target.value;
+    this.setState({activeInstance:xActiveInstance});
     console.log('data source form edit handler ');
 
   },
   render: function() {
     var scope = this.props.scope;
 
-    var dsModel = this.state;
+    var dsModel = this.state.activeInstance;
 
     var testConnection = function(event) {
       var dsId = event.target.attributes['data-id'].value;

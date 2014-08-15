@@ -155,9 +155,31 @@
     padding: 0;
     margin: 0;
 }
-.model-instance-property-list {
 
+.model-instance-property-list{
+	background: blue;
+	color: #4A4A4A;
+	font-size: 1.5rem;
 }
+.model-instance-property-list li:first-child {
+    background: red;
+    padding-top: 2rem;
+}
+.model-instance-property-list select {
+	font-size: 1.4rem;
+	border: none;
+	border-radius: 0;
+	padding-left: 0.5rem;
+	
+	
+	-webkit-appearance: none;
+	
+	height: 2rem;
+	text-transform: capitalize;
+	width: 100%;
+	height: 100%;
+}
+
 .table-header-cell {
 	padding-top: 0.7rem;
 }
@@ -212,7 +234,6 @@
 
 input {
 	border: none;
-	width: ;
 	font-size: 90%;
 }
 label {
@@ -300,20 +321,6 @@ label {
 .model-detail-pocket-button:hover {
 	background-color: #67992d;
 }
-
-.model-instance-property-list {
-	color: #4A4A4A;
-	font-size: 1.5rem;
-}
-
-.model-instance-property-list select {
-	font-size: 1.4rem;
-	border: none;
-	background: white;
-	-webkit-appearance: none;
-	height: 2rem;
-	text-transform: capitalize;
-}
 .btn-new-model-property {
     border: 0;
     background: transparent;
@@ -324,7 +331,6 @@ label {
 .btn-new-model-property:hover {
     color: #4A90E2;
 }
-
 
 .props-name-cell {
     width: 25rem;
@@ -374,10 +380,15 @@ label {
 }
 
 .props-comments-cell {
+	text-align: left;
 }
 .props-comments-header {
 }
-
+.props-spinner-cell {
+	background: red;
+	width: 2rem;
+	
+}
 
 .property-doc-textarea {
     height: 2.6rem;

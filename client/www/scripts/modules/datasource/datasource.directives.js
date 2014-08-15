@@ -15,9 +15,7 @@ Datasource.directive('slDatasourceEditorForm', [
 
 
         scope.$watch('activeInstance', function(instance) {
-          console.log('data source form ACTIVE INTANCE CHANGE WATCH');
           if(instance.type === 'datasource') {
-            console.log('data source form ACTIVE INTANCE CHANGE REMDER');
             React.renderComponent(DatasourceEditorView({scope:scope}), el[0]);
           }
         }, true);

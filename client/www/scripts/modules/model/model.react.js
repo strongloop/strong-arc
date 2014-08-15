@@ -4,18 +4,18 @@
  * */
 var ModelDetailEditor = (ModelDetailEditor = React).createClass({
   getInitialState: function() {
-    return this.props.scope.activeInstance;
+    return {activeInstance:this.props.scope.activeInstance};
   },
   componentWillReceiveProps: function(nextProps) {
-    this.setState(nextProps.scope.activeInstance);
+    this.setState({activeInstance:{}});
+    this.setState({activeInstance:nextProps.scope.activeInstance});
   },
   handleChange: function(event) {
     var modelPropertyName = '';
-   // console.log('model form edit handler ');
     if (event.target.attributes['data-name']) {
       modelPropertyName = event.target.attributes['data-name'].value;
       var xState = this.state;
-      this.state[modelPropertyName] = event.target.value;
+      xState.activeInstance[modelPropertyName] = event.target.value;
       this.setState(xState);
     }
   },
@@ -26,9 +26,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
   render: function() {
     var that = this;
     var scope = that.props.scope;
-
-    var model = that.state;
-    var modelDef = that.state;
+    var modelDef = that.state.activeInstance;
     var cx = React.addons.classSet;
 
     var classes = cx({
@@ -44,25 +42,25 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
         scope.toggleModelDetailView();
       });
     };
+    var isPublicChecked = function(item) {
+      if (item.public) {
+        return 'checked';
+      }
+      return '';
+    };
     var saveModelDefinition = function(event) {
       var scope = that.props.scope;
-//      var formEls = event.target.form;
-//      if (formEls.length > 0) {
-//        var modelObj = {};
-//        for (var i = 0;i < formEls.length;i++) {
-//          if (formEls[i].attributes['data-name']) {
-//            modelObj[formEls[i].attributes['data-name'].value] = formEls[i].value;
-//          }
-//
-//        }
-//
-//      }
-      console.log('hello: ' + JSON.stringify(that.state));
       scope.$apply(function() {
         scope.saveModelRequest(that.state);
-      })
+      });
       return false;
     };
+    var dataSourceOptions = scope.mainNavDatasources.map(function(ds) {
+      return (<option value={ds.name}>{ds.name}</option>);
+    });
+    var baseOptions = scope.mainNavModels.map(function(model) {
+      return (<option value={model.name}>{model.name}</option>);
+    });
     var returnVal = (<div />);
     if (scope.activeInstance && scope.activeInstance.name) {
       returnVal = (
@@ -110,19 +108,25 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
 	          		<div className="model-detail-label">
 	          		  <label>base model</label>
 	          		</div>
-	          		<input type="text"
-	          		  value={modelDef.base}
-	          		  onChange={this.handleChange}
-	          		  data-name="base"
-	          		  id="ModelBase"
-	          		  name="ModelBase"
-	          		  className="model-instance-editor-input" />
+                <select value={modelDef.base}
+                  data-name="base"
+                  name="base"
+                  onChange={this.handleChange}
+                  className="model-instance-editor-input">
+                  {baseOptions}
+                </select>
 	          	</div>
 	          	<div className="model-detail-input-container">
 	          		<div className="model-detail-label">
 	          		  <label>datasource</label>
 	          		</div>
-	          		<input type="text" value={modelDef.dataSource} onChange={this.handleChange} className="model-instance-editor-input" />
+                <select value={modelDef.dataSource}
+                  data-name="dataSource"
+                  name="dataSource"
+                  onChange={this.handleChange}
+                  className="model-instance-editor-input">
+                  {dataSourceOptions}
+                </select>
 	          	</div>
 	          </div>
 
@@ -130,8 +134,11 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
 	          	<div className="model-detail-input-container listNarrow">
 	          		<label className="model-detail-label">public</label>
 	          		<input type="checkbox"
-	          		   checked={modelDef.public}
-	          		   className="model-instance-editor-checkbox" />
+                  checked="off"
+                  data-name="public"
+                  name="public"
+                  onChange={this.handleChange}
+                  className="model-instance-editor-input" />
 	          	</div>
 	          	<div className="model-detail-input-container listNarrow">
 	          		<label className="model-detail-label">strict</label>
@@ -227,6 +234,8 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
             <div className="model-instance-container property-list-header">
               <div data-ui-type="table">
                 <div data-ui-type="row" className="model-instance-property-table-header-row">
+                  <span data-ui-type="cell" title="spinner" className="props-spinner-header table-header-cell">&nbsp;</span>
+
                   <span data-ui-type="cell" title="property name" className="props-name-header table-header-cell">Name</span>
 
                   <span data-ui-type="cell" title="data type"className="props-data-type-header table-header-cell">Type</span>
@@ -321,26 +330,32 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
     };
 
     var pClasses = cx({
-      'property-detail is-open': that.state.isOpen,
-      'property-detail is-closed': !that.state.isOpen
+      'property-detail-container is-open': that.state.isOpen,
+      'property-detail-container is-closed': !that.state.isOpen
     });
     var bClasses = cx({
-      'glyphicon glyphicon-chevron-down': that.state.isOpen,
-      'glyphicon glyphicon-chevron-right': !that.state.isOpen
+      'glyphicon glyphicon-open-sign': that.state.isOpen,
+      'glyphicon glyphicon-closed-sign': !that.state.isOpen
+    });
+    var cClasses = cx({
+      'modelproperty-container modelproperty-detail-is-open': that.state.isOpen,
+      'modelproperty-container modelproperty-detail-is-closed': !that.state.isOpen
     });
 
 
     return (
       <li>
-        <div >
-          <div data-ui-type="table">
+        <div className={cClasses}>
+          <div data-ui-type="table" className="modelproperty-detail-row" >
             <div data-ui-type="row">
-              <span data-ui-type="cell" className="props-name-cell">
+              <span data-ui-type="cell" className="props-spinner-cell">
                 <button
                   onClick={togglePropertiesView}
                   className="btn btn-sm btn-default btn-model-property-spinner">
                   <span className={bClasses}></span>
                 </button>
+              </span>
+              <span data-ui-type="cell" className="props-name-cell">
                 <input ref="propName"
                   data-name="name"
                   type="text"
@@ -357,13 +372,13 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
                   placeholder="default value" />
               </span>
               <span data-ui-type="cell" className="props-required-cell">
-                <input type="checkbox" />
+                <input type="checkbox"  />
               </span>
               <span data-ui-type="cell" className="props-index-cell">
                 <input type="checkbox" />
               </span>
               <span data-ui-type="cell" className="props-comments-cell">
-                <textarea className="property-doc-textarea model-instance-editor-input" ></textarea>
+                <input type="text" className="property-doc-textarea model-instance-editor-input" />
               </span>
             </div>
           </div>

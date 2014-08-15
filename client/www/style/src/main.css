@@ -1,4 +1,4 @@
-/* @override 
+/* @override
 	http://0.0.0.0:3003/style/dev/main.css */
 
 
@@ -9,6 +9,10 @@ body {
     margin: 0;
     overflow: hidden;
 }
+input:focus, select:focus {
+    outline:none;
+}
+
 /*
 
     Data Table Grid
@@ -25,7 +29,7 @@ body {
 [data-ui-type="cell"] {
     display: table-cell;
     vertical-align: top;
-    
+
 }
 button:focus,
 button:active:focus,
@@ -115,10 +119,10 @@ code {
 	float: left;
 }
 
-/* 
+/*
 
 	Login screen
-	
+
 */
 
 .jumbotron {

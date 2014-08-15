@@ -391,10 +391,7 @@ Model.directive('schemaModelComposer', [
   function($state, $modal) {
     return {
       templateUrl: './scripts/modules/model/templates/model.schema.composer.html',
-//      transclude: true,
-//      scope: {
-//        apiSourceTables: '=schemaModelComposer'
-//      },
+
       link: function(scope, elem, attrs) {
        // console.log('Schema Composer link function: ' + scope.apiSourceTables);
 
