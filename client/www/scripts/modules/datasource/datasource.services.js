@@ -41,7 +41,7 @@ Datasource.service('DataSourceService', [
     svc.getDataSourceById = function(dsId) {
       var deferred = $q.defer();
       var targetDS = {};
-      if (dsId !== CONST.newDataSourcePreId) {
+      if (dsId !== CONST.NEW_DATASOURCE_PRE_ID) {
 
         DataSourceDefinition.findById({id:dsId},
           function(response) {
@@ -66,7 +66,7 @@ Datasource.service('DataSourceService', [
         return;
       }
       for (var i = 0;i < openInstanceRefs.length;i++) {
-        if (openInstanceRefs[i].name === CONST.newDataSourceName) {
+        if (openInstanceRefs[i].name === CONST.NEW_DATASOURCE_NAME) {
           openInstanceRefs[i].name = newName;
           break;
         }
@@ -78,7 +78,7 @@ Datasource.service('DataSourceService', [
     svc.createDataSourceDefinition = function(config) {
       var deferred = $q.defer();
       // double check to clear out 'new' id
-      if (config.id === CONST.newDataSourcePreId) {
+      if (config.id === CONST.NEW_DATASOURCE_PRE_ID) {
         delete config.id;
       }
       DataSourceDefinition.create({}, config,
@@ -132,14 +132,14 @@ Datasource.service('DataSourceService', [
         openInstanceRefs = [];
       }
       var defaultDatasourceSchema = {
-        id: CONST.newDataSourcePreId,
-        name: CONST.newDataSourceName,
-        facetName: CONST.newDataSourceFacetName,
-        type: CONST.dataSourceType
+        id: CONST.NEW_DATASOURCE_PRE_ID,
+        name: CONST.NEW_DATASOURCE_NAME,
+        facetName: CONST.NEW_DATASOURCE_FACET_NAME,
+        type: CONST.DATASOURCE_TYPE
       };
       var doesNewDatasourceExist = false;
       for (var i = 0;i < openInstanceRefs.length;i++) {
-        if (openInstanceRefs[i].name === CONST.newDataSourceName) {
+        if (openInstanceRefs[i].name === CONST.NEW_DATASOURCE_NAME) {
           doesNewDatasourceExist = true;
           break;
         }

@@ -11,7 +11,7 @@ Model.service('ModelService', [
       if (config.name) {
 
         // double check to clear out 'new' id
-        if (config.id === CONST.newModelPreId) {
+        if (config.id === CONST.NEW_MODEL_PRE_ID) {
           delete config.id;
         }
 
@@ -262,7 +262,7 @@ Model.service('ModelService', [
     svc.getModelById = function(modelId) {
       var targetModel = {};
       var deferred = $q.defer();
-      if (modelId !== CONST.newModelPreId) {
+      if (modelId !== CONST.NEW_MODEL_PRE_ID) {
 
 
         ModelDefinition.findById({id:modelId},
@@ -303,12 +303,12 @@ Model.service('ModelService', [
 
     };
     var defaultModelSchema = {
-      id: CONST.newModelPreId,
+      id: CONST.NEW_MODEL_PRE_ID,
       type: 'model',
-      facetName: CONST.newModelFacetName,
+      facetName: CONST.NEW_MODEL_FACET_NAME,
       strict: true,
       public: false,
-      name: CONST.newModelName,
+      name: CONST.NEW_MODEL_NAME,
       idInjection: false
     };
 
@@ -323,7 +323,7 @@ Model.service('ModelService', [
       }
       var doesNewModelExist = false;
       for (var i = 0;i < openInstanceRefs.length;i++) {
-        if (openInstanceRefs[i].name === CONST.newModelName) {
+        if (openInstanceRefs[i].name === CONST.NEW_MODEL_NAME) {
           doesNewModelExist = true;
           break;
         }

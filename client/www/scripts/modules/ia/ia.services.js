@@ -74,7 +74,7 @@ IA.service('IAService', [
     svc.clearOpenNewModelReference = function() {
       var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
       for (var i = 0;i < openInstanceRefs.length;i++) {
-        if (openInstanceRefs[i].id = CONST.newModelPreId) {
+        if (openInstanceRefs[i].id = CONST.NEW_MODEL_PRE_ID) {
           openInstanceRefs.splice(i,1);
           break;
         }
@@ -84,7 +84,7 @@ IA.service('IAService', [
     svc.clearOpenNewDSReference = function() {
       var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
       for (var i = 0;i < openInstanceRefs.length;i++) {
-        if (openInstanceRefs[i].id = CONST.newDataSourcePreId) {
+        if (openInstanceRefs[i].id = CONST.NEW_DATASOURCE_PRE_ID) {
           openInstanceRefs.splice(i,1);
           break;
         }
@@ -120,7 +120,7 @@ IA.service('IAService', [
 
         case 'model':
           // may be new model instance
-          if (id === CONST.newModelPreId) {
+          if (id === CONST.NEW_MODEL_PRE_ID) {
             // so don't try to initialize against server
             console.log('TRYING TO ACTIVATE NEW MODEL TAB');
             deferred.resolve(ModelService.createNewModelInstance());
@@ -152,7 +152,7 @@ IA.service('IAService', [
 
         case 'datasource':
           // may be new model instance
-          if (id === CONST.newDataSourcePreId) {
+          if (id === CONST.NEW_DATASOURCE_PRE_ID) {
             // so don't try to initialize against server
             console.log('TRYING TO ACTIVATE NEW DS TAB');
             deferred.resolve(DataSourceService.createNewDatasourceInstance());

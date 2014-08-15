@@ -92,14 +92,14 @@
 })(jQuery);
 // Application Constants
 var CONST = {
-  newModelPreId:'sl.temp.new-model',
-  newModelName: 'new-model',
-  newModelFacetName: 'common',
-  newDataSourcePreId:'sl.temp.new-datasource',
-  newDataSourceName: 'new-datasource',
-  newDataSourceFacetName: 'server',
-  dataSourceType: 'datasource',
-  modelType: 'model'
+  NEW_MODEL_PRE_ID:'sl.temp.new-model',
+  NEW_MODEL_NAME: 'new-model',
+  NEW_MODEL_FACET_NAME: 'common',
+  NEW_DATASOURCE_PRE_ID:'sl.temp.new-datasource',
+  NEW_DATASOURCE_NAME: 'new-datasource',
+  NEW_DATASOURCE_FACET_NAME: 'server',
+  DATASOURCE_TYPE: 'datasource',
+  MODEL_TYPE: 'model'
 };
 var setUI = function() {
   var headerHeight = 50;

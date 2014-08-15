@@ -60,7 +60,7 @@ Discovery.directive('slDiscoverySchema', [
             console.log(testObj);
             testObj.name = key;
             testObj.modelId = modelId;
-            testObj.facetName = 'common';
+            testObj.facetName = CONST.NEW_MODEL_FACET_NAME;
             PropertyService.createModelProperty(testObj).
               then(function(response){
                 console.log('GREAT WE CREATED A Property')
@@ -97,7 +97,7 @@ Discovery.directive('slDiscoverySchema', [
               $scope.showDiscoveryBackButton = true;
               // ('create the following models: '  );
               $scope.apiSourceTables.map(function(table) {
-                table.facetName = 'common';
+                table.facetName = CONST.NEW_MODEL_FACET_NAME;
                 ModelService.createModel(table).
                   then(function(response) {
                     // create properties

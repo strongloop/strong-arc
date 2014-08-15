@@ -287,7 +287,7 @@ app.controller('StudioController', [
     // save model
     $scope.saveModelRequest = function(config) {
 
-      if (config.id && (config.id !== CONST.newModelPreId)) {
+      if (config.id && (config.id !== CONST.NEW_MODEL_PRE_ID)) {
         // update model
         ModelService.updateModel(config).
           then(function(response) {
@@ -300,7 +300,7 @@ app.controller('StudioController', [
       }
       else {
         // double check to clear out 'new' id
-        if (config.id === CONST.newModelPreId) {
+        if (config.id === CONST.NEW_MODEL_PRE_ID) {
           delete config.id;
         }
         // create model
@@ -372,7 +372,7 @@ app.controller('StudioController', [
       var propConfig = {
         name:'property-name-' + getRandomNumber(),
         type: 'string',
-        facetName: 'common',
+        facetName: CONST.NEW_MODEL_FACET_NAME,
         modelId: modelId
       };
 
@@ -437,12 +437,12 @@ app.controller('StudioController', [
 //      if (DataSourceService.isNewDatasourceNameUnique(formObj.name)) {
         // call create model
         if (!config.facetName) {
-          config.facetName = 'server';
+          config.facetName = CONST.NEW_DATASOURCE_FACET_NAME;
         }
         console.log('CREATE THE DataSource: ' + JSON.stringify(config));
 
         // double check to clear out 'new' id
-        if (config.id === CONST.newModelPreId) {
+        if (config.id === CONST.NEW_MODEL_PRE_ID) {
           delete config.id;
         }
 
