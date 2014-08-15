@@ -19,7 +19,7 @@ var IAMainNavContainer = (IAMainNavContainer = React).createClass({
     };
     return (
       <div>
-        <button data-name="ia_root"  onClick={singleClickItem} className="btn btn-default btn-block nav-tree-item nav-tree-root tree-root">OSCON demo project</button><div className="main-nav-help"><span id="mainNavContextHelp" data-id="MainNavContextHelp" className="glyphicon glyphicon-question-sign"></span></div>
+        <span className="ia-project-title-container">[project name goes here]</span><div className="main-nav-help"><span id="mainNavContextHelp" data-id="MainNavContextHelp" className="glyphicon glyphicon-question-sign"></span></div>
         <IAMainModelNav scope={this.props.scope} />
         <IAMainDatasourceNav scope={this.props.scope} />
       </div>
@@ -173,8 +173,7 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
     catch(error) {
       console.warn('error deleting model definition: ' + error);
     }
-//    var tVal = opt.sourceEvent.currentTarget.attributes['data-id'].value;
-//    console.log(tVal);
+
   },
   componentDidMount:function(){
     var menuItems = {};
@@ -184,39 +183,40 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
     var isDiscoverable = false;
 
     menuItems.openSelectedModels = {name: "open", callback: this.openSelectedDataSources};
-    menuItems.createModelsFromDS = {
-      name: "create models",
-      disabled: function(key, opt) {
-        if (opt.sourceEvent.target.attributes['data-is-discoverable']) {
-          isDiscoverable = opt.sourceEvent.target.attributes['data-is-discoverable'].value;
-        }
-        else if (opt.sourceEvent.target.parentElement.attributes['data-name']){
-          isDiscoverable = opt.sourceEvent.target.parentElement.attributes['data-is-discoverable'].value;
-        }
-        if (isDiscoverable === 'true') {
-          return false;
-        }
-        return true;
-      },
-      callback: function(key, opt) {
-//        console.log('||  ' + opt.sourceEvent.target.attributes['data-name'].value);
-        var dsId = '';
-        if (opt.sourceEvent.target.attributes['data-id']) {
-          dsId = opt.sourceEvent.target.attributes['data-id'].value;
-        }
-        // check the parent element
-        else if (opt.sourceEvent.target.parentElement.attributes['data-id']){
-          dsId = opt.sourceEvent.target.parentElement.attributes['data-id'].value;
-        }
-        if (dsId){
-          that.props.scope.$apply(function () {
-
-            that.props.scope.createModelsFromDS(dsId);
-          });
-        }
-
-      }
-    };
+// Dormant for initial releast
+//    menuItems.createModelsFromDS = {
+//      name: "create models",
+//      disabled: function(key, opt) {
+//        if (opt.sourceEvent.target.attributes['data-is-discoverable']) {
+//          isDiscoverable = opt.sourceEvent.target.attributes['data-is-discoverable'].value;
+//        }
+//        else if (opt.sourceEvent.target.parentElement.attributes['data-name']){
+//          isDiscoverable = opt.sourceEvent.target.parentElement.attributes['data-is-discoverable'].value;
+//        }
+//        if (isDiscoverable === 'true') {
+//          return false;
+//        }
+//        return true;
+//      },
+//      callback: function(key, opt) {
+////        console.log('||  ' + opt.sourceEvent.target.attributes['data-name'].value);
+//        var dsId = '';
+//        if (opt.sourceEvent.target.attributes['data-id']) {
+//          dsId = opt.sourceEvent.target.attributes['data-id'].value;
+//        }
+//        // check the parent element
+//        else if (opt.sourceEvent.target.parentElement.attributes['data-id']){
+//          dsId = opt.sourceEvent.target.parentElement.attributes['data-id'].value;
+//        }
+//        if (dsId){
+//          that.props.scope.$apply(function () {
+//
+//            that.props.scope.createModelsFromDS(dsId);
+//          });
+//        }
+//
+//      }
+//    };
     menuItems.deleteSelectedDataSource = {name: "delete", callback: this.deleteSelectedDataSource};
 
     $.contextMenu({
@@ -384,7 +384,7 @@ var IAMainControls = (IAMainControls = React).createClass({
             </div>
             <div data-ui-type="cell">
               <label className="main-control-command-label">APP</label>
-              <button onClick={renderAppViewRequest} type="button" className="btn btn-primary btn-sm">
+              <button disabled="disabled" onClick={renderAppViewRequest} type="button" className="btn btn-primary btn-sm">
                 <span className="glyphicon glyphicon-plus-sign"></span>
                 Render
               </button>

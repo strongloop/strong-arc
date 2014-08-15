@@ -51,7 +51,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
     var saveModelDefinition = function(event) {
       var scope = that.props.scope;
       scope.$apply(function() {
-        scope.saveModelRequest(that.state);
+        scope.saveModelRequest(that.state.activeInstance);
       });
       return false;
     };
@@ -146,20 +146,6 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
 	          		    checked={modelDef.strict}
 	          		    className="model-instance-editor-checkbox" />
 	          	</div>
-	          	<div className="model-detail-input-container listWide">
-	          		<label className="model-detail-label">Indexes</label>
-	          		<input type="button" value="Edit" className="model-detail-pocket-button" />
-	          	</div>
-	          	<div className="model-detail-input-container listWide">
-	          		<label className="model-detail-label">Scopes</label>
-	          		<input type="button" value="Edit" className="model-detail-pocket-button" />
-	          	</div>
-	          	<div className="model-detail-input-container listWide">
-	              	<div>
-	              		<label className="model-detail-label">Access</label>
-	              		<input type="button" value="Edit" className="model-detail-pocket-button" />
-	          		</div>
-	          	</div>
 	          </div>
 
 
@@ -234,7 +220,6 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
             <div className="model-instance-container property-list-header">
               <div data-ui-type="table">
                 <div data-ui-type="row" className="model-instance-property-table-header-row">
-                  <span data-ui-type="cell" title="spinner" className="props-spinner-header table-header-cell">&nbsp;</span>
 
                   <span data-ui-type="cell" title="property name" className="props-name-header table-header-cell">Name</span>
 
@@ -348,13 +333,6 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
         <div className={cClasses}>
           <div data-ui-type="table" className="modelproperty-detail-row" >
             <div data-ui-type="row">
-              <span data-ui-type="cell" className="props-spinner-cell">
-                <button
-                  onClick={togglePropertiesView}
-                  className="btn btn-sm btn-default btn-model-property-spinner">
-                  <span className={bClasses}></span>
-                </button>
-              </span>
               <span data-ui-type="cell" className="props-name-cell">
                 <input ref="propName"
                   data-name="name"

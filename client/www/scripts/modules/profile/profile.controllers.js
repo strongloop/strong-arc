@@ -28,20 +28,20 @@ Profile.controller('LoginController', [
     $scope.login = function () {
 
       $location.path('/studio');
-//      $scope.loginResult = User.login($scope.credentials,
-//        function () {
-//
-//          // TODO make a more robust API call here
-//          window.localStorage.setItem('currentUserId', $scope.loginResult.userId);
-//          window.localStorage.setItem('accessToken', $scope.loginResult.id);
-//          $location.path('/studio');
-//
-//          //$location.path('/');
-//        },
-//        function (res) {
-//          $scope.loginError = res.data.error;
-//        }
-//      );
+      $scope.loginResult = User.login($scope.credentials,
+        function () {
+
+          // TODO make a more robust API call here
+          window.localStorage.setItem('currentUserId', $scope.loginResult.userId);
+          window.localStorage.setItem('accessToken', $scope.loginResult.id);
+          $location.path('/studio');
+
+          //$location.path('/');
+        },
+        function (res) {
+          $scope.loginError = res.data.error;
+        }
+      );
     };
   }
 ]);
