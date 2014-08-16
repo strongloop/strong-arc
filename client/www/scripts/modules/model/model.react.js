@@ -19,7 +19,21 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
       this.setState(xState);
     }
   },
+  setPluralVal: function(event) {
+    if (event.target.attributes['data-name']) {
+      var xState = this.state;
+      var tActiveInstance = xState.activeInstance;
+      var modelPropertyName = tActiveInstance.name;
 
+      // check if plural value is already set
+      // if not then set it to a I18N.pluralize value
+      if (!tActiveInstance.plural) {
+        tActiveInstance.plural = modelPropertyName + 's';
+      }
+      xState.activeInstance = tActiveInstance;
+      this.setState(xState);
+    }
+  },
   saveFieldValue: function(event) {
     console.log('SAVE THIS VALUE: ' + event.target.value);
   },
@@ -75,7 +89,8 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
 		            <label>name</label>
 		            <input type="text"
 		              value={modelDef.name}
-		              onChange={that.handleChange}
+                  onChange={that.handleChange}
+                  onBlur={that.setPluralVal}
 		              data-name="name"
 		              id="ModelName"
 		              name="ModelName"

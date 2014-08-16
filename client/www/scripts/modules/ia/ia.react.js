@@ -19,7 +19,7 @@ var IAMainNavContainer = (IAMainNavContainer = React).createClass({
     };
     return (
       <div>
-        <span className="ia-project-title-container">[project name goes here]</span><div className="main-nav-help"><span id="mainNavContextHelp" data-id="MainNavContextHelp" className="glyphicon glyphicon-question-sign"></span></div>
+        <span className="ia-project-title-container">[project name goes here]</span><div className="main-nav-help"><a target="new" href="http://docs.strongloop.com/display/SLS/Using+frobnors"><span id="mainNavContextHelp" data-id="MainNavContextHelp" className="glyphicon glyphicon-question-sign"></span></a></div>
         <IAMainModelNav scope={this.props.scope} />
         <IAMainDatasourceNav scope={this.props.scope} />
       </div>
