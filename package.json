@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "main": "app.js",
   "bin": {
-    "strongloop-api-studio": "server.js"
+    "strongloop-api-studio": "server/server.js"
   },
   "scripts": {
     "test": "gulp test",

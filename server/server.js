@@ -7,4 +7,4 @@ var workspace = require('loopback-workspace');
 app.use('/workspace', workspace);
 
 // static files
-app.use(express.static(path.join(__dirname, 'client/www')));
+app.use(express.static(path.join(__dirname, '../client/www')));
