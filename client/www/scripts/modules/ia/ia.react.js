@@ -181,39 +181,7 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
     var isDiscoverable = false;
 
     menuItems.openSelectedModels = {name: "open", callback: this.openSelectedDataSources};
-// Dormant for initial release
-//    menuItems.createModelsFromDS = {
-//      name: "create models",
-//      disabled: function(key, opt) {
-//        if (opt.sourceEvent.target.attributes['data-is-discoverable']) {
-//          isDiscoverable = opt.sourceEvent.target.attributes['data-is-discoverable'].value;
-//        }
-//        else if (opt.sourceEvent.target.parentElement.attributes['data-name']){
-//          isDiscoverable = opt.sourceEvent.target.parentElement.attributes['data-is-discoverable'].value;
-//        }
-//        if (isDiscoverable === 'true') {
-//          return false;
-//        }
-//        return true;
-//      },
-//      callback: function(key, opt) {
-//        var dsId = '';
-//        if (opt.sourceEvent.target.attributes['data-id']) {
-//          dsId = opt.sourceEvent.target.attributes['data-id'].value;
-//        }
-//        // check the parent element
-//        else if (opt.sourceEvent.target.parentElement.attributes['data-id']){
-//          dsId = opt.sourceEvent.target.parentElement.attributes['data-id'].value;
-//        }
-//        if (dsId){
-//          that.props.scope.$apply(function () {
-//
-//            that.props.scope.createModelsFromDS(dsId);
-//          });
-//        }
-//
-//      }
-//    };
+
     menuItems.deleteSelectedDataSource = {name: "delete", callback: this.deleteSelectedDataSource};
 
     $.contextMenu({
@@ -281,30 +249,39 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
     // Datasource menu items
     var datasourceItemRenderer = function(item) {
 
-      var isDiscoverable = false;
-      if (item.isDiscoverable) {
-        isDiscoverable = item.isDiscoverable;
-      }
-      var classNameVar = 'datasource-node';
-      if (item.isActive) {
-        classNameVar += ' is-active';
-      }
-      else if (item.isOpen) {
-        classNameVar += ' is-open';
-      }
-      else if (item.isSelected) {
-        classNameVar += ' is-selected'
-      }
-      return (
-        <li key={item.name} data-id={item.id} className={classNameVar}>
-          <button data-is-discoverable={isDiscoverable} onClick={singleClickItem} data-name={item.name} data-id={item.id} className="btn btn-default btn-block nav-tree-item tree-node"><span data-is-discoverable={isDiscoverable}  data-name={item.name} className="glyphicon glyphicon-file"></span>{item.name}</button>
-        </li>);
+
     };
+    var items = (<li></li>);
+    if (scope.mainNavDatasources.map) {
+      items = scope.mainNavDatasources.map(function(item){
+        var isDiscoverable = false;
+        if (item.isDiscoverable) {
+          isDiscoverable = item.isDiscoverable;
+        }
+        var classNameVar = 'datasource-node';
+        if (item.isActive) {
+          classNameVar += ' is-active';
+        }
+        else if (item.isOpen) {
+          classNameVar += ' is-open';
+        }
+        else if (item.isSelected) {
+          classNameVar += ' is-selected'
+        }
+        return (
+          <li key={item.name} data-id={item.id} className={classNameVar}>
+            <button data-is-discoverable={isDiscoverable} onClick={singleClickItem} data-name={item.name} data-id={item.id} className="btn btn-default btn-block nav-tree-item tree-node"><span data-is-discoverable={isDiscoverable}  data-name={item.name} className="glyphicon glyphicon-file"></span>{item.name}</button>
+          </li>);
+      });
+    }
+
     // Main return
     return (
       <div>
         <button onClick={clickBranch} type="button" data-name="datasources_root" className="btn btn-default btn-block nav-tree-item tree-branch" title="Datasources"><span className="glyphicon glyphicon-folder-open"></span>Datasources</button>
-        <ul className="branch-leaf-list is-open">{scope.mainNavDatasources.map(datasourceItemRenderer)}</ul>
+        <ul className="branch-leaf-list is-open">
+          {items}
+        </ul>
         <button onClick={addNewInstanceRequest} data-type="datasource" className="nav-tree-item-addnew"><span className="plus">+</span>Add New Datasource</button>
       </div>
       );

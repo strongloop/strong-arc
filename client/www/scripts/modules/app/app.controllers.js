@@ -327,9 +327,27 @@ app.controller('StudioController', [
     $scope.deleteModelDefinitionRequest = function(modelId) {
       if (modelId){
         if (confirm('delete model?')){
-          // reset activeInstace if this is it
           // remove from open instance refs
           $scope.openInstanceRefs = IAService.closeInstanceById(modelId);
+          // reset activeInstace if this is it
+          if ($scope.activeInstance.id === modelId) {
+            if ($scope.openInstanceRefs.length === 0) {
+              IAService.clearActiveInstance();
+              $rootScope.$broadcast('IANavEvent');
+
+            }
+            else {
+
+              // active the first instance by default
+              IAService.activateInstanceById($scope.openInstanceRefs[0].id).
+                then(function(instance) {
+                  $scope.activeInstance = instance;
+                  $rootScope.$broadcast('IANavEvent');
+                }
+              );
+            }
+          }
+
           ModelService.deleteModel(modelId).
             then(function(response){
               loadModels();
@@ -395,6 +413,23 @@ app.controller('StudioController', [
         if (confirm('delete datasource?')){
           // remove from open instance refs
           $scope.openInstanceRefs = IAService.closeInstanceById(dsId);
+          // check if instance is activeInstance
+          if ($scope.openInstanceRefs.length === 0) {
+            IAService.clearActiveInstance();
+            $rootScope.$broadcast('IANavEvent');
+
+          }
+          else {
+
+            // active the first instance by default
+            IAService.activateInstanceById($scope.openInstanceRefs[0].id).
+              then(function(instance) {
+                $scope.activeInstance = instance;
+                $rootScope.$broadcast('IANavEvent');
+              }
+            );
+          }
+
           DataSourceService.deleteDataSource(dsId).
             then(function(response){
               loadDataSources();

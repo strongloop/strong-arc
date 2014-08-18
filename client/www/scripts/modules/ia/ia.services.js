@@ -231,11 +231,27 @@ IA.service('IAService', [
       var instance = AppStorageService.getItem('activeInstance');
 
       if (instance) {
-        // get the model definition from the api
-        instance = ModelService.getModelById(instance.id).
-          then(function(response) {
-            deferred.resolve(response);
-          });
+
+        switch (instance.type) {
+
+          case CONST.MODEL_TYPE:
+            // get the model definition from the api
+            instance = ModelService.getModelById(instance.id).
+              then(function(response) {
+                deferred.resolve(response);
+              });
+            break;
+
+          case CONST.DATASOURCE_TYPE:
+            // get the model definition from the api
+            instance = DataSourceService.getDataSourceById(instance.id).
+              then(function(response) {
+                deferred.resolve(response);
+              });
+            break;
+
+          default:
+        }
 
       }
       else {

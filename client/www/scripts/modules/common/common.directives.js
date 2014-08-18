@@ -49,6 +49,7 @@ Common.directive('slCommonInstanceTitleView', [
             React.renderComponent(CommonInstanceTitleView({scope: scope}), el[0]);
           }
         }, true);
+
       }
     }
   }
@@ -67,21 +68,20 @@ Common.directive('slCommonInstanceTabsView', [
         function renderComp(){
 
           var tabItems = [];
-
-
-          for (var i = 0;i < scope.openInstanceRefs.length;i++) {
-            var isActive = false;
-            if (scope.openInstanceRefs[i].name === scope.activeInstance.name) {
-              isActive = true;
+         if (scope.openInstanceRefs && scope.openInstanceRefs.length) {
+            for (var i = 0;i < scope.openInstanceRefs.length;i++) {
+              var isActive = false;
+              if (scope.openInstanceRefs[i].name === scope.activeInstance.name) {
+                isActive = true;
+              }
+              tabItems.push({
+                id:scope.openInstanceRefs[i].id,
+                name:scope.openInstanceRefs[i].name,
+                type:scope.openInstanceRefs[i].type,
+                isActive:isActive
+              });
             }
-            tabItems.push({
-              id:scope.openInstanceRefs[i].id,
-              name:scope.openInstanceRefs[i].name,
-              type:scope.openInstanceRefs[i].type,
-              isActive:isActive
-            });
           }
-
           React.renderComponent(CommonInstanceTabsView({scope:scope, tabItems:tabItems}), el[0]);
 
         }
@@ -98,16 +98,7 @@ Common.directive('slCommonInstanceTabsView', [
         }, true);
 //        scope = scope.$parent;
         scope.$watch('openInstanceRefs', function(newNames, oldNames) {
-          if ((scope.openInstanceRefs.length > 0) && (!scope.activeInstance.name)){
-            // activate the first open instance
-            IAService.activateInstanceById(scope.openInstanceRefs[0].id, scope.openInstanceRefs[0].type).
-              then(function(instance) {
-                scope.activeInstance = instance;
-                renderComp();
-              }
-            );
-          }
-          else if (scope.activeInstance) {
+          if (scope.activeInstance) {
             renderComp();
           }
         }, true);
