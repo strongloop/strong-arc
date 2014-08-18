@@ -1,9 +1,0 @@
-{
-  "user": {
-    "dataSource": "db"
-  },
-  "access-token": {
-    "dataSource": "db"
-  },
-  "newModel3": {}
-}
