@@ -4,10 +4,6 @@ var less = require('gulp-less');
 var mocha = require('gulp-spawn-mocha');
 var runSequence = require('run-sequence');
 
-var SOURCES = {
-  BACKEND_TESTS: 'test/*.js'
-};
-
 gulp.task('default', ['build', 'test']);
 
 gulp.task('build', ['build-less']);
@@ -27,7 +23,7 @@ gulp.task('test', ['build'], function(callback) {
 
 gulp.task('jshint', function() {
   return gulp.src([
-    SOURCES.BACKEND_TESTS,
+    'server/**/*.js'
     // TODO(bajtos) add more files once they pass the linter
   ])
     .pipe(jshint())
@@ -36,6 +32,6 @@ gulp.task('jshint', function() {
 });
 
 gulp.task('test-backend', function() {
-  return gulp.src([SOURCES.BACKEND_TESTS], { read: false })
+  return gulp.src('server/test/*.js', { read: false })
     .pipe(mocha());
 });
