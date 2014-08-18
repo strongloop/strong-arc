@@ -7,12 +7,10 @@ app.controller('StudioController', [
   'IAService',
   'DataSourceService',
   'PropertyService',
-  'ExplorerService',
   '$location',
   '$timeout',
   'ModelService',
-  'DiscoveryService',
-  function($rootScope, $scope, $state, $http, IAService, DataSourceService, PropertyService, ExplorerService, $location, $timeout, ModelService, DiscoveryService) {
+  function($rootScope, $scope, $state, $http, IAService, DataSourceService, PropertyService, $location, $timeout, ModelService) {
 
     /*
      * Instance Collections
@@ -39,9 +37,6 @@ app.controller('StudioController', [
     // legacy
     $scope.currentOpenDatasourceNames = IAService.getOpenDatasourceNames();
     $scope.currentSelectedCollection = IAService.clearInstanceSelections();
-    $scope.latestExplorerEndPointResponses = []; // array of named responses for explorer endpoints to hold latest server responses
-    $scope.explorerViewXPos = IAService.getExplorerViewXPos();  // for when the user controls it
-    //$scope.editorViewXPos = IAService.getEditorViewXPos();
     /*
     *
     * Dirty Flags
@@ -50,7 +45,6 @@ app.controller('StudioController', [
     $scope.apiModelsChanged = false;  // dirty flag
     $scope.apiDataSourcesChanged = false;
     $scope.activeModelPropertiesChanged = false;  // dirty flag
-    $scope.explorerDataModelChanged = false; // dirty toggle for triggering renders on the react components
     $scope.activeInstanceUpdated = false; // dirty toggle for active instance update
 
 
@@ -101,17 +95,6 @@ app.controller('StudioController', [
 
 
 
-    /*
-    *
-    * API Explorer View
-    *
-    * */
-    $scope.explorerResources = ExplorerService.getEResources().then(function(result) {
-      $scope.explorerResources = result;
-    });
-
-
-
     // Helper methods
     $scope.clearSelectedInstances = function() {
       $scope.instanceSelections = IAService.clearInstanceSelections();
@@ -135,18 +118,6 @@ app.controller('StudioController', [
      * branch clicked
      * */
     $scope.navTreeBranchClicked = function(type) {
-      // change the z-index on the main content to bring the
-      // canvas to the fore
-      // get reference to the following:
-      /*
-       [data-id="ModelEditorMainContainer"]
-       [data-id="CanvasApiContainer"]
-       [data-id="PreviewInstanceContainer"]
-       *
-       * */
-      IAService.showCanvasView();
-
-
 
       $scope.clearSelectedInstances();
 
@@ -356,6 +327,9 @@ app.controller('StudioController', [
     $scope.deleteModelDefinitionRequest = function(modelId) {
       if (modelId){
         if (confirm('delete model?')){
+          // reset activeInstace if this is it
+          // remove from open instance refs
+          $scope.openInstanceRefs = IAService.closeInstanceById(modelId);
           ModelService.deleteModel(modelId).
             then(function(response){
               loadModels();
@@ -419,6 +393,8 @@ app.controller('StudioController', [
     $scope.deleteDataSourceDefinitionRequest = function(dsId) {
       if (dsId){
         if (confirm('delete datasource?')){
+          // remove from open instance refs
+          $scope.openInstanceRefs = IAService.closeInstanceById(dsId);
           DataSourceService.deleteDataSource(dsId).
             then(function(response){
               loadDataSources();
@@ -456,86 +432,6 @@ app.controller('StudioController', [
         );
 
       }
-    };
-
-    /*
-    *
-    * DISCOVERY
-    *
-    * */
-
-    // new schema event
-    $scope.$on('newSchemaModelsEvent', function(event, message){
-      $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
-      $scope.activeInstance = IAService.getActiveInstance();
-      $scope.instanceType = 'model';
-      $scope.activeInstance.type = 'model';
-      // note that the handler is passed the problem domain parameters
-      loadModels();
-      $scope.setApiModelsDirty();
-      IAService.showInstanceView();
-
-    });
-    $scope.createModelsFromDS = function(id) {
-
-      // open a modal window and trigger the discovery flow
-      var modalConfig = DiscoveryService.getDiscoveryModalConfig(id);
-      var modalInstance = IAService.openModal(modalConfig);
-      modalInstance.opened.then(function() {
-        window.setUI();
-      });
-
-    };
-
-
-
-    /*
-    *
-    * EXPLORER
-    *
-    * */
-    $scope.showExplorerViewRequest = function() {
-      IAService.showExplorerView();
-    };
-
-
-    function isPayloadTypeRequest(rObj) {
-      if ((rObj.method === 'POST') || (rObj.method === 'PUT')) {
-        return true;
-      }
-      return false;
-    }
-
-
-    // TODO - refactor this into a service
-    $scope.explorerApiRequest = function(requestObj) {
-      var config = {
-        method: requestObj.method,
-        url: '/api' + requestObj.path
-      };
-      if (requestObj.path.indexOf('{id}') !== -1) {
-
-        if (requestObj.data.id) {
-
-          config.url = '/api' + requestObj.path.replace('{id}', requestObj.data.id);
-        }
-
-      }
-      if (isPayloadTypeRequest(requestObj)) {
-        config.data = requestObj.data;
-      }
-
-
-
-      $http(config).
-        success( function(response) {
-          $scope.latestExplorerEndPointResponses[requestObj.endPoint] = response;
-          $scope.explorerDataModelChanged = !$scope.explorerDataModelChanged;
-        }).
-        error(function(response) {
-          $scope.latestExplorerEndPointResponses[requestObj.endPoint] = response;
-          $scope.explorerDataModelChanged = !$scope.explorerDataModelChanged;
-        });
     };
 
 
@@ -632,14 +528,4 @@ app.controller('GlobalNavController',[
     };
   }
 ]);
-/*
-*
-* Need to confirm if this is used in the canvas view
-*
-* */
-app.controller('DragDropCtrl', function($scope) {
-  $scope.handleDrop = function() {
-
-  }
-});
 

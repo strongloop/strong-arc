@@ -55,6 +55,7 @@ IA.service('IAService', [
       }
       return retRefs;
     };
+    // aka remove instance ref
     svc.closeInstanceById = function(id) {
       var sourceInstances = svc.getOpenInstanceRefs();
       for (var i = 0;i < sourceInstances.length;i++) {
@@ -173,24 +174,6 @@ IA.service('IAService', [
 
 
 
-
-
-//          newInstance = DataSourceService.getDataSourceById(id).
-//            then(function(instance) {
-//              instance.type = 'datasource';
-//              svc.setActiveInstance(instance, instance.type);
-//              if (!isOpen) {
-//                var currRefs = AppStorageService.getItem('openInstanceRefs');
-//                if (!currRefs) {
-//                  currRefs = [];
-//                  AppStorageService.setItem('openInstanceRefs', currRefs);
-//                }
-//                currRefs.push({id: newInstance.id, name:newInstance.name,type:instanceType});
-//                AppStorageService.setItem('openInstanceRefs', currRefs);
-//              }
-//              deferred.resolve(instance);
-//            }
-//          );
           break;
 
         default:
@@ -235,7 +218,6 @@ IA.service('IAService', [
         }
       }
     };
-
     svc.updateOpenInstanceRefs = function(instanceRefs) {
       AppStorageService.setItem('openInstanceRefs', instanceRefs);
     };
@@ -246,19 +228,9 @@ IA.service('IAService', [
       // should already pre-exist
       // may already have properties
       //
-
-
-
-
-
       var instance = AppStorageService.getItem('activeInstance');
 
-
-
-
       if (instance) {
-
-
         // get the model definition from the api
         instance = ModelService.getModelById(instance.id).
           then(function(response) {
@@ -354,69 +326,11 @@ IA.service('IAService', [
      *
      * */
 
-/*
-* preview
-* */
-
-
-
-    svc.setPreviewInstance = function(instance) {
-      return AppStorageService.setItem('previewInstance', instance);
-    };
-    svc.clearPreviewInstance = function() {
-      return AppStorageService.removeItem('previewInstance');
-    };
-    svc.getPreviewInstance = function() {
-      return AppStorageService.getItem('previewInstance');
-    };
-
-    /*
-    *
-    * end new preview
-    *
-    * */
-
-    svc.setExplorerViewXPos = function(x) {
-      try{
-        var xPos = parseInt(x);
-        if ((xPos > 0) && (xPos < (svc.getViewportWidth() + 1))){
-          AppStorageService.setItem('explorerViewXPos', x);
-        }
-      }
-      catch(e){
-        console.warn('unable to save explorer view x pos: ' + e);
-      }
-    };
-    svc.getExplorerViewXPos = function() {
-
-//      var posX = AppStorageService.getItem('explorerViewXPos');
-//      if (!posX) {
-//        posX = svc.getViewportWidth();
-//      }
-//      posX = parseInt(posX);
-//      svc.setExplorerViewXPos(posX);
-
-
-      return 1000;
-
-    };
     svc.clearViews = function() {
       svc.closeContainer('[data-id="CommonInstanceContainer"]');
-      svc.closeContainer('[data-id="PreviewInstanceMainContainer"]');
-      svc.closeContainer('[data-id="ExplorerContainer"]');
-    };
-    svc.showCanvasView = function() {
-      // hide all slide outs that may be open
-      svc.clearViews();
     };
     svc.showInstanceView = function() {
-      //svc.clearViews();
-      svc.closeContainer('[data-id="ExplorerContainer"]');
-
       svc.openContainer('[data-id="CommonInstanceContainer"]');
-
-
-      // jQuery('[data-id="ModelEditorMainContainer"]').animate({width: 1000}, 500 );
     };
 
     svc.isViewOpen = function(viewId) {
@@ -426,16 +340,7 @@ IA.service('IAService', [
       }
       return false;
     };
-    svc.showExplorerView = function() {
-      //svc.clearViews();
-      if (svc.isViewOpen('ExplorerContainer')){
-        svc.closeContainer('[data-id="ExplorerContainer"]');
-      }
-      else {
-        svc.openContainer('[data-id="ExplorerContainer"]');
-      }
 
-    };
     // rename
     svc.toggleInstanceView = function() {
       if (svc.isViewOpen('CommonInstanceContainer')){

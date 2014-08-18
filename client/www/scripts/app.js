@@ -151,21 +151,15 @@ var app = angular.module('app', [
   'ngSanitize',
   'ngAnimate',
   'angular-growl',
-  'oldServices',
   'lbServices',
+  'oldServices',
   'Profile',
-  'Canvas',
-  'Explorer',
   'IA',
-  'UI',
-  'Demo',
   'Common',
   'Property',
   'Auth',
   'Model',
-  'UIForm',
   'Datasource',
-  'Discovery',
   'ui.bootstrap',
   'ui.utils',
   'checklist-model',
@@ -198,26 +192,6 @@ app.config([
         url: '/studio',
         templateUrl: './scripts/modules/app/templates/studio.main.html',
         controller: 'StudioController'
-      }).
-      state('uiform', {
-        url: '/uiform',
-        controller: 'UIFormMainController',
-        templateUrl: './scripts/modules/uiform/templates/uiform.main.html'
-      }).
-      state('demo', {
-        url: '/demo',
-        controller: 'DemoMainController',
-        templateUrl: './scripts/modules/demo/templates/demo.main.html'
-      }).
-      state('demo.detail', {
-        url: "/:modelName",
-        controller: 'DemoMainController',
-        templateUrl: './scripts/modules/demo/templates/demo.main.html'
-      }).
-      state('profile', {
-        url: '/profile',
-        controller: 'ProfileMainController',
-        templateUrl: './scripts/modules/profile/templates/profile.main.html'
       }).
       state('login', {
         url: '/login',
