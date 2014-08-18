@@ -4,59 +4,52 @@
  * */
 var ModelDetailEditor = (ModelDetailEditor = React).createClass({
   getInitialState: function() {
-    return this.props.scope.activeInstance;
+    return {activeInstance:this.props.scope.activeInstance};
   },
-
-//  handleChange: function(event) {
-//    var scope = this.props.scope;
-//    //this.setState({name: event.target.value});
-//    var stateName = event.target.attributes['data-name'].value;
-//    var xState = this.state;
-//    xState[stateName] = event.target.value;
-//    this.setState(xState);
-//    if (event.target.attributes.id) {
-//      var modelDetailProperty = event.target.attributes['data-name'].value;
-//      var modelDetailValue = event.target.value;
-//      scope.$apply(function() {
-//        scope.updateModelDetailProperty(modelDetailProperty, modelDetailValue);
-//      });
-//    }
-//  },
   componentWillReceiveProps: function(nextProps) {
-    this.setState(nextProps.model);
-    console.log('Component will receive props');
+    this.setState({activeInstance:{}});
+    this.setState({activeInstance:nextProps.scope.activeInstance});
   },
   handleChange: function(event) {
+    var scope = this.props.scope;
     var modelPropertyName = '';
-    console.log('model form edit handler ');
     if (event.target.attributes['data-name']) {
       modelPropertyName = event.target.attributes['data-name'].value;
+      // commented out code to update tab name while typing
+//      if (modelPropertyName === 'name') {
+//        // update the tab
+//        scope.$apply(function() {
+//            scope.updateActiveInstanceName(event.target.value);
+//          }
+//        );
+//      }
       var xState = this.state;
-      this.state[modelPropertyName] = event.target.value;
+      xState.activeInstance[modelPropertyName] = event.target.value;
       this.setState(xState);
     }
+  },
+  processModelNameValue: function(event) {
+    if (event.target.attributes['data-name']) {
+      var xState = this.state;
+      var tActiveInstance = xState.activeInstance;
+      var modelPropertyName = tActiveInstance.name;
 
-
-
-//    //xState[stateName] = event.target.value;
-//    for (var i = 0;i < xState.props.properties.length;i++) {
-//      if (xState.props.properties[i].name === stateName) {
-//        xState.props.properties[i].value = event.target.value;
-//      }
-//    }
-
-
+      // check if plural value is already set
+      // if not then set it to a I18N.pluralize value
+      if (!tActiveInstance.plural) {
+        tActiveInstance.plural = modelPropertyName + 's';
+      }
+      xState.activeInstance = tActiveInstance;
+      this.setState(xState);
+    }
+  },
+  saveFieldValue: function(event) {
 
   },
-//  componentWillUpdate: function(nextProps, nextState) {
-//    this.setState(nextProps.scope.activeInstance);
-//  },
   render: function() {
     var that = this;
     var scope = that.props.scope;
-
-    var model = that.state;
-    var modelDef = that.state;
+    var modelDef = that.state.activeInstance;
     var cx = React.addons.classSet;
 
     var classes = cx({
@@ -72,27 +65,37 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
         scope.toggleModelDetailView();
       });
     };
-    var saveModelDefinition = function(event) {
-      var scope = that.props.scope;
-//      var formEls = event.target.form;
-//      if (formEls.length > 0) {
-//        var modelObj = {};
-//        for (var i = 0;i < formEls.length;i++) {
-//          if (formEls[i].attributes['data-name']) {
-//            modelObj[formEls[i].attributes['data-name'].value] = formEls[i].value;
-//          }
-//
-//        }
-//
-//      }
-      console.log('hello: ' + JSON.stringify(that.state));
-      scope.$apply(function() {
-        scope.saveModelRequest(that.state);
-      })
-      return false;
+    var isPublicChecked = function(item) {
+      if (item.public) {
+        return 'checked';
+      }
+      return '';
     };
+    var saveModelDefinition = function(event) {
+      event.preventDefault();
+      var tState = that.state.activeInstance;
+      var scope = that.props.scope;
+      scope.$apply(function() {
+        scope.saveModelRequest(tState);
+      });
+    };
+    var dataSourceOptions = (<option />);
+    if (scope.mainNavDatasources.map) {
+      dataSourceOptions = scope.mainNavDatasources.map(function(ds) {
+        return (<option value={ds.name}>{ds.name}</option>);
+      });
+    }
+
+    var baseOptions = (<option />);
+    if (scope.mainNavModels.map) {
+      baseOptions = scope.mainNavModels.map(function(model) {
+        return (<option value={model.name}>{model.name}</option>);
+      });
+    }
+
+
     var returnVal = (<div />);
-    if (scope.activeInstance && scope.activeInstance.name) {
+    if (modelDef && modelDef.name) {
       returnVal = (
         <form role="form">
         	<div className="model-header-container">
@@ -105,7 +108,8 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
 		            <label>name</label>
 		            <input type="text"
 		              value={modelDef.name}
-		              onChange={that.handleChange}
+                  onChange={that.handleChange}
+                  onBlur={that.processModelNameValue}
 		              data-name="name"
 		              id="ModelName"
 		              name="ModelName"
@@ -138,19 +142,25 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
 	          		<div className="model-detail-label">
 	          		  <label>base model</label>
 	          		</div>
-	          		<input type="text"
-	          		  value={modelDef.base}
-	          		  onChange={this.handleChange}
-	          		  data-name="base"
-	          		  id="ModelBase"
-	          		  name="ModelBase"
-	          		  className="model-instance-editor-input" />
+                <select value={modelDef.base}
+                  data-name="base"
+                  name="base"
+                  onChange={this.handleChange}
+                  className="model-instance-editor-input">
+                  {baseOptions}
+                </select>
 	          	</div>
 	          	<div className="model-detail-input-container">
 	          		<div className="model-detail-label">
 	          		  <label>datasource</label>
 	          		</div>
-	          		<input type="text" value={modelDef.dataSource} onChange={this.handleChange} className="model-instance-editor-input" />
+                <select value={modelDef.dataSource}
+                  data-name="dataSource"
+                  name="dataSource"
+                  onChange={this.handleChange}
+                  className="model-instance-editor-input">
+                  {dataSourceOptions}
+                </select>
 	          	</div>
 	          </div>
 
@@ -158,28 +168,17 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
 	          	<div className="model-detail-input-container listNarrow">
 	          		<label className="model-detail-label">public</label>
 	          		<input type="checkbox"
-	          		   checked={modelDef.public}
-	          		   className="model-instance-editor-checkbox" />
+                  checked="off"
+                  data-name="public"
+                  name="public"
+                  onChange={this.handleChange}
+                  className="model-instance-editor-input" />
 	          	</div>
 	          	<div className="model-detail-input-container listNarrow">
 	          		<label className="model-detail-label">strict</label>
 	          		<input type="checkbox"
 	          		    checked={modelDef.strict}
 	          		    className="model-instance-editor-checkbox" />
-	          	</div>
-	          	<div className="model-detail-input-container listWide">
-	          		<label className="model-detail-label">Indexes</label>
-	          		<input type="button" value="Edit" className="model-detail-pocket-button" />
-	          	</div>
-	          	<div className="model-detail-input-container listWide">
-	          		<label className="model-detail-label">Scopes</label>
-	          		<input type="button" value="Edit" className="model-detail-pocket-button" />
-	          	</div>
-	          	<div className="model-detail-input-container listWide">
-	              	<div>
-	              		<label className="model-detail-label">Access</label>
-	              		<input type="button" value="Edit" className="model-detail-pocket-button" />
-	          		</div>
 	          	</div>
 	          </div>
 
@@ -213,7 +212,6 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
   triggerNewPropertyEditor: function() {
     var item = {};
     var that = this;
-    console.log('New Property Editor');
     that.props.scope.$apply(function() {
       that.props.scope.createNewProperty();
     });
@@ -228,9 +226,6 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
     var properties = scope.properties;
     var cx = React.addons.classSet;
 
-
-
-
     var classes = cx({
       'row is-open': this.state.isOpen,
       'row is-closed': !this.state.isOpen
@@ -244,14 +239,13 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
       that.setState({isOpen:isOpenState});
     };
 
-
     var items = [];
     items = properties.map(function (item) {
       return  (<ModelPropertyRowDetail modelProperty={item} scope={scope} />);
     });
 
     var retVal = (<div />);
-    if (properties && properties.length) {
+    if (properties) {
       retVal = (
         <div>
           <button type="button" onClick={clickHandler} className="model-instance-header-btn btn btn-default btn-block" title="Properties" ><span className={iconClasses}></span>Properties</button>
@@ -259,25 +253,19 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
             <div className="model-instance-container property-list-header">
               <div data-ui-type="table">
                 <div data-ui-type="row" className="model-instance-property-table-header-row">
-                  <span data-ui-type="cell" title="property name" className="props-name-header table-header-cell">Name</span>
 
+                  <span data-ui-type="cell" title="property name" className="props-name-header table-header-cell">Name</span>
 
                   <span data-ui-type="cell" title="data type"className="props-data-type-header table-header-cell">Type</span>
 
-                  <span data-ui-type="cell" title="default value" className="props-default-value-header table-header-cell"></span>
+                  <span data-ui-type="cell" title="is id" className="props-isid-header table-header-cell">is id</span>
 
+                  <span data-ui-type="cell" title="required" className="props-required-header table-header-cell">Req</span>
 
-                  <div data-ui-type="cell" className="props-required-cell table-header-cell">
-                    <div title="required" className="props-required-header">Req</div>
-                  </div>
+                  <span data-ui-type="cell" title="is index" className="props-index-header table-header-cell">Index</span>
 
-                  <div data-ui-type="cell" className="props-index-cell table-header-cell">
-                    <div title="is index" className="props-index-header">Index</div>
-                  </div>
+                  <span data-ui-type="cell" title="comments" className="props-comments-header table-header-cell">Comments</span>
 
-                  <div data-ui-type="cell" className="props-comments-cell table-header-cell header">
-                    <div title="comments" className="props-comments-header">Comments</div>
-                  </div>
 
                 </div>
               </div>
@@ -312,10 +300,8 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
   },
   componentWillReceiveProps: function(nextProps) {
     this.setState({modelProperty:nextProps.modelProperty});
-    console.log('Component will receive props');
   },
   componentDidMount: function() {
-    console.log('the field has loaded check if property name is property-name');
     var propNameInputs = jQuery('[data-name="ModelPropertyName"]');
     for (var i = 0;i < propNameInputs.length;i++) {
       if (propNameInputs[i].value === 'property-name' ){
@@ -343,7 +329,6 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
       scope.$apply(function() {
         scope.updateModelPropertyRequest(updateModelPropertyConfig);
       });
-      console.log('ok going to save on blur');
     }
 
   },
@@ -360,26 +345,25 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
     };
 
     var pClasses = cx({
-      'property-detail is-open': that.state.isOpen,
-      'property-detail is-closed': !that.state.isOpen
+      'property-detail-container is-open': that.state.isOpen,
+      'property-detail-container is-closed': !that.state.isOpen
     });
     var bClasses = cx({
-      'glyphicon glyphicon-chevron-down': that.state.isOpen,
-      'glyphicon glyphicon-chevron-right': !that.state.isOpen
+      'glyphicon glyphicon-open-sign': that.state.isOpen,
+      'glyphicon glyphicon-closed-sign': !that.state.isOpen
+    });
+    var cClasses = cx({
+      'modelproperty-container modelproperty-detail-is-open': that.state.isOpen,
+      'modelproperty-container modelproperty-detail-is-closed': !that.state.isOpen
     });
 
 
     return (
       <li>
-        <div >
-          <div data-ui-type="table">
+        <div className={cClasses}>
+          <div data-ui-type="table" className="modelproperty-detail-row" >
             <div data-ui-type="row">
               <span data-ui-type="cell" className="props-name-cell">
-                <button
-                  onClick={togglePropertiesView}
-                  className="btn btn-sm btn-default btn-model-property-spinner">
-                  <span className={bClasses}></span>
-                </button>
                 <input ref="propName"
                   data-name="name"
                   type="text"
@@ -390,19 +374,17 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
               <span data-ui-type="cell" className="props-data-type-cell">
                 <DataTypeSelect value={modelProperty.type} />
               </span>
-              <span data-ui-type="cell" className="props-default-value-cell">
-                <input type="text"
-                  className="model-instance-editor-input"
-                  placeholder="default value" />
+              <span data-ui-type="cell" className="props-isid-cell">
+                <input type="checkbox"  />
               </span>
               <span data-ui-type="cell" className="props-required-cell">
-                <input type="checkbox" />
+                <input type="checkbox"  />
               </span>
               <span data-ui-type="cell" className="props-index-cell">
                 <input type="checkbox" />
               </span>
               <span data-ui-type="cell" className="props-comments-cell">
-                <textarea className="property-doc-textarea model-instance-editor-input" ></textarea>
+                <input type="text" className="property-doc-textarea model-instance-editor-input" />
               </span>
             </div>
           </div>
@@ -460,7 +442,7 @@ var PropertyNameEditor = (PropertyNameEditor = React).createClass({
 //   // return {value: this.props.scope.property.name};
 //  },
   componentWillRecieveProps: function(nextProps) {
-    console.log('next props: ' + nextProps);
+
 
   },
   shouldComponentUpdate: function(nextProps, nextState) {
@@ -473,8 +455,6 @@ var PropertyNameEditor = (PropertyNameEditor = React).createClass({
 
   },
   componentWillUpdate: function(nextProps, nextState) {
-
-    console.log('nextState ===' + JSON.stringify(nextProps.name));
     this.setProps({value:nextProps.name});
   },
   render: function() {
@@ -633,7 +613,6 @@ var NewModelForm = (NewModelForm = React).createClass({
     var that = this;
     var scope = that.props.scope;
     var targetValue = event.target.value;
-    //console.log('new model name request: ' + event.target.value);
 
     if (targetValue) {
       // check to see if it is valid (no spaces, no invalid characters etc.
@@ -646,7 +625,6 @@ var NewModelForm = (NewModelForm = React).createClass({
   },
   componentWillReceiveProps: function(nextProps) {
     this.setState(nextProps.scope.newModelInstance);
-    console.log('Component will receive props');
   },
   render:function() {
 

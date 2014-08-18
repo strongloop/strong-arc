@@ -79,4 +79,15 @@
 .glyphicon-remove:before {
     content: "\e60c";
 }
+.glyphicon-open-sign {
+	content: "\e600";
+	background: green;
+	font-size: 12pt;
+}
+.glyphicon-closed-sign {
+	content: "\e600";
+	margin-right: 10px;
+	font-size: 12pt;
+}
+
 

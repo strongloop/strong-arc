@@ -20,7 +20,6 @@ Model.directive('modelBaseEditor',[
         scope.isModelInstanceBasePropertiesActive = true;
 
         scope.toggleModelDetailView = function() {
-          console.log('toggle model detail view');
           scope.isModelInstanceBasePropertiesActive = !scope.isModelInstanceBasePropertiesActive;
         };
 
@@ -67,7 +66,6 @@ Model.directive('modelPropertiesEditor',[
 
 
         scope.toggleModelPropertiesView = function() {
-          console.log('toggle model properties view')
           scope.isModelInstancePropertiesActive = !scope.isModelInstancePropertiesActive;
         };
         scope.$watch('isModelInstancePropertiesActive', function(val) {
@@ -183,7 +181,7 @@ Model.directive('slModelInstanceEditor', [
     return {
       templateUrl: './scripts/modules/model/templates/model.instance.editor.html',
       controller: function($scope) {
-        console.log('Model Instance Editor');
+
 
       },
       link: function(scope, el, attrs) {
@@ -203,7 +201,6 @@ Model.directive('modelSampleForm', [
       template: '<div uiform-form-builder ></div>',
       link: function(scope, elem, attrs) {
         scope.$watch('dmodels', function(models) {
-          console.log('UIForm Form Builder: ' + JSON.stringify(models));
           scope.formFields = models;
         }, true);
       }
@@ -267,7 +264,6 @@ Model.directive('modelRelationsEditor', [
 
         scope.deactivateRelationsEditor = function(){
           scope.relationsEditorActive = false;
-          console.log('Deactivate Editor')
         };
         scope.isAddRelationsButtonDisabled = function() {
           if (!scope.relationsEditorActive){
@@ -295,7 +291,6 @@ Model.directive('modelRelationsEditor', [
 
           if (scope.currRelation.isUnique){
             scope.currRelation.type = scope.baseDataType.name;
-            console.log('add relation: ' + value + ':' + scope.baseDataType.name);
             if (!scope.currModel.options){
               scope.currModel.options = [];
             }
@@ -336,7 +331,6 @@ Model.directive('modelAclEditor', [
 
         scope.deactivateEditor = function(){
           scope.aclEditorActive = false;
-          console.log('Deactivate Editor')
         };
         scope.isAddAclButtonDisabled = function() {
           if (!scope.aclEditorActive){
@@ -364,7 +358,6 @@ Model.directive('modelAclEditor', [
 
           if (scope.currAcl.isUnique){
             scope.currAcl.type = scope.baseDataType.name;
-            console.log('add option: ' + value + ':' + scope.baseDataType.name);
             scope.currModel.acl.push(scope.currAcl);
             scope.currOAcl = {
               isUnique:false
@@ -391,31 +384,23 @@ Model.directive('schemaModelComposer', [
   function($state, $modal) {
     return {
       templateUrl: './scripts/modules/model/templates/model.schema.composer.html',
-//      transclude: true,
-//      scope: {
-//        apiSourceTables: '=schemaModelComposer'
-//      },
-      link: function(scope, elem, attrs) {
-       // console.log('Schema Composer link function: ' + scope.apiSourceTables);
 
+      link: function(scope, elem, attrs) {
 
         scope.property = 'checked';
         scope.generateModelFromDataSource = function() {
           if (confirm('generate model?')) {
            // $state.transitionTo('uiform', {name:'test'});
-            console.log('|| Create the LB models and open the model editor view');
-            console.log('close the modal window');
+
           }
         };
         scope.collection = [];
         scope.$watch('apiSourceTables', function(sourceTables) {
-         // console.log('hell ya: ' + sourceTables);
           scope.collection = sourceTables;
           scope.property = 'checked';
         }, true);
 
         scope.getTableData = function(item) {
-          console.log('Get Table Details: ' + item);
         };
         scope.newModel = {
           properties: []

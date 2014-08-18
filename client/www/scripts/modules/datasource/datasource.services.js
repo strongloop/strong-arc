@@ -1,11 +1,10 @@
 // Copyright StrongLoop 2014
 Datasource.service('DataSourceService', [
-  'Datasourcedef',
   'DataSourceDefinition',
   'AppStorageService',
   '$timeout',
   '$q',
-  function(Datasourcedef, DataSourceDefinition, AppStorageService, $timeout, $q) {
+  function(DataSourceDefinition, AppStorageService, $timeout, $q) {
     var svc = {};
     //  var deferred = $q.defer();
     svc.getDiscoverableDatasourceConnectors = function() {
@@ -20,38 +19,12 @@ Datasource.service('DataSourceService', [
           deferred.resolve(response);
         },
         function(response) {
-          console.warn('bad get datasource defninitions')
+          console.warn('bad get datasource defninitions: ' + response)
         }
       );
 
-//      var retVal = JSON.parse(window.localStorage.getItem('ApiDatasources'));
-//      if (!retVal) {
-//        retVal = [];
-//      }
-//      $timeout(function() {
-//        deferred.resolve(retVal);
-//      }, 500);
-
       return deferred.promise;
-//      return Datasourcedef.query({},
-//        function(response) {
-//          var datasources = [];
-//          var core = response[0];
-//          var log = [];
-//          var datasources = [];
-//
-//          angular.forEach(core, function(value, key){
-//            this.push(key + ': ' + value);
-//            datasources.push({name:key,props:value});
-//          }, log);
-//
-//          window.localStorage.setItem('ApiDatasources', JSON.stringify(datasources));
-//          return datasources;
-//        },
-//        function(response) {
-//          console.log('bad get datasource defs');
-//        }
-//      );
+
     };
 
     svc.getDatasourceByName = function(name) {
@@ -67,17 +40,25 @@ Datasource.service('DataSourceService', [
     };
     svc.getDataSourceById = function(dsId) {
       var deferred = $q.defer();
+      var targetDS = {};
+      if (dsId !== CONST.NEW_DATASOURCE_PRE_ID) {
 
-      DataSourceDefinition.findById({id:dsId},
-        function(response) {
-          deferred.resolve(response);
-        },
-        function(response) {
-          console.warn('bad get datasource by id: ' + dsId + '  ' + response);
-        }
-      );
+        DataSourceDefinition.findById({id:dsId},
+          function(response) {
+            targetDS = response;
+            deferred.resolve(targetDS);
+          },
+          function(response) {
+            console.warn('bad get datasource by id: ' + dsId + '  ' + response);
+          }
+        );
 
+      }
+      else {
+        deferred.resolve(targetDS);
+      }
       return deferred.promise;
+
     };
     svc.updateNewDatasourceName = function(newName) {
       var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
@@ -85,18 +66,20 @@ Datasource.service('DataSourceService', [
         return;
       }
       for (var i = 0;i < openInstanceRefs.length;i++) {
-        if (openInstanceRefs[i].name === 'new-datasource') {
+        if (openInstanceRefs[i].name === CONST.NEW_DATASOURCE_NAME) {
           openInstanceRefs[i].name = newName;
           break;
         }
       }
-      console.log('(A) SET OPEN INSTANCE REFS: ' + JSON.stringify(openInstanceRefs));
       AppStorageService.setItem('openInstanceRefs', openInstanceRefs);
       return openInstanceRefs;
     };
     svc.createDataSourceDefinition = function(config) {
       var deferred = $q.defer();
-
+      // double check to clear out 'new' id
+      if (config.id === CONST.NEW_DATASOURCE_PRE_ID) {
+        delete config.id;
+      }
       DataSourceDefinition.create({}, config,
         function(response) {
           deferred.resolve(response);
@@ -109,9 +92,29 @@ Datasource.service('DataSourceService', [
 
       return deferred.promise;
     };
+    svc.testDataSourceConnection = function(dsId) {
+      var deferred = $q.defer();
+
+      DataSourceDefinition.findById({id:dsId},
+        function(response) {
+          response.$prototype$testConnection({id:dsId},
+            function(response) {
+              deferred.resolve(response);
+            },
+            function(response) {
+              console.warn('bad test ds connection: ' + response);
+            }
+          );
+        },
+        function(response) {
+
+        }
+      );
+
+      return deferred.promise;
+    };
     // obsolete
     svc.createDatasourceDef = function(datasourceDefObj) {
-      console.log('Add this data service: ' + JSON.stringify(datasourceDefObj));
       var currentDatasources = JSON.parse(window.localStorage.getItem('ApiDatasources'));
       if (!currentDatasources) {
         currentDatasources = [];
@@ -119,58 +122,47 @@ Datasource.service('DataSourceService', [
       currentDatasources.push(datasourceDefObj);
       window.localStorage.setItem('ApiDatasources', JSON.stringify(currentDatasources));
       return datasourceDefObj;
-     // return Datasourcedef.create(datasourceDefObj);
-    };
-    svc.getDatasourceTables = function(dsName) {
-      return Datasourcedef.discoverschema({},
-        function(response) {
-
-      //    console.log('good get tables defs: '+ response);
-
-//          var core = response[0];
-//          var log = [];
-//          var datasources = [];
-//          angular.forEach(core, function(value, key){
-//            this.push(key + ': ' + value);
-//            datasources.push({name:key,props:value});
-//          }, log);
-
-          // $scope.models = models;
-          var x = response.schema;
-          var y = x;
-
-          return response.schema;
-
-        },
-        function(response) {
-          console.log('bad get datasource defs');
-
-        }
-
-      );
     };
     svc.createNewDatasourceInstance = function() {
+      //var openInstanceRefs = IAService.getOpenInstanceRefs();
       var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
-      var defaultDatasourceSchema = {
-        name: 'new-datasource',
-        type: 'datasource'
-      };
       if (!openInstanceRefs) {
         openInstanceRefs = [];
       }
+      var defaultDatasourceSchema = {
+        id: CONST.NEW_DATASOURCE_PRE_ID,
+        name: CONST.NEW_DATASOURCE_NAME,
+        facetName: CONST.NEW_DATASOURCE_FACET_NAME,
+        type: CONST.DATASOURCE_TYPE
+      };
       var doesNewDatasourceExist = false;
       for (var i = 0;i < openInstanceRefs.length;i++) {
-        if (openInstanceRefs[i].name === 'new-datasource') {
+        if (openInstanceRefs[i].name === CONST.NEW_DATASOURCE_NAME) {
           doesNewDatasourceExist = true;
           break;
         }
       }
       if (!doesNewDatasourceExist) {
         openInstanceRefs.push(defaultDatasourceSchema);
-        console.log('(B) SET OPEN INSTANCE REFS: ' + JSON.stringify(openInstanceRefs));
         AppStorageService.setItem('openInstanceRefs', openInstanceRefs);
       }
       return defaultDatasourceSchema;
+    };
+    // delete datasource
+    svc.deleteDataSource = function(dsId) {
+      if (dsId) {
+        var deferred = $q.defer();
+
+        DataSourceDefinition.deleteById({id:dsId},
+          function(response) {
+            deferred.resolve(response);
+          },
+          function(response) {
+            console.warn('bad delete datasource definition');
+          }
+        );
+        return deferred.promise;
+      }
     };
     // dormant for now
     svc.isNewDatasourceNameUnique = function(name) {

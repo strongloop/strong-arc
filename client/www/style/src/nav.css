@@ -8,6 +8,9 @@
 Main Search
 
 */
+#MainNavSearchContainer {
+    visibility: hidden;
+}
 .nav-search-list {
     padding: 0;
     width: 90%;
@@ -74,8 +77,8 @@ Main Search
 }
 
 .header-logo-container{
-	
-	
+
+
 }
 
 .navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-brand:focus {
@@ -154,7 +157,7 @@ Main Search
 .btn-default.active {
     background: #4a90e2;
     color: white;
-    
+
 }
 
 

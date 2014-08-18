@@ -7,21 +7,7 @@ app.directive('greetingMain', [
   }
 ]);
 
-///*
-//*
-//* sl app studio
-//*
-//* */
-//app.directive('slAppStudio', [
-//  function() {
-//    return {
-//      template: './scripts/modules/app/studio.main.html',
-//      link: function(scope, el, attrs) {
-//
-//      }
-//    }
-//  }
-//]);
+
 app.directive('slAppChooser', [
   function() {
     return {

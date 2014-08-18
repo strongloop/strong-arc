@@ -10,15 +10,17 @@ Model.service('ModelService', [
       var deferred = $q.defer();
       if (config.name) {
 
+        // double check to clear out 'new' id
+        if (config.id === CONST.NEW_MODEL_PRE_ID) {
+          delete config.id;
+        }
 
-
-        ModelDefinition.create(config, function(response) {
-            console.log('good create model def: ' + response);
+        ModelDefinition.create({}, config, function(response) {
             deferred.resolve(response);
 
           },
           function(response){
-            console.log('bad create model def: ' + response);
+            console.warn('bad create model def: ' + response);
           });
       }
       return deferred.promise;
@@ -44,8 +46,6 @@ Model.service('ModelService', [
       var deferred = $q.defer();
       var p = ModelDefinition.find({},
         function(response) {
-
-          //   console.log('good get model defs: '+ response);
 
           // add create model to this for new model
 
@@ -79,52 +79,13 @@ Model.service('ModelService', [
           deferred.resolve(core);
         },
         function(response) {
-          console.log('bad get model defs: ' + response);
+          console.warn('bad get model defs: ' + response);
 
         }
       );
 
       return deferred.promise;
-//      return ModelDefinition.query({},
-//        function(response) {
-//
-//          //   console.log('good get model defs: '+ response);
-//
-//          // add create model to this for new model
-//
-//          var core = response;
-//          var log = [];
-//          var models = [];
-//          angular.forEach(core, function(value, key){
-//            // this.push(key + ': ' + value);
-//            var lProperties = [];
-//            if (value.properties) {
-//              angular.forEach(value.properties, function(value, key){
-//                lProperties.push({name:key,props:value});
-//              });
-//              value.properties = lProperties;
-//            }
-//            var lOptions = [];
-//            if (value.options) {
-//              angular.forEach(value.options, function(value, key){
-//                lOptions.push({name:key,props:value});
-//              });
-//              value.options = lProperties;
-//            }
-//            models.push({name:key,props:value});
-//          }, log);
-//
-//
-//          // $scope.models = models;
-//          window.localStorage.setItem('ApiModels', JSON.stringify(core));
-//          return models;
-//        },
-//        function(response) {
-//          console.log('bad get model defs');
-//
-//        }
-//
-//      );
+
     };
 
     svc.isNewModelNameUnique = function(name) {
@@ -144,16 +105,25 @@ Model.service('ModelService', [
     };
 
 
-     svc.updateModelInstance = function(model) {
-      var apiModels = AppStorageService.getItem('ApiModels');
-      for (var i = 0;i < apiModels.length;i++) {
-        if (apiModels[i].name === model.name) {
-          apiModels[i] = model;
-          break;
-        }
+    svc.updateModel = function(model) {
+      var deferred = $q.defer();
+
+      if (model.id) {
+
+        ModelDefinition.upsert(model,
+          function(response) {
+            deferred.resolve(response);
+          },
+          function(response) {
+            console.warn('bad update model definition: ' + model.id);
+          }
+        );
+
+
       }
-      AppStorageService.setItem('ApiModels', apiModels);
-      return Modeldef.upsert(model);
+
+      return deferred.promise;
+
     };
     svc.generateModelsFromSchema = function(schemaCollection) {
       if (schemaCollection && schemaCollection.length > 0) {
@@ -254,7 +224,6 @@ Model.service('ModelService', [
 
         }
         // open the new models
-        console.log('(I) SET OPEN INSTANCE REFS: ' + JSON.stringify(openInstances));
         AppStorageService.setItem('openInstanceRefs', openInstances);
         // activate the last one
         AppStorageService.setItem('activeInstance', newLBModel);
@@ -280,7 +249,7 @@ Model.service('ModelService', [
       }
       else {
 
-          console.log('request to get model data from localstorage cache failed so no model is returned');
+          console.warn('request to get model data from localstorage cache failed so no model is returned');
 
       }
 
@@ -289,24 +258,30 @@ Model.service('ModelService', [
     svc.getModelById = function(modelId) {
       var targetModel = {};
       var deferred = $q.defer();
+      if (modelId !== CONST.NEW_MODEL_PRE_ID) {
 
-      ModelDefinition.findById({id:modelId},
-        // success
-        function(response) {
-          targetModel = response;
-          ModelDefinition.properties({id:targetModel.id}, function(response) {
-            targetModel.properties = response;
-            deferred.resolve(targetModel);
-          });
 
-        },
-        // fail
-        function(response) {
-          console.log('bad get model definition');
-        }
-      );
+        ModelDefinition.findById({id:modelId},
+          // success
+          function(response) {
+            targetModel = response;
+            ModelDefinition.properties({id:targetModel.id}, function(response) {
+              targetModel.properties = response;
+              deferred.resolve(targetModel);
+            });
 
+          },
+          // fail
+          function(response) {
+            console.warn('bad get model definition: ' + response);
+          }
+        );
+      }
+      else {
+        deferred.resolve(targetModel);
+      }
       return deferred.promise;
+
     };
     svc.isPropertyUnique = function(modelRef, newPropertyName) {
       var isUnique = true;
@@ -324,12 +299,12 @@ Model.service('ModelService', [
 
     };
     var defaultModelSchema = {
-      id: 'temp.new-model',
+      id: CONST.NEW_MODEL_PRE_ID,
       type: 'model',
-      facetName: 'common',
-      strict: false,
-      public: true,
-      name:'new-model',
+      facetName: CONST.NEW_MODEL_FACET_NAME,
+      strict: true,
+      public: false,
+      name: CONST.NEW_MODEL_NAME,
       idInjection: false
     };
 
@@ -344,7 +319,7 @@ Model.service('ModelService', [
       }
       var doesNewModelExist = false;
       for (var i = 0;i < openInstanceRefs.length;i++) {
-        if (openInstanceRefs[i].name === 'new-model') {
+        if (openInstanceRefs[i].name === CONST.NEW_MODEL_NAME) {
           doesNewModelExist = true;
           break;
         }
@@ -352,7 +327,6 @@ Model.service('ModelService', [
       // create new model schema
       if (!doesNewModelExist) {
         openInstanceRefs.push(defaultModelSchema);
-        console.log('(J) SET OPEN INSTANCE REFS: ' + JSON.stringify(openInstanceRefs));
         AppStorageService.setItem('openInstanceRefs', openInstanceRefs);
       }
       return defaultModelSchema;

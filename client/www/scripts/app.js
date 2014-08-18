@@ -90,6 +90,17 @@
 
   }
 })(jQuery);
+// Application Constants
+var CONST = {
+  NEW_MODEL_PRE_ID:'sl.temp.new-model',
+  NEW_MODEL_NAME: 'new-model',
+  NEW_MODEL_FACET_NAME: 'common',
+  NEW_DATASOURCE_PRE_ID:'sl.temp.new-datasource',
+  NEW_DATASOURCE_NAME: 'new-datasource',
+  NEW_DATASOURCE_FACET_NAME: 'server',
+  DATASOURCE_TYPE: 'datasource',
+  MODEL_TYPE: 'model'
+};
 var setUI = function() {
   var headerHeight = 50;
   var searchHeight = jQuery('[data-id="MainSearchContainer"]').height();
@@ -140,21 +151,15 @@ var app = angular.module('app', [
   'ngSanitize',
   'ngAnimate',
   'angular-growl',
-  'oldServices',
   'lbServices',
+  'oldServices',
   'Profile',
-  'Canvas',
-  'Explorer',
   'IA',
-  'UI',
-  'Demo',
   'Common',
   'Property',
   'Auth',
   'Model',
-  'UIForm',
   'Datasource',
-  'Discovery',
   'ui.bootstrap',
   'ui.utils',
   'checklist-model',
@@ -187,26 +192,6 @@ app.config([
         url: '/studio',
         templateUrl: './scripts/modules/app/templates/studio.main.html',
         controller: 'StudioController'
-      }).
-      state('uiform', {
-        url: '/uiform',
-        controller: 'UIFormMainController',
-        templateUrl: './scripts/modules/uiform/templates/uiform.main.html'
-      }).
-      state('demo', {
-        url: '/demo',
-        controller: 'DemoMainController',
-        templateUrl: './scripts/modules/demo/templates/demo.main.html'
-      }).
-      state('demo.detail', {
-        url: "/:modelName",
-        controller: 'DemoMainController',
-        templateUrl: './scripts/modules/demo/templates/demo.main.html'
-      }).
-      state('profile', {
-        url: '/profile',
-        controller: 'ProfileMainController',
-        templateUrl: './scripts/modules/profile/templates/profile.main.html'
       }).
       state('login', {
         url: '/login',
