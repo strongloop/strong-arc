@@ -336,18 +336,9 @@ app.controller('StudioController', [
 
      // New Model Name Input Processing
     $scope.processModelNameInput = function(input) {
-      $scope.newModelInstance = {};
-      $scope.newModelInstance.name = input;
-      var modelCount = $scope.mainNavModels.length;
-      $scope.newModelInstance.isUnique = true;
-      for (var i = 0;i < modelCount;i++) {
-        var modelInstance = $scope.mainNavModels[i];
-        var compString = modelInstance.name.substr(0, input.length);
-        if (compString === input) {
-          $scope.newModelInstance.isUnique = false;
-          break;
-        }
-      }
+      // placeholder method to process changes that need
+      // to propagated when the model name changes
+
     };
     $scope.updateActiveInstanceName = function(name) {
       $scope.activeInstance.name = name;
