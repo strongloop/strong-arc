@@ -44,6 +44,11 @@ Common.directive('slCommonInstanceTitleView', [
           }
 
         });
+        scope.$watch('activeInstanceUpdated', function() {
+          if (scope.activeInstance) {
+            React.renderComponent(CommonInstanceTitleView({scope: scope}), el[0]);
+          }
+        }, true);
       }
     }
   }
@@ -86,6 +91,11 @@ Common.directive('slCommonInstanceTabsView', [
             renderComp();
           }
         },true);
+        scope.$watch('activeInstanceUpdated', function() {
+          if (scope.activeInstance) {
+            renderComp();
+          }
+        }, true);
 //        scope = scope.$parent;
         scope.$watch('openInstanceRefs', function(newNames, oldNames) {
           if ((scope.openInstanceRefs.length > 0) && (!scope.activeInstance.name)){

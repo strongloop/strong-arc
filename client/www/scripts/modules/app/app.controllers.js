@@ -51,6 +51,7 @@ app.controller('StudioController', [
     $scope.apiDataSourcesChanged = false;
     $scope.activeModelPropertiesChanged = false;  // dirty flag
     $scope.explorerDataModelChanged = false; // dirty toggle for triggering renders on the react components
+    $scope.activeInstanceUpdated = false; // dirty toggle for active instance update
 
 
     // initialize active instance
@@ -268,7 +269,15 @@ app.controller('StudioController', [
 
 
     /*
+    *
+    *
+    *
+    *
     * Models IA
+    *
+    *
+    *
+    *
     * */
     $scope.openSelectedModels = function() {
       var selectedModels = IAService.getCurrentInstanceSelections();
@@ -340,6 +349,10 @@ app.controller('StudioController', [
           break;
         }
       }
+    };
+    $scope.updateActiveInstanceName = function(name) {
+      $scope.activeInstance.name = name;
+      $scope.activeInstanceUpdated = !$scope.activeInstanceUpdated;
     };
     // Model Properties
     $scope.updateModelPropertyRequest = function(modelPropertyConfig) {

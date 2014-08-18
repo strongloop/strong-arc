@@ -11,15 +11,24 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
     this.setState({activeInstance:nextProps.scope.activeInstance});
   },
   handleChange: function(event) {
+    var scope = this.props.scope;
     var modelPropertyName = '';
     if (event.target.attributes['data-name']) {
       modelPropertyName = event.target.attributes['data-name'].value;
+      // commented out code to update tab name while typing
+//      if (modelPropertyName === 'name') {
+//        // update the tab
+//        scope.$apply(function() {
+//            scope.updateActiveInstanceName(event.target.value);
+//          }
+//        );
+//      }
       var xState = this.state;
       xState.activeInstance[modelPropertyName] = event.target.value;
       this.setState(xState);
     }
   },
-  setPluralVal: function(event) {
+  processModelNameValue: function(event) {
     if (event.target.attributes['data-name']) {
       var xState = this.state;
       var tActiveInstance = xState.activeInstance;
@@ -63,20 +72,30 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
       return '';
     };
     var saveModelDefinition = function(event) {
+      event.preventDefault();
+      var tState = that.state.activeInstance;
       var scope = that.props.scope;
       scope.$apply(function() {
-        scope.saveModelRequest(that.state.activeInstance);
+        scope.saveModelRequest(tState);
       });
-      return false;
     };
-    var dataSourceOptions = scope.mainNavDatasources.map(function(ds) {
-      return (<option value={ds.name}>{ds.name}</option>);
-    });
-    var baseOptions = scope.mainNavModels.map(function(model) {
-      return (<option value={model.name}>{model.name}</option>);
-    });
+    var dataSourceOptions = (<option />);
+    if (scope.mainNavDatasources.map) {
+      dataSourceOptions = scope.mainNavDatasources.map(function(ds) {
+        return (<option value={ds.name}>{ds.name}</option>);
+      });
+    }
+
+    var baseOptions = (<option />);
+    if (scope.mainNavModels.map) {
+      baseOptions = scope.mainNavModels.map(function(model) {
+        return (<option value={model.name}>{model.name}</option>);
+      });
+    }
+
+
     var returnVal = (<div />);
-    if (scope.activeInstance && scope.activeInstance.name) {
+    if (modelDef && modelDef.name) {
       returnVal = (
         <form role="form">
         	<div className="model-header-container">
@@ -90,7 +109,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
 		            <input type="text"
 		              value={modelDef.name}
                   onChange={that.handleChange}
-                  onBlur={that.setPluralVal}
+                  onBlur={that.processModelNameValue}
 		              data-name="name"
 		              id="ModelName"
 		              name="ModelName"
@@ -240,7 +259,7 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
 
                   <span data-ui-type="cell" title="data type"className="props-data-type-header table-header-cell">Type</span>
 
-                  <span data-ui-type="cell" title="default value" className="props-default-value-header table-header-cell"></span>
+                  <span data-ui-type="cell" title="is id" className="props-isid-header table-header-cell">is id</span>
 
                   <span data-ui-type="cell" title="required" className="props-required-header table-header-cell">Req</span>
 
@@ -359,10 +378,8 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
               <span data-ui-type="cell" className="props-data-type-cell">
                 <DataTypeSelect value={modelProperty.type} />
               </span>
-              <span data-ui-type="cell" className="props-default-value-cell">
-                <input type="text"
-                  className="model-instance-editor-input"
-                  placeholder="default value" />
+              <span data-ui-type="cell" className="props-isid-cell">
+                <input type="checkbox"  />
               </span>
               <span data-ui-type="cell" className="props-required-cell">
                 <input type="checkbox"  />
