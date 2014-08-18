@@ -225,7 +225,6 @@ IA.directive('slIaCleardbNavItem', [
       controller: function($scope) {
 
         $scope.clearDB = function() {
-          console.log('clear the cache');
           if (confirm('clear local cache?')) {
             AppStorageService.clearStorage();
             growl.addSuccessMessage("cleared studio caches");

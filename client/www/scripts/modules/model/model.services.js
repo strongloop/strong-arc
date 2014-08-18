@@ -16,12 +16,11 @@ Model.service('ModelService', [
         }
 
         ModelDefinition.create({}, config, function(response) {
-            console.log('good create model def: ' + response);
             deferred.resolve(response);
 
           },
           function(response){
-            console.log('bad create model def: ' + response);
+            console.warn('bad create model def: ' + response);
           });
       }
       return deferred.promise;
@@ -47,8 +46,6 @@ Model.service('ModelService', [
       var deferred = $q.defer();
       var p = ModelDefinition.find({},
         function(response) {
-
-          //   console.log('good get model defs: '+ response);
 
           // add create model to this for new model
 
@@ -82,7 +79,7 @@ Model.service('ModelService', [
           deferred.resolve(core);
         },
         function(response) {
-          console.log('bad get model defs: ' + response);
+          console.warn('bad get model defs: ' + response);
 
         }
       );
@@ -227,7 +224,6 @@ Model.service('ModelService', [
 
         }
         // open the new models
-        console.log('(I) SET OPEN INSTANCE REFS: ' + JSON.stringify(openInstances));
         AppStorageService.setItem('openInstanceRefs', openInstances);
         // activate the last one
         AppStorageService.setItem('activeInstance', newLBModel);
@@ -253,7 +249,7 @@ Model.service('ModelService', [
       }
       else {
 
-          console.log('request to get model data from localstorage cache failed so no model is returned');
+          console.warn('request to get model data from localstorage cache failed so no model is returned');
 
       }
 
@@ -277,7 +273,7 @@ Model.service('ModelService', [
           },
           // fail
           function(response) {
-            console.log('bad get model definition');
+            console.warn('bad get model definition: ' + response);
           }
         );
       }
@@ -331,7 +327,6 @@ Model.service('ModelService', [
       // create new model schema
       if (!doesNewModelExist) {
         openInstanceRefs.push(defaultModelSchema);
-        console.log('(J) SET OPEN INSTANCE REFS: ' + JSON.stringify(openInstanceRefs));
         AppStorageService.setItem('openInstanceRefs', openInstanceRefs);
       }
       return defaultModelSchema;

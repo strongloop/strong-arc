@@ -68,7 +68,7 @@ var CommonInstanceTabsView = (CommonInstanceTabsView = React).createClass({
         });
       }
       else if (event.target.attributes['data-name']) {
-        console.log('close the new model tab');
+//        console.log('close the new model tab');
       }
     };
     var items = [];

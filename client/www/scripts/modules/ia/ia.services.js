@@ -50,7 +50,6 @@ IA.service('IAService', [
         if ((retRefs.length === 1) && (!retRefs[0].id)) {
           // clear retRefs
           retRefs = [];
-          console.log('(C) SET OPEN INSTANCE REFS: ' + JSON.stringify(retRefs));
           AppStorageService.setItem('openInstanceRefs', retRefs);
         }
       }
@@ -64,7 +63,6 @@ IA.service('IAService', [
           break;
         }
       }
-      console.log('(D) SET OPEN INSTANCE REFS: ' + JSON.stringify(sourceInstances));
       AppStorageService.setItem('openInstanceRefs', sourceInstances);
       return sourceInstances;
     };
@@ -122,7 +120,6 @@ IA.service('IAService', [
           // may be new model instance
           if (id === CONST.NEW_MODEL_PRE_ID) {
             // so don't try to initialize against server
-            console.log('TRYING TO ACTIVATE NEW MODEL TAB');
             deferred.resolve(ModelService.createNewModelInstance());
           }
           else {
@@ -134,11 +131,9 @@ IA.service('IAService', [
                   var currRefs = AppStorageService.getItem('openInstanceRefs');
                   if (!currRefs) {
                     currRefs = [];
-                    console.log('(E) SET OPEN INSTANCE REFS: ' + JSON.stringify(currRefs));
                     AppStorageService.setItem('openInstanceRefs', currRefs);
                   }
                   currRefs.push({id: newInstance.id, name:newInstance.name,type:instanceType});
-                  console.log('(F) SET OPEN INSTANCE REFS: ' + JSON.stringify(currRefs));
                   AppStorageService.setItem('openInstanceRefs', currRefs);
                 }
                 deferred.resolve(instance);
@@ -154,7 +149,6 @@ IA.service('IAService', [
           // may be new model instance
           if (id === CONST.NEW_DATASOURCE_PRE_ID) {
             // so don't try to initialize against server
-            console.log('TRYING TO ACTIVATE NEW DS TAB');
             deferred.resolve(DataSourceService.createNewDatasourceInstance());
           }
           else {
@@ -166,11 +160,9 @@ IA.service('IAService', [
                   var currRefs = AppStorageService.getItem('openInstanceRefs');
                   if (!currRefs) {
                     currRefs = [];
-                    console.log('(Ed) SET OPEN INSTANCE REFS: ' + JSON.stringify(currRefs));
                     AppStorageService.setItem('openInstanceRefs', currRefs);
                   }
                   currRefs.push({id: newInstance.id, name:newInstance.name,type:instanceType});
-                  console.log('(Fd) SET OPEN INSTANCE REFS: ' + JSON.stringify(currRefs));
                   AppStorageService.setItem('openInstanceRefs', currRefs);
                 }
                 deferred.resolve(instance);
@@ -191,11 +183,9 @@ IA.service('IAService', [
 //                var currRefs = AppStorageService.getItem('openInstanceRefs');
 //                if (!currRefs) {
 //                  currRefs = [];
-//                  console.log('(G) SET OPEN INSTANCE REFS: ' + JSON.stringify(currRefs));
 //                  AppStorageService.setItem('openInstanceRefs', currRefs);
 //                }
 //                currRefs.push({id: newInstance.id, name:newInstance.name,type:instanceType});
-//                console.log('(H1) SET OPEN INSTANCE REFS: ' + JSON.stringify(currRefs));
 //                AppStorageService.setItem('openInstanceRefs', currRefs);
 //              }
 //              deferred.resolve(instance);

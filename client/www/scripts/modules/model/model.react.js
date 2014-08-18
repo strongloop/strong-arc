@@ -44,7 +44,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
     }
   },
   saveFieldValue: function(event) {
-    console.log('SAVE THIS VALUE: ' + event.target.value);
+
   },
   render: function() {
     var that = this;
@@ -212,7 +212,6 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
   triggerNewPropertyEditor: function() {
     var item = {};
     var that = this;
-    console.log('New Property Editor');
     that.props.scope.$apply(function() {
       that.props.scope.createNewProperty();
     });
@@ -301,10 +300,8 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
   },
   componentWillReceiveProps: function(nextProps) {
     this.setState({modelProperty:nextProps.modelProperty});
-    console.log('Component will receive props');
   },
   componentDidMount: function() {
-    console.log('the field has loaded check if property name is property-name');
     var propNameInputs = jQuery('[data-name="ModelPropertyName"]');
     for (var i = 0;i < propNameInputs.length;i++) {
       if (propNameInputs[i].value === 'property-name' ){
@@ -332,7 +329,6 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
       scope.$apply(function() {
         scope.updateModelPropertyRequest(updateModelPropertyConfig);
       });
-      console.log('ok going to save on blur');
     }
 
   },
@@ -446,7 +442,7 @@ var PropertyNameEditor = (PropertyNameEditor = React).createClass({
 //   // return {value: this.props.scope.property.name};
 //  },
   componentWillRecieveProps: function(nextProps) {
-    console.log('next props: ' + nextProps);
+
 
   },
   shouldComponentUpdate: function(nextProps, nextState) {
@@ -459,8 +455,6 @@ var PropertyNameEditor = (PropertyNameEditor = React).createClass({
 
   },
   componentWillUpdate: function(nextProps, nextState) {
-
-    console.log('nextState ===' + JSON.stringify(nextProps.name));
     this.setProps({value:nextProps.name});
   },
   render: function() {
@@ -619,7 +613,6 @@ var NewModelForm = (NewModelForm = React).createClass({
     var that = this;
     var scope = that.props.scope;
     var targetValue = event.target.value;
-    //console.log('new model name request: ' + event.target.value);
 
     if (targetValue) {
       // check to see if it is valid (no spaces, no invalid characters etc.
@@ -632,7 +625,6 @@ var NewModelForm = (NewModelForm = React).createClass({
   },
   componentWillReceiveProps: function(nextProps) {
     this.setState(nextProps.scope.newModelInstance);
-    console.log('Component will receive props');
   },
   render:function() {
 

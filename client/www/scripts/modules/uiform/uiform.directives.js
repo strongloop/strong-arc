@@ -7,7 +7,6 @@ UIForm.directive('uiformFormBuilder', [
       link: function(scope, elem, attrs) {
 
         scope.$watch('currUIForm.fields', function(uiFormFields) {
-          console.log('UIForm Form Builder: ' + JSON.stringify(uiFormFields));
           scope.formFields = uiFormFields;
         }, true);
 

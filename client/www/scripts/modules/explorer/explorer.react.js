@@ -230,7 +230,6 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
       };
       for (var i = 0;i < theForm.length;i++) {
         if (theForm[i].value) {
-          console.log('Processing Form : ' + theForm[i].name + ' = ' + theForm[i].value);
           requestData[theForm[i].name] = theForm[i].value;
         }
       }

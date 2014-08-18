@@ -3,7 +3,6 @@ UIForm.controller('UIFormMainController',[
   '$scope',
   'SampleDataService',
   function($scope, SampleDataService) {
-    console.log('UIForm controller');
 
     var sampleForm = {
       fields:[
@@ -66,7 +65,6 @@ UIForm.controller('UIFormMainController',[
     $scope.currUIForm = sampleForm;
 
     $scope.addUIFormElement = function(inputType) {
-      console.log('Add a ' + inputType + ' element to the form object');
       var formFieldDef = {
 //          fieldName:'field_name',
           fieldType:inputType,

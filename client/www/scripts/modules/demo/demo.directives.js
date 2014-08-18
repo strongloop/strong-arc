@@ -7,13 +7,13 @@ Demo.directive('slDemoMainNav', [
         $scope.formMode = 'new';
         $scope.modelRef = $stateParams.modelName;
         if ($scope.modelRef) {
-          console.log('DEMO THIS MODEL: ' + $scope.modelRef);
+
         }
 
         $scope.appModels = ModelService.getAllModels();
         $scope.appModels.
           then(function (result) {
-            console.log('MODELS: ' + JSON.stringify(result));
+
             $scope.appModels = result;
 
           }
@@ -24,7 +24,7 @@ Demo.directive('slDemoMainNav', [
           React.renderComponent(DemoModelNav({scope:scope}), el[0]);
         }, true);
         scope.$watch('modelRef', function(modelRef) {
-          console.log('[nav] model ref changed');
+
         }, true);
       }
     }
@@ -35,11 +35,10 @@ Demo.directive('slDemoMainForm', [
   function(ModelService) {
     return {
       controller: function($scope, $stateParams, ModelService) {
-        console.log('Demo Main form directive controller');
+
         $scope.modelRef = $stateParams.modelName;
         $scope.currFormData = {};
         if ($scope.modelRef) {
-          console.log('slDemoMainForm THIS MODEL: ' + $scope.modelRef);
 
           $scope.curFormData = ModelService.getModelByName($scope.modelRef);
           var propertiesCount = 0;
@@ -76,7 +75,6 @@ Demo.directive('slDemoMainForm', [
 
         }, true);
         scope.$watch('targetModelDef', function(modelDef) {
-          console.log('[form] model ref changed');
           React.renderComponent(DemoForm({scope:scope}), el[0]);
         }, true);
       }
@@ -88,7 +86,6 @@ Demo.directive('slDemoMainGrid', [
     return {
       template: '<div class="demo-data-grid"  ng-grid="demoDataGridOptions"></div>',
       controller: function($scope, $stateParams, $timeout, $http, ModelService) {
-        console.log('Demo Main Grid directive controller');
         $scope.modelData = {};
 
         $scope.modelRef = $stateParams.modelName;
@@ -103,7 +100,7 @@ Demo.directive('slDemoMainGrid', [
         };
 
         $scope.demoEdit = function(item) {
-          console.log('EDIT THIS ITEM: ' + JSON.stringify(item.entity));
+
           $scope.formMode = 'edit';
           $scope.httpMethod = 'PUT';
           var modelDef = ModelService.getModelByName($scope.modelRef);
@@ -127,7 +124,6 @@ Demo.directive('slDemoMainGrid', [
         };
         $scope.demoDelete = function(item) {
           if (confirm('delete this item?')) {
-            console.log('DELETE THIS ITEM: ' + JSON.stringify(item.entity));
             $scope.httpMethod = 'DELETE';
             var reqObj = {
               method:$scope.httpMethod,
@@ -142,7 +138,6 @@ Demo.directive('slDemoMainGrid', [
 
         };
         $scope.clearForm = function() {
-          console.log('clear the form');
           $scope.formMode = 'new';
           $scope.curFormData = {};
 
@@ -160,7 +155,7 @@ Demo.directive('slDemoMainGrid', [
       link: function(scope, el, attrs) {
 
         scope.$watch('modelRef', function(modelRef) {
-          console.log('[grid] model ref changed');
+
           if (modelRef) {
             scope.loadModelData(modelRef);
             scope.demoDataGridOptions = {
@@ -172,8 +167,7 @@ Demo.directive('slDemoMainGrid', [
 
         }, true);
         scope.$watch('modelData', function(data) {
-          console.log('[grid] model ref changed');
-//          scope.demoRestRequest('car');
+
           scope.demoDataGridOptions = {
             data: 'modelData',
             columnDefs:  'colDefs',

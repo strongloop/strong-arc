@@ -420,30 +420,7 @@ Canvas.directive('canvasView', [
             });
 
 
-            console.log('models: ' + models);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
           }
-
-
-
-
-
 
         }); // end scope watch
 
@@ -482,7 +459,6 @@ Canvas.directive('iaInstance', [
         function drawTheTree(data){
 
           var nodes = tree.nodes(data);
-          console.log('| NODES ' + nodes);
           var links = tree.links(nodes);
           var node  = canvas.selectAll('.node').
             data(nodes).

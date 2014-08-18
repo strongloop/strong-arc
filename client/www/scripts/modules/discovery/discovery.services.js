@@ -25,7 +25,6 @@ Discovery.service('DiscoveryService', [
                 deferred.resolve(res.models);
               },
               function (response) {
-                console.log('bad get schema defs');
               }
             );
           }
@@ -40,7 +39,6 @@ Discovery.service('DiscoveryService', [
           url: './scripts/modules/datasource/icars.json'
         };
         $http(htConfig).success(function (response) {
-          console.log('datasource schema resolve');
           deferred.resolve(response.schema);
         }).error(function (response) {
 
@@ -101,10 +99,6 @@ Discovery.service('DiscoveryService', [
           var p = response;
           var x = p;
           var resolution = tables.map(function(table) {
-            console.log('|');
-            console.log('target table being pushed onto stack' + JSON.stringify(table));
-            console.log('|');
-           // var modelDefinition =
 
             var xp = new p.$prototype$discoverModelDefinition({modelName: table.name, id: dsId},
               function(response) {
@@ -129,7 +123,6 @@ Discovery.service('DiscoveryService', [
 
             var relList = tmp.map(function(item) {
               for (property in item) {
-                console.log('KEY: ' + property);
                 finalArray.push(item[property]);
               }
 

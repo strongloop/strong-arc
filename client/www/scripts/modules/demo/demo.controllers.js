@@ -5,20 +5,17 @@ Demo.controller('DemoMainController', [
   '$http',
   'ModelService',
   function($scope, $stateParams, $http, ModelService) {
-    console.log('Demo Main Controller');
     $scope.modelRef = $stateParams.modelName;
     $scope.curFormData = {};
 
     if ($scope.modelRef) {
-      console.log('DEMO THIS MODEL: ' + $scope.modelRef);
+
     }
     $scope.demoModelChanged = function(name) {
-      console.log('change the model: ' + name);
       $scope.modelRef = name;
     };
 
     $scope.demoRestApiRequest = function(requestObj) {
-      console.log('demo rest request:  ' + JSON.stringify(requestObj));
       var config = {
         method: requestObj.method,
         url: requestObj.path + requestObj.endPoint + 's'
@@ -38,13 +35,11 @@ Demo.controller('DemoMainController', [
 
       $http(config).
         success( function(response) {
-          console.log('good demo rest call: ' + response);
           $scope.loadModelData($scope.modelRef);
           $scope.curFormData = {};
 
         }).
         error(function(response) {
-          console.log('bad demo rest call: ' + response);
         });
     };
     $scope.loadModelData = function(modelRef) {

@@ -49,7 +49,6 @@
            val = event.target.parentElement.attributes['data-name'].value;
          }
          scope.$apply(function () {
-           console.log('demo navigation: ' + val);
            document.location.href = '#demo/' + val;
            scope.demoModelChanged(val);
          });
@@ -62,7 +61,6 @@
 
      var addNewInstanceRequest = function(event) {
        if (event.target.attributes['data-type']){
-         console.log('add new: ' + event.target.attributes['data-type'].value);
          scope.$apply(function() {
            scope.createModelViewRequest();
          });
@@ -118,7 +116,6 @@ var DemoForm = (DemoForm = React).createClass({
       }
     }
     this.setState(xState);
-    console.log('demo form edit handler ');
 
   },
   render: function() {
@@ -128,7 +125,6 @@ var DemoForm = (DemoForm = React).createClass({
 
 
     var sendDemoRequest = function(event) {
-      console.log('submit the demo form');
       var theForm = event.target.form;
       var sourceEndPoint = event.target.attributes['data-name'].value;
 
@@ -159,7 +155,6 @@ var DemoForm = (DemoForm = React).createClass({
     };
 
     var clearDemoForm = function() {
-      console.log('clear the demo form');
     };
 
     var apiDetails = {httpMethod:'POST'};

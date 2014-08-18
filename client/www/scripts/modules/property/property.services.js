@@ -16,7 +16,7 @@ Property.service('PropertyService', [
         },
         // fail
         function(response) {
-          console.log('bad get model properties: ' + response);
+          console.warn('bad get model properties: ' + response);
         }
 
       );
@@ -28,12 +28,11 @@ Property.service('PropertyService', [
       // this should be ModelProperty.create
       ModelProperty.create({}, propConfig,
         function(response) {
-          console.log('good create property');
           deferred.resolve(response);
         },
         function(response) {
 
-          console.log('bad create model property');
+          console.warv('bad create model property: ' + response);
         }
 
       );
@@ -49,7 +48,7 @@ Property.service('PropertyService', [
         },
         // fail
         function(response) {
-          console.log('bad get model properties: ' + response);
+          console.warn('bad get model properties: ' + response);
         }
 
       );

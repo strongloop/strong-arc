@@ -63,8 +63,6 @@ Explorer.service('ExplorerService', [
         //var retVal = {}
 
 
-        console.log(resultArray);
-
         var returnArray = [];
         for (var i = 0;i < resultArray.length;i++) {
           returnArray.push({
@@ -114,14 +112,13 @@ Explorer.service('ExplorerService', [
           success(function(data, status, headers, config) {
             // this callback will be called asynchronously
             // when the response is available
-            console.log('Good api request' + data);
            // defer.resolve(data);
             return data;
           }).
           error(function(data, status, headers, config) {
             // called asynchronously if an error occurs
             // or server returns response with an error status.
-            console.log('Bad api request' + data);
+            console.warn('problem with api request' + data);
             defer.reject(data);
           });
         return defer.promise;

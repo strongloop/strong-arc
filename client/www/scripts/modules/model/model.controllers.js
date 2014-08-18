@@ -9,7 +9,6 @@ Model.controller('ModelEditorMainController', [
   'ModelService',
   'IAService',
   function($scope, ModelService, IAService) {
-    console.log('Model Editor Main Controller');
 
     $scope.activeModel = {
       name: IAService.getActiveModelInstance().name
@@ -20,7 +19,6 @@ Model.controller('ModelMainController', [
   '$scope',
   'ModelService',
   function($scope, ModelService) {
-    console.log('Model Main Controller');
 
     $scope.models = []; // placeholder for returned promise
     $scope.models = ModelService.getAllModels(); // service wrapper call
@@ -43,7 +41,6 @@ Model.controller('ModelInstanceController', [
   '$stateParams',
   'ModelService',
   function($scope, $state, $stateParams, ModelService) {
-    console.log('Model Instance Controller');
 
     var modelName = $stateParams.name;
 
@@ -60,7 +57,6 @@ Model.controller('ModelInstanceController', [
       $scope.isPropertyViewActive = !$scope.isPropertyViewActive;
     };
     $scope.updatePropertyDoc = function(a) {
-      console.log('CHANGING CHANGING');
     };
 
     var models = ModelService.getAllModels();

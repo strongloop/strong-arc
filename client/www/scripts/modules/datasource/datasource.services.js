@@ -71,7 +71,6 @@ Datasource.service('DataSourceService', [
           break;
         }
       }
-      console.log('(A) SET OPEN INSTANCE REFS: ' + JSON.stringify(openInstanceRefs))
       AppStorageService.setItem('openInstanceRefs', openInstanceRefs);
       return openInstanceRefs;
     };
@@ -108,7 +107,7 @@ Datasource.service('DataSourceService', [
           );
         },
         function(response) {
-          console.log('bad get model def for test connection: ' + response);
+
         }
       );
 
@@ -116,7 +115,6 @@ Datasource.service('DataSourceService', [
     };
     // obsolete
     svc.createDatasourceDef = function(datasourceDefObj) {
-      console.log('Add this data service: ' + JSON.stringify(datasourceDefObj));
       var currentDatasources = JSON.parse(window.localStorage.getItem('ApiDatasources'));
       if (!currentDatasources) {
         currentDatasources = [];

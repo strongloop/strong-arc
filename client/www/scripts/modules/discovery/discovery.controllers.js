@@ -2,6 +2,6 @@
 Discovery.controller('DiscoveryMainController', [
   '$scope',
   function($scope) {
-    console.log('Discovery Main Controller');
+
   }
 ]);

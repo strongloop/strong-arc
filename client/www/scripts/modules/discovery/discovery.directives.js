@@ -57,16 +57,15 @@ Discovery.directive('slDiscoverySchema', [
 
           var damn = propNames.map(function(key) {
             var testObj = propObj[key];
-            console.log(testObj);
             testObj.name = key;
             testObj.modelId = modelId;
             testObj.facetName = CONST.NEW_MODEL_FACET_NAME;
             PropertyService.createModelProperty(testObj).
               then(function(response){
-                console.log('GREAT WE CREATED A Property')
+
               }).
               catch(function error(msg) {
-                console.error('bad WE did not create A Property: ' + msg);
+                console.error('property not created: ' + msg);
               });
           });
         };
@@ -132,7 +131,6 @@ Discovery.directive('slDiscoverySchema', [
 
         };
         $scope.discoveryBackBtnClicked = function() {
-          console.log('back to schema');
           $scope.apiSourceTables = [];
           $scope.isDsTableGridVisible = true;
 
@@ -210,7 +208,6 @@ Discovery.directive('slCommonDisabledAttrib', [
       restrict: 'A',
       replace: false,
       controller: function($scope) {
-        console.log('disabled attribute');
         $scope.isDisabled = true;
       },
       link: function(scope, el, attrs) {
@@ -218,7 +215,6 @@ Discovery.directive('slCommonDisabledAttrib', [
         el.attr('disabled', 'disabled');
 
         scope.$watch('tableSelections', function(items) {
-          console.log('TEST VALUe TeST VAluE');
           if (items){
             if (items.length && items.length > 0) {
               el.removeAttr('disabled');

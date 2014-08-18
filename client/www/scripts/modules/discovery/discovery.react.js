@@ -9,7 +9,6 @@ var TargetTableModelRowItem = (TargetTableModelRowItem = React).createClass({
 
     var tPropKeys = propertyKeys.map(function(key) {
       var testObj = propertiesObj[key];
-      console.log(testObj);
       testObj.name = key;
       propertiesCollection.push(testObj)
     });
@@ -102,7 +101,6 @@ var TargetTableModelPreview = (TargetTableModelPreview = React).createClass({
 ////        });
 //        for (var property in propObj) {
 //         // if (item.properties.hasOwnProperty(property)) {
-//          console.log('property in properties: ' + property);
 //            return (<li>{property}</li>);
 //         // }
 //        }

@@ -19,7 +19,6 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
     var xActiveInstance = this.state.activeInstance;
     xActiveInstance[stateName] = event.target.value;
     this.setState({activeInstance:xActiveInstance});
-    console.log('data source form edit handler ');
 
   },
   render: function() {
@@ -43,13 +42,11 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
 
       for (var i = 0;i < theForm.length;i++) {
         if (theForm[i].value) {
-          console.log('Processing Form : ' + theForm[i].name + ' = ' + theForm[i].value);
           requestData[theForm[i].name] = theForm[i].value;
         }
       }
 
       if (requestData.name.length > 0) {
-        console.log('submit this form: ' + JSON.stringify(requestData));
         scope.$apply(function() {
           scope.updateOrCreateDatasource(requestData);
 

@@ -3,7 +3,6 @@ Canvas.controller('CanvasMainController', [
   '$scope',
   'ModelService',
   function($scope, ModelService) {
-    console.log('Canvas Main Controller');
 
     $scope.models = [];
     $scope.models = ModelService.getAllModels(); // service wrapper call

@@ -135,7 +135,6 @@ app.controller('StudioController', [
      * branch clicked
      * */
     $scope.navTreeBranchClicked = function(type) {
-      console.log('Tree Branch Clicked');
       // change the z-index on the main content to bring the
       // canvas to the fore
       // get reference to the following:
@@ -366,7 +365,6 @@ app.controller('StudioController', [
     $scope.deleteModelDefinitionRequest = function(modelId) {
       if (modelId){
         if (confirm('delete model?')){
-          console.log('delete this model: ' + modelId);
           ModelService.deleteModel(modelId).
             then(function(response){
               loadModels();
@@ -396,7 +394,6 @@ app.controller('StudioController', [
           $scope.activeInstance.properties.push(result);
           // $scope.activeInstanceChanged = !$scope.activeInstanceChanged;
           $scope.activeModelPropertiesChanged = !$scope.activeModelPropertiesChanged;
-          console.log('good add new model property')
         }
       );
 
@@ -431,7 +428,6 @@ app.controller('StudioController', [
     $scope.deleteDataSourceDefinitionRequest = function(dsId) {
       if (dsId){
         if (confirm('delete datasource?')){
-          console.log('delete this datasource: ' + dsId);
           DataSourceService.deleteDataSource(dsId).
             then(function(response){
               loadDataSources();
@@ -444,7 +440,7 @@ app.controller('StudioController', [
     $scope.updateOrCreateDatasource = function(config) {
       var currentDatasource = config;
       if (config.name) {
-        console.log('SAVE or CREATE datasource: ' + config.name);
+
         // check to make sure it is unique
 //
 //      if (DataSourceService.isNewDatasourceNameUnique(formObj.name)) {
@@ -452,7 +448,6 @@ app.controller('StudioController', [
         if (!config.facetName) {
           config.facetName = CONST.NEW_DATASOURCE_FACET_NAME;
         }
-        console.log('CREATE THE DataSource: ' + JSON.stringify(config));
 
         // double check to clear out 'new' id
         if (config.id === CONST.NEW_MODEL_PRE_ID) {
@@ -523,7 +518,6 @@ app.controller('StudioController', [
 
     // TODO - refactor this into a service
     $scope.explorerApiRequest = function(requestObj) {
-      console.log('explorer api request:  ' + JSON.stringify(requestObj));
       var config = {
         method: requestObj.method,
         url: '/api' + requestObj.path
@@ -563,15 +557,12 @@ app.controller('StudioController', [
      *
      * */
     $scope.$on('IANavEvent', function(event, data) {
-      console.log('IA NAV EVENT PROCESSING');
 
       var currActiveInstance = $scope.activeInstance;
       var openInstanceRefs = IAService.getOpenInstanceRefs();
 
-      console.log('| 1');
       // check if there is an active instance
       if (currActiveInstance && currActiveInstance.id) {
-        console.log('| 2');
         var instanceObjRef = {
           id:currActiveInstance.id,
           name:currActiveInstance.name,
@@ -579,7 +570,6 @@ app.controller('StudioController', [
         };
         // check if there are open instances and that activeInstance is in it
         if (openInstanceRefs.length > 0) {
-          console.log('| 2');
           var isActiveInstanceOpen = false;
           // loop over the refs to confirm active instance is in there
           for (var i = 0;i < openInstanceRefs.length;i++) {
@@ -591,39 +581,32 @@ app.controller('StudioController', [
           }
           // if it isn't in there we need to add it
           if (!isActiveInstanceOpen) {
-            console.log('| 3');
             // add active instance to open instance refs
 
             $scope.openInstanceRefs = IAService.addInstanceRef(instanceObjRef);
           }
-          console.log('| 4');
 
         }
         else {
           // we have a mismatch - we have an active instance but no open instance refs
           // add active instance to openInstanceRefs
-          console.log('| 5');
 
           $scope.openInstanceRefs = IAService.addInstanceRef(instanceObjRef);
         }
       }
       else {
-        console.log('| 6');
         // there is no active instance so confirm there are no open instance refs
         if (openInstanceRefs.length > 0) {
-          console.log('| 7');
           // we have a mismatch - we have open instances but none are active
           // set the 0 index open instance ref to the active instance
           IAService.activateInstanceById(openInstanceRefs[0].id).
             then(function(instance) {
-              console.log('| 8');
               $scope.activeInstance = instance;
               $rootScope.$broadcast('IANavEvent');
             }
           );
         }
         else {
-          console.log('| 9');
           // there are no open instances so we're good - everything is closed
         }
 
@@ -665,7 +648,7 @@ app.controller('GlobalNavController',[
 * */
 app.controller('DragDropCtrl', function($scope) {
   $scope.handleDrop = function() {
-    console.log('Item has been dropped');
+
   }
 });
 

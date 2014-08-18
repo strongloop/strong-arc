@@ -40,8 +40,7 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
   },
   deleteSelectedModel: function(key, opt) {
     var scope = this.props.scope;
-    console.log('key: ' + key);
-    console.log('opt' + opt);
+
     try{
       if (opt.sourceEvent.currentTarget.attributes['data-id']){
         var modelId = opt.sourceEvent.currentTarget.attributes['data-id'].value;
@@ -160,8 +159,7 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
   },
   deleteSelectedDataSource: function(key, opt) {
     var scope = this.props.scope;
-    console.log('key: ' + key);
-    console.log('opt' + opt);
+
     try{
       if (opt.sourceEvent.currentTarget.attributes['data-id']){
         var dsId = opt.sourceEvent.currentTarget.attributes['data-id'].value;
@@ -183,7 +181,7 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
     var isDiscoverable = false;
 
     menuItems.openSelectedModels = {name: "open", callback: this.openSelectedDataSources};
-// Dormant for initial releast
+// Dormant for initial release
 //    menuItems.createModelsFromDS = {
 //      name: "create models",
 //      disabled: function(key, opt) {
@@ -199,7 +197,6 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
 //        return true;
 //      },
 //      callback: function(key, opt) {
-////        console.log('||  ' + opt.sourceEvent.target.attributes['data-name'].value);
 //        var dsId = '';
 //        if (opt.sourceEvent.target.attributes['data-id']) {
 //          dsId = opt.sourceEvent.target.attributes['data-id'].value;
