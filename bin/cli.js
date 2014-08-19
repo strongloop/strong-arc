@@ -14,6 +14,8 @@ if(pathArg) {
 
 process.env.WORKSPACE_DIR = process.env.WORKSPACE_DIR || WORKSPACE_DIR;
 
+console.log('Loading workspace %s', process.env.WORKSPACE_DIR);
+
 var port = process.env.PORT || 0;
 
 var server = studio.listen(port, function(err) {
@@ -29,7 +31,5 @@ var server = studio.listen(port, function(err) {
 });
 
 function getArgv() {
-  var argv = process.argv.splice(); // copy
-  argv.shift(); // remove command
-  return argv;
+  return process.argv.slice(2);
 }
