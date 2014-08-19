@@ -73,17 +73,6 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
               required="true" />
           </div>
           <div className="form-group">
-            <label for="defaultForType">Default For Type</label>
-            <input id="defaultForType"
-              className="form-control"
-              name="defaultForType"
-              type="text"
-              value={dsModel.defaultForType}
-              onChange={this.handleChange}
-              data-name="defaultForType"
-              placeholder="default for type" />
-          </div>
-          <div className="form-group">
             <label for="connector">Connector</label>
             <select
               id="connector"
