@@ -14,7 +14,9 @@ if(pathArg) {
 
 process.env.WORKSPACE_DIR = process.env.WORKSPACE_DIR || WORKSPACE_DIR;
 
-var server = studio.listen(0, function(err) {
+var port = process.env.PORT || 0;
+
+var server = studio.listen(port, function(err) {
   if(err) {
     console.error('could not start studio!');
     console.error(err);
