@@ -20,6 +20,7 @@ var server = studio.listen(port, function(err) {
   if(err) {
     console.error('could not start studio!');
     console.error(err);
+    process.exit(1);
   }
 
   console.log('%s http://%s:%s',
