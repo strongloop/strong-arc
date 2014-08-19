@@ -92,6 +92,22 @@ Datasource.service('DataSourceService', [
 
       return deferred.promise;
     };
+    svc.updateDataSourceDefinition = function(config) {
+      var deferred = $q.defer();
+      // double check to clear out 'new' id
+      if (config.id) {
+        DataSourceDefinition.upsert({}, config,
+          function(response) {
+            deferred.resolve(response);
+          },
+          function(response) {
+            console.warn('bad update data source definition: ' + response);
+          }
+        );
+      }
+
+      return deferred.promise;
+    };
     svc.testDataSourceConnection = function(dsId) {
       var deferred = $q.defer();
 

@@ -443,29 +443,36 @@ app.controller('StudioController', [
       var currentDatasource = config;
       if (config.name) {
 
-        // check to make sure it is unique
-//
-//      if (DataSourceService.isNewDatasourceNameUnique(formObj.name)) {
-        // call create model
+        // make sure there is a facetName
         if (!config.facetName) {
           config.facetName = CONST.NEW_DATASOURCE_FACET_NAME;
         }
 
+        // create DataSourceDefinition
         // double check to clear out 'new' id
         if (config.id === CONST.NEW_MODEL_PRE_ID) {
           delete config.id;
+
+          DataSourceService.createDataSourceDefinition(config).
+            then(function(response) {
+              // clear reference to 'new' placeholder in openInstanceRefs
+              IAService.clearOpenNewDSReference();
+              $scope.activeInstance = response;
+              $scope.activeInstance.type = 'datasource';
+              loadDataSources();
+            }
+          );
         }
-
-        DataSourceService.createDataSourceDefinition(config).
-          then(function(response) {
-            // clear reference to 'new' placeholder in openInstanceRefs
-            IAService.clearOpenNewDSReference();
-            $scope.activeInstance = response;
-            $scope.activeInstance.type = 'datasource';
-            loadDataSources();
-          }
-        );
-
+        // update DataSourceDefinition
+        else {
+          DataSourceService.updateDataSourceDefinition(config).
+            then(function(response) {
+              $scope.activeInstance = response;
+              $scope.activeInstance.type = 'datasource';
+              loadDataSources();
+            }
+          );
+        }
       }
     };
 
