@@ -441,7 +441,7 @@ app.controller('StudioController', [
     // save Datasource
     $scope.updateOrCreateDatasource = function(config) {
       var currentDatasource = config;
-      if (config.name) {
+      if (config.id) {
 
         // make sure there is a facetName
         if (!config.facetName) {
