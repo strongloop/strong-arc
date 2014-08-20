@@ -221,7 +221,7 @@ app.factory('requestInterceptor', [
           // any other navigation requires login
           if ($location.path() !== '/'){
 //            $location.nextAfterLogin = $location.path();
-//            $location.path('/login');
+            $location.path('/login');
           }
         }
         return config || $q.when(config);
