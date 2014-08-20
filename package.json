@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "express": "~4.8.4",
-    "loopback-workspace": "^3.1.1",
+    "loopback-workspace": "strongloop/loopback-workspace",
     "request": "^2.34.0"
   },
   "optionalDependencies": {
