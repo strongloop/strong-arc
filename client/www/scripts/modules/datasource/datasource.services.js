@@ -101,9 +101,12 @@ Datasource.service('DataSourceService', [
             deferred.resolve(response);
           },
           function(response) {
-            console.warn('bad update data source definition: ' + response);
+            deferred.reject(response);
           }
         );
+      }
+      else {
+        console.warn('attempt to update DataSourceDefinition without an id property');
       }
 
       return deferred.promise;

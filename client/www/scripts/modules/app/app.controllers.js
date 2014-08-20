@@ -467,11 +467,14 @@ app.controller('StudioController', [
         else {
           DataSourceService.updateDataSourceDefinition(config).
             then(function(response) {
-              $scope.activeInstance = response;
-              $scope.activeInstance.type = 'datasource';
-              loadDataSources();
-            }
-          );
+                $scope.activeInstance = response;
+                $scope.activeInstance.type = 'datasource';
+                loadDataSources();
+              }
+            ).
+            catch(function(response){
+              console.warn('update DataSourceDefinition failed: ' + response.message);
+            });
         }
       }
     };
