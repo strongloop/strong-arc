@@ -226,12 +226,8 @@ app.factory('requestInterceptor', [
         return config || $q.when(config);
       },
       responseError: function(rejection) {
-        console.log('intercepted rejection of ', rejection.config.url, rejection.status);
         if (rejection.status == 401) {
-          //AppAuth.currentUser = null;
-          // save the current location so that login can redirect back
-//          $location.nextAfterLogin = $location.path();
-//          $location.path('/login');
+          $location.path('/login');
         }
         return $q.reject(rejection);
       }

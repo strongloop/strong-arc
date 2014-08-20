@@ -1,4 +1,54 @@
 // Copyright StrongLoop 2014
+Profile.directive('slUserLoginView', [
+  'ProfileService',
+  function(ProfileService) {
+
+    return {
+      controller: function ($scope, $location, ProfileService) {
+
+        $scope.loginErrorMessage = '';
+        $scope.credentials = {
+          email: '',
+          password: ''
+        };
+        $scope.resetCredentials = function() {
+          $scope.credentials = {
+            email: '',
+            password: ''
+          };
+        };
+        $scope.clearLoginErrorMessage = function() {
+          $scope.loginErrorMessage = '';
+        };
+
+        $scope.loginRequest = function (formConfig) {
+
+          $location.path('/studio');
+          $scope.loginResult = ProfileService.loginRequest(formConfig).
+            then(function(response) {
+
+              $location.path('/studio');
+
+            }).catch(function(response) {
+              $scope.loginErrorMessage = 'Authentication attempt failed. Please check your username (email) and password and try again';
+              $scope.resetCredentials();
+            }
+          );
+
+        };
+      },
+      link: function(scope, el, attrs) {
+
+        scope.$watch('credentials', function() {
+          React.renderComponent(LoginFormView({scope:scope}), el[0]);
+        });
+        scope.$watch('loginError', function() {
+          React.renderComponent(LoginFormView({scope:scope}), el[0]);
+        });
+      }
+    }
+  }
+]);
 Profile.directive('userPreferencesEditor', [
   'ProfileService',
   'UserPreferenceService',
