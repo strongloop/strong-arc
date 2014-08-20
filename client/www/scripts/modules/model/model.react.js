@@ -37,7 +37,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
       // check if plural value is already set
       // if not then set it to a I18N.pluralize value
       if (!tActiveInstance.plural) {
-        tActiveInstance.plural = modelPropertyName + 's';
+        tActiveInstance.plural = inflection.pluralize(modelPropertyName);
       }
       xState.activeInstance = tActiveInstance;
       this.setState(xState);
