@@ -9,3 +9,4 @@ var AppSelection = (AppSelection = React).createClass({
     return (<select>{options}</select>);
   }
 });
+

@@ -19,8 +19,12 @@ app.controller('StudioController', [
     $scope.mainNavModels = [];  // initialized further down
     $scope.instanceType = 'model';
     $scope.activeInstance = {};
+<<<<<<< HEAD
     $scope.modelNavIsVisible = true;
     $scope.dsNavIsVisible = true;
+=======
+    $scope.globalExceptionStack = [];
+>>>>>>> first cut at global exception handling
 
     /*
     *
@@ -34,7 +38,11 @@ app.controller('StudioController', [
     * aim to replace currentOpenModelNames and currentOpenDatasourceNames
     *
     * */
-    $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
+    var reloadOpenInstances = function() {
+      $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
+    };
+    reloadOpenInstances();
+
 
     // legacy
     $scope.currentOpenDatasourceNames = IAService.getOpenDatasourceNames();
@@ -141,7 +149,69 @@ app.controller('StudioController', [
 
     // Main Nav Tree Item clicked
     $scope.navTreeItemClicked = function(type, targetId, multiSelect) {
+<<<<<<< HEAD
       $scope.openSelectedInstance(targetId, type);
+=======
+
+      switch (type){
+
+        case 'model':
+          /*
+           * cases:
+           * - item is not open: open preview view of item
+           * - item is open and active: do nothing
+           * - item is open but not active: activate item
+           *
+           * */
+
+          //jQuery('[data-id="CanvasApiContainer"]').transition({ x: 1000 });
+          var openModelNames = IAService.getOpenModelNames();
+          var targetModel = ModelService.getModelById(targetId).
+            then(function(targetModel) {
+              $scope.activeInstance = IAService.setActiveInstance(targetModel, 'model');
+              reloadOpenInstances();
+              $scope.currentOpenModelNames = IAService.getOpenModelNames();
+              $scope.clearSelectedInstances();
+              IAService.showInstanceView();
+              $rootScope.$broadcast('IANavEvent');
+
+            }
+          );
+
+          // check for preview mode
+
+
+
+
+          break;
+        case 'datasource':
+          //$scope.previewInstance = DataSourceService.getDatasourceByName(target);
+          /*
+           * cases:
+           * - item is not open: open preview view of item
+           * - item is open and active: do nothing
+           * - item is open but not active: activate item
+           *
+           * */
+
+          var openDatasourceNames = IAService.getOpenDatasourceNames();
+          var targetDataSource = DataSourceService.getDataSourceById(targetId).
+            then(function(targetDataSource) {
+              $scope.activeInstance = IAService.setActiveInstance(targetDataSource, 'datasource');
+              reloadOpenInstances();
+              $scope.currentOpenDataSourceNames = IAService.getOpenDatasourceNames();
+              $scope.clearSelectedInstances();
+              IAService.showInstanceView();
+              $rootScope.$broadcast('IANavEvent');
+
+            }
+          );
+
+          break;
+
+        default:
+      }
+>>>>>>> first cut at global exception handling
     };
 
 
@@ -188,6 +258,7 @@ app.controller('StudioController', [
             }
           );
         }
+        reloadOpenInstances();
       }
       $scope.clearSelectedInstances();
     };
@@ -210,6 +281,7 @@ app.controller('StudioController', [
     $scope.saveModelRequest = function(config) {
 
       if (config.id && (config.id !== CONST.NEW_MODEL_PRE_ID)) {
+        var originalModelId = config.id;
         // update model
         ModelService.updateModel(config).
           then(function(response) {
@@ -217,6 +289,18 @@ app.controller('StudioController', [
             IAService.clearOpenNewModelReference();
             $scope.activeInstance = IAService.setActiveInstance(response, CONST.MODEL_TYPE);
             loadModels();
+<<<<<<< HEAD
+=======
+            $scope.activeInstance = response;
+            IAService.closeInstanceById(originalModelId);
+            IAService.addInstanceRef({
+              id:$scope.activeInstance.id,
+              name:$scope.activeInstance.name,
+              type:CONST.MODEL_TYPE
+            });
+            IAService.setActiveInstance($scope.activeInstance, CONST.MODEL_TYPE);
+            reloadOpenInstances();
+>>>>>>> first cut at global exception handling
           }
         );
       }
@@ -232,6 +316,8 @@ app.controller('StudioController', [
             IAService.clearOpenNewModelReference();
             loadModels();
             $scope.activeInstance = response;
+            IAService.setActiveInstance($scope.activeInstance, CONST.MODEL_TYPE);
+            reloadOpenInstances();
           }
         );
       }
@@ -285,6 +371,7 @@ app.controller('StudioController', [
               IAService.activateInstanceById($scope.openInstanceRefs[0].id).
                 then(function(instance) {
                   $scope.activeInstance = instance;
+                  reloadOpenInstances();
                   $rootScope.$broadcast('IANavEvent');
                 }
               );
@@ -372,6 +459,7 @@ app.controller('StudioController', [
             IAService.activateInstanceById($scope.openInstanceRefs[0].id).
               then(function(instance) {
                 $scope.activeInstance = instance;
+                reloadOpenInstances();
                 $rootScope.$broadcast('IANavEvent');
               }
             );
@@ -380,6 +468,7 @@ app.controller('StudioController', [
           DataSourceService.deleteDataSource(dsId).
             then(function(response){
               loadDataSources();
+              reloadOpenInstances();
             }
           );
         }
@@ -391,6 +480,7 @@ app.controller('StudioController', [
       var currentDatasource = config;
       if (config.id) {
 
+        var originalDataSourceId = config.id;
         // make sure there is a facetName
         if (!config.facetName) {
           config.facetName = CONST.NEW_DATASOURCE_FACET_NAME;
@@ -407,6 +497,14 @@ app.controller('StudioController', [
               IAService.clearOpenNewDSReference();
               $scope.activeInstance = response;
               $scope.activeInstance.type = CONST.DATASOURCE_TYPE;
+              IAService.closeInstanceById(originalDataSourceId);
+              IAService.addInstanceRef({
+                id:$scope.activeInstance.id,
+                name:$scope.activeInstance.name,
+                type:$scope.activeInstance.type
+              });
+              IAService.setActiveInstance($scope.activeInstance, CONST.DATASOURCE_TYPE);
+              reloadOpenInstances();
               loadDataSources();
             }
           );
@@ -417,6 +515,8 @@ app.controller('StudioController', [
             then(function(response) {
                 $scope.activeInstance = response;
                 $scope.activeInstance.type = CONST.DATASOURCE_TYPE;
+                IAService.setActiveInstance($scope.activeInstance, CONST.DATASOURCE_TYPE);
+              reloadOpenInstances();
                 loadDataSources();
               }
             ).
@@ -431,6 +531,10 @@ app.controller('StudioController', [
     function getRandomNumber() {
       return Math.floor((Math.random() * 100) + 1);
     }
+
+    $scope.$on('GlobalExceptionEvent', function(event, data) {
+      $scope.globalExceptionStack.push(data);
+    });
     /*
      *
      *   IA STATE CLEANUP LISTENER

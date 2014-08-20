@@ -230,6 +230,17 @@ app.factory('requestInterceptor', [
         if (rejection.status == 401) {
           $location.path('/login');
         }
+        if (rejection.status > 499) {
+
+          $rootScope.$broadcast('GlobalExceptionEvent', {
+              requestUrl: rejection.config.url,
+              message: rejection.data.error.message,
+              name: rejection.data.error.name,
+              stack: rejection.data.error.stack,
+              status: rejection.data.error.status
+            }
+          );
+        }
         return $q.reject(rejection);
       }
     };

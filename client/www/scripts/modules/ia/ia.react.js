@@ -508,4 +508,20 @@ var IAMainControls = (IAMainControls = React).createClass({
       );
   }
 });
+var IAGlobalExceptionDisplayView = (IAGlobalExceptionDisplayView = React).createClass({
+  render: function() {
+    var scope = this.props.scope;
+    var displayMarkup = (<div />);
+    if (scope.globalExceptionStack.length) {
+      var prevMessage = '';
+      displayMarkup = scope.globalExceptionStack.map(function(stackItem) {
+        if (stackItem.message !== prevMessage) {
+          prevMessage = stackItem.message;
+          return (<div className="">ERROR MESSAGE: {stackItem.message}</div>)
+        }
 
+      });
+    }
+    return (<div>{displayMarkup}</div>);
+  }
+});
