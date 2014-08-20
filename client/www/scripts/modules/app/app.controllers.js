@@ -441,31 +441,41 @@ app.controller('StudioController', [
     // save Datasource
     $scope.updateOrCreateDatasource = function(config) {
       var currentDatasource = config;
-      if (config.name) {
+      if (config.id) {
 
-        // check to make sure it is unique
-//
-//      if (DataSourceService.isNewDatasourceNameUnique(formObj.name)) {
-        // call create model
+        // make sure there is a facetName
         if (!config.facetName) {
           config.facetName = CONST.NEW_DATASOURCE_FACET_NAME;
         }
 
+        // create DataSourceDefinition
         // double check to clear out 'new' id
-        if (config.id === CONST.NEW_MODEL_PRE_ID) {
+        if (config.id === CONST.NEW_DATASOURCE_PRE_ID) {
           delete config.id;
+
+          DataSourceService.createDataSourceDefinition(config).
+            then(function(response) {
+              // clear reference to 'new' placeholder in openInstanceRefs
+              IAService.clearOpenNewDSReference();
+              $scope.activeInstance = response;
+              $scope.activeInstance.type = CONST.DATASOURCE_TYPE;
+              loadDataSources();
+            }
+          );
         }
-
-        DataSourceService.createDataSourceDefinition(config).
-          then(function(response) {
-            // clear reference to 'new' placeholder in openInstanceRefs
-            IAService.clearOpenNewDSReference();
-            $scope.activeInstance = response;
-            $scope.activeInstance.type = 'datasource';
-            loadDataSources();
-          }
-        );
-
+        // update DataSourceDefinition
+        else {
+          DataSourceService.updateDataSourceDefinition(config).
+            then(function(response) {
+                $scope.activeInstance = response;
+                $scope.activeInstance.type = CONST.DATASOURCE_TYPE;
+                loadDataSources();
+              }
+            ).
+            catch(function(response){
+              console.warn('update DataSourceDefinition failed: ' + response.message);
+            });
+        }
       }
     };
 
