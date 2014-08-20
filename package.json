@@ -6,6 +6,7 @@
     "strong-studio": "bin/cli.js"
   },
   "scripts": {
+    "prepublish": "gulp build",
     "test": "gulp test",
     "start": "node app.js"
   },

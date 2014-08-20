@@ -119,6 +119,14 @@ code {
 	float: left;
 }
 
+.header-version{
+    position: absolute;
+    font-size: 0.7em;
+    right: 0.5em;
+    top: 0.5em;
+    color: #08592B;
+}
+
 /*
 
 	Login screen
