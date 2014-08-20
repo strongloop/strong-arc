@@ -12,6 +12,11 @@
   },
   "dependencies": {
     "express": "~4.8.4",
+    "loopback-connector-mongodb": "^1.4.1",
+    "loopback-connector-mssql": "^1.1.0",
+    "loopback-connector-mysql": "^1.4.2",
+    "loopback-connector-oracle": "^1.4.1",
+    "loopback-connector-postgresql": "^1.1.1",
     "loopback-workspace": "strongloop/loopback-workspace",
     "request": "^2.34.0"
   },
