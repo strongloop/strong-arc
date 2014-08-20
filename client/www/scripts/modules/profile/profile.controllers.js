@@ -7,8 +7,8 @@
 Profile.controller('ProfileMainController', [
   '$rootScope',
   '$scope',
-  'User',
-  function ($rootScope, ProfileService, $scope, User) {
+  'ProfileService',
+  function ($rootScope, ProfileService, $scope, ProfileService) {
 
     $scope.viewTitle = 'Profile';
 
@@ -17,32 +17,9 @@ Profile.controller('ProfileMainController', [
 Profile.controller('LoginController', [
   '$scope',
   '$location',
-  'User',
-  function ($scope, $location, User) {
+  'ProfileService',
+  function ($scope, $location, ProfileService) {
 
-    $scope.credentials = {
-      email: 'foo@bar.com',
-      password: 'password'
-    };
-    // TODO move to Profile Service
-    $scope.login = function () {
-
-      $location.path('/studio');
-      $scope.loginResult = User.login($scope.credentials,
-        function () {
-
-          // TODO make a more robust API call here
-          window.localStorage.setItem('currentUserId', $scope.loginResult.userId);
-          window.localStorage.setItem('accessToken', $scope.loginResult.id);
-          $location.path('/studio');
-
-          //$location.path('/');
-        },
-        function (res) {
-          $scope.loginError = res.data.error;
-        }
-      );
-    };
   }
 ]);
 Profile.controller('RegisterController', [

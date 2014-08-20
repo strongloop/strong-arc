@@ -14,20 +14,38 @@
  * */
 Profile.service('ProfileService', [
   'User',
-  function (User) {
+  '$q',
+  function (User, $q) {
     var svc = {};
 
     svc.getCurrentUserId = function () {
       return window.localStorage.getItem('currentUserId');
     };
-
+    svc.loginRequest = function(config) {
+      var deferred = $q.defer();
+      User.login(config,
+        function (response) {
+          svc.saveAuthTokenData(response);
+          deferred.resolve(response);
+        },
+        function (response) {
+          var authFailMsg = 'Authentication attempt failed.  Please confirm your email and password and try again.';
+          deferred.reject(response);
+        }
+      );
+      return deferred.promise;
+    };
+    // better but still need a more robust implementation
+    svc.saveAuthTokenData = function(data) {
+      window.localStorage.setItem('currentUserId', data.userId);
+      window.localStorage.setItem('accessToken', data.id);
+    };
     svc.isAuthUser = function() {
       if (svc.getCurrentUserId()){
         return true;
       }
       return false;
     };
-
     svc.logCurrentUserOut = function (cb) {
       window.localStorage.removeItem('currentUserId');
       window.localStorage.removeItem('accessToken');

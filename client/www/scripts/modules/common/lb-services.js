@@ -1,8 +1,8 @@
 'use strict';
 
 var angBase = "/api";
-var authBase = angBase;
-// var authBase = "http://0.0.0.0:3000/api";
+//var authBase = angBase;
+var authBase = "https://auth.strongloop.com/api";
 
 /**
  * @ngdoc overview

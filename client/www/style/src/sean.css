@@ -11,3 +11,9 @@
 .common-instance-view-container {
     overflow-y:scroll;
 }
+.login-fail-message-container {
+    border: 1px solid #444444;
+    border-radius:1rem;
+    padding:2rem;
+    font-size:115%;
+}
