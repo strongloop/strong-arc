@@ -450,7 +450,7 @@ app.controller('StudioController', [
 
         // create DataSourceDefinition
         // double check to clear out 'new' id
-        if (config.id === CONST.NEW_MODEL_PRE_ID) {
+        if (config.id === CONST.NEW_DATASOURCE_PRE_ID) {
           delete config.id;
 
           DataSourceService.createDataSourceDefinition(config).
@@ -458,7 +458,7 @@ app.controller('StudioController', [
               // clear reference to 'new' placeholder in openInstanceRefs
               IAService.clearOpenNewDSReference();
               $scope.activeInstance = response;
-              $scope.activeInstance.type = 'datasource';
+              $scope.activeInstance.type = CONST.DATASOURCE_TYPE;
               loadDataSources();
             }
           );
@@ -468,7 +468,7 @@ app.controller('StudioController', [
           DataSourceService.updateDataSourceDefinition(config).
             then(function(response) {
                 $scope.activeInstance = response;
-                $scope.activeInstance.type = 'datasource';
+                $scope.activeInstance.type = CONST.DATASOURCE_TYPE;
                 loadDataSources();
               }
             ).
