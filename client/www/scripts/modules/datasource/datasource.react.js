@@ -85,10 +85,10 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
               name="connector" >
               <option value="">choose</option>
               <option value="loopback-connector-oracle">Oracle</option>
-              <option value="loopback-connector-mssql">MsSQL</option>
+              <option value="loopback-connector-mssql">Microsoft SQL</option>
               <option value="loopback-connector-mysql">MySQL</option>
-              <option value="loopback-connector-postgres">Postgres</option>
-              <option value="loopback-connector-mongodb">Mongo DB</option>
+              <option value="loopback-connector-postgresql">PostgreSQL</option>
+              <option value="loopback-connector-mongodb">MongoDB</option>
             </select>
           </div>
           <div className="form-group">
