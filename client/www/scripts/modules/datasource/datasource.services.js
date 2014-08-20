@@ -111,22 +111,22 @@ Datasource.service('DataSourceService', [
 
       return deferred.promise;
     };
-    svc.testDataSourceConnection = function(dsId) {
+    svc.testDataSourceConnection = function(config) {
+      if (!config.connector) {
+        return $q.reject('Select a connector first.');
+      }
+
       var deferred = $q.defer();
 
-      DataSourceDefinition.findById({id:dsId},
+      DataSourceDefinition.testConnection({}, config,
         function(response) {
-          response.$prototype$testConnection({id:dsId},
-            function(response) {
-              deferred.resolve(response);
-            },
-            function(response) {
-              console.warn('bad test ds connection: ' + response);
-            }
-          );
+          deferred.resolve(response);
         },
         function(response) {
-
+          var msg = response.data && response.data.error &&
+            response.data.error.message;
+          msg = msg || 'Unexpected error ' + response.status;
+          deferred.reject(msg);
         }
       );
 
