@@ -389,9 +389,10 @@ app.controller('StudioController', [
      *
      *
      * */
-    $scope.createDatasourceViewRequest = function() {
+    $scope.createDatasourceViewRequest = function(initialData) {
       $scope.instanceType = 'datasource';
-      $scope.activeInstance = DataSourceService.createNewDatasourceInstance();
+      $scope.activeInstance =
+        DataSourceService.createNewDatasourceInstance(initialData);
       $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
       $scope.clearSelectedInstances();
       IAService.showInstanceView();

@@ -322,8 +322,15 @@ var IAMainControls = (IAMainControls = React).createClass({
         else {
           val = event.target.parentElement.attributes['data-type'].value;
         }
+
+        var connector = event.target.attributes['data-name'] ?
+          event.target.attributes['data-name'].value :
+          event.target.parentElement.attributes['data-name'].value;
+
         scope.$apply(function() {
-          scope.createDatasourceViewRequest();
+          scope.createDatasourceViewRequest({
+            connector: connector
+          });
         });
       }
     };
@@ -388,7 +395,7 @@ var IAMainControls = (IAMainControls = React).createClass({
                 title="mssql connector">
                   <span className="glyphicon glyphicon-cloud"></span>
               </button>
-              <div className="ds-type-name">MsSQL</div>
+              <div className="ds-type-name">MS SQL</div>
             </div>
             <div data-ui-type="cell">
               <button onClick={addNewInstanceRequest}
@@ -404,8 +411,8 @@ var IAMainControls = (IAMainControls = React).createClass({
               <button onClick={addNewInstanceRequest}
                 data-type="datasource"
                 className="btn btn-default btn-control-ds"
-                data-name="postgres"
-                title="postgres connector">
+                data-name="postgresql"
+                title="postgresql connector">
                   <span className="glyphicon glyphicon-cloud"></span>
               </button>
               <div className="ds-type-name">Postgres</div>
