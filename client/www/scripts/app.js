@@ -220,7 +220,6 @@ app.factory('requestInterceptor', [
           // allow users to get to home view
           // any other navigation requires login
           if ($location.path() !== '/'){
-//            $location.nextAfterLogin = $location.path();
             $location.path('/login');
           }
         }

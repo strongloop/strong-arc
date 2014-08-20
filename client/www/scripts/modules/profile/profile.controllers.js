@@ -21,8 +21,8 @@ Profile.controller('LoginController', [
   function ($scope, $location, User) {
 
     $scope.credentials = {
-      email: 'foo@bar.com',
-      password: 'password'
+      email: '',
+      password: ''
     };
     // TODO move to Profile Service
     $scope.login = function () {
@@ -35,8 +35,6 @@ Profile.controller('LoginController', [
           window.localStorage.setItem('currentUserId', $scope.loginResult.userId);
           window.localStorage.setItem('accessToken', $scope.loginResult.id);
           $location.path('/studio');
-
-          //$location.path('/');
         },
         function (res) {
           $scope.loginError = res.data.error;
