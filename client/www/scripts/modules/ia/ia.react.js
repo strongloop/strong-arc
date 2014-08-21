@@ -19,7 +19,14 @@ var IAMainNavContainer = (IAMainNavContainer = React).createClass({
     };
     return (
       <div>
-        <span className="ia-project-title-container">[project name goes here]</span><div className="main-nav-help"><a target="new" href="http://docs.strongloop.com/display/SLS/Using+frobnors"><span id="mainNavContextHelp" data-id="MainNavContextHelp" className="glyphicon glyphicon-question-sign"></span></a></div>
+        <div className="ia-project-title-header-container" >
+          <div className="ia-project-nav-help">
+            <a target="_blank" href="http://docs.strongloop.com/display/SLS/Using+frobnors">
+              <span id="mainNavContextHelp" data-id="MainNavContextHelp" className="glyphicon glyphicon-question-mark"></span>
+            </a>
+          </div>
+          <span className="ia-project-title-container">This is an example of a long project name</span>
+        </div>
         <IAMainModelNav scope={this.props.scope} />
         <IAMainDatasourceNav scope={this.props.scope} />
       </div>
@@ -56,21 +63,7 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
 
   },
   componentDidMount:function(){
-    var menuItems = {};
-    var currentContextId = null;
-    menuItems.openSelectedModels = {name: "open", callback: this.openSelectedModels};
-    menuItems.deleteSelectedModel = {name: "delete", callback: this.deleteSelectedModel};
-    $.contextMenu({
-      // define which elements trigger this menu
-      selector: ".model-node",
-      // define the elements of the menu
-      items: menuItems,
-      events: {
-        show: function(opt, event) {
 
-        }
-      }
-    });
   },
   render: function() {
 
@@ -81,11 +74,9 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
 
 
     var clickBranch = function(event) {
-      if (event.target.attributes['data-name']){
-        scope.$apply(function () {
-          scope.navTreeBranchClicked('model');
-        });
-      }
+      scope.$apply(function () {
+        scope.navTreeBranchClicked('model');
+      });
     };
 
     var singleClickItem = function(event) {
@@ -111,12 +102,31 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
         scope.createModelViewRequest();
       });
     };
+    var hoverEvent = function(event) {
+
+      $(event.target).parent('.tree-item-row').attr('data-state', 'hover');
+    };
+    var hoverOutEvent = function(event) {
+
+    };
     var navModels = [];
     if (Array.isArray(scope.mainNavModels)) {
       navModels = scope.mainNavModels;
     }
-    var items = navModels.map(function(item) {
-      var classNameVar = 'model-node ';
+    var navItemContainerClasses = cx({
+      'ia-tree-node-table branch-leaf-list is-open': scope.modelNavIsVisible,
+      'ia-tree-node-table branch-leaf-list is-closed': !scope.modelNavIsVisible
+    });
+    var navItemOpenCloseIconClasses = cx({
+      'nav-branch-openclose-icon glyphicon glyphicon-navbranch-open': scope.modelNavIsVisible,
+      'nav-branch-openclose-icon glyphicon glyphicon-navbranch-closed': !scope.modelNavIsVisible
+    });
+    var navItemsOpenCloseFolderIconClasses = cx({
+      'nav-branch-folder-icon glyphicon glyphicon-folder-open': scope.modelNavIsVisible,
+      'nav-branch-folder-icon glyphicon glyphicon-folder-open': !scope.modelNavIsVisible
+    });
+    var rowItems = navModels.map(function(item) {
+      var classNameVar = 'tree-item-row ';
       if (item.isActive) {
         classNameVar += ' is-active';
       }
@@ -127,15 +137,33 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
         classNameVar += ' is-selected'
       }
       return (
-        <li className={classNameVar} data-id={item.id} >
-          <button onClick={singleClickItem} data-name={item.name} data-id={item.id} className="btn btn-default btn-block nav-tree-item tree-node"><span data-name={item.name}  data-id={item.id} className="glyphicon glyphicon-file"></span>{item.name}</button>
-        </li>
+        <div data-ui-type="row" onMouseOver={hoverEvent} onMouseOut={hoverOutEvent} className={classNameVar} data-id={item.id} >
+          <div data-ui-type="cell" className="ia-nav-item-icon-container-col">
+            <span data-name={item.name}  data-id={item.id} className="glyphicon glyphicon-file"></span>
+          </div>
+          <div data-ui-type="cell" className="ia-nav-item-name-container-col">
+            <button onClick={singleClickItem} data-name={item.name} data-id={item.id} className="nav-tree-item tree-node" title={item.name}><span className = "nav-tree-item-header">{item.name}</span>
+            </button>
+          </div>
+          <div data-ui-type="cell" className="ia-nav-item-dsconnect-icon-container-col">
+            <span data-name={item.name}  data-id={item.id} className="glyphicon glyphicon-lightning"></span>
+          </div>
+          <div data-ui-type="cell" className="ia-nav-item-contextmenu-icon-container-col">
+            <span data-name={item.name}  data-id={item.id} className="glyphicon glyphicon-contextmenu"></span>
+          </div>
+        </div>
         );
     });
     return (
       <div>
-        <button onClick={clickBranch} data-name="model_root" className="btn btn-default btn-block nav-tree-item tree-branch"  title="Models" ><span className="glyphicon glyphicon-folder-open"></span>Models</button>
-        <ul className="branch-leaf-list is-open">{items}</ul>
+        <button onClick={clickBranch} data-name="model_root" className="btn btn-default btn-block nav-tree-item tree-branch"  title="Models" >
+          <span className={navItemOpenCloseIconClasses}></span>
+          <span className="nav-branch-folder-icon glyphicon glyphicon-folder-open"></span>
+          <span className="nav-branch-title">Models</span>
+        </button>
+        <div data-ui-type="table" className={navItemContainerClasses}>
+          {rowItems}
+        </div>
         <button onClick={addNewInstanceRequest} data-type="model" className="nav-tree-item-addnew"><span className="plus">+</span>Add New Model</button>
       </div>
       );
@@ -207,11 +235,9 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
     var cx = React.addons.classSet;
 
     var clickBranch = function(event) {
-      if (event.target.attributes['data-name']){
-        scope.$apply(function () {
-     //     scope.navTreeBranchClicked('datasource');
-        });
-      }
+      scope.$apply(function () {
+        scope.navTreeBranchClicked('datasource');
+      });
     };
     var singleClickItem = function(event) {
 
@@ -230,7 +256,18 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
       }
 
     };
-
+    var navItemContainerClasses = cx({
+      'ia-tree-node-table branch-leaf-list is-open': scope.dsNavIsVisible,
+      'ia-tree-node-table branch-leaf-list is-closed': !scope.dsNavIsVisible
+    });
+    var navItemOpenCloseIconClasses = cx({
+      'nav-branch-openclose-icon glyphicon glyphicon-navbranch-open': scope.dsNavIsVisible,
+      'nav-branch-openclose-icon glyphicon glyphicon-navbranch-closed': !scope.dsNavIsVisible
+    });
+    var navItemsOpenCloseFolderIconClasses = cx({
+      'glyphicon glyphicon-folder-open': scope.dsNavIsVisible,
+      'glyphicon glyphicon-folder-closed': !scope.dsNavIsVisible
+    });
     var addNewInstanceRequest = function(event) {
       if (event.target.attributes['data-type'] || event.target.parentElement.attributes['data-type']){
         var val = '';
@@ -246,19 +283,10 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
       }
     };
 
-    // Datasource menu items
-    var datasourceItemRenderer = function(item) {
-
-
-    };
-    var items = (<li></li>);
+    var rowItems = (<div />);
     if (scope.mainNavDatasources.map) {
-      items = scope.mainNavDatasources.map(function(item){
-        var isDiscoverable = false;
-        if (item.isDiscoverable) {
-          isDiscoverable = item.isDiscoverable;
-        }
-        var classNameVar = 'datasource-node';
+      rowItems = scope.mainNavDatasources.map(function(item) {
+        var classNameVar = 'tree-item-row ';
         if (item.isActive) {
           classNameVar += ' is-active';
         }
@@ -269,19 +297,36 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
           classNameVar += ' is-selected'
         }
         return (
-          <li key={item.name} data-id={item.id} className={classNameVar}>
-            <button data-is-discoverable={isDiscoverable} onClick={singleClickItem} data-name={item.name} data-id={item.id} className="btn btn-default btn-block nav-tree-item tree-node"><span data-is-discoverable={isDiscoverable}  data-name={item.name} className="glyphicon glyphicon-file"></span>{item.name}</button>
-          </li>);
+          <div data-ui-type="row" className={classNameVar} data-id={item.id} >
+            <div data-ui-type="cell" className="ia-nav-item-icon-container-col">
+              <span data-name={item.name}  data-id={item.id} className="glyphicon glyphicon-file"></span>
+            </div>
+            <div data-ui-type="cell" className="ia-nav-item-name-container-col">
+              <button onClick={singleClickItem} data-name={item.name} data-id={item.id} className="nav-tree-item tree-node" title={item.name}><span className = "nav-tree-item-header">{item.name}</span>
+              </button>
+            </div>
+            <div data-ui-type="cell" className="ia-nav-item-dsconnect-icon-container-col">
+            </div>
+            <div data-ui-type="cell" className="ia-nav-item-contextmenu-icon-container-col">
+              <span data-name={item.name}  data-id={item.id} className="glyphicon glyphicon-contextmenu"></span>
+            </div>
+
+          </div>
+          );
       });
     }
 
     // Main return
     return (
       <div>
-        <button onClick={clickBranch} type="button" data-name="datasources_root" className="btn btn-default btn-block nav-tree-item tree-branch" title="Datasources"><span className="glyphicon glyphicon-folder-open"></span>Datasources</button>
-        <ul className="branch-leaf-list is-open">
-          {items}
-        </ul>
+        <button onClick={clickBranch} type="button" data-name="datasources_root" className="btn btn-default btn-block nav-tree-item tree-branch" title="Datasources">
+          <span className={navItemOpenCloseIconClasses}></span>
+          <span className="nav-branch-folder-icon glyphicon glyphicon-folder-open"></span>
+          <span className="nav-branch-title">DataSources</span>
+        </button>
+        <div data-ui-type="table" className={navItemContainerClasses}>
+          {rowItems}
+        </div>
         <button onClick={addNewInstanceRequest} data-type="datasource" className="nav-tree-item-addnew"><span className="plus">+</span>Add New Datasource</button>
       </div>
       );
@@ -359,15 +404,15 @@ var IAMainControls = (IAMainControls = React).createClass({
             <div data-ui-type="cell">
               <label className="main-control-command-label">MODEL</label>
               <button onClick={createModelViewRequest} type="button" className="btn btn-sm btn-primary">
-                <span className="glyphicon glyphicon-plus-sign"></span>
-                New
+                <span className="maincontrol-main-icon glyphicon glyphicon-plus-sign"></span>
+                <span className="maincontrol-main-button-label">New</span>
               </button>
             </div>
             <div data-ui-type="cell">
               <label className="main-control-command-label">APP</label>
               <button disabled="disabled" onClick={renderAppViewRequest} type="button" className="btn btn-primary btn-sm">
-                <span className="glyphicon glyphicon-plus-sign"></span>
-                Render
+                <span className="maincontrol-main-icon glyphicon glyphicon-play"></span>
+                <span className="maincontrol-main-button-label">Render</span>
               </button>
             </div>
           </div>
@@ -383,7 +428,7 @@ var IAMainControls = (IAMainControls = React).createClass({
                 data-name="oracle"
                 className="btn btn-default btn-control-ds"
                 title="oracle connector">
-                  <span className="glyphicon glyphicon-cloud"></span>
+                  <span className="glyphicon glyphicon-database"></span>
               </button>
               <div className="ds-type-name">Oracle</div>
             </div>
@@ -393,7 +438,7 @@ var IAMainControls = (IAMainControls = React).createClass({
                 data-name="mssql"
                 onClick={addNewInstanceRequest}
                 title="mssql connector">
-                  <span className="glyphicon glyphicon-cloud"></span>
+                  <span className="glyphicon glyphicon-database"></span>
               </button>
               <div className="ds-type-name">MS SQL</div>
             </div>
@@ -403,7 +448,7 @@ var IAMainControls = (IAMainControls = React).createClass({
                 className="btn btn-default btn-control-ds"
                 data-name="mysql"
                 title="mysql connector">
-                  <span className="glyphicon glyphicon-cloud"></span>
+                  <span className="glyphicon glyphicon-database"></span>
               </button>
               <div className="ds-type-name">MySQL</div>
             </div>
@@ -411,9 +456,15 @@ var IAMainControls = (IAMainControls = React).createClass({
               <button onClick={addNewInstanceRequest}
                 data-type="datasource"
                 className="btn btn-default btn-control-ds"
+<<<<<<< HEAD
                 data-name="postgresql"
                 title="postgresql connector">
                   <span className="glyphicon glyphicon-cloud"></span>
+=======
+                data-name="postgres"
+                title="postgres connector">
+                  <span className="glyphicon glyphicon-database"></span>
+>>>>>>> first visual design merge from old branch
               </button>
               <div className="ds-type-name">Postgres</div>
             </div>
@@ -423,7 +474,7 @@ var IAMainControls = (IAMainControls = React).createClass({
                 className="btn btn-default btn-control-ds"
                 data-name="mongo"
                 title="mongodb connector">
-                  <span className="glyphicon glyphicon-cloud"></span>
+                  <span className="glyphicon glyphicon-database"></span>
               </button>
               <div className="ds-type-name">Mongo</div>
             </div>

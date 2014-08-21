@@ -123,6 +123,14 @@ IA.directive('slIaMainNav', [
           processActiveNavState();
           renderComp();
         }, true);
+        scope.$watch('modelNavIsVisible', function(newVal, oldVal) {
+          processActiveNavState();
+          renderComp();
+        }, true);
+        scope.$watch('dsNavIsVisible', function(newVal, oldVal) {
+          processActiveNavState();
+          renderComp();
+        }, true);
         scope.$watch('currentOpenDatasourceNames', function(newVal, oldVal) {
           processActiveNavState();
           renderComp();

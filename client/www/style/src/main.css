@@ -86,8 +86,9 @@ code {
 	padding-left: 4rem;
     width: 100%;
  	height: 8rem;
-	-moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.49);
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.49);
+}
+.header-help-container{
+    font-size: 17pt;
 }
 .headerContainer li{
 	display: inline-block;
@@ -108,15 +109,15 @@ code {
 	float: left;
 }
 .logo{
-	margin-top: 0.4rem;
-	margin-left: 0.5rem;
-	width: 4rem;
+    margin-top: 0.8rem;
+    width: 3.3rem;
 }
 .wordbrand{
-	font-family: ubuntu;
-	font-size: 20pt;
-	color:  #08592B;
-	float: left;
+    font-family: ubuntu;
+    font-size: 20pt;
+    font-weight: 400;
+    color:  #08592B;
+    float: left;
 }
 
 .header-version{

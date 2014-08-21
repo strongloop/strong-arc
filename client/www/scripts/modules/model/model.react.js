@@ -59,8 +59,8 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
       'model-detail-pocket-container is-closed': !that.props.scope.isModelInstanceBasePropertiesActive
     });
     var iconClasses = cx({
-      'glyphicon glyphicon-minus-sign': that.props.scope.isModelInstanceBasePropertiesActive,
-      'glyphicon glyphicon-plus-sign': !that.props.scope.isModelInstanceBasePropertiesActive
+      'model-editor-section-icon glyphicon glyphicon-minus-sign': that.props.scope.isModelInstanceBasePropertiesActive,
+      'model-editor-section-icon glyphicon glyphicon-plus-sign': !that.props.scope.isModelInstanceBasePropertiesActive
     });
     var clickHandler = function(event) {
       scope.$apply(function() {
@@ -95,36 +95,34 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
       returnVal = (
         <form role="form">
         	<div className="model-header-container">
-
-        		<button onClick={saveModelDefinition}
-        		  className="model-detail-pocket-button model-save-button"
-        		  data-modelId={modelDef.Id} >Save</button>
-
-        		<div className="model-header-name-container">
-		            <label>name</label>
-		            <input type="text"
-		              value={modelDef.name}
-                  onChange={that.handleChange}
-                  onBlur={that.processModelNameValue}
-		              data-name="name"
-		              id="ModelName"
-		              name="ModelName"
-		              className="model-instance-name" />
-	            </div>
-
-          	</div>
+            <div className="model-header-name-container form-group">
+              <label>name</label>
+              <input type="text"
+                value={modelDef.name}
+                onChange={that.handleChange}
+                onBlur={that.processModelNameValue}
+                data-name="name"
+                id="ModelName"
+                name="ModelName"
+                className="model-instance-name form-control" />
+            </div>
+            <button onClick={saveModelDefinition}
+              className="model-detail-pocket-button model-save-button"
+              data-modelId={modelDef.id} >Save Model</button>
+          </div>
+          <div className="lineBreak"></div>
           <button onClick={clickHandler}
             type="button"
             className="model-instance-header-btn btn btn-default btn-block"
             title="Details" >
-            <span className={iconClasses}></span>Details</button>
-
-
+            <div className={iconClasses}></div>
+            <div className="model-editor-section-title">Details</div>
+          </button>
           <div className="model-detail-container">
 	          <div className="model-detail-input-row">
 	          	<div className="model-detail-input-container">
 	          		<div className="model-detail-label">
-	          		  <label>plural</label>
+	          		  <label>Plural</label>
 	          		</div>
 	          		<input type="text"
 	          		 	value={modelDef.plural}
@@ -136,7 +134,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
 	          	</div>
 	          	<div className="model-detail-input-container">
 	          		<div className="model-detail-label">
-	          		  <label>base model</label>
+	          		  <label>Base model</label>
 	          		</div>
                 <select value={modelDef.base}
                   data-name="base"
@@ -148,7 +146,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
 	          	</div>
 	          	<div className="model-detail-input-container">
 	          		<div className="model-detail-label">
-	          		  <label>datasource</label>
+	          		  <label>Datasource</label>
 	          		</div>
                 <select value={modelDef.dataSource}
                   data-name="dataSource"
@@ -161,6 +159,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
 	          </div>
 
 	          <div className="model-detail-button-row">
+<<<<<<< HEAD
 	          	<div className="model-detail-input-container listNarrow">
 	          		<label className="model-detail-label">public</label>
 	          		<input type="checkbox"
@@ -181,6 +180,25 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                     value={modelDef.strict}
 	          		    className="model-instance-editor-checkbox" />
 	          	</div>
+=======
+              <div className="model-detail-input-container listNarrow checkbox">
+                <label className="model-instance-editor-checkbox-label">
+                  <input type="checkbox"
+                  data-name="public"
+                  name="public"
+                  onChange={this.handleChange}
+                  className="model-instance-editor-checkbox" />public
+                </label>
+              </div>
+              <div className="model-detail-input-container listNarrow checkbox">
+                <label className="model-instance-editor-checkbox-label">
+                  <input type="checkbox"
+                  checked={modelDef.strict}
+                  className="model-instance-editor-checkbox" />strict
+                </label>
+
+              </div>
+>>>>>>> first visual design merge from old branch
 	          </div>
 
 
@@ -232,8 +250,8 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
       'row is-closed': !this.state.isOpen
     });
     var iconClasses = cx({
-      'glyphicon glyphicon-minus-sign': this.state.isOpen,
-      'glyphicon glyphicon-plus-sign': !this.state.isOpen
+      'model-editor-section-icon glyphicon glyphicon-minus-sign': this.state.isOpen,
+      'model-editor-section-icon glyphicon glyphicon-plus-sign': !this.state.isOpen
     });
     var clickHandler = function(event) {
       var isOpenState = !that.state.isOpen;
@@ -249,7 +267,10 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
     if (properties) {
       retVal = (
         <div>
-          <button type="button" onClick={clickHandler} className="model-instance-header-btn btn btn-default btn-block" title="Properties" ><span className={iconClasses}></span>Properties</button>
+          <button type="button" onClick={clickHandler} className="model-instance-header-btn btn btn-default btn-block" title="Properties" >
+            <span className={iconClasses}></span>
+            <span className="model-editor-section-title">Properties</span>
+          </button>
           <div className={classes} >
             <div className="model-instance-container property-list-header">
               <div data-ui-type="table">

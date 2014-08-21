@@ -37,7 +37,7 @@ Main Search
 [data-id="MainNavContainer"] {
     background-color: #666666;
     color: #ffffff;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: auto;
     position:relative;
     padding: 0;
@@ -48,14 +48,6 @@ Main Search
 	padding-top: 1.7rem;
 	padding-bottom: 1.3rem;
 	border-bottom: 1px solid #7DBD33 !important;
-}
-
-[data-id="MainNavContextHelp"] {
-	color: #4A4A4A;
-	position: absolute;
-	margin-top: -3.3rem;
-	margin-right: 1rem;
-	float: right;
 }
 
 [title="documentation"] {
@@ -109,13 +101,23 @@ Main Search
 
 */
 .nav-tree-item {
-    display: inline-block;
+    display: block;
     border: 0;
-    background: transparent;
+    background: transparent; /*orange;*/
     text-align: left;
     padding: 0;
 
 }
+.nav-tree-item-header{
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 16rem;
+    padding-left: 0.3rem;
+    font-size: 13pt;
+}
+
 /*The project title in the tree nav*/
 .nav-tree-root {
     color: white;
@@ -127,15 +129,15 @@ Main Search
     font-size: 80%;
 }
 .tree-branch {
-    padding: .4rem .2rem .2rem 2rem;
+    padding: .7rem .2rem .2rem 2rem;
     color: #ffffff;
-    font-size: 112%;
+    font-size: 106%;
+
+    letter-spacing: 1px;
 }
 .tree-node {
-    padding-left: 3rem;
-    font-size: 100%;
-    color: #ffffff;
-    margin-left: 2.4rem;
+    font-weight: lighter;
+    letter-spacing: 0.1rem;
 }
 .nav-tree-item-addnew {
     border: 0;
@@ -143,21 +145,87 @@ Main Search
     background: transparent;
     color: #BBBBBB;
     font-size: 90%;
-    margin-top: 0;
+    margin-top: 0.6rem;
     margin-left: 4.6rem;
+    font-size: 12pt;
+    font-weight: lighter;
+    letter-spacing: 0.1rem;
+}
+
+.nav-tree-context-menu-button{
+    background: maroon;
 }
 .branch-leaf-list.is-open {
-	margin-top: 0.5rem;
+    margin-top: 0.7rem;
     display: block;
 }
+.tree-item-row{
 
-.branch-leaf-list .btn-default:hover,
-.btn-default:focus,
-.btn-default:active,
-.btn-default.active {
+}
+.tree-item-row.is-open{
+    background: #595959;
+}
+.tree-item-row.is-active{
     background: #4a90e2;
-    color: white;
+}
 
+.nav-branch-openclose-icon{
+    width: 2rem;
+    height: 2rem;
+    font-size: 10pt;
+    color: #A8A8A8;
+}
+
+.nav-branch-folder-icon{
+
+}
+
+.ia-nav-item-icon-container-col{
+    padding-left: 5rem;
+    text-align: center;
+}
+.ia-nav-item-name-container-col{
+    padding-left: 0.4rem;
+    width: 100%;
+}
+.ia-nav-item-contextmenu-icon-container-col{
+    color: #79BD3F;
+    font-size: 12pt;
+    padding: 0.2rem 1rem 0 0.4rem;
+}
+.ia-nav-item-dsconnect-icon-container-col{
+    color: #79BD3F;;
+    font-size: 11pt;
+    padding: 0.2rem 0.6rem 0 1rem;
+}
+
+.ia-project-title-header-container{
+    padding: 0.5rem 0 1rem 1rem;
+    background: #656565;
+}
+.ia-project-title-container{
+    font-size: 9pt;
+    font-weight: bold;
+    padding-top: 0.7rem;
+    text-transform: uppercase;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 23rem;
+    padding-left: 0.8rem;
+}
+.ia-project-nav-help a{
+    color: #494949;
+    float: right;
+    height: 30px;
+    display: block;
+    padding-top: 0.4rem;
+    padding-right: 1.2rem;
+}
+.tree-item-row [data-ui-type="cell"]{
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
 }
 
 
@@ -187,14 +255,14 @@ Main Search
 }
 [data-id="IAMainControlsContainer"] [data-ui-type="table"] {
 }
-.main-controls-container {
-    width:90%;
-    margin:0 auto 0 auto;
+.maincontrol-main-button-label{
+    padding-left: 1rem;
+    margin-bottom: 2rem;
 }
-#mainNavContextHelp{
-	color: #444444;
+.maincontrol-main-icon{
+    font-size: 14pt;
+    padding-top: 0.5rem;;
 }
-
 
 /*Hack for demo*/
 .btn-primary {
@@ -232,7 +300,7 @@ Main Search
     height: 4.8rem;
     border-radius: 4px;
     background: #7DBC31;
-    font-size: 80%;
+    font-size: 16pt;
     color: #ffffff;
 	border-bottom: 3px solid #66992D;
 }
