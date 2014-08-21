@@ -83,8 +83,18 @@ input[type="checkbox"] {
     float:right;
 }
 .model-editor-body-container {
-    padding: 1.3rem;
+    display: block;
+    margin-top: 1rem;
     border-top: 1px solid #cccccc;
+}
+.model-editor-section-title{
+    display: inline-block;
+    font-size: 14pt;
+    padding-left: 0.6rem;
+}
+.model-editor-section-icon{
+    display: block;
+    font-size: 16pt;
 }
 .model-instance-header {
     display: inline;
@@ -93,7 +103,7 @@ input[type="checkbox"] {
     display: none;
 }
 .is-open {
-    display: block;
+    /*display: block;*/
 }
 .model-instance-header-btn {
     text-align: left;
@@ -103,12 +113,23 @@ input[type="checkbox"] {
 }
 .model-instance-editor-input {
     border: 1px solid #dddddd;
-    font-size: 90%;
+    font-size: 100%;
     border-radius: .3rem;
     width: 100%;
+    height: 3.4rem;
+    padding-left: 1rem;
+}
+.model-detail-label {
+    padding-left: 0.7rem;
 }
 .model-instance-editor-checkbox {
+    margin-top: 0.7rem !important;
+}
+.model-instance-editor-checkbox-label{
 
+}
+.model-detail-input-container label{
+    font-size: 10pt;
 }
 .model-instance-details-container [data-state="isOpen"] {
     display: block;
@@ -122,8 +143,8 @@ input[type="checkbox"] {
 
 */
 .property-list-header {
-	margin-left: 4rem;
-	width: 86rem;
+    margin-left: 1.5rem;
+    width: 89.3rem;
 }
 .btn-model-property-spinner {
     border: 0;
@@ -159,8 +180,8 @@ input[type="checkbox"] {
     color: #888888;
 }
 .model-instance-property-list [data-ui-type="cell"] {
-    text-align: center;
-    padding-top: 0.4rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     border-color: #DDDDDD;
     border-style: solid;
     border-width: 0 1px 1px 0;
@@ -169,6 +190,7 @@ input[type="checkbox"] {
 .model-instance-property-list{
 	color: #4A4A4A;
 	font-size: 1.5rem;
+    margin-left: -2.5rem;
 }
 .model-instance-property-list li:first-child {
 
@@ -247,28 +269,32 @@ input {
 	border: none;
 	font-size: 90%;
 }
+.lineBreak{
+    height: 1.6rem;
+    border-bottom: 1px solid #DDDDDD;
+}
 label {
 	color: #808080;
 }
 .model-header-container {
-	width: 100%;
-	min-width: 60rem;
-	height: 6.5rem;
-	border-bottom: 1px solid #DDDDDD;
+    background: #EEEEEE;
+    width: 100%;
+    min-width: 60rem;
+    height: 11.2rem;
+    border-radius: 5px;
 }
 .model-header-name-container {
-	display: inline-block;
-	margin-top: 0.7rem;
-	margin-left: 2.5rem;
-	width: 50%;
-	min-width: 40rem;
+    display: inline-block;
+    margin-top: 0.7rem;
+    margin-left: 3.5rem;
+    width: 38.7rem;
 }
 .model-header-name-container label{
-	margin-top: 1rem;
+    margin-top: 1rem;
+    margin-left: 0.5rem;
+    font-size: 9pt;
 }
 .model-instance-name {
-	font-size: 120%;
-	width: 70%;
 	border: 1px solid #DDDDDD;
 	border-radius: 0.3rem;
 	padding-left: 1rem;
@@ -276,26 +302,22 @@ label {
 .model-detail-container {
 	border-bottom: 1px solid #DDDDDD;
 }
-.model-detail-label {
-	padding-left: 0.2rem;
-}
 .model-detail-pocket-button {
-	color: #FFFFFF;
-	background-color: #7dbd34;
-	width: 8rem;
-	height: 3rem;
-	border-radius: 3px;
-	border-bottom: 2px solid #67992d;
-	padding-top: 0.5rem;
-	-moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.36);
-	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.36);
+    color: #FFFFFF;
+    background-color: #7dbd34;
+    margin-left: 3.2rem;
+    width: 8rem;
+    height: 3rem;
+    border-radius: 3px;
+    padding-top: 0.5rem;
 }
 .model-save-button {
-	margin-right: 2rem;
-	font-size: 14pt;
-	width: 15rem;
-	height: 5rem;
-	float: right;
+    margin-right: 2rem;
+    font-size: 12pt;
+    border: none;
+    border-bottom: 2px solid #67992d;
+    width: 12rem;
+    height: 3.7rem;
 }
 .model-detail-input-container {
 	padding-right: 1rem;
@@ -303,13 +325,14 @@ label {
 	width: 33%;
 }
 .model-detail-input-row{
-	margin-left: 5rem;
-	padding-right: 5rem;
-	margin-bottom:	2rem;
-	display:  inline-block;
-	width: 100%;
-	min-width: 50rem;
-	max-width: 90rem;
+    display:  inline-block;
+    margin-left: 2.5rem;
+    margin-top: 0.7rem;
+    margin-bottom:	2rem;
+    padding-right: 5rem;
+    width: 100%;
+    min-width: 50rem;
+    max-width: 90rem;
 }
 .model-detail-button-row{
 	margin-left: 5rem;
@@ -335,65 +358,60 @@ label {
 .btn-new-model-property {
     border: 0;
     background: transparent;
-    color: #1c1c1c;
+    color: #7dbd33;
     display: inline-block;
     margin-left: 5rem;
 }
 .btn-new-model-property:hover {
     color: #4A90E2;
 }
-
-.props-name-cell {
-	border-left: 20px solid #DDDDDD !important;
-	padding-left: 0.5rem;
+.modelproperty-container .props-name-cell {
+    border-left: 1px solid #DDDDDD;
+    padding-left: 1.5rem;
     width: 25rem;
 }
 .props-name-header {
-	width: 20.5rem;
-	padding-left: 2.5rem;
+    width: 31rem;
+    padding-left: 1.7rem;
 }
-.props-name-cell .btn {
-
-    text-align: left;
+.props-name-cell input{
+    width: 100%;
 }
 
 .props-data-type-cell {
+    padding-left: 1rem;
     width: 10rem;
 }
 .props-data-type-header {
-	width: 8rem;
+    width: 11.5rem;
+    padding-left: 1.4rem;
 }
 
-.props-default-value-cell {
-    width: 16rem;
+.props-isid-cell{
+    width: 5rem;
+    text-align: center;
 }
-.props-default-value-cell input {
-    height: 100%;
-    -webkit-appearance: none;
-    padding-left: 0.5rem;
-    border-radius: 0;
-    border: none;
+.props-isid-header{
+    width: 3.5rem;
+    padding-left: 2.5rem;
 }
-.props-default-value-header {
-	width: 19.5rem;
-}
-
 .props-required-cell {
     width: 5rem;
     text-align: center;
 }
 .props-required-header {
-	width: 5rem;
+    width: 4rem;
+    padding-left: 2.6rem;
 }
-
 .props-index-cell {
     width: 5rem;
     text-align: center;
+
 }
 .props-index-header {
-	width: 8rem;
+    width: 5rem;
+    padding-left: 2rem;
 }
-
 .props-comments-cell {
 	width: 20rem;
 }
@@ -406,6 +424,7 @@ label {
 	border: none;
 }
 .props-comments-header {
+    padding-left: 1rem;
 }
 .props-spinner-cell {
 	background: red;
@@ -416,7 +435,7 @@ label {
 	background: navy;
 }
 .modelproperty-detail-row{
-	margin-left: 0.6rem;
+    margin-left: 4rem;
 	width: 89.3rem;
 }
 .modelproperty-detail-is-open{

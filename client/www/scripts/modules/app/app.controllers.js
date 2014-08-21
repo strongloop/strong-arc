@@ -19,6 +19,8 @@ app.controller('StudioController', [
     $scope.mainNavModels = [];  // initialized further down
     $scope.instanceType = 'model';
     $scope.activeInstance = {};
+    $scope.modelNavIsVisible = true;
+    $scope.dsNavIsVisible = true;
 
     /*
     *

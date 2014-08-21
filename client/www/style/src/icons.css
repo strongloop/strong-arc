@@ -39,55 +39,58 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-/*Database icon*/
-.glyphicon-cloud:before {
-    content: "\e601";
-	font-size: 16pt;
+.glyphicon-question-mark:before{
+    content: "\e600";
 }
 
-/*Folder icon*/
+.glyphicon-database:before {
+    content: "\e602";
+    font-size: 16pt;
+}
+
+
 .glyphicon-folder-open:before {
-    content: "\e600";
+    content: "\e601";
     margin-right: 10px;
     font-size: 12pt;
 }
 .glyphicon-plus-sign:before {
-    content: "\e607";
-    font-size: 12pt;
-    margin-right: 10px;
+    content: "\e608";
 }
 .glyphicon-minus-sign:before {
-    content: "\e606";
-    font-size: 12pt;
-    margin-right: 10px;
+    content: "\e607";
 }
 .glyphicon-question-sign:before {
-    content: "\e609";
-    font-size: 18pt;
+    content: "\e60A";
 }
 .glyphicon-off:before {
-    content: "\e60a";
+    content: "\e60B";
     color: #01582A;
     font-size: 18pt;
     margin-left: 2rem;
 }
 .glyphicon-file:before {
-    content: "\e602";
+    content: "\e603";
     font-weight: lighter;
-    margin-right: 1rem;
 }
 .glyphicon-remove:before {
-    content: "\e60c";
+    content: "\e60D";
 }
-.glyphicon-open-sign {
-	content: "\e600";
-	background: green;
-	font-size: 12pt;
+.glyphicon-lightning:before {
+    content:  "\e606";
 }
-.glyphicon-closed-sign {
-	content: "\e600";
-	margin-right: 10px;
-	font-size: 12pt;
+.glyphicon-link:before {
+    content:  "\e605";
 }
-
-
+.glyphicon-navbranch-open:before {
+    content:  "\e604";
+}
+.glyphicon-navbranch-closed:before{
+    content:  "\e60f";
+}
+.glyphicon-contextmenu:before{
+    content: "\e60e";
+}
+.glyphicon-play:before{
+    content: "\e610";
+}
