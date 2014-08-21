@@ -8,7 +8,7 @@ Datasource.service('DataSourceService', [
     var svc = {};
     //  var deferred = $q.defer();
     svc.getDiscoverableDatasourceConnectors = function() {
-      return ['loopback-connector-mssql', 'loopback-connector-oracle', 'loopback-connector-mysql', 'loopback-connector-postgresql']
+      return ['mssql', 'oracle', 'mysql', 'postgresql'];
     };
 
     svc.getAllDatasources = function() {
@@ -142,7 +142,7 @@ Datasource.service('DataSourceService', [
       window.localStorage.setItem('ApiDatasources', JSON.stringify(currentDatasources));
       return datasourceDefObj;
     };
-    svc.createNewDatasourceInstance = function() {
+    svc.createNewDatasourceInstance = function(initialData) {
       //var openInstanceRefs = IAService.getOpenInstanceRefs();
       var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
       if (!openInstanceRefs) {
@@ -154,6 +154,8 @@ Datasource.service('DataSourceService', [
         facetName: CONST.NEW_DATASOURCE_FACET_NAME,
         type: CONST.DATASOURCE_TYPE
       };
+      angular.extend(defaultDatasourceSchema, initialData);
+
       var doesNewDatasourceExist = false;
       for (var i = 0;i < openInstanceRefs.length;i++) {
         if (openInstanceRefs[i].name === CONST.NEW_DATASOURCE_NAME) {
