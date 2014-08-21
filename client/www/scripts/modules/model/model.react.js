@@ -184,6 +184,8 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
               <div className="model-detail-input-container listNarrow checkbox">
                 <label className="model-instance-editor-checkbox-label">
                   <input type="checkbox"
+                  value={modelDef.public}
+                  checked={modelDef.public}
                   data-name="public"
                   name="public"
                   onChange={this.handleChange}
@@ -193,12 +195,20 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
               <div className="model-detail-input-container listNarrow checkbox">
                 <label className="model-instance-editor-checkbox-label">
                   <input type="checkbox"
+                  data-name="strict"
+                  name="strict"
+                  onChange={this.handleChange}
                   checked={modelDef.strict}
+                  value={modelDef.strict}
                   className="model-instance-editor-checkbox" />strict
                 </label>
 
               </div>
+<<<<<<< HEAD
 >>>>>>> first visual design merge from old branch
+=======
+
+>>>>>>> wire up model and model property forms
 	          </div>
 
 
