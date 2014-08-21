@@ -9,7 +9,6 @@ app.service('AppService', [
 
       }
     };
-
     return svc;
   }
 ]);
