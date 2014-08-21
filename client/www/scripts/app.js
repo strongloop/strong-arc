@@ -237,7 +237,7 @@ app.factory('requestInterceptor', [
               message: rejection.data.error.message,
               name: rejection.data.error.name,
               stack: rejection.data.error.stack,
-              status: rejection.data.error.status
+              status: rejection.status
             }
           );
         }

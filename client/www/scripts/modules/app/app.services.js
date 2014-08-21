@@ -4,20 +4,10 @@ app.service('AppService', [
   '$state',
   function($location, $state) {
     var svc = {};
-    var globalExceptionObj = {};
     svc.isViewAuth = function(stateName){
       switch(stateName){
 
       }
-    };
-    svc.setGlobalException = function(config) {
-      globalExceptionObj = config;
-    };
-    svc.clearGlobalException = function() {
-      globalExceptionObj = {};
-    };
-    svc.getGlobalException = function() {
-      return globalExceptionObj;
     };
 
     return svc;

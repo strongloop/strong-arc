@@ -1,3 +1,5 @@
+/* these css rules are temporary until we re-sync the
+CSS from original branch */
 .slider-btn {
     width:20px;
     height:700px;
@@ -11,9 +13,23 @@
 .common-instance-view-container {
     overflow-y:scroll;
 }
-.login-fail-message-container {
+.login-fail-message-container, .ia-global-exception-container {
     border: 1px solid #444444;
     border-radius:1rem;
     padding:2rem;
     font-size:115%;
+}
+.ia-global-exception-container {
+    margin:2rem;
+}
+[data-state="closed"] {
+    display:none;
+}
+[data-state="open"] {
+    display:inherit;
+}
+.global-exception-stack-display {
+    width:58rem;
+    background:#efefef;
+    overflow:auto;
 }

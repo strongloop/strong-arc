@@ -532,8 +532,11 @@ app.controller('StudioController', [
       return Math.floor((Math.random() * 100) + 1);
     }
 
+    $scope.clearGlobalException = function() {
+      $scope.globalExceptionStack = IAService.clearGlobalExceptionStack();
+    };
     $scope.$on('GlobalExceptionEvent', function(event, data) {
-      $scope.globalExceptionStack.push(data);
+      $scope.globalExceptionStack = IAService.setGlobalException(data);
     });
     /*
      *
