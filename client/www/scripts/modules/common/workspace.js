@@ -66,7 +66,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `templates` – `{array=}` -
+         *  - `templates` – `{array=}` - 
          */
         "getAvailableTemplates": {
           url: urlBase + "/Workspaces/component-templates",
@@ -128,9 +128,9 @@ module.factory(
          *
          * @param {Object} postData Request data.
          *
-         *  - `templateName` – `{string=}` -
+         *  - `templateName` – `{string=}` - 
          *
-         *  - `name` – `{string=}` -
+         *  - `name` – `{string=}` - 
          *
          * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -287,7 +287,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{boolean=}` -
+         *  - `exists` – `{boolean=}` - 
          */
         "exists": {
           url: urlBase + "/Workspaces/:id/exists",
@@ -483,7 +483,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` -
+         *  - `count` – `{number=}` - 
          */
         "count": {
           url: urlBase + "/Workspaces/count",
@@ -530,6 +530,9 @@ module.factory(
     );
 
 
+
+
+
     return R;
   }]);
 
@@ -557,872 +560,176 @@ module.factory(
       { 'id': '@id' },
       {
 
-        /**
-         * @ngdoc method
-         * @name lbServices.Facet#prototype$__findById__settings
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.settings.findById() instead.
-         *
-         * @description
-         *
-         * Find a related item by id for settings
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for settings
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `Facet` object.)
-         * </em>
-         */
+        // INTERNAL. Use Facet.settings.findById() instead.
         "prototype$__findById__settings": {
           url: urlBase + "/Facets/:id/settings/:fk",
           method: "GET",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.Facet#prototype$__destroyById__settings
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.settings.destroyById() instead.
-         *
-         * @description
-         *
-         * Delete a related item by id for settings
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for settings
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * Data properties:
-         *
-         *  - `` – `{undefined=}` -
-         */
+        // INTERNAL. Use Facet.settings.destroyById() instead.
         "prototype$__destroyById__settings": {
           url: urlBase + "/Facets/:id/settings/:fk",
           method: "DELETE",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.Facet#prototype$__updateById__settings
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.settings.updateById() instead.
-         *
-         * @description
-         *
-         * Update a related item by id for settings
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for settings
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `Facet` object.)
-         * </em>
-         */
+        // INTERNAL. Use Facet.settings.updateById() instead.
         "prototype$__updateById__settings": {
           url: urlBase + "/Facets/:id/settings/:fk",
           method: "PUT",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.Facet#prototype$__get__settings
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.settings() instead.
-         *
-         * @description
-         *
-         * Queries settings of Facet.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `filter` – `{object=}` -
-         *
-         * @param {Function(Array.<Object>, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Array.<Object>} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `Facet` object.)
-         * </em>
-         */
+        // INTERNAL. Use Facet.modelConfigs.findById() instead.
+        "prototype$__findById__modelConfigs": {
+          url: urlBase + "/Facets/:id/modelConfigs/:fk",
+          method: "GET",
+        },
+
+        // INTERNAL. Use Facet.modelConfigs.destroyById() instead.
+        "prototype$__destroyById__modelConfigs": {
+          url: urlBase + "/Facets/:id/modelConfigs/:fk",
+          method: "DELETE",
+        },
+
+        // INTERNAL. Use Facet.modelConfigs.updateById() instead.
+        "prototype$__updateById__modelConfigs": {
+          url: urlBase + "/Facets/:id/modelConfigs/:fk",
+          method: "PUT",
+        },
+
+        // INTERNAL. Use Facet.models.findById() instead.
+        "prototype$__findById__models": {
+          url: urlBase + "/Facets/:id/models/:fk",
+          method: "GET",
+        },
+
+        // INTERNAL. Use Facet.models.destroyById() instead.
+        "prototype$__destroyById__models": {
+          url: urlBase + "/Facets/:id/models/:fk",
+          method: "DELETE",
+        },
+
+        // INTERNAL. Use Facet.models.updateById() instead.
+        "prototype$__updateById__models": {
+          url: urlBase + "/Facets/:id/models/:fk",
+          method: "PUT",
+        },
+
+        // INTERNAL. Use Facet.datasources.findById() instead.
+        "prototype$__findById__datasources": {
+          url: urlBase + "/Facets/:id/datasources/:fk",
+          method: "GET",
+        },
+
+        // INTERNAL. Use Facet.datasources.destroyById() instead.
+        "prototype$__destroyById__datasources": {
+          url: urlBase + "/Facets/:id/datasources/:fk",
+          method: "DELETE",
+        },
+
+        // INTERNAL. Use Facet.datasources.updateById() instead.
+        "prototype$__updateById__datasources": {
+          url: urlBase + "/Facets/:id/datasources/:fk",
+          method: "PUT",
+        },
+
+        // INTERNAL. Use Facet.settings() instead.
         "prototype$__get__settings": {
           url: urlBase + "/Facets/:id/settings",
           method: "GET",
           isArray: true,
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.Facet#prototype$__create__settings
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.settings.create() instead.
-         *
-         * @description
-         *
-         * Creates a new instance in settings of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `Facet` object.)
-         * </em>
-         */
+        // INTERNAL. Use Facet.settings.create() instead.
         "prototype$__create__settings": {
           url: urlBase + "/Facets/:id/settings",
           method: "POST",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.Facet#prototype$__delete__settings
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.settings.destroyAll() instead.
-         *
-         * @description
-         *
-         * Deletes all settings of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * This method returns no data.
-         */
+        // INTERNAL. Use Facet.settings.destroyAll() instead.
         "prototype$__delete__settings": {
           url: urlBase + "/Facets/:id/settings",
           method: "DELETE",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.Facet#prototype$__findById__modelConfigs
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.modelConfigs.findById() instead.
-         *
-         * @description
-         *
-         * Find a related item by id for modelConfigs
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for modelConfigs
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `Facet` object.)
-         * </em>
-         */
-        "prototype$__findById__modelConfigs": {
-          url: urlBase + "/Facets/:id/modelConfigs/:fk",
+        // INTERNAL. Use Facet.settings.count() instead.
+        "prototype$__count__settings": {
+          url: urlBase + "/Facets/:id/settings/count",
           method: "GET",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.Facet#prototype$__destroyById__modelConfigs
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.modelConfigs.destroyById() instead.
-         *
-         * @description
-         *
-         * Delete a related item by id for modelConfigs
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for modelConfigs
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * Data properties:
-         *
-         *  - `` – `{undefined=}` -
-         */
-        "prototype$__destroyById__modelConfigs": {
-          url: urlBase + "/Facets/:id/modelConfigs/:fk",
-          method: "DELETE",
-        },
-
-        /**
-         * @ngdoc method
-         * @name lbServices.Facet#prototype$__updateById__modelConfigs
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.modelConfigs.updateById() instead.
-         *
-         * @description
-         *
-         * Update a related item by id for modelConfigs
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for modelConfigs
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `Facet` object.)
-         * </em>
-         */
-        "prototype$__updateById__modelConfigs": {
-          url: urlBase + "/Facets/:id/modelConfigs/:fk",
-          method: "PUT",
-        },
-
-        /**
-         * @ngdoc method
-         * @name lbServices.Facet#prototype$__get__modelConfigs
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.modelConfigs() instead.
-         *
-         * @description
-         *
-         * Queries modelConfigs of Facet.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `filter` – `{object=}` -
-         *
-         * @param {Function(Array.<Object>, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Array.<Object>} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `Facet` object.)
-         * </em>
-         */
+        // INTERNAL. Use Facet.modelConfigs() instead.
         "prototype$__get__modelConfigs": {
           url: urlBase + "/Facets/:id/modelConfigs",
           method: "GET",
           isArray: true,
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.Facet#prototype$__create__modelConfigs
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.modelConfigs.create() instead.
-         *
-         * @description
-         *
-         * Creates a new instance in modelConfigs of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `Facet` object.)
-         * </em>
-         */
+        // INTERNAL. Use Facet.modelConfigs.create() instead.
         "prototype$__create__modelConfigs": {
           url: urlBase + "/Facets/:id/modelConfigs",
           method: "POST",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.Facet#prototype$__delete__modelConfigs
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.modelConfigs.destroyAll() instead.
-         *
-         * @description
-         *
-         * Deletes all modelConfigs of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * This method returns no data.
-         */
+        // INTERNAL. Use Facet.modelConfigs.destroyAll() instead.
         "prototype$__delete__modelConfigs": {
           url: urlBase + "/Facets/:id/modelConfigs",
           method: "DELETE",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.Facet#prototype$__findById__models
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.models.findById() instead.
-         *
-         * @description
-         *
-         * Find a related item by id for models
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for models
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `Facet` object.)
-         * </em>
-         */
-        "prototype$__findById__models": {
-          url: urlBase + "/Facets/:id/models/:fk",
+        // INTERNAL. Use Facet.modelConfigs.count() instead.
+        "prototype$__count__modelConfigs": {
+          url: urlBase + "/Facets/:id/modelConfigs/count",
           method: "GET",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.Facet#prototype$__destroyById__models
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.models.destroyById() instead.
-         *
-         * @description
-         *
-         * Delete a related item by id for models
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for models
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * Data properties:
-         *
-         *  - `` – `{undefined=}` -
-         */
-        "prototype$__destroyById__models": {
-          url: urlBase + "/Facets/:id/models/:fk",
-          method: "DELETE",
-        },
-
-        /**
-         * @ngdoc method
-         * @name lbServices.Facet#prototype$__updateById__models
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.models.updateById() instead.
-         *
-         * @description
-         *
-         * Update a related item by id for models
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for models
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `Facet` object.)
-         * </em>
-         */
-        "prototype$__updateById__models": {
-          url: urlBase + "/Facets/:id/models/:fk",
-          method: "PUT",
-        },
-
-        /**
-         * @ngdoc method
-         * @name lbServices.Facet#prototype$__get__models
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.models() instead.
-         *
-         * @description
-         *
-         * Queries models of Facet.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `filter` – `{object=}` -
-         *
-         * @param {Function(Array.<Object>, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Array.<Object>} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `Facet` object.)
-         * </em>
-         */
+        // INTERNAL. Use Facet.models() instead.
         "prototype$__get__models": {
           url: urlBase + "/Facets/:id/models",
           method: "GET",
           isArray: true,
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.Facet#prototype$__create__models
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.models.create() instead.
-         *
-         * @description
-         *
-         * Creates a new instance in models of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `Facet` object.)
-         * </em>
-         */
+        // INTERNAL. Use Facet.models.create() instead.
         "prototype$__create__models": {
           url: urlBase + "/Facets/:id/models",
           method: "POST",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.Facet#prototype$__delete__models
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.models.destroyAll() instead.
-         *
-         * @description
-         *
-         * Deletes all models of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * This method returns no data.
-         */
+        // INTERNAL. Use Facet.models.destroyAll() instead.
         "prototype$__delete__models": {
           url: urlBase + "/Facets/:id/models",
           method: "DELETE",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.Facet#prototype$__findById__datasources
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.datasources.findById() instead.
-         *
-         * @description
-         *
-         * Find a related item by id for datasources
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for datasources
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `Facet` object.)
-         * </em>
-         */
-        "prototype$__findById__datasources": {
-          url: urlBase + "/Facets/:id/datasources/:fk",
+        // INTERNAL. Use Facet.models.count() instead.
+        "prototype$__count__models": {
+          url: urlBase + "/Facets/:id/models/count",
           method: "GET",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.Facet#prototype$__destroyById__datasources
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.datasources.destroyById() instead.
-         *
-         * @description
-         *
-         * Delete a related item by id for datasources
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for datasources
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * Data properties:
-         *
-         *  - `` – `{undefined=}` -
-         */
-        "prototype$__destroyById__datasources": {
-          url: urlBase + "/Facets/:id/datasources/:fk",
-          method: "DELETE",
-        },
-
-        /**
-         * @ngdoc method
-         * @name lbServices.Facet#prototype$__updateById__datasources
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.datasources.updateById() instead.
-         *
-         * @description
-         *
-         * Update a related item by id for datasources
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for datasources
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `Facet` object.)
-         * </em>
-         */
-        "prototype$__updateById__datasources": {
-          url: urlBase + "/Facets/:id/datasources/:fk",
-          method: "PUT",
-        },
-
-        /**
-         * @ngdoc method
-         * @name lbServices.Facet#prototype$__get__datasources
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.datasources() instead.
-         *
-         * @description
-         *
-         * Queries datasources of Facet.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `filter` – `{object=}` -
-         *
-         * @param {Function(Array.<Object>, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Array.<Object>} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `Facet` object.)
-         * </em>
-         */
+        // INTERNAL. Use Facet.datasources() instead.
         "prototype$__get__datasources": {
           url: urlBase + "/Facets/:id/datasources",
           method: "GET",
           isArray: true,
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.Facet#prototype$__create__datasources
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.datasources.create() instead.
-         *
-         * @description
-         *
-         * Creates a new instance in datasources of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `Facet` object.)
-         * </em>
-         */
+        // INTERNAL. Use Facet.datasources.create() instead.
         "prototype$__create__datasources": {
           url: urlBase + "/Facets/:id/datasources",
           method: "POST",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.Facet#prototype$__delete__datasources
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.datasources.destroyAll() instead.
-         *
-         * @description
-         *
-         * Deletes all datasources of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * This method returns no data.
-         */
+        // INTERNAL. Use Facet.datasources.destroyAll() instead.
         "prototype$__delete__datasources": {
           url: urlBase + "/Facets/:id/datasources",
           method: "DELETE",
+        },
+
+        // INTERNAL. Use Facet.datasources.count() instead.
+        "prototype$__count__datasources": {
+          url: urlBase + "/Facets/:id/datasources/count",
+          method: "GET",
         },
 
         /**
@@ -1526,7 +833,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{boolean=}` -
+         *  - `exists` – `{boolean=}` - 
          */
         "exists": {
           url: urlBase + "/Facets/:id/exists",
@@ -1722,7 +1029,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` -
+         *  - `count` – `{number=}` - 
          */
         "count": {
           url: urlBase + "/Facets/count",
@@ -1793,11 +1100,26 @@ module.factory(
     );
 
 
+
+
+    /**
+     * @ngdoc object
+     * @name lbServices.Facet.settings
+     * @object
+     * @description
+     *
+     * The object `Facet.settings` groups methods
+     * manipulating `FacetSetting` instances related to `Facet`.
+     *
+     * Use {@link lbServices.Facet#settings} to query
+     * all related instances.
+     */
+
+
         /**
          * @ngdoc method
          * @name lbServices.Facet#settings
          * @methodOf lbServices.Facet
-         * @deprecated Use Facet.settings() instead.
          *
          * @description
          *
@@ -1807,7 +1129,7 @@ module.factory(
          *
          *  - `id` – `{*}` - Definition id
          *
-         *  - `filter` – `{object=}` -
+         *  - `filter` – `{object=}` - 
          *
          * @param {Function(Array.<Object>, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -1832,9 +1154,42 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.Facet#settings.create
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.settings.create() instead.
+         * @name lbServices.Facet.settings#count
+         * @methodOf lbServices.Facet.settings
+         *
+         * @description
+         *
+         * Counts settings of Facet.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Definition id
+         *
+         * @param {Function(Object, Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {Function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @return {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `FacetSetting` object.)
+         * </em>
+         */
+        R.settings.count = function() {
+          var TargetResource = $injector.get("FacetSetting");
+          var action = TargetResource["::count::Facet::settings"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Facet.settings#create
+         * @methodOf lbServices.Facet.settings
          *
          * @description
          *
@@ -1871,9 +1226,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.Facet#settings.destroyAll
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.settings.destroyAll() instead.
+         * @name lbServices.Facet.settings#destroyAll
+         * @methodOf lbServices.Facet.settings
          *
          * @description
          *
@@ -1903,9 +1257,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.Facet#settings.destroyById
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.settings.destroyById() instead.
+         * @name lbServices.Facet.settings#destroyById
+         * @methodOf lbServices.Facet.settings
          *
          * @description
          *
@@ -1929,7 +1282,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `` – `{undefined=}` -
+         *  - `` – `{undefined=}` - 
          */
         R.settings.destroyById = function() {
           var TargetResource = $injector.get("FacetSetting");
@@ -1939,9 +1292,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.Facet#settings.findById
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.settings.findById() instead.
+         * @name lbServices.Facet.settings#findById
+         * @methodOf lbServices.Facet.settings
          *
          * @description
          *
@@ -1976,9 +1328,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.Facet#settings.updateById
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.settings.updateById() instead.
+         * @name lbServices.Facet.settings#updateById
+         * @methodOf lbServices.Facet.settings
          *
          * @description
          *
@@ -2014,12 +1365,24 @@ module.factory(
           var action = TargetResource["::updateById::Facet::settings"];
           return action.apply(R, arguments);
         };
+    /**
+     * @ngdoc object
+     * @name lbServices.Facet.modelConfigs
+     * @object
+     * @description
+     *
+     * The object `Facet.modelConfigs` groups methods
+     * manipulating `ModelConfig` instances related to `Facet`.
+     *
+     * Use {@link lbServices.Facet#modelConfigs} to query
+     * all related instances.
+     */
+
 
         /**
          * @ngdoc method
          * @name lbServices.Facet#modelConfigs
          * @methodOf lbServices.Facet
-         * @deprecated Use Facet.modelConfigs() instead.
          *
          * @description
          *
@@ -2029,7 +1392,7 @@ module.factory(
          *
          *  - `id` – `{*}` - Definition id
          *
-         *  - `filter` – `{object=}` -
+         *  - `filter` – `{object=}` - 
          *
          * @param {Function(Array.<Object>, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -2054,9 +1417,42 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.Facet#modelConfigs.create
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.modelConfigs.create() instead.
+         * @name lbServices.Facet.modelConfigs#count
+         * @methodOf lbServices.Facet.modelConfigs
+         *
+         * @description
+         *
+         * Counts modelConfigs of Facet.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Definition id
+         *
+         * @param {Function(Object, Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {Function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @return {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `ModelConfig` object.)
+         * </em>
+         */
+        R.modelConfigs.count = function() {
+          var TargetResource = $injector.get("ModelConfig");
+          var action = TargetResource["::count::Facet::modelConfigs"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Facet.modelConfigs#create
+         * @methodOf lbServices.Facet.modelConfigs
          *
          * @description
          *
@@ -2093,9 +1489,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.Facet#modelConfigs.destroyAll
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.modelConfigs.destroyAll() instead.
+         * @name lbServices.Facet.modelConfigs#destroyAll
+         * @methodOf lbServices.Facet.modelConfigs
          *
          * @description
          *
@@ -2125,9 +1520,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.Facet#modelConfigs.destroyById
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.modelConfigs.destroyById() instead.
+         * @name lbServices.Facet.modelConfigs#destroyById
+         * @methodOf lbServices.Facet.modelConfigs
          *
          * @description
          *
@@ -2151,7 +1545,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `` – `{undefined=}` -
+         *  - `` – `{undefined=}` - 
          */
         R.modelConfigs.destroyById = function() {
           var TargetResource = $injector.get("ModelConfig");
@@ -2161,9 +1555,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.Facet#modelConfigs.findById
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.modelConfigs.findById() instead.
+         * @name lbServices.Facet.modelConfigs#findById
+         * @methodOf lbServices.Facet.modelConfigs
          *
          * @description
          *
@@ -2198,9 +1591,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.Facet#modelConfigs.updateById
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.modelConfigs.updateById() instead.
+         * @name lbServices.Facet.modelConfigs#updateById
+         * @methodOf lbServices.Facet.modelConfigs
          *
          * @description
          *
@@ -2236,12 +1628,24 @@ module.factory(
           var action = TargetResource["::updateById::Facet::modelConfigs"];
           return action.apply(R, arguments);
         };
+    /**
+     * @ngdoc object
+     * @name lbServices.Facet.models
+     * @object
+     * @description
+     *
+     * The object `Facet.models` groups methods
+     * manipulating `ModelDefinition` instances related to `Facet`.
+     *
+     * Use {@link lbServices.Facet#models} to query
+     * all related instances.
+     */
+
 
         /**
          * @ngdoc method
          * @name lbServices.Facet#models
          * @methodOf lbServices.Facet
-         * @deprecated Use Facet.models() instead.
          *
          * @description
          *
@@ -2251,7 +1655,7 @@ module.factory(
          *
          *  - `id` – `{*}` - Definition id
          *
-         *  - `filter` – `{object=}` -
+         *  - `filter` – `{object=}` - 
          *
          * @param {Function(Array.<Object>, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -2276,9 +1680,42 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.Facet#models.create
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.models.create() instead.
+         * @name lbServices.Facet.models#count
+         * @methodOf lbServices.Facet.models
+         *
+         * @description
+         *
+         * Counts models of Facet.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Definition id
+         *
+         * @param {Function(Object, Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {Function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @return {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `ModelDefinition` object.)
+         * </em>
+         */
+        R.models.count = function() {
+          var TargetResource = $injector.get("ModelDefinition");
+          var action = TargetResource["::count::Facet::models"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Facet.models#create
+         * @methodOf lbServices.Facet.models
          *
          * @description
          *
@@ -2315,9 +1752,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.Facet#models.destroyAll
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.models.destroyAll() instead.
+         * @name lbServices.Facet.models#destroyAll
+         * @methodOf lbServices.Facet.models
          *
          * @description
          *
@@ -2347,9 +1783,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.Facet#models.destroyById
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.models.destroyById() instead.
+         * @name lbServices.Facet.models#destroyById
+         * @methodOf lbServices.Facet.models
          *
          * @description
          *
@@ -2373,7 +1808,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `` – `{undefined=}` -
+         *  - `` – `{undefined=}` - 
          */
         R.models.destroyById = function() {
           var TargetResource = $injector.get("ModelDefinition");
@@ -2383,9 +1818,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.Facet#models.findById
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.models.findById() instead.
+         * @name lbServices.Facet.models#findById
+         * @methodOf lbServices.Facet.models
          *
          * @description
          *
@@ -2420,9 +1854,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.Facet#models.updateById
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.models.updateById() instead.
+         * @name lbServices.Facet.models#updateById
+         * @methodOf lbServices.Facet.models
          *
          * @description
          *
@@ -2458,12 +1891,24 @@ module.factory(
           var action = TargetResource["::updateById::Facet::models"];
           return action.apply(R, arguments);
         };
+    /**
+     * @ngdoc object
+     * @name lbServices.Facet.datasources
+     * @object
+     * @description
+     *
+     * The object `Facet.datasources` groups methods
+     * manipulating `DataSourceDefinition` instances related to `Facet`.
+     *
+     * Use {@link lbServices.Facet#datasources} to query
+     * all related instances.
+     */
+
 
         /**
          * @ngdoc method
          * @name lbServices.Facet#datasources
          * @methodOf lbServices.Facet
-         * @deprecated Use Facet.datasources() instead.
          *
          * @description
          *
@@ -2473,7 +1918,7 @@ module.factory(
          *
          *  - `id` – `{*}` - Definition id
          *
-         *  - `filter` – `{object=}` -
+         *  - `filter` – `{object=}` - 
          *
          * @param {Function(Array.<Object>, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -2498,9 +1943,42 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.Facet#datasources.create
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.datasources.create() instead.
+         * @name lbServices.Facet.datasources#count
+         * @methodOf lbServices.Facet.datasources
+         *
+         * @description
+         *
+         * Counts datasources of Facet.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Definition id
+         *
+         * @param {Function(Object, Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {Function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @return {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `DataSourceDefinition` object.)
+         * </em>
+         */
+        R.datasources.count = function() {
+          var TargetResource = $injector.get("DataSourceDefinition");
+          var action = TargetResource["::count::Facet::datasources"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Facet.datasources#create
+         * @methodOf lbServices.Facet.datasources
          *
          * @description
          *
@@ -2537,9 +2015,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.Facet#datasources.destroyAll
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.datasources.destroyAll() instead.
+         * @name lbServices.Facet.datasources#destroyAll
+         * @methodOf lbServices.Facet.datasources
          *
          * @description
          *
@@ -2569,9 +2046,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.Facet#datasources.destroyById
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.datasources.destroyById() instead.
+         * @name lbServices.Facet.datasources#destroyById
+         * @methodOf lbServices.Facet.datasources
          *
          * @description
          *
@@ -2595,7 +2071,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `` – `{undefined=}` -
+         *  - `` – `{undefined=}` - 
          */
         R.datasources.destroyById = function() {
           var TargetResource = $injector.get("DataSourceDefinition");
@@ -2605,9 +2081,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.Facet#datasources.findById
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.datasources.findById() instead.
+         * @name lbServices.Facet.datasources#findById
+         * @methodOf lbServices.Facet.datasources
          *
          * @description
          *
@@ -2642,9 +2117,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.Facet#datasources.updateById
-         * @methodOf lbServices.Facet
-         * @deprecated Use Facet.datasources.updateById() instead.
+         * @name lbServices.Facet.datasources#updateById
+         * @methodOf lbServices.Facet.datasources
          *
          * @description
          *
@@ -2708,37 +2182,7 @@ module.factory(
       { 'id': '@id' },
       {
 
-        /**
-         * @ngdoc method
-         * @name lbServices.FacetSetting#prototype$__get__facet
-         * @methodOf lbServices.FacetSetting
-         * @deprecated Use FacetSetting.facet() instead.
-         *
-         * @description
-         *
-         * Fetches belongsTo relation facet
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `refresh` – `{boolean=}` -
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `FacetSetting` object.)
-         * </em>
-         */
+        // INTERNAL. Use FacetSetting.facet() instead.
         "prototype$__get__facet": {
           url: urlBase + "/FacetSettings/:id/facet",
           method: "GET",
@@ -2845,7 +2289,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{boolean=}` -
+         *  - `exists` – `{boolean=}` - 
          */
         "exists": {
           url: urlBase + "/FacetSettings/:id/exists",
@@ -3041,7 +2485,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` -
+         *  - `count` – `{number=}` - 
          */
         "count": {
           url: urlBase + "/FacetSettings/count",
@@ -3121,15 +2565,23 @@ module.factory(
           url: urlBase + "/Facets/:id/settings",
           method: "DELETE",
         },
+
+        // INTERNAL. Use Facet.settings.count() instead.
+        "::count::Facet::settings": {
+          url: urlBase + "/Facets/:id/settings/count",
+          method: "GET",
+        },
       }
     );
+
+
+
 
 
         /**
          * @ngdoc method
          * @name lbServices.FacetSetting#facet
          * @methodOf lbServices.FacetSetting
-         * @deprecated Use FacetSetting.facet() instead.
          *
          * @description
          *
@@ -3139,7 +2591,7 @@ module.factory(
          *
          *  - `id` – `{*}` - Definition id
          *
-         *  - `refresh` – `{boolean=}` -
+         *  - `refresh` – `{boolean=}` - 
          *
          * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -3189,179 +2641,19 @@ module.factory(
       { 'id': '@id' },
       {
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelConfig#prototype$__get__facet
-         * @methodOf lbServices.ModelConfig
-         * @deprecated Use ModelConfig.facet() instead.
-         *
-         * @description
-         *
-         * Fetches belongsTo relation facet
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - WorkspaceEntity id
-         *
-         *  - `refresh` – `{boolean=}` -
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelConfig` object.)
-         * </em>
-         */
+        // INTERNAL. Use ModelConfig.facet() instead.
         "prototype$__get__facet": {
           url: urlBase + "/ModelConfigs/:id/facet",
           method: "GET",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelConfig#prototype$__get__definition
-         * @methodOf lbServices.ModelConfig
-         * @deprecated Use ModelConfig.definition() instead.
-         *
-         * @description
-         *
-         * Queries definition of ModelConfig.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - WorkspaceEntity id
-         *
-         *  - `filter` – `{object=}` -
-         *
-         * @param {Function(Array.<Object>, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Array.<Object>} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelConfig` object.)
-         * </em>
-         */
+        // INTERNAL. Use ModelConfig.definition() instead.
         "prototype$__get__definition": {
           url: urlBase + "/ModelConfigs/:id/definition",
           method: "GET",
-          isArray: true,
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelConfig#prototype$__create__definition
-         * @methodOf lbServices.ModelConfig
-         * @deprecated Use ModelConfig.definition.create() instead.
-         *
-         * @description
-         *
-         * Creates a new instance in definition of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - WorkspaceEntity id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelConfig` object.)
-         * </em>
-         */
-        "prototype$__create__definition": {
-          url: urlBase + "/ModelConfigs/:id/definition",
-          method: "POST",
-        },
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelConfig#prototype$__delete__definition
-         * @methodOf lbServices.ModelConfig
-         * @deprecated Use ModelConfig.definition.destroyAll() instead.
-         *
-         * @description
-         *
-         * Deletes all definition of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - WorkspaceEntity id
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * This method returns no data.
-         */
-        "prototype$__delete__definition": {
-          url: urlBase + "/ModelConfigs/:id/definition",
-          method: "DELETE",
-        },
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelConfig#prototype$__get__dataSource
-         * @methodOf lbServices.ModelConfig
-         * @deprecated Use ModelConfig.dataSource() instead.
-         *
-         * @description
-         *
-         * Fetches belongsTo relation dataSource
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - WorkspaceEntity id
-         *
-         *  - `refresh` – `{boolean=}` -
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelConfig` object.)
-         * </em>
-         */
+        // INTERNAL. Use ModelConfig.dataSource() instead.
         "prototype$__get__dataSource": {
           url: urlBase + "/ModelConfigs/:id/dataSource",
           method: "GET",
@@ -3468,7 +2760,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{boolean=}` -
+         *  - `exists` – `{boolean=}` - 
          */
         "exists": {
           url: urlBase + "/ModelConfigs/:id/exists",
@@ -3664,7 +2956,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` -
+         *  - `count` – `{number=}` - 
          */
         "count": {
           url: urlBase + "/ModelConfigs/count",
@@ -3745,6 +3037,12 @@ module.factory(
           method: "DELETE",
         },
 
+        // INTERNAL. Use Facet.modelConfigs.count() instead.
+        "::count::Facet::modelConfigs": {
+          url: urlBase + "/Facets/:id/modelConfigs/count",
+          method: "GET",
+        },
+
         // INTERNAL. Use DataSourceDefinition.models.findById() instead.
         "::findById::DataSourceDefinition::models": {
           url: urlBase + "/DataSourceDefinitions/:id/models/:fk",
@@ -3781,15 +3079,23 @@ module.factory(
           url: urlBase + "/DataSourceDefinitions/:id/models",
           method: "DELETE",
         },
+
+        // INTERNAL. Use DataSourceDefinition.models.count() instead.
+        "::count::DataSourceDefinition::models": {
+          url: urlBase + "/DataSourceDefinitions/:id/models/count",
+          method: "GET",
+        },
       }
     );
+
+
+
 
 
         /**
          * @ngdoc method
          * @name lbServices.ModelConfig#facet
          * @methodOf lbServices.ModelConfig
-         * @deprecated Use ModelConfig.facet() instead.
          *
          * @description
          *
@@ -3799,7 +3105,7 @@ module.factory(
          *
          *  - `id` – `{*}` - WorkspaceEntity id
          *
-         *  - `refresh` – `{boolean=}` -
+         *  - `refresh` – `{boolean=}` - 
          *
          * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -3826,25 +3132,24 @@ module.factory(
          * @ngdoc method
          * @name lbServices.ModelConfig#definition
          * @methodOf lbServices.ModelConfig
-         * @deprecated Use ModelConfig.definition() instead.
          *
          * @description
          *
-         * Queries definition of ModelConfig.
+         * Fetches hasOne relation definition
          *
          * @param {Object=} parameters Request parameters.
          *
          *  - `id` – `{*}` - WorkspaceEntity id
          *
-         *  - `filter` – `{object=}` -
+         *  - `refresh` – `{boolean=}` - 
          *
-         * @param {Function(Array.<Object>, Object)=} successCb
+         * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
          *
          * @param {Function(Object)=} errorCb Error callback with one argument:
          *   `httpResponse`.
          *
-         * @return {Array.<Object>} An empty reference that will be
+         * @return {Object} An empty reference that will be
          *   populated with the actual data once the response is returned
          *   from the server.
          *
@@ -3861,80 +3166,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelConfig#definition.create
-         * @methodOf lbServices.ModelConfig
-         * @deprecated Use ModelConfig.definition.create() instead.
-         *
-         * @description
-         *
-         * Creates a new instance in definition of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - WorkspaceEntity id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
-        R.definition.create = function() {
-          var TargetResource = $injector.get("ModelDefinition");
-          var action = TargetResource["::create::ModelConfig::definition"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelConfig#definition.destroyAll
-         * @methodOf lbServices.ModelConfig
-         * @deprecated Use ModelConfig.definition.destroyAll() instead.
-         *
-         * @description
-         *
-         * Deletes all definition of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - WorkspaceEntity id
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * This method returns no data.
-         */
-        R.definition.destroyAll = function() {
-          var TargetResource = $injector.get("ModelDefinition");
-          var action = TargetResource["::delete::ModelConfig::definition"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
          * @name lbServices.ModelConfig#dataSource
          * @methodOf lbServices.ModelConfig
-         * @deprecated Use ModelConfig.dataSource() instead.
          *
          * @description
          *
@@ -3944,7 +3177,7 @@ module.factory(
          *
          *  - `id` – `{*}` - WorkspaceEntity id
          *
-         *  - `refresh` – `{boolean=}` -
+         *  - `refresh` – `{boolean=}` - 
          *
          * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -3994,1342 +3227,268 @@ module.factory(
       { 'id': '@id' },
       {
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__get__facet
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.facet() instead.
-         *
-         * @description
-         *
-         * Fetches belongsTo relation facet
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `refresh` – `{boolean=}` -
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
+        // INTERNAL. Use ModelDefinition.facet() instead.
         "prototype$__get__facet": {
           url: urlBase + "/ModelDefinitions/:id/facet",
           method: "GET",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__findById__methods
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.methods.findById() instead.
-         *
-         * @description
-         *
-         * Find a related item by id for methods
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for methods
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
+        // INTERNAL. Use ModelDefinition.methods.findById() instead.
         "prototype$__findById__methods": {
           url: urlBase + "/ModelDefinitions/:id/methods/:fk",
           method: "GET",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__destroyById__methods
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.methods.destroyById() instead.
-         *
-         * @description
-         *
-         * Delete a related item by id for methods
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for methods
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * Data properties:
-         *
-         *  - `` – `{undefined=}` -
-         */
+        // INTERNAL. Use ModelDefinition.methods.destroyById() instead.
         "prototype$__destroyById__methods": {
           url: urlBase + "/ModelDefinitions/:id/methods/:fk",
           method: "DELETE",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__updateById__methods
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.methods.updateById() instead.
-         *
-         * @description
-         *
-         * Update a related item by id for methods
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for methods
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
+        // INTERNAL. Use ModelDefinition.methods.updateById() instead.
         "prototype$__updateById__methods": {
           url: urlBase + "/ModelDefinitions/:id/methods/:fk",
           method: "PUT",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__get__methods
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.methods() instead.
-         *
-         * @description
-         *
-         * Queries methods of ModelDefinition.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `filter` – `{object=}` -
-         *
-         * @param {Function(Array.<Object>, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Array.<Object>} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
+        // INTERNAL. Use ModelDefinition.relations.findById() instead.
+        "prototype$__findById__relations": {
+          url: urlBase + "/ModelDefinitions/:id/relations/:fk",
+          method: "GET",
+        },
+
+        // INTERNAL. Use ModelDefinition.relations.destroyById() instead.
+        "prototype$__destroyById__relations": {
+          url: urlBase + "/ModelDefinitions/:id/relations/:fk",
+          method: "DELETE",
+        },
+
+        // INTERNAL. Use ModelDefinition.relations.updateById() instead.
+        "prototype$__updateById__relations": {
+          url: urlBase + "/ModelDefinitions/:id/relations/:fk",
+          method: "PUT",
+        },
+
+        // INTERNAL. Use ModelDefinition.accessControls.findById() instead.
+        "prototype$__findById__accessControls": {
+          url: urlBase + "/ModelDefinitions/:id/accessControls/:fk",
+          method: "GET",
+        },
+
+        // INTERNAL. Use ModelDefinition.accessControls.destroyById() instead.
+        "prototype$__destroyById__accessControls": {
+          url: urlBase + "/ModelDefinitions/:id/accessControls/:fk",
+          method: "DELETE",
+        },
+
+        // INTERNAL. Use ModelDefinition.accessControls.updateById() instead.
+        "prototype$__updateById__accessControls": {
+          url: urlBase + "/ModelDefinitions/:id/accessControls/:fk",
+          method: "PUT",
+        },
+
+        // INTERNAL. Use ModelDefinition.properties.findById() instead.
+        "prototype$__findById__properties": {
+          url: urlBase + "/ModelDefinitions/:id/properties/:fk",
+          method: "GET",
+        },
+
+        // INTERNAL. Use ModelDefinition.properties.destroyById() instead.
+        "prototype$__destroyById__properties": {
+          url: urlBase + "/ModelDefinitions/:id/properties/:fk",
+          method: "DELETE",
+        },
+
+        // INTERNAL. Use ModelDefinition.properties.updateById() instead.
+        "prototype$__updateById__properties": {
+          url: urlBase + "/ModelDefinitions/:id/properties/:fk",
+          method: "PUT",
+        },
+
+        // INTERNAL. Use ModelDefinition.validations.findById() instead.
+        "prototype$__findById__validations": {
+          url: urlBase + "/ModelDefinitions/:id/validations/:fk",
+          method: "GET",
+        },
+
+        // INTERNAL. Use ModelDefinition.validations.destroyById() instead.
+        "prototype$__destroyById__validations": {
+          url: urlBase + "/ModelDefinitions/:id/validations/:fk",
+          method: "DELETE",
+        },
+
+        // INTERNAL. Use ModelDefinition.validations.updateById() instead.
+        "prototype$__updateById__validations": {
+          url: urlBase + "/ModelDefinitions/:id/validations/:fk",
+          method: "PUT",
+        },
+
+        // INTERNAL. Use ModelDefinition.views.findById() instead.
+        "prototype$__findById__views": {
+          url: urlBase + "/ModelDefinitions/:id/views/:fk",
+          method: "GET",
+        },
+
+        // INTERNAL. Use ModelDefinition.views.destroyById() instead.
+        "prototype$__destroyById__views": {
+          url: urlBase + "/ModelDefinitions/:id/views/:fk",
+          method: "DELETE",
+        },
+
+        // INTERNAL. Use ModelDefinition.views.updateById() instead.
+        "prototype$__updateById__views": {
+          url: urlBase + "/ModelDefinitions/:id/views/:fk",
+          method: "PUT",
+        },
+
+        // INTERNAL. Use ModelDefinition.methods() instead.
         "prototype$__get__methods": {
           url: urlBase + "/ModelDefinitions/:id/methods",
           method: "GET",
           isArray: true,
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__create__methods
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.methods.create() instead.
-         *
-         * @description
-         *
-         * Creates a new instance in methods of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
+        // INTERNAL. Use ModelDefinition.methods.create() instead.
         "prototype$__create__methods": {
           url: urlBase + "/ModelDefinitions/:id/methods",
           method: "POST",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__delete__methods
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.methods.destroyAll() instead.
-         *
-         * @description
-         *
-         * Deletes all methods of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * This method returns no data.
-         */
+        // INTERNAL. Use ModelDefinition.methods.destroyAll() instead.
         "prototype$__delete__methods": {
           url: urlBase + "/ModelDefinitions/:id/methods",
           method: "DELETE",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__findById__relations
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.relations.findById() instead.
-         *
-         * @description
-         *
-         * Find a related item by id for relations
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for relations
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
-        "prototype$__findById__relations": {
-          url: urlBase + "/ModelDefinitions/:id/relations/:fk",
+        // INTERNAL. Use ModelDefinition.methods.count() instead.
+        "prototype$__count__methods": {
+          url: urlBase + "/ModelDefinitions/:id/methods/count",
           method: "GET",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__destroyById__relations
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.relations.destroyById() instead.
-         *
-         * @description
-         *
-         * Delete a related item by id for relations
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for relations
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * Data properties:
-         *
-         *  - `` – `{undefined=}` -
-         */
-        "prototype$__destroyById__relations": {
-          url: urlBase + "/ModelDefinitions/:id/relations/:fk",
-          method: "DELETE",
-        },
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__updateById__relations
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.relations.updateById() instead.
-         *
-         * @description
-         *
-         * Update a related item by id for relations
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for relations
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
-        "prototype$__updateById__relations": {
-          url: urlBase + "/ModelDefinitions/:id/relations/:fk",
-          method: "PUT",
-        },
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__get__relations
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.relations() instead.
-         *
-         * @description
-         *
-         * Queries relations of ModelDefinition.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `filter` – `{object=}` -
-         *
-         * @param {Function(Array.<Object>, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Array.<Object>} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
+        // INTERNAL. Use ModelDefinition.relations() instead.
         "prototype$__get__relations": {
           url: urlBase + "/ModelDefinitions/:id/relations",
           method: "GET",
           isArray: true,
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__create__relations
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.relations.create() instead.
-         *
-         * @description
-         *
-         * Creates a new instance in relations of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
+        // INTERNAL. Use ModelDefinition.relations.create() instead.
         "prototype$__create__relations": {
           url: urlBase + "/ModelDefinitions/:id/relations",
           method: "POST",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__delete__relations
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.relations.destroyAll() instead.
-         *
-         * @description
-         *
-         * Deletes all relations of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * This method returns no data.
-         */
+        // INTERNAL. Use ModelDefinition.relations.destroyAll() instead.
         "prototype$__delete__relations": {
           url: urlBase + "/ModelDefinitions/:id/relations",
           method: "DELETE",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__findById__accessControls
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.accessControls.findById() instead.
-         *
-         * @description
-         *
-         * Find a related item by id for accessControls
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for accessControls
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
-        "prototype$__findById__accessControls": {
-          url: urlBase + "/ModelDefinitions/:id/accessControls/:fk",
+        // INTERNAL. Use ModelDefinition.relations.count() instead.
+        "prototype$__count__relations": {
+          url: urlBase + "/ModelDefinitions/:id/relations/count",
           method: "GET",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__destroyById__accessControls
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.accessControls.destroyById() instead.
-         *
-         * @description
-         *
-         * Delete a related item by id for accessControls
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for accessControls
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * Data properties:
-         *
-         *  - `` – `{undefined=}` -
-         */
-        "prototype$__destroyById__accessControls": {
-          url: urlBase + "/ModelDefinitions/:id/accessControls/:fk",
-          method: "DELETE",
-        },
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__updateById__accessControls
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.accessControls.updateById() instead.
-         *
-         * @description
-         *
-         * Update a related item by id for accessControls
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for accessControls
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
-        "prototype$__updateById__accessControls": {
-          url: urlBase + "/ModelDefinitions/:id/accessControls/:fk",
-          method: "PUT",
-        },
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__get__accessControls
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.accessControls() instead.
-         *
-         * @description
-         *
-         * Queries accessControls of ModelDefinition.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `filter` – `{object=}` -
-         *
-         * @param {Function(Array.<Object>, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Array.<Object>} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
+        // INTERNAL. Use ModelDefinition.accessControls() instead.
         "prototype$__get__accessControls": {
           url: urlBase + "/ModelDefinitions/:id/accessControls",
           method: "GET",
           isArray: true,
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__create__accessControls
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.accessControls.create() instead.
-         *
-         * @description
-         *
-         * Creates a new instance in accessControls of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
+        // INTERNAL. Use ModelDefinition.accessControls.create() instead.
         "prototype$__create__accessControls": {
           url: urlBase + "/ModelDefinitions/:id/accessControls",
           method: "POST",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__delete__accessControls
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.accessControls.destroyAll() instead.
-         *
-         * @description
-         *
-         * Deletes all accessControls of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * This method returns no data.
-         */
+        // INTERNAL. Use ModelDefinition.accessControls.destroyAll() instead.
         "prototype$__delete__accessControls": {
           url: urlBase + "/ModelDefinitions/:id/accessControls",
           method: "DELETE",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__findById__properties
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.properties.findById() instead.
-         *
-         * @description
-         *
-         * Find a related item by id for properties
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for properties
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
-        "prototype$__findById__properties": {
-          url: urlBase + "/ModelDefinitions/:id/properties/:fk",
+        // INTERNAL. Use ModelDefinition.accessControls.count() instead.
+        "prototype$__count__accessControls": {
+          url: urlBase + "/ModelDefinitions/:id/accessControls/count",
           method: "GET",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__destroyById__properties
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.properties.destroyById() instead.
-         *
-         * @description
-         *
-         * Delete a related item by id for properties
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for properties
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * Data properties:
-         *
-         *  - `` – `{undefined=}` -
-         */
-        "prototype$__destroyById__properties": {
-          url: urlBase + "/ModelDefinitions/:id/properties/:fk",
-          method: "DELETE",
-        },
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__updateById__properties
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.properties.updateById() instead.
-         *
-         * @description
-         *
-         * Update a related item by id for properties
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for properties
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
-        "prototype$__updateById__properties": {
-          url: urlBase + "/ModelDefinitions/:id/properties/:fk",
-          method: "PUT",
-        },
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__get__properties
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.properties() instead.
-         *
-         * @description
-         *
-         * Queries properties of ModelDefinition.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `filter` – `{object=}` -
-         *
-         * @param {Function(Array.<Object>, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Array.<Object>} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
+        // INTERNAL. Use ModelDefinition.properties() instead.
         "prototype$__get__properties": {
           url: urlBase + "/ModelDefinitions/:id/properties",
           method: "GET",
           isArray: true,
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__create__properties
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.properties.create() instead.
-         *
-         * @description
-         *
-         * Creates a new instance in properties of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
+        // INTERNAL. Use ModelDefinition.properties.create() instead.
         "prototype$__create__properties": {
           url: urlBase + "/ModelDefinitions/:id/properties",
           method: "POST",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__delete__properties
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.properties.destroyAll() instead.
-         *
-         * @description
-         *
-         * Deletes all properties of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * This method returns no data.
-         */
+        // INTERNAL. Use ModelDefinition.properties.destroyAll() instead.
         "prototype$__delete__properties": {
           url: urlBase + "/ModelDefinitions/:id/properties",
           method: "DELETE",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__findById__validations
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.validations.findById() instead.
-         *
-         * @description
-         *
-         * Find a related item by id for validations
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for validations
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
-        "prototype$__findById__validations": {
-          url: urlBase + "/ModelDefinitions/:id/validations/:fk",
+        // INTERNAL. Use ModelDefinition.properties.count() instead.
+        "prototype$__count__properties": {
+          url: urlBase + "/ModelDefinitions/:id/properties/count",
           method: "GET",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__destroyById__validations
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.validations.destroyById() instead.
-         *
-         * @description
-         *
-         * Delete a related item by id for validations
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for validations
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * Data properties:
-         *
-         *  - `` – `{undefined=}` -
-         */
-        "prototype$__destroyById__validations": {
-          url: urlBase + "/ModelDefinitions/:id/validations/:fk",
-          method: "DELETE",
-        },
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__updateById__validations
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.validations.updateById() instead.
-         *
-         * @description
-         *
-         * Update a related item by id for validations
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for validations
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
-        "prototype$__updateById__validations": {
-          url: urlBase + "/ModelDefinitions/:id/validations/:fk",
-          method: "PUT",
-        },
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__get__validations
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.validations() instead.
-         *
-         * @description
-         *
-         * Queries validations of ModelDefinition.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `filter` – `{object=}` -
-         *
-         * @param {Function(Array.<Object>, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Array.<Object>} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
+        // INTERNAL. Use ModelDefinition.validations() instead.
         "prototype$__get__validations": {
           url: urlBase + "/ModelDefinitions/:id/validations",
           method: "GET",
           isArray: true,
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__create__validations
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.validations.create() instead.
-         *
-         * @description
-         *
-         * Creates a new instance in validations of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
+        // INTERNAL. Use ModelDefinition.validations.create() instead.
         "prototype$__create__validations": {
           url: urlBase + "/ModelDefinitions/:id/validations",
           method: "POST",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__delete__validations
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.validations.destroyAll() instead.
-         *
-         * @description
-         *
-         * Deletes all validations of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * This method returns no data.
-         */
+        // INTERNAL. Use ModelDefinition.validations.destroyAll() instead.
         "prototype$__delete__validations": {
           url: urlBase + "/ModelDefinitions/:id/validations",
           method: "DELETE",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__findById__views
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.views.findById() instead.
-         *
-         * @description
-         *
-         * Find a related item by id for views
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for views
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
-        "prototype$__findById__views": {
-          url: urlBase + "/ModelDefinitions/:id/views/:fk",
+        // INTERNAL. Use ModelDefinition.validations.count() instead.
+        "prototype$__count__validations": {
+          url: urlBase + "/ModelDefinitions/:id/validations/count",
           method: "GET",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__destroyById__views
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.views.destroyById() instead.
-         *
-         * @description
-         *
-         * Delete a related item by id for views
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for views
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * Data properties:
-         *
-         *  - `` – `{undefined=}` -
-         */
-        "prototype$__destroyById__views": {
-          url: urlBase + "/ModelDefinitions/:id/views/:fk",
-          method: "DELETE",
-        },
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__updateById__views
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.views.updateById() instead.
-         *
-         * @description
-         *
-         * Update a related item by id for views
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for views
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
-        "prototype$__updateById__views": {
-          url: urlBase + "/ModelDefinitions/:id/views/:fk",
-          method: "PUT",
-        },
-
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__get__views
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.views() instead.
-         *
-         * @description
-         *
-         * Queries views of ModelDefinition.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `filter` – `{object=}` -
-         *
-         * @param {Function(Array.<Object>, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Array.<Object>} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
+        // INTERNAL. Use ModelDefinition.views() instead.
         "prototype$__get__views": {
           url: urlBase + "/ModelDefinitions/:id/views",
           method: "GET",
           isArray: true,
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__create__views
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.views.create() instead.
-         *
-         * @description
-         *
-         * Creates a new instance in views of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelDefinition` object.)
-         * </em>
-         */
+        // INTERNAL. Use ModelDefinition.views.create() instead.
         "prototype$__create__views": {
           url: urlBase + "/ModelDefinitions/:id/views",
           method: "POST",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelDefinition#prototype$__delete__views
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.views.destroyAll() instead.
-         *
-         * @description
-         *
-         * Deletes all views of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * This method returns no data.
-         */
+        // INTERNAL. Use ModelDefinition.views.destroyAll() instead.
         "prototype$__delete__views": {
           url: urlBase + "/ModelDefinitions/:id/views",
           method: "DELETE",
+        },
+
+        // INTERNAL. Use ModelDefinition.views.count() instead.
+        "prototype$__count__views": {
+          url: urlBase + "/ModelDefinitions/:id/views/count",
+          method: "GET",
         },
 
         /**
@@ -5433,7 +3592,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{boolean=}` -
+         *  - `exists` – `{boolean=}` - 
          */
         "exists": {
           url: urlBase + "/ModelDefinitions/:id/exists",
@@ -5629,7 +3788,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` -
+         *  - `count` – `{number=}` - 
          */
         "count": {
           url: urlBase + "/ModelDefinitions/count",
@@ -5710,23 +3869,16 @@ module.factory(
           method: "DELETE",
         },
 
+        // INTERNAL. Use Facet.models.count() instead.
+        "::count::Facet::models": {
+          url: urlBase + "/Facets/:id/models/count",
+          method: "GET",
+        },
+
         // INTERNAL. Use ModelConfig.definition() instead.
         "::get::ModelConfig::definition": {
           url: urlBase + "/ModelConfigs/:id/definition",
           method: "GET",
-          isArray: true,
-        },
-
-        // INTERNAL. Use ModelConfig.definition.create() instead.
-        "::create::ModelConfig::definition": {
-          url: urlBase + "/ModelConfigs/:id/definition",
-          method: "POST",
-        },
-
-        // INTERNAL. Use ModelConfig.definition.destroyAll() instead.
-        "::delete::ModelConfig::definition": {
-          url: urlBase + "/ModelConfigs/:id/definition",
-          method: "DELETE",
         },
 
         // INTERNAL. Use ModelRelation.model() instead.
@@ -5750,11 +3902,13 @@ module.factory(
     );
 
 
+
+
+
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#facet
          * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.facet() instead.
          *
          * @description
          *
@@ -5764,7 +3918,7 @@ module.factory(
          *
          *  - `id` – `{*}` - Definition id
          *
-         *  - `refresh` – `{boolean=}` -
+         *  - `refresh` – `{boolean=}` - 
          *
          * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -5786,12 +3940,24 @@ module.factory(
           var action = TargetResource["::get::ModelDefinition::facet"];
           return action.apply(R, arguments);
         };
+    /**
+     * @ngdoc object
+     * @name lbServices.ModelDefinition.methods
+     * @object
+     * @description
+     *
+     * The object `ModelDefinition.methods` groups methods
+     * manipulating `ModelMethod` instances related to `ModelDefinition`.
+     *
+     * Use {@link lbServices.ModelDefinition#methods} to query
+     * all related instances.
+     */
+
 
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#methods
          * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.methods() instead.
          *
          * @description
          *
@@ -5801,7 +3967,7 @@ module.factory(
          *
          *  - `id` – `{*}` - Definition id
          *
-         *  - `filter` – `{object=}` -
+         *  - `filter` – `{object=}` - 
          *
          * @param {Function(Array.<Object>, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -5826,9 +3992,42 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#methods.create
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.methods.create() instead.
+         * @name lbServices.ModelDefinition.methods#count
+         * @methodOf lbServices.ModelDefinition.methods
+         *
+         * @description
+         *
+         * Counts methods of ModelDefinition.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Definition id
+         *
+         * @param {Function(Object, Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {Function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @return {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `ModelMethod` object.)
+         * </em>
+         */
+        R.methods.count = function() {
+          var TargetResource = $injector.get("ModelMethod");
+          var action = TargetResource["::count::ModelDefinition::methods"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.ModelDefinition.methods#create
+         * @methodOf lbServices.ModelDefinition.methods
          *
          * @description
          *
@@ -5865,9 +4064,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#methods.destroyAll
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.methods.destroyAll() instead.
+         * @name lbServices.ModelDefinition.methods#destroyAll
+         * @methodOf lbServices.ModelDefinition.methods
          *
          * @description
          *
@@ -5897,9 +4095,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#methods.destroyById
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.methods.destroyById() instead.
+         * @name lbServices.ModelDefinition.methods#destroyById
+         * @methodOf lbServices.ModelDefinition.methods
          *
          * @description
          *
@@ -5923,7 +4120,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `` – `{undefined=}` -
+         *  - `` – `{undefined=}` - 
          */
         R.methods.destroyById = function() {
           var TargetResource = $injector.get("ModelMethod");
@@ -5933,9 +4130,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#methods.findById
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.methods.findById() instead.
+         * @name lbServices.ModelDefinition.methods#findById
+         * @methodOf lbServices.ModelDefinition.methods
          *
          * @description
          *
@@ -5970,9 +4166,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#methods.updateById
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.methods.updateById() instead.
+         * @name lbServices.ModelDefinition.methods#updateById
+         * @methodOf lbServices.ModelDefinition.methods
          *
          * @description
          *
@@ -6008,12 +4203,24 @@ module.factory(
           var action = TargetResource["::updateById::ModelDefinition::methods"];
           return action.apply(R, arguments);
         };
+    /**
+     * @ngdoc object
+     * @name lbServices.ModelDefinition.relations
+     * @object
+     * @description
+     *
+     * The object `ModelDefinition.relations` groups methods
+     * manipulating `ModelRelation` instances related to `ModelDefinition`.
+     *
+     * Use {@link lbServices.ModelDefinition#relations} to query
+     * all related instances.
+     */
+
 
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#relations
          * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.relations() instead.
          *
          * @description
          *
@@ -6023,7 +4230,7 @@ module.factory(
          *
          *  - `id` – `{*}` - Definition id
          *
-         *  - `filter` – `{object=}` -
+         *  - `filter` – `{object=}` - 
          *
          * @param {Function(Array.<Object>, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6048,9 +4255,42 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#relations.create
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.relations.create() instead.
+         * @name lbServices.ModelDefinition.relations#count
+         * @methodOf lbServices.ModelDefinition.relations
+         *
+         * @description
+         *
+         * Counts relations of ModelDefinition.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Definition id
+         *
+         * @param {Function(Object, Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {Function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @return {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `ModelRelation` object.)
+         * </em>
+         */
+        R.relations.count = function() {
+          var TargetResource = $injector.get("ModelRelation");
+          var action = TargetResource["::count::ModelDefinition::relations"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.ModelDefinition.relations#create
+         * @methodOf lbServices.ModelDefinition.relations
          *
          * @description
          *
@@ -6087,9 +4327,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#relations.destroyAll
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.relations.destroyAll() instead.
+         * @name lbServices.ModelDefinition.relations#destroyAll
+         * @methodOf lbServices.ModelDefinition.relations
          *
          * @description
          *
@@ -6119,9 +4358,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#relations.destroyById
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.relations.destroyById() instead.
+         * @name lbServices.ModelDefinition.relations#destroyById
+         * @methodOf lbServices.ModelDefinition.relations
          *
          * @description
          *
@@ -6145,7 +4383,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `` – `{undefined=}` -
+         *  - `` – `{undefined=}` - 
          */
         R.relations.destroyById = function() {
           var TargetResource = $injector.get("ModelRelation");
@@ -6155,9 +4393,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#relations.findById
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.relations.findById() instead.
+         * @name lbServices.ModelDefinition.relations#findById
+         * @methodOf lbServices.ModelDefinition.relations
          *
          * @description
          *
@@ -6192,9 +4429,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#relations.updateById
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.relations.updateById() instead.
+         * @name lbServices.ModelDefinition.relations#updateById
+         * @methodOf lbServices.ModelDefinition.relations
          *
          * @description
          *
@@ -6230,12 +4466,24 @@ module.factory(
           var action = TargetResource["::updateById::ModelDefinition::relations"];
           return action.apply(R, arguments);
         };
+    /**
+     * @ngdoc object
+     * @name lbServices.ModelDefinition.accessControls
+     * @object
+     * @description
+     *
+     * The object `ModelDefinition.accessControls` groups methods
+     * manipulating `ModelAccessControl` instances related to `ModelDefinition`.
+     *
+     * Use {@link lbServices.ModelDefinition#accessControls} to query
+     * all related instances.
+     */
+
 
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#accessControls
          * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.accessControls() instead.
          *
          * @description
          *
@@ -6245,7 +4493,7 @@ module.factory(
          *
          *  - `id` – `{*}` - Definition id
          *
-         *  - `filter` – `{object=}` -
+         *  - `filter` – `{object=}` - 
          *
          * @param {Function(Array.<Object>, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6270,9 +4518,42 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#accessControls.create
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.accessControls.create() instead.
+         * @name lbServices.ModelDefinition.accessControls#count
+         * @methodOf lbServices.ModelDefinition.accessControls
+         *
+         * @description
+         *
+         * Counts accessControls of ModelDefinition.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Definition id
+         *
+         * @param {Function(Object, Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {Function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @return {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `ModelAccessControl` object.)
+         * </em>
+         */
+        R.accessControls.count = function() {
+          var TargetResource = $injector.get("ModelAccessControl");
+          var action = TargetResource["::count::ModelDefinition::accessControls"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.ModelDefinition.accessControls#create
+         * @methodOf lbServices.ModelDefinition.accessControls
          *
          * @description
          *
@@ -6309,9 +4590,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#accessControls.destroyAll
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.accessControls.destroyAll() instead.
+         * @name lbServices.ModelDefinition.accessControls#destroyAll
+         * @methodOf lbServices.ModelDefinition.accessControls
          *
          * @description
          *
@@ -6341,9 +4621,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#accessControls.destroyById
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.accessControls.destroyById() instead.
+         * @name lbServices.ModelDefinition.accessControls#destroyById
+         * @methodOf lbServices.ModelDefinition.accessControls
          *
          * @description
          *
@@ -6367,7 +4646,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `` – `{undefined=}` -
+         *  - `` – `{undefined=}` - 
          */
         R.accessControls.destroyById = function() {
           var TargetResource = $injector.get("ModelAccessControl");
@@ -6377,9 +4656,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#accessControls.findById
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.accessControls.findById() instead.
+         * @name lbServices.ModelDefinition.accessControls#findById
+         * @methodOf lbServices.ModelDefinition.accessControls
          *
          * @description
          *
@@ -6414,9 +4692,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#accessControls.updateById
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.accessControls.updateById() instead.
+         * @name lbServices.ModelDefinition.accessControls#updateById
+         * @methodOf lbServices.ModelDefinition.accessControls
          *
          * @description
          *
@@ -6452,12 +4729,24 @@ module.factory(
           var action = TargetResource["::updateById::ModelDefinition::accessControls"];
           return action.apply(R, arguments);
         };
+    /**
+     * @ngdoc object
+     * @name lbServices.ModelDefinition.properties
+     * @object
+     * @description
+     *
+     * The object `ModelDefinition.properties` groups methods
+     * manipulating `ModelProperty` instances related to `ModelDefinition`.
+     *
+     * Use {@link lbServices.ModelDefinition#properties} to query
+     * all related instances.
+     */
+
 
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#properties
          * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.properties() instead.
          *
          * @description
          *
@@ -6467,7 +4756,7 @@ module.factory(
          *
          *  - `id` – `{*}` - Definition id
          *
-         *  - `filter` – `{object=}` -
+         *  - `filter` – `{object=}` - 
          *
          * @param {Function(Array.<Object>, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6492,9 +4781,42 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#properties.create
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.properties.create() instead.
+         * @name lbServices.ModelDefinition.properties#count
+         * @methodOf lbServices.ModelDefinition.properties
+         *
+         * @description
+         *
+         * Counts properties of ModelDefinition.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Definition id
+         *
+         * @param {Function(Object, Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {Function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @return {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `ModelProperty` object.)
+         * </em>
+         */
+        R.properties.count = function() {
+          var TargetResource = $injector.get("ModelProperty");
+          var action = TargetResource["::count::ModelDefinition::properties"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.ModelDefinition.properties#create
+         * @methodOf lbServices.ModelDefinition.properties
          *
          * @description
          *
@@ -6531,9 +4853,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#properties.destroyAll
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.properties.destroyAll() instead.
+         * @name lbServices.ModelDefinition.properties#destroyAll
+         * @methodOf lbServices.ModelDefinition.properties
          *
          * @description
          *
@@ -6563,9 +4884,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#properties.destroyById
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.properties.destroyById() instead.
+         * @name lbServices.ModelDefinition.properties#destroyById
+         * @methodOf lbServices.ModelDefinition.properties
          *
          * @description
          *
@@ -6589,7 +4909,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `` – `{undefined=}` -
+         *  - `` – `{undefined=}` - 
          */
         R.properties.destroyById = function() {
           var TargetResource = $injector.get("ModelProperty");
@@ -6599,9 +4919,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#properties.findById
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.properties.findById() instead.
+         * @name lbServices.ModelDefinition.properties#findById
+         * @methodOf lbServices.ModelDefinition.properties
          *
          * @description
          *
@@ -6636,9 +4955,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#properties.updateById
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.properties.updateById() instead.
+         * @name lbServices.ModelDefinition.properties#updateById
+         * @methodOf lbServices.ModelDefinition.properties
          *
          * @description
          *
@@ -6674,12 +4992,24 @@ module.factory(
           var action = TargetResource["::updateById::ModelDefinition::properties"];
           return action.apply(R, arguments);
         };
+    /**
+     * @ngdoc object
+     * @name lbServices.ModelDefinition.validations
+     * @object
+     * @description
+     *
+     * The object `ModelDefinition.validations` groups methods
+     * manipulating `PropertyValidation` instances related to `ModelDefinition`.
+     *
+     * Use {@link lbServices.ModelDefinition#validations} to query
+     * all related instances.
+     */
+
 
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#validations
          * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.validations() instead.
          *
          * @description
          *
@@ -6689,7 +5019,7 @@ module.factory(
          *
          *  - `id` – `{*}` - Definition id
          *
-         *  - `filter` – `{object=}` -
+         *  - `filter` – `{object=}` - 
          *
          * @param {Function(Array.<Object>, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6714,9 +5044,42 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#validations.create
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.validations.create() instead.
+         * @name lbServices.ModelDefinition.validations#count
+         * @methodOf lbServices.ModelDefinition.validations
+         *
+         * @description
+         *
+         * Counts validations of ModelDefinition.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Definition id
+         *
+         * @param {Function(Object, Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {Function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @return {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `PropertyValidation` object.)
+         * </em>
+         */
+        R.validations.count = function() {
+          var TargetResource = $injector.get("PropertyValidation");
+          var action = TargetResource["::count::ModelDefinition::validations"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.ModelDefinition.validations#create
+         * @methodOf lbServices.ModelDefinition.validations
          *
          * @description
          *
@@ -6753,9 +5116,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#validations.destroyAll
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.validations.destroyAll() instead.
+         * @name lbServices.ModelDefinition.validations#destroyAll
+         * @methodOf lbServices.ModelDefinition.validations
          *
          * @description
          *
@@ -6785,9 +5147,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#validations.destroyById
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.validations.destroyById() instead.
+         * @name lbServices.ModelDefinition.validations#destroyById
+         * @methodOf lbServices.ModelDefinition.validations
          *
          * @description
          *
@@ -6811,7 +5172,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `` – `{undefined=}` -
+         *  - `` – `{undefined=}` - 
          */
         R.validations.destroyById = function() {
           var TargetResource = $injector.get("PropertyValidation");
@@ -6821,9 +5182,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#validations.findById
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.validations.findById() instead.
+         * @name lbServices.ModelDefinition.validations#findById
+         * @methodOf lbServices.ModelDefinition.validations
          *
          * @description
          *
@@ -6858,9 +5218,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#validations.updateById
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.validations.updateById() instead.
+         * @name lbServices.ModelDefinition.validations#updateById
+         * @methodOf lbServices.ModelDefinition.validations
          *
          * @description
          *
@@ -6896,12 +5255,24 @@ module.factory(
           var action = TargetResource["::updateById::ModelDefinition::validations"];
           return action.apply(R, arguments);
         };
+    /**
+     * @ngdoc object
+     * @name lbServices.ModelDefinition.views
+     * @object
+     * @description
+     *
+     * The object `ModelDefinition.views` groups methods
+     * manipulating `ViewDefinition` instances related to `ModelDefinition`.
+     *
+     * Use {@link lbServices.ModelDefinition#views} to query
+     * all related instances.
+     */
+
 
         /**
          * @ngdoc method
          * @name lbServices.ModelDefinition#views
          * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.views() instead.
          *
          * @description
          *
@@ -6911,7 +5282,7 @@ module.factory(
          *
          *  - `id` – `{*}` - Definition id
          *
-         *  - `filter` – `{object=}` -
+         *  - `filter` – `{object=}` - 
          *
          * @param {Function(Array.<Object>, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -6936,9 +5307,42 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#views.create
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.views.create() instead.
+         * @name lbServices.ModelDefinition.views#count
+         * @methodOf lbServices.ModelDefinition.views
+         *
+         * @description
+         *
+         * Counts views of ModelDefinition.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Definition id
+         *
+         * @param {Function(Object, Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {Function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @return {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `ViewDefinition` object.)
+         * </em>
+         */
+        R.views.count = function() {
+          var TargetResource = $injector.get("ViewDefinition");
+          var action = TargetResource["::count::ModelDefinition::views"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.ModelDefinition.views#create
+         * @methodOf lbServices.ModelDefinition.views
          *
          * @description
          *
@@ -6975,9 +5379,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#views.destroyAll
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.views.destroyAll() instead.
+         * @name lbServices.ModelDefinition.views#destroyAll
+         * @methodOf lbServices.ModelDefinition.views
          *
          * @description
          *
@@ -7007,9 +5410,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#views.destroyById
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.views.destroyById() instead.
+         * @name lbServices.ModelDefinition.views#destroyById
+         * @methodOf lbServices.ModelDefinition.views
          *
          * @description
          *
@@ -7033,7 +5435,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `` – `{undefined=}` -
+         *  - `` – `{undefined=}` - 
          */
         R.views.destroyById = function() {
           var TargetResource = $injector.get("ViewDefinition");
@@ -7043,9 +5445,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#views.findById
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.views.findById() instead.
+         * @name lbServices.ModelDefinition.views#findById
+         * @methodOf lbServices.ModelDefinition.views
          *
          * @description
          *
@@ -7080,9 +5481,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ModelDefinition#views.updateById
-         * @methodOf lbServices.ModelDefinition
-         * @deprecated Use ModelDefinition.views.updateById() instead.
+         * @name lbServices.ModelDefinition.views#updateById
+         * @methodOf lbServices.ModelDefinition.views
          *
          * @description
          *
@@ -7247,7 +5647,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{boolean=}` -
+         *  - `exists` – `{boolean=}` - 
          */
         "exists": {
           url: urlBase + "/ModelMethods/:id/exists",
@@ -7443,7 +5843,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` -
+         *  - `count` – `{number=}` - 
          */
         "count": {
           url: urlBase + "/ModelMethods/count",
@@ -7523,8 +5923,17 @@ module.factory(
           url: urlBase + "/ModelDefinitions/:id/methods",
           method: "DELETE",
         },
+
+        // INTERNAL. Use ModelDefinition.methods.count() instead.
+        "::count::ModelDefinition::methods": {
+          url: urlBase + "/ModelDefinitions/:id/methods/count",
+          method: "GET",
+        },
       }
     );
+
+
+
 
 
     return R;
@@ -7554,37 +5963,7 @@ module.factory(
       { 'id': '@id' },
       {
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelRelation#prototype$__get__model
-         * @methodOf lbServices.ModelRelation
-         * @deprecated Use ModelRelation.model() instead.
-         *
-         * @description
-         *
-         * Fetches belongsTo relation model
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - WorkspaceEntity id
-         *
-         *  - `refresh` – `{boolean=}` -
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelRelation` object.)
-         * </em>
-         */
+        // INTERNAL. Use ModelRelation.model() instead.
         "prototype$__get__model": {
           url: urlBase + "/ModelRelations/:id/model",
           method: "GET",
@@ -7691,7 +6070,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{boolean=}` -
+         *  - `exists` – `{boolean=}` - 
          */
         "exists": {
           url: urlBase + "/ModelRelations/:id/exists",
@@ -7887,7 +6266,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` -
+         *  - `count` – `{number=}` - 
          */
         "count": {
           url: urlBase + "/ModelRelations/count",
@@ -7967,15 +6346,23 @@ module.factory(
           url: urlBase + "/ModelDefinitions/:id/relations",
           method: "DELETE",
         },
+
+        // INTERNAL. Use ModelDefinition.relations.count() instead.
+        "::count::ModelDefinition::relations": {
+          url: urlBase + "/ModelDefinitions/:id/relations/count",
+          method: "GET",
+        },
       }
     );
+
+
+
 
 
         /**
          * @ngdoc method
          * @name lbServices.ModelRelation#model
          * @methodOf lbServices.ModelRelation
-         * @deprecated Use ModelRelation.model() instead.
          *
          * @description
          *
@@ -7985,7 +6372,7 @@ module.factory(
          *
          *  - `id` – `{*}` - WorkspaceEntity id
          *
-         *  - `refresh` – `{boolean=}` -
+         *  - `refresh` – `{boolean=}` - 
          *
          * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -8035,37 +6422,7 @@ module.factory(
       { 'id': '@id' },
       {
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelAccessControl#prototype$__get__model
-         * @methodOf lbServices.ModelAccessControl
-         * @deprecated Use ModelAccessControl.model() instead.
-         *
-         * @description
-         *
-         * Fetches belongsTo relation model
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - WorkspaceEntity id
-         *
-         *  - `refresh` – `{boolean=}` -
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelAccessControl` object.)
-         * </em>
-         */
+        // INTERNAL. Use ModelAccessControl.model() instead.
         "prototype$__get__model": {
           url: urlBase + "/ModelAccessControls/:id/model",
           method: "GET",
@@ -8172,7 +6529,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{boolean=}` -
+         *  - `exists` – `{boolean=}` - 
          */
         "exists": {
           url: urlBase + "/ModelAccessControls/:id/exists",
@@ -8368,7 +6725,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` -
+         *  - `count` – `{number=}` - 
          */
         "count": {
           url: urlBase + "/ModelAccessControls/count",
@@ -8448,15 +6805,23 @@ module.factory(
           url: urlBase + "/ModelDefinitions/:id/accessControls",
           method: "DELETE",
         },
+
+        // INTERNAL. Use ModelDefinition.accessControls.count() instead.
+        "::count::ModelDefinition::accessControls": {
+          url: urlBase + "/ModelDefinitions/:id/accessControls/count",
+          method: "GET",
+        },
       }
     );
+
+
+
 
 
         /**
          * @ngdoc method
          * @name lbServices.ModelAccessControl#model
          * @methodOf lbServices.ModelAccessControl
-         * @deprecated Use ModelAccessControl.model() instead.
          *
          * @description
          *
@@ -8466,7 +6831,7 @@ module.factory(
          *
          *  - `id` – `{*}` - WorkspaceEntity id
          *
-         *  - `refresh` – `{boolean=}` -
+         *  - `refresh` – `{boolean=}` - 
          *
          * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -8516,37 +6881,7 @@ module.factory(
       { 'id': '@id' },
       {
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ModelProperty#prototype$__get__model
-         * @methodOf lbServices.ModelProperty
-         * @deprecated Use ModelProperty.model() instead.
-         *
-         * @description
-         *
-         * Fetches belongsTo relation model
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - WorkspaceEntity id
-         *
-         *  - `refresh` – `{boolean=}` -
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ModelProperty` object.)
-         * </em>
-         */
+        // INTERNAL. Use ModelProperty.model() instead.
         "prototype$__get__model": {
           url: urlBase + "/ModelProperties/:id/model",
           method: "GET",
@@ -8653,7 +6988,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{boolean=}` -
+         *  - `exists` – `{boolean=}` - 
          */
         "exists": {
           url: urlBase + "/ModelProperties/:id/exists",
@@ -8849,7 +7184,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` -
+         *  - `count` – `{number=}` - 
          */
         "count": {
           url: urlBase + "/ModelProperties/count",
@@ -8930,6 +7265,12 @@ module.factory(
           method: "DELETE",
         },
 
+        // INTERNAL. Use ModelDefinition.properties.count() instead.
+        "::count::ModelDefinition::properties": {
+          url: urlBase + "/ModelDefinitions/:id/properties/count",
+          method: "GET",
+        },
+
         // INTERNAL. Use PropertyValidation.model() instead.
         "::get::PropertyValidation::model": {
           url: urlBase + "/PropertyValidations/:id/model",
@@ -8939,11 +7280,13 @@ module.factory(
     );
 
 
+
+
+
         /**
          * @ngdoc method
          * @name lbServices.ModelProperty#model
          * @methodOf lbServices.ModelProperty
-         * @deprecated Use ModelProperty.model() instead.
          *
          * @description
          *
@@ -8953,7 +7296,7 @@ module.factory(
          *
          *  - `id` – `{*}` - WorkspaceEntity id
          *
-         *  - `refresh` – `{boolean=}` -
+         *  - `refresh` – `{boolean=}` - 
          *
          * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -9104,7 +7447,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{boolean=}` -
+         *  - `exists` – `{boolean=}` - 
          */
         "exists": {
           url: urlBase + "/DatabaseColumns/:id/exists",
@@ -9300,7 +7643,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` -
+         *  - `count` – `{number=}` - 
          */
         "count": {
           url: urlBase + "/DatabaseColumns/count",
@@ -9347,6 +7690,9 @@ module.factory(
     );
 
 
+
+
+
     return R;
   }]);
 
@@ -9374,37 +7720,7 @@ module.factory(
       { 'id': '@id' },
       {
 
-        /**
-         * @ngdoc method
-         * @name lbServices.PropertyValidation#prototype$__get__model
-         * @methodOf lbServices.PropertyValidation
-         * @deprecated Use PropertyValidation.model() instead.
-         *
-         * @description
-         *
-         * Fetches belongsTo relation model
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - WorkspaceEntity id
-         *
-         *  - `refresh` – `{boolean=}` -
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `PropertyValidation` object.)
-         * </em>
-         */
+        // INTERNAL. Use PropertyValidation.model() instead.
         "prototype$__get__model": {
           url: urlBase + "/PropertyValidations/:id/model",
           method: "GET",
@@ -9511,7 +7827,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{boolean=}` -
+         *  - `exists` – `{boolean=}` - 
          */
         "exists": {
           url: urlBase + "/PropertyValidations/:id/exists",
@@ -9707,7 +8023,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` -
+         *  - `count` – `{number=}` - 
          */
         "count": {
           url: urlBase + "/PropertyValidations/count",
@@ -9787,15 +8103,23 @@ module.factory(
           url: urlBase + "/ModelDefinitions/:id/validations",
           method: "DELETE",
         },
+
+        // INTERNAL. Use ModelDefinition.validations.count() instead.
+        "::count::ModelDefinition::validations": {
+          url: urlBase + "/ModelDefinitions/:id/validations/count",
+          method: "GET",
+        },
       }
     );
+
+
+
 
 
         /**
          * @ngdoc method
          * @name lbServices.PropertyValidation#model
          * @methodOf lbServices.PropertyValidation
-         * @deprecated Use PropertyValidation.model() instead.
          *
          * @description
          *
@@ -9805,7 +8129,7 @@ module.factory(
          *
          *  - `id` – `{*}` - WorkspaceEntity id
          *
-         *  - `refresh` – `{boolean=}` -
+         *  - `refresh` – `{boolean=}` - 
          *
          * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -9855,221 +8179,47 @@ module.factory(
       { 'id': '@id' },
       {
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ViewDefinition#prototype$__findById__children
-         * @methodOf lbServices.ViewDefinition
-         * @deprecated Use ViewDefinition.children.findById() instead.
-         *
-         * @description
-         *
-         * Find a related item by id for children
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for children
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ViewDefinition` object.)
-         * </em>
-         */
+        // INTERNAL. Use ViewDefinition.children.findById() instead.
         "prototype$__findById__children": {
           url: urlBase + "/ViewDefinitions/:id/children/:fk",
           method: "GET",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ViewDefinition#prototype$__destroyById__children
-         * @methodOf lbServices.ViewDefinition
-         * @deprecated Use ViewDefinition.children.destroyById() instead.
-         *
-         * @description
-         *
-         * Delete a related item by id for children
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for children
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * Data properties:
-         *
-         *  - `` – `{undefined=}` -
-         */
+        // INTERNAL. Use ViewDefinition.children.destroyById() instead.
         "prototype$__destroyById__children": {
           url: urlBase + "/ViewDefinitions/:id/children/:fk",
           method: "DELETE",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ViewDefinition#prototype$__updateById__children
-         * @methodOf lbServices.ViewDefinition
-         * @deprecated Use ViewDefinition.children.updateById() instead.
-         *
-         * @description
-         *
-         * Update a related item by id for children
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for children
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ViewDefinition` object.)
-         * </em>
-         */
+        // INTERNAL. Use ViewDefinition.children.updateById() instead.
         "prototype$__updateById__children": {
           url: urlBase + "/ViewDefinitions/:id/children/:fk",
           method: "PUT",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ViewDefinition#prototype$__get__children
-         * @methodOf lbServices.ViewDefinition
-         * @deprecated Use ViewDefinition.children() instead.
-         *
-         * @description
-         *
-         * Queries children of ViewDefinition.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `filter` – `{object=}` -
-         *
-         * @param {Function(Array.<Object>, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Array.<Object>} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ViewDefinition` object.)
-         * </em>
-         */
+        // INTERNAL. Use ViewDefinition.children() instead.
         "prototype$__get__children": {
           url: urlBase + "/ViewDefinitions/:id/children",
           method: "GET",
           isArray: true,
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ViewDefinition#prototype$__create__children
-         * @methodOf lbServices.ViewDefinition
-         * @deprecated Use ViewDefinition.children.create() instead.
-         *
-         * @description
-         *
-         * Creates a new instance in children of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `ViewDefinition` object.)
-         * </em>
-         */
+        // INTERNAL. Use ViewDefinition.children.create() instead.
         "prototype$__create__children": {
           url: urlBase + "/ViewDefinitions/:id/children",
           method: "POST",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.ViewDefinition#prototype$__delete__children
-         * @methodOf lbServices.ViewDefinition
-         * @deprecated Use ViewDefinition.children.destroyAll() instead.
-         *
-         * @description
-         *
-         * Deletes all children of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * This method returns no data.
-         */
+        // INTERNAL. Use ViewDefinition.children.destroyAll() instead.
         "prototype$__delete__children": {
           url: urlBase + "/ViewDefinitions/:id/children",
           method: "DELETE",
+        },
+
+        // INTERNAL. Use ViewDefinition.children.count() instead.
+        "prototype$__count__children": {
+          url: urlBase + "/ViewDefinitions/:id/children/count",
+          method: "GET",
         },
 
         /**
@@ -10173,7 +8323,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{boolean=}` -
+         *  - `exists` – `{boolean=}` - 
          */
         "exists": {
           url: urlBase + "/ViewDefinitions/:id/exists",
@@ -10369,7 +8519,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` -
+         *  - `count` – `{number=}` - 
          */
         "count": {
           url: urlBase + "/ViewDefinitions/count",
@@ -10450,6 +8600,12 @@ module.factory(
           method: "DELETE",
         },
 
+        // INTERNAL. Use ModelDefinition.views.count() instead.
+        "::count::ModelDefinition::views": {
+          url: urlBase + "/ModelDefinitions/:id/views/count",
+          method: "GET",
+        },
+
         // INTERNAL. Use ViewDefinition.children.findById() instead.
         "::findById::ViewDefinition::children": {
           url: urlBase + "/ViewDefinitions/:id/children/:fk",
@@ -10486,15 +8642,36 @@ module.factory(
           url: urlBase + "/ViewDefinitions/:id/children",
           method: "DELETE",
         },
+
+        // INTERNAL. Use ViewDefinition.children.count() instead.
+        "::count::ViewDefinition::children": {
+          url: urlBase + "/ViewDefinitions/:id/children/count",
+          method: "GET",
+        },
       }
     );
+
+
+
+
+    /**
+     * @ngdoc object
+     * @name lbServices.ViewDefinition.children
+     * @object
+     * @description
+     *
+     * The object `ViewDefinition.children` groups methods
+     * manipulating `ViewDefinition` instances related to `ViewDefinition`.
+     *
+     * Use {@link lbServices.ViewDefinition#children} to query
+     * all related instances.
+     */
 
 
         /**
          * @ngdoc method
          * @name lbServices.ViewDefinition#children
          * @methodOf lbServices.ViewDefinition
-         * @deprecated Use ViewDefinition.children() instead.
          *
          * @description
          *
@@ -10504,7 +8681,7 @@ module.factory(
          *
          *  - `id` – `{*}` - Definition id
          *
-         *  - `filter` – `{object=}` -
+         *  - `filter` – `{object=}` - 
          *
          * @param {Function(Array.<Object>, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -10529,9 +8706,42 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ViewDefinition#children.create
-         * @methodOf lbServices.ViewDefinition
-         * @deprecated Use ViewDefinition.children.create() instead.
+         * @name lbServices.ViewDefinition.children#count
+         * @methodOf lbServices.ViewDefinition.children
+         *
+         * @description
+         *
+         * Counts children of ViewDefinition.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Definition id
+         *
+         * @param {Function(Object, Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {Function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @return {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `ViewDefinition` object.)
+         * </em>
+         */
+        R.children.count = function() {
+          var TargetResource = $injector.get("ViewDefinition");
+          var action = TargetResource["::count::ViewDefinition::children"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.ViewDefinition.children#create
+         * @methodOf lbServices.ViewDefinition.children
          *
          * @description
          *
@@ -10568,9 +8778,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ViewDefinition#children.destroyAll
-         * @methodOf lbServices.ViewDefinition
-         * @deprecated Use ViewDefinition.children.destroyAll() instead.
+         * @name lbServices.ViewDefinition.children#destroyAll
+         * @methodOf lbServices.ViewDefinition.children
          *
          * @description
          *
@@ -10600,9 +8809,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ViewDefinition#children.destroyById
-         * @methodOf lbServices.ViewDefinition
-         * @deprecated Use ViewDefinition.children.destroyById() instead.
+         * @name lbServices.ViewDefinition.children#destroyById
+         * @methodOf lbServices.ViewDefinition.children
          *
          * @description
          *
@@ -10626,7 +8834,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `` – `{undefined=}` -
+         *  - `` – `{undefined=}` - 
          */
         R.children.destroyById = function() {
           var TargetResource = $injector.get("ViewDefinition");
@@ -10636,9 +8844,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ViewDefinition#children.findById
-         * @methodOf lbServices.ViewDefinition
-         * @deprecated Use ViewDefinition.children.findById() instead.
+         * @name lbServices.ViewDefinition.children#findById
+         * @methodOf lbServices.ViewDefinition.children
          *
          * @description
          *
@@ -10673,9 +8880,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.ViewDefinition#children.updateById
-         * @methodOf lbServices.ViewDefinition
-         * @deprecated Use ViewDefinition.children.updateById() instead.
+         * @name lbServices.ViewDefinition.children#updateById
+         * @methodOf lbServices.ViewDefinition.children
          *
          * @description
          *
@@ -10766,7 +8972,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `status` – `{boolean=}` -
+         *  - `status` – `{boolean=}` - 
          */
         "prototype$testConnection": {
           url: urlBase + "/DataSourceDefinitions/:id/testConnection",
@@ -10788,9 +8994,9 @@ module.factory(
          *
          *  - `id` – `{*}` - Definition id
          *
-         *  - `modelName` – `{string=}` -
+         *  - `modelName` – `{string=}` - 
          *
-         *  - `options` – `{object=}` -
+         *  - `options` – `{object=}` - 
          *
          * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -10804,7 +9010,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `status` – `{boolean=}` -
+         *  - `status` – `{boolean=}` - 
          */
         "prototype$discoverModelDefinition": {
           url: urlBase + "/DataSourceDefinitions/:id/discoverModelDefinition",
@@ -10826,7 +9032,7 @@ module.factory(
          *
          *  - `id` – `{*}` - Definition id
          *
-         *  - `options` – `{object=}` -
+         *  - `options` – `{object=}` - 
          *
          * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -10840,263 +9046,59 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `models` – `{array=}` -
+         *  - `models` – `{array=}` - 
          */
         "prototype$getSchema": {
           url: urlBase + "/DataSourceDefinitions/:id/getSchema",
           method: "GET",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.DataSourceDefinition#prototype$__findById__models
-         * @methodOf lbServices.DataSourceDefinition
-         * @deprecated Use DataSourceDefinition.models.findById() instead.
-         *
-         * @description
-         *
-         * Find a related item by id for models
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for models
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `DataSourceDefinition` object.)
-         * </em>
-         */
+        // INTERNAL. Use DataSourceDefinition.models.findById() instead.
         "prototype$__findById__models": {
           url: urlBase + "/DataSourceDefinitions/:id/models/:fk",
           method: "GET",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.DataSourceDefinition#prototype$__destroyById__models
-         * @methodOf lbServices.DataSourceDefinition
-         * @deprecated Use DataSourceDefinition.models.destroyById() instead.
-         *
-         * @description
-         *
-         * Delete a related item by id for models
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for models
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * Data properties:
-         *
-         *  - `` – `{undefined=}` -
-         */
+        // INTERNAL. Use DataSourceDefinition.models.destroyById() instead.
         "prototype$__destroyById__models": {
           url: urlBase + "/DataSourceDefinitions/:id/models/:fk",
           method: "DELETE",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.DataSourceDefinition#prototype$__updateById__models
-         * @methodOf lbServices.DataSourceDefinition
-         * @deprecated Use DataSourceDefinition.models.updateById() instead.
-         *
-         * @description
-         *
-         * Update a related item by id for models
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `fk` – `{*}` - Foreign key for models
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `DataSourceDefinition` object.)
-         * </em>
-         */
+        // INTERNAL. Use DataSourceDefinition.models.updateById() instead.
         "prototype$__updateById__models": {
           url: urlBase + "/DataSourceDefinitions/:id/models/:fk",
           method: "PUT",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.DataSourceDefinition#prototype$__get__models
-         * @methodOf lbServices.DataSourceDefinition
-         * @deprecated Use DataSourceDefinition.models() instead.
-         *
-         * @description
-         *
-         * Queries models of DataSourceDefinition.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `filter` – `{object=}` -
-         *
-         * @param {Function(Array.<Object>, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Array.<Object>} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `DataSourceDefinition` object.)
-         * </em>
-         */
+        // INTERNAL. Use DataSourceDefinition.facet() instead.
+        "prototype$__get__facet": {
+          url: urlBase + "/DataSourceDefinitions/:id/facet",
+          method: "GET",
+        },
+
+        // INTERNAL. Use DataSourceDefinition.models() instead.
         "prototype$__get__models": {
           url: urlBase + "/DataSourceDefinitions/:id/models",
           method: "GET",
           isArray: true,
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.DataSourceDefinition#prototype$__create__models
-         * @methodOf lbServices.DataSourceDefinition
-         * @deprecated Use DataSourceDefinition.models.create() instead.
-         *
-         * @description
-         *
-         * Creates a new instance in models of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `DataSourceDefinition` object.)
-         * </em>
-         */
+        // INTERNAL. Use DataSourceDefinition.models.create() instead.
         "prototype$__create__models": {
           url: urlBase + "/DataSourceDefinitions/:id/models",
           method: "POST",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.DataSourceDefinition#prototype$__delete__models
-         * @methodOf lbServices.DataSourceDefinition
-         * @deprecated Use DataSourceDefinition.models.destroyAll() instead.
-         *
-         * @description
-         *
-         * Deletes all models of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * This method returns no data.
-         */
+        // INTERNAL. Use DataSourceDefinition.models.destroyAll() instead.
         "prototype$__delete__models": {
           url: urlBase + "/DataSourceDefinitions/:id/models",
           method: "DELETE",
         },
 
-        /**
-         * @ngdoc method
-         * @name lbServices.DataSourceDefinition#prototype$__get__facet
-         * @methodOf lbServices.DataSourceDefinition
-         * @deprecated Use DataSourceDefinition.facet() instead.
-         *
-         * @description
-         *
-         * Fetches belongsTo relation facet
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - Definition id
-         *
-         *  - `refresh` – `{boolean=}` -
-         *
-         * @param {Function(Object, Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {Function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @return {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `DataSourceDefinition` object.)
-         * </em>
-         */
-        "prototype$__get__facet": {
-          url: urlBase + "/DataSourceDefinitions/:id/facet",
+        // INTERNAL. Use DataSourceDefinition.models.count() instead.
+        "prototype$__count__models": {
+          url: urlBase + "/DataSourceDefinitions/:id/models/count",
           method: "GET",
         },
 
@@ -11201,7 +9203,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `exists` – `{boolean=}` -
+         *  - `exists` – `{boolean=}` - 
          */
         "exists": {
           url: urlBase + "/DataSourceDefinitions/:id/exists",
@@ -11397,7 +9399,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` -
+         *  - `count` – `{number=}` - 
          */
         "count": {
           url: urlBase + "/DataSourceDefinitions/count",
@@ -11441,6 +9443,45 @@ module.factory(
           method: "PUT",
         },
 
+        /**
+         * @ngdoc method
+         * @name lbServices.DataSourceDefinition#testConnection
+         * @methodOf lbServices.DataSourceDefinition
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {Function(Object, Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {Function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @return {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `` – `{boolean=}` - 
+         */
+        "testConnection": {
+          url: urlBase + "/DataSourceDefinitions/testConnection",
+          method: "POST",
+        },
+
         // INTERNAL. Use Facet.datasources.findById() instead.
         "::findById::Facet::datasources": {
           url: urlBase + "/Facets/:id/datasources/:fk",
@@ -11478,6 +9519,12 @@ module.factory(
           method: "DELETE",
         },
 
+        // INTERNAL. Use Facet.datasources.count() instead.
+        "::count::Facet::datasources": {
+          url: urlBase + "/Facets/:id/datasources/count",
+          method: "GET",
+        },
+
         // INTERNAL. Use ModelConfig.dataSource() instead.
         "::get::ModelConfig::dataSource": {
           url: urlBase + "/ModelConfigs/:id/dataSource",
@@ -11487,11 +9534,26 @@ module.factory(
     );
 
 
+
+
+    /**
+     * @ngdoc object
+     * @name lbServices.DataSourceDefinition.models
+     * @object
+     * @description
+     *
+     * The object `DataSourceDefinition.models` groups methods
+     * manipulating `ModelConfig` instances related to `DataSourceDefinition`.
+     *
+     * Use {@link lbServices.DataSourceDefinition#models} to query
+     * all related instances.
+     */
+
+
         /**
          * @ngdoc method
          * @name lbServices.DataSourceDefinition#models
          * @methodOf lbServices.DataSourceDefinition
-         * @deprecated Use DataSourceDefinition.models() instead.
          *
          * @description
          *
@@ -11501,7 +9563,7 @@ module.factory(
          *
          *  - `id` – `{*}` - Definition id
          *
-         *  - `filter` – `{object=}` -
+         *  - `filter` – `{object=}` - 
          *
          * @param {Function(Array.<Object>, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -11526,9 +9588,42 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.DataSourceDefinition#models.create
-         * @methodOf lbServices.DataSourceDefinition
-         * @deprecated Use DataSourceDefinition.models.create() instead.
+         * @name lbServices.DataSourceDefinition.models#count
+         * @methodOf lbServices.DataSourceDefinition.models
+         *
+         * @description
+         *
+         * Counts models of DataSourceDefinition.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Definition id
+         *
+         * @param {Function(Object, Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {Function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @return {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `ModelConfig` object.)
+         * </em>
+         */
+        R.models.count = function() {
+          var TargetResource = $injector.get("ModelConfig");
+          var action = TargetResource["::count::DataSourceDefinition::models"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.DataSourceDefinition.models#create
+         * @methodOf lbServices.DataSourceDefinition.models
          *
          * @description
          *
@@ -11565,9 +9660,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.DataSourceDefinition#models.destroyAll
-         * @methodOf lbServices.DataSourceDefinition
-         * @deprecated Use DataSourceDefinition.models.destroyAll() instead.
+         * @name lbServices.DataSourceDefinition.models#destroyAll
+         * @methodOf lbServices.DataSourceDefinition.models
          *
          * @description
          *
@@ -11597,9 +9691,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.DataSourceDefinition#models.destroyById
-         * @methodOf lbServices.DataSourceDefinition
-         * @deprecated Use DataSourceDefinition.models.destroyById() instead.
+         * @name lbServices.DataSourceDefinition.models#destroyById
+         * @methodOf lbServices.DataSourceDefinition.models
          *
          * @description
          *
@@ -11623,7 +9716,7 @@ module.factory(
          *
          * Data properties:
          *
-         *  - `` – `{undefined=}` -
+         *  - `` – `{undefined=}` - 
          */
         R.models.destroyById = function() {
           var TargetResource = $injector.get("ModelConfig");
@@ -11633,9 +9726,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.DataSourceDefinition#models.findById
-         * @methodOf lbServices.DataSourceDefinition
-         * @deprecated Use DataSourceDefinition.models.findById() instead.
+         * @name lbServices.DataSourceDefinition.models#findById
+         * @methodOf lbServices.DataSourceDefinition.models
          *
          * @description
          *
@@ -11670,9 +9762,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.DataSourceDefinition#models.updateById
-         * @methodOf lbServices.DataSourceDefinition
-         * @deprecated Use DataSourceDefinition.models.updateById() instead.
+         * @name lbServices.DataSourceDefinition.models#updateById
+         * @methodOf lbServices.DataSourceDefinition.models
          *
          * @description
          *
@@ -11713,7 +9804,6 @@ module.factory(
          * @ngdoc method
          * @name lbServices.DataSourceDefinition#facet
          * @methodOf lbServices.DataSourceDefinition
-         * @deprecated Use DataSourceDefinition.facet() instead.
          *
          * @description
          *
@@ -11723,7 +9813,7 @@ module.factory(
          *
          *  - `id` – `{*}` - Definition id
          *
-         *  - `refresh` – `{boolean=}` -
+         *  - `refresh` – `{boolean=}` - 
          *
          * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -11760,6 +9850,7 @@ module
         self[name] = load(name);
       });
       this.rememberMe = undefined;
+      this.currentUserData = null;
     }
 
     LoopBackAuth.prototype.save = function() {
@@ -11769,6 +9860,18 @@ module
         save(storage, name, self[name]);
       });
     };
+
+    LoopBackAuth.prototype.setUser = function(accessTokenId, userId, userData) {
+      this.accessTokenId = accessTokenId;
+      this.currentUserId = userId;
+      this.currentUserData = userData;
+    }
+
+    LoopBackAuth.prototype.clearUser = function() {
+      this.accessTokenId = null;
+      this.currentUserId = null;
+      this.currentUserData = null;
+    }
 
     return new LoopBackAuth();
 

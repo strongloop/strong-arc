@@ -26,3 +26,20 @@ $ strong-studio
 ```
 
 ### 3. Open the URL printed by the `strong-studio` command in a Chrome browser.
+
+## Developer Guide
+
+#### Updating angular services for loopback-workspace
+
+Ensure you have the latest version of loopback-sdk-angular-cli installed on
+your machine:
+
+```
+npm install loopback-sdk-angular-cli
+```
+
+Run the code generator in Studio root directory:
+
+```
+lb-ng -u /workspace/api node_modules/loopback-workspace/app.js client/www/scripts/modules/common/workspace.js
+```

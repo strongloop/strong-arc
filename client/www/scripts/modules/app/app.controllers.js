@@ -399,14 +399,17 @@ app.controller('StudioController', [
 
     };
     // test datasource connection
-    $scope.testDataSourceConnection = function(dsId) {
+    $scope.testDataSourceConnection = function(config) {
 
-      DataSourceService.testDataSourceConnection(dsId).
+      DataSourceService.testDataSourceConnection(config).
         then(function(response) {
           alert('DataSource status: ' + response.status);
+        })
+        .catch(function(err) {
+          alert('DataSource error: ' + err);
         });
-
     };
+
     // delete datasource
     $scope.deleteDataSourceDefinitionRequest = function(dsId) {
       if (dsId){

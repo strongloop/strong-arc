@@ -26,18 +26,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
 
     var dsModel = this.state.activeInstance;
 
-    var testConnection = function(event) {
-      var dsId = event.target.attributes['data-id'].value;
-      scope.$apply(function() {
-        scope.testDataSourceConnection(dsId);
-      });
-    };
-
-    var saveHandler = function(event) {
-
-      var theForm = event.target.form;
-
-
+    var buildRequestData = function(theForm) {
       var requestData = {};
 
       for (var i = 0;i < theForm.length;i++) {
@@ -45,6 +34,20 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
           requestData[theForm[i].name] = theForm[i].value;
         }
       }
+
+      return requestData;
+    };
+
+    var testConnection = function(event) {
+      var requestData = buildRequestData(event.target.form);
+      scope.$apply(function() {
+        scope.testDataSourceConnection(requestData);
+      });
+      return false;
+    };
+
+    var saveHandler = function(event) {
+      var requestData = buildRequestData(event.target.form);
 
       if (requestData.name.length > 0) {
         scope.$apply(function() {
@@ -57,8 +60,8 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
 
     return (
       <div data-id="DatasourceEditorInstanceContainer" >
-        <button onClick={testConnection} data-id={dsModel.id} >Test Connection</button>
         <form name="DatasourceForm" role="form">
+          <button onClick={testConnection}>Test Connection</button>
           <input type="hidden" data-name="id" name="id" value={dsModel.id} />
           <div className="form-group">
             <label for="name">Name</label>
@@ -82,10 +85,10 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
               name="connector" >
               <option value="">choose</option>
               <option value="loopback-connector-oracle">Oracle</option>
-              <option value="loopback-connector-mssql">MsSQL</option>
+              <option value="loopback-connector-mssql">Microsoft SQL</option>
               <option value="loopback-connector-mysql">MySQL</option>
-              <option value="loopback-connector-postgres">Postgres</option>
-              <option value="loopback-connector-mongodb">Mongo DB</option>
+              <option value="loopback-connector-postgresql">PostgreSQL</option>
+              <option value="loopback-connector-mongodb">MongoDB</option>
             </select>
           </div>
           <div className="form-group">
