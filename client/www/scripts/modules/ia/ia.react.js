@@ -458,11 +458,7 @@ var IAMainControls = (IAMainControls = React).createClass({
                 className="btn btn-default btn-control-ds"
                 data-name="postgres"
                 title="postgres connector">
-<<<<<<< HEAD
-                  <span className="glyphicon glyphicon-database"></span>
-=======
                 <span className="glyphicon glyphicon-database"></span>
->>>>>>> first visual design merge from old branch
               </button>
               <div className="ds-type-name">Postgres</div>
             </div>
