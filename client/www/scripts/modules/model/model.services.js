@@ -300,10 +300,10 @@ Model.service('ModelService', [
     };
     var defaultModelSchema = {
       id: CONST.NEW_MODEL_PRE_ID,
-      type: 'model',
+      type: CONST.MODEL_TYPE,
       facetName: CONST.NEW_MODEL_FACET_NAME,
-      strict: true,
-      public: false,
+      strict: false,
+      public: true,
       name: CONST.NEW_MODEL_NAME,
       idInjection: false
     };

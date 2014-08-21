@@ -24,7 +24,12 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
 //        );
 //      }
       var xState = this.state;
-      xState.activeInstance[modelPropertyName] = event.target.value;
+      if (event.target.attributes['type'] && (event.target.attributes['type'].value === 'checkbox')) {
+        xState.activeInstance[modelPropertyName] = event.target.checked;
+      }
+      else {
+        xState.activeInstance[modelPropertyName] = event.target.value;
+      }
       this.setState(xState);
     }
   },
@@ -42,9 +47,6 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
       xState.activeInstance = tActiveInstance;
       this.setState(xState);
     }
-  },
-  saveFieldValue: function(event) {
-
   },
   render: function() {
     var that = this;
@@ -64,12 +66,6 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
       scope.$apply(function() {
         scope.toggleModelDetailView();
       });
-    };
-    var isPublicChecked = function(item) {
-      if (item.public) {
-        return 'checked';
-      }
-      return '';
     };
     var saveModelDefinition = function(event) {
       event.preventDefault();
@@ -168,16 +164,21 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
 	          	<div className="model-detail-input-container listNarrow">
 	          		<label className="model-detail-label">public</label>
 	          		<input type="checkbox"
-                  checked="off"
+                  value={modelDef.public}
+                  checked={modelDef.public}
                   data-name="public"
                   name="public"
                   onChange={this.handleChange}
-                  className="model-instance-editor-input" />
+                  className="model-instance-editor-checkbox" />
 	          	</div>
 	          	<div className="model-detail-input-container listNarrow">
 	          		<label className="model-detail-label">strict</label>
 	          		<input type="checkbox"
-	          		    checked={modelDef.strict}
+                    data-name="strict"
+                    name="strict"
+                    onChange={this.handleChange}
+                    checked={modelDef.strict}
+                    value={modelDef.strict}
 	          		    className="model-instance-editor-checkbox" />
 	          	</div>
 	          </div>
@@ -323,12 +324,18 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
     if(event.target.attributes['data-name']){
       var tModelPropertyName = event.target.attributes['data-name'].value;
       var tModelProperty = this.state.modelProperty;
-      tModelProperty[tModelPropertyName] = event.target.value;
+      if (event.target.attributes['type'] && (event.target.attributes['type'].value === 'checkbox')) {
+        tModelProperty[tModelPropertyName] = event.target.checked;
+      }
+      else {
+        tModelProperty[tModelPropertyName] = event.target.value;
+      }
       this.setState({modelProperty:tModelProperty});
       var updateModelPropertyConfig = tModelProperty;
       scope.$apply(function() {
         scope.updateModelPropertyRequest(updateModelPropertyConfig);
       });
+
     }
 
   },
@@ -372,19 +379,42 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
                   value={modelProperty.name} />
               </span>
               <span data-ui-type="cell" className="props-data-type-cell">
-                <DataTypeSelect value={modelProperty.type} />
+                <DataTypeSelect scope={scope} modelProperty={that.state.modelProperty} type={modelProperty.type} />
               </span>
               <span data-ui-type="cell" className="props-isid-cell">
-                <input type="checkbox"  />
+                <input type="checkbox"
+                  data-name="isId"
+                  name="isId"
+                  onChange={this.triggerModelPropertyUpdate}
+                  checked={modelProperty.isId}
+                  value={modelProperty.isId}
+                  className="model-instance-editor-checkbox" />
               </span>
               <span data-ui-type="cell" className="props-required-cell">
-                <input type="checkbox"  />
+                <input type="checkbox"
+                  data-name="required"
+                  name="required"
+                  onChange={this.triggerModelPropertyUpdate}
+                  checked={modelProperty.required}
+                  value={modelProperty.required}
+                  className="model-instance-editor-checkbox" />
               </span>
               <span data-ui-type="cell" className="props-index-cell">
-                <input type="checkbox" />
+                <input type="checkbox"
+                  data-name="index"
+                  name="index"
+                  onChange={this.triggerModelPropertyUpdate}
+                  checked={modelProperty.index}
+                  value={modelProperty.index}
+                  className="model-instance-editor-checkbox" />
               </span>
               <span data-ui-type="cell" className="props-comments-cell">
-                <input type="text" className="property-doc-textarea model-instance-editor-input" />
+                <input type="text"
+                  data-name="comments"
+                  name="comments"
+                  onBlur={this.triggerModelPropertyUpdate}
+                  value={modelProperty.comments}
+                  className="property-doc-textarea model-instance-editor-input" />
               </span>
             </div>
           </div>
@@ -403,14 +433,37 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
 
 
 var DataTypeSelect = (DataTypeSelect = React).createClass({
+  getInitialState: function() {
+    return {
+      type:this.props.type,
+      modelProperty:this.props.modelProperty
+    };
+  },
+  handleChange: function(event) {
+    var scope = this.props.scope;
+    var modelPropertyName = '';
+    if (event.target.attributes['data-name']) {
+      modelPropertyName = event.target.attributes['data-name'].value;
+      var xState = this.state;
+      xState.modelProperty[modelPropertyName] = event.target.value;
+      this.setState(xState);
+      scope.$apply(function() {
+        scope.updateModelPropertyRequest(xState.modelProperty);
+      });
+    }
+  },
   render: function() {
+    var that = this;
+
+    var val = that.state.modelProperty.type;
 
     var dataTypes = ['string','array','buffer','date','geopoint','number','boolean','object','any'];
 
     var options = dataTypes.map(function(type) {
       return (<option value={type}>{type}</option>)
     });
-    return (<select value={this.props.value}>{options}</select>);
+
+    return (<select value={val} data-name="type" onChange={this.handleChange}>{options}</select>);
   }
 });
 

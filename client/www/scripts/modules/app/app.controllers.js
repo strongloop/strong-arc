@@ -272,8 +272,8 @@ app.controller('StudioController', [
           then(function(response) {
             // clear reference to 'new' placeholder in openInstanceRefs
             IAService.clearOpenNewModelReference();
+            $scope.activeInstance = IAService.setActiveInstance(response, CONST.MODEL_TYPE);
             loadModels();
-            $scope.activeInstance = response;
           }
         );
       }
