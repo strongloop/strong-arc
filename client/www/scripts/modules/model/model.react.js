@@ -4,7 +4,10 @@
  * */
 var ModelDetailEditor = (ModelDetailEditor = React).createClass({
   getInitialState: function() {
-    return {activeInstance:this.props.scope.activeInstance};
+    return {
+      activeInstance:this.props.scope.activeInstance,
+      isDetailsContainerOpen:true
+    };
   },
   componentWillReceiveProps: function(nextProps) {
     this.setState({activeInstance:{}});
@@ -48,19 +51,24 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
       this.setState(xState);
     }
   },
+  toggleModelDetailContainer: function() {
+    $('.model-detail-container').toggle(250);
+    var currState = this.state.isDetailsContainerOpen;
+    this.setState({isDetailsContainerOpen:!currState});
+  },
   render: function() {
-    var that = this;
-    var scope = that.props.scope;
-    var modelDef = that.state.activeInstance;
+    var component = this;
+    var scope = component.props.scope;
+    var modelDef = component.state.activeInstance;
     var cx = React.addons.classSet;
 
     var classes = cx({
-      'model-detail-pocket-container is-open': that.props.scope.isModelInstanceBasePropertiesActive,
-      'model-detail-pocket-container is-closed': !that.props.scope.isModelInstanceBasePropertiesActive
+      'model-detail-pocket-container is-open': component.props.scope.isModelInstanceBasePropertiesActive,
+      'model-detail-pocket-container is-closed': !component.props.scope.isModelInstanceBasePropertiesActive
     });
     var iconClasses = cx({
-      'model-editor-section-icon glyphicon glyphicon-minus-sign': that.props.scope.isModelInstanceBasePropertiesActive,
-      'model-editor-section-icon glyphicon glyphicon-plus-sign': !that.props.scope.isModelInstanceBasePropertiesActive
+      'model-editor-section-icon glyphicon glyphicon-minus-sign': component.state.isDetailsContainerOpen,
+      'model-editor-section-icon glyphicon glyphicon-plus-sign': !component.state.isDetailsContainerOpen
     });
     var clickHandler = function(event) {
       scope.$apply(function() {
@@ -69,8 +77,8 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
     };
     var saveModelDefinition = function(event) {
       event.preventDefault();
-      var tState = that.state.activeInstance;
-      var scope = that.props.scope;
+      var tState = component.state.activeInstance;
+      var scope = component.props.scope;
       scope.$apply(function() {
         scope.saveModelRequest(tState);
       });
@@ -99,8 +107,8 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
               <label>name</label>
               <input type="text"
                 value={modelDef.name}
-                onChange={that.handleChange}
-                onBlur={that.processModelNameValue}
+                onChange={component.handleChange}
+                onBlur={component.processModelNameValue}
                 data-name="name"
                 id="ModelName"
                 name="ModelName"
@@ -112,7 +120,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
           </div>
           <div className="lineBreak"></div>
 
-          <button onClick={clickHandler}
+          <button onClick={component.toggleModelDetailContainer}
             type="button"
             className="model-instance-header-btn btn btn-default btn-block"
             title="Details" >
@@ -204,7 +212,8 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
 
   getInitialState: function() {
     return {
-      isOpen:true
+      isOpen:true,
+      isPropertiesContainerOpen:true
     };
   },
   shouldComponentUpdate: function(nextProps, nextState) {
@@ -220,26 +229,30 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
     });
 
   },
-
+  toggleModelProperties: function() {
+    $('[data-id="ModelPropertyListContainer"]').toggle(250);
+    var currState = this.state.isPropertiesContainerOpen;
+    this.setState({isPropertiesContainerOpen:!currState});
+  },
   render: function() {
 
-    var that = this;
+    var component = this;
 
-    var scope = this.props.scope;
+    var scope = component.props.scope;
     var properties = scope.properties;
     var cx = React.addons.classSet;
 
     var classes = cx({
-      'row is-open': this.state.isOpen,
-      'row is-closed': !this.state.isOpen
+      'row is-open': component.state.isOpen,
+      'row is-closed': !component.state.isOpen
     });
     var iconClasses = cx({
-      'model-editor-section-icon glyphicon glyphicon-minus-sign': this.state.isOpen,
-      'model-editor-section-icon glyphicon glyphicon-plus-sign': !this.state.isOpen
+      'model-editor-section-icon glyphicon glyphicon-minus-sign': component.state.isPropertiesContainerOpen,
+      'model-editor-section-icon glyphicon glyphicon-plus-sign': !component.state.isPropertiesContainerOpen
     });
     var clickHandler = function(event) {
-      var isOpenState = !that.state.isOpen;
-      that.setState({isOpen:isOpenState});
+      var isOpenState = !component.state.isPropertiesContainerOpen;
+      component.setState({isOpen:isOpenState});
     };
 
     var items = [];
@@ -251,11 +264,11 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
     if (properties) {
       retVal = (
         <div>
-          <button type="button" onClick={clickHandler} className="model-instance-header-btn btn btn-default btn-block" title="Properties" >
+          <button type="button" onClick={component.toggleModelProperties} className="model-instance-header-btn btn btn-default btn-block" title="Properties" >
             <span className={iconClasses}></span>
             <span className="model-editor-section-title">Properties</span>
           </button>
-          <div className={classes} >
+          <div data-id="ModelPropertyListContainer" className={classes} >
             <div className="model-instance-container property-list-header">
               <div data-ui-type="table">
                 <div data-ui-type="row" className="model-instance-property-table-header-row">
@@ -279,7 +292,7 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
             <ul className="model-instance-property-list">
             {items}
             </ul>
-            <button type="button" onClick={this.triggerNewPropertyEditor} className="btn-new-model-property" >New Property</button>
+            <button type="button" onClick={component.triggerNewPropertyEditor} className="btn-new-model-property" >New Property</button>
           </div>
 
 

@@ -39,6 +39,9 @@ var IAMainNavContainer = (IAMainNavContainer = React).createClass({
 *
 * */
 var IAMainModelNav = (IAMainModelNav = React).createClass({
+  getInitialState: function() {
+    return {isModelNavContainerOpen:true};
+  },
   openSelectedModels:function(key, opt) {
     var component = this;
     if (opt.sourceEvent.currentTarget.attributes['data-id']) {
@@ -86,6 +89,11 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
         }
       }
     });
+  },
+  toggleModelNav: function() {
+    $('.model-branch-container').toggle(250);
+    var currState = this.state.isModelNavContainerOpen;
+    this.setState({isModelNavContainerOpen:!currState});
   },
   render: function() {
 
@@ -135,12 +143,12 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
       navModels = scope.mainNavModels;
     }
     var navItemContainerClasses = cx({
-      'ia-tree-node-table branch-leaf-list is-open': scope.modelNavIsVisible,
-      'ia-tree-node-table branch-leaf-list is-closed': !scope.modelNavIsVisible
+      'ia-tree-node-table branch-leaf-list model-branch-container is-open': scope.modelNavIsVisible,
+      'ia-tree-node-table branch-leaf-list model-branch-container is-closed': !scope.modelNavIsVisible
     });
     var navItemOpenCloseIconClasses = cx({
-      'nav-branch-openclose-icon glyphicon glyphicon-navbranch-open': scope.modelNavIsVisible,
-      'nav-branch-openclose-icon glyphicon glyphicon-navbranch-closed': !scope.modelNavIsVisible
+      'nav-branch-openclose-icon glyphicon glyphicon-navbranch-open': component.state.isModelNavContainerOpen,
+      'nav-branch-openclose-icon glyphicon glyphicon-navbranch-closed': !component.state.isModelNavContainerOpen
     });
     var navItemsOpenCloseFolderIconClasses = cx({
       'nav-branch-folder-icon glyphicon glyphicon-folder-open': scope.modelNavIsVisible,
@@ -183,7 +191,7 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
     });
     return (
       <div>
-        <button onClick={clickBranch} data-name="model_root" className="btn btn-default btn-block nav-tree-item tree-branch"  title="Models" >
+        <button onClick={component.toggleModelNav} data-name="model_root" className="btn btn-default btn-block nav-tree-item tree-branch"  title="Models" >
           <span className={navItemOpenCloseIconClasses}></span>
           <span className="nav-branch-folder-icon glyphicon glyphicon-folder-open"></span>
           <span className="nav-branch-title">Models</span>
@@ -202,6 +210,9 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
 *
 * */
 var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
+  getInitialState: function() {
+    return {isDataSourceNavContainerOpen:true};
+  },
   openSelectedDataSource:function(key, opt) {
     var component = this;
     if (opt.sourceEvent.currentTarget.attributes['data-id']) {
@@ -251,6 +262,11 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
       }
     });
   },
+  toggleDataSourceNav: function() {
+    $('.datasource-branch-container').toggle(250);
+    var currState = this.state.isDataSourceNavContainerOpen;
+    this.setState({isDataSourceNavContainerOpen:!currState});
+  },
   render: function() {
     var component = this;
     var scope = component.props.scope;
@@ -280,12 +296,12 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
 
     };
     var navItemContainerClasses = cx({
-      'ia-tree-node-table branch-leaf-list is-open': scope.dsNavIsVisible,
-      'ia-tree-node-table branch-leaf-list is-closed': !scope.dsNavIsVisible
+      'ia-tree-node-table branch-leaf-list datasource-branch-container is-open': scope.dsNavIsVisible,
+      'ia-tree-node-table branch-leaf-list datasource-branch-container is-closed': !scope.dsNavIsVisible
     });
     var navItemOpenCloseIconClasses = cx({
-      'nav-branch-openclose-icon glyphicon glyphicon-navbranch-open': scope.dsNavIsVisible,
-      'nav-branch-openclose-icon glyphicon glyphicon-navbranch-closed': !scope.dsNavIsVisible
+      'nav-branch-openclose-icon glyphicon glyphicon-navbranch-open': component.state.isDataSourceNavContainerOpen,
+      'nav-branch-openclose-icon glyphicon glyphicon-navbranch-closed': !component.state.isDataSourceNavContainerOpen
     });
     var navItemsOpenCloseFolderIconClasses = cx({
       'glyphicon glyphicon-folder-open': scope.dsNavIsVisible,
@@ -344,7 +360,7 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
     // Main return
     return (
       <div>
-        <button onClick={clickBranch} type="button" data-name="datasources_root" className="btn btn-default btn-block nav-tree-item tree-branch" title="Datasources">
+        <button onClick={component.toggleDataSourceNav} type="button" data-name="datasources_root" className="btn btn-default btn-block nav-tree-item tree-branch" title="Datasources">
           <span className={navItemOpenCloseIconClasses}></span>
           <span className="nav-branch-folder-icon glyphicon glyphicon-folder-open"></span>
           <span className="nav-branch-title">DataSources</span>
