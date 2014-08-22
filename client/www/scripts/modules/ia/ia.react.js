@@ -40,14 +40,16 @@ var IAMainNavContainer = (IAMainNavContainer = React).createClass({
 * */
 var IAMainModelNav = (IAMainModelNav = React).createClass({
   openSelectedModels:function(key, opt) {
-    var that = this;
-    that.props.scope.$apply(function () {
-      that.props.scope.openSelectedModels();
-    });
+    var component = this;
+    if (opt.sourceEvent.currentTarget.attributes['data-id']) {
+      var modelid = opt.sourceEvent.currentTarget.attributes['data-id'].value;
+      component.props.scope.$apply(function () {
+        component.props.scope.openSelectedInstance(modelid, CONST.MODEL_TYPE);
+      });
+    }
   },
   deleteSelectedModel: function(key, opt) {
     var scope = this.props.scope;
-
     try{
       if (opt.sourceEvent.currentTarget.attributes['data-id']){
         var modelId = opt.sourceEvent.currentTarget.attributes['data-id'].value;
@@ -60,14 +62,35 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
     catch(error) {
       console.warn('error deleting model definition: ' + error);
     }
-
   },
-  componentDidMount:function(){
+  componentDidMount: function() {
+    var component = this;
+    var menuItems = {};
+    var currentDSName = null;
+    var isDiscoverable = false;
 
+    menuItems.openSelectedModels = {name: "open", callback: component.openSelectedModels};
+    menuItems.deleteSelectedModel = {name: "delete", callback: component.deleteSelectedModel};
+
+    $.contextMenu({
+      // define which elements trigger this menu
+      selector: '.btn-nav-context',
+      trigger: 'left',
+      // define the elements of the menu
+      items: menuItems,
+      events: {
+        show: function(opt, event) {
+          if (opt.sourceEvent.target.attributes['data-name']){
+            currentDSName = opt.sourceEvent.target.attributes['data-name'].value;
+          }
+        }
+      }
+    });
   },
   render: function() {
 
-    var scope = this.props.scope;
+    var component = this;
+    var scope = component.props.scope;
 
     var modelSelectedCollection = [];
     var cx = React.addons.classSet;
@@ -136,6 +159,10 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
       else if (item.isSelected) {
         classNameVar += ' is-selected'
       }
+      var dsConnectEl = (<span />);
+      if (item.dataSource && (item.dataSource !== CONST.DEFAULT_DATASOURCE )) {
+        dsConnectEl = (<span data-name={item.name}  data-id={item.id} className="glyphicon glyphicon-lightning"></span>);
+      }
       return (
         <div data-ui-type="row" onMouseOver={hoverEvent} onMouseOut={hoverOutEvent} className={classNameVar} data-id={item.id} >
           <div data-ui-type="cell" className="ia-nav-item-icon-container-col">
@@ -146,10 +173,12 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
             </button>
           </div>
           <div data-ui-type="cell" className="ia-nav-item-dsconnect-icon-container-col">
-            <span data-name={item.name}  data-id={item.id} className="glyphicon glyphicon-lightning"></span>
+            {dsConnectEl}
           </div>
           <div data-ui-type="cell" className="ia-nav-item-contextmenu-icon-container-col">
-            <span data-name={item.name}  data-id={item.id} className="glyphicon glyphicon-contextmenu"></span>
+            <button className="btn-command btn-nav-context" data-id={item.id}>
+              <span data-name={item.name}  data-id={item.id} className="glyphicon glyphicon-contextmenu"></span>
+            </button>
           </div>
         </div>
         );
@@ -175,15 +204,14 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
 *
 * */
 var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
-  openSelectedDataSources:function(key, opt) {
-    var that = this;
-    that.props.scope.$apply(function () {
-      that.props.scope.openSelectedModels();
-    });
-  },
-  createModelsFromDS: function(options) {
-    var that = this;
-    var x = options;
+  openSelectedDataSource:function(key, opt) {
+    var component = this;
+    if (opt.sourceEvent.currentTarget.attributes['data-id']) {
+      var dsId = opt.sourceEvent.currentTarget.attributes['data-id'].value;
+      component.props.scope.$apply(function () {
+        component.props.scope.openSelectedInstance(dsId, CONST.DATASOURCE_TYPE);
+      });
+    }
   },
   deleteSelectedDataSource: function(key, opt) {
     var scope = this.props.scope;
@@ -203,18 +231,17 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
   },
   componentDidMount:function(){
     var menuItems = {};
-    var that = this;
+    var component = this;
     var currentDSName = null;
-
     var isDiscoverable = false;
 
-    menuItems.openSelectedModels = {name: "open", callback: this.openSelectedDataSources};
-
-    menuItems.deleteSelectedDataSource = {name: "delete", callback: this.deleteSelectedDataSource};
+    menuItems.openSelectedDataSource = {name: "open", callback: component.openSelectedDataSource};
+    menuItems.deleteSelectedDataSource = {name: "delete", callback: component.deleteSelectedDataSource};
 
     $.contextMenu({
       // define which elements trigger this menu
-      selector: '.datasource-node',
+      selector: '.btn-ds-nav-context',
+      trigger: 'left',
       // define the elements of the menu
       items: menuItems,
       events: {
@@ -222,15 +249,13 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
           if (opt.sourceEvent.target.attributes['data-name']){
             currentDSName = opt.sourceEvent.target.attributes['data-name'].value;
           }
-
-
         }
       }
-      // there's more, have a look at the demos and docs...
     });
   },
   render: function() {
-    var scope = this.props.scope;
+    var component = this;
+    var scope = component.props.scope;
 
     var cx = React.addons.classSet;
 
@@ -308,7 +333,9 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
             <div data-ui-type="cell" className="ia-nav-item-dsconnect-icon-container-col">
             </div>
             <div data-ui-type="cell" className="ia-nav-item-contextmenu-icon-container-col">
-              <span data-name={item.name}  data-id={item.id} className="glyphicon glyphicon-contextmenu"></span>
+              <button className="btn-command btn-ds-nav-context" data-id={item.id}>
+                <span data-name={item.name}  data-id={item.id} className="glyphicon glyphicon-contextmenu"></span>
+              </button>
             </div>
 
           </div>

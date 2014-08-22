@@ -63,6 +63,12 @@ code {
     margin: 0 auto;
     width: 80% /* value of your choice which suits your alignment */;
 }
+.btn-command {
+    border:0;
+    background:transparent;
+    margin:0;
+    padding:0;
+}
 /*
 
     growl

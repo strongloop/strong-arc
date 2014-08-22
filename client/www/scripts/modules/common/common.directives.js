@@ -43,7 +43,7 @@ Common.directive('slCommonInstanceTitleView', [
             React.renderComponent(CommonInstanceTitleView({scope: scope}), el[0]);
           }
 
-        });
+        }, true);
         scope.$watch('activeInstanceUpdated', function() {
           if (scope.activeInstance) {
             React.renderComponent(CommonInstanceTitleView({scope: scope}), el[0]);
@@ -86,7 +86,7 @@ Common.directive('slCommonInstanceTabsView', [
 
         }
 
-        scope.$watch('activeInstance', function(newVal, oldVal) {
+        scope.$watch('activeInstance', function(intance) {
           if (scope.activeInstance) {
             renderComp();
           }

@@ -99,6 +99,7 @@ var CONST = {
   NEW_DATASOURCE_NAME: 'new-datasource',
   NEW_DATASOURCE_FACET_NAME: 'server',
   DATASOURCE_TYPE: 'datasource',
+  DEFAULT_DATASOURCE: 'db',
   MODEL_TYPE: 'model'
 };
 var setUI = function() {

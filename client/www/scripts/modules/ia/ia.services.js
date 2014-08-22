@@ -134,10 +134,10 @@ IA.service('IAService', [
                     currRefs = [];
                     AppStorageService.setItem('openInstanceRefs', currRefs);
                   }
-                  currRefs.push({id: newInstance.id, name:newInstance.name,type:instanceType});
+                  currRefs.push({id: instance.id, name:instance.name,type:instanceType});
                   AppStorageService.setItem('openInstanceRefs', currRefs);
                 }
-                deferred.resolve(instance);
+                return deferred.resolve(instance);
 
               }
             );
@@ -163,10 +163,10 @@ IA.service('IAService', [
                     currRefs = [];
                     AppStorageService.setItem('openInstanceRefs', currRefs);
                   }
-                  currRefs.push({id: newInstance.id, name:newInstance.name,type:instanceType});
+                  currRefs.push({id: instance.id, name:instance.name,type:instanceType});
                   AppStorageService.setItem('openInstanceRefs', currRefs);
                 }
-                deferred.resolve(instance);
+                return deferred.resolve(instance);
 
               }
             );
