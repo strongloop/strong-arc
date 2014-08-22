@@ -33,3 +33,10 @@ CSS from original branch */
     background:#efefef;
     overflow:auto;
 }
+.is-invalid {
+    background:red;
+    border:3px solid red;
+}
+.model-instance-name-validation.is-valid {
+    display:none;
+}

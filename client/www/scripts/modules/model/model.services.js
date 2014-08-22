@@ -87,7 +87,6 @@ Model.service('ModelService', [
       return deferred.promise;
 
     };
-
     svc.isNewModelNameUnique = function(name) {
       var retVar = true;
 

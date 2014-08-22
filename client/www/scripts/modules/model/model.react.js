@@ -6,34 +6,49 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
   getInitialState: function() {
     return {
       activeInstance:this.props.scope.activeInstance,
-      isDetailsContainerOpen:true
+      isDetailsContainerOpen:true,
+      isModelNameValid:true
     };
   },
   componentWillReceiveProps: function(nextProps) {
     this.setState({activeInstance:{}});
     this.setState({activeInstance:nextProps.scope.activeInstance});
   },
+  isModelNamValid: function(name) {
+    var testResult = /^[\-_a-zA-Z0-9]+$/.test(name);
+    if (!testResult) {
+      return false;
+    }
+    else {
+      return true;
+    }
+
+  },
   handleChange: function(event) {
-    var scope = this.props.scope;
+    var component = this;
+    var scope = component.props.scope;
     var modelPropertyName = '';
     if (event.target.attributes['data-name']) {
+      var xState = component.state;
       modelPropertyName = event.target.attributes['data-name'].value;
-      // commented out code to update tab name while typing
-//      if (modelPropertyName === 'name') {
-//        // update the tab
-//        scope.$apply(function() {
-//            scope.updateActiveInstanceName(event.target.value);
-//          }
-//        );
-//      }
-      var xState = this.state;
+      if (modelPropertyName === 'name') {
+        if (!component.isModelNamValid(event.target.value)) {
+          xState.isModelNameValid = false;
+        }
+        else {
+          xState.isModelNameValid = true;
+        }
+      }
       if (event.target.attributes['type'] && (event.target.attributes['type'].value === 'checkbox')) {
         xState.activeInstance[modelPropertyName] = event.target.checked;
       }
       else {
+//        if (event.target.value.length < 1) {
+//          event.target.value = ' ';
+//        }
         xState.activeInstance[modelPropertyName] = event.target.value;
       }
-      this.setState(xState);
+      component.setState(xState);
     }
   },
   processModelNameValue: function(event) {
@@ -70,6 +85,14 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
       'model-editor-section-icon glyphicon glyphicon-minus-sign': component.state.isDetailsContainerOpen,
       'model-editor-section-icon glyphicon glyphicon-plus-sign': !component.state.isDetailsContainerOpen
     });
+    var modelNameInputClasses = cx({
+      'model-instance-name form-control': component.state.isModelNameValid,
+      'model-instance-name form-control is-invalid': !component.state.isModelNameValid
+    });
+    var modelNameValidationClasses = cx({
+      'model-instance-name-validation is-valid': component.state.isModelNameValid,
+      'model-instance-name-validation is-invalid': !component.state.isModelNameValid
+    });
     var clickHandler = function(event) {
       scope.$apply(function() {
         scope.toggleModelDetailView();
@@ -99,7 +122,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
 
 
     var returnVal = (<div />);
-    if (modelDef && modelDef.name) {
+    if (modelDef) {
       returnVal = (
         <form role="form">
         	<div className="model-header-container">
@@ -112,7 +135,18 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                 data-name="name"
                 id="ModelName"
                 name="ModelName"
-                className="model-instance-name form-control" />
+                className={modelNameInputClasses} />
+              <div className={modelNameValidationClasses}>
+                <span className="validation-error-message">
+                  Your model definition name is invalid.  Make sure it:
+                  <ul>
+                    <li>contains no spaces</li>
+                    <li>contains no crazy characters</li>
+                    <li>contains no hyphens</li>
+                    <li>starts with an alpha character</li>
+                  </ul>
+                </span>
+              </div>
             </div>
             <button onClick={saveModelDefinition}
               className="model-detail-pocket-button model-save-button"
