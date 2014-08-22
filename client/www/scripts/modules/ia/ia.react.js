@@ -546,6 +546,9 @@ var IAGlobalExceptionDisplayView = (IAGlobalExceptionDisplayView = React).create
                   <span>Message: </span><span>{stackItem.message}</span>
                 </li>
                 <li>
+                  <span>Details: </span><span>{stackItem.details}</span>
+                </li>
+                <li>
                   <span>Request: </span><span>{stackItem.requestUrl}</span>
                 </li>
                 <li>

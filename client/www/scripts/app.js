@@ -235,6 +235,7 @@ app.factory('requestInterceptor', [
           $rootScope.$broadcast('GlobalExceptionEvent', {
               requestUrl: rejection.config.url,
               message: rejection.data.error.message,
+              details: rejection.data.error.details,
               name: rejection.data.error.name,
               stack: rejection.data.error.stack,
               status: rejection.status
