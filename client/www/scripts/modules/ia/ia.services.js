@@ -10,6 +10,7 @@ IA.service('IAService', [
     var svc = {};
 
     var currentlySelected = [];
+    var globalExceptionStack = [];
 
     svc.getContainerWidth = function(selector) {
       if (selector) {
@@ -33,8 +34,23 @@ IA.service('IAService', [
       return (window.innerWidth - 40);
     };
 
-
-
+    /*
+    *
+    * Exception Handling
+    *
+    * */
+    svc.setGlobalException = function(config) {
+      if (config.message) { // barrier to entry
+        globalExceptionStack.push(config);
+      }
+      return globalExceptionStack;
+    };
+    svc.clearGlobalExceptionStack = function() {
+      return globalExceptionStack = [];
+    };
+    svc.getGlobalExceptionStack = function() {
+      return globalExceptionStack;
+    };
 
    // instances
 

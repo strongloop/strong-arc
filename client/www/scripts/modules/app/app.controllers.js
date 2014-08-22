@@ -21,6 +21,7 @@ app.controller('StudioController', [
     $scope.activeInstance = {};
     $scope.modelNavIsVisible = true;
     $scope.dsNavIsVisible = true;
+    $scope.globalExceptionStack = [];
 
     /*
     *
@@ -210,6 +211,7 @@ app.controller('StudioController', [
     $scope.saveModelRequest = function(config) {
 
       if (config.id && (config.id !== CONST.NEW_MODEL_PRE_ID)) {
+        var originalModelId = config.id;
         // update model
         ModelService.updateModel(config).
           then(function(response) {
@@ -232,6 +234,7 @@ app.controller('StudioController', [
             IAService.clearOpenNewModelReference();
             loadModels();
             $scope.activeInstance = response;
+            IAService.setActiveInstance($scope.activeInstance, CONST.MODEL_TYPE);
           }
         );
       }
@@ -391,6 +394,7 @@ app.controller('StudioController', [
       var currentDatasource = config;
       if (config.id) {
 
+        var originalDataSourceId = config.id;
         // make sure there is a facetName
         if (!config.facetName) {
           config.facetName = CONST.NEW_DATASOURCE_FACET_NAME;
@@ -407,6 +411,13 @@ app.controller('StudioController', [
               IAService.clearOpenNewDSReference();
               $scope.activeInstance = response;
               $scope.activeInstance.type = CONST.DATASOURCE_TYPE;
+              IAService.closeInstanceById(originalDataSourceId);
+              IAService.addInstanceRef({
+                id:$scope.activeInstance.id,
+                name:$scope.activeInstance.name,
+                type:$scope.activeInstance.type
+              });
+              IAService.setActiveInstance($scope.activeInstance, CONST.DATASOURCE_TYPE);
               loadDataSources();
             }
           );
@@ -417,6 +428,7 @@ app.controller('StudioController', [
             then(function(response) {
                 $scope.activeInstance = response;
                 $scope.activeInstance.type = CONST.DATASOURCE_TYPE;
+                IAService.setActiveInstance($scope.activeInstance, CONST.DATASOURCE_TYPE);
                 loadDataSources();
               }
             ).
@@ -431,6 +443,13 @@ app.controller('StudioController', [
     function getRandomNumber() {
       return Math.floor((Math.random() * 100) + 1);
     }
+
+    $scope.clearGlobalException = function() {
+      $scope.globalExceptionStack = IAService.clearGlobalExceptionStack();
+    };
+    $scope.$on('GlobalExceptionEvent', function(event, data) {
+      $scope.globalExceptionStack = IAService.setGlobalException(data);
+    });
     /*
      *
      *   IA STATE CLEANUP LISTENER

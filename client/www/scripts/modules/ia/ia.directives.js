@@ -188,6 +188,24 @@ IA.directive('slIaMainControls', [
   }
 ]);
 /*
+*
+*   IA GLOBAL EXCEPTION DISPLAY
+*
+* */
+app.directive('slIaGlobalExceptionView', [
+  function() {
+    return {
+      replace:true,
+      link: function(scope, el, attrs) {
+
+        scope.$watch('globalExceptionStack', function(oldVal, newVal) {
+          React.renderComponent(IAGlobalExceptionDisplayView({scope:scope}), el[0]);
+        }, true);
+      }
+    }
+  }
+]);
+ /*
  *
  *   IA Main Content
  *

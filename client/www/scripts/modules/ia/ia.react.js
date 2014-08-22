@@ -115,9 +115,7 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
         scope.$apply(function () {
           scope.navTreeItemClicked('model', val, event.metaKey);
         });
-
       }
-
     };
 
     var addNewInstanceRequest = function(event) {
@@ -508,4 +506,65 @@ var IAMainControls = (IAMainControls = React).createClass({
       );
   }
 });
+/*
+*
+* Exception display
+*
+* */
+var IAGlobalExceptionDisplayView = (IAGlobalExceptionDisplayView = React).createClass({
+  render: function() {
+    var scope = this.props.scope;
+    var displayMarkup = (<div />);
+    var toggleState = function(elem, one, two) {
+      var elem = document.querySelector(elem);
+      elem.setAttribute('data-state', elem.getAttribute('data-state') === one ? two : one);
 
+    };
+    var toggleStackDisplay = function(event) {
+      toggleState('.global-exception-stack-display', 'closed', 'open');
+      event.preventDefault();
+    };
+    var clearGlobalException = function() {
+      scope.$apply(function() {
+        scope.clearGlobalException();
+      });
+    };
+
+    if (scope.globalExceptionStack.length) {
+      var prevMessage = '';
+      displayMarkup = scope.globalExceptionStack.map(function(stackItem) {
+        if (stackItem.message !== prevMessage) {
+          prevMessage = stackItem.message;
+          return (
+            <div data-id="IAGlobalExceptionDisplayContainer" className="clearfix bg-danger ia-global-exception-container">
+              <h2>oops something is wrong</h2>
+              <ul>
+                <li>
+                  <span>Name: </span><span>{stackItem.name}</span>
+                </li>
+                <li>
+                  <span>Message: </span><span>{stackItem.message}</span>
+                </li>
+                <li>
+                  <span>Details: </span><span>{stackItem.details}</span>
+                </li>
+                <li>
+                  <span>Request: </span><span>{stackItem.requestUrl}</span>
+                </li>
+                <li>
+                  <span>Status: </span><span>{stackItem.status}</span>
+                </li>
+                <li>
+                  <button className="btn btn-sm btn-default" onClick={toggleStackDisplay}>Stack (toggle): </button><textarea data-state="closed" className="global-exception-stack-display" value={stackItem.stack}></textarea>
+                </li>
+              </ul>
+              <button onClick={clearGlobalException} className="btn btn-primary  pull-right global-exception-dismiss-button">ok, got it</button>
+
+            </div>)
+        }
+
+      });
+    }
+    return (<div>{displayMarkup}</div>);
+  }
+});

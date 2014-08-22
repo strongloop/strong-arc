@@ -111,6 +111,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
               data-modelId={modelDef.id} >Save Model</button>
           </div>
           <div className="lineBreak"></div>
+
           <button onClick={clickHandler}
             type="button"
             className="model-instance-header-btn btn btn-default btn-block"
