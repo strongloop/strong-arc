@@ -86,7 +86,7 @@ Common.directive('slCommonInstanceTabsView', [
 
         }
 
-        scope.$watch('activeInstance', function(intance) {
+        scope.$watch('activeInstance', function(instance) {
           if (scope.activeInstance) {
             renderComp();
           }
