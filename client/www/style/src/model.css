@@ -11,6 +11,13 @@ input[type="checkbox"] {
 
 }
 
+select {
+    height: 2.5rem;
+    -webkit-appearance: none;
+    padding-left: 0.5rem;
+    border-radius: 0;
+}
+
 /*
 
     models
@@ -74,7 +81,7 @@ input[type="checkbox"] {
     opacity: 1;
 }
 [data-id="ModelEditorInstanceContainer"] {
-    max-width: 90rem;
+    max-width: 2rem;
     margin-left: 2rem;
     margin-top: 2rem;
 }
@@ -112,8 +119,9 @@ input[type="checkbox"] {
     margin: .5rem .4rem .5rem 0;
 }
 .model-instance-editor-input {
+    color: #4a4a4a;
     border: 1px solid #dddddd;
-    font-size: 100%;
+    font-size: 11pt;
     border-radius: .3rem;
     width: 100%;
     height: 3.4rem;
@@ -198,20 +206,12 @@ input[type="checkbox"] {
 .model-instance-property-list select {
 	font-size: 1.4rem;
 	border: none;
-
-
 	height: 2rem;
 	text-transform: capitalize;
 	width: 100%;
 	height: 100%;
 }
 
-select {
-	height: 2.5rem;
-	-webkit-appearance: none;
-	padding-left: 0.5rem;
-	border-radius: 0;
-}
 
 .table-header-cell {
 	padding-top: 0.7rem;
@@ -277,16 +277,16 @@ label {
 	color: #808080;
 }
 .model-header-container {
-    background: #EEEEEE;
-    width: 100%;
+    /*background: #EEEEEE;*/
+    width: 90rem;
     min-width: 60rem;
     height: 11.2rem;
-    border-radius: 5px;
+    border-radius: 2rem;
 }
 .model-header-name-container {
     display: inline-block;
     margin-top: 0.7rem;
-    margin-left: 3.5rem;
+    margin-left: 1rem;
     width: 38.7rem;
 }
 .model-header-name-container label{
@@ -301,11 +301,12 @@ label {
 }
 .model-detail-container {
 	border-bottom: 1px solid #DDDDDD;
+    width: 90rem;
 }
 .model-detail-pocket-button {
     color: #FFFFFF;
     background-color: #7dbd34;
-    margin-left: 3.2rem;
+    margin-left: 6rem;
     width: 8rem;
     height: 3rem;
     border-radius: 3px;
@@ -316,7 +317,7 @@ label {
     font-size: 12pt;
     border: none;
     border-bottom: 2px solid #67992d;
-    width: 12rem;
+    width: 18rem;
     height: 3.7rem;
 }
 .model-detail-input-container {
@@ -332,7 +333,6 @@ label {
     padding-right: 5rem;
     width: 100%;
     min-width: 50rem;
-    max-width: 90rem;
 }
 .model-detail-button-row{
 	margin-left: 5rem;
