@@ -109,16 +109,58 @@ Model.service('ModelService', [
       var deferred = $q.defer();
 
       if (model.id) {
+        // `id` is '{facet}.{name}'
+        var oldName = model.id.split('.')[1];
 
-        ModelDefinition.upsert(model,
-          function(response) {
-            deferred.resolve(response);
-          },
-          function(response) {
-            console.warn('bad update model definition: ' + model.id);
-          }
-        );
+        // Temporary workaround until loopback-workspace supports renames
+        if (oldName === model.name) {
+          ModelDefinition.upsert(model,
+            function(response) {
+              deferred.resolve(response);
+            },
+            function(response) {
+              console.warn('bad update model definition: ' + model.id);
+            }
+          );
+        } else {
+          var oldId = model.id;
 
+          // delete properties that should be generated from the new name
+          delete model.id;
+          delete model.configFile;
+
+          var updatedModel = ModelDefinition.create(model);
+          updatedModel.$promise
+            .then(function moveAllRelatedDataToNewModel() {
+              return $q.all(
+                ['properties', 'validations', 'relations', 'accessControls']
+                  .map(function moveToNewModel(relationName) {
+                    var entities = ModelDefinition[relationName]({ id: oldId });
+                    return entities.$promise
+                      .then(function updateModelId() {
+                        return $q.all(entities.map(function(it) {
+                          it.modelId = updatedModel.id;
+                          console.log('update', relationName, it.id);
+                          return it.$save();
+                        }));
+                      })
+                      .then(function addToLocalModel() {
+                        // Views expects that `modelDef.properties`
+                        // is populated with model properties
+                        updatedModel[relationName] = entities;
+                      });
+                  }));
+            })
+            .then(function deleteOldModel() {
+              return ModelDefinition.deleteById({ id: oldId }).$promise;
+            })
+            .then(function() {
+              deferred.resolve(updatedModel);
+            })
+            .catch(function(err) {
+              console.warn('Cannot rename %s to %s.', oldId, model.name, err);
+            });
+        }
 
       }
 
