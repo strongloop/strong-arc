@@ -265,17 +265,12 @@ select {
     z-index: 4000;
 }
 
-input {
-	border: none;
-	font-size: 90%;
-}
+
 .lineBreak{
     height: 1.6rem;
     border-bottom: 1px solid #DDDDDD;
 }
-label {
-	color: #808080;
-}
+
 .model-header-container {
     /*background: #EEEEEE;*/
     width: 90rem;
@@ -392,25 +387,25 @@ label {
     text-align: center;
 }
 .props-isid-header{
-    width: 3.5rem;
+    width: 5.5rem;
     padding-left: 2.5rem;
 }
 .props-required-cell {
-    width: 5rem;
+    width: 5.5rem;
     text-align: center;
 }
 .props-required-header {
-    width: 4rem;
+    width: 5.5rem;
     padding-left: 2.6rem;
 }
 .props-index-cell {
-    width: 5rem;
+    width: 5.5rem;
     text-align: center;
 
 }
 .props-index-header {
-    width: 5rem;
-    padding-left: 2rem;
+    width: 7.5rem;
+    padding-left: 3rem;
 }
 .props-comments-cell {
 	width: 20rem;
@@ -423,8 +418,16 @@ label {
 	border-radius: 0;
 	border: none;
 }
+
 .props-comments-header {
     padding-left: 1rem;
+}
+.props-controls-header {
+    width:3rem;
+}
+.props-controls-cell {
+    width:3rem;
+    text-align: center;
 }
 .props-spinner-cell {
 	background: red;

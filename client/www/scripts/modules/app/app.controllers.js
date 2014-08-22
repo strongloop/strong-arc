@@ -269,6 +269,25 @@ app.controller('StudioController', [
 
       }
     };
+    $scope.deleteModelPropertyRequest = function(config) {
+      if (config.id && config.modelId) {
+        if (confirm('delete this model property?')){
+          // this seems a bit redundant and could likely benefit
+          // from refactoring
+          // delete the property from the active instance and then reload the
+          // whole instance again is 2 async calls
+          PropertyService.deleteModelProperty(config).
+            then(function(response) {
+              ModelService.getModelById(config.modelId).
+                then(function(response) {
+                  $scope.activeInstance = IAService.setActiveInstance(response, CONST.MODEL_TYPE);
+                }
+              );
+            }
+          );
+        }
+      }
+    };
     // delete models
     $scope.deleteModelDefinitionRequest = function(modelId) {
       if (modelId){

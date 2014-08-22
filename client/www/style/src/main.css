@@ -47,6 +47,13 @@ label {
     font-weight: normal;
     margin-right: 2rem;
 }
+label {
+    color: #808080;
+}
+input {
+    border: none;
+    font-size: 90%;
+}
 pre {
     background-color: #F8F8F8;
     border: 1px solid #DDD;

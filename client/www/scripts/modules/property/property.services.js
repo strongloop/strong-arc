@@ -50,10 +50,23 @@ Property.service('PropertyService', [
         function(response) {
           console.warn('bad get model properties: ' + response);
         }
-
       );
-
-      return deferred.promise
+      return deferred.promise;
+    };
+    svc.deleteModelProperty = function(config) {
+      var deferred = $q.defer();
+      ModelProperty.deleteById({id:config.id},
+        //success
+        function(response) {
+          return deferred.resolve(response);
+        },
+        // fail
+        function(response) {
+          console.warn('bad delete model properties: ' + response);
+          return deferred.reject(response);
+        }
+      );
+      return deferred.promise;
     };
 
     return svc;
