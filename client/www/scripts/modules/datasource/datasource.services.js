@@ -175,7 +175,7 @@ Datasource.service('DataSourceService', [
       window.localStorage.setItem('ApiDatasources', JSON.stringify(currentDatasources));
       return datasourceDefObj;
     };
-    svc.createNewDatasourceInstance = function(initialData) {
+    svc.createNewDataSourceInstance = function(initialData) {
       //var openInstanceRefs = IAService.getOpenInstanceRefs();
       var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
       if (!openInstanceRefs) {

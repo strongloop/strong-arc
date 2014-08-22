@@ -57,7 +57,7 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
       if (opt.sourceEvent.currentTarget.attributes['data-id']){
         var modelId = opt.sourceEvent.currentTarget.attributes['data-id'].value;
         scope.$apply(function(){
-         scope.deleteModelDefinitionRequest(modelId);
+          scope.deleteInstanceRequest(modelId, CONST.MODEL_TYPE);
         });
 
       }
@@ -66,13 +66,19 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
       console.warn('error deleting model definition: ' + error);
     }
   },
+  addNewInstanceRequest: function(event) {
+    var scope = this.props.scope;
+    scope.$apply(function() {
+      scope.createModelViewRequest();
+    });
+  },
   componentDidMount: function() {
     var component = this;
     var menuItems = {};
     var currentDSName = null;
     var isDiscoverable = false;
 
-    menuItems.openSelectedModels = {name: "open", callback: component.openSelectedModels};
+//    menuItems.openSelectedModels = {name: "open", callback: component.openSelectedModels};
     menuItems.deleteSelectedModel = {name: "delete", callback: component.deleteSelectedModel};
 
     $.contextMenu({
@@ -126,11 +132,6 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
       }
     };
 
-    var addNewInstanceRequest = function(event) {
-      scope.$apply(function() {
-        scope.createModelViewRequest();
-      });
-    };
     var hoverEvent = function(event) {
 
       $(event.target).parent('.tree-item-row').attr('data-state', 'hover');
@@ -199,7 +200,7 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
         <div data-ui-type="table" className={navItemContainerClasses}>
           {rowItems}
         </div>
-        <button onClick={addNewInstanceRequest} data-type="model" className="nav-tree-item-addnew"><span className="plus">+</span>Add New Model</button>
+        <button onClick={component.addNewInstanceRequest} data-type="model" className="nav-tree-item-addnew"><span className="plus">+</span>Add New Model</button>
       </div>
       );
   }
@@ -222,6 +223,21 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
       });
     }
   },
+  addNewInstanceRequest: function(event) {
+    var scope = this.props.scope;
+    if (event.target.attributes['data-type'] || event.target.parentElement.attributes['data-type']){
+      var val = '';
+      if (event.target.attributes['data-type']) {
+        val = event.target.attributes['data-type'].value;
+      }
+      else {
+        val = event.target.parentElement.attributes['data-type'].value;
+      }
+      scope.$apply(function() {
+        scope.createDatasourceViewRequest();
+      });
+    }
+  },
   deleteSelectedDataSource: function(key, opt) {
     var scope = this.props.scope;
 
@@ -229,7 +245,7 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
       if (opt.sourceEvent.currentTarget.attributes['data-id']){
         var dsId = opt.sourceEvent.currentTarget.attributes['data-id'].value;
         scope.$apply(function(){
-          scope.deleteDataSourceDefinitionRequest(dsId);
+          scope.deleteInstanceRequest(dsId, CONST.DATASOURCE_TYPE);
         });
       }
     }
@@ -244,7 +260,7 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
     var currentDSName = null;
     var isDiscoverable = false;
 
-    menuItems.openSelectedDataSource = {name: "open", callback: component.openSelectedDataSource};
+   // menuItems.openSelectedDataSource = {name: "open", callback: component.openSelectedDataSource};
     menuItems.deleteSelectedDataSource = {name: "delete", callback: component.deleteSelectedDataSource};
 
     $.contextMenu({
@@ -307,20 +323,7 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
       'glyphicon glyphicon-folder-open': scope.dsNavIsVisible,
       'glyphicon glyphicon-folder-closed': !scope.dsNavIsVisible
     });
-    var addNewInstanceRequest = function(event) {
-      if (event.target.attributes['data-type'] || event.target.parentElement.attributes['data-type']){
-        var val = '';
-        if (event.target.attributes['data-type']) {
-          val = event.target.attributes['data-type'].value;
-        }
-        else {
-          val = event.target.parentElement.attributes['data-type'].value;
-        }
-        scope.$apply(function() {
-          scope.createDatasourceViewRequest();
-        });
-      }
-    };
+
 
     var rowItems = (<div />);
     if (scope.mainNavDatasources.map) {
@@ -368,7 +371,7 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
         <div data-ui-type="table" className={navItemContainerClasses}>
           {rowItems}
         </div>
-        <button onClick={addNewInstanceRequest} data-type="datasource" className="nav-tree-item-addnew"><span className="plus">+</span>Add New Datasource</button>
+        <button onClick={component.addNewInstanceRequest} data-type="datasource" className="nav-tree-item-addnew"><span className="plus">+</span>Add New Datasource</button>
       </div>
       );
   }

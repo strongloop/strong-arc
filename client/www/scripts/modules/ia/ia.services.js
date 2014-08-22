@@ -85,13 +85,35 @@ IA.service('IAService', [
     };
     svc.clearActiveInstance = function() {
       AppStorageService.clearActiveInstance();
+      return {};
+    };
+    svc.isNewModelOpen = function() {
+      var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
+      if (openInstanceRefs && openInstanceRefs.length) {
+        for (var i = 0;i < openInstanceRefs.length;i++) {
+          if (openInstanceRefs[i].id === CONST.NEW_MODEL_PRE_ID) {
+            return true;
+          }
+        }
+      }
+      return false;
+    };
+    svc.isNewDataSourceOpen = function() {
+      var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
+      if (openInstanceRefs && openInstanceRefs.length) {
+        for (var i = 0;i < openInstanceRefs.length;i++) {
+          if (openInstanceRefs[i].id === CONST.NEW_DATASOURCE_PRE_ID) {
+            return true;
+          }
+        }
+      }
+      return false;
     };
     svc.clearOpenNewModelReference = function() {
       var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
       for (var i = 0;i < openInstanceRefs.length;i++) {
-        if (openInstanceRefs[i].id = CONST.NEW_MODEL_PRE_ID) {
+        if (openInstanceRefs[i].id === CONST.NEW_MODEL_PRE_ID) {
           openInstanceRefs.splice(i,1);
-          break;
         }
       }
       AppStorageService.setItem('openInstanceRefs', openInstanceRefs);
@@ -101,7 +123,6 @@ IA.service('IAService', [
       for (var i = 0;i < openInstanceRefs.length;i++) {
         if (openInstanceRefs[i].id = CONST.NEW_DATASOURCE_PRE_ID) {
           openInstanceRefs.splice(i,1);
-          break;
         }
       }
       AppStorageService.setItem('openInstanceRefs', openInstanceRefs);
@@ -166,7 +187,7 @@ IA.service('IAService', [
           // may be new model instance
           if (id === CONST.NEW_DATASOURCE_PRE_ID) {
             // so don't try to initialize against server
-            deferred.resolve(DataSourceService.createNewDatasourceInstance());
+            deferred.resolve(DataSourceService.createNewDataSourceInstance());
           }
           else {
             newInstance = DataSourceService.getDataSourceById(id).
@@ -204,14 +225,7 @@ IA.service('IAService', [
 
     };
     svc.setActiveInstance = function(instance, type) {
-      var targetInstance = {};
-
-      if (type === 'model') {
-        targetInstance = instance;
-      }
-      else if (type === 'datasource') {
-        targetInstance = instance;
-      }
+      var targetInstance = instance;
       targetInstance.type = type;
       AppStorageService.setItem('activeInstance', targetInstance);
       return targetInstance;

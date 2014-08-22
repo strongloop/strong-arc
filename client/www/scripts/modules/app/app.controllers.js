@@ -70,7 +70,6 @@ app.controller('StudioController', [
         then(function (result) {
           $scope.mainNavModels = result;
           $scope.apiModelsChanged = !$scope.apiModelsChanged;
-          $rootScope.$broadcast('IANavEvent');
         }
       );
     };
@@ -87,7 +86,7 @@ app.controller('StudioController', [
 
           $scope.mainNavDatasources = result;
           $scope.apiDataSourcesChanged = !$scope.apiDataSourcesChanged;
-          $rootScope.$broadcast('IANavEvent');
+
 
         });
     };
@@ -134,6 +133,46 @@ app.controller('StudioController', [
         );
       }
     };
+    /*
+    *
+    * Delete Instance by Id
+    *
+    *
+    * */
+
+    // delete instance
+    $scope.deleteInstanceRequest = function(instanceId, type) {
+      var refId = instanceId;
+      if (refId){
+        var confirmText = 'delete model?';
+        if (type === CONST.DATASOURCE_TYPE){
+          confirmText = 'delete datasource?';
+        }
+        if (confirm(confirmText)){
+
+          if (type === CONST.MODEL_TYPE) {
+            // delete the model
+            ModelService.deleteModel(refId).
+              then(function(response){
+                // remove from open instance refs
+                resetActiveToFirstOpenInstance(refId, CONST.MODEL_TYPE);
+                loadModels();
+              }
+            );
+          }
+          else if (type === CONST.DATASOURCE_TYPE) {
+            DataSourceService.deleteDataSource(refId).
+              then(function(response){
+                resetActiveToFirstOpenInstance(refId, CONST.MODEL_TYPE);
+                loadDataSources();
+              }
+            );
+          }
+        }
+      }
+    };
+
+
 
     // branch clicked
     $scope.navTreeBranchClicked = function(type) {
@@ -216,8 +255,8 @@ app.controller('StudioController', [
         ModelService.updateModel(config).
           then(function(response) {
             // clear reference to 'new' placeholder in openInstanceRefs
-            IAService.clearOpenNewModelReference();
             $scope.activeInstance = IAService.setActiveInstance(response, CONST.MODEL_TYPE);
+            IAService.clearOpenNewModelReference();
             loadModels();
           }
         );
@@ -231,6 +270,13 @@ app.controller('StudioController', [
         ModelService.createModel(config).
           then(function(response) {
             // clear reference to 'new' placeholder in openInstanceRefs
+
+            $scope.activeInstance = IAService.setActiveInstance(response, CONST.MODEL_TYPE);
+            $scope.openInstanceRefs = IAService.addInstanceRef({
+              id:$scope.activeInstance.id,
+              name:$scope.activeInstance.name,
+              type: CONST.MODEL_TYPE
+            });
             IAService.clearOpenNewModelReference();
             loadModels();
             $scope.activeInstance = response;
@@ -240,14 +286,48 @@ app.controller('StudioController', [
       }
     };
 
+    $scope.createNewInstance = function(type) {
+      // start New Model
+      if (type) {
+        var newDefaultInstance = {};
+        if (type === CONST.MODEL_TYPE) {
+          newDefaultInstance = ModelService.createNewModelInstance();
+        }
+        else if (type === CONST.DATASOURCE_TYPE) {
+          newDefaultInstance = DataSourceService.createNewDataSourceInstance();
+        }
+        $scope.activeInstance = IAService.setActiveInstance(newDefaultInstance, type);
+        $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
+        $scope.clearSelectedInstances();
+        $rootScope.$broadcast('IANavEvent');
+        IAService.showInstanceView();
+      }
+    };
     $scope.createModelViewRequest = function() {
-      $scope.instanceType = 'model';
-      $scope.activeInstance = ModelService.createNewModelInstance();
-      $scope.activeInstance = IAService.setActiveInstance($scope.activeInstance, 'model');
-      $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
-      $scope.clearSelectedInstances();
-      IAService.showInstanceView();
-      $rootScope.$broadcast('IANavEvent');
+      $scope.instanceType = CONST.MODEL_TYPE;
+      var isNewOpen = IAService.isNewModelOpen();
+
+
+      // check to see if new mode is already open
+
+      if (isNewOpen) {
+        // if it is check if it is active
+        // if new model is open but not active then just close it and
+        // start a fresh one
+        // the downside of this is that any unsaved data will be lost
+        // unfortunately the way the open tabs are handled the data isn't there anyway
+        // so will have to enhance in the future to preserve unsaved and inactive data
+        if ($scope.activeInstance && ($scope.activeInstance.id !== CONST.NEW_MODEL_PRE_ID)) {
+          $scope.openInstanceRefs = IAService.closeInstanceById(CONST.NEW_MODEL_PRE_ID);
+          $scope.createNewInstance(CONST.MODEL_TYPE);
+        }
+      }
+      else {
+        $scope.createNewInstance(CONST.MODEL_TYPE);
+      }
+
+
+
 
     };
 
@@ -288,39 +368,39 @@ app.controller('StudioController', [
         }
       }
     };
-    // delete models
-    $scope.deleteModelDefinitionRequest = function(modelId) {
-      if (modelId){
-        if (confirm('delete model?')){
-          // remove from open instance refs
-          $scope.openInstanceRefs = IAService.closeInstanceById(modelId);
-          // reset activeInstace if this is it
-          if ($scope.activeInstance.id === modelId) {
-            if ($scope.openInstanceRefs.length === 0) {
-              IAService.clearActiveInstance();
+
+
+    var resetActiveToFirstOpenInstance = function(refId, type) {
+      $scope.openInstanceRefs = IAService.closeInstanceById(refId);
+      // reset activeInstace if this is it
+      if ($scope.activeInstance.id === refId) {
+        if ($scope.openInstanceRefs.length === 0) {
+          $scope.activeInstance = IAService.clearActiveInstance();
+        }
+        else {
+          // active the first instance by default
+          IAService.activateInstanceById($scope.openInstanceRefs[0].id).
+            then(function(instance) {
+              $scope.activeInstance = IAService.setActiveInstance(instance, type);
+              $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
+
               $rootScope.$broadcast('IANavEvent');
-
-            }
-            else {
-
-              // active the first instance by default
-              IAService.activateInstanceById($scope.openInstanceRefs[0].id).
-                then(function(instance) {
-                  $scope.activeInstance = instance;
-                  $rootScope.$broadcast('IANavEvent');
-                }
-              );
-            }
-          }
-
-          ModelService.deleteModel(modelId).
-            then(function(response){
-              loadModels();
             }
           );
         }
       }
+      else {
+        $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
+      }
+
+
     };
+
+
+
+
+
+
 
     $scope.createNewProperty = function() {
 
@@ -355,14 +435,21 @@ app.controller('StudioController', [
      *
      * */
     $scope.createDatasourceViewRequest = function(initialData) {
-      $scope.instanceType = 'datasource';
-      $scope.activeInstance =
-        DataSourceService.createNewDatasourceInstance(initialData);
-      $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
-      $scope.clearSelectedInstances();
-      IAService.showInstanceView();
-      $rootScope.$broadcast('IANavEvent');
-
+      $scope.instanceType = CONST.DATASOURCE_TYPE;
+      var isNewOpen = IAService.isNewDataSourceOpen();
+      // check to see if new mode is already open
+      if (isNewOpen) {
+        // if it is check if it is active
+        // if new model is open but not active then just close it and
+        // start a fresh one
+        if ($scope.activeInstance && ($scope.activeInstance.id !== CONST.NEW_DATASOURCE_PRE_ID)) {
+          $scope.openInstanceRefs = IAService.closeInstanceById(CONST.NEW_DATASOURCE_PRE_ID);
+          $scope.createNewInstance(CONST.DATASOURCE_TYPE);
+        }
+      }
+      else {
+        $scope.createNewInstance(CONST.DATASOURCE_TYPE);
+      }
     };
     // test datasource connection
     $scope.testDataSourceConnection = function(config) {
@@ -376,37 +463,37 @@ app.controller('StudioController', [
         });
     };
 
-    // delete datasource
-    $scope.deleteDataSourceDefinitionRequest = function(dsId) {
-      if (dsId){
-        if (confirm('delete datasource?')){
-          // remove from open instance refs
-          $scope.openInstanceRefs = IAService.closeInstanceById(dsId);
-          // check if instance is activeInstance
-          if ($scope.openInstanceRefs.length === 0) {
-            IAService.clearActiveInstance();
-            $rootScope.$broadcast('IANavEvent');
-
-          }
-          else {
-
-            // active the first instance by default
-            IAService.activateInstanceById($scope.openInstanceRefs[0].id).
-              then(function(instance) {
-                $scope.activeInstance = instance;
-                $rootScope.$broadcast('IANavEvent');
-              }
-            );
-          }
-
-          DataSourceService.deleteDataSource(dsId).
-            then(function(response){
-              loadDataSources();
-            }
-          );
-        }
-      }
-    };
+//    // delete datasource
+//    $scope.deleteDataSourceDefinitionRequest = function(dsId) {
+//      if (dsId){
+//        if (confirm('delete datasource?')){
+//          // remove from open instance refs
+//          $scope.openInstanceRefs = IAService.closeInstanceById(dsId);
+//          // check if instance is activeInstance
+//          if ($scope.openInstanceRefs.length === 0) {
+//            IAService.clearActiveInstance();
+//            $rootScope.$broadcast('IANavEvent');
+//
+//          }
+//          else {
+//
+//            // active the first instance by default
+//            IAService.activateInstanceById($scope.openInstanceRefs[0].id).
+//              then(function(instance) {
+//                $scope.activeInstance = instance;
+//                $rootScope.$broadcast('IANavEvent');
+//              }
+//            );
+//          }
+//
+//          DataSourceService.deleteDataSource(dsId).
+//            then(function(response){
+//              loadDataSources();
+//            }
+//          );
+//        }
+//      }
+//    };
 
     // save Datasource
     $scope.updateOrCreateDatasource = function(config) {
@@ -427,6 +514,12 @@ app.controller('StudioController', [
           DataSourceService.createDataSourceDefinition(config).
             then(function(response) {
               // clear reference to 'new' placeholder in openInstanceRefs
+              $scope.activeInstance = IAService.setActiveInstance(response, CONST.DATASOURCE_TYPE);
+              $scope.openInstanceRefs = IAService.addInstanceRef({
+                id:$scope.activeInstance.id,
+                name:$scope.activeInstance.name,
+                type: CONST.DATASOURCE_TYPE
+              });
               IAService.clearOpenNewDSReference();
               $scope.activeInstance = response;
               $scope.activeInstance.type = CONST.DATASOURCE_TYPE;
@@ -529,6 +622,7 @@ app.controller('StudioController', [
         }
 
       }
+      $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
     });
 
   }
