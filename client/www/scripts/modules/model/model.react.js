@@ -93,6 +93,10 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
       'model-instance-name-validation is-valid': component.state.isModelNameValid,
       'model-instance-name-validation is-invalid': !component.state.isModelNameValid
     });
+    var formGroupValidationClasses = cx({
+      'model-header-name-container form-group': component.state.isModelNameValid,
+      'model-header-name-container form-group has-error': !component.state.isModelNameValid
+    });
     var clickHandler = function(event) {
       scope.$apply(function() {
         scope.toggleModelDetailView();
@@ -126,7 +130,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
       returnVal = (
         <form role="form">
         	<div className="model-header-container">
-            <div className="model-header-name-container form-group">
+            <div className={formGroupValidationClasses}>
               <label>name</label>
               <input type="text"
                 value={modelDef.name}
@@ -136,21 +140,15 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                 id="ModelName"
                 name="ModelName"
                 className={modelNameInputClasses} />
-              <div className={modelNameValidationClasses}>
-                <span className="validation-error-message">
-                  Your model definition name is invalid.  Make sure it:
-                  <ul>
-                    <li>contains no spaces</li>
-                    <li>contains no crazy characters</li>
-                    <li>contains no hyphens</li>
-                    <li>starts with an alpha character</li>
-                  </ul>
-                </span>
-              </div>
             </div>
             <button onClick={saveModelDefinition}
               className="model-detail-pocket-button model-save-button"
               data-modelId={modelDef.id} >Save Model</button>
+            <div className={modelNameValidationClasses}>
+              <span className="validation-error-message">
+                Model name can contain no spaces, no hyphens (or other crazy characters), starts with an alpha character
+              </span>
+            </div>
           </div>
           <div className="lineBreak"></div>
 
