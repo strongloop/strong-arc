@@ -35,7 +35,7 @@ Main Search
 }
 
 [data-id="MainNavContainer"] {
-    background-color: #666666;
+    background-color: #595959;
     color: #ffffff;
     overflow-y: auto;
     overflow-x: auto;
@@ -163,7 +163,7 @@ Main Search
 
 }
 .tree-item-row.is-open{
-    background: #595959;
+    background: #666666;
 }
 .tree-item-row.is-active{
     background: #4a90e2;

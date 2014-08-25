@@ -5,19 +5,6 @@
 
 /*
 
-    Datasource
-
-*/
-
-[data-id="DatasourceEditorInstanceContainer"] {
-    border-top: 1px solid #eeeeee;
-    padding: 3rem 0 0 4rem;
-}
-form[name="DatasourceForm"] {
-    max-width: 60rem;
-}
-/*
-
     Model Editor Tabs
 
 */
