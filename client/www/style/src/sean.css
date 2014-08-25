@@ -21,7 +21,6 @@ CSS from original branch */
     padding:2rem;
     font-size:115%;
 }
-<<<<<<< HEAD
 .ia-global-exception-container {
     margin:2rem;
 }
@@ -41,12 +40,10 @@ CSS from original branch */
 }
 .model-header-container .validation-error-message {
     margin-left:3rem;
-=======
-/*Hack for demo*/
+}
 .model-instance-header-btn {
     color: #7DBD33;
     font-size: 12pt;
     background: none;
     border: none;
->>>>>>> first cut at moving datasource visual design over
 }
