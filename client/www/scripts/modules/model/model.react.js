@@ -14,15 +14,8 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
     this.setState({activeInstance:{}});
     this.setState({activeInstance:nextProps.scope.activeInstance});
   },
-  isModelNamValid: function(name) {
-    var testResult = /^[\-_a-zA-Z0-9]+$/.test(name);
-    if (!testResult) {
-      return false;
-    }
-    else {
-      return true;
-    }
-
+  isModelNameValid: function(name) {
+    return /^[\-_a-zA-Z0-9]+$/.test(name);
   },
   handleChange: function(event) {
     var component = this;
@@ -32,20 +25,12 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
       var xState = component.state;
       modelPropertyName = event.target.attributes['data-name'].value;
       if (modelPropertyName === 'name') {
-        if (!component.isModelNamValid(event.target.value)) {
-          xState.isModelNameValid = false;
-        }
-        else {
-          xState.isModelNameValid = true;
-        }
+        xState.isModelNameValid = component.isModelNameValid(event.target.value);
       }
       if (event.target.attributes['type'] && (event.target.attributes['type'].value === 'checkbox')) {
         xState.activeInstance[modelPropertyName] = event.target.checked;
       }
       else {
-//        if (event.target.value.length < 1) {
-//          event.target.value = ' ';
-//        }
         xState.activeInstance[modelPropertyName] = event.target.value;
       }
       component.setState(xState);
