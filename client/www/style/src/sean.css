@@ -40,3 +40,6 @@ CSS from original branch */
 .model-instance-name-validation.is-valid {
     display:none;
 }
+.model-header-container .validation-error-message {
+    margin-left:3rem;
+}

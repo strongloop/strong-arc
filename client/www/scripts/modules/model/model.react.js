@@ -146,7 +146,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
               data-modelId={modelDef.id} >Save Model</button>
             <div className={modelNameValidationClasses}>
               <span className="validation-error-message">
-                Model name can contain no spaces, no hyphens (or other crazy characters), starts with an alpha character
+                Model name should conform with <a href="https://mathiasbynens.be/notes/javascript-identifiers" target="_new">valid javascript variable name conventions</a>
               </span>
             </div>
           </div>
