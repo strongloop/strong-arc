@@ -302,6 +302,8 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
 
                   <span data-ui-type="cell" title="comments" className="props-comments-header table-header-cell">Comments</span>
 
+                  <span data-ui-type="cell" title="controls" className="props-controls-header table-header-cell"></span>
+
 
                 </div>
               </div>
@@ -330,6 +332,7 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
 var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
   getInitialState: function() {
     return {
+      currModelId:this.props.modelProperty.modelId,
       modelProperty:this.props.modelProperty,
       isOpen:false
     };
@@ -370,33 +373,41 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
       scope.$apply(function() {
         scope.updateModelPropertyRequest(updateModelPropertyConfig);
       });
-
     }
-
+  },
+  deleteModelProperty: function(event) {
+    var component = this;
+    var scope = component.props.scope;
+    if (event.target.attributes['data-id']) {
+      var modelPropId = event.target.attributes['data-id'].value;
+      scope.$apply(function() {
+        scope.deleteModelPropertyRequest({id:modelPropId,modelId:component.state.currModelId});
+      });
+    }
   },
   render: function() {
 
-    var that = this;
-    var scope = that.props.scope;
-    var modelProperty = that.state.modelProperty;
+    var component = this;
+    var scope = component.props.scope;
+    var modelProperty = component.state.modelProperty;
     var cx = React.addons.classSet;
 
 
     var togglePropertiesView = function(property) {
-      that.setState({isOpen:!that.state.isOpen});
+      component.setState({isOpen:!component.state.isOpen});
     };
 
     var pClasses = cx({
-      'property-detail-container is-open': that.state.isOpen,
-      'property-detail-container is-closed': !that.state.isOpen
+      'property-detail-container is-open': component.state.isOpen,
+      'property-detail-container is-closed': !component.state.isOpen
     });
     var bClasses = cx({
-      'glyphicon glyphicon-open-sign': that.state.isOpen,
-      'glyphicon glyphicon-closed-sign': !that.state.isOpen
+      'glyphicon glyphicon-open-sign': component.state.isOpen,
+      'glyphicon glyphicon-closed-sign': !component.state.isOpen
     });
     var cClasses = cx({
-      'modelproperty-container modelproperty-detail-is-open': that.state.isOpen,
-      'modelproperty-container modelproperty-detail-is-closed': !that.state.isOpen
+      'modelproperty-container modelproperty-detail-is-open': component.state.isOpen,
+      'modelproperty-container modelproperty-detail-is-closed': !component.state.isOpen
     });
 
 
@@ -409,18 +420,18 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
                 <input ref="propName"
                   data-name="name"
                   type="text"
-                  onChange={this.checkSubmitModelProperty}
-                  onBlur={this.triggerModelPropertyUpdate}
+                  onChange={component.checkSubmitModelProperty}
+                  onBlur={component.triggerModelPropertyUpdate}
                   value={modelProperty.name} />
               </span>
               <span data-ui-type="cell" className="props-data-type-cell">
-                <DataTypeSelect scope={scope} modelProperty={that.state.modelProperty} type={modelProperty.type} />
+                <DataTypeSelect scope={scope} modelProperty={component.state.modelProperty} type={modelProperty.type} />
               </span>
               <span data-ui-type="cell" className="props-isid-cell">
                 <input type="checkbox"
                   data-name="isId"
                   name="isId"
-                  onChange={this.triggerModelPropertyUpdate}
+                  onChange={component.triggerModelPropertyUpdate}
                   checked={modelProperty.isId}
                   value={modelProperty.isId}
                   className="model-instance-editor-checkbox" />
@@ -429,7 +440,7 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
                 <input type="checkbox"
                   data-name="required"
                   name="required"
-                  onChange={this.triggerModelPropertyUpdate}
+                  onChange={component.triggerModelPropertyUpdate}
                   checked={modelProperty.required}
                   value={modelProperty.required}
                   className="model-instance-editor-checkbox" />
@@ -438,7 +449,7 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
                 <input type="checkbox"
                   data-name="index"
                   name="index"
-                  onChange={this.triggerModelPropertyUpdate}
+                  onChange={component.triggerModelPropertyUpdate}
                   checked={modelProperty.index}
                   value={modelProperty.index}
                   className="model-instance-editor-checkbox" />
@@ -447,10 +458,17 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
                 <input type="text"
                   data-name="comments"
                   name="comments"
-                  onBlur={this.triggerModelPropertyUpdate}
+                  onBlur={component.triggerModelPropertyUpdate}
                   value={modelProperty.comments}
                   className="property-doc-textarea model-instance-editor-input" />
               </span>
+              <span data-ui-type="cell" className="props-controls-cell">
+                <button className="btn btn-default btn-sm" onClick={component.deleteModelProperty} data-id={modelProperty.id}>
+                  <span data-id={modelProperty.id} className="glyphicon glyphicon-open-sign">X</span>
+                </button>
+
+              </span>
+
             </div>
           </div>
           <div className={pClasses}>
