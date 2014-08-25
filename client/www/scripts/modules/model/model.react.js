@@ -6,34 +6,34 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
   getInitialState: function() {
     return {
       activeInstance:this.props.scope.activeInstance,
-      isDetailsContainerOpen:true
+      isDetailsContainerOpen:true,
+      isModelNameValid:true
     };
   },
   componentWillReceiveProps: function(nextProps) {
     this.setState({activeInstance:{}});
     this.setState({activeInstance:nextProps.scope.activeInstance});
   },
+  isModelNameValid: function(name) {
+    return /^[\-_a-zA-Z0-9]+$/.test(name);
+  },
   handleChange: function(event) {
-    var scope = this.props.scope;
+    var component = this;
+    var scope = component.props.scope;
     var modelPropertyName = '';
     if (event.target.attributes['data-name']) {
+      var xState = component.state;
       modelPropertyName = event.target.attributes['data-name'].value;
-      // commented out code to update tab name while typing
-//      if (modelPropertyName === 'name') {
-//        // update the tab
-//        scope.$apply(function() {
-//            scope.updateActiveInstanceName(event.target.value);
-//          }
-//        );
-//      }
-      var xState = this.state;
+      if (modelPropertyName === 'name') {
+        xState.isModelNameValid = component.isModelNameValid(event.target.value);
+      }
       if (event.target.attributes['type'] && (event.target.attributes['type'].value === 'checkbox')) {
         xState.activeInstance[modelPropertyName] = event.target.checked;
       }
       else {
         xState.activeInstance[modelPropertyName] = event.target.value;
       }
-      this.setState(xState);
+      component.setState(xState);
     }
   },
   processModelNameValue: function(event) {
@@ -70,6 +70,18 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
       'model-editor-section-icon glyphicon glyphicon-minus-sign': component.state.isDetailsContainerOpen,
       'model-editor-section-icon glyphicon glyphicon-plus-sign': !component.state.isDetailsContainerOpen
     });
+    var modelNameInputClasses = cx({
+      'model-instance-name form-control': component.state.isModelNameValid,
+      'model-instance-name form-control is-invalid': !component.state.isModelNameValid
+    });
+    var modelNameValidationClasses = cx({
+      'model-instance-name-validation is-valid': component.state.isModelNameValid,
+      'model-instance-name-validation is-invalid': !component.state.isModelNameValid
+    });
+    var formGroupValidationClasses = cx({
+      'model-header-name-container form-group': component.state.isModelNameValid,
+      'model-header-name-container form-group has-error': !component.state.isModelNameValid
+    });
     var clickHandler = function(event) {
       scope.$apply(function() {
         scope.toggleModelDetailView();
@@ -99,11 +111,11 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
 
 
     var returnVal = (<div />);
-    if (modelDef && modelDef.name) {
+    if (modelDef) {
       returnVal = (
         <form role="form">
         	<div className="model-header-container">
-            <div className="model-header-name-container form-group">
+            <div className={formGroupValidationClasses}>
               <label>name</label>
               <input type="text"
                 value={modelDef.name}
@@ -112,11 +124,16 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                 data-name="name"
                 id="ModelName"
                 name="ModelName"
-                className="model-instance-name form-control" />
+                className={modelNameInputClasses} />
             </div>
             <button onClick={saveModelDefinition}
               className="model-detail-pocket-button model-save-button"
               data-modelId={modelDef.id} >Save Model</button>
+            <div className={modelNameValidationClasses}>
+              <span className="validation-error-message">
+                Model name should conform with <a href="https://mathiasbynens.be/notes/javascript-identifiers" target="_new">valid javascript variable name conventions</a>
+              </span>
+            </div>
           </div>
           <div className="lineBreak"></div>
 
