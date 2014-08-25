@@ -39,23 +39,46 @@ Property.service('PropertyService', [
 
       return deferred.promise;
     };
+
     svc.updateModelProperty = function(propConfig) {
       var deferred = $q.defer();
-      ModelProperty.upsert({}, propConfig,
-        //success
-        function(response) {
-          return deferred.resolve(response);
-        },
-        // fail
-        function(response) {
-          console.warn('bad get model properties: ' + response);
-        }
-      );
+
+      // `id` is '{facet}.{model}.{name}'
+      var oldName = propConfig.id.split('.').pop();
+
+      // Temporary workaround until loopback-workspace supports renames
+      if (oldName === propConfig.name) {
+        ModelProperty.upsert({}, propConfig,
+          //success
+          function(response) {
+            return deferred.resolve(response);
+          },
+          // fail
+          function(response) {
+            console.warn('bad get model properties: ' + response);
+          }
+        );
+      } else {
+        var oldId = propConfig.id;
+        var updatedDefinition = ModelProperty.create(propConfig);
+        updatedDefinition.$promise
+          .then(function deleteOldModelProperty() {
+            return ModelProperty.deleteById({ id: oldId }).$promise;
+          })
+          .then(function() {
+            deferred.resolve(updatedDefinition);
+          })
+          .catch(function(err) {
+            console.warn('Cannot rename %s to %s.', oldId, propConfig.id, err);
+          });
+      }
+
       return deferred.promise;
     };
+
     svc.deleteModelProperty = function(config) {
       var deferred = $q.defer();
-      ModelProperty.deleteById({id:config.id},
+      ModelProperty.deleteById({id: config.id},
         //success
         function(response) {
           return deferred.resolve(response);
