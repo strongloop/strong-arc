@@ -1,10 +1,11 @@
 // Copyright StrongLoop 2014
 Datasource.service('DataSourceService', [
   'DataSourceDefinition',
+  'ModelConfig',
   'AppStorageService',
   '$timeout',
   '$q',
-  function(DataSourceDefinition, AppStorageService, $timeout, $q) {
+  function(DataSourceDefinition, ModelConfig, AppStorageService, $timeout, $q) {
     var svc = {};
     //  var deferred = $q.defer();
     svc.getDiscoverableDatasourceConnectors = function() {
@@ -96,14 +97,46 @@ Datasource.service('DataSourceService', [
       var deferred = $q.defer();
       // double check to clear out 'new' id
       if (config.id) {
-        DataSourceDefinition.upsert({}, config,
-          function(response) {
-            deferred.resolve(response);
-          },
-          function(response) {
-            deferred.reject(response);
-          }
-        );
+        // `id` is '{facet}.{name}'
+        var oldName = config.id.split('.')[1];
+
+        // Temporary workaround until loopback-workspace supports renames
+        if (oldName === config.name) {
+          DataSourceDefinition.upsert({}, config,
+            function(response) {
+              deferred.resolve(response);
+            },
+            function(response) {
+              deferred.reject(response);
+            }
+          );
+        } else {
+          var oldId = config.id;
+
+          var updatedDefinition = DataSourceDefinition.create(config);
+          updatedDefinition.$promise
+            .then(function updateRelatedModelConfigs() {
+              var modelConfigs = ModelConfig.find({
+                where: { dataSource: oldName }
+              });
+
+              return modelConfigs.$promise.then(function updateModelConfig() {
+                $q.all(modelConfigs.map(function(mc) {
+                  mc.dataSource = config.name;
+                  return mc.$save();
+                }));
+              });
+            })
+            .then(function deleteOldDataSource() {
+              return DataSourceDefinition.deleteById({ id: oldId }).$promise;
+            })
+            .then(function() {
+              deferred.resolve(updatedDefinition);
+            })
+            .catch(function(err) {
+              console.warn('Cannot rename %s to %s.', oldId, config.id, err);
+            });
+        }
       }
       else {
         console.warn('attempt to update DataSourceDefinition without an id property');
