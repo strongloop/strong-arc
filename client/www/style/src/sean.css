@@ -35,7 +35,6 @@ CSS from original branch */
     background:#efefef;
     overflow:auto;
 }
-<<<<<<< HEAD
 .model-instance-name-validation.is-valid {
     display:none;
 }
@@ -48,6 +47,4 @@ CSS from original branch */
     background: none;
     border: none;
 }
-=======
 
->>>>>>> fix delete model property bug
