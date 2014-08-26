@@ -108,13 +108,6 @@ app.controller('StudioController', [
       $scope.apiModelsChanged = !$scope.apiModelsChanged;
     };
 
-
-
-    // toggle instance view
-    $scope.toggleInstanceContainer = function() {
-      IAService.toggleInstanceView();
-    };
-
     /*
     *
     * Open Instance By Id
@@ -300,7 +293,6 @@ app.controller('StudioController', [
         $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
         $scope.clearSelectedInstances();
         $rootScope.$broadcast('IANavEvent');
-        IAService.showInstanceView();
       }
     };
     $scope.createModelViewRequest = function() {
@@ -529,6 +521,14 @@ app.controller('StudioController', [
     $scope.clearGlobalException = function() {
       $scope.globalExceptionStack = IAService.clearGlobalExceptionStack();
     };
+
+    /*
+    *
+    * Event Listeners
+    *
+    * keep these to absolute minimum - in principle
+    *
+    * */
     $scope.$on('GlobalExceptionEvent', function(event, data) {
       $scope.globalExceptionStack = IAService.setGlobalException(data);
     });

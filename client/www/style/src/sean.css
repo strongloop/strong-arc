@@ -1,17 +1,5 @@
 /* these css rules are temporary until we re-sync the
 CSS from original branch */
-.slider-btn {
-    width:20px;
-    height:700px;
-}
-.tab-button-label {
-    height: 0.5rem;
-    width: 0.5rem;
-    -webkit-transform: rotate(-90deg);
-}
-.tab-button-cell {
-    width:25px;
-}
 .common-instance-view-container {
     overflow-y:scroll;
 }
