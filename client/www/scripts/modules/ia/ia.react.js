@@ -193,7 +193,7 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
           </div>
           <div data-ui-type="cell" className="ia-nav-item-contextmenu-icon-container-col">
             <button className="btn-command btn-nav-context" data-id={item.id} data-config-id={item.config.id}>
-              <span data-name={item.name}  data-id={item.id} className="glyphicon glyphicon-contextmenu"></span>
+              <span data-name={item.name} data-id={item.id} data-config-id={item.config.id} className="glyphicon glyphicon-contextmenu"></span>
             </button>
           </div>
         </div>
