@@ -12,12 +12,13 @@ Datasource.directive('slDatasourceEditorForm', [
     return {
       replace:true,
       link: function(scope, el, attrs) {
-
-
         scope.$watch('activeInstance', function(instance) {
           if(instance.type === 'datasource') {
             React.renderComponent(DatasourceEditorView({scope:scope}), el[0]);
           }
+        }, true);
+        scope.$watch('datasource.connectionTestResponse', function(response) {
+          React.renderComponent(DatasourceEditorView({scope:scope}), el[0]);
         }, true);
       }
     }

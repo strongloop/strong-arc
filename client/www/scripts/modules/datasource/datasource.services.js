@@ -144,6 +144,7 @@ Datasource.service('DataSourceService', [
 
       return deferred.promise;
     };
+
     svc.testDataSourceConnection = function(dsId) {
       var deferred = $q.defer();
 
@@ -157,7 +158,6 @@ Datasource.service('DataSourceService', [
           deferred.reject(error);
         }
       );
-
       return deferred.promise;
     };
     // obsolete

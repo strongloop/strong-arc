@@ -186,7 +186,10 @@ IA.service('IAService', [
     };
     svc.setActiveInstance = function(instance, type, id) {
       var targetInstance = instance;
-      targetInstance.type = type;
+      // no type if everything is closed
+      if (type) {
+        targetInstance.type = type;
+      }
       AppStorageService.setItem('activeInstance', targetInstance);
       svc.updateOpenInstanceRef(id, type, instance);
       return targetInstance;
