@@ -95,11 +95,13 @@ var CONST = {
   NEW_MODEL_PRE_ID:'sl.temp.new-model',
   NEW_MODEL_NAME: 'new-model',
   NEW_MODEL_FACET_NAME: 'common',
+  NEW_MODEL_BASE: 'Model',
   NEW_DATASOURCE_PRE_ID:'sl.temp.new-datasource',
   NEW_DATASOURCE_NAME: 'new-datasource',
   NEW_DATASOURCE_FACET_NAME: 'server',
   DATASOURCE_TYPE: 'datasource',
-  DEFAULT_DATASOURCE: 'db',
+  DEFAULT_DATASOURCE: 'none',
+  DEFAULT_DATASOURCE_BASE_MODEL: 'PersistedModel',
   MODEL_TYPE: 'model',
   APP_FACET: 'server'
 };

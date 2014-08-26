@@ -396,13 +396,11 @@ Model.service('ModelService', [
         config: {
           facetName: CONST.APP_FACET,
           public: true,
-        }
+          dataSource: null
+        },
+        base: CONST.NEW_MODEL_BASE
       };
     };
-
-
-
-
 
     svc.createNewModelInstance = function() {
       var returnInstance = new DefaultModelSchema();

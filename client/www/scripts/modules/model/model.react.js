@@ -32,6 +32,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
       } else {
         setDeepProperty(modelPropertyName, event.target.value);
       }
+
       component.setState(xState);
 
       function setDeepProperty(name, value) {
@@ -41,6 +42,55 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
         while (path.length > 0) obj = obj[path.shift()];
         obj[propertyName] = value;
       }
+    }
+  },
+  handleDataSourceChange: function(event) {
+    var component = this;
+    var select = event.target;
+    var selectedOption = select.options[select.selectedIndex];
+    var value = selectedOption.value;
+    var xState = component.state;
+    var modelDef = xState.activeInstance;
+    var modelConfig = modelDef.config;
+    var base = modelDef.base;
+
+    if(value === CONST.DEFAULT_DATASOURCE) {
+      value = null;
+      modelDef.base = CONST.NEW_MODEL_BASE;
+    } else if(base === CONST.NEW_MODEL_BASE) {
+      modelDef.base = CONST.DEFAULT_DATASOURCE_BASE_MODEL;
+    }
+
+    xState.activeInstance.config.dataSource = value;
+
+    component.setState(xState);
+    this.setBaseForDataSource();
+  },
+  setBaseForDataSource: function() {
+    var component = this;
+    var xState = component.state;
+    var modelDef = xState.activeInstance;
+    var modelConfig = modelDef.config;
+    var base = modelDef.base;
+    var baseIsDefault = base === CONST.NEW_MODEL_BASE;
+    var noDataSourceSelected = modelConfig.dataSource === null;
+
+    if(noDataSourceSelected) {
+      modelDef.base = CONST.NEW_MODEL_BASE;
+    } else {
+      modelDef.base = CONST.DEFAULT_DATASOURCE_BASE_MODEL;
+    }
+    
+    component.setState(xState);
+  },
+  handleBaseBlur: function() {
+    var component = this;
+    var xState = component.state;
+    var modelDef = xState.activeInstance;
+    var base = $.trim(modelDef.base, '');
+
+    if(!base) {
+      component.setBaseForDataSource();
     }
   },
   processModelNameValue: function(event) {
@@ -102,11 +152,14 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
         scope.saveModelRequest(tState);
       });
     };
-    var dataSourceOptions = (<option />);
+    var dataSourceOptions = [];
     if (scope.mainNavDatasources.map) {
-      dataSourceOptions = scope.mainNavDatasources.map(function(ds) {
+      dataSourceOptions.push(
+        <option>{CONST.DEFAULT_DATASOURCE}</option>
+      );
+      dataSourceOptions = dataSourceOptions.concat(scope.mainNavDatasources.map(function(ds) {
         return (<option value={ds.name}>{ds.name}</option>);
-      });
+      }));
     }
 
     var baseOptions = (<option />);
@@ -121,7 +174,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
     if (modelDef) {
       returnVal = (
         <form role="form">
-        	<div className="model-header-container">
+          <div className="model-header-container">
             <div className={formGroupValidationClasses}>
               <label>name</label>
               <input type="text"
@@ -152,46 +205,46 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
             <div className="model-editor-section-title">Details</div>
           </button>
           <div className="model-detail-container">
-	          <div className="model-detail-input-row">
-	          	<div className="model-detail-input-container">
-	          		<div className="model-detail-label">
-	          		  <label>Plural</label>
-	          		</div>
-	          		<input type="text"
-	          		 	value={modelDef.plural}
-	          		    onChange={this.handleChange}
-	          		    data-name="plural"
-	          		    id="ModelPlural"
-	          		    name="ModelPlural"
-	          		    className="model-instance-editor-input" />
-	          	</div>
-	          	<div className="model-detail-input-container">
-	          		<div className="model-detail-label">
-	          		  <label>Base model</label>
-	          		</div>
-                <select value={modelDef.base}
+            <div className="model-detail-input-row">
+              <div className="model-detail-input-container">
+                <div className="model-detail-label">
+                  <label>Plural</label>
+                </div>
+                <input type="text"
+                  value={modelDef.plural}
+                    onChange={this.handleChange}
+                    data-name="plural"
+                    id="ModelPlural"
+                    name="ModelPlural"
+                    className="model-instance-editor-input" />
+              </div>
+              <div className="model-detail-input-container">
+                <div className="model-detail-label">
+                  <label>Base model</label>
+                </div>
+                <input
+                  className="model-instance-editor-input"
+                  type="text"
                   data-name="base"
-                  name="base"
+                  value={modelDef.base}
                   onChange={this.handleChange}
-                  className="model-instance-editor-input">
-                  {baseOptions}
-                </select>
-	          	</div>
-	          	<div className="model-detail-input-container">
-	          		<div className="model-detail-label">
-	          		  <label>Datasource</label>
-	          		</div>
+                  onBlur={this.handleBaseBlur} />
+              </div>
+              <div className="model-detail-input-container">
+                <div className="model-detail-label">
+                  <label>Datasource</label>
+                </div>
                 <select value={modelDef.config.dataSource}
                   data-name="config.dataSource"
                   name="dataSource"
-                  onChange={this.handleChange}
+                  onChange={this.handleDataSourceChange}
                   className="model-instance-editor-input">
                   {dataSourceOptions}
                 </select>
-	          	</div>
-	          </div>
+              </div>
+            </div>
 
-	          <div className="model-detail-button-row">
+            <div className="model-detail-button-row">
               <div className="model-detail-input-container listNarrow checkbox">
                 <label className="model-instance-editor-checkbox-label">
                   <input type="checkbox"
@@ -213,23 +266,18 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                   value={modelDef.strict}
                   className="model-instance-editor-checkbox" />strict
                 </label>
-
               </div>
-	          </div>
-
-
+            </div>
           </div>
         </form>
         );
     }
-
     return returnVal;
   }
 });
 /*
  *
  *   MODEL PROPERTIES
- *
  *
  * */
 var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
