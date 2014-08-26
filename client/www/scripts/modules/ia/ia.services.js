@@ -12,28 +12,6 @@ IA.service('IAService', [
     var currentlySelected = [];
     var globalExceptionStack = [];
 
-    svc.getContainerWidth = function(selector) {
-      if (selector) {
-        return jQuery(selector).width();
-      }
-      return 0;
-    };
-    svc.openContainer = function(selector) {
-      var dragTabWidth = 20;
-      var mainWidth = (svc.getMainContentWidth() - dragTabWidth);
-      jQuery(selector).animate({width: mainWidth}, 500 );
-
-    };
-    svc.closeContainer = function(selector) {
-      return jQuery(selector).animate({width: 60}, 500 );
-    };
-    svc.getMainContentWidth = function() {
-      return svc.getContainerWidth('[data-id="MainContentContainer"]');
-    };
-    svc.getViewportWidth = function() {
-      return (window.innerWidth - 40);
-    };
-
     /*
     *
     * Exception Handling
@@ -372,31 +350,6 @@ IA.service('IAService', [
      *
      * */
 
-    svc.clearViews = function() {
-      svc.closeContainer('[data-id="CommonInstanceContainer"]');
-    };
-    svc.showInstanceView = function() {
-      svc.openContainer('[data-id="CommonInstanceContainer"]');
-    };
-
-    svc.isViewOpen = function(viewId) {
-      var xWidth = jQuery('[data-id="' + viewId + '"]').width();
-      if (parseInt(xWidth) > 100) {
-        return true;
-      }
-      return false;
-    };
-
-    // rename
-    svc.toggleInstanceView = function() {
-      if (svc.isViewOpen('CommonInstanceContainer')){
-        svc.closeContainer('[data-id="CommonInstanceContainer"]');
-      }
-      else {
-        svc.openContainer('[data-id="CommonInstanceContainer"]');
-      }
-
-    };
     svc.openModal = function(config) {
       return $modal.open(config);
     };

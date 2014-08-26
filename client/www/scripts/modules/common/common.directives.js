@@ -15,17 +15,7 @@
 Common.directive('slCommonInstanceContainer', [
   function() {
     return {
-      templateUrl: './scripts/modules/common/templates/common.instance.container.html',
-      controller: function($scope) {
-
-
-      },
-      link: function(scope, el, attrs) {
-        jQuery('[data-id="InstanceSliderBtn"]').click(function() {
-          scope.toggleInstanceContainer();
-        });
-
-      }
+      templateUrl: './scripts/modules/common/templates/common.instance.container.html'
     }
   }
 ]);
