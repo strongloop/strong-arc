@@ -47,4 +47,9 @@ CSS from original branch */
     background: none;
     border: none;
 }
-
+.btn-new-model-property {
+    white-space: nowrap;
+}
+.btn-new-model-property:disabled {
+    color:#666666;
+}

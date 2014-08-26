@@ -276,7 +276,12 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
     items = properties.map(function (item) {
       return  (<ModelPropertyRowDetail modelProperty={item} scope={scope} />);
     });
-
+    var disabledVal = false;
+    var titleText = 'New Property';
+    if (scope.activeInstance.id === CONST.NEW_MODEL_PRE_ID){
+      disabledVal = true;
+      titleText = 'Save your model before adding properties';
+    }
     var retVal = (<div />);
     if (properties) {
       retVal = (
@@ -311,7 +316,7 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
             <ul className="model-instance-property-list">
             {items}
             </ul>
-            <button type="button" onClick={component.triggerNewPropertyEditor} className="btn-new-model-property" >New Property</button>
+            <button disabled={disabledVal} title={titleText} type="button" onClick={component.triggerNewPropertyEditor} className="btn-new-model-property" >New Property</button>
           </div>
 
 
