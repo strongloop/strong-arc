@@ -279,3 +279,15 @@ app.controller('MainNavController',[
 
   }
 ]);
+
+// Get project name from package.json
+app.run(['$rootScope', 'PackageDefinition', function($rootScope, PackageDefinition) {
+  var pkg = PackageDefinition.findOne();
+  return pkg.$promise
+    .then(function() {
+      $rootScope.projectName = pkg.name;
+    })
+    .catch(function(err) {
+      console.warn('Cannot get project\'s package definition.', err);
+    });
+}]);
