@@ -180,6 +180,7 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
       if (item.dataSource && (item.dataSource !== CONST.DEFAULT_DATASOURCE )) {
         dsConnectEl = (<span data-name={item.name}  data-id={item.id} className="glyphicon glyphicon-lightning"></span>);
       }
+      var configId = item.config && item.config.id;
       return (
         <div data-ui-type="row" onMouseOver={hoverEvent} onMouseOut={hoverOutEvent} className={classNameVar} data-id={item.id}>
           <div data-ui-type="cell" className="ia-nav-item-icon-container-col">
@@ -193,8 +194,8 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
             {dsConnectEl}
           </div>
           <div data-ui-type="cell" className="ia-nav-item-contextmenu-icon-container-col">
-            <button className="btn-command btn-nav-context" data-id={item.id} data-config-id={item.config.id}>
-              <span data-name={item.name} data-id={item.id} data-config-id={item.config.id} className="glyphicon glyphicon-contextmenu"></span>
+            <button className="btn-command btn-nav-context" data-id={item.id} data-config-id={configId}>
+              <span data-name={item.name} data-id={item.id} data-config-id={configId} className="glyphicon glyphicon-contextmenu"></span>
             </button>
           </div>
         </div>
