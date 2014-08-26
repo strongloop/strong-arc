@@ -144,22 +144,17 @@ Datasource.service('DataSourceService', [
 
       return deferred.promise;
     };
-    svc.testDataSourceConnection = function(config) {
-      if (!config.connector) {
-        return $q.reject('Select a connector first.');
-      }
-
+    svc.testDataSourceConnection = function(dsId) {
       var deferred = $q.defer();
 
-      DataSourceDefinition.testConnection({}, config,
+      DataSourceDefinition.prototype$testConnection({ id: dsId },
         function(response) {
           deferred.resolve(response);
         },
         function(response) {
-          var msg = response.data && response.data.error &&
-            response.data.error.message;
-          msg = msg || 'Unexpected error ' + response.status;
-          deferred.reject(msg);
+          var error = response.data && response.data.error ||
+            new Error('Unexpected error ' + response.status);
+          deferred.reject(error);
         }
       );
 
