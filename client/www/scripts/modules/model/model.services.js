@@ -82,26 +82,6 @@ Model.service('ModelService', [
       return deferred.promise;
 
     };
-<<<<<<< HEAD
-    svc.isNewModelNameUnique = function(name) {
-      var retVar = true;
-
-      var existingModels = JSON.parse(window.localStorage.getItem('ApiModels'));
-      if (existingModels) {
-        for (var i = 0;i < existingModels.length;i++) {
-          if (existingModels[i].name === name) {
-            retVar = false;
-            break;
-          }
-        }
-      }
-
-      return retVar;
-    };
-=======
->>>>>>> ghost tab issue
-
-
     svc.updateModel = function(model) {
       var deferred = $q.defer();
 

@@ -57,7 +57,7 @@ IA.service('IAService', [
     svc.getOpenInstanceRefs = function() {
       var retRefs = AppStorageService.getItem('openInstanceRefs');
       var activeInstance = AppStorageService.getItem('activeInstance');
-      // TODO clean this up
+      // TODO Sean clean this up
       // make sure we don't have left overs from an abandoned create new model flow
       if (!retRefs) {
         retRefs = [];
@@ -121,7 +121,7 @@ IA.service('IAService', [
     svc.clearOpenNewDSReference = function() {
       var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
       for (var i = 0;i < openInstanceRefs.length;i++) {
-        if (openInstanceRefs[i].id = CONST.NEW_DATASOURCE_PRE_ID) {
+        if (openInstanceRefs[i].id === CONST.NEW_DATASOURCE_PRE_ID) {
           openInstanceRefs.splice(i,1);
         }
       }
