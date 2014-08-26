@@ -1,6 +1,8 @@
 /* @override
 	http://0.0.0.0:3003/style/dev/model.css
-	http://0.0.0.0:3003/style/src/model.css */
+	http://0.0.0.0:3003/style/src/model.css
+	http://localhost:4800/style/src/model.css
+	http://0.0.0.0:4800/style/src/model.css */
 
 
 ::-webkit-input-placeholder {
@@ -19,7 +21,6 @@ select {
 }
 
 /*
-
     models
 
 */
@@ -276,7 +277,8 @@ select {
     width: 90rem;
     min-width: 60rem;
     height: 11.2rem;
-    border-radius: 2rem;
+    border-radius: 0.5rem;
+    margin-left: 2rem;
 }
 .model-header-name-container {
     display: inline-block;
@@ -366,7 +368,7 @@ select {
     width: 25rem;
 }
 .props-name-header {
-    width: 31rem;
+    width: 30.3rem;
     padding-left: 1.7rem;
 }
 .props-name-cell input{
@@ -378,7 +380,7 @@ select {
     width: 10rem;
 }
 .props-data-type-header {
-    width: 11.5rem;
+    width: 11rem;
     padding-left: 1.4rem;
 }
 
@@ -387,7 +389,7 @@ select {
     text-align: center;
 }
 .props-isid-header{
-    width: 5.5rem;
+    width: 6.5rem;
     padding-left: 2.5rem;
 }
 .props-required-cell {
@@ -395,7 +397,7 @@ select {
     text-align: center;
 }
 .props-required-header {
-    width: 5.5rem;
+    width: 6rem;
     padding-left: 2.6rem;
 }
 .props-index-cell {
@@ -404,7 +406,7 @@ select {
 
 }
 .props-index-header {
-    width: 7.5rem;
+    width: 8rem;
     padding-left: 3rem;
 }
 .props-comments-cell {
@@ -434,6 +436,11 @@ select {
 	width: 1rem;
 	text-align: left;
 }
+.props-remove-btn{
+	background: none;
+	border: none;
+	color: #4a90e2;
+}
 .modelproperty-detail-is-open .modelproperty-detail-row{
 	background: navy;
 }
@@ -456,4 +463,6 @@ select {
 
 
 }
-
+.model-header-container .validation-error-message {
+    margin-left:1.5rem;
+}

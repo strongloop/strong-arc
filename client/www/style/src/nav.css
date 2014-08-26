@@ -1,6 +1,7 @@
 /* @override
 	http://0.0.0.0:3003/style/dev/nav.css
-	http://0.0.0.0:3003/style/src/nav.css */
+	http://0.0.0.0:3003/style/src/nav.css
+	http://localhost:4800/style/src/nav.css */
 
 
 /*
@@ -103,7 +104,7 @@ Main Search
 .nav-tree-item {
     display: block;
     border: 0;
-    background: transparent; /*orange;*/
+    background: transparent;
     text-align: left;
     padding: 0;
 
@@ -305,7 +306,7 @@ Main Search
 	border-bottom: 3px solid #66992D;
 }
 .btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {
-	background: #75aae8;
+	background: transparent;
 	color: white;
 	/*color: #689d2a;
 	background-color: #ebebeb;
