@@ -71,11 +71,6 @@ Model.service('ModelService', [
             models.push({name:key,props:value});
           }, log);
 
-
-          // $scope.models = models;
-          window.localStorage.setItem('ApiModels', JSON.stringify(core));
-          //window.localStorage.setItem('ApiModels', JSON.stringify(x));
-
           deferred.resolve(core);
         },
         function(response) {
@@ -87,23 +82,6 @@ Model.service('ModelService', [
       return deferred.promise;
 
     };
-    svc.isNewModelNameUnique = function(name) {
-      var retVar = true;
-
-      var existingModels = JSON.parse(window.localStorage.getItem('ApiModels'));
-      if (existingModels) {
-        for (var i = 0;i < existingModels.length;i++) {
-          if (existingModels[i].name === name) {
-            retVar = false;
-            break;
-          }
-        }
-      }
-
-      return retVar;
-    };
-
-
     svc.updateModel = function(model) {
       var deferred = $q.defer();
 
@@ -274,28 +252,7 @@ Model.service('ModelService', [
 
       }
     };
-    svc.getModelByName = function(name) {
-      var targetModel = null;
-      var currModelCollection = [];
-      if (window.localStorage.getItem('ApiModels')) {
-        currModelCollection = JSON.parse(window.localStorage.getItem('ApiModels'));
-        //var targetModel = currModelCollection[name];
-        for (var i = 0;i < currModelCollection.length;i++) {
-          if (currModelCollection[i].name === name) {
-            targetModel = currModelCollection[i];
-            targetModel.name = name;
-            break;
-          }
-        }
-      }
-      else {
 
-          console.warn('request to get model data from localstorage cache failed so no model is returned');
-
-      }
-
-      return targetModel;
-    };
     svc.getModelById = function(modelId) {
       var targetModel = {};
       var deferred = $q.defer();
@@ -339,14 +296,16 @@ Model.service('ModelService', [
       return isUnique;
 
     };
-    var defaultModelSchema = {
-      id: CONST.NEW_MODEL_PRE_ID,
-      type: CONST.MODEL_TYPE,
-      facetName: CONST.NEW_MODEL_FACET_NAME,
-      strict: false,
-      public: true,
-      name: CONST.NEW_MODEL_NAME,
-      idInjection: false
+    var DefaultModelSchema = function(){
+      return {
+        id: CONST.NEW_MODEL_PRE_ID,
+        type: CONST.MODEL_TYPE,
+        facetName: CONST.NEW_MODEL_FACET_NAME,
+        strict: false,
+        public: true,
+        name: CONST.NEW_MODEL_NAME,
+        idInjection: false
+      };
     };
 
 
@@ -354,23 +313,18 @@ Model.service('ModelService', [
 
 
     svc.createNewModelInstance = function() {
+      var returnInstance = new DefaultModelSchema();
       var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
       if (!openInstanceRefs) {
         openInstanceRefs = [];
       }
-      var doesNewModelExist = false;
-      for (var i = 0;i < openInstanceRefs.length;i++) {
-        if (openInstanceRefs[i].name === CONST.NEW_MODEL_NAME) {
-          doesNewModelExist = true;
-          break;
-        }
-      }
-      // create new model schema
-      if (!doesNewModelExist) {
-        openInstanceRefs.push(defaultModelSchema);
-        AppStorageService.setItem('openInstanceRefs', openInstanceRefs);
-      }
-      return defaultModelSchema;
+      openInstanceRefs.push({
+        id: returnInstance.id,
+        name: returnInstance.name,
+        type: returnInstance.type
+      });
+      AppStorageService.setItem('openInstanceRefs', openInstanceRefs);
+      return returnInstance;
     };
     return svc;
   }

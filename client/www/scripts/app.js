@@ -230,7 +230,7 @@ app.factory('requestInterceptor', [
         if (rejection.status == 401) {
           $location.path('/login');
         }
-        if (rejection.status > 499) {
+        if ((rejection.status > 499) || (rejection.status === 422)) {
 
           $rootScope.$broadcast('GlobalExceptionEvent', {
               requestUrl: rejection.config.url,
