@@ -54,12 +54,21 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
   deleteSelectedModel: function(key, opt) {
     var scope = this.props.scope;
     try{
-      if (opt.sourceEvent.currentTarget.attributes['data-id']){
-        var modelId = opt.sourceEvent.currentTarget.attributes['data-id'].value;
-        scope.$apply(function(){
-          scope.deleteInstanceRequest(modelId, CONST.MODEL_TYPE);
-        });
+      var targetAttributes = opt.sourceEvent.currentTarget.attributes;
+      if (targetAttributes['data-id']) {
+        var definitionId = targetAttributes['data-id'].value;
+        var configId = targetAttributes['data-config-id'] &&
+          targetAttributes['data-config-id'].value;
+        var instanceId = {
+          definitionId: definitionId,
+          configId: configId
+        };
 
+        scope.$apply(function(){
+          scope.deleteInstanceRequest(instanceId, CONST.MODEL_TYPE);
+        });
+      } else {
+        console.warn('Missing some of the required model attributes.');
       }
     }
     catch(error) {
@@ -171,7 +180,7 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
         dsConnectEl = (<span data-name={item.name}  data-id={item.id} className="glyphicon glyphicon-lightning"></span>);
       }
       return (
-        <div data-ui-type="row" onMouseOver={hoverEvent} onMouseOut={hoverOutEvent} className={classNameVar} data-id={item.id} >
+        <div data-ui-type="row" onMouseOver={hoverEvent} onMouseOut={hoverOutEvent} className={classNameVar} data-id={item.id}>
           <div data-ui-type="cell" className="ia-nav-item-icon-container-col">
             <span data-name={item.name}  data-id={item.id} className="glyphicon glyphicon-file"></span>
           </div>
@@ -183,8 +192,8 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
             {dsConnectEl}
           </div>
           <div data-ui-type="cell" className="ia-nav-item-contextmenu-icon-container-col">
-            <button className="btn-command btn-nav-context" data-id={item.id}>
-              <span data-name={item.name}  data-id={item.id} className="glyphicon glyphicon-contextmenu"></span>
+            <button className="btn-command btn-nav-context" data-id={item.id} data-config-id={item.config.id}>
+              <span data-name={item.name} data-id={item.id} data-config-id={item.config.id} className="glyphicon glyphicon-contextmenu"></span>
             </button>
           </div>
         </div>

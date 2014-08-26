@@ -152,10 +152,10 @@ app.controller('StudioController', [
 
           if (type === CONST.MODEL_TYPE) {
             // delete the model
-            ModelService.deleteModel(refId).
+            ModelService.deleteModel(refId.definitionId, refId.configId).
               then(function(response){
                 // remove from open instance refs
-                resetActiveToFirstOpenInstance(refId, CONST.MODEL_TYPE);
+                resetActiveToFirstOpenInstance(refId.definitionId, CONST.MODEL_TYPE);
                 loadModels();
               }
             );

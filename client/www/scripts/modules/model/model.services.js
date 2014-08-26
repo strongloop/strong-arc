@@ -2,9 +2,10 @@
 Model.service('ModelService', [
   'Modeldef',
   'ModelDefinition',
+  'ModelConfig',
   '$q',
   'AppStorageService',
-  function(Modeldef, ModelDefinition, $q, AppStorageService) {
+  function(Modeldef, ModelDefinition, ModelConfig, $q, AppStorageService) {
     var svc = {};
     svc.createModel = function(config) {
       var deferred = $q.defer();
@@ -16,8 +17,21 @@ Model.service('ModelService', [
         }
 
         ModelDefinition.create({}, config, function(response) {
-            deferred.resolve(response);
 
+          var modelConfig = angular.extend(
+            {
+              facetName: CONST.APP_FACET,
+              name: config.name,
+            },
+            config.config);
+
+            ModelConfig.create(modelConfig,
+              function() {
+                deferred.resolve(response);
+              },
+              function(response) {
+                console.warn('bad create model config: ' + response);
+              });
           },
           function(response){
             console.warn('bad create model def: ' + response);
@@ -26,16 +40,26 @@ Model.service('ModelService', [
       return deferred.promise;
 
     };
-    svc.deleteModel = function(modelId) {
-      if (modelId) {
+    svc.deleteModel = function(definitionId, configId) {
+      if (definitionId) {
         var deferred = $q.defer();
 
-        ModelDefinition.deleteById({id:modelId},
+        ModelDefinition.deleteById({ id: definitionId },
           function(response) {
-            deferred.resolve(response);
+            if (!configId) {
+              deferred.resolve(response);
+            } else {
+              ModelConfig.deleteById({ id: configId },
+                function() {
+                  deferred.resolve(response);
+                },
+                function(response) {
+                  console.warn('Cannot delete ModelConfig.', response);
+                });
+            }
           },
           function(response) {
-            console.warn('bad delete model definition');
+            console.warn('bad delete model definition', response);
           }
         );
         return deferred.promise;
@@ -44,38 +68,53 @@ Model.service('ModelService', [
 
     svc.getAllModels = function() {
       var deferred = $q.defer();
-      var p = ModelDefinition.find({},
-        function(response) {
+      ModelConfig.find({},
+        function(configs) {
+          var configMap = {};
+          angular.forEach(configs, function(value, key) {
+            configMap[value.name] = value;
+          });
 
-          // add create model to this for new model
+          ModelDefinition.find({},
+            function(response) {
 
-          var core = response;
-          var log = [];
-          var models = [];
-          angular.forEach(core, function(value, key){
-            // this.push(key + ': ' + value);
-            var lProperties = [];
-            if (value.properties) {
-              angular.forEach(value.properties, function(value, key){
-                lProperties.push({name:key,props:value});
-              });
-              value.properties = lProperties;
+              // add create model to this for new model
+
+              var core = response;
+              var log = [];
+              var models = [];
+              angular.forEach(core, function(value, key) {
+                // this.push(key + ': ' + value);
+                var lProperties = [];
+                if (value.properties) {
+                  angular.forEach(value.properties, function(value, key) {
+                    lProperties.push({name: key, props: value});
+                  });
+                  value.properties = lProperties;
+                }
+                var lOptions = [];
+                if (value.options) {
+                  angular.forEach(value.options, function(value, key) {
+                    lOptions.push({name: key, props: value});
+                  });
+                  value.options = lProperties;
+                }
+
+                value.config = configMap[value.name];
+                models.push({name: key, props: value});
+              }, log);
+
+
+              deferred.resolve(core);
+            },
+
+            function(response) {
+              console.warn('bad get model defs: ' + response);
             }
-            var lOptions = [];
-            if (value.options) {
-              angular.forEach(value.options, function(value, key){
-                lOptions.push({name:key,props:value});
-              });
-              value.options = lProperties;
-            }
-            models.push({name:key,props:value});
-          }, log);
-
-          deferred.resolve(core);
+          );
         },
-        function(response) {
-          console.warn('bad get model defs: ' + response);
-
+        function(err) {
+          console.warn('Cannot get model configs.', err);
         }
       );
 
@@ -93,7 +132,18 @@ Model.service('ModelService', [
         if (oldName === model.name) {
           ModelDefinition.upsert(model,
             function(response) {
-              deferred.resolve(response);
+              model.config.facetName = model.config.facetName || CONST.APP_FACET;
+              model.config.name = model.config.name || model.name;
+
+              ModelConfig.upsert(model.config,
+                function(configResponse) {
+                  response.config = configResponse;
+                  deferred.resolve(response);
+                },
+                function(configResponse) {
+                  console.warn('Cannot update model configuration', model.id, configResponse);
+                }
+              );
             },
             function(response) {
               console.warn('bad update model definition: ' + model.id);
@@ -117,7 +167,6 @@ Model.service('ModelService', [
                       .then(function updateModelId() {
                         return $q.all(entities.map(function(it) {
                           it.modelId = updatedModel.id;
-                          console.log('update', relationName, it.id);
                           return it.$save();
                         }));
                       })
@@ -127,6 +176,25 @@ Model.service('ModelService', [
                         updatedModel[relationName] = entities;
                       });
                   }));
+            })
+            .then(function renameModelConfig() {
+              var oldConfigId;
+              var modelConfig = ModelConfig.find(
+                { where: { name: updatedModel.name }});
+              return modelConfig.$promise
+                .then(function createNewModelConfig() {
+                  oldConfigId = modelConfig.id;
+                  modelConfig.name = updatedModel.name;
+
+                  // delete properties that should be generated from the new name
+                  delete modelConfig.id;
+                  delete modelConfig.configFile;
+
+                  return ModelConfig.create(modelConfig).$promise;
+                })
+                .then(function deleteOldModelConfig() {
+                  return ModelConfig.deleteById({ id: oldConfigId }).$promise;
+                });
             })
             .then(function deleteOldModel() {
               return ModelDefinition.deleteById({ id: oldId }).$promise;
@@ -170,7 +238,9 @@ Model.service('ModelService', [
           });
 
           var modelProps = {
-            public: true,
+            config: {
+              public: true,
+            },
             plural: sourceDbModelObj.name + 's'
           };
           newLBModel.props = modelProps;
@@ -265,7 +335,25 @@ Model.service('ModelService', [
             targetModel = response;
             ModelDefinition.properties({id:targetModel.id}, function(response) {
               targetModel.properties = response;
-              deferred.resolve(targetModel);
+
+              ModelConfig.findOne(
+                {
+                  filter: {
+                    where: {
+                      facetName: CONST.APP_FACET,
+                      name: targetModel.name
+                    }
+                  }
+                },
+                function(config) {
+                  targetModel.config = config;
+                  deferred.resolve(targetModel);
+                },
+                function(response) {
+                  console.warn('cannot get ModelConfig', response);
+                  targetModel.config = defaultModelSchema.config;
+                  deferred.resolve(targetModel);
+                });
             });
 
           },
@@ -296,15 +384,19 @@ Model.service('ModelService', [
       return isUnique;
 
     };
+
     var DefaultModelSchema = function(){
       return {
         id: CONST.NEW_MODEL_PRE_ID,
         type: CONST.MODEL_TYPE,
         facetName: CONST.NEW_MODEL_FACET_NAME,
         strict: false,
-        public: true,
         name: CONST.NEW_MODEL_NAME,
-        idInjection: false
+        idInjection: false,
+        config: {
+          facetName: CONST.APP_FACET,
+          public: true,
+        }
       };
     };
 
