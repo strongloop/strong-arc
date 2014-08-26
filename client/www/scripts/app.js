@@ -100,7 +100,8 @@ var CONST = {
   NEW_DATASOURCE_FACET_NAME: 'server',
   DATASOURCE_TYPE: 'datasource',
   DEFAULT_DATASOURCE: 'db',
-  MODEL_TYPE: 'model'
+  MODEL_TYPE: 'model',
+  APP_FACET: 'server'
 };
 var setUI = function() {
   var headerHeight = 50;

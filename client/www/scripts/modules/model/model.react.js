@@ -28,12 +28,19 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
         xState.isModelNameValid = component.isModelNameValid(event.target.value);
       }
       if (event.target.attributes['type'] && (event.target.attributes['type'].value === 'checkbox')) {
-        xState.activeInstance[modelPropertyName] = event.target.checked;
-      }
-      else {
-        xState.activeInstance[modelPropertyName] = event.target.value;
+        setDeepProperty(modelPropertyName, event.target.checked);
+      } else {
+        setDeepProperty(modelPropertyName, event.target.value);
       }
       component.setState(xState);
+
+      function setDeepProperty(name, value) {
+        var obj = xState.activeInstance;
+        var path = name.split('.');
+        var propertyName = path.pop();
+        while (path.length > 0) obj = obj[path.shift()];
+        obj[propertyName] = value;
+      }
     }
   },
   processModelNameValue: function(event) {
@@ -174,8 +181,8 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
 	          		<div className="model-detail-label">
 	          		  <label>Datasource</label>
 	          		</div>
-                <select value={modelDef.dataSource}
-                  data-name="dataSource"
+                <select value={modelDef.config.dataSource}
+                  data-name="config.dataSource"
                   name="dataSource"
                   onChange={this.handleChange}
                   className="model-instance-editor-input">
@@ -188,9 +195,9 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
               <div className="model-detail-input-container listNarrow checkbox">
                 <label className="model-instance-editor-checkbox-label">
                   <input type="checkbox"
-                  value={modelDef.public}
-                  checked={modelDef.public}
-                  data-name="public"
+                  value={modelDef.config.public}
+                  checked={modelDef.config.public}
+                  data-name="config.public"
                   name="public"
                   onChange={this.handleChange}
                   className="model-instance-editor-checkbox" />public
