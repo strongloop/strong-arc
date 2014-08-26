@@ -1,6 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var gulp = require('gulp');
+var install = require('gulp-install');
 var jshint = require('gulp-jshint');
 var less = require('gulp-less');
 var mocha = require('gulp-spawn-mocha');
@@ -8,7 +9,7 @@ var runSequence = require('run-sequence');
 
 gulp.task('default', ['build', 'test']);
 
-gulp.task('build', ['build-less', 'build-version']);
+gulp.task('build', ['build-less', 'build-version', 'install-example-modules']);
 
 gulp.task('build-less', function(){
   return gulp.src('client/less/style.less')
@@ -28,6 +29,11 @@ gulp.task('build-version', function(callback) {
      'client', 'www', 'scripts', 'version.js');
 
   fs.writeFile(filepath, content, 'utf-8', callback);
+});
+
+gulp.task('install-example-modules', function() {
+  return gulp.src('examples/**/package.json')
+    .pipe(install({ production: true }));
 });
 
 gulp.task('test', ['build'], function(callback) {

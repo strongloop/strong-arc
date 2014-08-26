@@ -454,16 +454,22 @@ app.controller('StudioController', [
     };
     // test datasource connection
     $scope.testDataSourceConnection = function(config) {
+      if (!config.connector) {
+        alert('Select a connector first.');
+        return;
+      }
 
-      DataSourceService.testDataSourceConnection(config).
-        then(function(response) {
+      $scope.updateOrCreateDatasource(config)
+        .then(function(data) {
+          return DataSourceService.testDataSourceConnection(data.id);
+        })
+        .then(function(response) {
           alert('DataSource status: ' + response.status);
         })
         .catch(function(err) {
-          alert('DataSource error: ' + err);
+          alert('DataSource error: ' + err.message);
         });
     };
-
 
     // save Datasource
     $scope.updateOrCreateDatasource = function(config) {
@@ -481,7 +487,7 @@ app.controller('StudioController', [
         if (config.id === CONST.NEW_DATASOURCE_PRE_ID) {
           delete config.id;
 
-          DataSourceService.createDataSourceDefinition(config).
+          return DataSourceService.createDataSourceDefinition(config).
             then(function(response) {
               // clear reference to 'new' placeholder in openInstanceRefs
               $scope.activeInstance = IAService.setActiveInstance(response, CONST.DATASOURCE_TYPE);
@@ -493,17 +499,19 @@ app.controller('StudioController', [
               IAService.clearOpenNewDSReference();
               loadDataSources();
               $rootScope.$broadcast('IANavEvent');
+              return response;
             }
           );
         }
         // update DataSourceDefinition
         else {
-          DataSourceService.updateDataSourceDefinition(config).
+          return DataSourceService.updateDataSourceDefinition(config).
             then(function(response) {
                 $scope.activeInstance = response;
                 $scope.activeInstance.type = CONST.DATASOURCE_TYPE;
                 IAService.setActiveInstance($scope.activeInstance, CONST.DATASOURCE_TYPE);
                 loadDataSources();
+                return response;
               }
             ).
             catch(function(response){
