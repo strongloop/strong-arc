@@ -23,6 +23,9 @@ app.controller('StudioController', [
     $scope.modelNavIsVisible = true;
     $scope.dsNavIsVisible = true;
     $scope.globalExceptionStack = [];
+    $scope.datasource = {
+      connectionTestResponse:''
+    };
 
     /*
     *
@@ -119,7 +122,8 @@ app.controller('StudioController', [
         IAService.activateInstanceById(id, type).
           then(function(response) {
             $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
-            $scope.activeInstance = response;
+            $scope.activeInstance = IAService.setActiveInstance(response, type);
+            $rootScope.$broadcast('IANavEvent');
           }).
           catch(function(response) {
             console.warn('problem activating instance: ' + '[' + id + ']' + response);
@@ -215,6 +219,7 @@ app.controller('StudioController', [
         if ($scope.openInstanceRefs.length === 0) {
           IAService.clearActiveInstance();
           $scope.activeInstance = {};
+          $scope.activeInstance = IAService.setActiveInstance($scope.activeInstance);
           $rootScope.$broadcast('IANavEvent');
 
         }
@@ -455,23 +460,32 @@ app.controller('StudioController', [
         $scope.createNewInstance(CONST.DATASOURCE_TYPE);
       }
     };
+    var getFriendlyTestConnectionMsg = function(response) {
+      var retVar = 'Failed';
+      if (response && (response === true)) {
+        retVar = 'Success';
+      }
+      return retVar;
+    };
     // test datasource connection
     $scope.testDataSourceConnection = function(config) {
+
       if (!config.connector) {
-        alert('Select a connector first.');
+        $scope.datasource.connectionTestResponse = getFriendlyTestConnectionMsg('failed: missing connector');
         return;
       }
 
-      $scope.updateOrCreateDatasource(config)
-        .then(function(data) {
-          return DataSourceService.testDataSourceConnection(data.id);
-        })
-        .then(function(response) {
-          alert('DataSource status: ' + response.status);
-        })
-        .catch(function(err) {
-          alert('DataSource error: ' + err.message);
+      $scope.clearTestMessage();
+      DataSourceService.testDataSourceConnection(config).
+        then(function(response) {
+          $scope.datasource.connectionTestResponse = getFriendlyTestConnectionMsg(response.status);
+        }).
+        catch(function(err) {
+          $scope.datasource.connectionTestResponse = getFriendlyTestConnectionMsg(err);
         });
+    };
+    $scope.clearTestMessage = function() {
+      $scope.datasource.connectionTestResponse = '';
     };
 
     // save Datasource
@@ -506,15 +520,18 @@ app.controller('StudioController', [
         else {
           return DataSourceService.updateDataSourceDefinition(config).
             then(function(response) {
-              growl.addSuccessMessage("datasource updated");
+              growl.addSuccessMessage('datasource updated');
               $scope.updateActiveInstance(
                 response, CONST.DATASOURCE_TYPE, originalDataSourceId);
               loadDataSources();
               return response;
             })
             .catch(function(response){
-              console.warn('update DataSourceDefinition failed: ' + response.message);
-            });
+                console.warn('bad datasource definition update: ' + response);
+                growl.addErrorMessage('error updating datasource definition');
+              }
+
+            );
         }
       }
     };
@@ -547,6 +564,8 @@ app.controller('StudioController', [
 
       var currActiveInstance = $scope.activeInstance;
       var openInstanceRefs = IAService.getOpenInstanceRefs();
+
+      $scope.clearTestMessage();
 
       // check if there is an active instance
       if (currActiveInstance && currActiveInstance.id) {
@@ -588,7 +607,8 @@ app.controller('StudioController', [
           // set the 0 index open instance ref to the active instance
           IAService.activateInstanceById(openInstanceRefs[0].id).
             then(function(instance) {
-              $scope.activeInstance = instance;
+              $scope.activeInstance = IAService.setActiveInstance(instance, instance.type);
+
               $rootScope.$broadcast('IANavEvent');
             }
           );

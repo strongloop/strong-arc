@@ -1,4 +1,4 @@
-/* @override 
+/* @override
 	http://0.0.0.0:3003/style/src/datasource.css */
 
 .datasource-editor-instance-container{
@@ -20,7 +20,7 @@
 	padding: 2rem 1rem 1rem 1rem;
 }
 .datasource-form-group{
-	
+
 }
 .datasource-header-container{
 	background: green;
@@ -31,10 +31,14 @@
 	padding-top: 1rem;
 }
 .datasource-header-name-container{
-	
+
 }
 .datasource-field-container{
 	width: 90rem;
 	margin-left: 2rem;
 	margin-right: 2rem;
 }
+.datasource-connection-test-response-container {
+    color:#7dbd33;
+}
+

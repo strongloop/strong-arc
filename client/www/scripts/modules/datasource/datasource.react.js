@@ -11,16 +11,36 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
       activeInstance: this.props.scope.activeInstance,
       isNameValid: this.isNameValid(this.props.scope.activeInstance.name),
       isConnectorValid: this.isConnectorValid(this.props.scope.activeInstance.connector),
-      isFormValid: (this.isNameValid(this.props.scope.activeInstance.name) && this.props.scope.activeInstance.connector)
+      isFormValid: (this.isNameValid(this.props.scope.activeInstance.name) && this.props.scope.activeInstance.connector),
+      testConnectionMessage:'',
+      isTesting: false
     }
   },
   componentWillReceiveProps: function(nextProps) {
     var component = this;
+
     component.setState({
       activeInstance:nextProps.scope.activeInstance,
       isNameValid: component.isNameValid(nextProps.scope.activeInstance.name),
       isConnectorValid: component.isConnectorValid(nextProps.scope.activeInstance.connector),
       isFormValid: (component.isNameValid(nextProps.scope.activeInstance.name) && nextProps.scope.activeInstance.connector)
+    });
+    if (nextProps.scope.datasource.connectionTestResponse){
+      component.setState({isTesting:false});
+    }
+    component.setState({
+      activeInstance: nextProps.scope.activeInstance,
+      testConnectionMessage: nextProps.scope.datasource.connectionTestResponse
+    });
+  },
+  clearMessages: function() {
+    var scope = this.props.scope;
+    this.setState({
+        testConnectionMessage:''
+      }
+    );
+    scope.$apply(function() {
+      scope.clearTestMessage();
     });
   },
   isConnectorValid: function(connector) {
@@ -33,7 +53,6 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
   isNameValid: function(name) {
     return /^[\-_a-zA-Z0-9]+$/.test(name);
   },
-
   handleChange: function(event) {
     var component = this;
     if (event.target.attributes['data-name']) {
@@ -107,9 +126,14 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
     if (component.state.isNameValid && component.state.isConnectorValid) {
       isFormValid = true;
     }
+    var testButtonClasses = cx({
+      'model-detail-pocket-button activity-indicator model-save-button datasource-test-button': component.state.isTesting,
+      'model-detail-pocket-button model-save-button datasource-test-button': !component.state.isTesting
+    });
+
 
     return (
-      <div data-id="DatasourceEditorInstanceContainer" className="datasource-editor-instance-container">
+      <div onClick={component.clearMessages} data-id="DatasourceEditorInstanceContainer" className="datasource-editor-instance-container">
         <form name="DatasourceForm" role="form">
           <div className="model-header-container">
             <div className={formGroupValidationClasses}>
@@ -120,7 +144,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
               name="name"
               type="text"
               value={dsModel.name}
-              onChange={this.handleChange}
+              onChange={component.handleChange}
               data-name="name"
               placeholder="name"
               required="true" />
@@ -141,13 +165,13 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                     <div className="datasource-form-group">
                       <label for="user">Username</label>
                       <input id="user"
-                      className="form-control"
-                      name="user"
-                      type="text"
-                      value={dsModel.user}
-                      onChange={this.handleChange}
-                      data-name="user"
-                      placeholder="user" />
+                        className="form-control"
+                        name="user"
+                        type="text"
+                        value={dsModel.user}
+                        onChange={this.handleChange}
+                        data-name="user"
+                        placeholder="user" />
                     </div>
                   </div>
                 </div>
@@ -159,7 +183,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                       className="form-control"
                       name="password"
                       value={dsModel.password}
-                      onChange={this.handleChange}
+                      onChange={component.handleChange}
                       data-name="password"
                       type="password"
                       placeholder="password" />
@@ -178,7 +202,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                     className="form-control"
                     name="host"
                     value={dsModel.host}
-                    onChange={this.handleChange}
+                    onChange={component.handleChange}
                     data-name="host"
                     type="text"
                     placeholder="host" />
@@ -191,7 +215,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                     className="form-control"
                     name="port"
                     value={dsModel.port}
-                    onChange={this.handleChange}
+                    onChange={component.handleChange}
                     data-name="port"
                     type="text"
                     placeholder="port" />
@@ -207,7 +231,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                     className="form-control"
                     name="database"
                     value={dsModel.database}
-                    onChange={this.handleChange}
+                    onChange={component.handleChange}
                     data-name="database"
                     type="text"
                     placeholder="database name" />
@@ -218,9 +242,8 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                     <label for="connector">Connector</label>
                     <select className="form-control model-instance-editor-input"
                         id="connector"
-                        required="true"
                         value={dsModel.connector}
-                        onChange={this.handleChange}
+                        onChange={component.handleChange}
                         data-name="connector"
                         name="connector" >
                       <option value="">choose</option>
@@ -237,7 +260,8 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
             </div>
           </div>
           <div className="datasource-buttons-layout-container">
-            <button onClick={component.testConnection} data-id={dsModel.id}  className="model-detail-pocket-button model-save-button datasource-test-button">Test Connection</button>
+            <button onClick={component.testConnection} data-id={dsModel.id} className={testButtonClasses}>Test Connection</button>
+            <span className="datasource-connection-test-response-container">{component.state.testConnectionMessage}</span>
           </div>
         </form>
       </div>

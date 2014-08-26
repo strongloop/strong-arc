@@ -143,6 +143,10 @@ code {
     top: 0.5em;
     color: #08592B;
 }
+.activity-indicator {
+    background-image: url('images/spinner3-greenie.gif');
+    background-repeat: no-repeat;
+}
 
 /*
 
