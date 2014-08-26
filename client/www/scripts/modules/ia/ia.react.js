@@ -17,6 +17,7 @@ var IAMainNavContainer = (IAMainNavContainer = React).createClass({
         });
       }
     };
+    var projectName = scope.projectName || '(unknown project)';
     return (
       <div>
         <div className="ia-project-title-header-container" >
@@ -25,7 +26,7 @@ var IAMainNavContainer = (IAMainNavContainer = React).createClass({
               <span id="mainNavContextHelp" data-id="MainNavContextHelp" className="glyphicon glyphicon-question-mark"></span>
             </a>
           </div>
-          <span className="ia-project-title-container">This is an example of a long project name</span>
+          <span className="ia-project-title-container">{projectName}</span>
         </div>
         <IAMainModelNav scope={this.props.scope} />
         <IAMainDatasourceNav scope={this.props.scope} />
