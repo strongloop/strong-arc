@@ -117,7 +117,7 @@ Datasource.service('DataSourceService', [
           updatedDefinition.$promise
             .then(function updateRelatedModelConfigs() {
               var modelConfigs = ModelConfig.find({
-                where: { dataSource: oldName }
+                filter: { where: { dataSource: oldName } }
               });
 
               return modelConfigs.$promise.then(function updateModelConfig() {
