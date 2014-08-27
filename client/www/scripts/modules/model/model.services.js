@@ -66,6 +66,17 @@ Model.service('ModelService', [
       }
     };
 
+    function setModelConfig(definition, config) {
+      if (Object.hasOwnProperty(definition, 'config'))
+        delete definition.config;
+
+      Object.defineProperty(definition, 'config', {
+        value: config,
+        writable: true,
+        enumerable: false
+      });
+    }
+
     svc.getAllModels = function() {
       var deferred = $q.defer();
       ModelConfig.find({},
@@ -100,7 +111,7 @@ Model.service('ModelService', [
                   value.options = lProperties;
                 }
 
-                value.config = configMap[value.name];
+                setModelConfig(value, configMap[value.name]);
                 models.push({name: key, props: value});
               }, log);
 
@@ -137,7 +148,7 @@ Model.service('ModelService', [
 
               ModelConfig.upsert(model.config,
                 function(configResponse) {
-                  response.config = configResponse;
+                  setModelConfig(response, configResponse);
                   deferred.resolve(response);
                 },
                 function(configResponse) {
@@ -178,21 +189,21 @@ Model.service('ModelService', [
                   }));
             })
             .then(function renameModelConfig() {
-              var oldConfigId;
-              var modelConfig = ModelConfig.find(
-                { where: { name: updatedModel.name }});
-              return modelConfig.$promise
-                .then(function createNewModelConfig() {
-                  oldConfigId = modelConfig.id;
-                  modelConfig.name = updatedModel.name;
+              var modelConfig = model.config;
+              var oldConfigId = modelConfig.id;
+              modelConfig.name = updatedModel.name;
 
-                  // delete properties that should be generated from the new name
-                  delete modelConfig.id;
-                  delete modelConfig.configFile;
+              // delete properties that should be generated from the new name
+              delete modelConfig.id;
+              delete modelConfig.configFile;
 
-                  return ModelConfig.create(modelConfig).$promise;
+              var updatedConfig = ModelConfig.create(modelConfig);
+              return updatedConfig.$promise
+                .then(function updateConfigReference() {
+                  setModelConfig(updatedModel, updatedConfig);
                 })
                 .then(function deleteOldModelConfig() {
+                  if (!oldConfigId) return;
                   return ModelConfig.deleteById({ id: oldConfigId }).$promise;
                 });
             })
@@ -346,12 +357,12 @@ Model.service('ModelService', [
                   }
                 },
                 function(config) {
-                  targetModel.config = config;
+                  setModelConfig(targetModel, config);
                   deferred.resolve(targetModel);
                 },
                 function(response) {
                   console.warn('cannot get ModelConfig', response);
-                  targetModel.config = new DefaultModelSchema().config;
+                  setModelConfig(targetModel, new DefaultModelSchema().config);
                   deferred.resolve(targetModel);
                 });
             });
@@ -386,20 +397,23 @@ Model.service('ModelService', [
     };
 
     var DefaultModelSchema = function(){
-      return {
+      var schema = {
         id: CONST.NEW_MODEL_PRE_ID,
         type: CONST.MODEL_TYPE,
         facetName: CONST.NEW_MODEL_FACET_NAME,
         strict: false,
         name: CONST.NEW_MODEL_NAME,
         idInjection: false,
-        config: {
-          facetName: CONST.APP_FACET,
-          public: true,
-          dataSource: null
-        },
         base: CONST.NEW_MODEL_BASE
       };
+
+      setModelConfig(schema, {
+        facetName: CONST.APP_FACET,
+        public: true,
+        dataSource: null
+      });
+
+      return schema;
     };
 
     svc.createNewModelInstance = function() {
