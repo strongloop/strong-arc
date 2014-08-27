@@ -250,8 +250,9 @@ app.controller('StudioController', [
           then(function(response) {
             // clear reference to 'new' placeholder in openInstanceRefs
             growl.addSuccessMessage("model saved");
-            $scope.activeInstance = IAService.setActiveInstance(response, CONST.MODEL_TYPE);
+            $scope.activeInstance = IAService.setActiveInstance(response, CONST.MODEL_TYPE, originalModelId);
             IAService.clearOpenNewModelReference();
+            $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
             loadModels();
           }
         );
@@ -507,7 +508,8 @@ app.controller('StudioController', [
             then(function(response) {
                 $scope.activeInstance = response;
                 $scope.activeInstance.type = CONST.DATASOURCE_TYPE;
-                IAService.setActiveInstance($scope.activeInstance, CONST.DATASOURCE_TYPE);
+                IAService.setActiveInstance($scope.activeInstance, CONST.DATASOURCE_TYPE, originalDataSourceId);
+                $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
                 loadDataSources();
                 growl.addSuccessMessage("datasource updated");
                 return response;
