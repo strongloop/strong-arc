@@ -87,25 +87,7 @@ IA.service('IAService', [
       }
       return false;
     };
-    svc.clearOpenNewModelReference = function() {
-      var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
-      for (var i = 0;i < openInstanceRefs.length;i++) {
-        if (openInstanceRefs[i].id === CONST.NEW_MODEL_PRE_ID) {
-          openInstanceRefs.splice(i,1);
-        }
-      }
-      AppStorageService.setItem('openInstanceRefs', openInstanceRefs);
-    };
-    svc.clearOpenNewDSReference = function() {
-      var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
-      for (var i = 0;i < openInstanceRefs.length;i++) {
-        if (openInstanceRefs[i].id === CONST.NEW_DATASOURCE_PRE_ID) {
-          openInstanceRefs.splice(i,1);
-        }
-      }
-      AppStorageService.setItem('openInstanceRefs', openInstanceRefs);
-
-    };
+    
     svc.activateInstanceById = function(id, type) {
       var deferred = $q.defer();
       var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
@@ -202,12 +184,29 @@ IA.service('IAService', [
       return deferred.promise;
 
     };
-    svc.setActiveInstance = function(instance, type) {
+    svc.setActiveInstance = function(instance, type, id) {
       var targetInstance = instance;
       targetInstance.type = type;
       AppStorageService.setItem('activeInstance', targetInstance);
+      svc.updateOpenInstanceRef(id, type, instance);
       return targetInstance;
     };
+
+    svc.updateOpenInstanceRef = function(id, type, instance) {
+      if (id !== undefined) {
+        var allInstances = svc.getOpenInstanceRefs();
+        allInstances.forEach(function(ref) {
+          if (ref.id === id && ref.type === type) {
+            // Note that when an instance is renamed,
+            // both id and name are changed
+            ref.id = instance.id;
+            ref.name = instance.name;
+          }
+        });
+        AppStorageService.setItem('openInstanceRefs', allInstances);
+      }
+    };
+
     svc.addInstanceRef = function(instanceRefObj) {
       if(instanceRefObj.id && instanceRefObj.name && instanceRefObj.type) {
         var currOpenInstanceRefs = svc.getOpenInstanceRefs();
