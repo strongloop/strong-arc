@@ -87,7 +87,7 @@ IA.service('IAService', [
       }
       return false;
     };
-    
+
     svc.activateInstanceById = function(id, type) {
       var deferred = $q.defer();
       var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
@@ -218,13 +218,20 @@ IA.service('IAService', [
           }
         }
         if (!instanceIsOpen) {
-          currOpenInstanceRefs.push(instanceRefObj);
+          // in case a full blown object gets passed in
+          // only persist the relevant parts
+          currOpenInstanceRefs.push({
+            id: instanceRefObj.id,
+            name: instanceRefObj.name,
+            type: instanceRefObj.type
+          });
           svc.updateOpenInstanceRefs(currOpenInstanceRefs);
           return currOpenInstanceRefs;
 
         }
       }
     };
+
     svc.updateOpenInstanceRefs = function(instanceRefs) {
       AppStorageService.setItem('openInstanceRefs', instanceRefs);
     };
