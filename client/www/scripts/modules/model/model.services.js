@@ -150,6 +150,10 @@ Model.service('ModelService', [
               ModelConfig.upsert(model.config,
                 function(configResponse) {
                   setModelConfig(response, configResponse);
+
+                  // copy over properties, they were not changed
+                  response.properties = model.properties;
+
                   deferred.resolve(response);
                 },
                 function(configResponse) {
