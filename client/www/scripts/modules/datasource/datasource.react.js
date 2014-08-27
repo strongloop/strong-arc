@@ -83,15 +83,15 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                 <div data-ui-type="cell" className="datasource-layout-col1">
                   <div className="username-input-container">
                     <div className="datasource-form-group">
-                      <label for="userName">Username</label>
-                      <input id="userName"
+                      <label for="user">Username</label>
+                      <input id="user"
                       className="form-control"
-                      name="userName"
+                      name="user"
                       type="text"
-                      value={dsModel.userName}
+                      value={dsModel.user}
                       onChange={this.handleChange}
-                      data-name="userName"
-                      placeholder="username" />
+                      data-name="user"
+                      placeholder="user" />
                     </div>
                   </div>
                 </div>
