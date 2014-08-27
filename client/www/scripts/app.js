@@ -110,9 +110,8 @@ var setUI = function() {
   var searchHeight = jQuery('[data-id="MainSearchContainer"]').height();
   var mainControlsHeight = jQuery('[data-id="MainControlsContainer"]').height();
   var jWindowHeight = $(window).height();
-  var navHeight = (jWindowHeight - headerHeight - searchHeight - mainControlsHeight);
+  var navHeight = (jWindowHeight - headerHeight - 12 - mainControlsHeight);
   jQuery('[data-id="MainNavContainer"]').css('height', navHeight);
-  jQuery('.main-content-item-container').css('height', (jWindowHeight - headerHeight));
   // any open views need to follow the width of the container
   var editorWidth = jQuery('[data-id="CommonInstanceContainer"]').width();
   var contentWidth = jQuery('[data-id="IAMainContentContainer"]').width();
