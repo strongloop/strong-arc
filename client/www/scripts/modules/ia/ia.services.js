@@ -87,25 +87,7 @@ IA.service('IAService', [
       }
       return false;
     };
-    svc.clearOpenNewModelReference = function() {
-      var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
-      for (var i = 0;i < openInstanceRefs.length;i++) {
-        if (openInstanceRefs[i].id === CONST.NEW_MODEL_PRE_ID) {
-          openInstanceRefs.splice(i,1);
-        }
-      }
-      AppStorageService.setItem('openInstanceRefs', openInstanceRefs);
-    };
-    svc.clearOpenNewDSReference = function() {
-      var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
-      for (var i = 0;i < openInstanceRefs.length;i++) {
-        if (openInstanceRefs[i].id === CONST.NEW_DATASOURCE_PRE_ID) {
-          openInstanceRefs.splice(i,1);
-        }
-      }
-      AppStorageService.setItem('openInstanceRefs', openInstanceRefs);
-
-    };
+    
     svc.activateInstanceById = function(id, type) {
       var deferred = $q.defer();
       var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');

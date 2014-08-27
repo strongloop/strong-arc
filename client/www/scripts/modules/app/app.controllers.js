@@ -166,6 +166,10 @@ app.controller('StudioController', [
       }
     };
 
+    $scope.updateActiveInstance = function(instance, type, id) {
+      $scope.activeInstance = IAService.setActiveInstance(instance, type, id);
+      $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
+    }
 
 
     // branch clicked
@@ -242,17 +246,15 @@ app.controller('StudioController', [
     * */
     // save model
     $scope.saveModelRequest = function(config) {
+      var originalModelId = config.id;
 
       if (config.id && (config.id !== CONST.NEW_MODEL_PRE_ID)) {
-        var originalModelId = config.id;
         // update model
         ModelService.updateModel(config).
           then(function(response) {
-            // clear reference to 'new' placeholder in openInstanceRefs
             growl.addSuccessMessage("model saved");
-            $scope.activeInstance = IAService.setActiveInstance(response, CONST.MODEL_TYPE, originalModelId);
-            IAService.clearOpenNewModelReference();
-            $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
+            $scope.updateActiveInstance(
+              response, CONST.MODEL_TYPE, originalModelId);
             loadModels();
           }
         );
@@ -265,17 +267,9 @@ app.controller('StudioController', [
         // create model
         ModelService.createModel(config).
           then(function(response) {
-            // clear reference to 'new' placeholder in openInstanceRefs
-
-            $scope.activeInstance = IAService.setActiveInstance(response, CONST.MODEL_TYPE);
-            $scope.openInstanceRefs = IAService.addInstanceRef({
-              id:$scope.activeInstance.id,
-              name:$scope.activeInstance.name,
-              type: CONST.MODEL_TYPE
-            });
-            IAService.clearOpenNewModelReference();
-            IAService.setActiveInstance($scope.activeInstance, CONST.MODEL_TYPE);
             growl.addSuccessMessage("model created");
+            $scope.updateActiveInstance(
+              response, CONST.MODEL_TYPE, originalModelId);
             loadModels();
             $rootScope.$broadcast('IANavEvent');
           }
@@ -472,6 +466,7 @@ app.controller('StudioController', [
     // save Datasource
     $scope.updateOrCreateDatasource = function(config) {
       var currentDatasource = config;
+
       if (config.id) {
 
         var originalDataSourceId = config.id;
@@ -487,14 +482,8 @@ app.controller('StudioController', [
 
           return DataSourceService.createDataSourceDefinition(config).
             then(function(response) {
-              // clear reference to 'new' placeholder in openInstanceRefs
-              $scope.activeInstance = IAService.setActiveInstance(response, CONST.DATASOURCE_TYPE);
-              $scope.openInstanceRefs = IAService.addInstanceRef({
-                id:$scope.activeInstance.id,
-                name:$scope.activeInstance.name,
-                type: CONST.DATASOURCE_TYPE
-              });
-              IAService.clearOpenNewDSReference();
+              $scope.updateActiveInstance(
+                response, CONST.DATASOURCE_TYPE, originalDataSourceId);
               loadDataSources();
               growl.addSuccessMessage("datasource created");
               $rootScope.$broadcast('IANavEvent');
@@ -506,16 +495,13 @@ app.controller('StudioController', [
         else {
           return DataSourceService.updateDataSourceDefinition(config).
             then(function(response) {
-                $scope.activeInstance = response;
-                $scope.activeInstance.type = CONST.DATASOURCE_TYPE;
-                IAService.setActiveInstance($scope.activeInstance, CONST.DATASOURCE_TYPE, originalDataSourceId);
-                $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
-                loadDataSources();
-                growl.addSuccessMessage("datasource updated");
-                return response;
-              }
-            ).
-            catch(function(response){
+              growl.addSuccessMessage("datasource updated");
+              $scope.updateActiveInstance(
+                response, CONST.DATASOURCE_TYPE, originalDataSourceId);
+              loadDataSources();
+              return response;
+            })
+            .catch(function(response){
               console.warn('update DataSourceDefinition failed: ' + response.message);
             });
         }
