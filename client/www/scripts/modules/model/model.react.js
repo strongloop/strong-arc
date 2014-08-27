@@ -201,7 +201,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
               data-modelId={modelDef.id} >Save Model</button>
             <div className={modelNameValidationClasses}>
               <span className="validation-error-message">
-                Model name should conform with <a href="https://mathiasbynens.be/notes/javascript-identifiers" target="_new">valid javascript variable name conventions</a>
+                The name needs to conform with <a target="_blank" href="https://mathiasbynens.be/notes/javascript-identifiers" >javascript conventions</a>
               </span>
             </div>
           </div>
@@ -557,8 +557,8 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
                   className="property-doc-textarea model-instance-editor-input" />
               </span>
               <span data-ui-type="cell" className="props-controls-cell">
-                <button className="btn btn-default btn-sm" onClick={component.deleteModelProperty} data-id={modelProperty.id}>
-                  <span data-id={modelProperty.id} className="glyphicon glyphicon-open-sign">X</span>
+                <button className="props-remove-btn" onClick={component.deleteModelProperty} data-id={modelProperty.id}>
+                  <span data-id={modelProperty.id} className="glyphicon glyphicon-remove"></span>
                 </button>
 
               </span>

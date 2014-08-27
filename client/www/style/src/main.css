@@ -1,5 +1,6 @@
 /* @override
-	http://0.0.0.0:3003/style/dev/main.css */
+	http://0.0.0.0:3003/style/dev/main.css
+	http://0.0.0.0:4800/style/src/main.css */
 
 
 body {
@@ -9,6 +10,7 @@ body {
     margin: 0;
     overflow: hidden;
 }
+
 input:focus, select:focus {
     outline:none;
 }
@@ -124,7 +126,7 @@ code {
 }
 .logo{
     margin-top: 0.8rem;
-    width: 3.3rem;
+    width: 18rem;
 }
 .wordbrand{
     font-family: ubuntu;
@@ -195,3 +197,16 @@ code {
     height: 550px;
     overflow: scroll;
 }
+
+/*
+
+Validation CSS
+
+*/
+.validation-error-message{
+	font-size: 11pt;
+	font-weight: lighter;
+	color: #9e9b9b;
+}
+
+
