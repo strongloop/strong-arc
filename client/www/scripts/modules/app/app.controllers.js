@@ -338,6 +338,23 @@ app.controller('StudioController', [
 
     };
 
+    $scope.isModelConfigMigrateable = function() {
+      var deferred = $q.defer();
+      var promise = deferred.promise;
+
+      if(!config || !config.dataSource) {
+        deferred.resolve(false);
+        return promise;
+      }
+
+      return DataSourceDefinition
+        .find({name: config.dataSource, facet: CONST.APP_FACET})
+        .then(function(dataSourceDef) {
+          // TODO(ritch) actual resolve
+          return true;
+        });
+    }
+
      // New Model Name Input Processing
     $scope.processModelNameInput = function(input) {
       // placeholder method to process changes that need

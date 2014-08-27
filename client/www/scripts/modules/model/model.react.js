@@ -17,8 +17,6 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
       activeInstance:nextProps.scope.activeInstance,
       isFormValid: component.isNameValid(nextProps.scope.activeInstance.name)
     });
-
-
   },
   isNameValid: function(name) {
     return /^[\-_a-zA-Z0-9]+$/.test(name);
@@ -866,4 +864,20 @@ var NewModelForm = (NewModelForm = React).createClass({
   }
 });
 
+var ModelPocketEditorContainer = (ModelPocketEditorContainer = React).createClass({
+  getInitialState: function() {
+    return {visible: false};
+  },
+  componentDidMount: function() {
+    this.props.scope.isModelConfigMigrateable()
+      .then(function() {
 
+      })
+  },
+  handleClick: function() {
+
+  },
+  render: function() {
+    return (<button onClick={this.handleClick}>Migrate</button>)
+  }
+});
