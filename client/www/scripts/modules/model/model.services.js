@@ -25,8 +25,9 @@ Model.service('ModelService', [
             },
             config.config);
 
-            ModelConfig.create(modelConfig,
+            modelConfig = ModelConfig.create(modelConfig,
               function() {
+                setModelConfig(response, modelConfig);
                 deferred.resolve(response);
               },
               function(response) {
