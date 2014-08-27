@@ -29,7 +29,7 @@
 </head>
 <body ng-app="app">
 
-<div class="headerContainer">
+<div class="headerContainer" data-id="AppHeaderContainer">
 	<div class="branding">
 		<img src="./images/strongloop.svg" alt="Strongloop logo" class="logo">
 	</div>
@@ -109,8 +109,10 @@
 <script src="./scripts/vendor/angular/angular-resource.js"></script>
 <script src="./scripts/vendor/angular/angular-growl.min.js"></script>
 
+<!-- sl layout -->
+<script src="./scripts/sl.ui.layout.js"></script>
+
 <!-- app -->
-<script src="./scripts/app.js"></script>
 <script src="./scripts/modules/app/app.module.js"></script>
 <script src="./scripts/modules/app/app.controllers.js"></script>
 <script src="./scripts/modules/app/app.directives.js"></script>

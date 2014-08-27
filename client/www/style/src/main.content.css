@@ -12,7 +12,6 @@
     width: 100%;
     /*min-height:3000px;*/
     border-left: 0px solid #dddddd;
-    overflow: hidden;
     background: #FFFFFF;
 }
 [data-id="IAMainContentContainer"] {
@@ -25,6 +24,7 @@
     width: 8px;
     background: white;
     border-color: #dddddd;
+    width:100%;
     /*border-width: 0 20px 0 0;*/
     /*border-style: solid;*/
     /*margin-left: 2rem;*/
@@ -81,7 +81,8 @@
     width: 100%;
     padding-top: 2.6rem;
 }
-.instance-body-container {
-    height:600px;
-    overflow-y: auto;
+.common-instance-view-container {
+    overflow-y:auto;
+    overflow-x:hidden;
 }
+

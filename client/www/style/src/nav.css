@@ -39,7 +39,8 @@ Main Search
     background-color: #595959;
     color: #ffffff;
     overflow-y: auto;
-    overflow-x: auto;
+    overflow-x: hidden;
+    margin-bottom:100rem;
     position:relative;
     padding: 0;
 
