@@ -351,7 +351,7 @@ Model.service('ModelService', [
                 },
                 function(response) {
                   console.warn('cannot get ModelConfig', response);
-                  targetModel.config = defaultModelSchema.config;
+                  targetModel.config = new DefaultModelSchema().config;
                   deferred.resolve(targetModel);
                 });
             });
