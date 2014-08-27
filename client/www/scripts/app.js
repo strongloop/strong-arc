@@ -160,7 +160,6 @@ var app = angular.module('app', [
   'IA',
   'Common',
   'Property',
-  'Auth',
   'Model',
   'Datasource',
   'ui.bootstrap',
