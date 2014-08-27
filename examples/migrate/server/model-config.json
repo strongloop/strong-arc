@@ -24,7 +24,7 @@
     "dataSource": "db",
     "public": false
   },
-  "newModel": {
+  "todo": {
     "dataSource": "db",
     "public": true
   }

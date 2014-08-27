@@ -318,12 +318,35 @@ select {
     padding-top: 0.5rem;
 }
 .model-save-button {
-    margin-right: 2rem;
     font-size: 12pt;
     border: none;
     border-bottom: 2px solid #67992d;
-    width: 18rem;
+    width: 17rem;
     height: 3.7rem;
+}
+.model-migrate-button {
+    color: #777;
+    background-color: #ddd;
+    font-size: 12pt;
+    border: none;
+    border-bottom: 2px solid #999;
+    width: 17rem;
+    height: 3.7rem;
+}
+.model-migrate-button:hover {
+    color: #fff;
+    background-color: #999 !important;
+}
+.model-migrate-loading {
+    margin-left: 6rem;
+    padding: 2px 6px 3px 0 !important;
+    text-align: center;
+    width: 17rem;
+    display: inline-block;
+}
+.model-migrate-button[disabled] {
+    opacity: 0.4;
+    background: #999 !important;
 }
 .model-detail-input-container {
 	padding-right: 1rem;

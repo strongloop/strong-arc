@@ -1,17 +1,19 @@
 // Copyright StrongLoop 2014
 app.controller('StudioController', [
   '$rootScope',
+  '$q',
   '$scope',
   '$state',
   '$http',
   'IAService',
   'DataSourceService',
+  'DataSourceDefinition',
   'PropertyService',
   '$location',
   '$timeout',
   'ModelService',
   'growl',
-  function($rootScope, $scope, $state, $http, IAService, DataSourceService, PropertyService, $location, $timeout, ModelService, growl) {
+  function($rootScope, $q, $scope, $state, $http, IAService, DataSourceService, DataSourceDefinition, PropertyService, $location, $timeout, ModelService, growl) {
 
     /*
      * Instance Collections
@@ -337,6 +339,60 @@ app.controller('StudioController', [
 
 
     };
+
+    $scope.isModelConfigMigrateable = function(config) {
+      var deferred = $q.defer();
+      var promise = deferred.promise;
+      var canMigrate = false;
+
+      if(!config || !config.dataSource) {
+        deferred.resolve(canMigrate);
+        return promise;
+      }
+
+      DataSourceDefinition.findOne({
+        name: config.dataSource,
+        facet: CONST.APP_FACET
+      },
+      function(dataSourceDef) {
+        console.log(CONST);
+        var connector = dataSourceDef && dataSourceDef.connector;
+        var connectorIsSupported = connector
+          && CONST.CONNECTORS_SUPPORTING_MIGRATE
+          .indexOf(connector.toLowerCase()) > -1;
+
+          console.log('connectorIsSupported', connectorIsSupported);
+
+        deferred.resolve(dataSourceDef && connectorIsSupported);
+      });
+
+      return promise;
+    }
+
+    $scope.migrateModelConfig = function(config) {
+      var deferred = $q.defer();
+      var promise = deferred.promise;
+
+      return DataSourceDefinition.findOne({
+        name: config.dataSource,
+        facet: CONST.APP_FACET
+      })
+      .$promise
+      .then(function(dataSourceDef) {
+        return DataSourceDefinition.prototype$autoupdate({
+          id: dataSourceDef.id
+        },{
+          modelName: config.name
+        })
+      }, function(ex) {
+        growl.addErrorMessage(
+          'could not migrate model (check console for details)'
+        );
+      })
+      .then(function() {
+        growl.addSuccessMessage("model migrated");
+      });
+    }
 
      // New Model Name Input Processing
     $scope.processModelNameInput = function(input) {

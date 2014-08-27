@@ -1,0 +1,22 @@
+{
+  "name": "todo",
+  "plural": "todos",
+  "base": "PersistedModel",
+  "strict": false,
+  "idInjection": false,
+  "type": "model",
+  "properties": {
+    "done": {
+      "type": "boolean",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}
