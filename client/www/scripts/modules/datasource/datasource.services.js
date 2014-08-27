@@ -171,11 +171,7 @@ Datasource.service('DataSourceService', [
       return datasourceDefObj;
     };
     svc.createNewDataSourceInstance = function(initialData) {
-      //var openInstanceRefs = IAService.getOpenInstanceRefs();
-      var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
-      if (!openInstanceRefs) {
-        openInstanceRefs = [];
-      }
+
       var defaultDatasourceSchema = {
         id: CONST.NEW_DATASOURCE_PRE_ID,
         name: CONST.NEW_DATASOURCE_NAME,
@@ -184,17 +180,6 @@ Datasource.service('DataSourceService', [
       };
       angular.extend(defaultDatasourceSchema, initialData);
 
-      var doesNewDatasourceExist = false;
-      for (var i = 0;i < openInstanceRefs.length;i++) {
-        if (openInstanceRefs[i].name === CONST.NEW_DATASOURCE_NAME) {
-          doesNewDatasourceExist = true;
-          break;
-        }
-      }
-      if (!doesNewDatasourceExist) {
-        openInstanceRefs.push(defaultDatasourceSchema);
-        AppStorageService.setItem('openInstanceRefs', openInstanceRefs);
-      }
       return defaultDatasourceSchema;
     };
     // delete datasource

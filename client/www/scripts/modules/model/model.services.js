@@ -21,7 +21,7 @@ Model.service('ModelService', [
           var modelConfig = angular.extend(
             {
               facetName: CONST.APP_FACET,
-              name: config.name,
+              name: config.name
             },
             config.config);
 
@@ -255,7 +255,7 @@ Model.service('ModelService', [
 
           var modelProps = {
             config: {
-              public: true,
+              public: true
             },
             plural: sourceDbModelObj.name + 's'
           };
@@ -423,16 +423,7 @@ Model.service('ModelService', [
 
     svc.createNewModelInstance = function() {
       var returnInstance = new DefaultModelSchema();
-      var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
-      if (!openInstanceRefs) {
-        openInstanceRefs = [];
-      }
-      openInstanceRefs.push({
-        id: returnInstance.id,
-        name: returnInstance.name,
-        type: returnInstance.type
-      });
-      AppStorageService.setItem('openInstanceRefs', openInstanceRefs);
+
       return returnInstance;
     };
     return svc;
