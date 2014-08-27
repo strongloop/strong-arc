@@ -7,14 +7,20 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
     return {
       activeInstance:this.props.scope.activeInstance,
       isDetailsContainerOpen:true,
-      isModelNameValid:true
+      isNameValid:true,
+      isFormValid: false
     };
   },
   componentWillReceiveProps: function(nextProps) {
-    this.setState({activeInstance:{}});
-    this.setState({activeInstance:nextProps.scope.activeInstance});
+    var component = this;
+    component.setState({
+      activeInstance:nextProps.scope.activeInstance,
+      isFormValid: component.isNameValid(nextProps.scope.activeInstance.name)
+    });
+
+
   },
-  isModelNameValid: function(name) {
+  isNameValid: function(name) {
     return /^[\-_a-zA-Z0-9]+$/.test(name);
   },
   handleChange: function(event) {
@@ -25,7 +31,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
       var xState = component.state;
       modelPropertyName = event.target.attributes['data-name'].value;
       if (modelPropertyName === 'name') {
-        xState.isModelNameValid = component.isModelNameValid(event.target.value);
+        xState.isNameValid = component.isNameValid(event.target.value);
       }
       if (event.target.attributes['type'] && (event.target.attributes['type'].value === 'checkbox')) {
         setDeepProperty(modelPropertyName, event.target.checked);
@@ -80,7 +86,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
     } else {
       modelDef.base = CONST.DEFAULT_DATASOURCE_BASE_MODEL;
     }
-    
+
     component.setState(xState);
   },
   handleBaseBlur: function() {
@@ -128,16 +134,16 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
       'model-editor-section-icon glyphicon glyphicon-plus-sign': !component.state.isDetailsContainerOpen
     });
     var modelNameInputClasses = cx({
-      'model-instance-name form-control': component.state.isModelNameValid,
-      'model-instance-name form-control is-invalid': !component.state.isModelNameValid
+      'model-instance-name form-control': component.state.isNameValid,
+      'model-instance-name form-control is-invalid': !component.state.isNameValid
     });
     var modelNameValidationClasses = cx({
-      'model-instance-name-validation is-valid': component.state.isModelNameValid,
-      'model-instance-name-validation is-invalid': !component.state.isModelNameValid
+      'model-instance-name-validation is-valid': component.state.isNameValid,
+      'model-instance-name-validation is-invalid': !component.state.isNameValid
     });
     var formGroupValidationClasses = cx({
-      'model-header-name-container form-group': component.state.isModelNameValid,
-      'model-header-name-container form-group has-error': !component.state.isModelNameValid
+      'model-header-name-container form-group': component.state.isNameValid,
+      'model-header-name-container form-group has-error': !component.state.isNameValid
     });
     var clickHandler = function(event) {
       scope.$apply(function() {
@@ -168,7 +174,10 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
         return (<option value={model.name}>{model.name}</option>);
       });
     }
-
+    var isFormValid = false;
+    if (component.state.isNameValid) {
+      isFormValid = true;
+    }
 
     var returnVal = (<div />);
     if (modelDef) {
@@ -187,6 +196,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                 className={modelNameInputClasses} />
             </div>
             <button onClick={saveModelDefinition}
+              disabled={!isFormValid}
               className="model-detail-pocket-button model-save-button"
               data-modelId={modelDef.id} >Save Model</button>
             <div className={modelNameValidationClasses}>
@@ -394,11 +404,16 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
     return {
       currModelId:this.props.modelProperty.modelId,
       modelProperty:this.props.modelProperty,
-      isOpen:false
+      isOpen:false,
+      isNameValid: true
     };
   },
   componentWillReceiveProps: function(nextProps) {
-    this.setState({modelProperty:nextProps.modelProperty});
+    var component = this;
+    component.setState({
+      modelProperty:nextProps.modelProperty,
+      isNameValid: component.isNameValid(nextProps.modelProperty.name)
+    });
   },
   componentDidMount: function() {
     var propNameInputs = jQuery('[data-name="ModelPropertyName"]');
@@ -408,16 +423,21 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
       }
     }
   },
+  isNameValid: function(name) {
+    return /^[\-_a-zA-Z0-9]+$/.test(name);
+  },
   checkSubmitModelProperty: function(event) {
-//    if (event.keyCode === 13) {
-//      console.log('|||    ENTER ');
-//    }
+    var component = this;
 
     var tModel = this.state.modelProperty;
     tModel.name = event.target.value;
     this.setState({modelProperty:tModel});
+    component.setState({
+      isNameValid: component.isNameValid(event.target.value)
+    });
   },
   triggerModelPropertyUpdate: function(event) {
+    var component = this;
     var scope = this.props.scope;
     if(event.target.attributes['data-name']){
       var tModelPropertyName = event.target.attributes['data-name'].value;
@@ -429,6 +449,11 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
         tModelProperty[tModelPropertyName] = event.target.value;
       }
       this.setState({modelProperty:tModelProperty});
+      if (tModelPropertyName === 'name') {
+        component.setState({
+          isNameValid: component.isNameValid(event.target.value)
+        });
+      }
       var updateModelPropertyConfig = tModelProperty;
       scope.$apply(function() {
         scope.updateModelPropertyRequest(updateModelPropertyConfig);
@@ -469,6 +494,14 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
       'modelproperty-container modelproperty-detail-is-open': component.state.isOpen,
       'modelproperty-container modelproperty-detail-is-closed': !component.state.isOpen
     });
+    var propertyCellValidationClasses = cx({
+      'props-name-cell': component.state.isNameValid,
+      'props-name-cell has-errors': !component.state.isNameValid
+    });
+    var propertyValidationContainerClasses = cx({
+      'model-instance-name-validation is-valid': component.state.isNameValid,
+      'model-instance-name-validation is-invalid': !component.state.isNameValid
+    });
 
 
     return (
@@ -476,9 +509,10 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
         <div className={cClasses}>
           <div data-ui-type="table" className="modelproperty-detail-row" >
             <div data-ui-type="row">
-              <span data-ui-type="cell" className="props-name-cell">
+              <span data-ui-type="cell" className={propertyCellValidationClasses}>
                 <input ref="propName"
                   data-name="name"
+                  required="true"
                   type="text"
                   onChange={component.checkSubmitModelProperty}
                   onBlur={component.triggerModelPropertyUpdate}
@@ -530,6 +564,11 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
               </span>
 
             </div>
+          </div>
+          <div className={propertyValidationContainerClasses}>
+            <span className="validation-error-message">
+            Property name should conform with <a href="https://mathiasbynens.be/notes/javascript-identifiers" target="_new">valid javascript variable name conventions</a>
+            </span>
           </div>
           <div className={pClasses}>
             <ModelPocketEditorContainer scope={scope} property={modelProperty} />

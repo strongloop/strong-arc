@@ -10,7 +10,8 @@ app.controller('StudioController', [
   '$location',
   '$timeout',
   'ModelService',
-  function($rootScope, $scope, $state, $http, IAService, DataSourceService, PropertyService, $location, $timeout, ModelService) {
+  'growl',
+  function($rootScope, $scope, $state, $http, IAService, DataSourceService, PropertyService, $location, $timeout, ModelService, growl) {
 
     /*
      * Instance Collections
@@ -248,6 +249,7 @@ app.controller('StudioController', [
         ModelService.updateModel(config).
           then(function(response) {
             // clear reference to 'new' placeholder in openInstanceRefs
+            growl.addSuccessMessage("model saved");
             $scope.activeInstance = IAService.setActiveInstance(response, CONST.MODEL_TYPE);
             IAService.clearOpenNewModelReference();
             loadModels();
@@ -272,6 +274,7 @@ app.controller('StudioController', [
             });
             IAService.clearOpenNewModelReference();
             IAService.setActiveInstance($scope.activeInstance, CONST.MODEL_TYPE);
+            growl.addSuccessMessage("model created");
             loadModels();
             $rootScope.$broadcast('IANavEvent');
           }
@@ -353,6 +356,7 @@ app.controller('StudioController', [
             then(function(response) {
               ModelService.getModelById(config.modelId).
                 then(function(response) {
+                  growl.addSuccessMessage("property deleted");
                   $scope.activeInstance = IAService.setActiveInstance(response, CONST.MODEL_TYPE);
                 }
               );
@@ -402,7 +406,7 @@ app.controller('StudioController', [
       // should get a config (with at least name/type of property)
 
       var propConfig = {
-        name:'property-name-' + getRandomNumber(),
+        name:'propertyName' + getRandomNumber(),
         type: 'string',
         facetName: CONST.NEW_MODEL_FACET_NAME,
         modelId: modelId
@@ -411,6 +415,7 @@ app.controller('StudioController', [
       var newProperty = PropertyService.createModelProperty(propConfig);
       newProperty.
         then(function (result) {
+          growl.addSuccessMessage("property created");
 
           $scope.activeInstance.properties.push(result);
           // $scope.activeInstanceChanged = !$scope.activeInstanceChanged;
@@ -490,6 +495,7 @@ app.controller('StudioController', [
               });
               IAService.clearOpenNewDSReference();
               loadDataSources();
+              growl.addSuccessMessage("datasource created");
               $rootScope.$broadcast('IANavEvent');
               return response;
             }
@@ -503,6 +509,7 @@ app.controller('StudioController', [
                 $scope.activeInstance.type = CONST.DATASOURCE_TYPE;
                 IAService.setActiveInstance($scope.activeInstance, CONST.DATASOURCE_TYPE);
                 loadDataSources();
+                growl.addSuccessMessage("datasource updated");
                 return response;
               }
             ).

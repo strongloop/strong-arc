@@ -93,11 +93,11 @@
 // Application Constants
 var CONST = {
   NEW_MODEL_PRE_ID:'sl.temp.new-model',
-  NEW_MODEL_NAME: 'new-model',
+  NEW_MODEL_NAME: 'newModel',
   NEW_MODEL_FACET_NAME: 'common',
   NEW_MODEL_BASE: 'Model',
   NEW_DATASOURCE_PRE_ID:'sl.temp.new-datasource',
-  NEW_DATASOURCE_NAME: 'new-datasource',
+  NEW_DATASOURCE_NAME: 'newDatasource',
   NEW_DATASOURCE_FACET_NAME: 'server',
   DATASOURCE_TYPE: 'datasource',
   DEFAULT_DATASOURCE: 'none',

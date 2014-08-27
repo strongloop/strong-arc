@@ -81,7 +81,6 @@ select {
     opacity: 1;
 }
 [data-id="ModelEditorInstanceContainer"] {
-    max-width: 2rem;
     margin-left: 2rem;
     margin-top: 2rem;
 }
@@ -350,6 +349,14 @@ select {
 .model-detail-pocket-button:hover {
 	background-color: #67992d;
 }
+button[disabled].model-detail-pocket-button {
+    color: #dddddd;
+    background-color: #7dbd34;
+}
+button[disabled].model-detail-pocket-button:hover {
+    color: #dddddd;
+    background-color: #7dbd34;
+}
 .btn-new-model-property {
     border: 0;
     background: transparent;
@@ -441,8 +448,14 @@ select {
     margin-left: 4rem;
 	width: 89.3rem;
 }
+.modelproperty-container .validation-error-message{
+    margin-left:40px;
+}
 .modelproperty-detail-is-open{
 	border: 2px solid blue;
+}
+.props-name-cell.has-errors {
+    border-color: #a94442;
 }
 .modelproperty-detail-is-closed{
 }
