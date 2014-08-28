@@ -4,6 +4,9 @@ var workspace = require('loopback-workspace');
 
 var app = module.exports = express();
 
+// export the workspace object, useful e.g. in tests
+app.workspace = workspace;
+
 // REST APIs
 app.use('/workspace', workspace);
 
