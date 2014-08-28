@@ -174,6 +174,7 @@ code {
     position:relative;
 }
 #LoginMainContainer .center_div {
+<<<<<<< HEAD
     max-width:45rem;
     margin-top: 5rem;
     padding: 6rem;
@@ -185,6 +186,13 @@ code {
     font-size: 22pt;
     margin-bottom: 3rem;
 	text-align: center;
+=======
+    max-width:37rem;
+}
+.login-form-title {
+    margin-top:14rem;
+
+>>>>>>> Add forgot password and register links plus CSS cleanup
 }
 [data-id="LoginForm"] {
     display:block;
@@ -201,6 +209,7 @@ code {
     padding:2rem;
     font-size:115%;
 }
+<<<<<<< HEAD
 .login-button-container{
 	display: inline-block;
 	margin-top: 2rem;
@@ -209,15 +218,27 @@ code {
 }
 [data-id="LoginRegisterLinksContainer"] {
     margin-top:1rem;
+=======
+[data-id="LoginRegisterLinksContainer"] {
+    margin-top:8rem;
+>>>>>>> Add forgot password and register links plus CSS cleanup
 }
 [data-id="RegisterLink"] {
     float:right;
 }
+<<<<<<< HEAD
 
 /*
 
     Splash
 
+=======
+
+/*
+
+    Splash
+
+>>>>>>> Add forgot password and register links plus CSS cleanup
 */
 .jumbotron {
     background-color: #ffffff;
