@@ -32,7 +32,7 @@ gulp.task('build-version', function(callback) {
 });
 
 gulp.task('install-example-modules', function() {
-  return gulp.src('examples/**/package.json')
+  return gulp.src('examples/*/package.json')
     .pipe(install({ production: true }));
 });
 
