@@ -5,7 +5,7 @@ Model.service('ModelService', [
   'ModelConfig',
   '$q',
   'AppStorageService',
-  'DataSourceDefinition'
+  'DataSourceDefinition',
   function(Modeldef, ModelDefinition, ModelConfig, $q, AppStorageService, DataSourceDefinition) {
     var svc = {};
     svc.createModel = function(config) {

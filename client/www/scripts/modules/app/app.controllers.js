@@ -1,6 +1,7 @@
 // Copyright StrongLoop 2014
 app.controller('StudioController', [
   '$rootScope',
+  '$q',
   '$scope',
   '$state',
   '$http',
@@ -11,7 +12,7 @@ app.controller('StudioController', [
   '$timeout',
   'ModelService',
   'growl',
-  function($rootScope, $scope, $state, $http, IAService, DataSourceService, PropertyService, $location, $timeout, ModelService, growl) {
+  function($rootScope, $q, $scope, $state, $http, IAService, DataSourceService, PropertyService, $location, $timeout, ModelService, growl) {
 
     /*
      * Instance Collections
@@ -338,7 +339,7 @@ app.controller('StudioController', [
 
     };
 
-    $scope.isModelConfigMigrateable = function() {
+    $scope.isModelConfigMigrateable = function(config) {
       var deferred = $q.defer();
       var promise = deferred.promise;
 
@@ -351,6 +352,7 @@ app.controller('StudioController', [
         .find({name: config.dataSource, facet: CONST.APP_FACET})
         .then(function(dataSourceDef) {
           // TODO(ritch) actual resolve
+          console.log(dataSourceDef);
           return true;
         });
     }

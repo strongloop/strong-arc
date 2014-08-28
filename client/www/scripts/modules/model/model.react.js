@@ -197,6 +197,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
               disabled={!isFormValid}
               className="model-detail-pocket-button model-save-button"
               data-modelId={modelDef.id} >Save Model</button>
+            <MigrateButton scope={scope} config={modelDef.config} />
             <div className={modelNameValidationClasses}>
               <span className="validation-error-message">
                 The name needs to conform with <a target="_blank" href="https://mathiasbynens.be/notes/javascript-identifiers" >javascript conventions</a>
@@ -645,9 +646,6 @@ var PropertyCommentEditor = (PropertyCommentEditor = React).createClass({
  * property name editor
  * */
 var PropertyNameEditor = (PropertyNameEditor = React).createClass({
-//  getInitialState: function() {
-//   // return {value: this.props.scope.property.name};
-//  },
   componentWillRecieveProps: function(nextProps) {
 
 
@@ -669,7 +667,6 @@ var PropertyNameEditor = (PropertyNameEditor = React).createClass({
     var value = this.props.name;
 
     var changeHandler = function(event) {
-//      this.setState({'value': event.target.value});
       scope.$apply(function () {
         scope.property.name = event.target.value;
       });
@@ -864,20 +861,29 @@ var NewModelForm = (NewModelForm = React).createClass({
   }
 });
 
-var ModelPocketEditorContainer = (ModelPocketEditorContainer = React).createClass({
+var MigrateButton = (MigrateButton = React).createClass({
   getInitialState: function() {
-    return {visible: false};
+    return {canMigrate: false};
   },
   componentDidMount: function() {
-    this.props.scope.isModelConfigMigrateable()
-      .then(function() {
-
+    var component = this;
+    this.props.scope.isModelConfigMigrateable(this.props.config)
+      .then(function(canMigrate) {
+        console.log(canMigrate);
+        component.setState({canMigrate: canMigrate});
+      }, function(ex) {
+        console.warn('cannot determine if a model is able to migrate');
+        console.warn(ex);
       })
   },
   handleClick: function() {
 
   },
   render: function() {
-    return (<button onClick={this.handleClick}>Migrate</button>)
+    if(this.state.canMigrate) {
+      return <button>Migrate</button>
+    } else {
+      return <span />
+    }
   }
 });
