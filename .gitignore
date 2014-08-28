@@ -2,4 +2,6 @@ node_modules
 bower_components
 .idea
 .DS_Store
-client/www/scripts/version.js
+/client/www/scripts/version.js
+/client/test/integration/sandbox
+*-xunit.xml
