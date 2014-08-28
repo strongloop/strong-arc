@@ -503,21 +503,21 @@ var IAMainControls = (IAMainControls = React).createClass({
               <button onClick={addNewInstanceRequest}
                 data-type="datasource"
                 className="btn btn-default btn-control-ds"
-                data-name="postgres"
+                data-name="postgresql"
                 title="postgres connector">
                 <span className="glyphicon glyphicon-database"></span>
               </button>
-              <div className="ds-type-name">Postgres</div>
+              <div className="ds-type-name">PostgreSQL</div>
             </div>
             <div data-ui-type="cell">
               <button onClick={addNewInstanceRequest}
                 data-type="datasource"
                 className="btn btn-default btn-control-ds"
-                data-name="mongo"
+                data-name="mongodb"
                 title="mongodb connector">
                   <span className="glyphicon glyphicon-database"></span>
               </button>
-              <div className="ds-type-name">Mongo</div>
+              <div className="ds-type-name">MongoDB</div>
             </div>
           </div>
         </div>
