@@ -7,5 +7,5 @@ describe('hello-protractor', function() {
       ptor.get('/#');
       expect(ptor.getTitle()).toBe('StrongLoop API Studio [prototype]');
     });
-  })
+  });
 });

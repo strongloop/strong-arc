@@ -45,7 +45,8 @@ gulp.task('test', ['build'], function(callback) {
 
 gulp.task('jshint', function() {
   return gulp.src([
-    'server/**/*.js'
+    'server/**/*.js',
+    'client/test/**/*.js',
     // TODO(bajtos) add more files once they pass the linter
   ])
     .pipe(jshint())
