@@ -279,7 +279,7 @@ app.controller('StudioController', [
       }
     };
 
-    $scope.createNewInstance = function(type) {
+    $scope.createNewInstance = function(type, initialData) {
       // start New Model
       if (type) {
         var newDefaultInstance = {};
@@ -289,13 +289,13 @@ app.controller('StudioController', [
             // easier to just close it an refresh than to activate existing instance ref
             IAService.closeInstanceById(CONST.NEW_MODEL_PRE_ID);
           }
-          newDefaultInstance = ModelService.createNewModelInstance();
+          newDefaultInstance = ModelService.createNewModelInstance(initialData);
         }
         else if (type === CONST.DATASOURCE_TYPE) {
           if (IAService.isNewDataSourceOpen()) {
             IAService.closeInstanceById(CONST.NEW_DATASOURCE_PRE_ID);
           }
-          newDefaultInstance = DataSourceService.createNewDataSourceInstance();
+          newDefaultInstance = DataSourceService.createNewDataSourceInstance(initialData);
         }
         $scope.activeInstance = IAService.setActiveInstance(newDefaultInstance, type);
         IAService.addInstanceRef($scope.activeInstance);
@@ -448,11 +448,11 @@ app.controller('StudioController', [
         // start a fresh one
         if ($scope.activeInstance && ($scope.activeInstance.id !== CONST.NEW_DATASOURCE_PRE_ID)) {
           $scope.openInstanceRefs = IAService.closeInstanceById(CONST.NEW_DATASOURCE_PRE_ID);
-          $scope.createNewInstance(CONST.DATASOURCE_TYPE);
+          $scope.createNewInstance(CONST.DATASOURCE_TYPE, initialData);
         }
       }
       else {
-        $scope.createNewInstance(CONST.DATASOURCE_TYPE);
+        $scope.createNewInstance(CONST.DATASOURCE_TYPE, initialData);
       }
     };
     // test datasource connection
