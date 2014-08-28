@@ -534,18 +534,13 @@ var IAMainControls = (IAMainControls = React).createClass({
 *
 * */
 var IAGlobalExceptionDisplayView = (IAGlobalExceptionDisplayView = React).createClass({
+  toggleStackView: function() {
+    $('[data-id="GlobalExceptionDetailsContainer"]').toggle(250);
+  },
   render: function() {
-    var scope = this.props.scope;
+    var component = this;
+    var scope = component.props.scope;
     var displayMarkup = (<div />);
-    var toggleState = function(elem, one, two) {
-      var elem = document.querySelector(elem);
-      elem.setAttribute('data-state', elem.getAttribute('data-state') === one ? two : one);
-
-    };
-    var toggleStackDisplay = function(event) {
-      toggleState('.global-exception-stack-display', 'closed', 'open');
-      event.preventDefault();
-    };
     var clearGlobalException = function() {
       scope.$apply(function() {
         scope.clearGlobalException();
@@ -558,31 +553,36 @@ var IAGlobalExceptionDisplayView = (IAGlobalExceptionDisplayView = React).create
         if (stackItem.message !== prevMessage) {
           prevMessage = stackItem.message;
           return (
-            <div data-id="IAGlobalExceptionDisplayContainer" className="clearfix bg-danger ia-global-exception-container">
-              <h2>oops something is wrong</h2>
-              <ul>
-                <li>
-                  <span>Name: </span><span>{stackItem.name}</span>
-                </li>
-                <li>
-                  <span>Message: </span><span>{stackItem.message}</span>
-                </li>
-                <li>
-                  <span>Details: </span><span>{stackItem.details}</span>
-                </li>
-                <li>
-                  <span>Request: </span><span>{stackItem.requestUrl}</span>
-                </li>
-                <li>
-                  <span>Status: </span><span>{stackItem.status}</span>
-                </li>
-                <li>
-                  <button className="btn btn-sm btn-default" onClick={toggleStackDisplay}>Stack (toggle): </button><textarea data-state="closed" className="global-exception-stack-display" value={stackItem.stack}></textarea>
-                </li>
-              </ul>
-              <button onClick={clearGlobalException} className="btn btn-primary  pull-right global-exception-dismiss-button">ok, got it</button>
+            <div data-id="IAGlobalExceptionDisplayContainer" className="ia-global-exception-container">
+              <span onClick={clearGlobalException} className="glyphicon glyphicon-remove ia-global-exception-close-button"></span>
+              <div className="ia-global-exception-header">Oops! Something is wrong</div>
+              <div className="ia-global-exception-link" onClick={component.toggleStackView}>Show/hide details</div>
+              <span className="ia-global-exception-value">{stackItem.message}</span>
+              <div data-id="GlobalExceptionDetailsContainer">
 
-            </div>)
+                <ul className="ia-global-exception-body">
+                  <li>
+                    <span className="ia-global-exception-label">Name: </span><span className="ia-global-exception-value">{stackItem.name}</span>
+                  </li>
+                  <li>
+                    <span  className="ia-global-exception-label">Message: </span><span className="ia-global-exception-value">{stackItem.message}</span>
+                  </li>
+                  <li>
+                    <span  className="ia-global-exception-label">Details: </span><span className="ia-global-exception-value">{stackItem.details}</span>
+                  </li>
+                  <li>
+                    <span  className="ia-global-exception-label">Request: </span><span className="ia-global-exception-value">{stackItem.requestUrl}</span>
+                  </li>
+                  <li>
+                    <span  className="ia-global-exception-label">Status: </span><span className="ia-global-exception-value">{stackItem.status}</span>
+                  </li>
+
+                </ul>
+
+                <textarea data-id="StackTraceMessageContainer" className="global-exception-stack-display" value={stackItem.stack}></textarea>
+              </div>
+
+            </div>);
         }
 
       });
