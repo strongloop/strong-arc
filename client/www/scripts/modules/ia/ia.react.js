@@ -141,14 +141,6 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
         });
       }
     };
-
-    var hoverEvent = function(event) {
-
-      $(event.target).parent('.tree-item-row').attr('data-state', 'hover');
-    };
-    var hoverOutEvent = function(event) {
-
-    };
     var navModels = [];
     if (Array.isArray(scope.mainNavModels)) {
       navModels = scope.mainNavModels;
@@ -182,7 +174,7 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
       }
       var configId = item.config && item.config.id;
       return (
-        <div data-ui-type="row" onMouseOver={hoverEvent} onMouseOut={hoverOutEvent} className={classNameVar} data-id={item.id}>
+        <div data-ui-type="row" className={classNameVar} data-id={item.id}>
           <div data-ui-type="cell" className="ia-nav-item-icon-container-col">
             <span data-name={item.name}  data-id={item.id} className="glyphicon glyphicon-file"></span>
           </div>

@@ -101,12 +101,17 @@ Main Search
     Nav Tree
 
 */
+
 .nav-tree-item {
     display: block;
     border: 0;
     background: transparent;
     text-align: left;
     padding: 0;
+    color:#ffffff;
+}
+.nav-tree-item:hover {
+    color:#AEFF14;
 
 }
 .nav-tree-item-header{
