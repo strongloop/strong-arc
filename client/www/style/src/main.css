@@ -70,7 +70,6 @@ code {
 }
 .center_div {
     margin: 0 auto;
-    width: 80% /* value of your choice which suits your alignment */;
 }
 .btn-command {
     border:0;
@@ -146,15 +145,65 @@ code {
 
 /*
 
-	Login screen
+	Login
 
 */
+#LoginMainContainer {
+    position:relative;
+}
+#LoginMainContainer .center_div {
+    max-width:37rem;
+}
+.login-form-title {
+    margin-top:14rem;
 
+}
+[data-id="LoginForm"] {
+    display:block;
+    margin: 0 auto 0 auto;
+}
+[data-id="AuthExceptionMessageContainer"] {
+    position:absolute;
+    top:1rem;
+    max-width:35rem;
+}
+.login-fail-message-container {
+    border: 1px solid #444444;
+    border-radius:1rem;
+    padding:2rem;
+    font-size:115%;
+}
+[data-id="LoginRegisterLinksContainer"] {
+    margin-top:8rem;
+}
+[data-id="RegisterLink"] {
+    float:right;
+}
+
+/*
+
+    Splash
+
+*/
 .jumbotron {
     background-color: #ffffff;
 }
 .img-main-splash {
     width: 100%;
+}
+
+/*
+    Global Exception
+
+*/
+.ia-global-exception-container {
+    margin:2rem;
+}
+
+.global-exception-stack-display {
+    width:58rem;
+    background:#efefef;
+    overflow:auto;
 }
 
 /*
