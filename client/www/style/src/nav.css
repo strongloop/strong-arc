@@ -269,6 +269,9 @@ Main Search
     font-size: 14pt;
     padding-top: 0.5rem;;
 }
+.main-control-apprender-container label, .main-control-apprender-container button{
+    visibility:hidden;
+}
 
 /*Hack for demo*/
 .btn-primary {

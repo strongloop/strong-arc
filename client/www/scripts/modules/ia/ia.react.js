@@ -455,7 +455,7 @@ var IAMainControls = (IAMainControls = React).createClass({
                 <span className="maincontrol-main-button-label">New</span>
               </button>
             </div>
-            <div data-ui-type="cell">
+            <div data-ui-type="cell" className="main-control-apprender-container">
               <label className="main-control-command-label">APP</label>
               <button disabled="disabled" onClick={renderAppViewRequest} type="button" className="btn btn-primary btn-sm">
                 <span className="maincontrol-main-icon glyphicon glyphicon-play"></span>
