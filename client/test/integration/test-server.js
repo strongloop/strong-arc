@@ -9,7 +9,7 @@ var STUDIO_ROOT = path.resolve(__dirname, '..', '..', '..');
 var EMPTY_PROJECT = path.resolve(STUDIO_ROOT, 'examples', 'empty');
 
 fs.removeSync(SANDBOX);
-fs.copy(EMPTY_PROJECT, SANDBOX);
+fs.copySync(EMPTY_PROJECT, SANDBOX);
 process.env.WORKSPACE_DIR = SANDBOX;
 
 // karma listens on port 9876 by default
@@ -18,12 +18,28 @@ var port = 9800;
 
 // Inject `POST /reset` to reset the sandbox to initial state
 studio.post('/reset', function(req, res, next) {
-  async.each(
-    workspace.models(),
+  console.log('--reset-start--');
+
+  var modelsToReset = workspace.models().filter(function(m) {
+    return m !== 'PackageDefinition' && m !== 'Facet' && m !== 'ConfigFile';
+  });
+
+  async.eachSeries(
+    modelsToReset,
     function(entity, next) {
-      entity.destroyAll(next);
+      // `destroyAll` does not remove JSON files
+      // we have to use `removeById` instead
+      entity.find(function(err, list) {
+        async.eachSeries(
+          list,
+          function(instance, cb) {
+            entity.removeById(instance.id, cb);
+          },
+          next);
+      });
     },
     function(err) {
+      console.log('--reset-done--');
       if (err) next(err);
       res.json({ success: true });
     });

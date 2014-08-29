@@ -19,7 +19,10 @@ given.emptyWorkspace = function() {
 
     // wait for `app.run()` to finish
     var deferred = $q.defer();
+    var resolved = false;
     $rootScope.$watch('projectName', function() {
+      if (resolved) return;
+      resolved = true;
       reset().then(
         function(res) {
           deferred.resolve(res);
