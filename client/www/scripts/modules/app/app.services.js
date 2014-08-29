@@ -13,39 +13,56 @@ app.service('AppService', [
   }
 ]);
 app.service('AppStorageService', [
-  function() {
+  '$rootScope',
+  function($rootScope) {
     var svc = {};
 
+    // namepsace for UI state storage
+    var slScope = '';
+
     var getSlScope = function() {
-      var slScope = window.localStorage.getItem('slScope');
-      if (!slScope) {
-        return {};
+      if ($rootScope.projectName) {
+        slScope = $rootScope.projectName;
+        return JSON.parse(window.localStorage.getItem($rootScope.projectName)) || {};
       }
-      return JSON.parse(slScope);
+      return null;
     };
 
     svc.setItem = function(itemName, item) {
       var localScope = getSlScope();
-      localScope[itemName] = item;
-      return window.localStorage.setItem('slScope', JSON.stringify(localScope));
+      if (localScope) {
+        localScope[itemName] = item;
+        window.localStorage.setItem(slScope, JSON.stringify(localScope));
+      }
+
     };
     svc.getItem = function(itemName) {
       var localScope = getSlScope();
-      return localScope[itemName];
+      if (localScope) {
+        return localScope[itemName];
+      }
+      return null;
+
     };
     svc.removeItem = function(itemName) {
       var localScope = getSlScope();
-      delete localScope[itemName];
-      window.localStorage.setItem('slScope', JSON.stringify(localScope));
-      return localScope;
+      if (localScope) {
+        delete localScope[itemName];
+        window.localStorage.setItem(slScope, JSON.stringify(localScope));
+        return localScope;
+      }
+      return null;
+
     };
     svc.clearActiveInstance = function() {
       svc.removeItem('activeInstance');
     };
     svc.clearStorage = function() {
-      window.localStorage.removeItem('ApiModels');
-      window.localStorage.removeItem('ApiDatasources');
-      return window.localStorage.removeItem('slScope');
+      var localScope = getSlScope();
+      if (localScope) {
+        window.localStorage.removeItem(slScope);
+      }
+
     };
     return svc;
   }
