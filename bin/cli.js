@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 var path = require('path');
+var util = require('util');
+var opener = require('opener');
 var studio = require('../server/server');
 var DEFAULT_STUDIO_HOST = 'localhost';
 var STUDIO_RUNNING_MSG = 
@@ -25,9 +27,12 @@ var server = studio.listen(port, function(err) {
     process.exit(1);
   }
 
-  console.log('%s http://%s:%s',
-    STUDIO_RUNNING_MSG, DEFAULT_STUDIO_HOST,
+  var url = util.format('http://%s:%s', DEFAULT_STUDIO_HOST,
     server.address().port);
+  console.log('%s %s', STUDIO_RUNNING_MSG, url);
+  if (argv.indexOf('--cli') === -1) {
+    opener(url);
+  }
 });
 
 function getArgv() {
