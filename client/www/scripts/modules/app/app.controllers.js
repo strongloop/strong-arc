@@ -196,12 +196,14 @@ app.controller('StudioController', [
       // defensive check to make sure the component is initialized
       if (openInstanceRefs && openInstanceRefs.length > 0){
         // only if the model isn't currently active
-        var targetInstance = IAService.activateInstanceById(id).
-          then(function(targetInstance) {
-            $scope.activeInstance = targetInstance;
-            $scope.clearSelectedInstances();
-          }
-        );
+        if ($scope.activeInstance.id !== id) {
+          var targetInstance = IAService.activateInstanceById(id).
+            then(function(instance) {
+              $scope.activeInstance = IAService.setActiveInstance(instance, instance.type);
+              $scope.clearSelectedInstances();
+            }
+          );
+        }
       }
     };
 
@@ -221,7 +223,7 @@ app.controller('StudioController', [
           // active the first instance by default
           IAService.activateInstanceById($scope.openInstanceRefs[0].id).
             then(function(instance) {
-              $scope.activeInstance = instance;
+              $scope.activeInstance = IAService.setActiveInstance(instance, instance.type);
               $rootScope.$broadcast('IANavEvent');
             }
           );
@@ -282,12 +284,21 @@ app.controller('StudioController', [
       if (type) {
         var newDefaultInstance = {};
         if (type === CONST.MODEL_TYPE) {
+          // check if new model is already open
+          if (IAService.isNewModelOpen()) {
+            // easier to just close it an refresh than to activate existing instance ref
+            IAService.closeInstanceById(CONST.NEW_MODEL_PRE_ID);
+          }
           newDefaultInstance = ModelService.createNewModelInstance();
         }
         else if (type === CONST.DATASOURCE_TYPE) {
+          if (IAService.isNewDataSourceOpen()) {
+            IAService.closeInstanceById(CONST.NEW_DATASOURCE_PRE_ID);
+          }
           newDefaultInstance = DataSourceService.createNewDataSourceInstance();
         }
         $scope.activeInstance = IAService.setActiveInstance(newDefaultInstance, type);
+        IAService.addInstanceRef($scope.activeInstance);
         $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
         $scope.clearSelectedInstances();
         $rootScope.$broadcast('IANavEvent');
