@@ -118,6 +118,15 @@ select {
     border-radius: .2rem;
     margin: .5rem .4rem .5rem 0;
 }
+.model-instance-header-btn:hover {
+    color:#4a90e2;
+}
+.model-instance-header-btn:active {
+    color:#7DBD33;
+}
+.model-instance-header-btn:focus {
+    color:#7DBD33;
+}
 .model-instance-editor-input {
     color: #4a4a4a;
     border: 1px solid #dddddd;
