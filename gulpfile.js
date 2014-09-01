@@ -73,7 +73,8 @@ gulp.task('test-client-integration', function(callback) {
       'node_modules/.bin/karma',
       'start',
       '--single-run',
-      '--browsers PhantomJS',
+      '--browsers',
+      'PhantomJS',
       'client/test/integration/karma.integration.js',
     ],
     {
