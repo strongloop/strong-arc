@@ -32,4 +32,10 @@ beforeEach(function setupInject() {
   };
 });
 
+beforeEach(function clearAppStorage() {
+  return inject(function(AppStorageService) {
+    AppStorageService.clearStorage();
+  });
+});
+
 
