@@ -16,6 +16,9 @@ Model.service('ModelService', [
           delete config.id;
         }
 
+        // remove internal studio properties
+        delete config.type;
+
         ModelDefinition.create({}, config, function(response) {
 
           var modelConfig = angular.extend(
@@ -137,6 +140,9 @@ Model.service('ModelService', [
       var deferred = $q.defer();
 
       if (model.id) {
+        // remove internal studio properties
+        delete model.type;
+
         // `id` is '{facet}.{name}'
         var oldName = model.id.split('.')[1];
 

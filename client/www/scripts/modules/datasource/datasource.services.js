@@ -81,6 +81,10 @@ Datasource.service('DataSourceService', [
       if (config.id === CONST.NEW_DATASOURCE_PRE_ID) {
         delete config.id;
       }
+
+      // remove internal studio properties
+      delete config.type;
+
       DataSourceDefinition.create({}, config,
         function(response) {
           deferred.resolve(response);
@@ -97,6 +101,9 @@ Datasource.service('DataSourceService', [
       var deferred = $q.defer();
       // double check to clear out 'new' id
       if (config.id) {
+        // remove internal studio properties
+        delete config.type;
+
         // `id` is '{facet}.{name}'
         var oldName = config.id.split('.')[1];
 
