@@ -33,6 +33,7 @@ var app = angular.module('app', [
   'checklist-model',
   'ngGrid'
 ]);
+app.value('CONST', CONST);
 app.config(['growlProvider', function(growlProvider) {
   growlProvider.globalTimeToLive(1800);
 }]);
