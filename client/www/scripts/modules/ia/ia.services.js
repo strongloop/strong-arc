@@ -109,10 +109,8 @@ IA.service('IAService', [
     };
 
     svc.activateInstanceById = function(id, type) {
-      var deferred = $q.defer();
       var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
 
-      var newInstance = {};
       var isOpen = false;
       var instanceType = type;
 
@@ -134,59 +132,29 @@ IA.service('IAService', [
       // activate instance from respective repository
       switch(instanceType) {
 
-        case 'model':
+        case CONST.MODEL_TYPE:
           // may be new model instance
           if (id === CONST.NEW_MODEL_PRE_ID) {
             // so don't try to initialize against server
-            deferred.resolve(ModelService.createNewModelInstance());
+            return $q.when(ModelService.createNewModelInstance());
           }
           else {
-            newInstance = ModelService.getModelById(id).
-              then(function(instance) {
-                instance.type = 'model';
-                svc.setActiveInstance(instance, instance.type);
-                if (!isOpen) {
-                  var currRefs = AppStorageService.getItem('openInstanceRefs');
-                  if (!currRefs) {
-                    currRefs = [];
-                    AppStorageService.setItem('openInstanceRefs', currRefs);
-                  }
-                  currRefs.push({id: instance.id, name:instance.name,type:instanceType});
-                  AppStorageService.setItem('openInstanceRefs', currRefs);
-                }
-                return deferred.resolve(instance);
-
-              }
-            );
+            return ModelService.getModelById(id)
+              .then(setNewActiveInstance);
           }
 
 
           break;
 
-        case 'datasource':
+        case CONST.DATASOURCE_TYPE:
           // may be new model instance
           if (id === CONST.NEW_DATASOURCE_PRE_ID) {
             // so don't try to initialize against server
-            deferred.resolve(DataSourceService.createNewDataSourceInstance());
+            return $q.when(DataSourceService.createNewDataSourceInstance());
           }
           else {
-            newInstance = DataSourceService.getDataSourceById(id).
-              then(function(instance) {
-                instance.type = 'datasource';
-                svc.setActiveInstance(instance, instance.type);
-                if (!isOpen) {
-                  var currRefs = AppStorageService.getItem('openInstanceRefs');
-                  if (!currRefs) {
-                    currRefs = [];
-                    AppStorageService.setItem('openInstanceRefs', currRefs);
-                  }
-                  currRefs.push({id: instance.id, name:instance.name,type:instanceType});
-                  AppStorageService.setItem('openInstanceRefs', currRefs);
-                }
-                return deferred.resolve(instance);
-
-              }
-            );
+            return DataSourceService.getDataSourceById(id)
+              .then(setNewActiveInstance);
           }
 
 
@@ -196,23 +164,35 @@ IA.service('IAService', [
         default:
           // there is no instance type
           console.warn('trying to open instance by name but no type available: ' + id);
-
+          // return a promise that is never finished
+          return $q.defer().promise;
 
       }
 
-
-      return deferred.promise;
+      function setNewActiveInstance(instance) {
+        svc.setActiveInstance(instance, instanceType);
+        if (!isOpen) {
+          var currRefs = AppStorageService.getItem('openInstanceRefs');
+          if (!currRefs) {
+            currRefs = [];
+            AppStorageService.setItem('openInstanceRefs', currRefs);
+          }
+          currRefs.push({id: instance.id, name:instance.name,type:instanceType});
+          AppStorageService.setItem('openInstanceRefs', currRefs);
+        }
+        return instance;
+      }
 
     };
+
     svc.setActiveInstance = function(instance, type, id) {
-      var targetInstance = instance;
       // no type if everything is closed
       if (type) {
-        targetInstance.type = type;
+        instance.type = type;
       }
-      AppStorageService.setItem('activeInstance', targetInstance);
+      AppStorageService.setItem('activeInstance', instance);
       svc.updateOpenInstanceRef(id, type, instance);
-      return targetInstance;
+      return instance;
     };
 
     svc.updateOpenInstanceRef = function(id, type, instance) {
@@ -273,7 +253,7 @@ IA.service('IAService', [
 
           case CONST.MODEL_TYPE:
             // get the model definition from the api
-            instance = ModelService.getModelById(instance.id).
+            ModelService.getModelById(instance.id).
               then(function(response) {
                 deferred.resolve(response);
               });
@@ -281,13 +261,15 @@ IA.service('IAService', [
 
           case CONST.DATASOURCE_TYPE:
             // get the model definition from the api
-            instance = DataSourceService.getDataSourceById(instance.id).
+            DataSourceService.getDataSourceById(instance.id).
               then(function(response) {
                 deferred.resolve(response);
               });
             break;
 
           default:
+            deferred.reject(new Error(
+                'Invalid activeInstance type ' + instance.type));
         }
 
       }
