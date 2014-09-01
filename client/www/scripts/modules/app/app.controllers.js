@@ -476,7 +476,10 @@ app.controller('StudioController', [
       }
 
       $scope.clearTestMessage();
-      DataSourceService.testDataSourceConnection(config).
+      $scope.updateOrCreateDatasource(config).
+        then(function(data) {
+          return DataSourceService.testDataSourceConnection(data.id);
+        }).
         then(function(response) {
           $scope.datasource.connectionTestResponse = getFriendlyTestConnectionMsg(response.status);
         }).
