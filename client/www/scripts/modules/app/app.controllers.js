@@ -460,28 +460,40 @@ app.controller('StudioController', [
         $scope.createNewInstance(CONST.DATASOURCE_TYPE, initialData);
       }
     };
-    var getFriendlyTestConnectionMsg = function(response) {
-      var retVar = 'Failed';
-      if (response && (response === true)) {
-        retVar = 'Success';
+
+    var setFriendlyTestConnectionMsg = function(response) {
+      var message;
+      if (typeof response === 'string') {
+        message = response;
+      } else if (response.status) {
+        message = 'Success';
+      } else if (!response.error) {
+        message = 'Failed.';
+      } else {
+        message = 'Failed: ' + response.error.message;
       }
-      return retVar;
+      $scope.datasource.connectionTestResponse = message;
     };
+
     // test datasource connection
     $scope.testDataSourceConnection = function(config) {
 
       if (!config.connector) {
-        $scope.datasource.connectionTestResponse = getFriendlyTestConnectionMsg('failed: missing connector');
+         setFriendlyTestConnectionMsg('Failed: missing connector');
         return;
       }
 
       $scope.clearTestMessage();
-      DataSourceService.testDataSourceConnection(config).
-        then(function(response) {
-          $scope.datasource.connectionTestResponse = getFriendlyTestConnectionMsg(response.status);
-        }).
-        catch(function(err) {
-          $scope.datasource.connectionTestResponse = getFriendlyTestConnectionMsg(err);
+      $scope.updateOrCreateDatasource(config)
+        .then(function(data) {
+          return DataSourceService.testDataSourceConnection(data.id);
+        })
+        .then(function(response) {
+          setFriendlyTestConnectionMsg(response);
+        })
+        .catch(function(err) {
+          // Note: The http error is reported in the global error view
+          setFriendlyTestConnectionMsg('Failed.');
         });
     };
     $scope.clearTestMessage = function() {

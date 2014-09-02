@@ -105,6 +105,7 @@ app.factory('requestInterceptor', [
               details: rejection.data.error.details,
               name: rejection.data.error.name,
               stack: rejection.data.error.stack,
+              code: rejection.data.error.code,
               status: rejection.status
             }
           );

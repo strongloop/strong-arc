@@ -19,6 +19,26 @@ IA.service('IAService', [
     * */
     svc.setGlobalException = function(config) {
       if (config.message) { // barrier to entry
+        // Provide a better description for well-known
+        // testConnection & autoupdate errors
+        if (config.name === 'InvocationError') {
+          var help;
+          switch (config.code) {
+            case 'MODULE_NOT_FOUND':
+              help = 'Run `npm install` in your project and try again.';
+              break;
+            case 'ER_INVALID_CONNECTOR':
+              help = 'Add the connector to your project and try again.';
+              break;
+          }
+          if (help) {
+            if (config.message[config.message.length-1] !== '.')
+              config.message += '.';
+            config.message += ' ' + help;
+          }
+        }
+
+        // Push the exception on the stack.
         globalExceptionStack.push(config);
       }
       return globalExceptionStack;
