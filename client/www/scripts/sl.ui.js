@@ -23,3 +23,13 @@ var triggerResizeUpdate = function() {
 window.onresize = function(event) {
   this.triggerResizeUpdate(event);
 };
+// localStorage support test
+(function() {
+  if (window.localStorage) {
+    window.isLocalStorageEnabled = true;
+    return true;
+  }
+  console.warn('window.localStorage is not enabled');
+  window.isLocalStorageEnabled = false;
+  return false;
+})();
