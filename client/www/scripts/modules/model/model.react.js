@@ -426,6 +426,10 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
   isNameValid: function(name) {
     return /^[\-_a-zA-Z0-9]+$/.test(name);
   },
+  componentDidUpdate: function() {
+    // recalculate in case properties push below the scroll view
+    window.triggerResizeUpdate();
+  },
   checkSubmitModelProperty: function(event) {
     var component = this;
 

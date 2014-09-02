@@ -5,8 +5,8 @@
 
 body {
     font-size: 16px;
-    height: 100%;
     width: 100%;
+    background-color:#ffffff;
     margin: 0;
     overflow: hidden;
 }
