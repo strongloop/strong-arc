@@ -578,8 +578,7 @@ var IAGlobalExceptionDisplayView = (IAGlobalExceptionDisplayView = React).create
                   </li>
 
                 </ul>
-
-                <textarea data-id="StackTraceMessageContainer" className="global-exception-stack-display" value={stackItem.stack}></textarea>
+                <div data-id="StackTraceMessageContainer" className="global-exception-stack-display">{stackItem.stack}</div>
               </div>
 
             </div>);
