@@ -212,5 +212,62 @@ Validation CSS
 	font-weight: lighter;
 	color: #9e9b9b;
 }
+/*
 
+    Global Exception
+
+*/
+.ia-global-exception-container {
+    color: #d0021b;
+    margin: 1rem;
+    padding: 2rem 3rem;
+    border: 1px solid #d0021b;
+    border-radius: 0.5rem;
+    background-color: rgba(208, 2, 27, 0.1);
+}
+.ia-global-exception-header {
+    margin-bottom: 1rem;
+}
+.ia-global-exception-body {
+    font-size: 10pt;
+}
+.ia-global-exception-label {
+    font-weight: bold;
+}
+.ia-global-exception-value {
+    font-size:11pt;
+
+}
+.ia-global-exception-close-button{
+    float: right;
+    font-size: 18pt;
+}
+.ia-global-exception-close-button:hover {
+
+    color: #4a90e2;
+    cursor: pointer;
+}
+.ia-global-exception-link{
+    float:right;
+    padding-top: 1rem;
+    text-decoration: underline;
+}
+.ia-global-exception-link:hover{
+    color: #4a90e2;
+    cursor: pointer;
+}
+.global-exception-stack-display {
+    width:100%;
+    height: 15rem;
+    border: 1px solid #d0021b;
+    margin-top: 1rem;
+    padding: 1rem;
+    font-size: 10pt;
+    background-color: rgba(208, 2, 27, 0.1);;
+    overflow:auto;
+    white-space:pre;
+}
+[data-id="GlobalExceptionDetailsContainer"] {
+    display:none;
+}
 

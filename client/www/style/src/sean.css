@@ -1,4 +1,4 @@
-/* @override 
+/* @override
 	http://0.0.0.0:4800/style/src/sean.css */
 
 /* these css rules are temporary until we re-sync the
@@ -22,9 +22,9 @@ CSS from original branch */
     display:inherit;
 }
 .global-exception-stack-display {
-    width:58rem;
-    background:#efefef;
-    overflow:auto;
+    /*width:58rem;*/
+    /*background:#efefef;*/
+    /*overflow:auto;*/
 }
 .model-instance-name-validation.is-valid {
     display:none;
