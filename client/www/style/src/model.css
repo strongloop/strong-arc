@@ -184,7 +184,15 @@ select {
     /*border-right:1px solid #aaaaaa;*/
     /*border-left:1px solid #aaaaaa;*/
 }
-
+.model-instance-name-validation.is-valid {
+    display:none;
+}
+.model-instance-header-btn {
+    color: #7DBD33;
+    font-size: 12pt;
+    background: none;
+    border: none;
+}
 .model-instance-container .model-instance-property-table-header-row {
     background-color: #EDEDED;
     height: 3rem;
@@ -456,6 +464,13 @@ button[disabled].model-detail-pocket-button:hover {
 	background: none;
 	border: none;
 	color: #4a90e2;
+}
+
+.btn-new-model-property {
+    white-space: nowrap;
+}
+.btn-new-model-property:disabled {
+    color:#666666;
 }
 .modelproperty-detail-is-open .modelproperty-detail-row{
 	background: navy;

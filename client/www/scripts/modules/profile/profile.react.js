@@ -56,11 +56,11 @@ var LoginFormView = (LoginFormView = React).createClass({
     return (
       <div className="container card" id="LoginMainContainer">
         <div className="center_div">
-          <h2>Sign in to Strong Studio</h2>
-          <div className="item item-divider assertive">
+          <div data-id="AuthExceptionMessageContainer" className="item item-divider assertive">
           {errorDisplay}
           </div>
-          <form name="LoginForm" role="form">
+          <h2 className="login-form-title">Strong Studio Sign In</h2>
+          <form data-id="LoginForm" name="LoginForm" role="form">
             <div className="form-group">
               <label for="InputUserName">Username</label>
               <input id="InputUserName" value={credentials.email}
@@ -85,6 +85,10 @@ var LoginFormView = (LoginFormView = React).createClass({
             Sign In
             </button>
           </form>
+          <div data-id="LoginRegisterLinksContainer">
+            <a href="https://strongloop.com/register/" target="_blank" title="Strong Studio register link" data-id="RegisterLink" className="login-register-link">Register</a>
+            <a href="https://strongloop.com/login?action=lostpassword" target="_blank" title="Strong Studio forgot password link" data-id="ForgotPasswordLink" className="login-forgot-password-link">Forgot password</a>
+          </div>
         </div>
       </div>
 
