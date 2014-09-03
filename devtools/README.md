@@ -14,3 +14,14 @@ This folder contains files that add Blink Developer Tools to Studio.
 Run `gulp pull-devtools` in the project root to update front-end files
 to the latest version.
 
+## Resources
+
+Run Studio with `DEBUG=studio:devtools` to see the Chrome Remote Debugging
+Protocol messages exchanged between the frontend and the backend.
+
+Protocol documentation:
+https://developer.chrome.com/devtools/docs/protocol/tot
+
+Guide on how to debug protocol DevTools in Chrome Canary:
+https://developer.chrome.com/devtools/docs/contributing#step-1-getting-set-up
+
