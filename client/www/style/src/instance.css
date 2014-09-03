@@ -1,6 +1,7 @@
 /* @override
 	http://0.0.0.0:3003/style/dev/instance.css
-	http://0.0.0.0:3003/style/src/instance.css */
+	http://0.0.0.0:3003/style/src/instance.css
+	http://localhost:53360/style/src/instance.css */
 
 
 /*
@@ -42,7 +43,7 @@
 }
 .instance-tabs-list .instance-tab-item-container {
 	color: #5C5C5C;
-	padding: 1rem 2rem 1rem 2rem;
+	padding: 1rem 2rem 0.8rem 2rem;
 	margin-left: 0.2rem;
 	border: 1px solid #CCCCCC;
 	border-radius: 5px 5px 0 0;
@@ -62,7 +63,6 @@
     background: transparent;
 }
 .instance-tab-close-button {
-    font-size: 90%;
     margin-left: 1rem;
     border: 0;
     background: transparent;

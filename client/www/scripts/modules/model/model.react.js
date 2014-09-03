@@ -185,7 +185,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
         <form role="form">
           <div className="model-header-container">
             <div className={formGroupValidationClasses}>
-              <label>name</label>
+              <label className="field-label">Name</label>
               <input type="text"
                 value={modelDef.name}
                 onChange={component.handleChange}
@@ -217,9 +217,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
           <div className="model-detail-container">
             <div className="model-detail-input-row">
               <div className="model-detail-input-container">
-                <div className="model-detail-label">
-                  <label>Plural</label>
-                </div>
+                  <label className="field-label">Plural</label>
                 <input type="text"
                   value={modelDef.plural}
                     onChange={this.handleChange}
@@ -229,9 +227,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                     className="model-instance-editor-input" />
               </div>
               <div className="model-detail-input-container">
-                <div className="model-detail-label">
-                  <label>Base model</label>
-                </div>
+                  <label className="field-label">Base model</label>
                 <input
                   className="model-instance-editor-input"
                   type="text"
@@ -241,9 +237,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                   onBlur={this.handleBaseBlur} />
               </div>
               <div className="model-detail-input-container">
-                <div className="model-detail-label">
-                  <label>Datasource</label>
-                </div>
+                  <label className="field-label">Datasource</label>
                 <select value={modelDef.config.dataSource}
                   data-name="config.dataSource"
                   name="dataSource"

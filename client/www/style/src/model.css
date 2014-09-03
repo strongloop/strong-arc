@@ -2,7 +2,8 @@
 	http://0.0.0.0:3003/style/dev/model.css
 	http://0.0.0.0:3003/style/src/model.css
 	http://localhost:4800/style/src/model.css
-	http://0.0.0.0:4800/style/src/model.css */
+	http://0.0.0.0:4800/style/src/model.css
+	http://localhost:53360/style/src/model.css */
 
 
 ::-webkit-input-placeholder {
@@ -127,17 +128,11 @@ select {
     height: 3.4rem;
     padding-left: 1rem;
 }
-.model-detail-label {
-    padding-left: 0.7rem;
-}
 .model-instance-editor-checkbox {
     margin-top: 0.7rem !important;
 }
 .model-instance-editor-checkbox-label{
 
-}
-.model-detail-input-container label{
-    font-size: 10pt;
 }
 .model-instance-details-container [data-state="isOpen"] {
     display: block;
@@ -273,12 +268,6 @@ select {
     z-index: 4000;
 }
 
-
-.lineBreak{
-    height: 1.6rem;
-    border-bottom: 1px solid #DDDDDD;
-}
-
 .model-header-container {
     /*background: #EEEEEE;*/
     width: 90rem;
@@ -292,11 +281,6 @@ select {
     margin-top: 0.7rem;
     margin-left: 1rem;
     width: 38.7rem;
-}
-.model-header-name-container label{
-    margin-top: 1rem;
-    margin-left: 0.5rem;
-    font-size: 9pt;
 }
 .model-instance-name {
 	border: 1px solid #DDDDDD;
