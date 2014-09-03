@@ -56,37 +56,45 @@ var LoginFormView = (LoginFormView = React).createClass({
     return (
       <div className="container card" id="LoginMainContainer">
         <div className="center_div">
-          <h2>Sign in to Strong Studio</h2>
-          <div className="item item-divider assertive">
+          <div data-id="AuthExceptionMessageContainer" className="item item-divider assertive">
           {errorDisplay}
           </div>
-          <form name="LoginForm" role="form">
+          <h2 className="login-form-title">StrongLoop Studio Sign In</h2>
+          <form data-id="LoginForm" name="LoginForm" role="form">
             <div className="form-group">
-              <label for="InputUserName">Username</label>
+              <label for="InputUserName" className="field-label">Username</label>
               <input id="InputUserName" value={credentials.email}
-                className="form-control"
-                name="InputUserName"
-                onChange={that.handleChange}
-                data-name="email"
-                type="text"
-                placeholder="Email" />
+              className="form-control"
+              name="InputUserName"
+              onChange={that.handleChange}
+              data-name="email"
+              type="text"
+              placeholder="Email" />
             </div>
             <div className="form-group">
-              <label for="InputPassword">Password</label>
+              <label for="InputPassword" className="field-label">Password</label>
               <input type="password" className="form-control"
-                value={credentials.password}
-                id="InputPassword"
-                data-name="password"
-                onChange={that.handleChange}
-                name="InputPassword"
-                placeholder="Password" />
+              value={credentials.password}
+              id="InputPassword"
+              data-name="password"
+              onChange={that.handleChange}
+              name="InputPassword"
+              placeholder="Password" />
             </div>
-            <button type="submit" onClick={submitLoginRequest} className="btn btn-primary pull-right">
-            Sign In
-            </button>
+            <div className="login-button-container">
+              <button type="submit" onClick={submitLoginRequest} className="btn btn-primary pull-right">
+              Sign In
+              </button>
+            </div>
+            <div className="lineBreak"></div>
           </form>
+          <div data-id="LoginRegisterLinksContainer">
+            <a href="https://strongloop.com/register/" target="_blank" title="StrongLoop Studio register link" data-id="RegisterLink" className="login-register-link">Register</a>
+            <a href="https://strongloop.com/login?action=lostpassword" target="_blank" title="StrongLoop Studio forgot password link" data-id="ForgotPasswordLink" className="login-forgot-password-link">Forgot password</a>
+          </div>
         </div>
       </div>
+
 
     );
   }
