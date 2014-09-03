@@ -57,6 +57,11 @@ app.config([
         controller: 'HomeMainController',
         templateUrl: './scripts/modules/app/templates/home.main.html'
       }).
+      state('devtools', {
+        url: '/devtools',
+        templateUrl: './scripts/modules/app/templates/devtools.html',
+        controller: 'DevToolsController'
+      }).
       state('studio', {
         url: '/studio',
         templateUrl: './scripts/modules/app/templates/studio.main.html',
