@@ -11,6 +11,7 @@
     "start": "node app.js"
   },
   "dependencies": {
+    "debug": "^2.0.0",
     "express": "~4.8.4",
     "loopback-workspace": "strongloop/loopback-workspace",
     "opener": "~1.4.0",
