@@ -56,6 +56,7 @@ gulp.task('jshint', function() {
   return gulp.src([
     'server/**/*.js',
     'client/test/**/*.js',
+    'devtools/server/**/*.js',
     // TODO(bajtos) add more files once they pass the linter
     '!client/test/integration/{sandbox/,sandbox/**}'
   ])

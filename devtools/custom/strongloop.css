@@ -1,0 +1,2 @@
+/* hide the top toolbar, only "Profiles" tab is used at the moment */
+.toolbar { display: none; }
