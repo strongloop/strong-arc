@@ -662,3 +662,10 @@ app.controller('GlobalNavController',[
   }
 ]);
 
+app.controller('DevToolsController',[
+  '$scope',
+  '$location',
+  function(/*$scope, $location*/){
+    // no-op
+  }
+]);
