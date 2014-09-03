@@ -31,9 +31,29 @@ var COMMANDS = {
   // Temporary implementation returning sample data
   'Profiler.stop': { profile: sampleCpuProfile },
 
-  // TODO(bajtos) support Heap profiler
-  // 'HeapProfiler.takeHeapSnapshot'
-  // 'HeapProfiler.stopTrackingHeapObjects'
+  'HeapProfiler.takeHeapSnapshot': function(params, done) {
+    this._sendSampleHeapSnapshot()
+    done();
+  },
+
+  'HeapProfiler.startTrackingHeapObjects': function(params, done) {
+    done(new Error('Heap Timeline is not implemented yet.'));
+    // Now we are supposed to periodically send back heap changes
+    // Sample transcript from Chrome Canary
+    //   {"method":"HeapProfiler.heapStatsUpdate",
+    //     "params":{"statsUpdate":[0,40196,3597832]}}
+    //   {"method":"HeapProfiler.lastSeenObjectId",
+    //     "params":{"lastSeenObjectId":80511,"timestamp":1409762645308.25}}
+    // See also documentation in protocol.json
+  },
+
+  'HeapProfiler.stopTrackingHeapObjects': function(params, done) {
+    // This prevents errors in the frontend
+    // The timeline is still not displayed correctly though
+    // (or perhaps our sample data is not good for the timeline view)
+    this._sendSampleHeapSnapshot();
+    done();
+  },
 };
 
 extend(DevToolsBackend.prototype, {
@@ -63,7 +83,7 @@ extend(DevToolsBackend.prototype, {
         callback(null, resultOrHandler);
       };
 
-    fn(request.params, function handleResult(err, result) {
+    fn.call(this, request.params, function handleResult(err, result) {
       debug('response #%s %s', request.id, request.method, result);
       var response = { id: request.id };
       if (err) {
@@ -81,6 +101,25 @@ extend(DevToolsBackend.prototype, {
 
   _sendMessage: function(message) {
     this.client.send(JSON.stringify(message));
+  },
+
+  _sendSampleHeapSnapshot: function() {
+    /*jshint -W106*/
+    this._sendMessage({
+      method: 'HeapProfiler.reportHeapSnapshotProgress',
+      params: {
+        done: sampleHeapSnapshot.snapshot.node_count,
+        total: sampleHeapSnapshot.snapshot.node_count,
+        finished: true
+      }
+    });
+
+    this._sendMessage({
+      'method': 'HeapProfiler.addHeapSnapshotChunk',
+      'params': {
+        'chunk': JSON.stringify(sampleHeapSnapshot)
+      }
+    });
   },
 });
 
