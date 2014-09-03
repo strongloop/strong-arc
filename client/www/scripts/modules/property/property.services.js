@@ -23,21 +23,15 @@ Property.service('PropertyService', [
       return deferred.promise
     };
     svc.createModelProperty = function(propConfig) {
-      var deferred = $q.defer();
-
-      // this should be ModelProperty.create
-      ModelProperty.create({}, propConfig,
-        function(response) {
-          deferred.resolve(response);
-        },
-        function(response) {
-
-          console.warv('bad create model property: ' + response);
-        }
-
-      );
-
-      return deferred.promise;
+      return ModelProperty.create({}, propConfig)
+        .$promise
+        .then(function(property) {
+          return property;
+        })
+        .catch(function(error) {
+          console.warn('bad create model property: ' + error);
+          return error;
+        });
     };
 
     svc.updateModelProperty = function(propConfig) {

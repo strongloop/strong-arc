@@ -57,7 +57,7 @@ given.modelInstance = function(definitionData, configData) {
   return inject(function(CONST, ModelDefinition, ModelConfig) {
     definitionData = angular.extend({
       name: 'aModelDefinition_' + (++_givenValueCounter),
-      facetName: 'common',
+      facetName: 'common'
     }, definitionData);
     configData = angular.extend({
       name: definitionData.name,
@@ -81,7 +81,7 @@ given.dataSourceInstance = function(definitionData) {
     definitionData = angular.extend({
       name: 'aDataSourceDefinition' + (++_givenValueCounter),
       facetName: 'server',
-      connector: 'memory',
+      connector: 'memory'
     }, definitionData);
     return DataSourceService.createNewDataSourceInstance(definitionData);
   });

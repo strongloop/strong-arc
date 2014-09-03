@@ -168,6 +168,7 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
         classNameVar += ' is-selected'
       }
       var dsConnectEl = (<span />);
+      // TODO - SEAN fix this bug - it needs to reference 'config' for dataSource
       if (item.dataSource && (item.dataSource !== CONST.DEFAULT_DATASOURCE )) {
         dsConnectEl = (<span data-name={item.name}  data-id={item.id} className="sl-icon sl-icon-lightning"></span>);
       }
@@ -267,7 +268,38 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
 
    // menuItems.openSelectedDataSource = {name: "open", callback: component.openSelectedDataSource};
     menuItems.deleteSelectedDataSource = {name: "delete", callback: component.deleteSelectedDataSource};
+    menuItems.createModelsFromDS = {
+      name: "create models",
+      disabled: function(key, opt) {
+        if (opt.sourceEvent.target.attributes['data-is-discoverable']) {
+          isDiscoverable = opt.sourceEvent.target.attributes['data-is-discoverable'].value;
+        }
+        else if (opt.sourceEvent.target.parentElement.attributes['data-name']){
+          isDiscoverable = opt.sourceEvent.target.parentElement.attributes['data-is-discoverable'].value;
+        }
+        if (isDiscoverable === 'true') {
+          return false;
+        }
+        return true;
+      },
+      callback: function(key, opt) {
+        var dsId = '';
+        if (opt.sourceEvent.target.attributes['data-id']) {
+          dsId = opt.sourceEvent.target.attributes['data-id'].value;
+        }
+        // check the parent element
+        else if (opt.sourceEvent.target.parentElement.attributes['data-id']){
+          dsId = opt.sourceEvent.target.parentElement.attributes['data-id'].value;
+        }
+        if (dsId){
+          component.props.scope.$apply(function () {
 
+            component.props.scope.createModelsFromDS(dsId);
+          });
+        }
+
+      }
+    };
     $.contextMenu({
       // define which elements trigger this menu
       selector: '.btn-ds-nav-context',
@@ -333,6 +365,11 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
     var rowItems = (<div />);
     if (scope.mainNavDatasources.map) {
       rowItems = scope.mainNavDatasources.map(function(item) {
+
+        var isDiscoverable = false;
+        if (item.isDiscoverable) {
+          isDiscoverable = item.isDiscoverable;
+        }
         var classNameVar = 'tree-item-row ';
         if (item.isActive) {
           classNameVar += ' is-active';
@@ -355,7 +392,7 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
             <div data-ui-type="cell" className="ia-nav-item-dsconnect-icon-container-col">
             </div>
             <div data-ui-type="cell" className="ia-nav-item-contextmenu-icon-container-col">
-              <button className="btn-command btn-ds-nav-context" data-id={item.id}>
+              <button className="btn-command btn-ds-nav-context" data-is-discoverable={isDiscoverable} data-id={item.id}>
                 <span data-name={item.name}  data-id={item.id} className="sl-icon sl-icon-box-arrow-down"></span>
               </button>
             </div>

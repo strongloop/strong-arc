@@ -34,6 +34,7 @@ var app = angular.module('app', [
   'IA',
   'Common',
   'Property',
+  'Discovery',
   'Model',
   'Landing',
   'UI',
