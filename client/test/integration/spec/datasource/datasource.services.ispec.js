@@ -17,15 +17,14 @@ describe('DataSourceService', function() {
 
   beforeEach(given.emptyWorkspace);
 
-  describe('.createDataSource()', function() {
+  describe('.createDataSourceInstance()', function() {
     it('removes internal Studio properties', function() {
-      var def = DataSourceService.createNewDataSourceInstance(
-        given.dataSourceDefinition());
+      var instance = given.dataSourceInstance();
 
-      // setActiveInstance adds `type` property
-      IAService.setActiveInstance(def, CONST.MODEL_TYPE);
+      // setActiveInstance used to add `type` property
+      IAService.setActiveInstance(instance, CONST.MODEL_TYPE);
 
-      return DataSourceService.createDataSourceDefinition(def)
+      return DataSourceService.createDataSourceInstance(instance)
         .then(function(created) {
           return DataSourceDefinition.findById({ id: created.id }).$promise;
         })
@@ -37,16 +36,15 @@ describe('DataSourceService', function() {
     });
   });
 
-  describe('.updateDataSource()', function() {
+  describe('.updateDataSourceInstance()', function() {
     it('removes internal Studio properties on update', function() {
-      var def = DataSourceService.createNewDataSourceInstance(
-          given.dataSourceDefinition());
-      return DataSourceService.createDataSourceDefinition(def)
-        .then(function(response) {
-          // setActiveInstance adds `type` property
-          IAService.setActiveInstance(response, CONST.MODEL_TYPE);
+      var instance = given.dataSourceInstance();
+      return DataSourceService.createDataSourceInstance(instance)
+        .then(function(created) {
+          // setActiveInstance used to add `type` property
+          IAService.setActiveInstance(created, CONST.MODEL_TYPE);
 
-          return DataSourceService.updateDataSourceDefinition(response);
+          return DataSourceService.updateDataSourceInstance(created);
         })
         .then(function(updated) {
           return DataSourceDefinition.findById({ id: updated.id }).$promise;

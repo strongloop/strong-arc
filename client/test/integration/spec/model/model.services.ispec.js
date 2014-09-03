@@ -17,14 +17,14 @@ describe('ModelService', function() {
 
   beforeEach(given.emptyWorkspace);
 
-  describe('.createModel()', function() {
+  describe('.createModelInstance()', function() {
     it('removes internal Studio properties', function() {
-      var def = ModelService.createNewModelInstance(given.modelDefinition());
+      var instance = given.modelInstance();
 
-      // setActiveInstance adds `type` property
-      IAService.setActiveInstance(def, CONST.MODEL_TYPE);
+      // setActiveInstance used to add `type` property
+      IAService.setActiveInstance(instance, CONST.MODEL_TYPE);
 
-      return ModelService.createModel(def)
+      return ModelService.createModelInstance(instance)
         .then(function(created) {
           return ModelDefinition.findById({ id: created.id }).$promise;
         })
@@ -36,15 +36,16 @@ describe('ModelService', function() {
     });
   });
 
-  describe('.updateModel()', function() {
+  describe('.updateModelInstance()', function() {
     it('removes internal Studio properties on update', function() {
-      var def = ModelService.createNewModelInstance(given.modelDefinition());
-      return ModelService.createModel(def)
-        .then(function(response) {
-          // setActiveInstance adds `type` property
-          IAService.setActiveInstance(response, CONST.MODEL_TYPE);
+      var instance = given.modelInstance();
 
-          return ModelService.updateModel(response);
+      return ModelService.createModelInstance(instance)
+        .then(function(created) {
+          // setActiveInstance used to add `type` property
+          IAService.setActiveInstance(created, CONST.MODEL_TYPE);
+
+          return ModelService.updateModelInstance(created);
         })
         .then(function(updated) {
           return ModelDefinition.findById({ id: updated.id }).$promise;

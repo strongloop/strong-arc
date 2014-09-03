@@ -10,8 +10,8 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
     return {
       activeInstance: this.props.scope.activeInstance,
       isNameValid: this.isNameValid(this.props.scope.activeInstance.name),
-      isConnectorValid: this.isConnectorValid(this.props.scope.activeInstance.connector),
-      isFormValid: (this.isNameValid(this.props.scope.activeInstance.name) && this.props.scope.activeInstance.connector),
+      isConnectorValid: this.isConnectorValid(this.props.scope.activeInstance.definition.connector),
+      isFormValid: (this.isNameValid(this.props.scope.activeInstance.definition.name) && this.props.scope.activeInstance.definition.connector),
       testConnectionMessage:'',
       isTesting: false
     }
@@ -21,9 +21,9 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
 
     component.setState({
       activeInstance:nextProps.scope.activeInstance,
-      isNameValid: component.isNameValid(nextProps.scope.activeInstance.name),
-      isConnectorValid: component.isConnectorValid(nextProps.scope.activeInstance.connector),
-      isFormValid: (component.isNameValid(nextProps.scope.activeInstance.name) && nextProps.scope.activeInstance.connector)
+      isNameValid: component.isNameValid(nextProps.scope.activeInstance.definition.name),
+      isConnectorValid: component.isConnectorValid(nextProps.scope.activeInstance.definition.connector),
+      isFormValid: (component.isNameValid(nextProps.scope.activeInstance.definition.name) && nextProps.scope.activeInstance.definition.connector)
     });
     if (nextProps.scope.datasource.connectionTestResponse){
       component.setState({isTesting:false});
@@ -58,7 +58,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
     if (event.target.attributes['data-name']) {
       var dsPropName = event.target.attributes['data-name'].value;
       var xActiveInstance = this.state.activeInstance;
-      xActiveInstance[dsPropName] = event.target.value;
+      xActiveInstance.definition[dsPropName] = event.target.value;
       this.setState({activeInstance:xActiveInstance});
 
       if (dsPropName === 'name') {
@@ -76,36 +76,26 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
 
     }
   },
-  buildRequestData: function(theForm) {
-    var requestData = {};
-    for (var i = 0;i < theForm.length;i++) {
-      if (theForm[i].value) {
-        requestData[theForm[i].name] = theForm[i].value;
-      }
-    }
-    return requestData;
-  },
   testConnection: function(event) {
+    event.preventDefault();
     var scope = this.props.scope;
-    var requestData = this.buildRequestData(event.target.form);
+    var requestData = this.state.activeInstance;
     scope.$apply(function() {
       scope.testDataSourceConnection(requestData);
     });
-    return false;
   },
   saveHandler: function(event) {
+    event.preventDefault();
     var scope = this.props.scope;
-    var requestData = this.buildRequestData(event.target.form);
-    if (requestData.name.length > 0) {
-      scope.$apply(function() {
-        scope.updateOrCreateDatasource(requestData);
-      });
-    }
+    var requestData = this.state.activeInstance;
+    scope.$apply(function() {
+      scope.saveDataSourceInstanceRequest(requestData);
+    });
   },
   render: function() {
     var component = this;
     var cx = React.addons.classSet;
-    var dsModel = component.state.activeInstance;
+    var dsModel = component.state.activeInstance.definition;
     var dsNameInputClasses = cx({
       'model-instance-name form-control': component.state.isNameValid,
       'model-instance-name form-control is-invalid': !component.state.isNameValid
@@ -169,7 +159,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                         name="user"
                         type="text"
                         value={dsModel.user}
-                        onChange={this.handleChange}
+                        onChange={component.handleChange}
                         data-name="user"
                         placeholder="user" />
                     </div>

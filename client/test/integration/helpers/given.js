@@ -39,23 +39,36 @@ given.emptyWorkspace = function() {
 
 var _givenValueCounter = 0;
 
-given.modelDefinition = function(data) {
-  return inject(function(ModelDefinition) {
-    data = angular.extend({
+given.modelInstance = function(definitionData, configData) {
+  return inject(function(CONST, ModelDefinition, ModelConfig) {
+    definitionData = angular.extend({
       name: 'aModelDefinition_' + (++_givenValueCounter),
       facetName: 'common',
-    }, data);
-    return new ModelDefinition(data);
+    }, definitionData);
+    configData = angular.extend({
+      name: definitionData.name,
+      facetName: 'server'
+    });
+
+    // TODO(bajtos) Use ModelService.createNewModelInstance() instead
+    return {
+      id: definitionData.id,
+      type: CONST.MODEL_TYPE,
+      name: definitionData.name,
+      definition: new ModelDefinition(definitionData),
+      properties: [],
+      config: new ModelConfig(configData)
+    };
   });
 };
 
-given.dataSourceDefinition = function(data) {
-  return inject(function(DataSourceDefinition) {
-    data = angular.extend({
+given.dataSourceInstance = function(definitionData) {
+  return inject(function(DataSourceService) {
+    var definitionData = angular.extend({
       name: 'aDataSourceDefinition' + (++_givenValueCounter),
       facetName: 'server',
       connector: 'memory',
-    }, data);
-    return new DataSourceDefinition(data);
+    }, definitionData);
+    return DataSourceService.createNewDataSourceInstance(definitionData);
   });
 };

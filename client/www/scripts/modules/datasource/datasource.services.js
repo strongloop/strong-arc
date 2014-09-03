@@ -7,121 +7,60 @@ Datasource.service('DataSourceService', [
   '$q',
   function(DataSourceDefinition, ModelConfig, AppStorageService, $timeout, $q) {
     var svc = {};
-    //  var deferred = $q.defer();
-    svc.getDiscoverableDatasourceConnectors = function() {
-      return ['mssql', 'oracle', 'mysql', 'postgresql'];
-    };
 
-    svc.getAllDatasources = function() {
 
-      var deferred = $q.defer();
-
-      DataSourceDefinition.find({},function(response){
-          deferred.resolve(response);
-        },
-        function(response) {
-          console.warn('bad get datasource defninitions: ' + response)
-        }
-      );
-
-      return deferred.promise;
-
-    };
-
-    svc.getDatasourceByName = function(name) {
-
-      if (window.localStorage.getItem('ApiDatasources')) {
-        var currDSCollection = JSON.parse(window.localStorage.getItem('ApiDatasources'));
-        for (var i = 0;i < currDSCollection.length;i++) {
-          if (currDSCollection[i].name === name) {
-            return currDSCollection[i];
-          }
-        }
-      }
-    };
-    svc.getDataSourceById = function(dsId) {
-      var deferred = $q.defer();
-      var targetDS = {};
-      if (dsId !== CONST.NEW_DATASOURCE_PRE_ID) {
-
-        DataSourceDefinition.findById({id:dsId},
-          function(response) {
-            targetDS = response;
-            deferred.resolve(targetDS);
-          },
-          function(response) {
-            console.warn('bad get datasource by id: ' + dsId + '  ' + response);
-          }
-        );
-
-      }
-      else {
-        deferred.resolve(targetDS);
-      }
-      return deferred.promise;
-
-    };
-    svc.updateNewDatasourceName = function(newName) {
-      var openInstanceRefs = AppStorageService.getItem('openInstanceRefs');
-      if (!openInstanceRefs) {
-        return;
-      }
-      for (var i = 0;i < openInstanceRefs.length;i++) {
-        if (openInstanceRefs[i].name === CONST.NEW_DATASOURCE_NAME) {
-          openInstanceRefs[i].name = newName;
-          break;
-        }
-      }
-      AppStorageService.setItem('openInstanceRefs', openInstanceRefs);
-      return openInstanceRefs;
-    };
-    svc.createDataSourceDefinition = function(config) {
+    svc.createDataSourceInstance = function(targetInstance) {
       var deferred = $q.defer();
       // double check to clear out 'new' id
-      if (config.id === CONST.NEW_DATASOURCE_PRE_ID) {
-        delete config.id;
+      if (targetInstance.definition.id === CONST.NEW_DATASOURCE_PRE_ID) {
+        delete targetInstance.definition.id;
       }
 
-      // remove internal studio properties
-      delete config.type;
-
-      DataSourceDefinition.create({}, config,
-        function(response) {
-          deferred.resolve(response);
+      DataSourceDefinition.create({}, targetInstance.definition,
+        function(definition) {
+          targetInstance.id = definition.id;
+          targetInstance.name = definition.name;
+          targetInstance.definition = definition;
+          deferred.resolve(targetInstance);
         },
-        function(response) {
-          console.warn('bad create data source definition: ' + response);
+        function(error) {
+          console.warn('bad create data source definition:',
+              error && error.data && error.data.error || error);
+          deferred.reject(error);
         }
       );
-
-
       return deferred.promise;
     };
-    svc.updateDataSourceDefinition = function(config) {
+    svc.updateDataSourceInstance = function(targetInstance) {
       var deferred = $q.defer();
+      var instance = {};
       // double check to clear out 'new' id
-      if (config.id) {
+      if (targetInstance.definition.id) {
         // remove internal studio properties
-        delete config.type;
+        delete targetInstance.definition.type;
 
         // `id` is '{facet}.{name}'
-        var oldName = config.id.split('.')[1];
+        var oldName = targetInstance.definition.id.split('.')[1];
 
         // Temporary workaround until loopback-workspace supports renames
-        if (oldName === config.name) {
-          DataSourceDefinition.upsert({}, config,
-            function(response) {
-              deferred.resolve(response);
+        if (oldName === targetInstance.definition.name) {
+          DataSourceDefinition.upsert({}, targetInstance.definition,
+            function(definition) {
+              targetInstance.id = definition.id;
+              targetInstance.name = definition.name;
+              targetInstance.definition = definition;
+              deferred.resolve(targetInstance);
             },
-            function(response) {
-              deferred.reject(response);
+            function(error) {
+              console.warn('problem updating DataSourceDefinition: ' + error);
+              deferred.reject(error);
             }
           );
         } else {
-          var oldId = config.id;
+          var oldId = targetInstance.definition.id;
 
-          var updatedDefinition = DataSourceDefinition.create(config);
-          updatedDefinition.$promise
+          targetInstance.definition = DataSourceDefinition.create(targetInstance.definition);
+          targetInstance.definition.$promise
             .then(function updateRelatedModelConfigs() {
               var modelConfigs = ModelConfig.find({
                 filter: { where: { dataSource: oldName } }
@@ -138,10 +77,13 @@ Datasource.service('DataSourceService', [
               return DataSourceDefinition.deleteById({ id: oldId }).$promise;
             })
             .then(function() {
-              deferred.resolve(updatedDefinition);
+              targetInstance.id = targetInstance.definition.id;
+              targetInstance.name = targetInstance.definition.name;
+              deferred.resolve(targetInstance);
             })
-            .catch(function(err) {
-              console.warn('Cannot rename %s to %s.', oldId, config.id, err);
+            .catch(function(error) {
+              console.warn('Cannot rename %s to %s.', oldId, targetDefinition.id, error);
+              deferred.reject(error);
             });
         }
       }
@@ -151,7 +93,96 @@ Datasource.service('DataSourceService', [
 
       return deferred.promise;
     };
+    svc.getAllDataSourceInstances = function() {
 
+      var deferred = $q.defer();
+
+      DataSourceDefinition.find({},function(response){
+          var instances = [];
+          angular.forEach(response, function(item) {
+            instances.push({
+              id: item.id,
+              name: item.name,
+              type: CONST.DATASOURCE_TYPE,
+              definition: item
+            });
+          });
+          deferred.resolve(instances);
+        },
+        function(response) {
+          console.warn('bad get datasource defninitions: ' + response)
+        }
+      );
+
+      return deferred.promise;
+
+    };
+    svc.createNewDataSourceInstance = function(initialDefinition) {
+      var defaultDataSourceSchema = initialDefinition || {};
+
+      if (!defaultDataSourceSchema.id) {
+        defaultDataSourceSchema.id = CONST.NEW_DATASOURCE_PRE_ID;
+      }
+      if (!defaultDataSourceSchema.name) {
+        defaultDataSourceSchema.name = CONST.NEW_DATASOURCE_NAME;
+      }
+      if (!defaultDataSourceSchema.facetName) {
+        defaultDataSourceSchema.facetName = CONST.NEW_DATASOURCE_FACET_NAME;
+      }
+
+      return {
+        id: defaultDataSourceSchema.id,
+        name: defaultDataSourceSchema.name,
+        type: CONST.DATASOURCE_TYPE,
+        definition: defaultDataSourceSchema
+      };
+    };
+    svc.getDiscoverableDatasourceConnectors = function() {
+      return ['mssql', 'oracle', 'mysql', 'postgresql'];
+    };
+    svc.getDataSourceInstanceById = function(dsId) {
+      var deferred = $q.defer();
+      var targetDS = {};
+      if (dsId !== CONST.NEW_DATASOURCE_PRE_ID) {
+
+        DataSourceDefinition.findById({id:dsId},
+          function(definition) {
+            var instance = {
+              id: definition.id,
+              name: definition.name,
+              type: CONST.DATASOURCE_TYPE,
+              definition: definition
+            }
+            deferred.resolve(instance);
+          },
+          function(error) {
+            console.warn('bad get datasource by id: ' + dsId + '  ' + error);
+            deferred.reject(error);
+          }
+        );
+
+      }
+      else {
+        console.warn('tried to retrieve datasource by new id: ' + dsId );
+      }
+      return deferred.promise;
+
+    };
+    svc.deleteDataSourceInstance = function(dsId) {
+      if (dsId) {
+        var deferred = $q.defer();
+
+        DataSourceDefinition.deleteById({id:dsId},
+          function(response) {
+            deferred.resolve(response);
+          },
+          function(response) {
+            console.warn('bad delete datasource definition');
+          }
+        );
+        return deferred.promise;
+      }
+    };
     svc.testDataSourceConnection = function(dsId) {
       var deferred = $q.defer();
 
@@ -167,60 +198,9 @@ Datasource.service('DataSourceService', [
       );
       return deferred.promise;
     };
-    // obsolete
-    svc.createDatasourceDef = function(datasourceDefObj) {
-      var currentDatasources = JSON.parse(window.localStorage.getItem('ApiDatasources'));
-      if (!currentDatasources) {
-        currentDatasources = [];
-      }
-      currentDatasources.push(datasourceDefObj);
-      window.localStorage.setItem('ApiDatasources', JSON.stringify(currentDatasources));
-      return datasourceDefObj;
-    };
-    svc.createNewDataSourceInstance = function(initialData) {
 
-      var defaultDatasourceSchema = {
-        id: CONST.NEW_DATASOURCE_PRE_ID,
-        name: CONST.NEW_DATASOURCE_NAME,
-        facetName: CONST.NEW_DATASOURCE_FACET_NAME,
-        type: CONST.DATASOURCE_TYPE
-      };
-      angular.extend(defaultDatasourceSchema, initialData);
 
-      return defaultDatasourceSchema;
-    };
-    // delete datasource
-    svc.deleteDataSource = function(dsId) {
-      if (dsId) {
-        var deferred = $q.defer();
 
-        DataSourceDefinition.deleteById({id:dsId},
-          function(response) {
-            deferred.resolve(response);
-          },
-          function(response) {
-            console.warn('bad delete datasource definition');
-          }
-        );
-        return deferred.promise;
-      }
-    };
-    // dormant for now
-    svc.isNewDatasourceNameUnique = function(name) {
-      var retVar = true;
-
-      var existingDatasources = JSON.parse(window.localStorage.getItem('ApiDatasources'));
-      if (existingDatasources) {
-        for (var i = 0;i < existingDatasources.length;i++) {
-          if (existingDatasources[i].name === name) {
-            retVar = false;
-            break;
-          }
-        }
-      }
-
-      return retVar;
-    };
     return svc;
   }
 ]);

@@ -21,7 +21,7 @@ Model.controller('ModelMainController', [
   function($scope, ModelService) {
 
     $scope.models = []; // placeholder for returned promise
-    $scope.models = ModelService.getAllModels(); // service wrapper call
+    $scope.models = ModelService.getAllModelInstances(); // service wrapper call
     $scope.models.$promise.
       then(function (result) {
         var ctx = [];
@@ -59,7 +59,7 @@ Model.controller('ModelInstanceController', [
     $scope.updatePropertyDoc = function(a) {
     };
 
-    var models = ModelService.getAllModels();
+    var models = ModelService.getAllModelInstances();
     models.$promise.
       then(function (result) {
         var core = result[0];

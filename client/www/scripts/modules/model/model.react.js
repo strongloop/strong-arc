@@ -23,7 +23,6 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
   },
   handleChange: function(event) {
     var component = this;
-    var scope = component.props.scope;
     var modelPropertyName = '';
     if (event.target.attributes['data-name']) {
       var xState = component.state;
@@ -31,21 +30,20 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
       if (modelPropertyName === 'name') {
         xState.isNameValid = component.isNameValid(event.target.value);
       }
+      if ((modelPropertyName === 'config.public') || (modelPropertyName === 'config.dataSource')){
+        modelPropertyName = modelPropertyName.split('.');
+        if (event.target.attributes['type'] && (event.target.attributes['type'].value === 'checkbox')) {
+          xState.activeInstance.config[modelPropertyName[1]] = event.target.checked;
+        } else {
+          xState.activeInstance.config[modelPropertyName[1]] = event.target.value;
+        }
+      }
       if (event.target.attributes['type'] && (event.target.attributes['type'].value === 'checkbox')) {
-        setDeepProperty(modelPropertyName, event.target.checked);
+        xState.activeInstance.definition[modelPropertyName] = event.target.checked;
       } else {
-        setDeepProperty(modelPropertyName, event.target.value);
+        xState.activeInstance.definition[modelPropertyName] = event.target.value;
       }
-
       component.setState(xState);
-
-      function setDeepProperty(name, value) {
-        var obj = xState.activeInstance;
-        var path = name.split('.');
-        var propertyName = path.pop();
-        while (path.length > 0) obj = obj[path.shift()];
-        obj[propertyName] = value;
-      }
     }
   },
   handleDataSourceChange: function(event) {
@@ -54,8 +52,8 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
     var selectedOption = select.options[select.selectedIndex];
     var value = selectedOption.value;
     var xState = component.state;
-    var modelDef = xState.activeInstance;
-    var modelConfig = modelDef.config;
+    var modelDef = xState.activeInstance.definition;
+    var modelConfig = xState.activeInstance.config;
     var base = modelDef.base;
 
     if(value === CONST.DEFAULT_DATASOURCE) {
@@ -73,8 +71,8 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
   setBaseForDataSource: function() {
     var component = this;
     var xState = component.state;
-    var modelDef = xState.activeInstance;
-    var modelConfig = modelDef.config;
+    var modelDef = xState.activeInstance.definition;
+    var modelConfig = xState.activeInstance.config;
     var base = modelDef.base;
     var baseIsDefault = base === CONST.NEW_MODEL_BASE;
     var noDataSourceSelected = modelConfig.dataSource === null;
@@ -90,7 +88,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
   handleBaseBlur: function() {
     var component = this;
     var xState = component.state;
-    var modelDef = xState.activeInstance;
+    var modelDef = xState.activeInstance.definition;
     var base = $.trim(modelDef.base, '');
 
     if(!base) {
@@ -101,16 +99,25 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
     if (event.target.attributes['data-name']) {
       var xState = this.state;
       var tActiveInstance = xState.activeInstance;
-      var modelPropertyName = tActiveInstance.name;
+      var modelPropertyName = tActiveInstance.definition.name;
 
       // check if plural value is already set
       // if not then set it to a I18N.pluralize value
-      if (!tActiveInstance.plural) {
-        tActiveInstance.plural = inflection.pluralize(modelPropertyName);
+      if (!tActiveInstance.definition.plural) {
+        tActiveInstance.definition.plural = inflection.pluralize(modelPropertyName);
       }
       xState.activeInstance = tActiveInstance;
       this.setState(xState);
     }
+  },
+  saveModelInstance: function(event) {
+    var component = this;
+    event.preventDefault();
+    var instance = component.state.activeInstance;
+    var scope = component.props.scope;
+    scope.$apply(function() {
+      scope.saveModelInstanceRequest(instance);
+    });
   },
   toggleModelDetailContainer: function() {
     $('.model-detail-container').toggle(250);
@@ -120,7 +127,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
   render: function() {
     var component = this;
     var scope = component.props.scope;
-    var modelDef = component.state.activeInstance;
+    var modelDef = component.state.activeInstance.definition;
     var cx = React.addons.classSet;
 
     var classes = cx({
@@ -148,14 +155,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
         scope.toggleModelDetailView();
       });
     };
-    var saveModelDefinition = function(event) {
-      event.preventDefault();
-      var tState = component.state.activeInstance;
-      var scope = component.props.scope;
-      scope.$apply(function() {
-        scope.saveModelRequest(tState);
-      });
-    };
+
     var dataSourceOptions = [];
     if (scope.mainNavDatasources.map) {
       dataSourceOptions.push(
@@ -191,9 +191,10 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                 data-name="name"
                 id="ModelName"
                 name="ModelName"
+                placeholder="model name"
                 className={modelNameInputClasses} />
             </div>
-            <button onClick={saveModelDefinition}
+            <button onClick={component.saveModelInstance}
               disabled={!isFormValid}
               className="model-detail-pocket-button model-save-button"
               data-modelId={modelDef.id} >Save Model</button>
@@ -221,7 +222,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                 </div>
                 <input type="text"
                   value={modelDef.plural}
-                    onChange={this.handleChange}
+                    onChange={component.handleChange}
                     data-name="plural"
                     id="ModelPlural"
                     name="ModelPlural"
@@ -236,17 +237,17 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                   type="text"
                   data-name="base"
                   value={modelDef.base}
-                  onChange={this.handleChange}
-                  onBlur={this.handleBaseBlur} />
+                  onChange={component.handleChange}
+                  onBlur={component.handleBaseBlur} />
               </div>
               <div className="model-detail-input-container">
                 <div className="model-detail-label">
                   <label>Datasource</label>
                 </div>
-                <select value={modelDef.config.dataSource}
+                <select value={component.state.activeInstance.config.dataSource}
                   data-name="config.dataSource"
                   name="dataSource"
-                  onChange={this.handleDataSourceChange}
+                  onChange={component.handleDataSourceChange}
                   className="model-instance-editor-input">
                   {dataSourceOptions}
                 </select>
@@ -257,11 +258,11 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
               <div className="model-detail-input-container listNarrow checkbox">
                 <label className="model-instance-editor-checkbox-label">
                   <input type="checkbox"
-                  value={modelDef.config.public}
-                  checked={modelDef.config.public}
+                  value={component.state.activeInstance.config.public}
+                  checked={component.state.activeInstance.config.public}
                   data-name="config.public"
                   name="public"
-                  onChange={this.handleChange}
+                  onChange={component.handleChange}
                   className="model-instance-editor-checkbox" />public
                 </label>
               </div>
@@ -270,7 +271,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                   <input type="checkbox"
                   data-name="strict"
                   name="strict"
-                  onChange={this.handleChange}
+                  onChange={component.handleChange}
                   checked={modelDef.strict}
                   value={modelDef.strict}
                   className="model-instance-editor-checkbox" />strict
@@ -306,7 +307,7 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
     var item = {};
     var that = this;
     that.props.scope.$apply(function() {
-      that.props.scope.createNewProperty();
+      that.props.scope.createNewModelProperty();
     });
 
   },
@@ -320,7 +321,7 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
     var component = this;
 
     var scope = component.props.scope;
-    var properties = scope.properties;
+    var properties = scope.activeInstance.properties;
     var cx = React.addons.classSet;
 
     var classes = cx({
@@ -800,62 +801,6 @@ var PropertyConnectionEditor = (PropertyConnectionEditor = React).createClass({
         placeholder="search models" />
         <label>target property</label>
         <input type="text" placeholder="search properties" />
-      </div>
-      );
-  }
-});
-/*
- *
- *   NEW MODEL
- *
- * */
-var NewModelForm = (NewModelForm = React).createClass({
-  getInitialState: function() {
-    return this.props.scope.newModelInstance;
-  },
-  newModelNameInput: function(event) {
-    var that = this;
-    var scope = that.props.scope;
-    var targetValue = event.target.value;
-
-    if (targetValue) {
-      // check to see if it is valid (no spaces, no invalid characters etc.
-      // then check to see if it is unique
-      scope.$apply(function() {
-        scope.processModelNameInput(targetValue);
-      });
-    }
-
-  },
-  componentWillReceiveProps: function(nextProps) {
-    this.setState(nextProps.scope.newModelInstance);
-  },
-  render:function() {
-
-    var scope = this.props.scope;
-    var model = this.state;
-
-    var uniqueWarningCss = 'new-model-name';
-
-    var uniqueText = '';
-    if (model.isUnique) {
-      uniqueWarningCss += ' is-unique';
-      uniqueText = 'unique name';
-    }
-    else {
-      uniqueWarningCss += ' is-duplicate';
-      uniqueText = 'duplicate name';
-    }
-
-    return (
-      <div>
-        <form>
-          <label>Model name</label>
-          <input placeholder="model name" value={model.name} onChange={this.newModelNameInput} type="text" />
-          <span className={uniqueWarningCss}>{uniqueText}</span>
-          <br />
-          <button className="btn btn-primary">create</button>
-        </form>
       </div>
       );
   }
