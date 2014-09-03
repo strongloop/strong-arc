@@ -1,0 +1,16 @@
+{
+    "extensions": [
+        {
+            "type": "@WebInspector.ContextMenu.Provider",
+            "contextTypes": [ "WebInspector.CodeMirrorTextEditor" ],
+            "className": "WebInspector.DocumentationView.ContextMenuProvider"
+        }
+    ],
+    "dependencies": ["source_frame"],
+    "scripts": [
+        "WikiParser.js",
+        "JSArticle.js",
+        "DocumentationURLProvider.js",
+        "DocumentationView.js"
+    ]
+}
