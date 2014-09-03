@@ -1,4 +1,5 @@
 var given = {};
+
 given.emptyWorkspace = function() {
   return inject(function($http, $rootScope, $q, throwHttpError) {
     function reset() {
@@ -19,7 +20,10 @@ given.emptyWorkspace = function() {
 
     // wait for `app.run()` to finish
     var deferred = $q.defer();
+    var resolved = false;
     $rootScope.$watch('projectName', function() {
+      if (resolved) return;
+      resolved = true;
       reset().then(
         function(res) {
           deferred.resolve(res);
@@ -30,5 +34,28 @@ given.emptyWorkspace = function() {
     });
 
     return deferred.promise;
+  });
+};
+
+var _givenValueCounter = 0;
+
+given.modelDefinition = function(data) {
+  return inject(function(ModelDefinition) {
+    data = angular.extend({
+      name: 'aModelDefinition_' + (++_givenValueCounter),
+      facetName: 'common',
+    }, data);
+    return new ModelDefinition(data);
+  });
+};
+
+given.dataSourceDefinition = function(data) {
+  return inject(function(DataSourceDefinition) {
+    data = angular.extend({
+      name: 'aDataSourceDefinition' + (++_givenValueCounter),
+      facetName: 'server',
+      connector: 'memory',
+    }, data);
+    return new DataSourceDefinition(data);
   });
 };
