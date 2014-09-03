@@ -642,7 +642,7 @@ app.controller('HomeMainController',[
   '$location',
   function($scope, $location){
     var viewModel = {};
-    viewModel.message = 'Strong Studio';
+    viewModel.message = 'StrongLoop Studio';
     $scope.viewModel = viewModel;
 
 

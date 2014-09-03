@@ -174,7 +174,7 @@ code {
     position:relative;
 }
 #LoginMainContainer .center_div {
-    max-width:45rem;
+    max-width:50rem;
     margin-top: 5rem;
     padding: 6rem;
     border: 1px solid #DDDDDD;
@@ -188,19 +188,22 @@ code {
 }
 
 [data-id="LoginForm"] {
+    max-width:45rem;
     display:block;
     margin: 0 auto 0 auto;
 }
 [data-id="AuthExceptionMessageContainer"] {
     position:absolute;
     top:1rem;
-    max-width:35rem;
+    max-width:38rem;
 }
 .login-fail-message-container {
-    border: 1px solid #444444;
-    border-radius:1rem;
-    padding:2rem;
+    padding:1.4rem;
     font-size:115%;
+    color: #d0021b;
+    border: 1px solid #d0021b;
+    border-radius: 0.5rem;
+    background-color: rgba(208, 2, 27, 0.1);
 }
 
 .login-button-container{
