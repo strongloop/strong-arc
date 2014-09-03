@@ -1,0 +1,88 @@
+{
+    "extensions": [
+        {
+            "type": "@WebInspector.Panel",
+            "name": "elements",
+            "title": "Elements",
+            "order": 0,
+            "className": "WebInspector.ElementsPanel"
+        },
+        {
+            "type": "@WebInspector.ContextMenu.Provider",
+            "contextTypes": ["WebInspector.RemoteObject", "WebInspector.DOMNode", "WebInspector.DeferredDOMNode"],
+            "className": "WebInspector.ElementsPanel.ContextMenuProvider"
+        },
+        {
+            "type": "@WebInspector.Renderer",
+            "contextTypes": ["WebInspector.DOMNode"],
+            "className": "WebInspector.ElementsTreeOutline.Renderer"
+        },
+        {
+            "type": "@WebInspector.Revealer",
+            "contextTypes": ["WebInspector.DOMNode", "WebInspector.DeferredDOMNode" ],
+            "className": "WebInspector.ElementsPanel.DOMNodeRevealer"
+        },
+        {
+            "type": "@WebInspector.Revealer",
+            "contextTypes": ["WebInspector.RemoteObject"],
+            "className": "WebInspector.ElementsPanel.NodeRemoteObjectRevealer"
+        },
+        {
+            "type": "@WebInspector.NodeRemoteObjectInspector",
+            "contextTypes": ["WebInspector.RemoteObject"],
+            "className": "WebInspector.ElementsPanel.NodeRemoteObjectInspector"
+        },
+        {
+            "type": "ui-setting",
+            "section": "Elements",
+            "title": "Color format:",
+            "settingName": "colorFormat",
+            "settingType": "select",
+            "options": [
+                ["As authored", "original"],
+                ["HEX: #DAC0DE", "hex", true],
+                ["RGB: rgb(128, 255, 255)", "rgb", true],
+                ["HSL: hsl(300, 80%, 90%)", "hsl", true]
+            ]
+        },
+        {
+            "type": "ui-setting",
+            "section": "Elements",
+            "title": "Show user agent styles",
+            "settingName": "showUserAgentStyles",
+            "settingType": "checkbox"
+        },
+        {
+            "type": "ui-setting",
+            "section": "Elements",
+            "title": "Show user agent shadow DOM",
+            "settingName": "showUAShadowDOM",
+            "settingType": "checkbox"
+        },
+        {
+            "type": "ui-setting",
+            "section": "Elements",
+            "title": "Word wrap",
+            "settingName": "domWordWrap",
+            "settingType": "checkbox"
+        },
+        {
+            "type": "ui-setting",
+            "section": "Elements",
+            "title": "Show rulers",
+            "settingName": "showMetricsRulers",
+            "settingType": "checkbox"
+        }
+    ],
+    "scripts": [
+        "Spectrum.js",
+        "DOMSyntaxHighlighter.js",
+        "ElementsTreeOutline.js",
+        "EventListenersSidebarPane.js",
+        "MetricsSidebarPane.js",
+        "PlatformFontsSidebarPane.js",
+        "PropertiesSidebarPane.js",
+        "StylesSidebarPane.js",
+        "ElementsPanel.js"
+    ]
+}
