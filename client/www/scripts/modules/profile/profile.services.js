@@ -21,9 +21,25 @@ Profile.service('ProfileService', [
     svc.getCurrentUserId = function () {
       return window.localStorage.getItem('currentUserId');
     };
+
+    svc.buildLoginRequest = function(data) {
+      var result = {
+        password: data.password
+      };
+
+      if (/@/.test(data.nameOrEmail)) {
+        result.email = data.nameOrEmail;
+      } else {
+        result.username = data.nameOrEmail;
+      }
+
+      return result;
+    };
+
     svc.loginRequest = function(config) {
       var deferred = $q.defer();
-      User.login(config,
+      var request = svc.buildLoginRequest(config);
+      User.login(request,
         function (response) {
           svc.saveAuthTokenData(response);
           deferred.resolve(response);

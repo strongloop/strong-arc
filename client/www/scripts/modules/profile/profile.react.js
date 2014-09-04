@@ -34,14 +34,14 @@ var LoginFormView = (LoginFormView = React).createClass({
       for (var i = 0;i < formComp.length;i++) {
         if (formComp[i].attributes['id']){
           if ((formComp[i].attributes['id'].value === 'InputUserName')) {
-            loginCredentials.email = formComp[i].value;
+            loginCredentials.nameOrEmail = formComp[i].value;
           }
           if ((formComp[i].attributes['id'].value === 'InputPassword')) {
             loginCredentials.password = formComp[i].value;
           }
         }
       }
-      if (loginCredentials.email && loginCredentials.password) {
+      if (loginCredentials.nameOrEmail && loginCredentials.password) {
         scope.$apply(function() {
           scope.loginRequest(loginCredentials);
         });
@@ -62,14 +62,14 @@ var LoginFormView = (LoginFormView = React).createClass({
           <h2 className="login-form-title">StrongLoop Studio Sign In</h2>
           <form data-id="LoginForm" name="LoginForm" role="form">
             <div className="form-group">
-              <label for="InputUserName" className="field-label">Username</label>
-              <input id="InputUserName" value={credentials.email}
+              <label for="InputUserName" className="field-label">Username or E-mail</label>
+              <input id="InputUserName" value={credentials.nameOrEmail}
               className="form-control"
               name="InputUserName"
               onChange={that.handleChange}
-              data-name="email"
+              data-name="nameOrEmail"
               type="text"
-              placeholder="Email" />
+              placeholder="Username or E-mail" />
             </div>
             <div className="form-group">
               <label for="InputPassword" className="field-label">Password</label>
