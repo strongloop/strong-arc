@@ -208,7 +208,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
 
           <button onClick={component.toggleModelDetailContainer}
             type="button"
-            className="model-instance-header-btn btn btn-default btn-block"
+            className="model-instance-header-btn btn-block"
             title="Details" >
             <div className={iconClasses}></div>
             <div className="model-editor-section-title">Details</div>
@@ -350,7 +350,7 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
     if (properties) {
       retVal = (
         <div>
-          <button type="button" onClick={component.toggleModelProperties} className="model-instance-header-btn btn btn-default btn-block" title="Properties" >
+          <button type="button" onClick={component.toggleModelProperties} className="model-instance-header-btn btn-block" title="Properties" >
             <span className={iconClasses}></span>
             <span className="model-editor-section-title">Properties</span>
           </button>
