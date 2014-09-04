@@ -62,14 +62,14 @@ var LoginFormView = (LoginFormView = React).createClass({
           <h2 className="login-form-title">StrongLoop Studio Sign In</h2>
           <form data-id="LoginForm" name="LoginForm" role="form">
             <div className="form-group">
-              <label for="InputUserName" className="field-label">Username</label>
+              <label for="InputUserName" className="field-label">Username or E-mail</label>
               <input id="InputUserName" value={credentials.nameOrEmail}
               className="form-control"
               name="InputUserName"
               onChange={that.handleChange}
               data-name="nameOrEmail"
               type="text"
-              placeholder="Email" />
+              placeholder="Username or E-mail" />
             </div>
             <div className="form-group">
               <label for="InputPassword" className="field-label">Password</label>
