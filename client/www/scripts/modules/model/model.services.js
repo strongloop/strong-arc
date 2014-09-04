@@ -5,7 +5,8 @@ Model.service('ModelService', [
   'ModelConfig',
   '$q',
   'AppStorageService',
-  function(Modeldef, ModelDefinition, ModelConfig, $q, AppStorageService) {
+  'DataSourceDefinition',
+  function(Modeldef, ModelDefinition, ModelConfig, $q, AppStorageService, DataSourceDefinition) {
     var svc = {};
     svc.createModel = function(config) {
       var deferred = $q.defer();
