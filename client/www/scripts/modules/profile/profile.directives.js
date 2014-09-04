@@ -8,12 +8,12 @@ Profile.directive('slUserLoginView', [
 
         $scope.loginErrorMessage = '';
         $scope.credentials = {
-          email: '',
+          nameOrEmail: '',
           password: ''
         };
         $scope.resetCredentials = function() {
           $scope.credentials = {
-            email: '',
+            nameOrEmail: '',
             password: ''
           };
         };
