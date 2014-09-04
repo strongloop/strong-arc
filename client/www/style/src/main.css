@@ -281,6 +281,9 @@ Validation CSS
 	font-weight: lighter;
 	color: #9e9b9b;
 }
+.is-valid {
+    display: none;
+}
 /*
 
     Global Exception
