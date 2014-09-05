@@ -29,6 +29,9 @@ Model.service('ModelService', [
             },
             targetInstance.config);
 
+          if (targetInstance.config.dataSource && (targetInstance.config.dataSource === CONST.DEFAULT_DATASOURCE)){
+            targetInstance.config.dataSource = null;
+          }
           ModelConfig.create(targetInstance.config,
             function(config) {
               targetInstance.config = config;
@@ -74,6 +77,14 @@ Model.service('ModelService', [
           svc.getModelConfigByName(instance.name).
             then(function(response) {
               instance.config = response;
+              if (instance.config.dataSource) {
+                if (instance.config.dataSource === null) {
+                  instance.config.dataSource = CONST.DEFAULT_DATASOURCE;
+                }
+              }
+              else {
+                instance.config.dataSource = CONST.DEFAULT_DATASOURCE;
+              }
               return instance;
             }).
             then(function(instance) {
@@ -155,6 +166,14 @@ Model.service('ModelService', [
                 }
 
                 instance.config = configMap[value.name];
+                if (instance.config.dataSource) {
+                  if (instance.config.dataSource === null) {
+                    instance.config.dataSource = CONST.DEFAULT_DATASOURCE;
+                  }
+                }
+                else {
+                  instance.config.dataSource = CONST.DEFAULT_DATASOURCE;
+                }
                 modelInstances.push(instance);
               }, log);
 
@@ -193,7 +212,9 @@ Model.service('ModelService', [
                   facetName: CONST.APP_FACET
                 },
                 targetInstance.config);
-
+              if (targetInstance.config.dataSource && (targetInstance.config.dataSource === CONST.DEFAULT_DATASOURCE)){
+                targetInstance.config.dataSource = null;
+              }
               ModelConfig.upsert(targetInstance.config,
                 function(configResponse) {
                   targetInstance.config = configResponse; 
@@ -294,7 +315,7 @@ Model.service('ModelService', [
         config: {
           facetName: CONST.APP_FACET,
           public: true,
-          dataSource: null
+          dataSource: CONST.DEFAULT_DATASOURCE
         }
       };
 
