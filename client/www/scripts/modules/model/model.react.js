@@ -810,26 +810,10 @@ var PropertyConnectionEditor = (PropertyConnectionEditor = React).createClass({
 var MigrateButton = (MigrateButton = React).createClass({
   getInitialState: function() {
     return {scope: this.props.scope};
-<<<<<<< HEAD
   },
   handleClick: function() {
     var component = this;
     var config = this.state.scope.activeInstance.config;
-=======
-  },
-  isLoading: function(isLoading) {
-    this.setState({loading: isLoading});
-    this.render();
-  },
-  handleClick: function() {
-    var component = this;
-    var started = Date.now();
-
-    // minimum time in milliseconds to display the loading indicator
-    var MIN_DISPLAY_LOADING = 500;
-
-    component.isLoading(true);
->>>>>>> work around react problem with null values on a
 
     component
       .props
@@ -842,21 +826,12 @@ var MigrateButton = (MigrateButton = React).createClass({
     if(activeInstance.isMigrating) {
       return (<strong className="model-migrate-loading">Migrating...</strong>);
     } else {
-<<<<<<< HEAD
       return (<button
-        title={canMigrate ? ''
-              : 'Select a data source that supports migration to enable this feature.'}
-        disabled={canMigrate ? '' : 'disabled'}      
-        className="model-detail-pocket-button model-migrate-button"
-        onClick={this.handleClick}>Migrate Model</button>)
-=======
-      return <button
       title={canMigrate ? ''
         : 'Select a data source that supports migration to enable this feature.'}
       disabled={canMigrate ? '' : 'disabled'}
       className="model-detail-pocket-button model-migrate-button"
-      onClick={this.handleClick}>Migrate Model</button>
->>>>>>> work around react problem with null values on a
+      onClick={this.handleClick}>Migrate Model</button>)
     }
   }
 });
