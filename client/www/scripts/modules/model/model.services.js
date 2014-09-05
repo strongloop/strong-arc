@@ -32,7 +32,11 @@ Model.service('ModelService', [
           ModelConfig.create(targetInstance.config,
             function(config) {
               targetInstance.config = config;
-              deferred.resolve(targetInstance);
+                svc.isModelConfigMigrateable(targetInstance .config)
+                  .then(function(canMigrate) {
+                    targetInstance.canMigrate = canMigrate;
+                    deferred.resolve(targetInstance);
+                  });
             },
             function(error) {
               console.warn('bad create model config: ' + error);
@@ -77,7 +81,11 @@ Model.service('ModelService', [
               svc.getModelPropertiesById(instance.id).
                 then(function(properties) {
                   instance.properties = properties;
-                  deferred.resolve(instance);
+                  svc.isModelConfigMigrateable(instance.config)
+                    .then(function(canMigrate) {
+                      instance.canMigrate = canMigrate;
+                      deferred.resolve(instance);
+                    });
                 });
             }).
             catch(function(error) {
@@ -188,8 +196,12 @@ Model.service('ModelService', [
 
               ModelConfig.upsert(targetInstance.config,
                 function(configResponse) {
-                  targetInstance.config = configResponse;
-                  deferred.resolve(targetInstance);
+                  targetInstance.config = configResponse; 
+                  svc.isModelConfigMigrateable(targetInstance.config)
+                    .then(function(canMigrate) {
+                      targetInstance.canMigrate = canMigrate;
+                      deferred.resolve(targetInstance);
+                    });
                 },
                 function(error) {
                   console.warn('Cannot update model configuration', targetInstance.id, error);
@@ -454,6 +466,66 @@ Model.service('ModelService', [
 
       }
     };
+
+    svc.migrateModelConfig = function(config) {
+      var deferred = $q.defer();
+      var promise = deferred.promise;
+
+      return DataSourceDefinition.findOne({
+        filter: {
+          where: {
+          name: config.dataSource,
+          facetName: CONST.APP_FACET
+          }
+        }
+      })
+      .$promise
+      .then(function(dataSourceDef) {
+        return DataSourceDefinition.prototype$autoupdate({
+          id: dataSourceDef.id
+        },{
+          modelName: config.name
+        })
+      }, function(ex) {
+        growl.addErrorMessage(
+          'could not migrate model (check console for details)'
+        );
+      })
+      .then(function() {
+        growl.addSuccessMessage("model migrated");
+      });
+    }
+
+    svc.isModelConfigMigrateable = function(config) {
+      var deferred = $q.defer();
+      var promise = deferred.promise;
+      var canMigrate = false;
+
+      if(!config || !config.dataSource) {
+        deferred.resolve(canMigrate);
+        return promise;
+      }
+
+      DataSourceDefinition.findOne({
+        filter: {
+          where: {
+            name: config.dataSource,
+            facetName: CONST.APP_FACET
+          }
+        }
+      },
+      function(dataSourceDef) {
+        var connector = dataSourceDef && dataSourceDef.connector;
+        var connectorIsSupported = connector
+          && CONST.CONNECTORS_SUPPORTING_MIGRATE
+          .indexOf(connector.toLowerCase()) > -1;
+
+        deferred.resolve(dataSourceDef && connectorIsSupported);
+      });
+
+      return promise;
+    } 
+
     return svc;
   }
 ]);

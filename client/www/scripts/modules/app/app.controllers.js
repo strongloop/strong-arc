@@ -7,13 +7,12 @@ app.controller('StudioController', [
   '$http',
   'IAService',
   'DataSourceService',
-  'DataSourceDefinition',
   'PropertyService',
   '$location',
   '$timeout',
   'ModelService',
   'growl',
-  function($rootScope, $q, $scope, $state, $http, IAService, DataSourceService, DataSourceDefinition, PropertyService, $location, $timeout, ModelService, growl) {
+  function($rootScope, $q, $scope, $state, $http, IAService, DataSourceService, PropertyService, $location, $timeout, ModelService, growl) {
 
     // Instance Collections
     $scope.mainNavDatasources = []; // initialized further down
@@ -272,7 +271,6 @@ app.controller('StudioController', [
               $scope.activeInstance, CONST.MODEL_TYPE, originalModelId);
             loadModels();
             $rootScope.$broadcast('IANavEvent');
-
           }
         );
       }
@@ -306,63 +304,8 @@ app.controller('StudioController', [
 
     };
 
-    $scope.isModelConfigMigrateable = function(config) {
-      var deferred = $q.defer();
-      var promise = deferred.promise;
-      var canMigrate = false;
-
-      if(!config || !config.dataSource) {
-        deferred.resolve(canMigrate);
-        return promise;
-      }
-
-      DataSourceDefinition.findOne({
-        filter: {
-          where: {
-          name: config.dataSource,
-          facetName: CONST.APP_FACET
-          }
-        }
-      },
-      function(dataSourceDef) {
-        var connector = dataSourceDef && dataSourceDef.connector;
-        var connectorIsSupported = connector
-          && CONST.CONNECTORS_SUPPORTING_MIGRATE
-          .indexOf(connector.toLowerCase()) > -1;
-
-        deferred.resolve(dataSourceDef && connectorIsSupported);
-      });
-
-      return promise;
-    }
-
     $scope.migrateModelConfig = function(config) {
-      var deferred = $q.defer();
-      var promise = deferred.promise;
-
-      return DataSourceDefinition.findOne({
-        filter: {
-          where: {
-          name: config.dataSource,
-          facetName: CONST.APP_FACET
-          }
-        }
-      })
-      .$promise
-      .then(function(dataSourceDef) {
-        return DataSourceDefinition.prototype$autoupdate({
-          id: dataSourceDef.id
-        },{
-          modelName: config.name
-        })
-      }, function(ex) {
-        growl.addErrorMessage(
-          'could not migrate model (check console for details)'
-        );
-      })
-      .then(function() {
-        growl.addSuccessMessage("model migrated");
-      });
+      return ModelService.migrateModelConfig(config);
     }
 
     // update model property
