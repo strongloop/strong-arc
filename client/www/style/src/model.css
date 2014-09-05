@@ -116,6 +116,7 @@ select {
     text-align: left;
     border: none;
     background: none;
+    color:#7DBD33;
     border-radius: .2rem;
     margin: .5rem .4rem .5rem 0;
 }
