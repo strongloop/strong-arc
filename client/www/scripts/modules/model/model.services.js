@@ -8,60 +8,103 @@ Model.service('ModelService', [
   'DataSourceDefinition',
   function(Modeldef, ModelDefinition, ModelConfig, $q, AppStorageService, DataSourceDefinition) {
     var svc = {};
-    svc.createModel = function(config) {
+
+
+
+    svc.createModelInstance = function(targetInstance) {
       var deferred = $q.defer();
-      if (config.name) {
+      if (targetInstance.definition.name) {
 
-        // double check to clear out 'new' id
-        if (config.id === CONST.NEW_MODEL_PRE_ID) {
-          delete config.id;
-        }
+        delete targetInstance.id;
+        delete targetInstance.definition.id;
 
-        // remove internal studio properties
-        delete config.type;
+        ModelDefinition.create({}, targetInstance.definition, function(definition) {
 
-        ModelDefinition.create({}, config, function(response) {
-
-          var modelConfig = angular.extend(
-            {
-              facetName: CONST.APP_FACET,
-              name: config.name
+          targetInstance.id = definition.id;
+          targetInstance.name = definition.name;
+          targetInstance.definition = definition;
+          targetInstance.config = angular.extend({
+              name: definition.name,
+              facetName: CONST.APP_FACET
             },
-            config.config);
+            targetInstance.config);
 
-            modelConfig = ModelConfig.create(modelConfig,
-              function() {
-                setModelConfig(response, modelConfig);
-                deferred.resolve(response);
-              },
-              function(response) {
-                console.warn('bad create model config: ' + response);
-              });
+          ModelConfig.create(targetInstance.config,
+            function(config) {
+              targetInstance.config = config;
+              deferred.resolve(targetInstance);
+            },
+            function(error) {
+              console.warn('bad create model config: ' + error);
+              deferred.reject('bad create model config: ' + error);
+            });
+
           },
-          function(response){
-            console.warn('bad create model def: ' + response);
+          function(error){
+            console.warn('bad create model def: ' + error);
+            deferred.reject('bad create model def: ' + error);
           });
       }
       return deferred.promise;
+    };
+    // returns a full 'instance' with a definition and config property
+    svc.getModelInstanceById = function(modelId) {
+      var deferred = $q.defer();
+      var instance = {};
+      svc.getModelDefinitionById(modelId).
+        // model definition
+        then(function(definition) {
+          // begin the instance object
+          // add the definition
+          instance = {
+            definition: definition,
+            type: CONST.MODEL_TYPE,
+            id: definition.id,
+            name: definition.name
+          };
+          return instance;
+        }).
+        // model config
+        then(function(instance) {
+          // get the config
+          svc.getModelConfigByName(instance.name).
+            then(function(response) {
+              instance.config = response;
+              return instance;
+            }).
+            then(function(instance) {
+              // model properties
+              svc.getModelPropertiesById(instance.id).
+                then(function(properties) {
+                  instance.properties = properties;
+                  deferred.resolve(instance);
+                });
+            }).
+            catch(function(error) {
+              console.warn('bad get model config');
+              return error;
+            });
+        }).
+        catch(function(error) {
+          deferred.reject(error);
+        });
+
+      return deferred.promise;
 
     };
-    svc.deleteModel = function(definitionId, configId) {
+    svc.deleteModelInstance = function(definitionId, configId) {
       if (definitionId) {
         var deferred = $q.defer();
 
         ModelDefinition.deleteById({ id: definitionId },
           function(response) {
-            if (!configId) {
-              deferred.resolve(response);
-            } else {
-              ModelConfig.deleteById({ id: configId },
-                function() {
-                  deferred.resolve(response);
-                },
-                function(response) {
-                  console.warn('Cannot delete ModelConfig.', response);
-                });
-            }
+            ModelConfig.deleteById({ id: configId },
+              function() {
+                deferred.resolve(response);
+              },
+              function(response) {
+                console.warn('Cannot delete ModelConfig.', response);
+              });
           },
           function(response) {
             console.warn('bad delete model definition', response);
@@ -70,19 +113,7 @@ Model.service('ModelService', [
         return deferred.promise;
       }
     };
-
-    function setModelConfig(definition, config) {
-      if (Object.hasOwnProperty(definition, 'config'))
-        delete definition.config;
-
-      Object.defineProperty(definition, 'config', {
-        value: config,
-        writable: true,
-        enumerable: false
-      });
-    }
-
-    svc.getAllModels = function() {
+    svc.getAllModelInstances = function() {
       var deferred = $q.defer();
       ModelConfig.find({},
         function(configs) {
@@ -95,33 +126,32 @@ Model.service('ModelService', [
             function(response) {
 
               // add create model to this for new model
-
               var core = response;
               var log = [];
-              var models = [];
+              var modelInstances = [];
               angular.forEach(core, function(value, key) {
-                // this.push(key + ': ' + value);
-                var lProperties = [];
-                if (value.properties) {
-                  angular.forEach(value.properties, function(value, key) {
-                    lProperties.push({name: key, props: value});
-                  });
-                  value.properties = lProperties;
-                }
+                var instance = {};
+
+                instance.id = value.id;
+                instance.name = value.name;
+                instance.type = CONST.MODEL_TYPE;
+                instance.definition = value;
+
+
                 var lOptions = [];
                 if (value.options) {
                   angular.forEach(value.options, function(value, key) {
                     lOptions.push({name: key, props: value});
                   });
-                  value.options = lProperties;
+                  instance.options = lOptions;
                 }
 
-                setModelConfig(value, configMap[value.name]);
-                models.push({name: key, props: value});
+                instance.config = configMap[value.name];
+                modelInstances.push(instance);
               }, log);
 
 
-              deferred.resolve(core);
+              deferred.resolve(modelInstances);
             },
 
             function(response) {
@@ -137,50 +167,48 @@ Model.service('ModelService', [
       return deferred.promise;
 
     };
-    svc.updateModel = function(model) {
+    svc.updateModelInstance = function(targetInstance) {
       var deferred = $q.defer();
 
-      if (model.id) {
-        // remove internal studio properties
-        delete model.type;
+      if (targetInstance.definition.id) {
 
         // `id` is '{facet}.{name}'
-        var oldName = model.id.split('.')[1];
+        var oldName = targetInstance.definition.id.split('.')[1];
 
         // Temporary workaround until loopback-workspace supports renames
-        if (oldName === model.name) {
-          ModelDefinition.upsert(model,
-            function(response) {
-              model.config.facetName = model.config.facetName || CONST.APP_FACET;
-              model.config.name = model.config.name || model.name;
-
-              ModelConfig.upsert(model.config,
-                function(configResponse) {
-                  setModelConfig(response, configResponse);
-
-                  // copy over properties, they were not changed
-                  response.properties = model.properties;
-
-                  deferred.resolve(response);
+        if (oldName === targetInstance.definition.name) {
+          ModelDefinition.upsert(targetInstance.definition,
+            function(definition) {
+              targetInstance.definition = definition;
+              targetInstance.config = angular.extend({
+                  name: definition.name,
+                  facetName: CONST.APP_FACET
                 },
+                targetInstance.config);
+
+              ModelConfig.upsert(targetInstance.config,
                 function(configResponse) {
-                  console.warn('Cannot update model configuration', model.id, configResponse);
+                  targetInstance.config = configResponse;
+                  deferred.resolve(targetInstance);
+                },
+                function(error) {
+                  console.warn('Cannot update model configuration', targetInstance.id, error);
                 }
               );
             },
-            function(response) {
-              console.warn('bad update model definition: ' + model.id);
+            function(error) {
+              console.warn('bad update model definition: [' + targetInstance.id + '][' + error + ']');
             }
           );
         } else {
-          var oldId = model.id;
+          var oldId = targetInstance.definition.id;
 
           // delete properties that should be generated from the new name
-          delete model.id;
-          delete model.configFile;
+          delete targetInstance.definition.id;
+          delete targetInstance.definition.configFile;
 
-          var updatedModel = ModelDefinition.create(model);
-          updatedModel.$promise
+          targetInstance.definition = ModelDefinition.create(targetInstance.definition);
+          targetInstance.definition.$promise
             .then(function moveAllRelatedDataToNewModel() {
               return $q.all(
                 ['properties', 'validations', 'relations', 'accessControls']
@@ -189,21 +217,20 @@ Model.service('ModelService', [
                     return entities.$promise
                       .then(function updateModelId() {
                         return $q.all(entities.map(function(it) {
-                          it.modelId = updatedModel.id;
+                          it.modelId = targetInstance.definition.id;
                           return it.$save();
                         }));
                       })
                       .then(function addToLocalModel() {
-                        // Views expects that `modelDef.properties`
                         // is populated with model properties
-                        updatedModel[relationName] = entities;
+                        targetInstance[relationName] = entities;
                       });
                   }));
             })
             .then(function renameModelConfig() {
-              var modelConfig = model.config;
+              var modelConfig = targetInstance.config;
               var oldConfigId = modelConfig.id;
-              modelConfig.name = updatedModel.name;
+              modelConfig.name = targetInstance.definition.name;
 
               // delete properties that should be generated from the new name
               delete modelConfig.id;
@@ -212,7 +239,7 @@ Model.service('ModelService', [
               var updatedConfig = ModelConfig.create(modelConfig);
               return updatedConfig.$promise
                 .then(function updateConfigReference() {
-                  setModelConfig(updatedModel, updatedConfig);
+                  targetInstance.config = updatedConfig;
                 })
                 .then(function deleteOldModelConfig() {
                   if (!oldConfigId) return;
@@ -223,7 +250,10 @@ Model.service('ModelService', [
               return ModelDefinition.deleteById({ id: oldId }).$promise;
             })
             .then(function() {
-              deferred.resolve(updatedModel);
+              // ensure they are in sync
+              targetInstance.id = targetInstance.definition.id;
+              targetInstance.name = targetInstance.definition.name;
+              deferred.resolve(targetInstance);
             })
             .catch(function(err) {
               console.warn('Cannot rename %s to %s.', oldId, model.name, err);
@@ -235,6 +265,88 @@ Model.service('ModelService', [
       return deferred.promise;
 
     };
+    var DefaultModelInstance = function(){
+      var schema = {
+        id: CONST.NEW_MODEL_PRE_ID,
+        type: CONST.MODEL_TYPE,
+        name: CONST.NEW_MODEL_NAME,
+        definition: {
+          id: CONST.NEW_MODEL_PRE_ID,
+          facetName: CONST.NEW_MODEL_FACET_NAME,
+          strict: false,
+          name: CONST.NEW_MODEL_NAME,
+          idInjection: false,
+          base: CONST.NEW_MODEL_BASE
+        },
+        properties: [],
+        config: {
+          facetName: CONST.APP_FACET,
+          public: true,
+          dataSource: null
+        }
+      };
+
+      return schema;
+    };
+    svc.createNewModelInstance = function() {
+      var returnInstance = new DefaultModelInstance();
+      return returnInstance;
+    };
+
+
+    svc.getModelDefinitionById = function(modelId) {
+      var deferred = $q.defer();
+      if (modelId !== CONST.NEW_MODEL_PRE_ID) {
+        ModelDefinition.findById({id:modelId},
+          function(definition) {
+            deferred.resolve(definition);
+          },
+          function(error) {
+            deferred.reject(error);
+          });
+      }
+      else {
+        console.warn('attempt to retrieve new model definition');
+        deferred.reject('attempt to retrieve new model definition');
+      }
+      return deferred.promise;
+    };
+
+    svc.getModelPropertiesById = function(modelId) {
+      var deferred = $q.defer();
+      ModelDefinition.properties({id:modelId},
+        function(properties) {
+          deferred.resolve(properties);
+        },
+        function(error) {
+          console.warn('couldnt get properties for model');
+          deferred.reject(error);
+        });
+      return deferred.promise;
+    };
+
+    svc.getModelConfigByName = function(modelName){
+      var deferred = $q.defer();
+      ModelConfig.findOne(
+        {
+          filter: {
+            where: {
+              facetName: CONST.APP_FACET,
+              name: modelName
+            }
+          }
+        },
+        function(config) {
+          deferred.resolve(config);
+        },
+        function(error) {
+          console.warn('cannot get ModelConfig', response);
+          deferred.reject(error);
+        });
+
+      return deferred.promise;
+    };
+
     svc.generateModelsFromSchema = function(schemaCollection) {
       if (schemaCollection && schemaCollection.length > 0) {
 
@@ -242,7 +354,6 @@ Model.service('ModelService', [
         if (!openInstances) {
           openInstances = [];
         }
-
         for (var i = 0;i < schemaCollection.length;i++) {
           var sourceDbModelObj = schemaCollection[i];
           // model definition object generation from schema
@@ -267,8 +378,6 @@ Model.service('ModelService', [
             plural: sourceDbModelObj.name + 's'
           };
           newLBModel.props = modelProps;
-
-
           if (sourceDbModelObj.properties) {
             for (var k = 0;k < sourceDbModelObj.properties.length;k++){
               var sourceProperty = sourceDbModelObj.properties[k];
@@ -329,7 +438,7 @@ Model.service('ModelService', [
 
             }
 
-            svc.createModel(newLBModel);
+            svc.createModelDefinition(newLBModel);
 
           }
 
@@ -344,94 +453,6 @@ Model.service('ModelService', [
         //var nm = IAService.activateInstanceByName(newOpenInstances[0], 'model');
 
       }
-    };
-
-    svc.getModelById = function(modelId) {
-      var targetModel = {};
-      var deferred = $q.defer();
-      if (modelId !== CONST.NEW_MODEL_PRE_ID) {
-
-
-        ModelDefinition.findById({id:modelId},
-          // success
-          function(response) {
-            targetModel = response;
-            ModelDefinition.properties({id:targetModel.id}, function(response) {
-              targetModel.properties = response;
-
-              ModelConfig.findOne(
-                {
-                  filter: {
-                    where: {
-                      facetName: CONST.APP_FACET,
-                      name: targetModel.name
-                    }
-                  }
-                },
-                function(config) {
-                  setModelConfig(targetModel, config);
-                  deferred.resolve(targetModel);
-                },
-                function(response) {
-                  console.warn('cannot get ModelConfig', response);
-                  setModelConfig(targetModel, new DefaultModelSchema().config);
-                  deferred.resolve(targetModel);
-                });
-            });
-
-          },
-          // fail
-          function(response) {
-            console.warn('bad get model definition: ' + response);
-          }
-        );
-      }
-      else {
-        deferred.resolve(targetModel);
-      }
-      return deferred.promise;
-
-    };
-    svc.isPropertyUnique = function(modelRef, newPropertyName) {
-      var isUnique = true;
-      var newNameLen = newPropertyName.length;
-      if (!modelRef.properties) {
-        modelRef.properties = [];
-      }
-      for (var i = 0;i < modelRef.properties.length;i++) {
-        var xModelProp = modelRef.properties[i];
-        if (xModelProp.name.substr(0, newNameLen) === newPropertyName) {
-          return false;
-        }
-      }
-      return isUnique;
-
-    };
-
-    var DefaultModelSchema = function(){
-      var schema = {
-        id: CONST.NEW_MODEL_PRE_ID,
-        type: CONST.MODEL_TYPE,
-        facetName: CONST.NEW_MODEL_FACET_NAME,
-        strict: false,
-        name: CONST.NEW_MODEL_NAME,
-        idInjection: false,
-        base: CONST.NEW_MODEL_BASE
-      };
-
-      setModelConfig(schema, {
-        facetName: CONST.APP_FACET,
-        public: true,
-        dataSource: null
-      });
-
-      return schema;
-    };
-
-    svc.createNewModelInstance = function() {
-      var returnInstance = new DefaultModelSchema();
-
-      return returnInstance;
     };
     return svc;
   }

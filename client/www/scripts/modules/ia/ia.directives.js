@@ -18,7 +18,7 @@ IA.directive('slIaMainNav', [
           if (scope.activeInstance && scope.activeInstance.name) {
 
 
-            if (IAService.getInstanceType(scope.activeInstance) === 'model') {
+            if (scope.activeInstance.type === CONST.MODEL_TYPE) {
               currActiveModelInstanceName = scope.activeInstance.name;
             }
 
@@ -48,7 +48,7 @@ IA.directive('slIaMainNav', [
           // datasources
           var openDatasourceNames = scope.currentOpenDatasourceNames;
           var currActiveDatasourceInstanceName = '';
-          if (scope.activeInstance && (IAService.getInstanceType(scope.activeInstance) === 'datasource')) {
+          if (scope.activeInstance && (scope.activeInstance.type === CONST.DATASOURCE_TYPE)) {
             currActiveDatasourceInstanceName = scope.activeInstance.name;
           }
 

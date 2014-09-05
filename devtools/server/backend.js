@@ -32,7 +32,7 @@ var COMMANDS = {
   'Profiler.stop': { profile: sampleCpuProfile },
 
   'HeapProfiler.takeHeapSnapshot': function(params, done) {
-    this._sendSampleHeapSnapshot()
+    this._sendSampleHeapSnapshot();
     done();
   },
 
@@ -53,7 +53,7 @@ var COMMANDS = {
     // (or perhaps our sample data is not good for the timeline view)
     this._sendSampleHeapSnapshot();
     done();
-  },
+  }
 };
 
 extend(DevToolsBackend.prototype, {
@@ -120,7 +120,7 @@ extend(DevToolsBackend.prototype, {
         'chunk': JSON.stringify(sampleHeapSnapshot)
       }
     });
-  },
+  }
 });
 
 function loadExampleJsonSync(name) {
