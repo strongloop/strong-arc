@@ -37,7 +37,7 @@ Model.directive('modelBaseEditor',[
 
         scope.$watch('activeInstance', function(val) {
           renderComp();
-        });
+        }, true);
       }
     }
   }

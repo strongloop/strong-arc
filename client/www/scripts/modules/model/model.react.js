@@ -129,7 +129,6 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
     var scope = component.props.scope;
     var activeInstance = component.state.activeInstance;
     var modelDef = activeInstance.definition;
-    var config = activeInstance.config;
     var cx = React.addons.classSet;
 
     var classes = cx({
@@ -200,7 +199,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
               disabled={!isFormValid}
               className="model-detail-pocket-button model-save-button"
               data-modelId={modelDef.id} >Save Model</button>
-            <MigrateButton scope={scope} config={activeInstance.config} />
+            <MigrateButton scope={scope} />
             <div className={modelNameValidationClasses}>
               <span className="validation-error-message">
                 The name needs to conform with <a target="_blank" href="https://mathiasbynens.be/notes/javascript-identifiers" >javascript conventions</a>
@@ -810,22 +809,11 @@ var PropertyConnectionEditor = (PropertyConnectionEditor = React).createClass({
 
 var MigrateButton = (MigrateButton = React).createClass({
   getInitialState: function() {
-    return {canMigrate: false};
-  },
-  componentDidMount: function() {
-    var component = this;
-    
-    this.props.scope.isModelConfigMigrateable(this.props.config)
-      .then(function(canMigrate) {
-        component.setState({canMigrate: canMigrate});
-      }, function(ex) {
-        console.warn('cannot determine if a model is able to migrate');
-        console.warn(ex);
-      });
-  },
+    return {scope: this.props.scope};
+  },      
   isLoading: function(isLoading) {
     this.setState({loading: isLoading});
-    this.render();
+    this.render();  
   },
   handleClick: function() {
     var component = this;
@@ -853,7 +841,7 @@ var MigrateButton = (MigrateButton = React).createClass({
       });
   },
   render: function() {
-    var canMigrate = this.state.canMigrate;
+    var canMigrate = this.state.scope.activeInstance.canMigrate;
     if(this.state.loading) {
       return (<strong className="model-migrate-loading">Migrating...</strong>);
     } else {
