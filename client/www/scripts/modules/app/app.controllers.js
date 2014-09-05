@@ -305,7 +305,19 @@ app.controller('StudioController', [
     };
 
     $scope.migrateModelConfig = function(config) {
-      return ModelService.migrateModelConfig(config);
+      var instance = $scope.activeInstance;
+      instance.isMigrating = true;
+      return ModelService.migrateModelConfig(config)
+        .then(function() {
+          instance.isMigrating = false;
+        }, function(ex) {
+          growl.addErrorMessage(
+            'could not migrate model (check console for details)'
+          );
+        })
+        .then(function() {
+          growl.addSuccessMessage("model migrated");
+        });
     }
 
     // update model property

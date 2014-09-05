@@ -810,47 +810,28 @@ var PropertyConnectionEditor = (PropertyConnectionEditor = React).createClass({
 var MigrateButton = (MigrateButton = React).createClass({
   getInitialState: function() {
     return {scope: this.props.scope};
-  },      
-  isLoading: function(isLoading) {
-    this.setState({loading: isLoading});
-    this.render();  
   },
   handleClick: function() {
     var component = this;
-    var started = Date.now();
-
-    // minimum time in milliseconds to display the loading indicator
-    var MIN_DISPLAY_LOADING = 500;
-    
-    component.isLoading(true);
+    var config = this.state.scope.activeInstance.config;
 
     component
       .props
       .scope
-      .migrateModelConfig(this.props.config)
-      .then(function() {
-        var elapsed = Date.now() - started;
-
-        if(elapsed < MIN_DISPLAY_LOADING) {
-          setTimeout(function() {
-            component.isLoading(false);
-          }, MIN_DISPLAY_LOADING - elapsed);
-        } else {
-          component.isLoading(false);
-        }
-      });
+      .migrateModelConfig(config);
   },
   render: function() {
-    var canMigrate = this.state.scope.activeInstance.canMigrate;
-    if(this.state.loading) {
+    var activeInstance = this.state.scope.activeInstance;
+    var canMigrate = activeInstance.canMigrate;
+    if(activeInstance.isMigrating) {
       return (<strong className="model-migrate-loading">Migrating...</strong>);
     } else {
-      return <button
+      return (<button
         title={canMigrate ? ''
               : 'Select a data source that supports migration to enable this feature.'}
         disabled={canMigrate ? '' : 'disabled'}      
         className="model-detail-pocket-button model-migrate-button"
-        onClick={this.handleClick}>Migrate Model</button>
+        onClick={this.handleClick}>Migrate Model</button>)
     }
   }
 });
