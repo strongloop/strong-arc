@@ -317,17 +317,18 @@ app.controller('StudioController', [
       }
 
       DataSourceDefinition.findOne({
-        name: config.dataSource,
-        facet: CONST.APP_FACET
+        filter: {
+          where: {
+          name: config.dataSource,
+          facetName: CONST.APP_FACET
+          }
+        }
       },
       function(dataSourceDef) {
-        console.log(CONST);
         var connector = dataSourceDef && dataSourceDef.connector;
         var connectorIsSupported = connector
           && CONST.CONNECTORS_SUPPORTING_MIGRATE
           .indexOf(connector.toLowerCase()) > -1;
-
-          console.log('connectorIsSupported', connectorIsSupported);
 
         deferred.resolve(dataSourceDef && connectorIsSupported);
       });
@@ -340,8 +341,12 @@ app.controller('StudioController', [
       var promise = deferred.promise;
 
       return DataSourceDefinition.findOne({
-        name: config.dataSource,
-        facet: CONST.APP_FACET
+        filter: {
+          where: {
+          name: config.dataSource,
+          facetName: CONST.APP_FACET
+          }
+        }
       })
       .$promise
       .then(function(dataSourceDef) {
