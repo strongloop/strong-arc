@@ -52,7 +52,7 @@ Model.service('ModelService', [
       return deferred.promise;
     };
     // returns a full 'instance' with a definition and config property
-    svc.getModelInstanceById = function(modelId) {
+    svc.getModelInstanceById = function(modelId) {  
       var deferred = $q.defer();
       var instance = {};
       svc.getModelDefinitionById(modelId).
@@ -486,13 +486,6 @@ Model.service('ModelService', [
         },{
           modelName: config.name
         })
-      }, function(ex) {
-        growl.addErrorMessage(
-          'could not migrate model (check console for details)'
-        );
-      })
-      .then(function() {
-        growl.addSuccessMessage("model migrated");
       });
     }
 
