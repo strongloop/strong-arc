@@ -114,7 +114,8 @@ select {
 }
 .model-instance-header-btn {
     text-align: left;
-    border: 1px solid #f1f1f1;
+    border: none;
+    background: none;
     border-radius: .2rem;
     margin: .5rem .4rem .5rem 0;
 }
