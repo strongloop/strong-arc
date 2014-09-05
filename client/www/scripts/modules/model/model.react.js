@@ -127,7 +127,9 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
   render: function() {
     var component = this;
     var scope = component.props.scope;
-    var modelDef = component.state.activeInstance.definition;
+    var activeInstance = component.state.activeInstance;
+    var modelDef = activeInstance.definition;
+    var config = activeInstance.config;
     var cx = React.addons.classSet;
 
     var classes = cx({
@@ -198,7 +200,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
               disabled={!isFormValid}
               className="model-detail-pocket-button model-save-button"
               data-modelId={modelDef.id} >Save Model</button>
-            <MigrateButton scope={scope} config={modelDef.config} />
+            <MigrateButton scope={scope} config={activeInstance.config} />
             <div className={modelNameValidationClasses}>
               <span className="validation-error-message">
                 The name needs to conform with <a target="_blank" href="https://mathiasbynens.be/notes/javascript-identifiers" >javascript conventions</a>
