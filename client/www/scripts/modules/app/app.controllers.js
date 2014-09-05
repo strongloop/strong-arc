@@ -466,6 +466,7 @@ app.controller('StudioController', [
               loadDataSources();
               growl.addSuccessMessage("datasource created");
               $rootScope.$broadcast('IANavEvent');
+              return $scope.activeInstance;
 
             }
           );
@@ -480,6 +481,7 @@ app.controller('StudioController', [
               $scope.updateActiveInstance(
                 $scope.activeInstance, CONST.DATASOURCE_TYPE, originalDataSourceId);
               loadDataSources();
+              return $scope.activeInstance;
             })
             .catch(function(error){
               console.warn('bad datasource definition update: ' + error);
@@ -500,7 +502,9 @@ app.controller('StudioController', [
       }
 
       $scope.clearTestMessage();
-      DataSourceService.updateDataSourceInstance(instance)
+
+
+      $scope.saveDataSourceInstanceRequest(instance)
         .then(function(data) {
           return DataSourceService.testDataSourceConnection(data.id);
         })
@@ -511,6 +515,8 @@ app.controller('StudioController', [
           // Note: The http error is reported in the global error view
           setFriendlyTestConnectionMsg('Failed.');
         });
+
+
     };
     $scope.clearTestMessage = function() {
       $scope.datasource.connectionTestResponse = '';
