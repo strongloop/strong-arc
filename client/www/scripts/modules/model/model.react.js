@@ -815,6 +815,9 @@ var MigrateButton = (MigrateButton = React).createClass({
     var component = this;
     var config = this.state.scope.activeInstance.config;
 
+    if (config.dataSource === CONST.DEFAULT_DATASOURCE) {
+      config.dataSource = null;
+    }
     component
       .props
       .scope

@@ -55,7 +55,7 @@ Model.service('ModelService', [
       return deferred.promise;
     };
     // returns a full 'instance' with a definition and config property
-    svc.getModelInstanceById = function(modelId) {  
+    svc.getModelInstanceById = function(modelId) {
       var deferred = $q.defer();
       var instance = {};
       svc.getModelDefinitionById(modelId).
@@ -217,7 +217,7 @@ Model.service('ModelService', [
               }
               ModelConfig.upsert(targetInstance.config,
                 function(configResponse) {
-                  targetInstance.config = configResponse; 
+                  targetInstance.config = configResponse;
                   svc.isModelConfigMigrateable(targetInstance.config)
                     .then(function(canMigrate) {
                       targetInstance.canMigrate = canMigrate;
@@ -492,6 +492,9 @@ Model.service('ModelService', [
       var deferred = $q.defer();
       var promise = deferred.promise;
 
+      if (config.dataSource === CONST.DEFAULT_DATASOURCE) {
+        config.dataSource = null;
+      }
       return DataSourceDefinition.findOne({
         filter: {
           where: {
@@ -514,7 +517,9 @@ Model.service('ModelService', [
       var deferred = $q.defer();
       var promise = deferred.promise;
       var canMigrate = false;
-
+      if (config.dataSource === CONST.DEFAULT_DATASOURCE) {
+        config.dataSource = null;
+      }
       if(!config || !config.dataSource) {
         deferred.resolve(canMigrate);
         return promise;
@@ -538,7 +543,7 @@ Model.service('ModelService', [
       });
 
       return promise;
-    } 
+    }
 
     return svc;
   }
