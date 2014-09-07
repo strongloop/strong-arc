@@ -489,6 +489,9 @@ button[disabled].model-detail-pocket-button:hover {
     margin-left: 4rem;
 	width: 89.3rem;
 }
+.btn-new-model-property:disabled {
+    color:#666666;
+}
 .modelproperty-container .validation-error-message{
     margin-left:40px;
 }
