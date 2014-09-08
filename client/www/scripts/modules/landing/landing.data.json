@@ -1,0 +1,16 @@
+{
+  "apps": [
+    {
+      "id": "studio",
+      "name": "Strong Studio"
+    },
+    {
+      "id": "advisor",
+      "name": "Node Advisor"
+    },
+    {
+      "id": "inspector",
+      "name": "Node Inspector"
+    }
+  ]
+}

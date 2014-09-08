@@ -3,6 +3,7 @@ var fs = require('fs-extra');
 var path = require('path');
 var exec = require('child_process').exec;
 var gulp = require('gulp');
+var watch = require('gulp-watch');
 var gutil = require('gulp-util');
 var install = require('gulp-install');
 var jshint = require('gulp-jshint');
@@ -12,7 +13,7 @@ var runSequence = require('run-sequence');
 var spawn = require('child_process').spawn;
 var svn = require('svn-interface');
 
-gulp.task('default', ['build', 'test']);
+gulp.task('default', ['build', 'test', 'watch']);
 
 gulp.task('build', ['build-less', 'build-version', 'install-example-modules']);
 
@@ -20,6 +21,11 @@ gulp.task('build-less', function() {
   return gulp.src('client/less/style.less')
     .pipe(less())
     .pipe(gulp.dest('client/www/style'));
+});
+
+gulp.task('watch', function() {
+  // Watch all the .less files, then run the less task
+  gulp.watch('client/less/**/*.less', ['build-less']);
 });
 
 gulp.task('build-version', function(callback) {
@@ -120,9 +126,13 @@ gulp.task('pull-devtools', function(callback) {
       if (err) return callback(err);
       var branches = result.lists.list.entry
         // get the branch id (number)
-        .map(function(e) { return +e.name._text; })
+        .map(function(e) {
+          return +e.name._text;
+        })
         // filter out non-numbers
-        .filter(function(n) { return n; });
+        .filter(function(n) {
+          return n;
+        });
 
       latestBranch = Math.max.apply(Math, branches);
       gutil.log('Using branch', gutil.colors.yellow(latestBranch))
@@ -160,7 +170,7 @@ gulp.task('pull-devtools', function(callback) {
     gutil.log('Writing version file');
     fs.writeFile(
       path.resolve(FRONTEND_DIR, 'version.txt'),
-      'Branch: ' + latestBranch + '\nRepository: ' + REPO_URL,
+        'Branch: ' + latestBranch + '\nRepository: ' + REPO_URL,
       'utf-8',
       cb);
   }
@@ -188,7 +198,7 @@ gulp.task('pull-devtools', function(callback) {
         evalFile('common/object.js');
         evalFile('common/utilities.js');
         evalFile('sdk/InspectorBackend.js');
-      } catch(err) {
+      } catch (err) {
         return cb(err);
       }
 
@@ -200,7 +210,7 @@ gulp.task('pull-devtools', function(callback) {
 
       fs.writeFile(
         path.resolve(FRONTEND_DIR, 'InspectorBackendCommands.js'),
-        header + commands,
+          header + commands,
         'utf8',
         cb);
     });

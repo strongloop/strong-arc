@@ -1,0 +1,1 @@
+var Landing = angular.module('Landing', []);
