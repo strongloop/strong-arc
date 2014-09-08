@@ -247,12 +247,13 @@ IA.directive('slIaCleardbNavItem', [
   'growl',
   function(AppStorageService, growl) {
     return {
-      template: '<li><a href="#" ng-click="clearDB()">reset</a></li>',
-      controller: function($scope) {
+      template: '<li><a href="#studio" ng-click="clearDB()">reset</a></li>',
+      controller: function($scope, $location) {
 
         $scope.clearDB = function() {
           if (confirm('clear local cache?')) {
             AppStorageService.clearStorage();
+            $location.path('/#studio');
             growl.addSuccessMessage("cleared studio caches");
           }
         }

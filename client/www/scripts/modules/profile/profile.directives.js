@@ -22,13 +22,9 @@ Profile.directive('slUserLoginView', [
         };
 
         $scope.loginRequest = function (formConfig) {
-
-          $location.path('/studio');
           $scope.loginResult = ProfileService.loginRequest(formConfig).
             then(function(response) {
-
               $location.path('/studio');
-
             }).catch(function(response) {
               $scope.loginErrorMessage = 'Authentication attempt failed. Please check your username (email) and password and try again';
               $scope.resetCredentials();
