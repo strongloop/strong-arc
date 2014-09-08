@@ -14,8 +14,8 @@ var CONST = {
   APP_FACET: 'server',
   CONNECTORS_SUPPORTING_MIGRATE: [
     'mongodb', // for indexes
-    'mysql', 
-    'mssql', 
+    'mysql',
+    'mssql',
     'oracle',
     'postgresql'
   ]
@@ -26,6 +26,7 @@ var app = angular.module('app', [
   'ngResource',
   'ngSanitize',
   'ngAnimate',
+  'ngCookies',
   'angular-growl',
   'lbServices',
   'oldServices',
@@ -91,11 +92,13 @@ app.factory('requestInterceptor', [
   '$q',
   '$rootScope',
   '$location',
-  function ($q, $rootScope, $location) {
+  '$cookieStore',
+  function ($q, $rootScope, $location, $cookieStore) {
     return {
       'request': function (config) {
-        if (window.localStorage.getItem('accessToken')) {
-          config.headers.authorization = window.localStorage.getItem('accessToken');
+        var at = $cookieStore.get('accessToken');
+        if (at) {
+          config.headers.authorization = at;
         }
         else{
           // allow users to get to home view

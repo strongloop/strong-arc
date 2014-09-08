@@ -4,7 +4,7 @@ var util = require('util');
 var opener = require('opener');
 var studio = require('../server/server');
 var DEFAULT_STUDIO_HOST = 'localhost';
-var STUDIO_RUNNING_MSG = 
+var STUDIO_RUNNING_MSG =
 exports.STUDIO_RUNNING_MSG = 'Your studio is running here:';
 var argv = getArgv();
 var pathArg = argv[0];
@@ -27,8 +27,8 @@ var server = studio.listen(port, function(err) {
     process.exit(1);
   }
 
-  var url = util.format('http://%s:%s', DEFAULT_STUDIO_HOST,
-    server.address().port);
+  var url = util.format('http://%s:%s/%s', DEFAULT_STUDIO_HOST,
+    server.address().port, '#studio');
   console.log('%s %s', STUDIO_RUNNING_MSG, url);
   if (argv.indexOf('--cli') === -1) {
     opener(url);
