@@ -338,11 +338,11 @@ app.controller('StudioController', [
           // whole instance again is 2 async calls
           PropertyService.deleteModelProperty(config).
             then(function(response) {
-              IAService.getModelInstanceById(config.modelId).
+              ModelService.getModelInstanceById(config.modelId).
                 then(function(instance) {
                   growl.addSuccessMessage("property deleted");
                   $scope.activeInstance = IAService.setActiveInstance(instance, CONST.MODEL_TYPE);
-                }
+                  $scope.activeModelPropertiesChanged = !$scope.activeModelPropertiesChanged;                }
               );
             }
           );
