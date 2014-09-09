@@ -11,7 +11,14 @@ var CONST = {
   DEFAULT_DATASOURCE: 'none',
   DEFAULT_DATASOURCE_BASE_MODEL: 'PersistedModel',
   MODEL_TYPE: 'model',
-  APP_FACET: 'server'
+  APP_FACET: 'server',
+  CONNECTORS_SUPPORTING_MIGRATE: [
+    'mongodb', // for indexes
+    'mysql',
+    'mssql',
+    'oracle',
+    'postgresql'
+  ]
 };
 
 var app = angular.module('app', [
@@ -19,6 +26,7 @@ var app = angular.module('app', [
   'ngResource',
   'ngSanitize',
   'ngAnimate',
+  'ngCookies',
   'angular-growl',
   'lbServices',
   'oldServices',
@@ -33,6 +41,7 @@ var app = angular.module('app', [
   'checklist-model',
   'ngGrid'
 ]);
+app.value('CONST', CONST);
 app.config(['growlProvider', function(growlProvider) {
   growlProvider.globalTimeToLive(1800);
 }]);
@@ -56,6 +65,11 @@ app.config([
         controller: 'HomeMainController',
         templateUrl: './scripts/modules/app/templates/home.main.html'
       }).
+      state('devtools', {
+        url: '/devtools',
+        templateUrl: './scripts/modules/app/templates/devtools.html',
+        controller: 'DevToolsController'
+      }).
       state('studio', {
         url: '/studio',
         templateUrl: './scripts/modules/app/templates/studio.main.html',
@@ -78,11 +92,13 @@ app.factory('requestInterceptor', [
   '$q',
   '$rootScope',
   '$location',
-  function ($q, $rootScope, $location) {
+  '$cookieStore',
+  function ($q, $rootScope, $location, $cookieStore) {
     return {
       'request': function (config) {
-        if (window.localStorage.getItem('accessToken')) {
-          config.headers.authorization = window.localStorage.getItem('accessToken');
+        var at = $cookieStore.get('accessToken');
+        if (at) {
+          config.headers.authorization = at;
         }
         else{
           // allow users to get to home view

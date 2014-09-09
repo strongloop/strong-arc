@@ -114,7 +114,9 @@ select {
 }
 .model-instance-header-btn {
     text-align: left;
-    border: 1px solid #f1f1f1;
+    border: none;
+    background: none;
+    color:#7DBD33;
     border-radius: .2rem;
     margin: .5rem .4rem .5rem 0;
 }
@@ -318,12 +320,35 @@ select {
     padding-top: 0.5rem;
 }
 .model-save-button {
-    margin-right: 2rem;
     font-size: 12pt;
     border: none;
     border-bottom: 2px solid #67992d;
-    width: 18rem;
+    width: 17rem;
     height: 3.7rem;
+}
+.model-migrate-button {
+    color: #777;
+    background-color: #ddd;
+    font-size: 12pt;
+    border: none;
+    border-bottom: 2px solid #999;
+    width: 17rem;
+    height: 3.7rem;
+}
+.model-migrate-button:hover {
+    color: #fff;
+    background-color: #999 !important;
+}
+.model-migrate-loading {
+    margin-left: 6rem;
+    padding: 2px 6px 3px 0 !important;
+    text-align: center;
+    width: 17rem;
+    display: inline-block;
+}
+.model-migrate-button[disabled] {
+    opacity: 0.4;
+    background: #999 !important;
 }
 .model-detail-input-container {
 	padding-right: 1rem;
@@ -463,6 +488,9 @@ button[disabled].model-detail-pocket-button:hover {
 .modelproperty-detail-row{
     margin-left: 4rem;
 	width: 89.3rem;
+}
+.btn-new-model-property:disabled {
+    color:#666666;
 }
 .modelproperty-container .validation-error-message{
     margin-left:40px;

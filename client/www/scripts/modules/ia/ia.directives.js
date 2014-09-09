@@ -18,7 +18,7 @@ IA.directive('slIaMainNav', [
           if (scope.activeInstance && scope.activeInstance.name) {
 
 
-            if (IAService.getInstanceType(scope.activeInstance) === 'model') {
+            if (scope.activeInstance.type === CONST.MODEL_TYPE) {
               currActiveModelInstanceName = scope.activeInstance.name;
             }
 
@@ -48,7 +48,7 @@ IA.directive('slIaMainNav', [
           // datasources
           var openDatasourceNames = scope.currentOpenDatasourceNames;
           var currActiveDatasourceInstanceName = '';
-          if (scope.activeInstance && (IAService.getInstanceType(scope.activeInstance) === 'datasource')) {
+          if (scope.activeInstance && (scope.activeInstance.type === CONST.DATASOURCE_TYPE)) {
             currActiveDatasourceInstanceName = scope.activeInstance.name;
           }
 
@@ -247,12 +247,13 @@ IA.directive('slIaCleardbNavItem', [
   'growl',
   function(AppStorageService, growl) {
     return {
-      template: '<li><a href="#" ng-click="clearDB()">reset</a></li>',
-      controller: function($scope) {
+      template: '<li><a href="#studio" ng-click="clearDB()">reset</a></li>',
+      controller: function($scope, $location) {
 
         $scope.clearDB = function() {
           if (confirm('clear local cache?')) {
             AppStorageService.clearStorage();
+            $location.path('/#studio');
             growl.addSuccessMessage("cleared studio caches");
           }
         }

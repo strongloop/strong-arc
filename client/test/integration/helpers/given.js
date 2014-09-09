@@ -1,4 +1,5 @@
 var given = {};
+
 given.emptyWorkspace = function() {
   return inject(function($http, $rootScope, $q, throwHttpError) {
     function reset() {
@@ -19,7 +20,10 @@ given.emptyWorkspace = function() {
 
     // wait for `app.run()` to finish
     var deferred = $q.defer();
+    var resolved = false;
     $rootScope.$watch('projectName', function() {
+      if (resolved) return;
+      resolved = true;
       reset().then(
         function(res) {
           deferred.resolve(res);
@@ -30,5 +34,41 @@ given.emptyWorkspace = function() {
     });
 
     return deferred.promise;
+  });
+};
+
+var _givenValueCounter = 0;
+
+given.modelInstance = function(definitionData, configData) {
+  return inject(function(CONST, ModelDefinition, ModelConfig) {
+    definitionData = angular.extend({
+      name: 'aModelDefinition_' + (++_givenValueCounter),
+      facetName: 'common',
+    }, definitionData);
+    configData = angular.extend({
+      name: definitionData.name,
+      facetName: 'server'
+    });
+
+    // TODO(bajtos) Use ModelService.createNewModelInstance() instead
+    return {
+      id: definitionData.id,
+      type: CONST.MODEL_TYPE,
+      name: definitionData.name,
+      definition: new ModelDefinition(definitionData),
+      properties: [],
+      config: new ModelConfig(configData)
+    };
+  });
+};
+
+given.dataSourceInstance = function(definitionData) {
+  return inject(function(DataSourceService) {
+    var definitionData = angular.extend({
+      name: 'aDataSourceDefinition' + (++_givenValueCounter),
+      facetName: 'server',
+      connector: 'memory',
+    }, definitionData);
+    return DataSourceService.createNewDataSourceInstance(definitionData);
   });
 };

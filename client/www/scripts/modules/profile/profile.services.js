@@ -15,15 +15,32 @@
 Profile.service('ProfileService', [
   'User',
   '$q',
-  function (User, $q) {
+  '$cookieStore',
+  function (User, $q, $cookieStore) {
     var svc = {};
 
     svc.getCurrentUserId = function () {
-      return window.localStorage.getItem('currentUserId');
+      return $cookieStore.get('currentUserId');
     };
+
+    svc.buildLoginRequest = function(data) {
+      var result = {
+        password: data.password
+      };
+
+      if (/@/.test(data.nameOrEmail)) {
+        result.email = data.nameOrEmail;
+      } else {
+        result.username = data.nameOrEmail;
+      }
+
+      return result;
+    };
+
     svc.loginRequest = function(config) {
       var deferred = $q.defer();
-      User.login(config,
+      var request = svc.buildLoginRequest(config);
+      User.login(request,
         function (response) {
           svc.saveAuthTokenData(response);
           deferred.resolve(response);
@@ -37,8 +54,10 @@ Profile.service('ProfileService', [
     };
     // better but still need a more robust implementation
     svc.saveAuthTokenData = function(data) {
-      window.localStorage.setItem('currentUserId', data.userId);
-      window.localStorage.setItem('accessToken', data.id);
+
+      $cookieStore.put('currentUserId', data.userId);
+      $cookieStore.put('accessToken', data.id);
+
     };
     svc.isAuthUser = function() {
       if (svc.getCurrentUserId()){
@@ -47,8 +66,8 @@ Profile.service('ProfileService', [
       return false;
     };
     svc.logCurrentUserOut = function (cb) {
-      window.localStorage.removeItem('currentUserId');
-      window.localStorage.removeItem('accessToken');
+      $cookieStore.remove('currentUserId');
+      $cookieStore.remove('accessToken');
       var logoutObj = User.logout();
       logoutObj.$promise.
         then(function(result) {

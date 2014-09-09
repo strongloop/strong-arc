@@ -37,7 +37,7 @@ Model.directive('modelBaseEditor',[
 
         scope.$watch('activeInstance', function(val) {
           renderComp();
-        });
+        }, true);
       }
     }
   }
@@ -70,7 +70,7 @@ Model.directive('modelPropertiesEditor',[
         };
         scope.$watch('isModelInstancePropertiesActive', function(val) {
           var properties = [];
-          if (scope.activeInstance && scope.activeInstance.properties) {
+          if (scope.activeInstance.definition && scope.activeInstance.properties) {
             properties = scope.activeInstance.properties;
           }
           if (!scope.properties) {
