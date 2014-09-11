@@ -1,0 +1,61 @@
+.sl-landing-page {
+  padding: 4.7rem 3.13rem;
+
+  .sl-apps {
+    text-align: center;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .sl-app {
+    .box-sizing(border-box);
+    text-align: center;
+    height: 18rem;
+    max-width: 40rem;
+    display: block;
+    margin: 2.5rem auto 5rem;
+    cursor: pointer;
+
+    .app-image {
+      .border-radius(5px);
+      .drop-shadow();
+      border: 1px solid @gray-light;
+      height: 90%;
+      width: 100%;
+    }
+
+    &:hover {
+      .app-image {
+        .drop-shadow(0, 1px, 3px, 0, 0.35);
+        border-color: @gray;
+      }
+
+      a {
+        text-decoration: none;
+      }
+    }
+
+    a {
+      .box-sizing(border-box);
+      display: block;
+      width: 100%;
+      padding: 1.25rem;
+    }
+
+    &:last-child {
+      //margin-right: 0;
+    }
+  }
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: @tablet-min-width) {
+  .sl-landing-page {
+    .sl-app {
+      width: 20rem;
+      display: inline-block;
+      margin-right: 2.5rem;
+      margin-top: 0;
+    }
+  }
+}

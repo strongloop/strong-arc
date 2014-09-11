@@ -22,21 +22,22 @@
   <link rel="stylesheet" type="text/css" href="./style/src/demo.css">
   <link rel="stylesheet" type="text/css" href="./style/src/icons.css">
   <link rel="stylesheet" type="text/css" href="./style/src/datasource.css">
-  <!--<link rel="stylesheet" type="text/css" href="./style/style.css">-->
+  <link rel="stylesheet" type="text/css" href="./style/style.css">
 
 </head>
 <body ng-app="app">
 
 <div class="headerContainer" data-id="AppHeaderContainer">
-	<div class="branding">
-		<img src="./images/strongloop.svg" alt="Strongloop logo" class="logo">
-	</div>
- 	<div class="navButtons">
-      <ul>
-        <li class="header-help-container">
-          <a href="http://docs.strongloop.com/pages/viewpage.action?pageId=3179029" target="_new" title="documentation"><span class="glyphicon glyphicon-question-sign"></span></a>
-        </li>
-        <li>
+  <div class="branding">
+    <a href="/#studio"><img src="./images/strongloop.svg" alt="Strongloop logo" class="logo"></a>
+  </div>
+  <div class="navButtons">
+    <ul>
+      <li class="header-help-container">
+        <a href="http://docs.strongloop.com/pages/viewpage.action?pageId=3179029" target="_new"
+           title="documentation"><span class="glyphicon glyphicon-question-sign"></span></a>
+      </li>
+      <li>
           <span class="dropdown" on-toggle="toggled(open)">
             <a href class="dropdown-toggle">
               <span class="glyphicon glyphicon-off"></span>
@@ -48,10 +49,10 @@
               <li sl-ia-cleardb-nav-item></li>
             </ul>
           </span>
-        </li>
-      </ul>
-    </div>
-    <div class="header-version"></div>
+      </li>
+    </ul>
+  </div>
+  <div class="header-version"></div>
 
 </div>
 
@@ -159,6 +160,12 @@
 <script src="./scripts/modules/property/property.controllers.js"></script>
 <script src="./scripts/modules/property/property.services.js"></script>
 <script src="./scripts/modules/property/property.directives.js"></script>
+
+<!-- landing -->
+<script src="./scripts/modules/landing/landing.module.js"></script>
+<script src="./scripts/modules/landing/landing.services.js"></script>
+<script src="./scripts/modules/landing/landing.controllers.js"></script>
+<script src="./scripts/modules/landing/landing.directives.js"></script>
 
 </body>
 </html>
