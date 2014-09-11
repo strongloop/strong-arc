@@ -2,15 +2,11 @@
   "apps": [
     {
       "id": "studio",
-      "name": "Strong Studio"
+      "name": "API Composer"
     },
     {
-      "id": "advisor",
-      "name": "Node Advisor"
-    },
-    {
-      "id": "inspector",
-      "name": "Node Inspector"
+      "id": "devtools",
+      "name": "Profiler"
     }
   ]
 }

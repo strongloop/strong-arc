@@ -1,0 +1,23 @@
+<div class="sl-ui-select"
+     data-ui-type="select"
+     ng-class="{ open: isOpen }"
+     ng-mouseleave="hideMenu()"
+     >
+  <span class="selected"
+        data-id="{{selected.id}}"
+        ng-click="isOpen = !isOpen">
+      {{selected.name}}
+    <i class="sl-icon sl-icon-chevron-down"></i>
+  </span>
+  <ul ng-class="{ hide: !isOpen }">
+    <li ng-repeat="item in list">
+      <a href
+         data-id="{{item.id}}"
+         ng-click="selectItem(item);"
+         ng-class="{ selected: selected.id == item.id }">
+        {{item.name}}
+        <i class="sl-icon sl-icon-checkmark" ng-show="selected.id == item.id"></i>
+      </a>
+    </li>
+  </ul>
+</div>

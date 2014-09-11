@@ -1,4 +1,19 @@
 // Copyright StrongLoop 2014
+app.controller('SuiteController', ['$scope', 'LandingService', function($scope, LandingService){
+  $scope.suiteIA = {
+    apps: [],
+    selectedApp: {
+      id: 'none',
+      name: 'Select Module'
+    }
+  };
+
+  LandingService.getApps()
+    .then(function(data){
+      $scope.suiteIA.apps = data;
+    });
+}]);
+
 app.controller('StudioController', [
   '$rootScope',
   '$q',
@@ -24,6 +39,11 @@ app.controller('StudioController', [
     $scope.globalExceptionStack = [];
     $scope.datasource = {
       connectionTestResponse:''
+    };
+
+    $scope.suiteIA.selectedApp =  {
+      "id": "studio",
+      "name": "API Composer"
     };
 
     // list of open instances (models/datasources)
@@ -595,7 +615,11 @@ app.controller('GlobalNavController',[
 app.controller('DevToolsController',[
   '$scope',
   '$location',
-  function(/*$scope, $location*/){
-    // no-op
+  function($scope, $location){
+
+    $scope.suiteIA.selectedApp = {
+      "id": "devtools",
+      "name": "Profiler"
+    };
   }
 ]);
