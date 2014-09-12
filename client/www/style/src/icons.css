@@ -5,11 +5,11 @@
 
 @font-face {
 	font-family: 'Strongloop';
-	src:url('../../fonts/Strongloop.eot?-sfu57g');
-	src:url('../../fonts/Strongloop.eot?#iefix-sfu57g') format('embedded-opentype'),
-		url('../../fonts/Strongloop.woff?-sfu57g') format('woff'),
-		url('../../fonts/Strongloop.ttf?-sfu57g') format('truetype'),
-		url('../../fonts/Strongloop.svg?-sfu57g#Strongloop') format('svg');
+	src:url('../../fonts/Strongloop.eot?ldukra');
+	src:url('../../fonts/Strongloop.eot?#iefixldukra') format('embedded-opentype'),
+		url('../../fonts/Strongloop.woff?ldukra') format('woff'),
+		url('../../fonts/Strongloop.ttf?ldukra') format('truetype'),
+		url('../../fonts/Strongloop.svg?ldukra#Strongloop') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -38,6 +38,14 @@
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+.glyphicon-checkmark-outline:before {
+  content: "\e611";
+}
+
+.glyphicon-checkmark:before {
+  content: "\e612";
 }
 
 .glyphicon-question-mark:before{
