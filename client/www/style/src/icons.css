@@ -14,7 +14,7 @@
 	font-style: normal;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class^="sl-icon-"], [class*=" sl-icon-"] {
 	font-family: 'Strongloop';
 	speak: none;
 	font-style: normal;
@@ -28,7 +28,7 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.glyphicon {
+.sl-icon {
     position: relative;
     top: 1px;
     display: inline-block;
@@ -40,66 +40,66 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.glyphicon-checkmark-outline:before {
+.sl-icon-checkmark-outline:before {
   content: "\e611";
 }
 
-.glyphicon-checkmark:before {
+.sl-icon-checkmark:before {
   content: "\e612";
 }
 
-.glyphicon-question-mark:before{
+.sl-icon-question-mark:before{
     content: "\e600";
 }
 
-.glyphicon-database:before {
+.sl-icon-database:before {
     content: "\e602";
     font-size: 16pt;
 }
 
 
-.glyphicon-folder-open:before {
+.sl-icon-folder-open:before {
     content: "\e601";
     margin-right: 10px;
     font-size: 12pt;
 }
-.glyphicon-plus-sign:before {
+.sl-icon-plus-sign:before {
     content: "\e608";
 }
-.glyphicon-minus-sign:before {
+.sl-icon-minus-sign:before {
     content: "\e607";
 }
-.glyphicon-question-sign:before {
+.sl-icon-question-sign:before {
     content: "\e60A";
 }
-.glyphicon-off:before {
+.sl-icon-off:before {
     content: "\e60B";
     color: #01582A;
     font-size: 18pt;
     margin-left: 2rem;
 }
-.glyphicon-file:before {
+.sl-icon-file:before {
     content: "\e603";
     font-weight: lighter;
 }
-.glyphicon-remove:before {
+.sl-icon-remove:before {
     content: "\e60D";
 }
-.glyphicon-lightning:before {
+.sl-icon-lightning:before {
     content:  "\e606";
 }
-.glyphicon-link:before {
+.sl-icon-link:before {
     content:  "\e605";
 }
-.glyphicon-navbranch-open:before {
+.sl-icon-navbranch-open:before {
     content:  "\e604";
 }
-.glyphicon-navbranch-closed:before{
+.sl-icon-navbranch-closed:before{
     content:  "\e60f";
 }
-.glyphicon-contextmenu:before{
+.sl-icon-contextmenu:before{
     content: "\e60e";
 }
-.glyphicon-play:before{
+.sl-icon-play:before{
     content: "\e610";
 }
