@@ -149,12 +149,12 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
       'ia-tree-node-table branch-leaf-list model-branch-container is-closed': !scope.modelNavIsVisible
     });
     var navItemOpenCloseIconClasses = cx({
-      'nav-branch-openclose-icon sl-icon sl-icon-navbranch-open': component.state.isModelNavContainerOpen,
-      'nav-branch-openclose-icon sl-icon sl-icon-navbranch-closed': !component.state.isModelNavContainerOpen
+      'nav-branch-openclose-icon sl-icon sl-icon-arrow-down': component.state.isModelNavContainerOpen,
+      'nav-branch-openclose-icon sl-icon sl-icon-arrow-right': !component.state.isModelNavContainerOpen
     });
     var navItemsOpenCloseFolderIconClasses = cx({
-      'nav-branch-folder-icon sl-icon sl-icon-folder-open': scope.modelNavIsVisible,
-      'nav-branch-folder-icon sl-icon sl-icon-folder-open': !scope.modelNavIsVisible
+      'nav-branch-folder-icon sl-icon sl-icon-folder': scope.modelNavIsVisible,
+      'nav-branch-folder-icon sl-icon sl-icon-folder': !scope.modelNavIsVisible
     });
     var rowItems = navModels.map(function(item) {
       var classNameVar = 'tree-item-row ';
@@ -187,7 +187,7 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
           </div>
           <div data-ui-type="cell" className="ia-nav-item-contextmenu-icon-container-col">
             <button className="btn-command btn-nav-context" data-id={item.id} data-config-id={item.configId}>
-              <span data-name={item.name} data-id={item.id} data-config-id={item.configId} className="sl-icon sl-icon-contextmenu"></span>
+              <span data-name={item.name} data-id={item.id} data-config-id={item.configId} className="sl-icon sl-icon-box-arrow-down"></span>
             </button>
           </div>
         </div>
@@ -197,7 +197,7 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
       <div>
         <button onClick={component.toggleModelNav} data-name="model_root" className="btn btn-default btn-block nav-tree-item tree-branch"  title="Models" >
           <span className={navItemOpenCloseIconClasses}></span>
-          <span className="nav-branch-folder-icon sl-icon sl-icon-folder-open"></span>
+          <span className="nav-branch-folder-icon sl-icon sl-icon-folder"></span>
           <span className="nav-branch-title">Models</span>
         </button>
         <div data-ui-type="table" className={navItemContainerClasses}>
@@ -321,8 +321,8 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
       'ia-tree-node-table branch-leaf-list datasource-branch-container is-closed': !scope.dsNavIsVisible
     });
     var navItemOpenCloseIconClasses = cx({
-      'nav-branch-openclose-icon sl-icon sl-icon-navbranch-open': component.state.isDataSourceNavContainerOpen,
-      'nav-branch-openclose-icon sl-icon sl-icon-navbranch-closed': !component.state.isDataSourceNavContainerOpen
+      'nav-branch-openclose-icon sl-icon sl-icon-arrow-down': component.state.isDataSourceNavContainerOpen,
+      'nav-branch-openclose-icon sl-icon sl-icon-arrow-right': !component.state.isDataSourceNavContainerOpen
     });
     var navItemsOpenCloseFolderIconClasses = cx({
       'sl-icon sl-icon-folder-open': scope.dsNavIsVisible,
@@ -356,7 +356,7 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
             </div>
             <div data-ui-type="cell" className="ia-nav-item-contextmenu-icon-container-col">
               <button className="btn-command btn-ds-nav-context" data-id={item.id}>
-                <span data-name={item.name}  data-id={item.id} className="sl-icon sl-icon-contextmenu"></span>
+                <span data-name={item.name}  data-id={item.id} className="sl-icon sl-icon-box-arrow-down"></span>
               </button>
             </div>
 
@@ -370,7 +370,7 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
       <div>
         <button onClick={component.toggleDataSourceNav} type="button" data-name="datasources_root" className="btn btn-default btn-block nav-tree-item tree-branch" title="Datasources">
           <span className={navItemOpenCloseIconClasses}></span>
-          <span className="nav-branch-folder-icon sl-icon sl-icon-folder-open"></span>
+          <span className="nav-branch-folder-icon sl-icon sl-icon-folder"></span>
           <span className="nav-branch-title">DataSources</span>
         </button>
         <div data-ui-type="table" className={navItemContainerClasses}>
@@ -556,7 +556,7 @@ var IAGlobalExceptionDisplayView = (IAGlobalExceptionDisplayView = React).create
           prevMessage = stackItem.message;
           return (
             <div data-id="IAGlobalExceptionDisplayContainer" className="ia-global-exception-container">
-              <span onClick={clearGlobalException} className="sl-icon sl-icon-remove ia-global-exception-close-button"></span>
+              <span onClick={clearGlobalException} className="sl-icon sl-icon-close ia-global-exception-close-button"></span>
               <div className="ia-global-exception-header">Oops! Something is wrong</div>
               <div className="ia-global-exception-link" onClick={component.toggleStackView}>Show/hide details</div>
               <span className="ia-global-exception-value">{stackItem.message}</span>
