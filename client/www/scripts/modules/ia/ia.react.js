@@ -23,7 +23,7 @@ var IAMainNavContainer = (IAMainNavContainer = React).createClass({
         <div className="ia-project-title-header-container" >
           <div className="ia-project-nav-help">
             <a target="_blank" href="http://docs.strongloop.com/display/SLS/Using+StrongLoop+Studio">
-              <span id="mainNavContextHelp" data-id="MainNavContextHelp" className="glyphicon glyphicon-question-mark"></span>
+              <span id="mainNavContextHelp" data-id="MainNavContextHelp" className="sl-icon sl-icon-question-mark"></span>
             </a>
           </div>
           <span className="ia-project-title-container">{projectName}</span>
@@ -149,12 +149,12 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
       'ia-tree-node-table branch-leaf-list model-branch-container is-closed': !scope.modelNavIsVisible
     });
     var navItemOpenCloseIconClasses = cx({
-      'nav-branch-openclose-icon glyphicon glyphicon-navbranch-open': component.state.isModelNavContainerOpen,
-      'nav-branch-openclose-icon glyphicon glyphicon-navbranch-closed': !component.state.isModelNavContainerOpen
+      'nav-branch-openclose-icon sl-icon sl-icon-navbranch-open': component.state.isModelNavContainerOpen,
+      'nav-branch-openclose-icon sl-icon sl-icon-navbranch-closed': !component.state.isModelNavContainerOpen
     });
     var navItemsOpenCloseFolderIconClasses = cx({
-      'nav-branch-folder-icon glyphicon glyphicon-folder-open': scope.modelNavIsVisible,
-      'nav-branch-folder-icon glyphicon glyphicon-folder-open': !scope.modelNavIsVisible
+      'nav-branch-folder-icon sl-icon sl-icon-folder-open': scope.modelNavIsVisible,
+      'nav-branch-folder-icon sl-icon sl-icon-folder-open': !scope.modelNavIsVisible
     });
     var rowItems = navModels.map(function(item) {
       var classNameVar = 'tree-item-row ';
@@ -169,14 +169,14 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
       }
       var dsConnectEl = (<span />);
       if (item.dataSource && (item.dataSource !== CONST.DEFAULT_DATASOURCE )) {
-        dsConnectEl = (<span data-name={item.name}  data-id={item.id} className="glyphicon glyphicon-lightning"></span>);
+        dsConnectEl = (<span data-name={item.name}  data-id={item.id} className="sl-icon sl-icon-lightning"></span>);
       }
       item.configId = item.config && item.config.id;
 
       return (
         <div data-ui-type="row" className={classNameVar} data-id={item.id}>
           <div data-ui-type="cell" className="ia-nav-item-icon-container-col">
-            <span data-name={item.name}  data-id={item.id} className="glyphicon glyphicon-file"></span>
+            <span data-name={item.name}  data-id={item.id} className="sl-icon sl-icon-file"></span>
           </div>
           <div data-ui-type="cell" className="ia-nav-item-name-container-col">
             <button onClick={singleClickItem} data-name={item.name} data-id={item.id} className="nav-tree-item tree-node" title={item.name}><span className = "nav-tree-item-header">{item.name}</span>
@@ -187,7 +187,7 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
           </div>
           <div data-ui-type="cell" className="ia-nav-item-contextmenu-icon-container-col">
             <button className="btn-command btn-nav-context" data-id={item.id} data-config-id={item.configId}>
-              <span data-name={item.name} data-id={item.id} data-config-id={item.configId} className="glyphicon glyphicon-contextmenu"></span>
+              <span data-name={item.name} data-id={item.id} data-config-id={item.configId} className="sl-icon sl-icon-contextmenu"></span>
             </button>
           </div>
         </div>
@@ -197,7 +197,7 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
       <div>
         <button onClick={component.toggleModelNav} data-name="model_root" className="btn btn-default btn-block nav-tree-item tree-branch"  title="Models" >
           <span className={navItemOpenCloseIconClasses}></span>
-          <span className="nav-branch-folder-icon glyphicon glyphicon-folder-open"></span>
+          <span className="nav-branch-folder-icon sl-icon sl-icon-folder-open"></span>
           <span className="nav-branch-title">Models</span>
         </button>
         <div data-ui-type="table" className={navItemContainerClasses}>
@@ -321,12 +321,12 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
       'ia-tree-node-table branch-leaf-list datasource-branch-container is-closed': !scope.dsNavIsVisible
     });
     var navItemOpenCloseIconClasses = cx({
-      'nav-branch-openclose-icon glyphicon glyphicon-navbranch-open': component.state.isDataSourceNavContainerOpen,
-      'nav-branch-openclose-icon glyphicon glyphicon-navbranch-closed': !component.state.isDataSourceNavContainerOpen
+      'nav-branch-openclose-icon sl-icon sl-icon-navbranch-open': component.state.isDataSourceNavContainerOpen,
+      'nav-branch-openclose-icon sl-icon sl-icon-navbranch-closed': !component.state.isDataSourceNavContainerOpen
     });
     var navItemsOpenCloseFolderIconClasses = cx({
-      'glyphicon glyphicon-folder-open': scope.dsNavIsVisible,
-      'glyphicon glyphicon-folder-closed': !scope.dsNavIsVisible
+      'sl-icon sl-icon-folder-open': scope.dsNavIsVisible,
+      'sl-icon sl-icon-folder-closed': !scope.dsNavIsVisible
     });
 
 
@@ -346,7 +346,7 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
         return (
           <div data-ui-type="row" className={classNameVar} data-id={item.id} >
             <div data-ui-type="cell" className="ia-nav-item-icon-container-col">
-              <span data-name={item.name}  data-id={item.id} className="glyphicon glyphicon-file"></span>
+              <span data-name={item.name}  data-id={item.id} className="sl-icon sl-icon-file"></span>
             </div>
             <div data-ui-type="cell" className="ia-nav-item-name-container-col">
               <button onClick={singleClickItem} data-name={item.name} data-id={item.id} className="nav-tree-item tree-node" title={item.name}><span className = "nav-tree-item-header">{item.name}</span>
@@ -356,7 +356,7 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
             </div>
             <div data-ui-type="cell" className="ia-nav-item-contextmenu-icon-container-col">
               <button className="btn-command btn-ds-nav-context" data-id={item.id}>
-                <span data-name={item.name}  data-id={item.id} className="glyphicon glyphicon-contextmenu"></span>
+                <span data-name={item.name}  data-id={item.id} className="sl-icon sl-icon-contextmenu"></span>
               </button>
             </div>
 
@@ -370,7 +370,7 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
       <div>
         <button onClick={component.toggleDataSourceNav} type="button" data-name="datasources_root" className="btn btn-default btn-block nav-tree-item tree-branch" title="Datasources">
           <span className={navItemOpenCloseIconClasses}></span>
-          <span className="nav-branch-folder-icon glyphicon glyphicon-folder-open"></span>
+          <span className="nav-branch-folder-icon sl-icon sl-icon-folder-open"></span>
           <span className="nav-branch-title">DataSources</span>
         </button>
         <div data-ui-type="table" className={navItemContainerClasses}>
@@ -453,14 +453,14 @@ var IAMainControls = (IAMainControls = React).createClass({
             <div data-ui-type="cell">
               <label className="main-control-command-label">MODEL</label>
               <button onClick={createModelViewRequest} type="button" className="btn btn-sm btn-primary">
-                <span className="maincontrol-main-icon glyphicon glyphicon-plus-sign"></span>
+                <span className="maincontrol-main-icon sl-icon sl-icon-plus-sign"></span>
                 <span className="maincontrol-main-button-label">New</span>
               </button>
             </div>
             <div data-ui-type="cell" className="main-control-apprender-container">
               <label className="main-control-command-label">APP</label>
               <button disabled="disabled" onClick={renderAppViewRequest} type="button" className="btn btn-primary btn-sm">
-                <span className="maincontrol-main-icon glyphicon glyphicon-play"></span>
+                <span className="maincontrol-main-icon sl-icon sl-icon-play"></span>
                 <span className="maincontrol-main-button-label">Render</span>
               </button>
             </div>
@@ -477,7 +477,7 @@ var IAMainControls = (IAMainControls = React).createClass({
                 data-name="oracle"
                 className="btn btn-default btn-control-ds"
                 title="oracle connector">
-                  <span className="glyphicon glyphicon-database"></span>
+                  <span className="sl-icon sl-icon-database"></span>
               </button>
               <div className="ds-type-name">Oracle</div>
             </div>
@@ -487,7 +487,7 @@ var IAMainControls = (IAMainControls = React).createClass({
                 data-name="mssql"
                 onClick={addNewInstanceRequest}
                 title="mssql connector">
-                  <span className="glyphicon glyphicon-database"></span>
+                  <span className="sl-icon sl-icon-database"></span>
               </button>
               <div className="ds-type-name">MS SQL</div>
             </div>
@@ -497,7 +497,7 @@ var IAMainControls = (IAMainControls = React).createClass({
                 className="btn btn-default btn-control-ds"
                 data-name="mysql"
                 title="mysql connector">
-                  <span className="glyphicon glyphicon-database"></span>
+                  <span className="sl-icon sl-icon-database"></span>
               </button>
               <div className="ds-type-name">MySQL</div>
             </div>
@@ -507,7 +507,7 @@ var IAMainControls = (IAMainControls = React).createClass({
                 className="btn btn-default btn-control-ds"
                 data-name="postgresql"
                 title="postgres connector">
-                <span className="glyphicon glyphicon-database"></span>
+                <span className="sl-icon sl-icon-database"></span>
               </button>
               <div className="ds-type-name">PostgreSQL</div>
             </div>
@@ -517,7 +517,7 @@ var IAMainControls = (IAMainControls = React).createClass({
                 className="btn btn-default btn-control-ds"
                 data-name="mongodb"
                 title="mongodb connector">
-                  <span className="glyphicon glyphicon-database"></span>
+                  <span className="sl-icon sl-icon-database"></span>
               </button>
               <div className="ds-type-name">MongoDB</div>
             </div>
@@ -556,7 +556,7 @@ var IAGlobalExceptionDisplayView = (IAGlobalExceptionDisplayView = React).create
           prevMessage = stackItem.message;
           return (
             <div data-id="IAGlobalExceptionDisplayContainer" className="ia-global-exception-container">
-              <span onClick={clearGlobalException} className="glyphicon glyphicon-remove ia-global-exception-close-button"></span>
+              <span onClick={clearGlobalException} className="sl-icon sl-icon-remove ia-global-exception-close-button"></span>
               <div className="ia-global-exception-header">Oops! Something is wrong</div>
               <div className="ia-global-exception-link" onClick={component.toggleStackView}>Show/hide details</div>
               <span className="ia-global-exception-value">{stackItem.message}</span>

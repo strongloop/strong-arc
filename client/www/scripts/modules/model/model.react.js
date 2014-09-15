@@ -136,8 +136,8 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
       'model-detail-pocket-container is-closed': !component.props.scope.isModelInstanceBasePropertiesActive
     });
     var iconClasses = cx({
-      'model-editor-section-icon glyphicon glyphicon-minus-sign': component.state.isDetailsContainerOpen,
-      'model-editor-section-icon glyphicon glyphicon-plus-sign': !component.state.isDetailsContainerOpen
+      'model-editor-section-icon sl-icon sl-icon-minus-sign': component.state.isDetailsContainerOpen,
+      'model-editor-section-icon sl-icon sl-icon-plus-sign': !component.state.isDetailsContainerOpen
     });
     var modelNameInputClasses = cx({
       'model-instance-name form-control': component.state.isNameValid,
@@ -330,8 +330,8 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
       'row is-closed': !component.state.isOpen
     });
     var iconClasses = cx({
-      'model-editor-section-icon glyphicon glyphicon-minus-sign': component.state.isPropertiesContainerOpen,
-      'model-editor-section-icon glyphicon glyphicon-plus-sign': !component.state.isPropertiesContainerOpen
+      'model-editor-section-icon sl-icon sl-icon-minus-sign': component.state.isPropertiesContainerOpen,
+      'model-editor-section-icon sl-icon sl-icon-plus-sign': !component.state.isPropertiesContainerOpen
     });
     var clickHandler = function(event) {
       var isOpenState = !component.state.isPropertiesContainerOpen;
@@ -492,8 +492,8 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
       'property-detail-container is-closed': !component.state.isOpen
     });
     var bClasses = cx({
-      'glyphicon glyphicon-open-sign': component.state.isOpen,
-      'glyphicon glyphicon-closed-sign': !component.state.isOpen
+      'sl-icon sl-icon-open-sign': component.state.isOpen,
+      'sl-icon sl-icon-closed-sign': !component.state.isOpen
     });
     var cClasses = cx({
       'modelproperty-container modelproperty-detail-is-open': component.state.isOpen,
@@ -563,7 +563,7 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
               </span>
               <span data-ui-type="cell" className="props-controls-cell">
                 <button className="props-remove-btn" onClick={component.deleteModelProperty} data-id={modelProperty.id}>
-                  <span data-id={modelProperty.id} className="glyphicon glyphicon-remove"></span>
+                  <span data-id={modelProperty.id} className="sl-icon sl-icon-remove"></span>
                 </button>
 
               </span>
