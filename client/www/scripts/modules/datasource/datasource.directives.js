@@ -8,7 +8,8 @@
  * */
 Datasource.directive('slDatasourceEditorForm', [
   'DataSourceService',
-  function() {
+  'connectorMetadata',
+  function(DataSourceService, connectorMetadata) {
     return {
       replace:true,
       link: function(scope, el, attrs) {
@@ -25,6 +26,8 @@ Datasource.directive('slDatasourceEditorForm', [
         scope.$watch('datasource.connectionTestResponse', function(response) {
           React.renderComponent(DatasourceEditorView({scope:scope}), el[0]);
         }, true);
+
+        scope.connectorMetadata = connectorMetadata;
       }
     }
   }
