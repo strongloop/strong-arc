@@ -24,6 +24,7 @@ module.exports = function(config) {
       // 'client/www/scripts/vendor/react/JSXTransformer.js',
 
       'client/www/scripts/vendor/angular/ui-utils.js',
+      'client/www/scripts/vendor/angular/angular-cookies.js',
       'client/www/scripts/vendor/angular/angular-animate.js',
       'client/www/scripts/vendor/angular/angular-ui-router.js',
       // 'client/www/scripts/vendor/angular/angular-touch.js',
