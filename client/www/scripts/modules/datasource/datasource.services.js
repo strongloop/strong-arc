@@ -3,9 +3,12 @@ Datasource.service('DataSourceService', [
   'DataSourceDefinition',
   'ModelConfig',
   'AppStorageService',
+  'connectorMetadata',
   '$timeout',
   '$q',
-  function(DataSourceDefinition, ModelConfig, AppStorageService, $timeout, $q) {
+  function DataSourceService(DataSourceDefinition, ModelConfig,
+                             AppStorageService, connectorMetadata,
+                             $timeout, $q) {
     var svc = this;
 
     svc.createDataSourceInstance = function(targetInstance) {
@@ -137,7 +140,13 @@ Datasource.service('DataSourceService', [
       };
     };
     svc.getDiscoverableDatasourceConnectors = function() {
-      return ['mssql', 'oracle', 'mysql', 'postgresql'];
+      return connectorMetadata
+        .filter(function(it) {
+          return it.features && it.features.discovery;
+        })
+        .map(function(it) {
+          return it.name;
+        });
     };
     svc.getDataSourceInstanceById = function(dsId) {
       var deferred = $q.defer();
