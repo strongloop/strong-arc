@@ -6,7 +6,9 @@ Model.service('ModelService', [
   '$q',
   'AppStorageService',
   'DataSourceDefinition',
-  function(Modeldef, ModelDefinition, ModelConfig, $q, AppStorageService, DataSourceDefinition) {
+  'connectorMetadata',
+  function(Modeldef, ModelDefinition, ModelConfig, $q,
+           AppStorageService, DataSourceDefinition, connectorMetadata) {
     var svc = {};
 
 
@@ -544,10 +546,13 @@ Model.service('ModelService', [
         }
       },
       function(dataSourceDef) {
-        var connector = dataSourceDef && dataSourceDef.connector;
-        var connectorIsSupported = connector
-          && CONST.CONNECTORS_SUPPORTING_MIGRATE
-          .indexOf(connector.toLowerCase()) > -1;
+        var connectorName = dataSourceDef && dataSourceDef.connector;
+        var metadata = connectorMetadata.filter(function(it) {
+          return it.name === connectorName;
+        })[0];
+
+        var connectorIsSupported = connectorName &&
+          metadata && metadata.features && metadata.features.migration;
 
         deferred.resolve(dataSourceDef && connectorIsSupported);
       });

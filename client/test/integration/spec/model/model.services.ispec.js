@@ -57,4 +57,42 @@ describe('ModelService', function() {
         });
     });
   });
+
+  describe('.isModelConfigMigrateable()', function() {
+    var DataSourceService;
+    beforeEach(function() {
+      inject(function(_DataSourceService_) {
+        DataSourceService = _DataSourceService_;
+      });
+    });
+
+    it('returns false for model not attached to any datasource', function() {
+      return ModelService.isModelConfigMigrateable({ dataSource: null })
+        .then(function(result) {
+          expect(result).to.equal(false);
+        });
+    });
+
+    it('returns true for model attached to a MySQL datasource', function() {
+      var ds = given.dataSourceInstance({ connector: 'mysql' });
+      return DataSourceService.createDataSourceInstance(ds)
+        .then(function() {
+          return ModelService.isModelConfigMigrateable({ dataSource: ds.name });
+        })
+        .then(function(result) {
+          expect(result).to.equal(true);
+        });
+    });
+
+    it('returns false for model attached to a Memory datasource', function() {
+      var ds = given.dataSourceInstance({ connector: 'memory' });
+      return DataSourceService.createDataSourceInstance(ds)
+        .then(function() {
+          return ModelService.isModelConfigMigrateable({ dataSource: ds.name });
+        })
+        .then(function(result) {
+          expect(result).to.equal(false);
+        });
+    });
+  });
 });
