@@ -82,9 +82,13 @@ app.config([
           // Wait for all metadata requests to finish
           'studioMetadataResults': [
             'modelPropertyTypes',
+            'connectorMetadata',
             '$q',
-            function waitForAllStudioMetadata(modelPropertyTypes, $q) {
+            function waitForAllStudioMetadata(modelPropertyTypes,
+                                              connectorMetadata,
+                                              $q) {
               return $q.all([
+                connectorMetadata.$promise,
                 modelPropertyTypes.$promise
               ]);
             }
