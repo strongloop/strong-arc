@@ -80,8 +80,7 @@ module.exports = function(config) {
 
     proxies: {
       // NOTE(bajtos) The port 9800 is hard-coded in test-server.js
-      '/workspace': 'http://localhost:9800/workspace',
-      '/reset': 'http://localhost:9800/reset',
+      '/': 'http://localhost:9800/',
     },
 
     // enable / disable colors in the output (reporters and logs)

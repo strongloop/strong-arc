@@ -37,6 +37,7 @@ var app = angular.module('app', [
   'Model',
   'Landing',
   'Datasource',
+  'Explorer',
   'ui.bootstrap',
   'ui.utils',
   'checklist-model',
