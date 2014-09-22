@@ -23,9 +23,5 @@
   "Role": {
     "dataSource": "db",
     "public": false
-  },
-  "newModel": {
-    "dataSource": "db",
-    "public": true
   }
 }
