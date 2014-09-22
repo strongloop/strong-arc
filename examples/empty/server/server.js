@@ -1,5 +1,6 @@
 var loopback = require('loopback');
 var boot = require('loopback-boot');
+var cors = require('cors');
 
 var app = module.exports = loopback();
 
@@ -8,6 +9,7 @@ app.use(loopback.favicon());
 
 // request pre-processing middleware
 app.use(loopback.compress());
+app.use(cors());
 
 // -- Add your pre-processing middleware here --
 
