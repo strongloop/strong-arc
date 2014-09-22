@@ -48,7 +48,8 @@ Model.directive('modelBaseEditor',[
  *
  * */
 Model.directive('modelPropertiesEditor',[
-  function() {
+  'modelPropertyTypes',
+  function(modelPropertyTypes) {
     return {
       controller: function($scope, growl) {
         $scope.earlyNewPropertyWarning = function() {
@@ -58,6 +59,7 @@ Model.directive('modelPropertiesEditor',[
       link: function(scope, el, attrs) {
 
         scope.isModelInstancePropertiesActive = true;
+        scope.modelPropertyTypes = modelPropertyTypes;
 
         function renderComp() {
           if (!scope.properties) {
