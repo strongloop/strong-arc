@@ -1,2 +1,12 @@
 /* hide the top toolbar, only "Profiles" tab is used at the moment */
 .toolbar { display: none; }
+
+/* hide start button */
+.control-profiling {
+  display: none;
+}
+
+/* hide record heap allocations */
+.profile-launcher-view-content form label:nth-child(3) {
+  display: none;
+}
