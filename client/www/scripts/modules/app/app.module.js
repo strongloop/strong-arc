@@ -36,6 +36,7 @@ var app = angular.module('app', [
   'Property',
   'Model',
   'Landing',
+  'UI',
   'Datasource',
   'ui.bootstrap',
   'ui.utils',

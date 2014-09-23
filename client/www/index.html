@@ -24,12 +24,13 @@
   <link rel="stylesheet" type="text/css" href="./style/style.css">
 
 </head>
-<body ng-app="app">
+<body ng-app="app" ng-controller="SuiteController">
 
 <div class="headerContainer" data-id="AppHeaderContainer">
   <div class="branding">
     <a href="/#studio"><img src="./images/strongloop.svg" alt="Strongloop logo" class="logo"></a>
   </div>
+  <sl-app-selector></sl-app-selector>
   <div class="navButtons">
     <ul>
       <li class="header-help-container">
@@ -110,6 +111,8 @@
 
 <!-- sl ui -->
 <script src="./scripts/sl.ui.js"></script>
+<script src="./scripts/modules/ui/ui.module.js"></script>
+<script src="./scripts/modules/ui/ui.directives.js"></script>
 
 <!-- app -->
 <script src="./scripts/modules/app/app.module.js"></script>
@@ -165,6 +168,8 @@
 <script src="./scripts/modules/landing/landing.services.js"></script>
 <script src="./scripts/modules/landing/landing.controllers.js"></script>
 <script src="./scripts/modules/landing/landing.directives.js"></script>
+
+
 
 </body>
 </html>

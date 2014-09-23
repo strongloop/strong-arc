@@ -1,0 +1,115 @@
+.sl-ui-select {
+  @radius: .4rem;
+  @radius-inside: .3rem;
+
+  border-radius: @radius;
+  display: inline-block;
+  background-color: @ui-select-bg-color;
+  position: relative;
+  cursor: pointer;
+  height: 4.3rem;
+  font-size: @font-size-base;
+
+  &:hover {
+    background-color: @ui-select-hover-bg-color;
+  }
+
+  span.selected {
+    display: block;
+    position: relative;
+    color: @ui-select-color;
+    padding: 1rem 4.5rem 1rem 1.5rem;
+    //min-width: 14rem;
+    position: relative;
+    z-index: 2;
+    border-radius: @radius;
+    background-color: inherit;
+
+    .sl-icon {
+      font-size: .85rem;
+      color: @ui-select-color;
+      position: absolute;
+      top: 1.55rem;
+      right: 1.5rem;
+    }
+  }
+
+  &.open {
+    background-color: @ui-select-nav-bg-color;
+    border-radius: @radius @radius 0 0;
+
+    span.selected, span.selected .sl-icon {
+      color: @link-color;
+    }
+
+    span.selected {
+      .drop-shadow(0, 1px, 3px, 0, 0.35);
+
+      //hide bottom dropshadow on box
+      &::after {
+        display: block;
+        content: '';
+        position: absolute;
+        width: 100%;
+        background: @ui-select-nav-bg-color;
+        height: 7px;
+        bottom: -4px;
+        left: 0;
+      }
+    }
+  }
+
+  .selected {
+    display: block;
+
+    .sl-icon {
+      color: @ui-icon-selected;
+    }
+
+    &:hover {
+      color: @ui-select-hover-color;
+
+      .sl-icon {
+        color: @ui-icon-selected-hover;
+      }
+    }
+  }
+
+  ul {
+    cursor: default;
+    display: block;
+    position: absolute;
+    top: 4.3rem;
+    width: 20rem;
+    padding: 1rem 0;
+    left: 0;
+    background-color: @ui-select-nav-bg-color;
+    border-radius: 0 @radius @radius @radius;
+    .drop-shadow(0, 1px, 3px, 0, 0.35);
+
+    li {
+      display: block;
+      padding: 0 1rem;
+    }
+
+    a {
+      display: block;
+      padding: .5rem 2rem .5rem 1em;
+      text-decoration: none;
+      border-radius: @radius-inside;
+      color: @gray-light;
+      position: relative;
+
+      &:hover {
+        background-color: @ui-select-bg-color;
+        color: @ui-select-color;
+      }
+
+      .sl-icon {
+        position: absolute;
+        right: 10px;
+        top: 8px;
+      }
+    }
+  }
+}
