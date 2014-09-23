@@ -16,9 +16,14 @@ Landing.directive('slAppSelector', [
       restrict: "E",
       replace: true,
       templateUrl: './scripts/modules/landing/templates/landing.app.selector.html',
-      controller: function($scope, $attrs, LandingService, $log, $location){
+      controller: function($scope, $attrs, $log){
         $scope.list = $scope.suiteIA.apps;
         $scope.selected = $scope.suiteIA.selectedApp;
+
+        $scope.isMenuVisible = function(){
+          return $scope.isAuthUser();
+        };
+
       },
       link: function(scope, el, attrs){
         scope.$watch('suiteIA.apps', function(newVal, oldVal){
