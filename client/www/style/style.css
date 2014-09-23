@@ -145,11 +145,11 @@
 }
 .sl-landing-page > header h1 {
   font-weight: 100;
-  font-size: 3rem;
+  font-size: 3.2rem;
 }
 .sl-landing-page > header p {
   font-weight: 100;
-  font-size: 1.6rem;
+  font-size: 2rem;
 }
 .sl-landing-page .sl-apps {
   text-align: center;
@@ -192,16 +192,16 @@
   color: #7dbd33;
 }
 .sl-landing-page .sl-app .app-description {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   margin: .8rem;
 }
 .sl-landing-page .sl-app .app-name {
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: #555555;
   margin-top: .8rem;
 }
 .sl-landing-page .sl-app a.app-launch {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   color: #4a90e2;
 }
 .sl-app-selector {
