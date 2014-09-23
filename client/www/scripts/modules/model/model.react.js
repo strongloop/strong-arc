@@ -108,11 +108,14 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
       }
       xState.activeInstance = tActiveInstance;
       this.setState(xState);
+      this.saveModelInstance();
     }
   },
   saveModelInstance: function(event) {
     var component = this;
-    event.preventDefault();
+    if (event && event.preventDefault) {
+      event.preventDefault();
+    }
     var instance = component.state.activeInstance;
     var scope = component.props.scope;
     scope.$apply(function() {
@@ -305,12 +308,17 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
     return true;
   },
   triggerNewPropertyEditor: function() {
-    var item = {};
-    var that = this;
-    that.props.scope.$apply(function() {
-      that.props.scope.createNewModelProperty();
-    });
-
+    var scope = this.props.scope;
+    if (scope.activeInstance.id !== CONST.NEW_MODEL_PRE_ID){
+      scope.$apply(function() {
+        scope.createNewModelProperty();
+      });
+    }
+    else {
+      scope.$apply(function() {
+        scope.earlyNewPropertyWarning();
+      });
+    }
   },
   toggleModelProperties: function() {
     $('[data-id="ModelPropertyListContainer"]').toggle(250);
@@ -333,21 +341,10 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
       'model-editor-section-icon sl-icon sl-icon-minus-thick': component.state.isPropertiesContainerOpen,
       'model-editor-section-icon sl-icon sl-icon-plus-thick': !component.state.isPropertiesContainerOpen
     });
-    var clickHandler = function(event) {
-      var isOpenState = !component.state.isPropertiesContainerOpen;
-      component.setState({isOpen:isOpenState});
-    };
-
-    var items = [];
-    items = properties.map(function (item) {
+    var items = properties.map(function (item) {
       return  (<ModelPropertyRowDetail modelProperty={item} scope={scope} />);
     });
-    var disabledVal = false;
-    var titleText = 'New Property';
-    if (scope.activeInstance.id === CONST.NEW_MODEL_PRE_ID){
-      disabledVal = true;
-      titleText = 'Save your model before adding properties';
-    }
+
     var retVal = (<div />);
     if (properties) {
       retVal = (
@@ -382,12 +379,8 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
             <ul className="model-instance-property-list">
             {items}
             </ul>
-            <button disabled={disabledVal} title={titleText} type="button" onClick={component.triggerNewPropertyEditor} className="btn-new-model-property" >New Property</button>
-          </div>
-
-
+            <button title="New Property" type="button" onClick={component.triggerNewPropertyEditor} className="btn-new-model-property" >New Property</button>          </div>
         </div>
-
       );
     }
 

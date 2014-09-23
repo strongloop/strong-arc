@@ -50,7 +50,11 @@ Model.directive('modelBaseEditor',[
 Model.directive('modelPropertiesEditor',[
   function() {
     return {
-    //  templateUrl: './scripts/modules/model/templates/model.properties.editor.html',
+      controller: function($scope, growl) {
+        $scope.earlyNewPropertyWarning = function() {
+          growl.addWarnMessage('you should name your model first');
+        };
+      },
       link: function(scope, el, attrs) {
 
         scope.isModelInstancePropertiesActive = true;
