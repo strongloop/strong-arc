@@ -3,7 +3,7 @@ Landing.service('LandingService', [
   '$q',
   '$http',
   function ($q, $http) {
-    var svc = {};
+    var svc = this;
 
     svc.getApps = function () {
       return $http.get('./scripts/modules/landing/landing.data.json')

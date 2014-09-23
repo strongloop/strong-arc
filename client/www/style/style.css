@@ -135,6 +135,21 @@
 /* begin feature abstraction class name wrapping icons.less class names */
 .sl-landing-page {
   padding: 4.7rem 3.13rem;
+  font-weight: 100;
+  color: #555555;
+}
+.sl-landing-page > header {
+  text-align: center;
+  width: 90%;
+  margin: 0 auto 3rem;
+}
+.sl-landing-page > header h1 {
+  font-weight: 100;
+  font-size: 3rem;
+}
+.sl-landing-page > header p {
+  font-weight: 100;
+  font-size: 1.6rem;
 }
 .sl-landing-page .sl-apps {
   text-align: center;
@@ -146,31 +161,20 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   text-align: center;
-  height: 18rem;
+  height: 20rem;
   max-width: 40rem;
   display: block;
   margin: 2.5rem auto 5rem;
   cursor: pointer;
 }
-.sl-landing-page .sl-app .app-image {
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  -moz-background-clip: padding;
-  -webkit-background-clip: padding-box;
-  background-clip: padding-box;
-  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25);
-  -moz-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25);
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25);
-  border: 1px solid #999999;
+.sl-landing-page .sl-app .app-container {
   height: 90%;
   width: 100%;
+  padding: 1.5rem 0;
+  text-align: center;
 }
-.sl-landing-page .sl-app:hover .app-image {
-  -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.35);
-  -moz-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.35);
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.35);
-  border-color: #555555;
+.sl-landing-page .sl-app:hover .app-container {
+  background-color: #eeeeee;
 }
 .sl-landing-page .sl-app:hover a {
   text-decoration: none;
@@ -181,7 +185,24 @@
   box-sizing: border-box;
   display: block;
   width: 100%;
-  padding: 1.25rem;
+}
+.sl-landing-page .sl-app .app-image::before {
+  margin-right: 0;
+  font-size: 4rem;
+  color: #7dbd33;
+}
+.sl-landing-page .sl-app .app-description {
+  font-size: 1.3rem;
+  margin: .8rem;
+}
+.sl-landing-page .sl-app .app-name {
+  font-size: 1.5rem;
+  color: #555555;
+  margin-top: .8rem;
+}
+.sl-landing-page .sl-app a.app-launch {
+  font-size: 1.2rem;
+  color: #4a90e2;
 }
 .sl-app-selector {
   display: inline-block;
@@ -189,7 +210,7 @@
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .sl-landing-page .sl-app {
-    width: 20rem;
+    width: 24rem;
     display: inline-block;
     margin-right: 2.5rem;
     margin-top: 0;
