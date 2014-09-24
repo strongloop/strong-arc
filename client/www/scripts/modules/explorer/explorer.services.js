@@ -8,14 +8,24 @@ Explorer.service('ExplorerService', [
     var svc = {};
 
     svc.getSwaggerResources = function() {
-      var swaggerUrl;
+      var host, port, swaggerUrl;
       var portFilter = { where: { facetName: CONST.APP_FACET, name: 'port' }};
-      return FacetSetting.find({ filter: portFilter }).$promise
+      var hostFilter = { where: { facetName: CONST.APP_FACET, name: 'host' }};
+      return FacetSetting.find({ filter: hostFilter }).$promise
         .then(function(list) {
-          var port = list.length ? list[0].value : 3000;
-          swaggerUrl = 'http://localhost:' + port + '/explorer/resources';
+          // NOTE(bajtos) Windows does not support '0.0.0.0' in URLs
+          // We need to replace that value with `localhost`
+          host = list.length && list[0].value !== '0.0.0.0' ?
+            list[0].value : 'localhost';
+        })
+        .then(function() {
+          return FacetSetting.find({ filter: portFilter }).$promise;
+        })
+        .then(function(list) {
+          port = list.length ? list[0].value : 3000;
         })
         .then(function fetchSwaggerRoot() {
+          swaggerUrl = 'http://' + host + ':' + port + '/explorer/resources';
           return $http.get(swaggerUrl);
         })
         .catch(function(err) {

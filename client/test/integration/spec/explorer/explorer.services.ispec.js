@@ -42,13 +42,17 @@ describe('ExplorerService', function() {
   });
 
   it('builds correct swagger URL', function() {
-    return given.facetConfig('server', { restApiRoot: '/rest', port: 3030 })
+    return given.facetConfig('server', {
+      restApiRoot: '/rest',
+      host: '127.0.0.1',
+      port: 3030
+    })
       .then(given.targetAppIsRunning)
       .then(ExplorerService.getSwaggerResources.bind(ExplorerService))
       .catch(throwHttpError)
       .then(function(swagger) {
         expect(swagger).to.have.property('length', 1);
-        expect(swagger[0].basePath).to.equal('http://localhost:3030/rest');
+        expect(swagger[0].basePath).to.equal('http://127.0.0.1:3030/rest');
       });
   });
 
