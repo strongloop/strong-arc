@@ -13,6 +13,9 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      // == ES5 shims for PhantomJS ==
+      'node_modules/es5-shim/es5-shim.js',
+
       // == subset of scripts from client/www/index.html ==
       'client/www/scripts/vendor/jquery/jquery-2.0.0.js',
 
