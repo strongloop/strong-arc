@@ -37,6 +37,20 @@ given.emptyWorkspace = function() {
   });
 };
 
+given.targetAppIsRunning = function() {
+  return inject(function($http, throwHttpError) {
+    return $http({ method: 'POST', url: '/start' })
+      .catch(throwHttpError);
+  });
+};
+
+given.targetAppIsStopped = function() {
+  return inject(function($http, throwHttpError) {
+    return $http({ method: 'POST', url: '/stop' })
+      .catch(throwHttpError);
+  });
+};
+
 var _givenValueCounter = 0;
 
 given.modelInstance = function(definitionData, configData) {
@@ -70,5 +84,26 @@ given.dataSourceInstance = function(definitionData) {
       connector: 'memory',
     }, definitionData);
     return DataSourceService.createNewDataSourceInstance(definitionData);
+  });
+};
+
+given.facetConfig = function(facetName, settings) {
+  return inject(function($q, FacetSetting) {
+    return $q.all(Object.keys(settings).map(function(key) {
+      var filter = { where: { facetName: facetName, name: key }};
+      return FacetSetting.find(filter).$promise
+        .then(function(list) {
+          if (list.length) {
+            list[0].value = settings[key];
+            return list[0].$save();
+          } else {
+            return FacetSetting.create({
+              facetName: facetName,
+              name: key,
+              value: settings[key]
+            }).$promise;
+          }
+        });
+    }));
   });
 };
