@@ -123,7 +123,7 @@ code {
 .header-help-container{
     font-size: 17pt;
 }
-.headerContainer li{
+.headerContainer li {
 	display: inline-block;
 }
 .navButtons{
@@ -136,6 +136,9 @@ code {
     min-width: 50px;
     top: 4rem;
     left: -1.4rem;
+}
+.dropdown-menu li {
+  display: block;
 }
 .branding{
 	width: 25rem;
