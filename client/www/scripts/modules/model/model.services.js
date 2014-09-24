@@ -519,7 +519,7 @@ Model.service('ModelService', [
           id: dataSourceDef.id
         },{
           modelName: config.name
-        })
+        }).$promise;
       });
     }
 

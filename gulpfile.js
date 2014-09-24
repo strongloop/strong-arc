@@ -3,6 +3,7 @@ var fs = require('fs-extra');
 var path = require('path');
 var exec = require('child_process').exec;
 var gulp = require('gulp');
+var gutil = require('gulp-util');
 var watch = require('gulp-watch');
 var install = require('gulp-install');
 var jshint = require('gulp-jshint');
@@ -11,6 +12,7 @@ var mocha = require('gulp-spawn-mocha');
 var runSequence = require('run-sequence');
 var spawn = require('child_process').spawn;
 var pullDevTools = require('./build-tasks/pull-devtools');
+var setupMysql = require('./build-tasks/setup-mysql');
 
 gulp.task('default', ['build', 'test', 'watch']);
 
@@ -53,6 +55,7 @@ gulp.task('test', ['build'], function(callback) {
   runSequence(
     'jshint',
     'test-server',
+    'setup-mysql',
     'test-client-integration',
     callback);
 });
@@ -103,6 +106,31 @@ gulp.task('test-client-integration', function(callback) {
     else
       callback();
   });
+});
+
+gulp.task('setup-mysql', function(callback) {
+  var ROOT_PASSWORD = process.env.MYSQL_ROOT_PWD || '';
+  setupMysql(ROOT_PASSWORD, function(err) {
+    if (err) logMysqlErrorDescription(err);
+    callback(err);
+  });
+
+  function logMysqlErrorDescription(err) {
+    switch (err.code) {
+      case 'ECONNREFUSED':
+        logRed('Cannot connect to the MySQL server.');
+        logRed('Ensure you have a MySQL server running at your machine.');
+        break;
+      case 'ER_ACCESS_DENIED_ERROR':
+        logRed('Cannot login as MySQL `root` user.');
+        logRed('Provide the password via the env var MYSQL_ROOT_PWD.');
+        break;
+    }
+  }
+
+  function logRed() {
+    gutil.log(gutil.colors.red.apply(gutil.colors, arguments));
+  }
 });
 
 gulp.task('pull-devtools', function(callback) {

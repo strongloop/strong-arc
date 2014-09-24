@@ -62,7 +62,7 @@ given.modelInstance = function(definitionData, configData) {
     configData = angular.extend({
       name: definitionData.name,
       facetName: 'server'
-    });
+    }, configData);
 
     // TODO(bajtos) Use ModelService.createNewModelInstance() instead
     return {
@@ -105,5 +105,19 @@ given.facetConfig = function(facetName, settings) {
           }
         });
     }));
+  });
+};
+
+given.mysqlDataSource = function(dataSourceName) {
+  return inject(function(CONST, DataSourceDefinition) {
+    return DataSourceDefinition.create({
+      facetName: CONST.APP_FACET,
+      name: dataSourceName,
+      connector: 'mysql',
+      // the database and credentials are created by /build-tasks/setup-mysql.js
+      database: 'strong_studio_test',
+      username: 'studio',
+      password: 'zh59jeol'
+    }).$promise;
   });
 };
