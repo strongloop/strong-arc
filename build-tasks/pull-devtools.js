@@ -98,8 +98,8 @@ module.exports = function(DEVTOOLS_DIR, callback) {
         evalFile('common/object.js');
         evalFile('common/utilities.js');
         evalFile('sdk/InspectorBackend.js');
-      } catch (err) {
-        return cb(err);
+      } catch (e) {
+        return cb(e);
       }
 
       /*global InspectorBackendClass */
