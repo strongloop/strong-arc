@@ -6,8 +6,7 @@ Datasource.service('DataSourceService', [
   '$timeout',
   '$q',
   function(DataSourceDefinition, ModelConfig, AppStorageService, $timeout, $q) {
-    var svc = {};
-
+    var svc = this;
 
     svc.createDataSourceInstance = function(targetInstance) {
       var deferred = $q.defer();
@@ -198,8 +197,6 @@ Datasource.service('DataSourceService', [
       );
       return deferred.promise;
     };
-
-
 
     return svc;
   }

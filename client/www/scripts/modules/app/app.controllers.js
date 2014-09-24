@@ -26,12 +26,13 @@ app.controller('StudioController', [
   '$http',
   'IAService',
   'DataSourceService',
+  'DiscoveryService',
   'PropertyService',
   '$location',
   '$timeout',
   'ModelService',
   'growl',
-  function($rootScope, $q, $scope, $state, $http, IAService, DataSourceService, PropertyService, $location, $timeout, ModelService, growl) {
+  function($rootScope, $q, $scope, $state, $http, IAService, DataSourceService, DiscoveryService, PropertyService, $location, $timeout, ModelService, growl) {
 
     // Instance Collections
     $scope.mainNavDatasources = []; // initialized further down
@@ -520,8 +521,47 @@ app.controller('StudioController', [
       $scope.globalExceptionStack = IAService.clearGlobalExceptionStack();
     };
 
-    // Event Listeners
-    // global exception
+
+
+
+
+    /*
+     *
+     * DISCOVERY
+     *
+     * */
+
+    // new schema event
+    $scope.$on('newSchemaModelsEvent', function(event, message){
+      $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
+      $scope.activeInstance = IAService.getActiveInstance();
+      $scope.instanceType = 'model';
+      $scope.activeInstance.type = 'model';
+      // note that the handler is passed the problem domain parameters
+      loadModels();
+      $scope.setApiModelsDirty();
+
+
+    });
+    $scope.createModelsFromDS = function(id) {
+
+      // open a modal window and trigger the discovery flow
+      var modalConfig = DiscoveryService.getDiscoveryModalConfig(id);
+      var modalInstance = IAService.openModal(modalConfig);
+      modalInstance.opened.then(function() {
+        window.setUI();
+      });
+
+    };
+
+
+    /*
+    *
+    * Event Listeners
+    *
+    * keep these to absolute minimum - in principle
+    *
+    * */
     $scope.$on('GlobalExceptionEvent', function(event, data) {
       $scope.globalExceptionStack = IAService.setGlobalException(data);
     });

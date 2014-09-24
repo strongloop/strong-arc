@@ -364,7 +364,7 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
 
                   <span data-ui-type="cell" title="is id" className="props-isid-header table-header-cell">is id</span>
 
-                  <span data-ui-type="cell" title="required" className="props-required-header table-header-cell">Req</span>
+                  <span data-ui-type="cell" title="required" className="props-required-header table-header-cell">Required</span>
 
                   <span data-ui-type="cell" title="is index" className="props-index-header table-header-cell">Index</span>
 
@@ -605,7 +605,7 @@ var DataTypeSelect = (DataTypeSelect = React).createClass({
   render: function() {
     var that = this;
 
-    var val = that.state.modelProperty.type;
+    var val = that.state.modelProperty.type.toLowerCase();
 
     var dataTypes = ['string','array','buffer','date','geopoint','number','boolean','object','any'];
 

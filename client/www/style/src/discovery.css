@@ -11,6 +11,9 @@
     text-align: center;
     font-size:175%;
 }
+.modal-body {
+    padding:8px 20px 20px 20px;
+}
 .discovery-schema-list-grid {
     height: 400px;
 }
@@ -23,11 +26,15 @@
 .discovery-schema-grid-label {
     display:inline-block;
     margin-bottom:8px;
+    padding-top:3rem;
+    color:#444444;
 }
 .discovery-schema-filter-input {
     float:right;
-    border:1px solid #dddddd;
-    border-radius:.2rem;
+    width:20rem;
+    border:1px solid #cccccc;
+    border-radius:2rem;
+    padding:.5rem;
 
 }
 .model-schema-editor-source-table-table th {
@@ -60,17 +67,72 @@
 .discovery-target-model-table .table-header {
     background-color: #eaeaea;
     border-bottom: 1px solid #d4d4d4;
-    font-weight:bold;
 }
 .discovery-target-model-table [data-ui-type="cell"] {
-    padding:5px;
-    border:1px solid #eeeeee;
+    padding: 5px;
+    border: 1px solid #eeeeee;
+}
+.discovery-schema-property-select-col {
+    width:3rem;
+    text-align: center;
+}
+.discovery-schema-property-checkbox {
+    display:inline-block;
+    margin:0 auto 0 auto;
+}
+.discovery-schema-property-checkbox input {
+    display:none;
 }
 .discovery-target-model-table [data-ui-type="row"]:nth-of-type(odd) {
     background-color: rgb(243, 243, 243);
 }
+.discovery-model-preview-modelname {
+    font-size:140%;
+}
+.ngSelectionCheckbox{
+    /*display:none;*/
+}
+.discovery-grid-container div .select-item-cell{
+    vertical-align: middle;
+    text-align: center;
+    padding-top:3px;
+    padding-left:3px;
+}
+.modal-header {
+    background-color: #7DBD33;
+    color:#ffffff;
+    border-radius:1.4rem 1.4rem 0 0;
 
+}
+.modal-content {
+    border-radius:1.4rem;
+}
+.discovery-grid-container .ngHeaderContainer {
+    background-color: #dddddd;
+    color:#111111;
+}
+.discovery-grid-container div .select-item-cell span{
+    display:inline-block;
+}
+.discovery-grid-container div .select-item-cell [type="checkbox"]{
+    display:none;
+}
+.discovery-grid-container div.selected .select-item-cell{
+    color:#4a90e2;
+}
+.discovery-grid-container div .select-item-cell{
+    color:rgba(100, 100, 100, .25);
+}
+/*.discovery-grid-container div.selected .select-item-cell .checkbox-icon:before{*/
+    /*content: "\e614";*/
+/*}*/
 
+/*.sl-icon-checkmark:before {*/
+
+/*}*/
+/*.sl-icon-checkmark-outline:before {*/
+    /*content: "\e615";*/
+/*}*/
 /*Hack for demo*/
 
 /* The "cancel" button in discovery flow */
