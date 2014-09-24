@@ -1,11 +1,7 @@
 // Copyright StrongLoop 2014
 app.controller('SuiteController', ['$scope', 'LandingService', 'ProfileService', function($scope, LandingService, ProfileService){
   $scope.suiteIA = {
-    apps: [],
-    selectedApp: {
-      id: 'none',
-      name: 'Select Module'
-    }
+    apps: []
   };
 
   $scope.isAuthUser = function(){

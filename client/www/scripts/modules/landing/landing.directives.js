@@ -21,7 +21,7 @@ Landing.directive('slAppSelector', [
         $scope.selected = $scope.suiteIA.selectedApp;
 
         $scope.isMenuVisible = function(){
-          return $scope.isAuthUser();
+          return $scope.isAuthUser() && $scope.suiteIA.selectedApp;
         };
 
       },
