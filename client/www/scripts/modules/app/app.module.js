@@ -77,7 +77,19 @@ app.config([
       state('studio', {
         url: '/studio',
         templateUrl: './scripts/modules/app/templates/studio.main.html',
-        controller: 'StudioController'
+        controller: 'StudioController',
+        resolve: {
+          // Wait for all metadata requests to finish
+          'studioMetadataResults': [
+            'modelPropertyTypes',
+            '$q',
+            function waitForAllStudioMetadata(modelPropertyTypes, $q) {
+              return $q.all([
+                modelPropertyTypes.$promise
+              ]);
+            }
+          ]
+        }
       })
       .state('landing', {
         url: '/landing',

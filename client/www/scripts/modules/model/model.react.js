@@ -607,7 +607,7 @@ var DataTypeSelect = (DataTypeSelect = React).createClass({
 
     var val = that.state.modelProperty.type.toLowerCase();
 
-    var dataTypes = ['string','array','buffer','date','geopoint','number','boolean','object','any'];
+    var dataTypes = this.props.scope.modelPropertyTypes;
 
     var options = dataTypes.map(function(type) {
       return (<option value={type}>{type}</option>)
