@@ -90,58 +90,25 @@ Discovery.controller('DiscoveryMainController', [
           $scope.currentDiscoveryStep = 'initialSchemaView';
           $scope.showDiscoveryBackButton = true;
           $scope.targetGenerateSrcTables.map(function(table, index) {
+            var dSource = dsName.split('.')[1];
+            var selectedProperties = $scope.masterSelectedProperties[index];
+            DiscoveryService.createModelFromSchema(dsName, table, selectedProperties)
+              .then(function handleNewModelFromSchema(modelId) {
+                var instance = ModelService.getModelInstanceById(modelId)
+                  .then(function openNewModelInstance(instance) {
+                    IAService.addInstanceRef(instance);
+                    IAService.setActiveInstance(instance);
+                    $rootScope.$broadcast('newSchemaModelsEvent', {});
 
-          table.facetName = CONST.NEW_MODEL_FACET_NAME;
-          var dSource = dsName.split('.')[1];
-          var instance = {
-            name: table.name,
-            definition: table,
-            type: CONST.MODEL_TYPE,
-            config: {
-              dataSource: dSource
-            }
-          };
-
-          // generate the model instance
-          ModelService.createModelInstance(instance).
-            then(function(instance) {
-              var modelId = instance.id;
-
-              // create properties
-              var propertiesCollection = [];
-              var selectedProperties = $scope.masterSelectedProperties[index];
-              var selectedPropNames = [];
-              for (var i = 0;i < selectedProperties.length;i++) {
-                selectedPropNames.push(selectedProperties[i].name);
-                var targetProperty = selectedProperties[i];
-                targetProperty.modelId = modelId;
-                targetProperty.facetName = CONST.NEW_MODEL_FACET_NAME;
-                if(targetProperty.id) {
-                  targetProperty.isId = true;
-                }
-                propertiesCollection.push(PropertyService.createModelProperty(targetProperty).
-                  then(function(property){
-                    return property;
-                  }).
-                  catch(function(error) {
-                    console.warn('property not created: ' + error);
-                    return error;
                   })
-                );
-              }
+                  .catch(function handleNewModelInstanceError(error) {
+                    console.warn('bad get new model instance: ' + error);
+                  });
+              })
+              .catch(function handleNewModelFromSchemaError(error) {
+                console.warn('bad create model from schema: ' + error);
+              });
 
-              $q.all(propertiesCollection)
-                .then(function(response) {
-                  instance.properties = response;
-                  IAService.addInstanceRef(instance);
-                  IAService.setActiveInstance(instance);
-                  $rootScope.$broadcast('newSchemaModelsEvent', {});
-                }).
-                catch(function(error) {
-                  console.warn('bad q.all model properties: ' + error);
-                });
-              }
-            );
           });
           // kill the modal
           $scope.cancel();
