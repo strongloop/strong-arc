@@ -59,6 +59,7 @@ gulp.task('test', ['build'], function(callback) {
 
 gulp.task('jshint', function() {
   return gulp.src([
+    'gulpfile.js',
     'build-tasks/**/*.js',
     'server/**/*.js',
     'client/test/**/*.js',
