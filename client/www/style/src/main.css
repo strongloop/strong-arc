@@ -130,7 +130,7 @@ code {
 	width: 10rem;
 	position: absolute;
 	right: 2rem;
-	margin-top: 0.7rem;
+	top: 3rem;
 }
 .dropdown-menu {
     min-width: 50px;
