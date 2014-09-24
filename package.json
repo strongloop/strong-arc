@@ -22,6 +22,7 @@
   "devDependencies": {
     "async": "~0.9.0",
     "chai": "^1.9.1",
+    "es5-shim": "^4.0.3",
     "fs-extra": "~0.11.0",
     "gulp": "^3.6.2",
     "gulp-changed": "^0.3.0",
@@ -41,8 +42,10 @@
     "karma-mocha": "~0.1.9",
     "karma-mocha-reporter": "^0.3.1",
     "karma-phantomjs-launcher": "~0.1.4",
+    "loopback-connector-mysql": "^1.4.7",
     "loopback-explorer": "^1.2.9",
     "mocha": "^1.21.4",
+    "mysql": "^2.5.1",
     "protractor": "^0.22.0",
     "run-sequence": "^0.3.6",
     "supertest": "^0.13.0",

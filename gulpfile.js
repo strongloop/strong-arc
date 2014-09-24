@@ -3,15 +3,16 @@ var fs = require('fs-extra');
 var path = require('path');
 var exec = require('child_process').exec;
 var gulp = require('gulp');
-var watch = require('gulp-watch');
 var gutil = require('gulp-util');
+var watch = require('gulp-watch');
 var install = require('gulp-install');
 var jshint = require('gulp-jshint');
 var less = require('gulp-less');
 var mocha = require('gulp-spawn-mocha');
 var runSequence = require('run-sequence');
 var spawn = require('child_process').spawn;
-var svn = require('svn-interface');
+var pullDevTools = require('./build-tasks/pull-devtools');
+var setupMysql = require('./build-tasks/setup-mysql');
 
 gulp.task('default', ['build', 'test', 'watch']);
 
@@ -54,12 +55,15 @@ gulp.task('test', ['build'], function(callback) {
   runSequence(
     'jshint',
     'test-server',
+    'setup-mysql',
     'test-client-integration',
     callback);
 });
 
 gulp.task('jshint', function() {
   return gulp.src([
+    'gulpfile.js',
+    'build-tasks/**/*.js',
     'server/**/*.js',
     'client/test/**/*.js',
     'devtools/server/**/*.js',
@@ -104,115 +108,32 @@ gulp.task('test-client-integration', function(callback) {
   });
 });
 
-gulp.task('pull-devtools', function(callback) {
-  var REPO_URL = 'http://src.chromium.org/blink/branches/chromium';
-  var DEVTOOLS_DIR = path.resolve(__dirname, 'devtools');
-  var FRONTEND_DIR = path.resolve(DEVTOOLS_DIR, 'frontend');
-  var PROTOCOL_FILE = path.resolve(DEVTOOLS_DIR, 'protocol.json');
-
-  var latestBranch;
-
-  async.series([
-    removeOldFiles,
-    fetchBranchFiles,
-    writeVersionFile,
-    generateProtocolCommands,
-  ], function(err) {
+gulp.task('setup-mysql', function(callback) {
+  var ROOT_PASSWORD = process.env.MYSQL_ROOT_PWD || '';
+  setupMysql(ROOT_PASSWORD, function(err) {
+    if (err) logMysqlErrorDescription(err);
     callback(err);
   });
 
-  function fetchLatestBranchId(cb) {
-    svn.list(REPO_URL, function(err, result) {
-      if (err) return callback(err);
-      var branches = result.lists.list.entry
-        // get the branch id (number)
-        .map(function(e) {
-          return +e.name._text;
-        })
-        // filter out non-numbers
-        .filter(function(n) {
-          return n;
-        });
-
-      latestBranch = Math.max.apply(Math, branches);
-      gutil.log('Using branch', gutil.colors.yellow(latestBranch))
-      cb();
-    });
+  function logMysqlErrorDescription(err) {
+    switch (err.code) {
+      case 'ECONNREFUSED':
+        logRed('Cannot connect to the MySQL server.');
+        logRed('Ensure you have a MySQL server running at your machine.');
+        break;
+      case 'ER_ACCESS_DENIED_ERROR':
+        logRed('Cannot login as MySQL `root` user.');
+        logRed('Provide the password via the env var MYSQL_ROOT_PWD.');
+        break;
+    }
   }
 
-  function removeOldFiles(cb) {
-    fs.remove(FRONTEND_DIR, function(err) {
-      if (err) cb(err);
-      fs.remove(PROTOCOL_FILE, cb);
-    });
+  function logRed() {
+    gutil.log(gutil.colors.red.apply(gutil.colors, arguments));
   }
+});
 
-  function fetchBranchFiles(cb) {
-    var branchUrl = REPO_URL + '/' + latestBranch;
-    var devtoolsUrl = branchUrl + '/Source/devtools';
-
-    gutil.log('Pulling front_end files...');
-    svn.export(
-      [devtoolsUrl + '/front_end', FRONTEND_DIR],
-      function(err, result) {
-        if (err) return cb(new Error('SVN failed: ' + result));
-        gutil.log('Pulling protocol.json');
-        svn.export(
-          [devtoolsUrl + '/protocol.json', DEVTOOLS_DIR],
-          function(err, result) {
-            if (err) return cb(new Error('SVN failed: ' + result));
-            cb();
-          });
-      });
-  }
-
-  function writeVersionFile(cb) {
-    gutil.log('Writing version file');
-    fs.writeFile(
-      path.resolve(FRONTEND_DIR, 'version.txt'),
-        'Branch: ' + latestBranch + '\nRepository: ' + REPO_URL,
-      'utf-8',
-      cb);
-  }
-
-  function generateProtocolCommands(cb) {
-    gutil.log('Generating InspectorBackendCommands.js');
-    var vm = require('vm');
-    fs.readJsonFile(PROTOCOL_FILE, function(err, protocol) {
-      if (err) return cb(err);
-
-      function evalFile(filePath) {
-        filePath = path.resolve(FRONTEND_DIR, filePath);
-        var source = fs.readFileSync(filePath, 'utf8');
-        vm.runInThisContext(source, filePath);
-      }
-
-      // TODO(bajtos) Evaluate all scripts in a new context
-      /*global self:true, WebInspector:true, window:true */
-      self = {};
-      WebInspector = {};
-      window = global;
-
-      // TODO(bajtos) Rework to async code(?)
-      try {
-        evalFile('common/object.js');
-        evalFile('common/utilities.js');
-        evalFile('sdk/InspectorBackend.js');
-      } catch (err) {
-        return cb(err);
-      }
-
-      /*global InspectorBackendClass */
-      var commands = InspectorBackendClass._generateCommands(protocol);
-      var header = '// Auto-generated.\n' +
-        '// Run `gulp pull-devtools` to update.\n' +
-        '\n';
-
-      fs.writeFile(
-        path.resolve(FRONTEND_DIR, 'InspectorBackendCommands.js'),
-          header + commands,
-        'utf8',
-        cb);
-    });
-  }
+gulp.task('pull-devtools', function(callback) {
+  var DEVTOOLS_DIR = path.resolve(__dirname, 'devtools');
+  pullDevTools(DEVTOOLS_DIR, callback);
 });
