@@ -121,3 +121,14 @@ given.mysqlDataSource = function(dataSourceName) {
     }).$promise;
   });
 };
+
+given.facetIsMissing = function(facetName) {
+  return inject(function($http) {
+    return $http.post('/delete-facet/' + facetName)
+      .then(function() {
+        return inject(function(Facet) {
+          return Facet.find().$promise;
+        });
+      });
+  });
+};

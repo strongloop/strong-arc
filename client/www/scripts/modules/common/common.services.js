@@ -401,3 +401,35 @@ Common.service('SampleDataService', [
      return svc;
   }
 ]);
+
+Common.service('WorkspaceService', [
+  'Facet',
+  '$q',
+  function WorkspaceService(Facet, $q) {
+    var svc = this;
+
+    svc.validate = function() {
+      return Facet.find()
+        .$promise
+        .then(function(list) {
+          var facetNames = list.map(function(f) { return f.name; });
+          var errorMessage;
+          if (facetNames.indexOf('server') === -1) {
+            errorMessage = 'Missing `server` facet.';
+          } else if (facetNames.indexOf('common') === -1) {
+            errorMessage = 'Missing `common` facet.';
+          }
+
+          if (!errorMessage) {
+            svc.validationError = null;
+            return true;
+          }
+
+          var error = new Error(errorMessage);
+          error.code = 'E_INVALID_WORKSPACE';
+          svc.validationError = error;
+          return false;
+        });
+    };
+  }
+]);
