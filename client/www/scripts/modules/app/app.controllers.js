@@ -1,5 +1,5 @@
 // Copyright StrongLoop 2014
-app.controller('SuiteController', ['$scope', 'LandingService', 'ProfileService', function($scope, LandingService, ProfileService){
+app.controller('SuiteController', ['$scope', '$rootScope', 'LandingService', 'ProfileService', function($scope, $rootScope, LandingService, ProfileService){
   $scope.suiteIA = {
     apps: []
   };
@@ -12,6 +12,12 @@ app.controller('SuiteController', ['$scope', 'LandingService', 'ProfileService',
     .then(function(data){
       $scope.suiteIA.apps = data;
     });
+
+  $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+    //clear the selected app from previous page
+    delete $scope.suiteIA.selectedApp;
+  });
+
 }]);
 
 app.controller('StudioController', [
