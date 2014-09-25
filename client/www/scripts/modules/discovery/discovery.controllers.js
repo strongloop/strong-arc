@@ -33,6 +33,9 @@ Discovery.controller('DiscoveryMainController', [
           $scope.schemaSrcTables = schemaData;  // trigger the grid display
           $scope.isDsTableGridVisible = true;
           $scope.isDsTablesLoadingIndicatorVisible = false;
+
+          //todo: work around for step1 not showing data grid
+          $(window).trigger('resize');
         });
     }
 
