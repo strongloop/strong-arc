@@ -274,8 +274,7 @@ Main Search
     visibility:hidden;
 }
 
-/*Hack for demo*/
-.btn-primary {
+[data-id="MainControlsContainer"] .btn-primary {
     color: #ffffff;
     background-color: #7DBD33;
     width: 12.5rem;
@@ -314,12 +313,20 @@ Main Search
     color: #ffffff;
 	border-bottom: 3px solid #66992D;
 }
-.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {
-	background: transparent;
-	color: white;
-	/*color: #689d2a;
-	background-color: #ebebeb;
-	border-color: #adadad;*/
+/*.main-controls-container .btn-default:hover,*/
+/*.main-controls-container .btn-default:focus,*/
+/*.main-controls-container .btn-default:active,*/
+/*.main-controls-container .btn-default.active, .open .dropdown-toggle.btn-default {*/
+    /*background: transparent;*/
+    /*color: white;*/
+/*}*/
+[data-id="MainNavContainer"] .btn-default:hover,
+    [data-id="MainNavContainer"] .btn-default:focus,
+    [data-id="MainNavContainer"] .btn-default:active,
+    [data-id="MainNavContainer"] .btn-default.active,
+    .open .dropdown-toggle.btn-default {
+    background: transparent;
+    color: white;
 }
 
 [data-id="MainControlsContainer"] {

@@ -44,12 +44,12 @@ Discovery.directive('slDiscoveryModelPreview', [
               tableName: tables[i].name,
               data: 'masterProperties[' + i + ']', // trick to render multiple ng-grids
               columnDefs: [
-                {field: 'name', displayName: 'Name'},
-                {field: 'type', displayName: 'Type'},
-                {field: 'id', displayName: 'Is Id', cellFilter: 'isIdFilter'},
-                {field: 'precision', displayName: 'Precision'},
-                {field: 'required', displayName: 'Required'},
-                {field: 'scale', displayName: 'Scale'}
+                {field: 'name', displayName: 'Name', cellClass: 'discovery-data-cell'},
+                {field: 'type', displayName: 'Type', cellClass: 'discovery-data-cell'},
+                {field: 'id', displayName: 'Is Id', cellFilter: 'isIdFilter', cellClass: 'discovery-data-cell'},
+                {field: 'precision', displayName: 'Precision', cellClass: 'discovery-data-cell'},
+                {field: 'required', displayName: 'Required', cellClass: 'discovery-data-cell'},
+                {field: 'scale', displayName: 'Scale', cellClass: 'discovery-data-cell'}
               ],
               checkboxHeaderTemplate: '<input class="ngSelectionHeader" type="checkbox" ng-model="allSelected" ng-change="toggleSelectAll(allSelected)"/>',
               checkboxCellTemplate: '<label class="select-item-cell"><span class="sl-icon sl-icon-checkmark"></span><input type="checkbox" /></label>',
@@ -57,6 +57,7 @@ Discovery.directive('slDiscoveryModelPreview', [
               selectWithCheckboxOnly: false,
               selectedItems:  scope.masterSelectedProperties[i],
               multiSelect: true,
+              rowHeight: 40,
               filterOptions: scope.filterOptions,
               plugins: [new ngGridFlexibleHeightPlugin()]
             });
@@ -76,8 +77,8 @@ Discovery.directive('slDiscoveryModelPreview', [
       return false;
     };
   });
-// control disabled state of wizard buttons
-Discovery.directive('slDiscoveryDisabledAttrib', [
+// control disabled state of next wizard buttons
+Discovery.directive('slDiscoveryNextDisabledAttrib', [
   function() {
     return {
       restrict: 'A',
@@ -89,6 +90,32 @@ Discovery.directive('slDiscoveryDisabledAttrib', [
 
         el.attr('disabled', 'disabled');
         scope.$watch('tableSelections', function(items) {
+          if (items){
+            if (items.length && items.length > 0) {
+              el.removeAttr('disabled');
+            }
+            else{
+              el.attr('disabled', 'disabled');
+            }
+          }
+        }, true);
+      }
+    };
+  }
+]);
+// control disabled state of next wizard buttons
+Discovery.directive('slDiscoverySelectallDisabledAttrib', [
+  function() {
+    return {
+      restrict: 'A',
+      replace: false,
+      controller: function($scope) {
+        $scope.isDisabled = true;
+      },
+      link: function(scope, el, attrs) {
+
+        el.attr('disabled', 'disabled');
+        scope.$watch('schemaSrcTables', function(items) {
           if (items){
             if (items.length && items.length > 0) {
               el.removeAttr('disabled');
