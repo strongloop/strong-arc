@@ -91,6 +91,10 @@ app.config([
           ]
         }
       })
+      .state('invalid-workspace', {
+        templateUrl: './scripts/modules/app/templates/studio.invalid.html',
+        controller: 'InvalidWorkspaceController'
+      })
       .state('landing', {
         url: '/landing',
         templateUrl: './scripts/modules/landing/templates/landing.main.html',

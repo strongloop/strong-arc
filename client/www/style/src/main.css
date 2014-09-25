@@ -357,3 +357,20 @@ Validation CSS
     border: none;
 }
 
+.error-screen {
+  color: #d0021b;
+  padding: 2rem 3rem;
+  border: 1px solid #d0021b;
+  border-radius: 0.5rem;
+  background-color: rgba(208, 2, 27, 0.1);
+  margin: 10rem auto;
+  width: 80%; /* value of your choice which suits your alignment */;
+}
+
+.error-screen .error-details {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 2rem;
+  font-family: monospace;
+  white-space:pre;
+}

@@ -24,11 +24,12 @@ app.controller('StudioController', [
   'DataSourceService',
   'DiscoveryService',
   'PropertyService',
+  'WorkspaceService',
   '$location',
   '$timeout',
   'ModelService',
   'growl',
-  function($rootScope, $q, $scope, $state, $http, IAService, DataSourceService, DiscoveryService, PropertyService, $location, $timeout, ModelService, growl) {
+  function($rootScope, $q, $scope, $state, $http, IAService, DataSourceService, DiscoveryService, PropertyService, WorkspaceService, $location, $timeout, ModelService, growl) {
 
     // Instance Collections
     $scope.mainNavDatasources = []; // initialized further down
@@ -67,6 +68,13 @@ app.controller('StudioController', [
         // initialize active instance
         $scope.activeInstance = IAService.getActiveInstance();
         $rootScope.$broadcast('IANavEvent');
+      }
+    });
+
+    // Validate the workspace
+    WorkspaceService.validate().then(function(isValid) {
+      if (!isValid) {
+        $state.go('invalid-workspace');
       }
     });
 
@@ -661,5 +669,13 @@ app.controller('DevToolsController',[
       "id": "devtools",
       "name": "Profiler"
     };
+  }
+]);
+
+app.controller('InvalidWorkspaceController', [
+  'WorkspaceService',
+  '$scope',
+  function(WorkspaceService, $scope) {
+    $scope.error = WorkspaceService.validationError;
   }
 ]);
