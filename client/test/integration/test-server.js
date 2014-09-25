@@ -16,9 +16,16 @@ process.env.WORKSPACE_DIR = SANDBOX;
 // let's use a similar port number for the Studio server
 var port = 9800;
 
+var sandboxNeedsFullReset = false;
+
 // Inject `POST /reset` to reset the sandbox to initial state
 studio.post('/reset', function(req, res, next) {
   console.log('--reset-start--');
+
+  if (sandboxNeedsFullReset) {
+    fs.copySync(EMPTY_PROJECT, SANDBOX);
+    sandboxNeedsFullReset = false;
+  }
 
   var modelsToReset = workspace.models().filter(function(m) {
     return m !== 'PackageDefinition' && m !== 'Facet' && m !== 'ConfigFile';
@@ -40,7 +47,20 @@ studio.post('/reset', function(req, res, next) {
     },
     function(err) {
       console.log('--reset-done--');
-      if (err) next(err);
+      if (err) return next(err);
+      res.json({ success: true });
+    });
+});
+
+studio.post('/delete-facet/:facetName', function(req, res, next) {
+  console.log('--delete-facet-start--');
+  var facetName = req.params.facetName;
+  fs.remove(
+    path.resolve(SANDBOX, req.params.facetName),
+    function(err) {
+      console.log('--delete-facet-done--');
+      sandboxNeedsFullReset = true;
+      if (err) return next(err);
       res.json({ success: true });
     });
 });
