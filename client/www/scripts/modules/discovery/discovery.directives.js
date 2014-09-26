@@ -92,10 +92,10 @@ Discovery.directive('slDiscoveryNextDisabledAttrib', [
         scope.$watch('tableSelections', function(items) {
           if (items){
             if (items.length && items.length > 0) {
-              el.removeAttr('disabled');
+              el.prop('disabled', false);
             }
-            else{
-              el.attr('disabled', 'disabled');
+            else {
+              el.prop('disabled', true);
             }
           }
         }, true);
@@ -118,10 +118,10 @@ Discovery.directive('slDiscoverySelectallDisabledAttrib', [
         scope.$watch('schemaSrcTables', function(items) {
           if (items){
             if (items.length && items.length > 0) {
-              el.removeAttr('disabled');
+              el.prop('disabled', false);
             }
             else{
-              el.attr('disabled', 'disabled');
+              el.prop('disabled', true);
             }
           }
         }, true);
