@@ -33,7 +33,7 @@ Discovery.service('DiscoveryService', [
       DataSourceService.getDataSourceInstanceById(dsId).
         then(function (dsInstance) {
           var pStack = tables.map(function(table) {
-            return new dsInstance.definition.$prototype$discoverModelDefinition({tableName: table.name, id: dsId},
+            return new dsInstance.definition.$prototype$discoverModelDefinition({tableName: table.name, id: dsId, options: {schema: table.owner}},
               function(modelDef) {
                 return {data:modelDef.status};
               },
