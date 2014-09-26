@@ -26,6 +26,7 @@ var app = angular.module('app', [
   'ngResource',
   'ngSanitize',
   'ngAnimate',
+  'angularSpinner',
   'ngCookies',
   'angular-growl',
   'lbServices',
