@@ -88,7 +88,7 @@ Discovery.directive('slDiscoveryNextDisabledAttrib', [
       },
       link: function(scope, el, attrs) {
 
-        el.attr('disabled', 'disabled');
+        el.prop('disabled', true);
         scope.$watch('tableSelections', function(items) {
           if (items){
             if (items.length && items.length > 0) {
@@ -114,7 +114,7 @@ Discovery.directive('slDiscoverySelectallDisabledAttrib', [
       },
       link: function(scope, el, attrs) {
 
-        el.attr('disabled', 'disabled');
+        el.prop('disabled', true);
         scope.$watch('schemaSrcTables', function(items) {
           if (items){
             if (items.length && items.length > 0) {
