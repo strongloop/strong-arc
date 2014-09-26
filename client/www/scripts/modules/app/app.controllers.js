@@ -1,5 +1,5 @@
 // Copyright StrongLoop 2014
-app.controller('SuiteController', ['$scope', '$rootScope', 'LandingService', 'ProfileService', function($scope, $rootScope, LandingService, ProfileService){
+app.controller('SuiteController', ['$scope', 'LandingService', 'ProfileService', function($scope, LandingService, ProfileService){
   $scope.suiteIA = {
     apps: []
   };
@@ -12,12 +12,6 @@ app.controller('SuiteController', ['$scope', '$rootScope', 'LandingService', 'Pr
     .then(function(data){
       $scope.suiteIA.apps = data;
     });
-
-  $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-    //clear the selected app from previous page
-    delete $scope.suiteIA.selectedApp;
-  });
-
 }]);
 
 app.controller('StudioController', [
@@ -48,10 +42,7 @@ app.controller('StudioController', [
       connectionTestResponse:''
     };
 
-    $scope.suiteIA.selectedApp =  {
-      "id": "studio",
-      "name": "API Composer"
-    };
+    $scope.suiteIA.pageId = 'studio';
 
     // list of open instances (models/datasources)
     $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
@@ -665,9 +656,6 @@ app.controller('DevToolsController',[
   '$location',
   function($scope, $location){
 
-    $scope.suiteIA.selectedApp = {
-      "id": "devtools",
-      "name": "Profiler"
-    };
+    $scope.suiteIA.pageId = 'devtools';
   }
 ]);

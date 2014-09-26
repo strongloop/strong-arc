@@ -11,7 +11,6 @@ Profile.controller('ProfileMainController', [
   function ($rootScope, ProfileService, $scope, ProfileService) {
 
     $scope.viewTitle = 'Profile';
-
   }
 ]);
 Profile.controller('LoginController', [
@@ -19,7 +18,7 @@ Profile.controller('LoginController', [
   '$location',
   'ProfileService',
   function ($scope, $location, ProfileService) {
-
+    $scope.suiteIA.pageId = 'login';
   }
 ]);
 Profile.controller('RegisterController', [
@@ -28,6 +27,7 @@ Profile.controller('RegisterController', [
   'User',
   function ($scope, $location, User) {
 
+    $scope.suiteIA.pageId = 'register';
     $scope.registration = {};
 
     $scope.register = function () {

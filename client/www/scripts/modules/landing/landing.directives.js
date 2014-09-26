@@ -33,6 +33,21 @@ Landing.directive('slAppSelector', [
         scope.$watch('suiteIA.selectedApp', function(newVal){
           scope.selected = newVal;
         }, true);
+
+        scope.$watch('suiteIA.pageId', function(newVal){
+
+          //clear previous page's value
+          delete scope.suiteIA.selectedApp;
+
+          //set the selected app for the page based on its pageId
+          //if there's an app for it
+          scope.suiteIA.apps.forEach(function(app, i){
+            if (app.id === scope.suiteIA.pageId) {
+                scope.suiteIA.selectedApp = app;
+            }
+          });
+
+        });
       }
     }
   }
