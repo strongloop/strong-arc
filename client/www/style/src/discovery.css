@@ -1,7 +1,11 @@
 /* @override
 	http://0.0.0.0:3003/style/dev/discovery.css */
 
-
+.discovery-modal-container .btn-default {
+    color: #333333;
+    background-color: #eeeeee;
+    border-color: #cccccc;
+}
 /*
 
     Discovery
@@ -14,6 +18,26 @@
 .modal-body {
     padding:8px 20px 20px 20px;
 }
+.discovery-modal-container .loading-indicator {
+    width: 50px;
+    height: 50px;
+    margin: 35px auto 0 auto;
+}
+.discovery-modal-container .modal-footer {
+    text-align:left;
+}
+.discovery-modal-container .modal-footer form {
+    float:right;
+}
+
+.discovery-modal-container button.btn-select-all .sl-icon {
+    top:2px;
+    color:rgba(100, 100, 100, .25);
+}
+.discovery-modal-container button.is-all-selected .sl-icon {
+    color:#4a90e2;
+}
+
 .discovery-schema-list-grid {
     height: 400px;
 }
@@ -92,12 +116,7 @@
 .ngSelectionCheckbox{
     /*display:none;*/
 }
-.discovery-grid-container div .select-item-cell{
-    vertical-align: middle;
-    text-align: center;
-    padding-top:3px;
-    padding-left:3px;
-}
+
 .modal-header {
     background-color: #7DBD33;
     color:#ffffff;
@@ -107,22 +126,47 @@
 .modal-content {
     border-radius:1.4rem;
 }
+.discovery-grid-container .ngViewport {
+    overflow-x:hidden;
+}
+.discovery-grid-container div label.select-item-cell{
+    color:rgba(100, 100, 100, .25);
+    display:inline-block;
+    position:absolute;
+    top:10px;
+    left:3px;
+}
+.discovery-grid-container .discovery-data-cell {
+    padding-left:1rem;
+    vertical-align: middle;
+
+}
+.discovery-grid-container .discovery-data-cell span {
+    display:inline-block;
+    font-size:122%;
+}
 .discovery-grid-container .ngHeaderContainer {
+    font-weight:normal;
+    font-size:90%;
     background-color: #dddddd;
     color:#111111;
 }
-.discovery-grid-container div .select-item-cell span{
-    display:inline-block;
+.discovery-grid-container .ngHeaderContainer .ngHeaderCell {
+    margin-left:.3rem;
 }
+.discovery-schema-list-grid.discovery-grid-container .ngHeaderContainer .ngHeaderCell.col0 input[type="checkbox"]{
+    display:none;
+}
+
+
+
 .discovery-grid-container div .select-item-cell [type="checkbox"]{
     display:none;
 }
 .discovery-grid-container div.selected .select-item-cell{
     color:#4a90e2;
 }
-.discovery-grid-container div .select-item-cell{
-    color:rgba(100, 100, 100, .25);
-}
+
 /*.discovery-grid-container div.selected .select-item-cell .checkbox-icon:before{*/
     /*content: "\e614";*/
 /*}*/
@@ -133,29 +177,4 @@
 /*.sl-icon-checkmark-outline:before {*/
     /*content: "\e615";*/
 /*}*/
-/*Hack for demo*/
 
-/* The "cancel" button in discovery flow */
-[ng-click="cancel()"]{
-	background: #7dbc33;
-	border: 1px solid #507a21;
-	color: #ffffff;
-	width: 10rem;
-	height: 4rem;
-}
-/*The "Next" button in Discovery Flow*/
-[ng-click="discoveryNexBtnClicked()"]{
-	background: #7dbc33;
-	border: 1px solid #507a21;
-	color: #ffffff;
-	width: 10rem;
-	height: 4rem;
-}
-/* The "Back" button in Discovery Flow */
-[ng-click="discoveryBackBtnClicked()"]{
-	background: #7dbc33;
-	border: 1px solid #507a21;
-	color: #ffffff;
-	width: 10rem;
-	height: 4rem;
-}

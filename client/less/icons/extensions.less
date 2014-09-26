@@ -2,3 +2,17 @@
 .sl-icon-contextmenu:before {
   &:extend(.sl-icon-box-arrow-down:before);
 }
+
+.discovery-grid-container .ngRow {
+  .sl-icon:before {
+      &:extend(.sl-icon-checkmark-outline:before);
+  }
+
+  &.selected {
+    .sl-icon:before {
+      &:extend(.sl-icon-checkmark:before);
+      color:#4a90e2;
+    }
+  }
+}
+

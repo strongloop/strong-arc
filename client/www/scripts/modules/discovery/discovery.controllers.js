@@ -13,11 +13,15 @@ Discovery.controller('DiscoveryMainController', [
     $scope.isDsTablesLoadingIndicatorVisible = true;
     $scope.currentDiscoveryStep = 'selectSourceTables';
     $scope.showDiscoveryBackButton = false;
+    $scope.showSelectAllButton = true;
+    $scope.isSelectAllButtonDisabled = true;
     $scope.tableSelections = []; // note also used to disable wizard buttons
     $scope.targetTables = [];
     $scope.masterSelectedProperties = []; // collection of selected property collections
     $scope.targetGenerateSrcTables = [];  // selected tables from the schema
+    $scope.showModelPreview = false;
     $scope.isDsTableGridVisible = false;
+    $scope.isAllSchemaTablesSelected = false;
 
     $scope.filterOptions = {
       filterText: ''
@@ -43,6 +47,13 @@ Discovery.controller('DiscoveryMainController', [
       return $scope.targetGenerateSrcTables.length > 0;
     };
 
+    $scope.toggeleSelectAllSchemaTables = function() {
+      if ($scope.schemaSrcTables) {
+        $scope.isAllSchemaTablesSelected = !$scope.isAllSchemaTablesSelected;
+        $scope.dsTablesGridOptions.selectAll($scope.isAllSchemaTablesSelected);
+      }
+    };
+
     // next click
     $scope.discoveryNexBtnClicked = function() {
       $scope.targetTables = $scope.dsTablesGridOptions.selectedItems;
@@ -52,17 +63,20 @@ Discovery.controller('DiscoveryMainController', [
 
         // initial step show the output from the 'get schema' call on the ds
         case 'initialSchemaView':
-
+          $scope.showSelectAllButton = true;
           $scope.currentDiscoveryStep = 'selectSourceTables';
           $scope.showDiscoveryBackButton = false;
-
+          $scope.showModelPreview = false;
           break;
 
         // user has selected at least one source table
         case 'selectSourceTables':
+
+          $scope.showSelectAllButton = false;
           $scope.isDsTablesLoadingIndicatorVisible = true;
           DiscoveryService.getModelsFromSchemaSelections(dsName, $scope.targetTables).
             then(function(response) {
+              $scope.showModelPreview = true;
               $scope.targetGenerateSrcTables = response;
               $scope.isDsTablesLoadingIndicatorVisible = false;
             });
@@ -142,10 +156,11 @@ Discovery.controller('DiscoveryMainController', [
     $scope.discoveryBackBtnClicked = function() {
       $scope.targetGenerateSrcTables = [];
       $scope.isDsTableGridVisible = true;
-
+      $scope.showSelectAllButton = true;
+      $scope.showModelPreview = false;
       switch($scope.currentDiscoveryStep) {
         case 'initialSchemaView':
-
+          $scope.showDiscoveryBackButton = false;
           break;
 
         case 'selectSourceTables':
@@ -170,13 +185,19 @@ Discovery.controller('DiscoveryMainController', [
     $scope.dsTablesGridOptions = {
       data: 'schemaSrcTables',
       columnDefs: [
-        {field:'name', displayName:'Table'},
-        {field:'owner',displayName:'Owner'}
+        {field:'name', displayName:'Table', minWidth: 500, cellClass: 'discovery-data-cell'},
+        {field:'owner',displayName:'Owner', maxWidth: 10, cellClass: 'discovery-data-cell'}
       ],
       checkboxHeaderTemplate: '<input class="ngSelectionHeader" type="checkbox" ng-model="allSelected" ng-change="toggleSelectAll(allSelected)"/>',
       checkboxCellTemplate: '<label class="select-item-cell"><span class="sl-icon sl-icon-checkmark"></span><input type="checkbox" /></label>',
       showSelectionCheckbox: true,
       selectWithCheckboxOnly: false,
+      afterSelectionChange: function (rowItem) {
+        if (!$scope.isAllSchemaTablesSelected) {
+          $scope.isAllSchemaTablesSelected = ($scope.schemaSrcTables.length === $scope.tableSelections.length);
+        }
+      },
+      rowHeight: 40,
       selectedItems:  $scope.tableSelections,
       multiSelect: true,
       filterOptions: $scope.filterOptions
