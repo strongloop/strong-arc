@@ -31,6 +31,7 @@ module.exports = function(config) {
       'client/www/scripts/vendor/angular/angular-animate.js',
       'client/www/scripts/vendor/angular/angular-ui-router.js',
       // 'client/www/scripts/vendor/angular/angular-touch.js',
+      'client/www/scripts/vendor/angular/angular-spinner.js',
       'client/www/scripts/vendor/angular/angular-sanitize.js',
       'client/www/scripts/vendor/angular/ng-grid.js',
       'client/www/scripts/vendor/angular/checklist-model.js',
@@ -40,6 +41,7 @@ module.exports = function(config) {
       'client/www/scripts/vendor/angular/angular-growl.min.js',
 
       'client/www/scripts/vendor/string.min.js',
+      'client/www/scripts/vendor/spin.js',
       'client/www/scripts/vendor/inflection.min.js',
       'client/www/scripts/vendor/chance.js',
 
