@@ -100,7 +100,7 @@ Common.directive('slCommonInstanceTabsView', [
 Common.directive('slCommonLoadingIndicator', [
   function() {
     return {
-      template: '<div class="loading-indicator"><img src="./style/src/images/spinner3-greenie.gif" /></div>'
+      template: '<span us-spinner="{radius:30, width:8, length: 24, color:\'#7DBD33\'}"></span>'
     }
   }
 ]);

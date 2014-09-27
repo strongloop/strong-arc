@@ -25,12 +25,14 @@ module.exports = function(config) {
       // (see the comment in `exclude` section below)
       // 'client/www/scripts/vendor/react/react-addon.0.10.0.js',
       // 'client/www/scripts/vendor/react/JSXTransformer.js',
+      'client/www/scripts/vendor/spin.js',
 
       'client/www/scripts/vendor/angular/ui-utils.js',
       'client/www/scripts/vendor/angular/angular-cookies.js',
       'client/www/scripts/vendor/angular/angular-animate.js',
       'client/www/scripts/vendor/angular/angular-ui-router.js',
       // 'client/www/scripts/vendor/angular/angular-touch.js',
+      'client/www/scripts/vendor/angular/angular-spinner.js',
       'client/www/scripts/vendor/angular/angular-sanitize.js',
       'client/www/scripts/vendor/angular/ng-grid.js',
       'client/www/scripts/vendor/angular/checklist-model.js',
@@ -40,6 +42,7 @@ module.exports = function(config) {
       'client/www/scripts/vendor/angular/angular-growl.min.js',
 
       'client/www/scripts/vendor/string.min.js',
+
       'client/www/scripts/vendor/inflection.min.js',
       'client/www/scripts/vendor/chance.js',
 
@@ -83,7 +86,7 @@ module.exports = function(config) {
 
     proxies: {
       // NOTE(bajtos) The port 9800 is hard-coded in test-server.js
-      '/': 'http://localhost:9800/',
+      '/': 'http://localhost:9800/'
     },
 
     // enable / disable colors in the output (reporters and logs)
@@ -118,7 +121,7 @@ module.exports = function(config) {
       'karma-mocha',
       'karma-chai',
       'karma-mocha-reporter',
-      'karma-junit-reporter',
+      'karma-junit-reporter'
     ],
 
     // If browser does not capture in given timeout [ms], kill it
