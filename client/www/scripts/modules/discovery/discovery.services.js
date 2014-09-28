@@ -3,10 +3,7 @@ Discovery.service('DiscoveryService', [
   'DataSourceService',
   '$q',
   'DataSourceDefinition',
-  'Datasourcedef',
-  '$http',
-  '$timeout',
-  function (DataSourceService, $q, DataSourceDefinition, Datasourcedef, $http, $timeout) {
+  function (DataSourceService, $q, DataSourceDefinition) {
     var svc = this;
 
     svc.getSchemaDataFromDatasource = function (dsId) {
@@ -56,40 +53,30 @@ Discovery.service('DiscoveryService', [
     };
     /*
     *
-    *
     *   New Method for directly creating models from schema objects
     *
-    * currently not implemented yet in the ui
     * */
-    svc.createModelFromSchema = function(dsName, schemaModelObj, selectedProperties) {
+    svc.createModelFromSchema = function(dsId, schemaModelObj, selectedProperties) {
 
-      return DataSourceService.getDataSourceInstanceById(dsName)
-        .then(function (dataSource) {
+      var modelToCreate = schemaModelObj;
+      var selectedPropNames = [];
+      for (var i = 0;i < selectedProperties.length;i++) {
+        selectedPropNames.push(selectedProperties[i].name);
+      }
 
+      // remove the unselected model properties
+      var propKeys = Object.keys(modelToCreate.properties);
+      propKeys.map(function(key) {
+        if (selectedPropNames.indexOf(key) === -1) {
+          delete modelToCreate.properties[key];
+        }
+      });
 
-          var modelToCreate = schemaModelObj;
-          var selectedPropNames = [];
-          for (var i = 0;i < selectedProperties.length;i++) {
-            selectedPropNames.push(selectedProperties[i].name);
-          }
-
-          // remove the unselected model properties
-          var propKeys = Object.keys(modelToCreate.properties);
-          propKeys.map(function(key) {
-            if (selectedPropNames.indexOf(key) === -1) {
-              delete modelToCreate.properties[key];
-            }
-          });
-
-          var commandObj = dataSource.definition;
-
-          return commandObj.$prototype$createModel(modelToCreate)
-            .then(function(model) {
-              return model;
-            });
-
+      return DataSourceDefinition.prototype$createModel({id: dsId}, {discoveredDef: modelToCreate})
+        .$promise
+        .then(function(response) {
+          return response.modelDefinitionId;
         });
-
 
     };
 
