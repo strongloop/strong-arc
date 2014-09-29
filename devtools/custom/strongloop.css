@@ -162,3 +162,6 @@
 .profile-launcher-view-content form label p {
   margin-left: 1.5rem;
 }
+.record-profile-status-bar-item {
+  display: none;
+}
