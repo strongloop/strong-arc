@@ -494,7 +494,7 @@ WebInspector.CPUProfileView.prototype = {
  */
 WebInspector.CPUProfileType = function()
 {
-    WebInspector.ProfileType.call(this, WebInspector.CPUProfileType.TypeId, WebInspector.UIString("Collect JavaScript CPU Profile"));
+    WebInspector.ProfileType.call(this, WebInspector.CPUProfileType.TypeId, WebInspector.UIString("JavaScript/Node.js CPU Profile"));
     this._recording = false;
 
     this._nextAnonymousConsoleProfileNumber = 1;

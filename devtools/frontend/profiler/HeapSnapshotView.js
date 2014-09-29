@@ -1009,7 +1009,7 @@ WebInspector.HeapSnapshotView.prototype = {
  */
 WebInspector.HeapSnapshotProfileType = function(id, title)
 {
-    WebInspector.ProfileType.call(this, id || WebInspector.HeapSnapshotProfileType.TypeId, title || WebInspector.UIString("Take Heap Snapshot"));
+    WebInspector.ProfileType.call(this, id || WebInspector.HeapSnapshotProfileType.TypeId, title || WebInspector.UIString("Heap Snapshot"));
     WebInspector.targetManager.observeTargets(this);
     WebInspector.targetManager.addModelListener(WebInspector.HeapProfilerModel, WebInspector.HeapProfilerModel.Events.ResetProfiles, this._resetProfiles, this);
     WebInspector.targetManager.addModelListener(WebInspector.HeapProfilerModel, WebInspector.HeapProfilerModel.Events.AddHeapSnapshotChunk, this._addHeapSnapshotChunk, this);
