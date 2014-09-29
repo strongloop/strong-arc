@@ -1,12 +1,164 @@
+/* @override
+	http://0.0.0.0:3003/style/dev/icons.css
+	http://0.0.0.0:3003/style/src/icons.css
+	http://0.0.0.0:4800/style/src/icons.css */
+/* version 0.0.1 see google docs ./Design -> Icons for src files and a backup of icomoon.io export */
+/* remember to modify path name to ../fonts/ when copying icomoon style.css file into icons.less */
+/* cut-n-paste these rules from icomoon exported style.css file */
+/* --------------------------------------- */
+/* ------ BEGIN CUT AND PASTE HERE ------- */
+/* --------------------------------------- */
+@font-face {
+  font-family: 'Strongloop';
+  src: url('/fonts/Strongloop.eot?-v6x80a');
+  src: url('/fonts/Strongloop.eot?#iefix-v6x80a') format('embedded-opentype'), url('/fonts/Strongloop.woff?-v6x80a') format('woff'), url('/fonts/Strongloop.ttf?-v6x80a') format('truetype'), url('/fonts/Strongloop.svg?-v6x80a#Strongloop') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+[class^="sl-icon-"],
+[class*=" sl-icon-"] {
+  font-family: 'Strongloop';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.sl-icon-checkmark-outline:before {
+  content: "\e615";
+}
+.sl-icon-box-arrow-down:before {
+  content: "\e600";
+}
+.sl-icon-link:before {
+  content: "\e601";
+}
+.sl-icon-file:before {
+  content: "\e602";
+}
+.sl-icon-minus:before {
+  content: "\e603";
+}
+.sl-icon-minus-thick:before {
+  content: "\e604";
+}
+.sl-icon-search:before {
+  content: "\e605";
+}
+.sl-icon-question-mark:before {
+  content: "\e606";
+}
+.sl-icon-plus:before {
+  content: "\e607";
+}
+.sl-icon-plus-thick:before {
+  content: "\e608";
+}
+.sl-icon-plus-sign:before {
+  content: "\e609";
+}
+.sl-icon-play:before {
+  content: "\e60a";
+}
+.sl-icon-on-off:before {
+  content: "\e60b";
+}
+.sl-icon-logo:before {
+  content: "\e60c";
+}
+.sl-icon-help:before {
+  content: "\e60d";
+}
+.sl-icon-lightning:before {
+  content: "\e60e";
+}
+.sl-icon-folder:before {
+  content: "\e60f";
+}
+.sl-icon-down-arrow:before {
+  content: "\e610";
+}
+.sl-icon-database:before {
+  content: "\e611";
+}
+.sl-icon-close:before {
+  content: "\e612";
+}
+.sl-icon-chevron-down:before {
+  content: "\e613";
+}
+.sl-icon-checkmark:before {
+  content: "\e614";
+}
+.sl-icon-arrow-down:before {
+  content: "\e616";
+}
+.sl-icon-arrow-right:before {
+  content: "\e617";
+}
+/* --------------------------------------------------- */
+/* ------------- END CUT AND PASTE HERE -------------- */
+/* --------------------------------------------------- */
+/* begin custom rules, needs to persist across font style updates, these are not included in icomoon export style.css */
+.sl-icon {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+}
+.sl-icon-database:before {
+  font-size: 16pt;
+}
+.sl-icon-folder:before {
+  margin-right: 10px;
+  font-size: 12pt;
+}
+.sl-icon-on-off:before {
+  color: #01582A;
+  font-size: 18pt;
+  margin-left: 2rem;
+}
+.sl-icon-file:before {
+  font-weight: lighter;
+}
+/* end custom rules */
+/* renamed */
+/*connecticon -> link*/
+/*document -> file*/
+/*off -> on-off*/
+/*folder-open -> folder*/
+/*question-sign -> help*/
+/*remove -> close*/
+/*navbranch-open -> arrow-down*/
+/*navbranch-closed -> arrow-right*/
+/*contextmenu -> box-arrow-down*/
+/*minus-sign -> minus-thick*/
+/*plus-sign -> plus-thick*/
 /* hide the top toolbar, only "Profiles" tab is used at the moment */
-.toolbar { display: none; }
-
+.toolbar {
+  display: none;
+}
 /* hide start button */
 .control-profiling {
   display: none;
 }
-
 /* hide record heap allocations */
+.profile-launcher-view-content form {
+  /* hide radio buttons */
+}
 .profile-launcher-view-content form label:nth-child(3) {
   display: none;
+}
+.profile-launcher-view-content form label input {
+  display: none;
+}
+.profile-launcher-view-content form label .sl-icon {
+  color: #616161;
+  margin-right: .5rem;
+}
+.profile-launcher-view-content form label p {
+  margin-left: 1.5rem;
 }

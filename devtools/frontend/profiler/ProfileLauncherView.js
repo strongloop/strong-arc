@@ -166,7 +166,7 @@ WebInspector.MultiProfileLauncherView = function(profilesPanel)
     WebInspector.settings.selectedProfileType = WebInspector.settings.createSetting("selectedProfileType", "CPU");
 
     var header = this._innerContentElement.createChild("h1");
-    header.textContent = WebInspector.UIString("Select profiling type");
+    header.textContent = WebInspector.UIString("Profile types supported");
 
     this._profileTypeSelectorForm = this._innerContentElement.createChild("form");
 
@@ -201,6 +201,13 @@ WebInspector.MultiProfileLauncherView.prototype = {
         var decorationElement = profileType.decorationElement();
         if (decorationElement)
             labelElement.appendChild(decorationElement);
+
+        /** STRONGLOOP-BEGIN **/
+        //add bullet icon to labels
+        var iconElement = labelElement.createChild('i');
+        iconElement.className = 'sl-icon sl-icon-logo';
+        labelElement.insertBefore(iconElement, optionElement);
+        /** STRONGLOOP-END **/
     },
 
     restoreSelectedProfileType: function()

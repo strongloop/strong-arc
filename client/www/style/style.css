@@ -10,8 +10,8 @@
 /* --------------------------------------- */
 @font-face {
   font-family: 'Strongloop';
-  src: url('../fonts/Strongloop.eot?-v6x80a');
-  src: url('../fonts/Strongloop.eot?#iefix-v6x80a') format('embedded-opentype'), url('../fonts/Strongloop.woff?-v6x80a') format('woff'), url('../fonts/Strongloop.ttf?-v6x80a') format('truetype'), url('../fonts/Strongloop.svg?-v6x80a#Strongloop') format('svg');
+  src: url('/fonts/Strongloop.eot?-v6x80a');
+  src: url('/fonts/Strongloop.eot?#iefix-v6x80a') format('embedded-opentype'), url('/fonts/Strongloop.woff?-v6x80a') format('woff'), url('/fonts/Strongloop.ttf?-v6x80a') format('truetype'), url('/fonts/Strongloop.svg?-v6x80a#Strongloop') format('svg');
   font-weight: normal;
   font-style: normal;
 }

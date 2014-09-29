@@ -16,17 +16,29 @@ var setupMysql = require('./build-tasks/setup-mysql');
 
 gulp.task('default', ['build', 'test', 'watch']);
 
-gulp.task('build', ['build-less', 'build-version', 'install-example-modules']);
+gulp.task('build', [
+    'build-less',
+    'build-version',
+    'install-example-modules',
+    'build-less-devtools'
+]);
 
 gulp.task('build-less', function() {
   return gulp.src('client/less/style.less')
     .pipe(less())
-    .pipe(gulp.dest('client/www/style'));
+    .pipe(gulp.dest('client/www/style/'));
+});
+
+gulp.task('build-less-devtools', function() {
+  return gulp.src('devtools/custom/less/strongloop.less')
+    .pipe(less())
+    .pipe(gulp.dest('devtools/custom/'));
 });
 
 gulp.task('watch', function() {
-  // Watch all the .less files, then run the less task
+  // Watch all the .less files, then run the less tasks
   gulp.watch('client/less/**/*.less', ['build-less']);
+  gulp.watch('devtools/custom/less/**/*.less', ['build-less-devtools']);
 });
 
 gulp.task('build-version', function(callback) {
