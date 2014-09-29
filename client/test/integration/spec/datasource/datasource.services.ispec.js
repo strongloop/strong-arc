@@ -56,4 +56,27 @@ describe('DataSourceService', function() {
         });
     });
   });
+
+  describe('.getDiscoverableDatasourceConnectors()', function() {
+    beforeEach(function() {
+      return inject(function loadConnectorMetadata(connectorMetadata) {
+        return connectorMetadata.$promise;
+      });
+    });
+
+    it('includes expected connectors', function() {
+      var list = DataSourceService.getDiscoverableDatasourceConnectors();
+      expect(list).to.include.members([
+        'mssql',
+        'oracle',
+        'mysql',
+        'postgresql'
+      ]);
+    });
+
+    it('excludes memory connector', function() {
+      var list = DataSourceService.getDiscoverableDatasourceConnectors();
+      expect(list).to.not.include('memory');
+    });
+  });
 });

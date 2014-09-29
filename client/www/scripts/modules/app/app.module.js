@@ -12,13 +12,6 @@ var CONST = {
   DEFAULT_DATASOURCE_BASE_MODEL: 'PersistedModel',
   MODEL_TYPE: 'model',
   APP_FACET: 'server',
-  CONNECTORS_SUPPORTING_MIGRATE: [
-    'mongodb', // for indexes
-    'mysql',
-    'mssql',
-    'oracle',
-    'postgresql'
-  ]
 };
 
 var app = angular.module('app', [
@@ -83,9 +76,13 @@ app.config([
           // Wait for all metadata requests to finish
           'studioMetadataResults': [
             'modelPropertyTypes',
+            'connectorMetadata',
             '$q',
-            function waitForAllStudioMetadata(modelPropertyTypes, $q) {
+            function waitForAllStudioMetadata(modelPropertyTypes,
+                                              connectorMetadata,
+                                              $q) {
               return $q.all([
+                connectorMetadata.$promise,
                 modelPropertyTypes.$promise
               ]);
             }

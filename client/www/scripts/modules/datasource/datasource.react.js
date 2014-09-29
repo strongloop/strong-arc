@@ -47,8 +47,10 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
     if (!connector) {
       return false;
     }
-    var connectors = ["memory","oracle","mssql","mysql","postgresql","mongodb"];
-    return (connectors.indexOf(connector) !== -1);
+    var availableConnectors = this.props.scope.connectorMetadata;
+    return availableConnectors.some(function(it) {
+      return it.name === connector;
+    });
   },
   isNameValid: function(name) {
     return /^[\-_a-zA-Z0-9]+$/.test(name);
@@ -121,6 +123,9 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
       'model-detail-pocket-button model-save-button datasource-test-button': !component.state.isTesting
     });
 
+    var connectorOptions = this.props.scope.connectorMetadata.map(function(it) {
+       return (<option value={it.name}>{it.description}</option>);
+    });
 
     return (
       <div onClick={component.clearMessages} data-id="DatasourceEditorInstanceContainer" className="datasource-editor-instance-container">
@@ -237,12 +242,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                         data-name="connector"
                         name="connector" >
                       <option value="">choose</option>
-                      <option value="memory">In-Memory</option>
-                      <option value="oracle">Oracle</option>
-                      <option value="mssql">MS SQL</option>
-                      <option value="mysql">MySQL</option>
-                      <option value="postgresql">PostgreSQL</option>
-                      <option value="mongodb">MongoDB</option>
+                      {connectorOptions}
                     </select>
                   </div>
                 </div>
