@@ -77,6 +77,7 @@ app.controller('StudioController', [
         then(function (result) {
           $scope.mainNavModels = result;
           $scope.apiModelsChanged = !$scope.apiModelsChanged;
+          $rootScope.$broadcast('IANavEvent');
         }
       );
     };
@@ -87,6 +88,7 @@ app.controller('StudioController', [
         then(function (result) {
           $scope.mainNavDatasources = result;
           $scope.apiDataSourcesChanged = !$scope.apiDataSourcesChanged;
+          $rootScope.$broadcast('IANavEvent');
         });
     };
     loadDataSources();
