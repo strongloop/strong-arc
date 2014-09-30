@@ -4,8 +4,6 @@ Landing.controller('LandingController', [
   'LandingService',
   function ($scope, LandingService) {
 
-    $scope.suiteIA.pageId = 'landing';
-
     LandingService.getApps()
       .then(function (data) {
         $scope.apps = data;

@@ -1,17 +1,16 @@
 // Copyright StrongLoop 2014
-app.controller('SuiteController', ['$scope', 'LandingService', 'ProfileService', function($scope, LandingService, ProfileService){
-  $scope.suiteIA = {
-    apps: []
-  };
+app.controller('SuiteController', [
+  '$scope',
+  'ProfileService',
+  '$location', function($scope, ProfileService){
 
-  $scope.isAuthUser = function(){
-    return ProfileService.isAuthUser();
-  };
+    $scope.suiteIA = {
+      apps: []
+    };
 
-  LandingService.getApps()
-    .then(function(data){
-      $scope.suiteIA.apps = data;
-    });
+    $scope.isAuthUser = function(){
+      return ProfileService.isAuthUser();
+    };
 }]);
 
 app.controller('StudioController', [
@@ -41,8 +40,6 @@ app.controller('StudioController', [
     $scope.datasource = {
       connectionTestResponse:''
     };
-
-    $scope.suiteIA.pageId = 'studio';
 
     // list of open instances (models/datasources)
     $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
@@ -655,7 +652,5 @@ app.controller('DevToolsController',[
   '$scope',
   '$location',
   function($scope, $location){
-
-    $scope.suiteIA.pageId = 'devtools';
   }
 ]);
