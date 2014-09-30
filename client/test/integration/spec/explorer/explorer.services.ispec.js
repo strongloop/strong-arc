@@ -56,14 +56,9 @@ describe('ExplorerService', function() {
       });
   });
 
-  it('returns descriptive error when the app is not running', function() {
-    given.targetAppIsStopped()
+  it('ensures the app is running', function() {
+    return given.targetAppIsStopped()
       .then(ExplorerService.getSwaggerResources.bind(ExplorerService))
-      .then(function() {
-        throw new Error('getSwaggerResources should have failed');
-      })
-      .catch(function(err) {
-        expect(err.message).to.contain('not running');
-      });
+      .catch(throwHttpError);
   });
 });
