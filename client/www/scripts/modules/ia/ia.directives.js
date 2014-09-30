@@ -198,8 +198,15 @@ app.directive('slIaGlobalExceptionView', [
       replace:true,
       link: function(scope, el, attrs) {
 
-        scope.$watch('globalExceptionStack', function(oldVal, newVal) {
+        scope.$watch('globalExceptionStack', function(newVal) {
           React.renderComponent(IAGlobalExceptionDisplayView({scope:scope}), el[0]);
+          // fatal to Api Composer application
+          newVal.map(function(stackItem) {
+            if (stackItem.isFatal) {
+              $('[data-id="MainSidebarContainer"]').hide();
+              $('[data-id="IAMainContentContainer"]').hide();
+            }
+          });
         }, true);
       }
     }

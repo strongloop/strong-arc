@@ -21,13 +21,14 @@ app.controller('StudioController', [
   '$http',
   'IAService',
   'DataSourceService',
+  'WorkspaceService',
   'DiscoveryService',
   'PropertyService',
   '$location',
   '$timeout',
   'ModelService',
   'growl',
-  function($rootScope, $q, $scope, $state, $http, IAService, DataSourceService, DiscoveryService, PropertyService, $location, $timeout, ModelService, growl) {
+  function($rootScope, $q, $scope, $state, $http, IAService, DataSourceService, WorkspaceService, DiscoveryService, PropertyService, $location, $timeout, ModelService, growl) {
 
     // Instance Collections
     $scope.mainNavDatasources = []; // initialized further down
@@ -63,6 +64,20 @@ app.controller('StudioController', [
         $rootScope.$broadcast('IANavEvent');
       }
     });
+    // Validate the workspace
+    WorkspaceService.validate().then(function(isValid) {
+      if (!isValid) {
+        $rootScope.$broadcast('GlobalExceptionEvent', {
+            isFatal: true,
+            message: WorkspaceService.validationError.message,
+            code: WorkspaceService.validationError.code,
+            details: 'API Composer only works with valid LoopBack projects',
+            help: 'Ensure you have LoopBack installed and create your project using the slc loopback command'
+          }
+        );
+      }
+    });
+
 
     // Load Model and DataSource collections
     var loadModels = function() {
@@ -654,3 +669,4 @@ app.controller('DevToolsController',[
   function($scope, $location){
   }
 ]);
+

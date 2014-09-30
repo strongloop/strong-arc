@@ -591,6 +591,72 @@ var IAGlobalExceptionDisplayView = (IAGlobalExceptionDisplayView = React).create
       displayMarkup = scope.globalExceptionStack.map(function(stackItem) {
         if (stackItem.message !== prevMessage) {
           prevMessage = stackItem.message;
+          /*
+          * NOTE the var declarations in the set are deliberately not
+          * assigned in a block at the top of the function to make the code
+          * more readable and portable.
+          * */
+          var nameElement;
+          if (stackItem.name) {
+            nameElement =  (
+              <li>
+                <span className="ia-global-exception-label">Name: </span>
+                <span className="ia-global-exception-value">{stackItem.name}</span>
+              </li>
+            );
+          }
+          var messageElement;
+          if (stackItem.message) {
+            messageElement = (
+                <li>
+                  <span  className="ia-global-exception-label">Message: </span>
+                  <span className="ia-global-exception-value">{stackItem.message}</span>
+                </li>
+              );
+          }
+          var detailsElement;
+          if (stackItem.details) {
+            detailsElement = (
+                <li>
+                  <span  className="ia-global-exception-label">Details: </span>
+                  <span className="ia-global-exception-value">{stackItem.details}</span>
+                </li>
+               );
+          }
+          var requestUrlElement;
+          if (stackItem.requestUrl) {
+          requestUrlElement = (
+              <li>
+                <span  className="ia-global-exception-label">Request: </span>
+                <span className="ia-global-exception-value">{stackItem.requestUrl}</span>
+              </li>
+            );
+          }
+          var statusElement;
+          if (stackItem.status) {
+          statusElement = (
+              <li>
+                <span  className="ia-global-exception-label">Staus: </span>
+                <span className="ia-global-exception-value">{stackItem.status}</span>
+              </li>
+            );
+          }
+          var helpElement;
+          if (stackItem.help) {
+            helpElement = (
+                <li>
+                  <span  className="ia-global-exception-label">Help: </span>
+                  <span className="ia-global-exception-value">{stackItem.help}</span>
+                </li>
+              );
+          }
+          var stackTraceElement;
+          if (stackItem.stack) {
+            stackTraceElement = (
+                <div data-id="StackTraceMessageContainer"
+                  className="global-exception-stack-display">{stackItem.stack}</div>
+              );
+          };
           return (
             <div data-id="IAGlobalExceptionDisplayContainer" className="ia-global-exception-container">
               <span onClick={clearGlobalException} className="sl-icon sl-icon-close ia-global-exception-close-button"></span>
@@ -600,26 +666,16 @@ var IAGlobalExceptionDisplayView = (IAGlobalExceptionDisplayView = React).create
               <div data-id="GlobalExceptionDetailsContainer">
 
                 <ul className="ia-global-exception-body">
-                  <li>
-                    <span className="ia-global-exception-label">Name: </span><span className="ia-global-exception-value">{stackItem.name}</span>
-                  </li>
-                  <li>
-                    <span  className="ia-global-exception-label">Message: </span><span className="ia-global-exception-value">{stackItem.message}</span>
-                  </li>
-                  <li>
-                    <span  className="ia-global-exception-label">Details: </span><span className="ia-global-exception-value">{stackItem.details}</span>
-                  </li>
-                  <li>
-                    <span  className="ia-global-exception-label">Request: </span><span className="ia-global-exception-value">{stackItem.requestUrl}</span>
-                  </li>
-                  <li>
-                    <span  className="ia-global-exception-label">Status: </span><span className="ia-global-exception-value">{stackItem.status}</span>
-                  </li>
-
+                  {nameElement}
+                  {messageElement}
+                  {detailsElement}
+                  {requestUrlElement}
+                  {statusElement}
+                  {helpElement}
                 </ul>
-                <div data-id="StackTraceMessageContainer" className="global-exception-stack-display">{stackItem.stack}</div>
-              </div>
+                {stackTraceElement}
 
+              </div>
             </div>);
         }
 
