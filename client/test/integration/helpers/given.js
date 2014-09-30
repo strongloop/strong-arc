@@ -38,16 +38,14 @@ given.emptyWorkspace = function() {
 };
 
 given.targetAppIsRunning = function() {
-  return inject(function($http, throwHttpError) {
-    return $http({ method: 'POST', url: '/start' })
-      .catch(throwHttpError);
+  return inject(function(Workspace, throwHttpError) {
+    return Workspace.start().$promise.catch(throwHttpError);
   });
 };
 
 given.targetAppIsStopped = function() {
-  return inject(function($http, throwHttpError) {
-    return $http({ method: 'POST', url: '/stop' })
-      .catch(throwHttpError);
+  return inject(function(Workspace, throwHttpError) {
+    return Workspace.stop().$promise.catch(throwHttpError);
   });
 };
 
