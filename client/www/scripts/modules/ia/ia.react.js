@@ -266,10 +266,8 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
     var currentDSName = null;
     var isDiscoverable = false;
 
-   // menuItems.openSelectedDataSource = {name: "open", callback: component.openSelectedDataSource};
-    menuItems.deleteSelectedDataSource = {name: "delete", callback: component.deleteSelectedDataSource};
     menuItems.createModelsFromDS = {
-      name: "create models",
+      name: "discover models",
       disabled: function(key, opt) {
         if (opt.sourceEvent.target.attributes['data-is-discoverable']) {
           isDiscoverable = opt.sourceEvent.target.attributes['data-is-discoverable'].value;
@@ -300,6 +298,8 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
 
       }
     };
+    menuItems.deleteSelectedDataSource = {name: "delete", callback: component.deleteSelectedDataSource};
+
     $.contextMenu({
       // define which elements trigger this menu
       selector: '.btn-ds-nav-context',
