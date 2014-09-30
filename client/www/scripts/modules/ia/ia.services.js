@@ -151,7 +151,7 @@ IA.service('IAService', [
       var openInstanceRefs = svc.closeInstanceById(refId);
       var activeInstance = svc.getActiveInstance();
       // reset activeInstace if this is it
-      if (activeInstance.id === refId) {
+      if (activeInstance && (activeInstance.id === refId)) {
         if (openInstanceRefs.length === 0) {
           activeInstance = svc.clearActiveInstance();
           return activeInstance;
@@ -166,7 +166,7 @@ IA.service('IAService', [
         }
       }
       else {
-        console.warn('resetActiveToFirstOpenInstance called where activeInstance.id does not equal refId:  [' + activeInstance.id + '][' + refId + ']');
+        console.warn('resetActiveToFirstOpenInstance called where either activeInstance does not exist or activeInstance.id does not equal refId: [' + refId + ']');
         return {};
       }
     };
