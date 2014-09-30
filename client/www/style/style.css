@@ -228,6 +228,37 @@
     margin-top: 0;
   }
 }
+.datasource-editor-instance-container {
+  padding: 2rem 2rem 2rem 2rem;
+}
+.datasource-editor-instance-container .datasource-layout-table {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.datasource-editor-instance-container .datasource-layout-col1 {
+  width: 20rem;
+  padding: 2rem 1rem 1rem 1rem;
+}
+.datasource-editor-instance-container .datasource-layout-col2 {
+  width: 20rem;
+  padding: 2rem 1rem 1rem 1rem;
+}
+.datasource-editor-instance-container .datasource-header-container {
+  background: green;
+  height: 7rem;
+}
+.datasource-editor-instance-container .datasource-buttons-layout-container {
+  padding-left: 42rem;
+  padding-top: 1rem;
+}
+.datasource-editor-instance-container .datasource-field-container {
+  width: 90rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+.datasource-editor-instance-container .datasource-connection-test-response-container {
+  color: #7dbd33;
+}
 .sl-ui-select {
   border-radius: 0.4rem;
   display: inline-block;
