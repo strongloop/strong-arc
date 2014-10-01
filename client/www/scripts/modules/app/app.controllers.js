@@ -72,7 +72,13 @@ app.controller('StudioController', [
             message: WorkspaceService.validationError.message,
             code: WorkspaceService.validationError.code,
             details: 'API Composer only works with valid LoopBack projects',
-            help: 'Ensure you have LoopBack installed and create your project using the slc loopback command'
+            help: [
+              { text: 'Ensure you have LoopBack installed and create your project using the slc loopback command.' },
+              { text: 'See:' },
+              { link: 'http://loopback.io/',
+                text: 'LoopBack getting started guide' },
+              { text: 'for more information' }
+            ]
           }
         );
       }

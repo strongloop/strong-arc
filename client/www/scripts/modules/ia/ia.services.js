@@ -27,7 +27,13 @@ IA.service('IAService', [
               errorObj.help = 'Run `npm install` in your project and try again.';
               break;
             case 'ER_INVALID_CONNECTOR':
-              errorObj.help = 'Add the connector to your project and try again.';
+              errorObj.help = [
+                { text: 'Add the connector to your project and try again.' },
+                { text: 'See' },
+                { link: 'http://docs.strongloop.com/display/LB/Data+sources+and+connectors#Datasourcesandconnectors-Installingaconnector',
+                  text: 'docs: Installing a connector' },
+                { text: 'for more information' }
+              ];
               break;
           }
         }
