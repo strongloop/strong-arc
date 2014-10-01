@@ -641,12 +641,52 @@ var IAGlobalExceptionDisplayView = (IAGlobalExceptionDisplayView = React).create
               </li>
             );
           }
+          /*
+          * The helpElement can contain hyperlinks as pointers to documentation or
+          * examples or straight text as string.
+          * Straight text will get wrapped in a <span> element
+          * Text with hyperlinks must be specified as an array containing
+          * either text or link elements
+          *
+          * the following thrown globalException object eg:
+          *   stackItem.help = [
+          *     { text: 'this is a description of the error' },
+          *     { text: 'See:' },
+          *     { text: 'I am the link text title', link: 'http://www.example.com'},
+          *     { text: 'for more info' }
+          *   ];
+          *
+          *   will get translated into a markup structure as follows:
+          *   <span> this is a description of the error </span>
+          *   <span See </span>
+          *   <a href="http://www.example.com">I am the link text title</a>
+          *   <span> for more info </span>
+          *
+          *   the following eg:
+          *   stackItem.help = 'This is a description of the error';
+          *
+          *   will get translated into the following:
+          *   <span> This is a description of the error </span>
+          *
+          * */
           var helpElement;
           if (stackItem.help) {
+            var helpString = stackItem.help;
+            if (Array.isArray(stackItem.help)) {
+              helpString = stackItem.help.map(function(item) {
+                  if (item.link) {
+                    return (<a href={item.link} target="_blank" title={item.text}>{item.text}</a>);
+                  }
+                  else {
+                    return (<span> {item.text} </span>);
+                  }
+                }
+              );
+            }
             helpElement = (
                 <li>
                   <span  className="ia-global-exception-label">Help: </span>
-                  <span className="ia-global-exception-value">{stackItem.help}</span>
+                  <span className="ia-global-exception-value">{helpString}</span>
                 </li>
               );
           }
