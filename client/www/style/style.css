@@ -145,6 +145,17 @@
 .discovery-grid-container .ngRow.selected .sl-icon:before {
   color: #4a90e2;
 }
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
 .sl-landing-page {
   padding: 4.7rem 3.13rem;
   font-weight: 100;
@@ -248,8 +259,26 @@
   height: 7rem;
 }
 .datasource-editor-instance-container .datasource-buttons-layout-container {
+  *zoom: 1;
   padding-left: 42rem;
   padding-top: 1rem;
+}
+.datasource-editor-instance-container .datasource-buttons-layout-container:before,
+.datasource-editor-instance-container .datasource-buttons-layout-container:after {
+  display: table;
+  content: "";
+}
+.datasource-editor-instance-container .datasource-buttons-layout-container:after {
+  clear: both;
+}
+.datasource-editor-instance-container .datasource-buttons-layout-container .datasource-test-button {
+  float: left;
+  margin-bottom: 1.5rem;
+}
+.datasource-editor-instance-container .datasource-buttons-layout-container .datasource-connection-test-response-container {
+  display: block;
+  float: left;
+  width: 24rem;
 }
 .datasource-editor-instance-container .datasource-field-container {
   width: 90rem;
@@ -258,6 +287,7 @@
 }
 .datasource-editor-instance-container .datasource-connection-test-response-container {
   color: #7dbd33;
+  margin-left: 1.5rem;
 }
 .sl-ui-select {
   border-radius: 0.4rem;

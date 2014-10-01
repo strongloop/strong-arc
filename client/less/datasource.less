@@ -23,9 +23,22 @@
     background: green;
     height: 7rem;
   }
-  .datasource-buttons-layout-container{
+  .datasource-buttons-layout-container {
+    .clearfix;
+
     padding-left: 42rem;
     padding-top: 1rem;
+
+    .datasource-test-button {
+      float: left;
+      margin-bottom: 1.5rem;
+    }
+
+    .datasource-connection-test-response-container {
+      display: block;
+      float: left;
+      width: 24rem;
+    }
   }
   .datasource-header-name-container{
 
@@ -37,5 +50,6 @@
   }
   .datasource-connection-test-response-container {
     color:#7dbd33;
+    margin-left: 1.5rem;
   }
 }
