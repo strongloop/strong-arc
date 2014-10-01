@@ -57,8 +57,13 @@
   },
   "keywords": [
     "studio",
-    "loopback"
+    "loopback",
+    "StrongLoop"
   ],
+  "license": {
+    "name": "StrongLoop",
+    "url": "https://github.com/strongloop/strong-studio/blob/master/LICENSE"
+  },
   "author": "Sean Brookes",
   "homepage": "https://github.com/strongloop/strong-studio"
 }
