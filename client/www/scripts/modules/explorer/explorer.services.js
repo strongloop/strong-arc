@@ -1,10 +1,11 @@
 Explorer.service('ExplorerService', [
   'CONST',
   'FacetSetting',
+  'Workspace',
   '$http',
   'throwHttpError',
   '$q',
-  function(CONST, FacetSetting, $http, throwHttpError, $q) {
+  function(CONST, FacetSetting, Workspace, $http, throwHttpError, $q) {
     var svc = {};
 
     svc.getSwaggerResources = function() {
@@ -12,17 +13,20 @@ Explorer.service('ExplorerService', [
       var portFilter = { where: { facetName: CONST.APP_FACET, name: 'port' }};
       var hostFilter = { where: { facetName: CONST.APP_FACET, name: 'host' }};
       return FacetSetting.find({ filter: hostFilter }).$promise
-        .then(function(list) {
+        .then(function saveHostConfig(list) {
           // NOTE(bajtos) Windows does not support '0.0.0.0' in URLs
           // We need to replace that value with `localhost`
           host = list.length && list[0].value !== '0.0.0.0' ?
             list[0].value : 'localhost';
         })
-        .then(function() {
+        .then(function findPortConfig() {
           return FacetSetting.find({ filter: portFilter }).$promise;
         })
-        .then(function(list) {
+        .then(function savePortConfig(list) {
           port = list.length ? list[0].value : 3000;
+        })
+        .then(function ensureAppIsRunning() {
+          return Workspace.start().$promise;
         })
         .then(function fetchSwaggerRoot() {
           swaggerUrl = 'http://' + host + ':' + port + '/explorer/resources';
@@ -34,6 +38,8 @@ Explorer.service('ExplorerService', [
           if (err.status === 404 && !err.response) {
             throw new Error(
               'Cannot fetch Explorer metadata, the project is not running.');
+          } else {
+            throw err;
           }
         })
         .then(function fetchAllApis(response) {
