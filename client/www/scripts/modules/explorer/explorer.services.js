@@ -38,6 +38,8 @@ Explorer.service('ExplorerService', [
           if (err.status === 404 && !err.response) {
             throw new Error(
               'Cannot fetch Explorer metadata, the project is not running.');
+          } else {
+            throw err;
           }
         })
         .then(function fetchAllApis(response) {
