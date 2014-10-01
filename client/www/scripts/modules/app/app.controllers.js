@@ -552,13 +552,23 @@ app.controller('StudioController', [
     });
     $scope.createModelsFromDS = function(id) {
 
-      // open a modal window and trigger the discovery flow
-      var modalConfig = DiscoveryService.getDiscoveryModalConfig(id);
-      var modalInstance = IAService.openModal(modalConfig);
-      modalInstance.opened.then(function() {
-        window.setUI();
-      });
-
+      DataSourceService.testDataSourceConnection(id)
+        .then(function(response) {
+          if (response.status) {
+            // open a modal window and trigger the discovery flow
+            var modalConfig = DiscoveryService.getDiscoveryModalConfig(id);
+            var modalInstance = IAService.openModal(modalConfig);
+            modalInstance.opened.then(function() {
+              window.setUI();
+            });
+          }
+          else {
+            $rootScope.$broadcast('GlobalExceptionEvent', response.error);
+          }
+        })
+        .catch(function(error) {
+          $rootScope.$broadcast('GlobalExceptionEvent', error);
+        });
     };
 
 

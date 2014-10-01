@@ -87,12 +87,17 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
     });
   },
   saveHandler: function(event) {
-    event.preventDefault();
-    var scope = this.props.scope;
-    var requestData = this.state.activeInstance;
-    scope.$apply(function() {
-      scope.saveDataSourceInstanceRequest(requestData);
-    });
+    var component = this;
+    if (event && event.preventDefault) {
+      event.preventDefault();
+    }
+    if (component.state.isNameValid && component.state.isConnectorValid) {
+      var scope = this.props.scope;
+      var requestData = this.state.activeInstance;
+      scope.$apply(function() {
+        scope.saveDataSourceInstanceRequest(requestData);
+      });
+    }
   },
   render: function() {
     var component = this;
@@ -141,6 +146,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
               value={dsModel.name}
               onChange={component.handleChange}
               data-name="name"
+              onBlur={component.saveHandler}
               placeholder="name"
               required="true" />
             </div>
@@ -165,6 +171,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                         type="text"
                         value={dsModel.user}
                         onChange={component.handleChange}
+                        onBlur={component.saveHandler}
                         data-name="user"
                         placeholder="user" />
                     </div>
@@ -179,6 +186,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                       name="password"
                       value={dsModel.password}
                       onChange={component.handleChange}
+                      onBlur={component.saveHandler}
                       data-name="password"
                       type="password"
                       placeholder="password" />
@@ -198,6 +206,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                     name="host"
                     value={dsModel.host}
                     onChange={component.handleChange}
+                    onBlur={component.saveHandler}
                     data-name="host"
                     type="text"
                     placeholder="host" />
@@ -211,6 +220,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                     name="port"
                     value={dsModel.port}
                     onChange={component.handleChange}
+                    onBlur={component.saveHandler}
                     data-name="port"
                     type="text"
                     placeholder="port" />
@@ -227,6 +237,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                     name="database"
                     value={dsModel.database}
                     onChange={component.handleChange}
+                    onBlur={component.saveHandler}
                     data-name="database"
                     type="text"
                     placeholder="database name" />
@@ -239,6 +250,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                         id="connector"
                         value={dsModel.connector}
                         onChange={component.handleChange}
+                        onBlur={component.saveHandler}
                         data-name="connector"
                         name="connector" >
                       <option value="">choose</option>
