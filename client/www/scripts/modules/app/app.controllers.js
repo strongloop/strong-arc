@@ -39,7 +39,8 @@ app.controller('StudioController', [
     $scope.dsNavIsVisible = true;
     $scope.globalExceptionStack = [];
     $scope.datasource = {
-      connectionTestResponse:''
+      connectionTestResponse:'',
+      connectionTestResponseType: 'success'
     };
 
     // list of open instances (models/datasources)
@@ -513,19 +514,27 @@ app.controller('StudioController', [
     };
     $scope.clearTestMessage = function() {
       $scope.datasource.connectionTestResponse = '';
+      $scope.datasource.connectionTestResponseType = 'success';
     };
-    var setFriendlyTestConnectionMsg = function(response) {
+
+    var   setFriendlyTestConnectionMsg = function(response) {
       var message;
+      var type = 'success';
+
       if (typeof response === 'string') {
         message = response;
       } else if (response.status) {
         message = 'Success';
       } else if (!response.error) {
         message = 'Failed.';
+        type = 'error';
       } else {
         message = 'Failed: ' + response.error.message;
+        type = 'error';
       }
+
       $scope.datasource.connectionTestResponse = message;
+      $scope.datasource.connectionTestResponseType = type;
     };
 
 

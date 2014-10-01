@@ -278,7 +278,8 @@
 .datasource-editor-instance-container .datasource-buttons-layout-container .datasource-connection-test-response-container {
   display: block;
   float: left;
-  width: 24rem;
+  width: 25rem;
+  margin-top: .8rem;
 }
 .datasource-editor-instance-container .datasource-field-container {
   width: 90rem;
@@ -286,7 +287,6 @@
   margin-right: 2rem;
 }
 .datasource-editor-instance-container .datasource-connection-test-response-container {
-  color: #7dbd33;
   margin-left: 1.5rem;
 }
 .sl-ui-select {
@@ -386,4 +386,13 @@
   position: absolute;
   right: 10px;
   top: 8px;
+}
+.ui-msg-error {
+  color: #d9534f;
+}
+.ui-msg-success {
+  color: #7dbd33;
+}
+.ui-msg-info {
+  color: #4a90e2;
 }
