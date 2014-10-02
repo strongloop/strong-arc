@@ -20,10 +20,10 @@ gulp.task('default', ['build', 'test', 'watch']);
 
 gulp.task('build', [
     'build-less',
+    'build-less-devtools',
     'build-version',
     'build-workspace-services',
     'install-example-modules',
-    'build-less-devtools'
 ]);
 
 gulp.task('build-less', function() {
