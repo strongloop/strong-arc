@@ -1,6 +1,10 @@
 describe('ExplorerService', function() {
   var $injector, CONST, ExplorerService, throwHttpError;
 
+  // Starting a process on Jenkins is slow,
+  // we need more time for tests to finish
+  this.timeout(5000);
+
   beforeEach(function() {
     inject(function(_$injector_) {
       $injector = _$injector_;
