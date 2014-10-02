@@ -1,0 +1,14 @@
+{
+  "apps": [
+    {
+      "id": "studio",
+      "name": "API Composer",
+      "description": "Develop and test LoopBack apps, models, and data sources."
+    },
+    {
+      "id": "devtools",
+      "name": "Profiler",
+      "description": "Profile applications’ CPU and memory consumption."
+    }
+  ]
+}

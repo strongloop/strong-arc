@@ -1,0 +1,8 @@
+<div ng-show="showModelPreview">
+  <span class="discovery-schema-grid-label">Models to be generated</span>
+  <div ng-repeat="option in gridOptions">
+      <span class="discovery-model-preview-modelname">{{ option.tableName }}</span> <span>properties:</span>
+      <div ng-grid="option" class="discovery-grid-container"></div>
+    <hr />
+  </div>
+</div>

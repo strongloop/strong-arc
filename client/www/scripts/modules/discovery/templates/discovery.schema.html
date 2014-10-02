@@ -1,0 +1,13 @@
+<div data-id="DatasourceDiscoveryContainer">
+  <div sl-common-loading-indicator ng-show="isDsTablesLoadingIndicatorVisible"></div>
+  <div sl-discovery-model-preview ng-model="gridOptions"></div>
+  <div ng-show="isDsTableGridVisible">
+    <div class="discovery-schema-grid-header-container">
+      <input type="text" placeholder="filter" class="discovery-schema-filter-input" ng-model="filterOptions.filterText" />
+      <span class="discovery-schema-grid-label">Select the tables you want to model</span>
+    </div>
+    <div class="discovery-schema-list-grid discovery-grid-container" ng-grid="dsTablesGridOptions"></div>
+  </div>
+
+</div>
+

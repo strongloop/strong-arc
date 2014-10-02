@@ -1,10 +1,10 @@
 // Application Constants
 var CONST = {
-  NEW_MODEL_PRE_ID:'sl.temp.new-model',
+  NEW_MODEL_PRE_ID: 'sl.temp.new-model',
   NEW_MODEL_NAME: 'newModel',
   NEW_MODEL_FACET_NAME: 'common',
   NEW_MODEL_BASE: 'Model',
-  NEW_DATASOURCE_PRE_ID:'sl.temp.new-datasource',
+  NEW_DATASOURCE_PRE_ID: 'sl.temp.new-datasource',
   NEW_DATASOURCE_NAME: 'newDatasource',
   NEW_DATASOURCE_FACET_NAME: 'server',
   DATASOURCE_TYPE: 'datasource',
@@ -12,13 +12,6 @@ var CONST = {
   DEFAULT_DATASOURCE_BASE_MODEL: 'PersistedModel',
   MODEL_TYPE: 'model',
   APP_FACET: 'server',
-  CONNECTORS_SUPPORTING_MIGRATE: [
-    'mongodb', // for indexes
-    'mysql',
-    'mssql',
-    'oracle',
-    'postgresql'
-  ]
 };
 
 var app = angular.module('app', [
@@ -26,6 +19,7 @@ var app = angular.module('app', [
   'ngResource',
   'ngSanitize',
   'ngAnimate',
+  'angularSpinner',
   'ngCookies',
   'angular-growl',
   'lbServices',
@@ -34,15 +28,19 @@ var app = angular.module('app', [
   'IA',
   'Common',
   'Property',
+  'Discovery',
   'Model',
+  'Landing',
+  'UI',
   'Datasource',
+  'Explorer',
   'ui.bootstrap',
   'ui.utils',
   'checklist-model',
   'ngGrid'
 ]);
 app.value('CONST', CONST);
-app.config(['growlProvider', function(growlProvider) {
+app.config(['growlProvider', function (growlProvider) {
   growlProvider.globalTimeToLive(1800);
 }]);
 app.config([
@@ -73,7 +71,28 @@ app.config([
       state('studio', {
         url: '/studio',
         templateUrl: './scripts/modules/app/templates/studio.main.html',
-        controller: 'StudioController'
+        controller: 'StudioController',
+        resolve: {
+          // Wait for all metadata requests to finish
+          'studioMetadataResults': [
+            'modelPropertyTypes',
+            'connectorMetadata',
+            '$q',
+            function waitForAllStudioMetadata(modelPropertyTypes,
+                                              connectorMetadata,
+                                              $q) {
+              return $q.all([
+                connectorMetadata.$promise,
+                modelPropertyTypes.$promise
+              ]);
+            }
+          ]
+        }
+      })
+      .state('landing', {
+        url: '/landing',
+        templateUrl: './scripts/modules/landing/templates/landing.main.html',
+        controller: 'LandingController'
       }).
       state('login', {
         url: '/login',
@@ -100,16 +119,16 @@ app.factory('requestInterceptor', [
         if (at) {
           config.headers.authorization = at;
         }
-        else{
+        else {
           // allow users to get to home view
           // any other navigation requires login
-          if ($location.path() !== '/'){
+          if ($location.path() !== '/') {
             $location.path('/login');
           }
         }
         return config || $q.when(config);
       },
-      responseError: function(rejection) {
+      responseError: function (rejection) {
         if (rejection.status == 401) {
           $location.path('/login');
         }
@@ -134,9 +153,9 @@ app.factory('requestInterceptor', [
 
 // global autofocus
 app.factory('Focus', [
-  '$rootScope', '$timeout', (function($rootScope, $timeout) {
-    return function(name) {
-      return $timeout(function() {
+  '$rootScope', '$timeout', (function ($rootScope, $timeout) {
+    return function (name) {
+      return $timeout(function () {
         return $rootScope.$broadcast('focusOn', name);
       });
     };
@@ -144,18 +163,10 @@ app.factory('Focus', [
 ]);
 
 
-
-
-
-
-
-
-
-
-app.controller('MainNavController',[
+app.controller('MainNavController', [
   '$scope',
   '$location',
-  function($scope, $location){
+  function ($scope, $location) {
 
     $scope.isActive = function (viewLocation) {
       return viewLocation === $location.path();
@@ -165,13 +176,13 @@ app.controller('MainNavController',[
 ]);
 
 // Get project name from package.json
-app.run(['$rootScope', 'PackageDefinition', function($rootScope, PackageDefinition) {
+app.run(['$rootScope', 'PackageDefinition', function ($rootScope, PackageDefinition) {
   var pkg = PackageDefinition.findOne();
   return pkg.$promise
-    .then(function() {
+    .then(function () {
       $rootScope.projectName = pkg.name;
     })
-    .catch(function(err) {
+    .catch(function (err) {
       console.warn('Cannot get project\'s package definition.', err);
     });
 }]);

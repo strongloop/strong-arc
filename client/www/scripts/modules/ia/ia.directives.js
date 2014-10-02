@@ -65,9 +65,9 @@ IA.directive('slIaMainNav', [
 
               // is it discoverable
              // if (localDSInstance.children && localDSInstance.children.connector) {
-              if (localDSInstance && localDSInstance.connector) {
+              if (localDSInstance && localDSInstance.definition.connector) {
                 for (var w = 0;w < discoverableDatasources.length;w++) {
-                  if (localDSInstance.connector === discoverableDatasources[w]) {
+                  if (localDSInstance.definition.connector === discoverableDatasources[w]) {
                     localDSInstance.isDiscoverable = true;
                     break;
                   }
@@ -198,8 +198,15 @@ app.directive('slIaGlobalExceptionView', [
       replace:true,
       link: function(scope, el, attrs) {
 
-        scope.$watch('globalExceptionStack', function(oldVal, newVal) {
+        scope.$watch('globalExceptionStack', function(newVal) {
           React.renderComponent(IAGlobalExceptionDisplayView({scope:scope}), el[0]);
+          // fatal to Api Composer application
+          newVal.map(function(stackItem) {
+            if (stackItem.isFatal) {
+              $('[data-id="MainSidebarContainer"]').hide();
+              $('[data-id="IAMainContentContainer"]').hide();
+            }
+          });
         }, true);
       }
     }

@@ -11,7 +11,6 @@ Profile.controller('ProfileMainController', [
   function ($rootScope, ProfileService, $scope, ProfileService) {
 
     $scope.viewTitle = 'Profile';
-
   }
 ]);
 Profile.controller('LoginController', [
@@ -19,7 +18,7 @@ Profile.controller('LoginController', [
   '$location',
   'ProfileService',
   function ($scope, $location, ProfileService) {
-
+    //noop
   }
 ]);
 Profile.controller('RegisterController', [

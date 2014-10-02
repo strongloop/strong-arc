@@ -23,7 +23,7 @@ var IAMainNavContainer = (IAMainNavContainer = React).createClass({
         <div className="ia-project-title-header-container" >
           <div className="ia-project-nav-help">
             <a target="_blank" href="http://docs.strongloop.com/display/SLS/Using+StrongLoop+Studio">
-              <span id="mainNavContextHelp" data-id="MainNavContextHelp" className="glyphicon glyphicon-question-mark"></span>
+              <span id="mainNavContextHelp" data-id="MainNavContextHelp" className="sl-icon sl-icon-question-mark"></span>
             </a>
           </div>
           <span className="ia-project-title-container">{projectName}</span>
@@ -149,12 +149,12 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
       'ia-tree-node-table branch-leaf-list model-branch-container is-closed': !scope.modelNavIsVisible
     });
     var navItemOpenCloseIconClasses = cx({
-      'nav-branch-openclose-icon glyphicon glyphicon-navbranch-open': component.state.isModelNavContainerOpen,
-      'nav-branch-openclose-icon glyphicon glyphicon-navbranch-closed': !component.state.isModelNavContainerOpen
+      'nav-branch-openclose-icon sl-icon sl-icon-arrow-down': component.state.isModelNavContainerOpen,
+      'nav-branch-openclose-icon sl-icon sl-icon-arrow-right': !component.state.isModelNavContainerOpen
     });
     var navItemsOpenCloseFolderIconClasses = cx({
-      'nav-branch-folder-icon glyphicon glyphicon-folder-open': scope.modelNavIsVisible,
-      'nav-branch-folder-icon glyphicon glyphicon-folder-open': !scope.modelNavIsVisible
+      'nav-branch-folder-icon sl-icon sl-icon-folder': scope.modelNavIsVisible,
+      'nav-branch-folder-icon sl-icon sl-icon-folder': !scope.modelNavIsVisible
     });
     var rowItems = navModels.map(function(item) {
       var classNameVar = 'tree-item-row ';
@@ -168,15 +168,16 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
         classNameVar += ' is-selected'
       }
       var dsConnectEl = (<span />);
+      // TODO - SEAN fix this bug - it needs to reference 'config' for dataSource
       if (item.dataSource && (item.dataSource !== CONST.DEFAULT_DATASOURCE )) {
-        dsConnectEl = (<span data-name={item.name}  data-id={item.id} className="glyphicon glyphicon-lightning"></span>);
+        dsConnectEl = (<span data-name={item.name}  data-id={item.id} className="sl-icon sl-icon-lightning"></span>);
       }
       item.configId = item.config && item.config.id;
 
       return (
         <div data-ui-type="row" className={classNameVar} data-id={item.id}>
           <div data-ui-type="cell" className="ia-nav-item-icon-container-col">
-            <span data-name={item.name}  data-id={item.id} className="glyphicon glyphicon-file"></span>
+            <span data-name={item.name}  data-id={item.id} className="sl-icon sl-icon-file"></span>
           </div>
           <div data-ui-type="cell" className="ia-nav-item-name-container-col">
             <button onClick={singleClickItem} data-name={item.name} data-id={item.id} className="nav-tree-item tree-node" title={item.name}><span className = "nav-tree-item-header">{item.name}</span>
@@ -187,7 +188,7 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
           </div>
           <div data-ui-type="cell" className="ia-nav-item-contextmenu-icon-container-col">
             <button className="btn-command btn-nav-context" data-id={item.id} data-config-id={item.configId}>
-              <span data-name={item.name} data-id={item.id} data-config-id={item.configId} className="glyphicon glyphicon-contextmenu"></span>
+              <span data-name={item.name} data-id={item.id} data-config-id={item.configId} className="sl-icon sl-icon-box-arrow-down"></span>
             </button>
           </div>
         </div>
@@ -197,7 +198,7 @@ var IAMainModelNav = (IAMainModelNav = React).createClass({
       <div>
         <button onClick={component.toggleModelNav} data-name="model_root" className="btn btn-default btn-block nav-tree-item tree-branch"  title="Models" >
           <span className={navItemOpenCloseIconClasses}></span>
-          <span className="nav-branch-folder-icon glyphicon glyphicon-folder-open"></span>
+          <span className="nav-branch-folder-icon sl-icon sl-icon-folder"></span>
           <span className="nav-branch-title">Models</span>
         </button>
         <div data-ui-type="table" className={navItemContainerClasses}>
@@ -262,10 +263,46 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
   componentDidMount:function(){
     var menuItems = {};
     var component = this;
-    var currentDSName = null;
     var isDiscoverable = false;
 
-   // menuItems.openSelectedDataSource = {name: "open", callback: component.openSelectedDataSource};
+    /*
+     * Note createModelsFromDS must be the first menu item in the menu
+     * to allow control whether it is visible or not.  If you want to adjust
+     * the order of the menu items you must take into account
+     * See the show event below
+     * */
+    menuItems.createModelsFromDS = {
+      name: "discover models",
+      disabled: function(key, opt) {
+        if (opt.sourceEvent.target.attributes['data-is-discoverable']) {
+          isDiscoverable = opt.sourceEvent.target.attributes['data-is-discoverable'].value;
+        }
+        else if (opt.sourceEvent.target.parentElement.attributes['data-name']){
+          isDiscoverable = opt.sourceEvent.target.parentElement.attributes['data-is-discoverable'].value;
+        }
+        if (isDiscoverable === 'true') {
+          return false;
+        }
+        return true;
+      },
+      callback: function(key, opt) {
+        var dsId = '';
+        if (opt.sourceEvent.target.attributes['data-id']) {
+          dsId = opt.sourceEvent.target.attributes['data-id'].value;
+        }
+        // check the parent element
+        else if (opt.sourceEvent.target.parentElement.attributes['data-id']){
+          dsId = opt.sourceEvent.target.parentElement.attributes['data-id'].value;
+        }
+        if (dsId){
+          component.props.scope.$apply(function () {
+
+            component.props.scope.createModelsFromDS(dsId);
+          });
+        }
+
+      }
+    };
     menuItems.deleteSelectedDataSource = {name: "delete", callback: component.deleteSelectedDataSource};
 
     $.contextMenu({
@@ -275,9 +312,16 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
       // define the elements of the menu
       items: menuItems,
       events: {
-        show: function(opt, event) {
-          if (opt.sourceEvent.target.attributes['data-name']){
-            currentDSName = opt.sourceEvent.target.attributes['data-name'].value;
+        show: function(opt) {
+          if (opt.sourceEvent.target.attributes['data-is-discoverable']) {
+            var isDiscoverable = JSON.parse(opt.sourceEvent.target.attributes['data-is-discoverable'].value);
+            // note the order of menu items to target not showing discover item on
+            // ds types that don't support it.
+            // show by default (in case it was turned off by another item as it is shared
+            $('.context-menu-list li:first-child').show();
+            if (!isDiscoverable) {
+              $('.context-menu-list li:first-child').hide();
+            }
           }
         }
       }
@@ -321,18 +365,23 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
       'ia-tree-node-table branch-leaf-list datasource-branch-container is-closed': !scope.dsNavIsVisible
     });
     var navItemOpenCloseIconClasses = cx({
-      'nav-branch-openclose-icon glyphicon glyphicon-navbranch-open': component.state.isDataSourceNavContainerOpen,
-      'nav-branch-openclose-icon glyphicon glyphicon-navbranch-closed': !component.state.isDataSourceNavContainerOpen
+      'nav-branch-openclose-icon sl-icon sl-icon-arrow-down': component.state.isDataSourceNavContainerOpen,
+      'nav-branch-openclose-icon sl-icon sl-icon-arrow-right': !component.state.isDataSourceNavContainerOpen
     });
     var navItemsOpenCloseFolderIconClasses = cx({
-      'glyphicon glyphicon-folder-open': scope.dsNavIsVisible,
-      'glyphicon glyphicon-folder-closed': !scope.dsNavIsVisible
+      'sl-icon sl-icon-folder-open': scope.dsNavIsVisible,
+      'sl-icon sl-icon-folder-closed': !scope.dsNavIsVisible
     });
 
 
     var rowItems = (<div />);
     if (scope.mainNavDatasources.map) {
       rowItems = scope.mainNavDatasources.map(function(item) {
+
+        var isDiscoverable = false;
+        if (item.isDiscoverable) {
+          isDiscoverable = item.isDiscoverable;
+        }
         var classNameVar = 'tree-item-row ';
         if (item.isActive) {
           classNameVar += ' is-active';
@@ -346,7 +395,7 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
         return (
           <div data-ui-type="row" className={classNameVar} data-id={item.id} >
             <div data-ui-type="cell" className="ia-nav-item-icon-container-col">
-              <span data-name={item.name}  data-id={item.id} className="glyphicon glyphicon-file"></span>
+              <span data-name={item.name}  data-id={item.id} className="sl-icon sl-icon-file"></span>
             </div>
             <div data-ui-type="cell" className="ia-nav-item-name-container-col">
               <button onClick={singleClickItem} data-name={item.name} data-id={item.id} className="nav-tree-item tree-node" title={item.name}><span className = "nav-tree-item-header">{item.name}</span>
@@ -355,8 +404,8 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
             <div data-ui-type="cell" className="ia-nav-item-dsconnect-icon-container-col">
             </div>
             <div data-ui-type="cell" className="ia-nav-item-contextmenu-icon-container-col">
-              <button className="btn-command btn-ds-nav-context" data-id={item.id}>
-                <span data-name={item.name}  data-id={item.id} className="glyphicon glyphicon-contextmenu"></span>
+              <button className="btn-command btn-ds-nav-context" data-is-discoverable={isDiscoverable} data-id={item.id}>
+                <span data-name={item.name}  data-id={item.id} className="sl-icon sl-icon-box-arrow-down"></span>
               </button>
             </div>
 
@@ -370,7 +419,7 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
       <div>
         <button onClick={component.toggleDataSourceNav} type="button" data-name="datasources_root" className="btn btn-default btn-block nav-tree-item tree-branch" title="Datasources">
           <span className={navItemOpenCloseIconClasses}></span>
-          <span className="nav-branch-folder-icon glyphicon glyphicon-folder-open"></span>
+          <span className="nav-branch-folder-icon sl-icon sl-icon-folder"></span>
           <span className="nav-branch-title">DataSources</span>
         </button>
         <div data-ui-type="table" className={navItemContainerClasses}>
@@ -453,14 +502,14 @@ var IAMainControls = (IAMainControls = React).createClass({
             <div data-ui-type="cell">
               <label className="main-control-command-label">MODEL</label>
               <button onClick={createModelViewRequest} type="button" className="btn btn-sm btn-primary">
-                <span className="maincontrol-main-icon glyphicon glyphicon-plus-sign"></span>
+                <span className="maincontrol-main-icon sl-icon sl-icon-plus-sign"></span>
                 <span className="maincontrol-main-button-label">New</span>
               </button>
             </div>
             <div data-ui-type="cell" className="main-control-apprender-container">
               <label className="main-control-command-label">APP</label>
               <button disabled="disabled" onClick={renderAppViewRequest} type="button" className="btn btn-primary btn-sm">
-                <span className="maincontrol-main-icon glyphicon glyphicon-play"></span>
+                <span className="maincontrol-main-icon sl-icon sl-icon-play"></span>
                 <span className="maincontrol-main-button-label">Render</span>
               </button>
             </div>
@@ -477,7 +526,7 @@ var IAMainControls = (IAMainControls = React).createClass({
                 data-name="oracle"
                 className="btn btn-default btn-control-ds"
                 title="oracle connector">
-                  <span className="glyphicon glyphicon-database"></span>
+                  <span className="sl-icon sl-icon-database"></span>
               </button>
               <div className="ds-type-name">Oracle</div>
             </div>
@@ -487,7 +536,7 @@ var IAMainControls = (IAMainControls = React).createClass({
                 data-name="mssql"
                 onClick={addNewInstanceRequest}
                 title="mssql connector">
-                  <span className="glyphicon glyphicon-database"></span>
+                  <span className="sl-icon sl-icon-database"></span>
               </button>
               <div className="ds-type-name">MS SQL</div>
             </div>
@@ -497,7 +546,7 @@ var IAMainControls = (IAMainControls = React).createClass({
                 className="btn btn-default btn-control-ds"
                 data-name="mysql"
                 title="mysql connector">
-                  <span className="glyphicon glyphicon-database"></span>
+                  <span className="sl-icon sl-icon-database"></span>
               </button>
               <div className="ds-type-name">MySQL</div>
             </div>
@@ -507,7 +556,7 @@ var IAMainControls = (IAMainControls = React).createClass({
                 className="btn btn-default btn-control-ds"
                 data-name="postgresql"
                 title="postgres connector">
-                <span className="glyphicon glyphicon-database"></span>
+                <span className="sl-icon sl-icon-database"></span>
               </button>
               <div className="ds-type-name">PostgreSQL</div>
             </div>
@@ -517,7 +566,7 @@ var IAMainControls = (IAMainControls = React).createClass({
                 className="btn btn-default btn-control-ds"
                 data-name="mongodb"
                 title="mongodb connector">
-                  <span className="glyphicon glyphicon-database"></span>
+                  <span className="sl-icon sl-icon-database"></span>
               </button>
               <div className="ds-type-name">MongoDB</div>
             </div>
@@ -554,35 +603,131 @@ var IAGlobalExceptionDisplayView = (IAGlobalExceptionDisplayView = React).create
       displayMarkup = scope.globalExceptionStack.map(function(stackItem) {
         if (stackItem.message !== prevMessage) {
           prevMessage = stackItem.message;
+          /*
+          * NOTE the var declarations in the set are deliberately not
+          * assigned in a block at the top of the function to make the code
+          * more readable and portable.
+          * */
+          var nameElement;
+          if (stackItem.name) {
+            nameElement =  (
+              <li>
+                <span className="ia-global-exception-label">Name: </span>
+                <span className="ia-global-exception-value">{stackItem.name}</span>
+              </li>
+            );
+          }
+          var messageElement;
+          if (stackItem.message) {
+            messageElement = (
+                <li>
+                  <span  className="ia-global-exception-label">Message: </span>
+                  <span className="ia-global-exception-value">{stackItem.message}</span>
+                </li>
+              );
+          }
+          var detailsElement;
+          if (stackItem.details) {
+            detailsElement = (
+                <li>
+                  <span  className="ia-global-exception-label">Details: </span>
+                  <span className="ia-global-exception-value">{stackItem.details}</span>
+                </li>
+               );
+          }
+          var requestUrlElement;
+          if (stackItem.requestUrl) {
+          requestUrlElement = (
+              <li>
+                <span  className="ia-global-exception-label">Request: </span>
+                <span className="ia-global-exception-value">{stackItem.requestUrl}</span>
+              </li>
+            );
+          }
+          var statusElement;
+          if (stackItem.status) {
+          statusElement = (
+              <li>
+                <span  className="ia-global-exception-label">Staus: </span>
+                <span className="ia-global-exception-value">{stackItem.status}</span>
+              </li>
+            );
+          }
+          /*
+          * The helpElement can contain hyperlinks as pointers to documentation or
+          * examples or straight text as string.
+          * Straight text will get wrapped in a <span> element
+          * Text with hyperlinks must be specified as an array containing
+          * either text or link elements
+          *
+          * the following thrown globalException object eg:
+          *   stackItem.help = [
+          *     { text: 'this is a description of the error' },
+          *     { text: 'See:' },
+          *     { text: 'I am the link text title', link: 'http://www.example.com'},
+          *     { text: 'for more info' }
+          *   ];
+          *
+          *   will get translated into a markup structure as follows:
+          *   <span> this is a description of the error </span>
+          *   <span See </span>
+          *   <a href="http://www.example.com">I am the link text title</a>
+          *   <span> for more info </span>
+          *
+          *   the following eg:
+          *   stackItem.help = 'This is a description of the error';
+          *
+          *   will get translated into the following:
+          *   <span> This is a description of the error </span>
+          *
+          * */
+          var helpElement;
+          if (stackItem.help) {
+            var helpString = stackItem.help;
+            if (Array.isArray(stackItem.help)) {
+              helpString = stackItem.help.map(function(item) {
+                  if (item.link) {
+                    return (<a href={item.link} target="_blank" title={item.text}>{item.text}</a>);
+                  }
+                  else {
+                    return (<span> {item.text} </span>);
+                  }
+                }
+              );
+            }
+            helpElement = (
+                <li>
+                  <span  className="ia-global-exception-label">Help: </span>
+                  <span className="ia-global-exception-value">{helpString}</span>
+                </li>
+              );
+          }
+          var stackTraceElement;
+          if (stackItem.stack) {
+            stackTraceElement = (
+                <div data-id="StackTraceMessageContainer"
+                  className="global-exception-stack-display">{stackItem.stack}</div>
+              );
+          };
           return (
             <div data-id="IAGlobalExceptionDisplayContainer" className="ia-global-exception-container">
-              <span onClick={clearGlobalException} className="glyphicon glyphicon-remove ia-global-exception-close-button"></span>
+              <span onClick={clearGlobalException} className="sl-icon sl-icon-close ia-global-exception-close-button"></span>
               <div className="ia-global-exception-header">Oops! Something is wrong</div>
               <div className="ia-global-exception-link" onClick={component.toggleStackView}>Show/hide details</div>
               <span className="ia-global-exception-value">{stackItem.message}</span>
               <div data-id="GlobalExceptionDetailsContainer">
 
                 <ul className="ia-global-exception-body">
-                  <li>
-                    <span className="ia-global-exception-label">Name: </span><span className="ia-global-exception-value">{stackItem.name}</span>
-                  </li>
-                  <li>
-                    <span  className="ia-global-exception-label">Message: </span><span className="ia-global-exception-value">{stackItem.message}</span>
-                  </li>
-                  <li>
-                    <span  className="ia-global-exception-label">Details: </span><span className="ia-global-exception-value">{stackItem.details}</span>
-                  </li>
-                  <li>
-                    <span  className="ia-global-exception-label">Request: </span><span className="ia-global-exception-value">{stackItem.requestUrl}</span>
-                  </li>
-                  <li>
-                    <span  className="ia-global-exception-label">Status: </span><span className="ia-global-exception-value">{stackItem.status}</span>
-                  </li>
-
+                  {nameElement}
+                  {messageElement}
+                  {detailsElement}
+                  {requestUrlElement}
+                  {statusElement}
+                  {helpElement}
                 </ul>
-                <div data-id="StackTraceMessageContainer" className="global-exception-stack-display">{stackItem.stack}</div>
-              </div>
+                {stackTraceElement}
 
+              </div>
             </div>);
         }
 

@@ -37,18 +37,30 @@ given.emptyWorkspace = function() {
   });
 };
 
+given.targetAppIsRunning = function() {
+  return inject(function(Workspace, throwHttpError) {
+    return Workspace.start().$promise.catch(throwHttpError);
+  });
+};
+
+given.targetAppIsStopped = function() {
+  return inject(function(Workspace, throwHttpError) {
+    return Workspace.stop().$promise.catch(throwHttpError);
+  });
+};
+
 var _givenValueCounter = 0;
 
 given.modelInstance = function(definitionData, configData) {
   return inject(function(CONST, ModelDefinition, ModelConfig) {
     definitionData = angular.extend({
       name: 'aModelDefinition_' + (++_givenValueCounter),
-      facetName: 'common',
+      facetName: 'common'
     }, definitionData);
     configData = angular.extend({
       name: definitionData.name,
       facetName: 'server'
-    });
+    }, configData);
 
     // TODO(bajtos) Use ModelService.createNewModelInstance() instead
     return {
@@ -64,11 +76,57 @@ given.modelInstance = function(definitionData, configData) {
 
 given.dataSourceInstance = function(definitionData) {
   return inject(function(DataSourceService) {
-    var definitionData = angular.extend({
+    definitionData = angular.extend({
       name: 'aDataSourceDefinition' + (++_givenValueCounter),
       facetName: 'server',
-      connector: 'memory',
+      connector: 'memory'
     }, definitionData);
     return DataSourceService.createNewDataSourceInstance(definitionData);
+  });
+};
+
+given.facetConfig = function(facetName, settings) {
+  return inject(function($q, FacetSetting) {
+    return $q.all(Object.keys(settings).map(function(key) {
+      var filter = { where: { facetName: facetName, name: key }};
+      return FacetSetting.find(filter).$promise
+        .then(function(list) {
+          if (list.length) {
+            list[0].value = settings[key];
+            return list[0].$save();
+          } else {
+            return FacetSetting.create({
+              facetName: facetName,
+              name: key,
+              value: settings[key]
+            }).$promise;
+          }
+        });
+    }));
+  });
+};
+
+given.mysqlDataSource = function(dataSourceName) {
+  return inject(function(CONST, DataSourceDefinition) {
+    return DataSourceDefinition.create({
+      facetName: CONST.APP_FACET,
+      name: dataSourceName,
+      connector: 'mysql',
+      // the database and credentials are created by /build-tasks/setup-mysql.js
+      database: 'strong_studio_test',
+      username: 'studio',
+      password: 'zh59jeol'
+    }).$promise;
+  });
+};
+
+given.facetIsMissing = function(facetName) {
+  return inject(function($http) {
+    return $http.post('/delete-facet/' + facetName)
+      .then(function() {
+        return inject(function(Facet) {
+          return Facet.find().$promise;
+        });
+      });
   });
 };

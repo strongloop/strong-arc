@@ -108,11 +108,14 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
       }
       xState.activeInstance = tActiveInstance;
       this.setState(xState);
+      this.saveModelInstance();
     }
   },
   saveModelInstance: function(event) {
     var component = this;
-    event.preventDefault();
+    if (event && event.preventDefault) {
+      event.preventDefault();
+    }
     var instance = component.state.activeInstance;
     var scope = component.props.scope;
     scope.$apply(function() {
@@ -136,8 +139,8 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
       'model-detail-pocket-container is-closed': !component.props.scope.isModelInstanceBasePropertiesActive
     });
     var iconClasses = cx({
-      'model-editor-section-icon glyphicon glyphicon-minus-sign': component.state.isDetailsContainerOpen,
-      'model-editor-section-icon glyphicon glyphicon-plus-sign': !component.state.isDetailsContainerOpen
+      'model-editor-section-icon sl-icon sl-icon-minus-thick': component.state.isDetailsContainerOpen,
+      'model-editor-section-icon sl-icon sl-icon-plus-thick': !component.state.isDetailsContainerOpen
     });
     var modelNameInputClasses = cx({
       'model-instance-name form-control': component.state.isNameValid,
@@ -305,12 +308,17 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
     return true;
   },
   triggerNewPropertyEditor: function() {
-    var item = {};
-    var that = this;
-    that.props.scope.$apply(function() {
-      that.props.scope.createNewModelProperty();
-    });
-
+    var scope = this.props.scope;
+    if (scope.activeInstance.id !== CONST.NEW_MODEL_PRE_ID){
+      scope.$apply(function() {
+        scope.createNewModelProperty();
+      });
+    }
+    else {
+      scope.$apply(function() {
+        scope.earlyNewPropertyWarning();
+      });
+    }
   },
   toggleModelProperties: function() {
     $('[data-id="ModelPropertyListContainer"]').toggle(250);
@@ -330,24 +338,13 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
       'row is-closed': !component.state.isOpen
     });
     var iconClasses = cx({
-      'model-editor-section-icon glyphicon glyphicon-minus-sign': component.state.isPropertiesContainerOpen,
-      'model-editor-section-icon glyphicon glyphicon-plus-sign': !component.state.isPropertiesContainerOpen
+      'model-editor-section-icon sl-icon sl-icon-minus-thick': component.state.isPropertiesContainerOpen,
+      'model-editor-section-icon sl-icon sl-icon-plus-thick': !component.state.isPropertiesContainerOpen
     });
-    var clickHandler = function(event) {
-      var isOpenState = !component.state.isPropertiesContainerOpen;
-      component.setState({isOpen:isOpenState});
-    };
-
-    var items = [];
-    items = properties.map(function (item) {
+    var items = properties.map(function (item) {
       return  (<ModelPropertyRowDetail modelProperty={item} scope={scope} />);
     });
-    var disabledVal = false;
-    var titleText = 'New Property';
-    if (scope.activeInstance.id === CONST.NEW_MODEL_PRE_ID){
-      disabledVal = true;
-      titleText = 'Save your model before adding properties';
-    }
+
     var retVal = (<div />);
     if (properties) {
       retVal = (
@@ -367,7 +364,7 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
 
                   <span data-ui-type="cell" title="is id" className="props-isid-header table-header-cell">is id</span>
 
-                  <span data-ui-type="cell" title="required" className="props-required-header table-header-cell">Req</span>
+                  <span data-ui-type="cell" title="required" className="props-required-header table-header-cell">Required</span>
 
                   <span data-ui-type="cell" title="is index" className="props-index-header table-header-cell">Index</span>
 
@@ -382,12 +379,8 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
             <ul className="model-instance-property-list">
             {items}
             </ul>
-            <button disabled={disabledVal} title={titleText} type="button" onClick={component.triggerNewPropertyEditor} className="btn-new-model-property" >New Property</button>
-          </div>
-
-
+            <button title="New Property" type="button" onClick={component.triggerNewPropertyEditor} className="btn-new-model-property" >New Property</button>          </div>
         </div>
-
       );
     }
 
@@ -492,8 +485,8 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
       'property-detail-container is-closed': !component.state.isOpen
     });
     var bClasses = cx({
-      'glyphicon glyphicon-open-sign': component.state.isOpen,
-      'glyphicon glyphicon-closed-sign': !component.state.isOpen
+      'sl-icon sl-icon-open-sign': component.state.isOpen,
+      'sl-icon sl-icon-closed-sign': !component.state.isOpen
     });
     var cClasses = cx({
       'modelproperty-container modelproperty-detail-is-open': component.state.isOpen,
@@ -563,7 +556,7 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
               </span>
               <span data-ui-type="cell" className="props-controls-cell">
                 <button className="props-remove-btn" onClick={component.deleteModelProperty} data-id={modelProperty.id}>
-                  <span data-id={modelProperty.id} className="glyphicon glyphicon-remove"></span>
+                  <span data-id={modelProperty.id} className="sl-icon sl-icon-close"></span>
                 </button>
 
               </span>
@@ -612,9 +605,9 @@ var DataTypeSelect = (DataTypeSelect = React).createClass({
   render: function() {
     var that = this;
 
-    var val = that.state.modelProperty.type;
+    var val = that.state.modelProperty.type.toLowerCase();
 
-    var dataTypes = ['string','array','buffer','date','geopoint','number','boolean','object','any'];
+    var dataTypes = this.props.scope.modelPropertyTypes;
 
     var options = dataTypes.map(function(type) {
       return (<option value={type}>{type}</option>)

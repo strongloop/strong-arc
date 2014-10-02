@@ -1,4 +1,18 @@
 // Copyright StrongLoop 2014
+app.controller('SuiteController', [
+  '$scope',
+  'ProfileService',
+  '$location', function($scope, ProfileService){
+
+    $scope.suiteIA = {
+      apps: []
+    };
+
+    $scope.isAuthUser = function(){
+      return ProfileService.isAuthUser();
+    };
+}]);
+
 app.controller('StudioController', [
   '$rootScope',
   '$q',
@@ -7,12 +21,14 @@ app.controller('StudioController', [
   '$http',
   'IAService',
   'DataSourceService',
+  'WorkspaceService',
+  'DiscoveryService',
   'PropertyService',
   '$location',
   '$timeout',
   'ModelService',
   'growl',
-  function($rootScope, $q, $scope, $state, $http, IAService, DataSourceService, PropertyService, $location, $timeout, ModelService, growl) {
+  function($rootScope, $q, $scope, $state, $http, IAService, DataSourceService, WorkspaceService, DiscoveryService, PropertyService, $location, $timeout, ModelService, growl) {
 
     // Instance Collections
     $scope.mainNavDatasources = []; // initialized further down
@@ -23,7 +39,8 @@ app.controller('StudioController', [
     $scope.dsNavIsVisible = true;
     $scope.globalExceptionStack = [];
     $scope.datasource = {
-      connectionTestResponse:''
+      connectionTestResponse: '',
+      connectionTestResponseType: 'success'
     };
 
     // list of open instances (models/datasources)
@@ -48,6 +65,26 @@ app.controller('StudioController', [
         $rootScope.$broadcast('IANavEvent');
       }
     });
+    // Validate the workspace
+    WorkspaceService.validate().then(function(isValid) {
+      if (!isValid) {
+        $rootScope.$broadcast('GlobalExceptionEvent', {
+            isFatal: true,
+            message: WorkspaceService.validationError.message,
+            code: WorkspaceService.validationError.code,
+            details: 'API Composer only works with valid LoopBack projects',
+            help: [
+              { text: 'Ensure you have LoopBack installed and create your project using the slc loopback command.' },
+              { text: 'See:' },
+              { link: 'http://loopback.io/',
+                text: 'LoopBack getting started guide' },
+              { text: 'for more information' }
+            ]
+          }
+        );
+      }
+    });
+
 
     // Load Model and DataSource collections
     var loadModels = function() {
@@ -56,6 +93,7 @@ app.controller('StudioController', [
         then(function (result) {
           $scope.mainNavModels = result;
           $scope.apiModelsChanged = !$scope.apiModelsChanged;
+          $rootScope.$broadcast('IANavEvent');
         }
       );
     };
@@ -66,6 +104,7 @@ app.controller('StudioController', [
         then(function (result) {
           $scope.mainNavDatasources = result;
           $scope.apiDataSourcesChanged = !$scope.apiDataSourcesChanged;
+          $rootScope.$broadcast('IANavEvent');
         });
     };
     loadDataSources();
@@ -452,7 +491,7 @@ app.controller('StudioController', [
       var dsDef = instance.definition;
 
       if (!dsDef.connector) {
-         setFriendlyTestConnectionMsg('Failed: missing connector');
+         setFriendlyTestConnectionMsg('Failed: missing connector'); //todo pass as object
         return;
       }
 
@@ -468,26 +507,36 @@ app.controller('StudioController', [
         })
         .catch(function(err) {
           // Note: The http error is reported in the global error view
-          setFriendlyTestConnectionMsg('Failed.');
+          setFriendlyTestConnectionMsg('Failed.'); //todo pass as object
         });
 
 
     };
     $scope.clearTestMessage = function() {
       $scope.datasource.connectionTestResponse = '';
+      $scope.datasource.connectionTestResponseType = 'success';
     };
+
+    //todo fix signature so `response` arg is always an object with .status, optional .error, and .data
     var setFriendlyTestConnectionMsg = function(response) {
       var message;
+      var type = 'success';
+
       if (typeof response === 'string') {
         message = response;
+        type = 'error';
       } else if (response.status) {
         message = 'Success';
       } else if (!response.error) {
         message = 'Failed.';
+        type = 'error';
       } else {
         message = 'Failed: ' + response.error.message;
+        type = 'error';
       }
+
       $scope.datasource.connectionTestResponse = message;
+      $scope.datasource.connectionTestResponseType = type;
     };
 
 
@@ -496,8 +545,57 @@ app.controller('StudioController', [
       $scope.globalExceptionStack = IAService.clearGlobalExceptionStack();
     };
 
-    // Event Listeners
-    // global exception
+
+
+
+
+    /*
+     *
+     * DISCOVERY
+     *
+     * */
+
+    // new schema event
+    $scope.$on('newSchemaModelsEvent', function(event, message){
+      $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
+      $scope.activeInstance = IAService.getActiveInstance();
+      $scope.instanceType = 'model';
+      $scope.activeInstance.type = 'model';
+      // note that the handler is passed the problem domain parameters
+      loadModels();
+      $scope.setApiModelsDirty();
+
+
+    });
+    $scope.createModelsFromDS = function(id) {
+
+      DataSourceService.testDataSourceConnection(id)
+        .then(function(response) {
+          if (response.status) {
+            // open a modal window and trigger the discovery flow
+            var modalConfig = DiscoveryService.getDiscoveryModalConfig(id);
+            var modalInstance = IAService.openModal(modalConfig);
+            modalInstance.opened.then(function() {
+              window.setUI();
+            });
+          }
+          else {
+            $rootScope.$broadcast('GlobalExceptionEvent', response.error);
+          }
+        })
+        .catch(function(error) {
+          $rootScope.$broadcast('GlobalExceptionEvent', error);
+        });
+    };
+
+
+    /*
+    *
+    * Event Listeners
+    *
+    * keep these to absolute minimum - in principle
+    *
+    * */
     $scope.$on('GlobalExceptionEvent', function(event, data) {
       $scope.globalExceptionStack = IAService.setGlobalException(data);
     });
@@ -595,7 +693,7 @@ app.controller('GlobalNavController',[
 app.controller('DevToolsController',[
   '$scope',
   '$location',
-  function(/*$scope, $location*/){
-    // no-op
+  function($scope, $location){
   }
 ]);
+

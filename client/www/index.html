@@ -2,6 +2,8 @@
 <html>
 <head>
   <title>StrongLoop Studio [prototype] :: StrongLoop</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <!--<link rel="stylesheet" type="text/css" href="./style/bootstrap.css">-->
   <link rel="stylesheet" type="text/css" href="./style/ng-grid.min.css">
@@ -20,26 +22,26 @@
   <link rel="stylesheet" type="text/css" href="./style/src/model.css">
   <!--<link rel="stylesheet" type="text/css" href="./style/src/explorer.css">-->
   <link rel="stylesheet" type="text/css" href="./style/src/demo.css">
-  <link rel="stylesheet" type="text/css" href="./style/src/icons.css">
-  <link rel="stylesheet" type="text/css" href="./style/src/datasource.css">
-  <!--<link rel="stylesheet" type="text/css" href="./style/style.css">-->
+  <link rel="stylesheet" type="text/css" href="./style/style.css">
 
 </head>
-<body ng-app="app">
+<body ng-app="app" ng-controller="SuiteController">
 
 <div class="headerContainer" data-id="AppHeaderContainer">
-	<div class="branding">
-		<img src="./images/strongloop.svg" alt="Strongloop logo" class="logo">
-	</div>
- 	<div class="navButtons">
-      <ul>
-        <li class="header-help-container">
-          <a href="http://docs.strongloop.com/pages/viewpage.action?pageId=3179029" target="_new" title="documentation"><span class="glyphicon glyphicon-question-sign"></span></a>
-        </li>
-        <li>
+  <div class="branding">
+    <a href="/#landing"><img src="./images/strongloop.svg" alt="Strongloop logo" class="logo"></a>
+  </div>
+  <sl-app-selector></sl-app-selector>
+  <div class="navButtons">
+    <ul>
+      <li class="header-help-container">
+        <a href="http://docs.strongloop.com/pages/viewpage.action?pageId=3179029" target="_new"
+           title="documentation"><span class="sl-icon sl-icon-help"></span></a>
+      </li>
+      <li>
           <span class="dropdown" on-toggle="toggled(open)">
             <a href class="dropdown-toggle">
-              <span class="glyphicon glyphicon-off"></span>
+              <span class="sl-icon sl-icon-on-off"></span>
             </a>
             <ul class="dropdown-menu">
               <li lb-register-nav-item></li>
@@ -48,10 +50,10 @@
               <li sl-ia-cleardb-nav-item></li>
             </ul>
           </span>
-        </li>
-      </ul>
-    </div>
-    <div class="header-version"></div>
+      </li>
+    </ul>
+  </div>
+  <div class="header-version"></div>
 
 </div>
 
@@ -90,6 +92,10 @@
 <!-- chance -->
 <script src="./scripts/vendor/chance.js"></script>
 
+<!-- spin -->
+<script src="./scripts/vendor/spin.js"></script>
+
+
 <!-- lb services -->
 <script src="./scripts/modules/common/lb-services.js"></script>
 <script src="./scripts/modules/common/workspace.js"></script>
@@ -100,8 +106,10 @@
 <script src="./scripts/vendor/angular/angular-animate.js"></script>
 <script src="./scripts/vendor/angular/angular-ui-router.js"></script>
 <script src="./scripts/vendor/angular/angular-touch.js"></script>
+<script src="./scripts/vendor/angular/angular-spinner.js"></script>
 <script src="./scripts/vendor/angular/angular-sanitize.js"></script>
 <script src="./scripts/vendor/angular/ng-grid.js"></script>
+<script src="./scripts/vendor/angular/ng-grid-flexible-height.js"></script>
 <script src="./scripts/vendor/angular/checklist-model.js"></script>
 <script src="./scripts/vendor/angular/ui-bootstrap.js"></script>
 <script src="./scripts/vendor/angular/ui-bootstrap-tpls.js"></script>
@@ -110,6 +118,8 @@
 
 <!-- sl ui -->
 <script src="./scripts/sl.ui.js"></script>
+<script src="./scripts/modules/ui/ui.module.js"></script>
+<script src="./scripts/modules/ui/ui.directives.js"></script>
 
 <!-- app -->
 <script src="./scripts/modules/app/app.module.js"></script>
@@ -159,6 +169,29 @@
 <script src="./scripts/modules/property/property.controllers.js"></script>
 <script src="./scripts/modules/property/property.services.js"></script>
 <script src="./scripts/modules/property/property.directives.js"></script>
+
+<!-- explorer -->
+<script src="./scripts/modules/explorer/explorer.module.js"></script>
+<!--
+<script type="text/jsx" src="./scripts/modules/explorer/explorer.react.js"></script>
+<script src="./scripts/modules/explorer/explorer.controllers.js"></script>
+-->
+<script src="./scripts/modules/explorer/explorer.services.js"></script>
+<!--
+<script src="./scripts/modules/explorer/explorer.directives.js"></script>
+-->
+
+<!-- landing -->
+<script src="./scripts/modules/landing/landing.module.js"></script>
+<script src="./scripts/modules/landing/landing.services.js"></script>
+<script src="./scripts/modules/landing/landing.controllers.js"></script>
+<script src="./scripts/modules/landing/landing.directives.js"></script>
+
+<!-- discovery -->
+<script src="./scripts/modules/discovery/discovery.module.js"></script>
+<script src="./scripts/modules/discovery/discovery.controllers.js"></script>
+<script src="./scripts/modules/discovery/discovery.services.js"></script>
+<script src="./scripts/modules/discovery/discovery.directives.js"></script>
 
 </body>
 </html>

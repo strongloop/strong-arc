@@ -13,6 +13,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
       isConnectorValid: this.isConnectorValid(this.props.scope.activeInstance.definition.connector),
       isFormValid: (this.isNameValid(this.props.scope.activeInstance.definition.name) && this.props.scope.activeInstance.definition.connector),
       testConnectionMessage:'',
+      testConnectionMessageType: 'success',
       isTesting: false
     }
   },
@@ -30,13 +31,15 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
     }
     component.setState({
       activeInstance: nextProps.scope.activeInstance,
-      testConnectionMessage: nextProps.scope.datasource.connectionTestResponse
+      testConnectionMessage: nextProps.scope.datasource.connectionTestResponse,
+      testConnectionMessageType: nextProps.scope.datasource.connectionTestResponseType
     });
   },
   clearMessages: function() {
     var scope = this.props.scope;
     this.setState({
-        testConnectionMessage:''
+        testConnectionMessage: '',
+        testConnectionMessageType: 'success'
       }
     );
     scope.$apply(function() {
@@ -47,8 +50,10 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
     if (!connector) {
       return false;
     }
-    var connectors = ["memory","oracle","mssql","mysql","postgresql","mongodb"];
-    return (connectors.indexOf(connector) !== -1);
+    var availableConnectors = this.props.scope.connectorMetadata;
+    return availableConnectors.some(function(it) {
+      return it.name === connector;
+    });
   },
   isNameValid: function(name) {
     return /^[\-_a-zA-Z0-9]+$/.test(name);
@@ -85,12 +90,17 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
     });
   },
   saveHandler: function(event) {
-    event.preventDefault();
-    var scope = this.props.scope;
-    var requestData = this.state.activeInstance;
-    scope.$apply(function() {
-      scope.saveDataSourceInstanceRequest(requestData);
-    });
+    var component = this;
+    if (event && event.preventDefault) {
+      event.preventDefault();
+    }
+    if (component.state.isNameValid && component.state.isConnectorValid) {
+      var scope = this.props.scope;
+      var requestData = this.state.activeInstance;
+      scope.$apply(function() {
+        scope.saveDataSourceInstanceRequest(requestData);
+      });
+    }
   },
   render: function() {
     var component = this;
@@ -121,6 +131,14 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
       'model-detail-pocket-button model-save-button datasource-test-button': !component.state.isTesting
     });
 
+    var testMessageClasses = cx({
+      'ui-msg-inline-success': component.state.testConnectionMessageType === 'success',
+      'ui-msg-inline-error': component.state.testConnectionMessageType === 'error',
+      'datasource-connection-test-response-container': true
+    });
+    var connectorOptions = this.props.scope.connectorMetadata.map(function(it) {
+       return (<option value={it.name}>{it.description}</option>);
+    });
 
     return (
       <div onClick={component.clearMessages} data-id="DatasourceEditorInstanceContainer" className="datasource-editor-instance-container">
@@ -136,6 +154,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
               value={dsModel.name}
               onChange={component.handleChange}
               data-name="name"
+              onBlur={component.saveHandler}
               placeholder="name"
               required="true" />
             </div>
@@ -160,6 +179,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                         type="text"
                         value={dsModel.user}
                         onChange={component.handleChange}
+                        onBlur={component.saveHandler}
                         data-name="user"
                         placeholder="user" />
                     </div>
@@ -174,6 +194,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                       name="password"
                       value={dsModel.password}
                       onChange={component.handleChange}
+                      onBlur={component.saveHandler}
                       data-name="password"
                       type="password"
                       placeholder="password" />
@@ -193,6 +214,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                     name="host"
                     value={dsModel.host}
                     onChange={component.handleChange}
+                    onBlur={component.saveHandler}
                     data-name="host"
                     type="text"
                     placeholder="host" />
@@ -206,6 +228,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                     name="port"
                     value={dsModel.port}
                     onChange={component.handleChange}
+                    onBlur={component.saveHandler}
                     data-name="port"
                     type="text"
                     placeholder="port" />
@@ -222,6 +245,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                     name="database"
                     value={dsModel.database}
                     onChange={component.handleChange}
+                    onBlur={component.saveHandler}
                     data-name="database"
                     type="text"
                     placeholder="database name" />
@@ -234,15 +258,11 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                         id="connector"
                         value={dsModel.connector}
                         onChange={component.handleChange}
+                        onBlur={component.saveHandler}
                         data-name="connector"
                         name="connector" >
                       <option value="">choose</option>
-                      <option value="memory">In-Memory</option>
-                      <option value="oracle">Oracle</option>
-                      <option value="mssql">MS SQL</option>
-                      <option value="mysql">MySQL</option>
-                      <option value="postgresql">PostgreSQL</option>
-                      <option value="mongodb">MongoDB</option>
+                      {connectorOptions}
                     </select>
                   </div>
                 </div>
@@ -251,7 +271,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
           </div>
           <div className="datasource-buttons-layout-container">
             <button onClick={component.testConnection} data-id={dsModel.id} className={testButtonClasses}>Test Connection</button>
-            <span className="datasource-connection-test-response-container">{component.state.testConnectionMessage}</span>
+            <span className={testMessageClasses}>{component.state.testConnectionMessage}</span>
           </div>
         </form>
       </div>

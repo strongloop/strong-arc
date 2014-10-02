@@ -1,0 +1,34 @@
+/* hide the top toolbar, only "Profiles" tab is used at the moment */
+.toolbar { display: none; }
+
+/* hide start button */
+.control-profiling {
+  display: none;
+}
+
+/* hide record heap allocations */
+.profile-launcher-view-content form {
+  label:nth-child(3) {
+    display: none;
+  }
+
+  /* hide radio buttons */
+  label {
+    input {
+      display: none;
+    }
+
+    .sl-icon {
+      color: @bullet-color;
+      margin-right: .5rem;
+    }
+
+    p {
+      margin-left: 1.5rem;
+    }
+  }
+}
+
+.record-profile-status-bar-item {
+  display: none;
+}

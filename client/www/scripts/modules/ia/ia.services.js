@@ -17,29 +17,28 @@ IA.service('IAService', [
     * Global Exception Handling
     *
     * */
-    svc.setGlobalException = function(config) {
-      if (config.message) { // barrier to entry
+    svc.setGlobalException = function(errorObj) {
+      if (errorObj.message) { // barrier to entry
         // Provide a better description for well-known
         // testConnection & autoupdate errors
-        if (config.name === 'InvocationError') {
-          var help;
-          switch (config.code) {
+        if (errorObj.name === 'InvocationError') {
+          switch (errorObj.code) {
             case 'MODULE_NOT_FOUND':
-              help = 'Run `npm install` in your project and try again.';
+              errorObj.help = 'Run `npm install` in your project and try again.';
               break;
             case 'ER_INVALID_CONNECTOR':
-              help = 'Add the connector to your project and try again.';
+              errorObj.help = [
+                { text: 'Add the connector to your project and try again.' },
+                { text: 'See' },
+                { link: 'http://docs.strongloop.com/display/LB/Data+sources+and+connectors#Datasourcesandconnectors-Installingaconnector',
+                  text: 'docs: Installing a connector' },
+                { text: 'for more information' }
+              ];
               break;
           }
-          if (help) {
-            if (config.message[config.message.length-1] !== '.')
-              config.message += '.';
-            config.message += ' ' + help;
-          }
         }
-
         // Push the exception on the stack.
-        globalExceptionStack.push(config);
+        globalExceptionStack.push(errorObj);
       }
       return globalExceptionStack;
     };
@@ -151,7 +150,7 @@ IA.service('IAService', [
       var openInstanceRefs = svc.closeInstanceById(refId);
       var activeInstance = svc.getActiveInstance();
       // reset activeInstace if this is it
-      if (activeInstance.id === refId) {
+      if (activeInstance && (activeInstance.id === refId)) {
         if (openInstanceRefs.length === 0) {
           activeInstance = svc.clearActiveInstance();
           return activeInstance;
@@ -166,7 +165,7 @@ IA.service('IAService', [
         }
       }
       else {
-        console.warn('resetActiveToFirstOpenInstance called where activeInstance.id does not equal refId:  [' + activeInstance.id + '][' + refId + ']');
+        console.warn('resetActiveToFirstOpenInstance called where either activeInstance does not exist or activeInstance.id does not equal refId: [' + refId + ']');
         return {};
       }
     };

@@ -3,11 +3,13 @@ Datasource.service('DataSourceService', [
   'DataSourceDefinition',
   'ModelConfig',
   'AppStorageService',
+  'connectorMetadata',
   '$timeout',
   '$q',
-  function(DataSourceDefinition, ModelConfig, AppStorageService, $timeout, $q) {
-    var svc = {};
-
+  function DataSourceService(DataSourceDefinition, ModelConfig,
+                             AppStorageService, connectorMetadata,
+                             $timeout, $q) {
+    var svc = this;
 
     svc.createDataSourceInstance = function(targetInstance) {
       var deferred = $q.defer();
@@ -138,7 +140,13 @@ Datasource.service('DataSourceService', [
       };
     };
     svc.getDiscoverableDatasourceConnectors = function() {
-      return ['mssql', 'oracle', 'mysql', 'postgresql'];
+      return connectorMetadata
+        .filter(function(it) {
+          return it.features && it.features.discovery;
+        })
+        .map(function(it) {
+          return it.name;
+        });
     };
     svc.getDataSourceInstanceById = function(dsId) {
       var deferred = $q.defer();
@@ -199,8 +207,43 @@ Datasource.service('DataSourceService', [
       return deferred.promise;
     };
 
-
-
     return svc;
+  }
+]);
+
+
+/**
+ * @ngdoc factory
+ * @name Datasource.connectorMetadata
+ * @description
+ * A cached list of supported connectors, including connector metadata.
+ */
+Datasource.factory('connectorMetadata', [
+  'Workspace',
+  function connectorMetadataFactory(Workspace) {
+    var result = [];
+    var list = Workspace.listAvailableConnectors();
+    result.$resolved = list.$resolved;
+
+    result.$promise = list.$promise.then(function() {
+      list.forEach(function filterSupportedConnectors(connector) {
+        var SUPPORTED_CONNECTORS = [
+          'memory',
+          'oracle',
+          'mssql',
+          'mysql',
+          'postgresql',
+          'mongodb'
+        ];
+
+        if (SUPPORTED_CONNECTORS.indexOf(connector.name) !== -1) {
+          result.push(connector);
+        }
+      });
+      result.$resolved = true;
+      return result;
+    });
+
+    return result;
   }
 ]);

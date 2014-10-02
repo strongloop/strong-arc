@@ -6,53 +6,65 @@ Model.service('ModelService', [
   '$q',
   'AppStorageService',
   'DataSourceDefinition',
-  function(Modeldef, ModelDefinition, ModelConfig, $q, AppStorageService, DataSourceDefinition) {
+  'connectorMetadata',
+  function(Modeldef, ModelDefinition, ModelConfig, $q,
+           AppStorageService, DataSourceDefinition, connectorMetadata) {
     var svc = {};
 
 
 
     svc.createModelInstance = function(targetInstance) {
-      var deferred = $q.defer();
-      if (targetInstance.definition.name) {
+        if (targetInstance.definition.name) {
 
         delete targetInstance.id;
         delete targetInstance.definition.id;
 
-        ModelDefinition.create({}, targetInstance.definition, function(definition) {
+        return ModelDefinition.create({}, targetInstance.definition)
+          .$promise
+          .then(function(definition) {
 
-          targetInstance.id = definition.id;
-          targetInstance.name = definition.name;
-          targetInstance.definition = definition;
-          targetInstance.config = angular.extend({
-              name: definition.name,
-              facetName: CONST.APP_FACET
-            },
-            targetInstance.config);
+            targetInstance.id = definition.id;
+            targetInstance.name = definition.name;
+            targetInstance.definition = definition;
+            targetInstance.config = angular.extend({
+                name: definition.name,
+                facetName: CONST.APP_FACET
+              },
+              targetInstance.config);
 
-          if (targetInstance.config.dataSource && (targetInstance.config.dataSource === CONST.DEFAULT_DATASOURCE)){
-            targetInstance.config.dataSource = null;
-          }
-          ModelConfig.create(targetInstance.config,
-            function(config) {
-              targetInstance.config = config;
-                svc.isModelConfigMigrateable(targetInstance .config)
+            if (targetInstance.config.dataSource && (targetInstance.config.dataSource === CONST.DEFAULT_DATASOURCE)){
+              targetInstance.config.dataSource = null;
+            }
+            return ModelConfig.create(targetInstance.config)
+              .$promise
+              .then(function(config) {
+                targetInstance.config = config;
+                return svc.isModelConfigMigrateable(targetInstance .config)
                   .then(function(canMigrate) {
                     targetInstance.canMigrate = canMigrate;
-                    deferred.resolve(targetInstance);
+                    return targetInstance;
+                  }).
+                  catch(function(error) {
+                    console.log('bad is model config migratable: ' + error);
+                    return error;
                   });
-            },
-            function(error) {
-              console.warn('bad create model config: ' + error);
-              deferred.reject('bad create model config: ' + error);
-            });
+              })
+              .catch(function(error) {
+                console.warn('bad create model config: ' + error);
+                return error;
+              });
 
-          },
-          function(error){
+          })
+          .catch(function(error){
             console.warn('bad create model def: ' + error);
-            deferred.reject('bad create model def: ' + error);
+            return error;
           });
+
+    }
+      else {
+        console.warn('createModelInstance called with no definition name');
+        return null;
       }
-      return deferred.promise;
     };
     // returns a full 'instance' with a definition and config property
     svc.getModelInstanceById = function(modelId) {
@@ -509,7 +521,7 @@ Model.service('ModelService', [
           id: dataSourceDef.id
         },{
           modelName: config.name
-        })
+        }).$promise;
       });
     }
 
@@ -534,10 +546,13 @@ Model.service('ModelService', [
         }
       },
       function(dataSourceDef) {
-        var connector = dataSourceDef && dataSourceDef.connector;
-        var connectorIsSupported = connector
-          && CONST.CONNECTORS_SUPPORTING_MIGRATE
-          .indexOf(connector.toLowerCase()) > -1;
+        var connectorName = dataSourceDef && dataSourceDef.connector;
+        var metadata = connectorMetadata.filter(function(it) {
+          return it.name === connectorName;
+        })[0];
+
+        var connectorIsSupported = connectorName &&
+          metadata && metadata.features && metadata.features.migration;
 
         deferred.resolve(dataSourceDef && connectorIsSupported);
       });

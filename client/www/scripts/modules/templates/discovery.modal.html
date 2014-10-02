@@ -1,0 +1,15 @@
+<div>
+  <div class="modal-header">
+    <p>New Models from "{{targetDiscoveryDSName}}"</p>
+  </div>
+  <div class="modal-body">
+    <div sl-discovery-schema></div>
+  </div>
+  <div class="modal-footer">
+    <form name="DiscoveryWizardForm">
+      <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+      <button class="btn btn-primary" ng-click="discoveryBackBtnClicked()" ng-show="showDiscoveryBackButton"  >Back</button>
+      <button class="btn btn-primary" ng-click="discoveryNexBtnClicked()"  sl-common-disabled-attrib >Next</button>
+    </form>
+  </div>
+</div>

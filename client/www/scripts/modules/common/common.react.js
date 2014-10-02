@@ -62,7 +62,7 @@ var CommonInstanceTabsView = (CommonInstanceTabsView = React).createClass({
         <li className={classNameVar}>
           <button onClick={clickInstanceTabItem} className="instance-tab-item-button" data-name={item.name} data-id={item.id}>{item.name}</button>
           <button onClick={clickInstanceTabClose} className=" instance-tab-close-button" data-name={item.name} data-id={item.id}>
-            <span className="glyphicon glyphicon-remove" data-name={item.name} data-id={item.id}></span>
+            <span className="sl-icon sl-icon-close" data-name={item.name} data-id={item.id}></span>
           </button>
         </li>
         );
