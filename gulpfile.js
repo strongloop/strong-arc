@@ -10,6 +10,8 @@ var jshint = require('gulp-jshint');
 var less = require('gulp-less');
 var mocha = require('gulp-spawn-mocha');
 var runSequence = require('run-sequence');
+var rename = require('gulp-rename');
+var loopbackAngular = require('gulp-loopback-sdk-angular');
 var spawn = require('child_process').spawn;
 var pullDevTools = require('./build-tasks/pull-devtools');
 var setupMysql = require('./build-tasks/setup-mysql');
@@ -18,9 +20,10 @@ gulp.task('default', ['build', 'test', 'watch']);
 
 gulp.task('build', [
     'build-less',
+    'build-less-devtools',
     'build-version',
+    'build-workspace-services',
     'install-example-modules',
-    'build-less-devtools'
 ]);
 
 gulp.task('build-less', function() {
@@ -53,6 +56,13 @@ gulp.task('build-version', function(callback) {
     'client', 'www', 'scripts', 'version.js');
 
   fs.writeFile(filepath, content, 'utf-8', callback);
+});
+
+gulp.task('build-workspace-services', function() {
+  return gulp.src('./node_modules/loopback-workspace/app.js')
+    .pipe(loopbackAngular({ apiUrl: '/workspace/api' }))
+    .pipe(rename('workspace.services.js'))
+    .pipe(gulp.dest('./client/www/scripts/modules/common'));
 });
 
 gulp.task('install-example-modules', function() {
