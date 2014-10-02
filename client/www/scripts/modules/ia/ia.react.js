@@ -263,9 +263,14 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
   componentDidMount:function(){
     var menuItems = {};
     var component = this;
-    var currentDSName = null;
     var isDiscoverable = false;
 
+    /*
+     * Note createModelsFromDS must be the first menu item in the menu
+     * to allow control whether it is visible or not.  If you want to adjust
+     * the order of the menu items you must take into account
+     * See the show event below
+     * */
     menuItems.createModelsFromDS = {
       name: "discover models",
       disabled: function(key, opt) {
@@ -307,9 +312,16 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
       // define the elements of the menu
       items: menuItems,
       events: {
-        show: function(opt, event) {
-          if (opt.sourceEvent.target.attributes['data-name']){
-            currentDSName = opt.sourceEvent.target.attributes['data-name'].value;
+        show: function(opt) {
+          if (opt.sourceEvent.target.attributes['data-is-discoverable']) {
+            var isDiscoverable = JSON.parse(opt.sourceEvent.target.attributes['data-is-discoverable'].value);
+            // note the order of menu items to target not showing discover item on
+            // ds types that don't support it.
+            // show by default (in case it was turned off by another item as it is shared
+            $('.context-menu-list li:first-child').show();
+            if (!isDiscoverable) {
+              $('.context-menu-list li:first-child').hide();
+            }
           }
         }
       }
