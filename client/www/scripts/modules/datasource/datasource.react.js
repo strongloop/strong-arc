@@ -13,6 +13,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
       isConnectorValid: this.isConnectorValid(this.props.scope.activeInstance.definition.connector),
       isFormValid: (this.isNameValid(this.props.scope.activeInstance.definition.name) && this.props.scope.activeInstance.definition.connector),
       testConnectionMessage:'',
+      testConnectionMessageType: 'success',
       isTesting: false
     }
   },
@@ -30,13 +31,15 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
     }
     component.setState({
       activeInstance: nextProps.scope.activeInstance,
-      testConnectionMessage: nextProps.scope.datasource.connectionTestResponse
+      testConnectionMessage: nextProps.scope.datasource.connectionTestResponse,
+      testConnectionMessageType: nextProps.scope.datasource.connectionTestResponseType
     });
   },
   clearMessages: function() {
     var scope = this.props.scope;
     this.setState({
-        testConnectionMessage:''
+        testConnectionMessage: '',
+        testConnectionMessageType: 'success'
       }
     );
     scope.$apply(function() {
@@ -128,6 +131,11 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
       'model-detail-pocket-button model-save-button datasource-test-button': !component.state.isTesting
     });
 
+    var testMessageClasses = cx({
+      'ui-msg-inline-success': component.state.testConnectionMessageType === 'success',
+      'ui-msg-inline-error': component.state.testConnectionMessageType === 'error',
+      'datasource-connection-test-response-container': true
+    });
     var connectorOptions = this.props.scope.connectorMetadata.map(function(it) {
        return (<option value={it.name}>{it.description}</option>);
     });
@@ -263,7 +271,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
           </div>
           <div className="datasource-buttons-layout-container">
             <button onClick={component.testConnection} data-id={dsModel.id} className={testButtonClasses}>Test Connection</button>
-            <span className="datasource-connection-test-response-container">{component.state.testConnectionMessage}</span>
+            <span className={testMessageClasses}>{component.state.testConnectionMessage}</span>
           </div>
         </form>
       </div>
