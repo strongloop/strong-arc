@@ -4,6 +4,8 @@ var path = require('path');
 var studio = require('../../../server/server');
 var workspace = studio.workspace;
 
+var given = require('loopback-workspace/test/helpers/given');
+
 var SANDBOX = path.resolve(__dirname, 'sandbox');
 var STUDIO_ROOT = path.resolve(__dirname, '..', '..', '..');
 var EMPTY_PROJECT = path.resolve(STUDIO_ROOT, 'examples', 'empty');
@@ -63,6 +65,13 @@ studio.post('/delete-facet/:facetName', function(req, res, next) {
       if (err) return next(err);
       res.json({ success: true });
     });
+});
+
+studio.post('/given/unique-server-port', function(req, res, next) {
+  given.uniqueServerPort(function(err, configEntry) {
+    if (err) return next(err);
+    res.json({ succcess: true, port: configEntry.value });
+  });
 });
 
 workspace.models.Workspace.remoteMethod('reset', {
