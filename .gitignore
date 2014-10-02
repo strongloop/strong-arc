@@ -4,4 +4,5 @@ bower_components
 .DS_Store
 /client/www/scripts/version.js
 /client/test/integration/sandbox
+/client/www/scripts/modules/common/workspace.services.js
 *-xunit.xml

@@ -36,15 +36,9 @@ Previous releases are available at `http://get-studio.strongloop.com/strong-stud
 
 #### Updating angular services for loopback-workspace
 
-Ensure you have the latest version of loopback-sdk-angular-cli installed on
-your machine:
+Angular services are automatically generated during `gulp build`.
 
 ```
-npm install loopback-sdk-angular-cli
-```
-
-Run the code generator in Studio root directory:
-
-```
-lb-ng -u /workspace/api node_modules/loopback-workspace/app.js client/www/scripts/modules/common/workspace.js
+$ npm update
+$ gulp build
 ```
