@@ -387,12 +387,12 @@
   right: 10px;
   top: 8px;
 }
-.ui-msg-error {
+.ui-msg-inline-error {
   color: #d9534f;
 }
-.ui-msg-success {
+.ui-msg-inline-success {
   color: #7dbd33;
 }
-.ui-msg-info {
+.ui-msg-inline-info {
   color: #4a90e2;
 }

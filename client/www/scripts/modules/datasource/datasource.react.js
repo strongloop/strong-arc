@@ -132,8 +132,8 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
     });
 
     var testMessageClasses = cx({
-      'ui-msg-success': component.state.testConnectionMessageType === 'success',
-      'ui-msg-error': component.state.testConnectionMessageType === 'error',
+      'ui-msg-inline-success': component.state.testConnectionMessageType === 'success',
+      'ui-msg-inline-error': component.state.testConnectionMessageType === 'error',
       'datasource-connection-test-response-container': true
     });
     var connectorOptions = this.props.scope.connectorMetadata.map(function(it) {

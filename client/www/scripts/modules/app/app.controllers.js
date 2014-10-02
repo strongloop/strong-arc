@@ -39,7 +39,7 @@ app.controller('StudioController', [
     $scope.dsNavIsVisible = true;
     $scope.globalExceptionStack = [];
     $scope.datasource = {
-      connectionTestResponse:'',
+      connectionTestResponse: '',
       connectionTestResponseType: 'success'
     };
 
@@ -491,7 +491,7 @@ app.controller('StudioController', [
       var dsDef = instance.definition;
 
       if (!dsDef.connector) {
-         setFriendlyTestConnectionMsg('Failed: missing connector');
+         setFriendlyTestConnectionMsg('Failed: missing connector'); //todo pass as object
         return;
       }
 
@@ -507,7 +507,7 @@ app.controller('StudioController', [
         })
         .catch(function(err) {
           // Note: The http error is reported in the global error view
-          setFriendlyTestConnectionMsg('Failed.');
+          setFriendlyTestConnectionMsg('Failed.'); //todo pass as object
         });
 
 
@@ -517,12 +517,14 @@ app.controller('StudioController', [
       $scope.datasource.connectionTestResponseType = 'success';
     };
 
-    var   setFriendlyTestConnectionMsg = function(response) {
+    //todo fix signature so `response` arg is always an object with .status, optional .error, and .data
+    var setFriendlyTestConnectionMsg = function(response) {
       var message;
       var type = 'success';
 
       if (typeof response === 'string') {
         message = response;
+        type = 'error';
       } else if (response.status) {
         message = 'Success';
       } else if (!response.error) {
