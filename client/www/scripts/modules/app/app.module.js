@@ -20,6 +20,7 @@ var app = angular.module('app', [
   'ngSanitize',
   'ngAnimate',
   'angularSpinner',
+  'elasticsearch',
   'ngCookies',
   'angular-growl',
   'lbServices',
@@ -31,6 +32,7 @@ var app = angular.module('app', [
   'Discovery',
   'Model',
   'Landing',
+  'Advisor',
   'UI',
   'Datasource',
   'Explorer',
@@ -93,8 +95,13 @@ app.config([
         url: '/landing',
         templateUrl: './scripts/modules/landing/templates/landing.main.html',
         controller: 'LandingController'
-      }).
-      state('login', {
+      })
+      .state('advisor', {
+        url: '/advisor',
+        templateUrl: './scripts/modules/advisor/templates/advisor.main.html',
+        controller: 'AdvisorController'
+      })
+      .state('login', {
         url: '/login',
         controller: 'LoginController',
         templateUrl: './scripts/modules/profile/templates/login.html'
@@ -113,11 +120,27 @@ app.factory('requestInterceptor', [
   '$location',
   '$cookieStore',
   function ($q, $rootScope, $location, $cookieStore) {
+    function isLocal(url, host){
+      var isLocal = false;
+
+      if ( url.indexOf('./') === 0 || url.indexOf('/') === 0 ) {
+        isLocal = true;
+      } else if ( url.indexOf(host) > -1 ) {
+        isLocal = true;
+      }
+
+      return isLocal;
+    }
+
     return {
       'request': function (config) {
         var at = $cookieStore.get('accessToken');
         if (at) {
-          config.headers.authorization = at;
+          if ( isLocal(config.url, $location.host()) ) {
+            config.headers.authorization = at;
+          } else {
+            delete config.headers.authorization;
+          }
         }
         else {
           // allow users to get to home view

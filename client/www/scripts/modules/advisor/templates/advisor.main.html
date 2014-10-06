@@ -1,0 +1,12 @@
+<div class="sl-advisor">
+  <header>
+    <h1>Node Advisor</h1>
+    <p>Find out about npm modules.</p>
+    <input type="text" ng-model="name" placeholder="Module name">
+  </header>
+  <ol class="sl-modules">
+    <li ng-repeat="module in modules">
+      {{module._source.name}}
+    </li>
+  </ul>
+</div>

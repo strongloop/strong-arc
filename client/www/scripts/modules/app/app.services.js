@@ -69,7 +69,11 @@ app.service('AppStorageService', [
 ]);
 app.service('NavigationService', [
   '$location',
-  function($location) {
+  'Config',
+  function($location, Config) {
+    if ( Config.foo == 'bar' ) {
+
+    }
     var svc = {};
     svc.postLogoutNav = function(){
       $location.path('/login');

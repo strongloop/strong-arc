@@ -433,3 +433,11 @@ Common.service('WorkspaceService', [
     };
   }
 ]);
+
+Common.service('es', ['esFactory', 'Config', function (esFactory, cfg){
+  return esFactory({
+    host: cfg.ElasticSearch.host,
+    apiVersion: cfg.ElasticSearch.version,
+    log: cfg.ElasticSearch.log
+  });
+}]);
