@@ -25,7 +25,7 @@
   <link rel="stylesheet" type="text/css" href="./style/style.css">
 
 </head>
-<body ng-app="app" ng-controller="SuiteController">
+<body ng-app="Studio" ng-controller="StudioMainController">
 
 <div class="headerContainer" data-id="AppHeaderContainer">
   <div class="branding">
@@ -46,8 +46,7 @@
             <ul class="dropdown-menu">
               <li lb-register-nav-item></li>
               <li lb-login-nav-item></li>
-              <li lb-logout-nav-item></li>
-              <li sl-ia-cleardb-nav-item></li>
+              <li sl-user-logout-nav-item></li>
             </ul>
           </span>
       </li>
@@ -59,10 +58,6 @@
 
 
 <div ui-view autoscroll="false"></div>
-
-<div id="CoordinateInstrumentationContainer">
-
-</div>
 
 <!-- growl notification placeholder -->
 <div growl></div>
@@ -121,12 +116,19 @@
 <script src="./scripts/modules/ui/ui.module.js"></script>
 <script src="./scripts/modules/ui/ui.directives.js"></script>
 
-<!-- app -->
-<script src="./scripts/modules/app/app.module.js"></script>
-<script src="./scripts/modules/app/app.controllers.js"></script>
-<script src="./scripts/modules/app/app.directives.js"></script>
-<script src="./scripts/modules/app/app.services.js"></script>
-<script type="text/jsx" src="./scripts/modules/app/app.react.js"></script>
+<!-- studio -->
+<script src="./scripts/modules/studio/studio.module.js"></script>
+<script src="./scripts/modules/studio/studio.controllers.js"></script>
+<script src="./scripts/modules/studio/studio.directives.js"></script>
+<script src="./scripts/modules/studio/studio.services.js"></script>
+<script type="text/jsx" src="./scripts/modules/studio/studio.react.js"></script>
+
+<!-- composer -->
+<script src="./scripts/modules/composer/composer.module.js"></script>
+<script src="./scripts/modules/composer/composer.controllers.js"></script>
+<script src="./scripts/modules/composer/composer.directives.js"></script>
+<script src="./scripts/modules/composer/composer.services.js"></script>
+<script type="text/jsx" src="./scripts/modules/composer/composer.react.js"></script>
 
 <!-- common -->
 <script src="./scripts/modules/common/common.module.js"></script>
@@ -135,12 +137,16 @@
 <script src="./scripts/modules/common/common.directives.js"></script>
 <script src="./scripts/modules/common/common.services.js"></script>
 
-<!-- profile -->
-<script src="./scripts/modules/profile/profile.module.js"></script>
-<script src="./scripts/modules/profile/profile.controllers.js"></script>
-<script src="./scripts/modules/profile/profile.services.js"></script>
-<script type="text/jsx" src="./scripts/modules/profile/profile.react.js"></script>
-<script src="./scripts/modules/profile/profile.directives.js"></script>
+<!-- profiler -->
+<script src="./scripts/modules/profiler/profiler.module.js"></script>
+<script src="./scripts/modules/profiler/profiler.controllers.js"></script>
+
+<!-- studio-user -->
+<script src="./scripts/modules/studio-user/studio-user.module.js"></script>
+<script src="./scripts/modules/studio-user/studio-user.controllers.js"></script>
+<script src="./scripts/modules/studio-user/studio-user.services.js"></script>
+<script type="text/jsx" src="./scripts/modules/studio-user/studio-user.react.js"></script>
+<script src="./scripts/modules/studio-user/studio-user.directives.js"></script>
 
 <!-- model -->
 <script src="./scripts/modules/model/model.module.js"></script>

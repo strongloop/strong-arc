@@ -1,12 +1,12 @@
 {
   "apps": [
     {
-      "id": "studio",
+      "id": "composer",
       "name": "API Composer",
       "description": "Develop and test LoopBack apps, models, and data sources."
     },
     {
-      "id": "devtools",
+      "id": "profiler",
       "name": "Profiler",
       "description": "Profile applications’ CPU and memory consumption."
     }

@@ -1,15 +1,15 @@
-describe('ProfileService', function() {
-  var ProfileService;
+describe('StudioUserService', function() {
+  var StudioUserService;
 
   beforeEach(function() {
-    inject(function(_ProfileService_) {
-      ProfileService = _ProfileService_;
+    inject(function(_StudioUserService_) {
+      StudioUserService = _StudioUserService_;
     });
   });
 
   describe('buildLoginRequest', function() {
     it('interprets nameOrEmail as an email', function() {
-      var result = ProfileService.buildLoginRequest({
+      var result = StudioUserService.buildLoginRequest({
         nameOrEmail: 'user@example.com'
       });
 
@@ -17,7 +17,7 @@ describe('ProfileService', function() {
     });
 
     it('interprets nameOrEmail as a user name', function() {
-      var result = ProfileService.buildLoginRequest({
+      var result = StudioUserService.buildLoginRequest({
         nameOrEmail: 'aName'
       });
 
@@ -25,7 +25,7 @@ describe('ProfileService', function() {
     });
 
     it('includes password in the request', function() {
-      var result = ProfileService.buildLoginRequest({
+      var result = StudioUserService.buildLoginRequest({
         password: '12345'
       });
 

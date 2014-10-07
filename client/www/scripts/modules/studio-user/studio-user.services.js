@@ -1,23 +1,9 @@
-/**
- *
- * Copyright StrongLoop 2014
- *
- * User: seanbrookes
- * Date: 2014-01-13
- * Time: 4:50 PM
- *
- */
-/**
- *
- * Profile Service
- *
- * */
-Profile.service('ProfileService', [
+StudioUser.service('StudioUserService', [
   'User',
   '$q',
   '$cookieStore',
   function (User, $q, $cookieStore) {
-    var svc = {};
+    var svc = this;
 
     svc.getCurrentUserId = function () {
       return $cookieStore.get('currentUserId');
@@ -84,58 +70,3 @@ Profile.service('ProfileService', [
 
   }
 ]);
-Profile.service('UserPreferenceService', [
-  function() {
-
-    var svc = {};
-    svc.getAllUserPreferences = function() {
-      var prefs = window.localStorage.getItem('UserPreferences');
-      if(prefs) {
-        return JSON.parse(prefs);
-      }
-      return null;
-    };
-    svc.getUserPref = function(prefRef) {
-      var prefs = svc.getAllUserPreferences();
-      if (prefs[prefRef]){
-        return prefs[prefRef];
-      }
-      return null;
-    };
-    svc.saveBulkUserPrefs = function(prefsObj){
-      if (prefsObj) {
-        window.localStorage.setItem('UserPreferences', JSON.stringify(prefsObj));
-      }
-
-    };
-    svc.setUserPref = function(userPrefName, userPrefVal) {
-      if (userPrefName && userPrefVal) {
-        var prefs = svc.getAllUserPreferences();
-        // walk down the path to make sure the property references are valid
-        var isNew = true;
-        for (var i = 0; i < prefs.length;i++) {
-          if (prefs[i].name === userPrefName) {
-            prefs[i].value = userPrefVal;
-            isNew = false;
-            break;
-          }
-        }
-        if (isNew) {
-          prefs.push({
-            name:userPrefName,
-            value:userPrefVal
-          });
-        }
-        window.localStorage.setItem('UserPreferences', JSON.stringify(prefs));
-      }
-      return svc.getAllUserPreferences();
-    };
-    return svc;
-  }
-]);
-
-
-
-
-
-
