@@ -1,7 +1,5 @@
 exports.config = {
-
-  specs: [
-    './e2e/**/*.spec.js'
-  ],
-  baseUrl: 'http://0.0.0.0:3003'
+  seleniumAddress: 'http://localhost:4444/wd/hub',
+  specs: ['./e2e/**/*.spec.js'],
+  jasmineNodeOpts: {isVerbose: true}
 };

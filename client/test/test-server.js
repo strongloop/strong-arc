@@ -1,13 +1,13 @@
 var async = require('async');
 var fs = require('fs-extra');
 var path = require('path');
-var studio = require('../../../server/server');
+var studio = require('../../server/server');
 var workspace = studio.workspace;
 
 var given = require('loopback-workspace/test/helpers/given');
 
 var SANDBOX = path.resolve(__dirname, 'sandbox');
-var STUDIO_ROOT = path.resolve(__dirname, '..', '..', '..');
+var STUDIO_ROOT = path.resolve(__dirname, '..',  '..');
 var EMPTY_PROJECT = path.resolve(STUDIO_ROOT, 'examples', 'empty');
 
 fs.removeSync(SANDBOX);

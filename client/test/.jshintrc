@@ -18,6 +18,9 @@
   "afterEach": true,
   "expect": true,
   "angular": true,
+  "element": true,
+  "by": true,
+  "browser": true,
   "inject": true,
   "given": true,
   "protractor": true

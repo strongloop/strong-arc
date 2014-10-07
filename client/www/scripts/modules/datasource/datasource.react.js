@@ -158,7 +158,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
               placeholder="name"
               required="true" />
             </div>
-            <button disabled={!isFormValid} type="button" onClick={component.saveHandler} className="model-detail-pocket-button model-save-button">Save Datasource</button>
+            <button disabled={!isFormValid} type="button" onClick={component.saveHandler} data-id="datasource-save-button" className="datasource-detail-pocket-button datasource-save-button">Save Datasource</button>
             <div className={dsNameValidationClasses}>
               <span className="validation-error-message">
               DataSource name should conform with <a href="https://mathiasbynens.be/notes/javascript-identifiers" target="_new">valid javascript variable name conventions</a>

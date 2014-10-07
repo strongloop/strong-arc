@@ -51,7 +51,7 @@ StudioUser.directive('slUserLogoutNavItem', [
   'StudioNavigationService',
   function (StudioUserService, $location, StudioNavigationService) {
     return{
-      template: '<li ng-show="isUserAuth()"><a href="#" ng-click="logout()">logout</a></li>',
+      template: '<li ng-show="isUserAuth()"><a data-id="StudioLogoutLink" href="#" ng-click="logout()">logout</a></li>',
       link: function(scope,element, attribs) {
         scope.logout = function () {
           StudioUserService.logCurrentUserOut(function() {
