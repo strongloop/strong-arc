@@ -403,9 +403,10 @@ Common.service('SampleDataService', [
 ]);
 
 Common.service('WorkspaceService', [
+  'Workspace',
   'Facet',
   '$q',
-  function WorkspaceService(Facet, $q) {
+  function WorkspaceService(Workspace, Facet, $q) {
     var svc = this;
 
     svc.validate = function() {
@@ -430,6 +431,15 @@ Common.service('WorkspaceService', [
           svc.validationError = error;
           return false;
         });
+    };
+    svc.stopApp = function() {
+      return Workspace.stop().$promise;
+    };
+    svc.startApp = function() {
+      return Workspace.start().$promise;
+    };
+    svc.isAppRunning = function() {
+      return Workspace.isRunning().$promise;
     };
   }
 ]);

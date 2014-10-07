@@ -270,19 +270,35 @@ Main Search
     font-size: 14pt;
     padding-top: 0.5rem;;
 }
-.main-control-apprender-container label, .main-control-apprender-container button{
-    visibility:hidden;
-}
+
 
 [data-id="MainControlsContainer"] .btn-primary {
     color: #ffffff;
-    background-color: #7DBD33;
-    width: 12.5rem;
     height: 4.8rem;
     font-size: 13pt;
     padding-top: 0.7rem;
-    padding-left: 0;
     border-bottom: 3px solid #66992D;
+}
+[data-id="MainControlsContainer"] .btn-primary.btn-fullsize {
+    width: 12.5rem;
+    padding-left: 0;
+}
+[data-id="MainControlsContainer"] .btn-primary.btn-fullsize:active {
+    background:#66992D;
+    color:#444444;
+}
+[data-id="MainControlsContainer"] .btn-primary.btn-halfsize {
+    width: 4.8rem;
+    margin-left:.1rem;
+    margin-right:.1rem;
+}
+[data-id="MainControlsContainer"] .btn-primary.btn-halfsize:active {
+    background:#66992D;
+    color:#444444;
+}
+[data-id="MainControlsContainer"] .btn-default.btn-control-ds:active {
+    background:#66992D;
+    color:#444444;
 }
 
 .main-controls-container .btn-primary:hover {
