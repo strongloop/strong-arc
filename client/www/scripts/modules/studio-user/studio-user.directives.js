@@ -1,10 +1,10 @@
 // Copyright StrongLoop 2014
-Profile.directive('slUserLoginView', [
-  'ProfileService',
-  function(ProfileService) {
+StudioUser.directive('slUserLoginView', [
+  'StudioUserService',
+  function(StudioUserService) {
 
     return {
-      controller: function ($scope, $location, ProfileService) {
+      controller: function ($scope, $location, StudioUserService) {
 
         $scope.loginErrorMessage = '';
         $scope.credentials = {
@@ -22,7 +22,7 @@ Profile.directive('slUserLoginView', [
         };
 
         $scope.loginRequest = function (formConfig) {
-          $scope.loginResult = ProfileService.loginRequest(formConfig).
+          $scope.loginResult = StudioUserService.loginRequest(formConfig).
             then(function(response) {
               $location.path('/landing');
             }).catch(function(response) {
@@ -45,92 +45,65 @@ Profile.directive('slUserLoginView', [
     }
   }
 ]);
-Profile.directive('userPreferencesEditor', [
-  'ProfileService',
-  'UserPreferenceService',
-  function(ProfileService, UserPreferenceService) {
-    return {
-      templateUrl: './scripts/modules/profile/templates/user.preferences.editor.html',
-      link: function(scope, elem, attrs) {
-
-        scope.userPreferences = UserPreferenceService.getAllUserPreferences();
-        // name normalization strategy
-        scope.updateModelNameNormalizationStrategyPreference = function() {
-          UserPreferenceService.saveBulkUserPrefs(scope.userPreferences);
-        };
-        // json dialect
-        scope.updateModelEditingJSONDialectPreference = function(){
-          UserPreferenceService.saveBulkUserPrefs(scope.userPreferences);
-        };
-      }
-    }
-  }
-]);
-Profile.directive('lbLogoutNavItem', [
-  'ProfileService',
+StudioUser.directive('slUserLogoutNavItem', [
+  'StudioUserService',
   '$location',
-  'NavigationService',
-  function (ProfileService, $location, NavigationService) {
+  'StudioNavigationService',
+  function (StudioUserService, $location, StudioNavigationService) {
     return{
       template: '<li ng-show="isUserAuth()"><a href="#" ng-click="logout()">logout</a></li>',
       link: function(scope,element, attribs) {
         scope.logout = function () {
-          ProfileService.logCurrentUserOut(function() {
-            NavigationService.postLogoutNav();
+          StudioUserService.logCurrentUserOut(function() {
+            StudioNavigationService.postLogoutNav();
           });
         };
         scope.isUserAuth = function () {
-          return ProfileService.getCurrentUserId();
+          return StudioUserService.getCurrentUserId();
         };
       },
       replace: true
     };
   }
 ]);
-Profile.directive('lbLoginNavItem', [
-  'ProfileService',
-  '$location',
-  'NavigationService',
-  function (ProfileService) {
+StudioUser.directive('lbLoginNavItem', [
+  'StudioUserService',
+  function (StudioUserService) {
     return{
       template: '<li ng-hide="isUserAuth()"><a ui-sref="login" title="login">login</a></li>',
       link: function(scope,element, attribs) {
         scope.isUserAuth = function () {
-          return ProfileService.getCurrentUserId();
+          return StudioUserService.getCurrentUserId();
         };
       },
       replace: true
     };
   }
 ]);
-Profile.directive('lbRegisterNavItem', [
-  'ProfileService',
-  '$location',
-  'NavigationService',
-  function (ProfileService, $location, NavigationService) {
+StudioUser.directive('lbRegisterNavItem', [
+  'StudioUserService',
+  function (StudioUserService, $location, NavigationService) {
     return{
       template: '<li ng-hide="isUserAuth()"><a href="https://strongloop.com/register/" target="_blank">register</a></li>',
       link: function(scope,element, attribs) {
         scope.isUserAuth = function () {
-          return ProfileService.getCurrentUserId();
+          return StudioUserService.getCurrentUserId();
         };
       },
       replace: true
     };
   }
 ]);
-Profile.directive('lbGreetingNavItem', [
-  'ProfileService',
-  '$location',
-  'NavigationService',
-  function (ProfileService, $location, NavigationService) {
+StudioUser.directive('lbGreetingNavItem', [
+  'StudioUserService',
+  function (StudioUserService) {
     return{
       template: '<li ng-show="isUserAuth()"><a href="#profile" us-sref="profile">Hi {{ currentUser.firstName }}</a></li>',
       link: function(scope,element, attribs) {
         scope.currentUser = {};
-        var isAuthUser = ProfileService.getCurrentUserId();
+        var isAuthUser = StudioUserService.getCurrentUserId();
         if (isAuthUser) {
-          scope.currentUser = ProfileService.getCurrentUser();
+          scope.currentUser = StudioUserService.getCurrentUser();
         }
 
         scope.isUserAuth = function () {

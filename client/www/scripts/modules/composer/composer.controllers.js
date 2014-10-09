@@ -1,21 +1,7 @@
-// Copyright StrongLoop 2014
-app.controller('SuiteController', [
-  '$scope',
-  'ProfileService',
-  '$location', function($scope, ProfileService){
-
-    $scope.suiteIA = {
-      apps: []
-    };
-
-    $scope.isAuthUser = function(){
-      return ProfileService.isAuthUser();
-    };
-}]);
-
-app.controller('StudioController', [
+Composer.controller('ComposerMainController', [
   '$rootScope',
   '$q',
+  '$log',
   '$scope',
   '$state',
   '$http',
@@ -28,7 +14,7 @@ app.controller('StudioController', [
   '$timeout',
   'ModelService',
   'growl',
-  function($rootScope, $q, $scope, $state, $http, IAService, DataSourceService, WorkspaceService, DiscoveryService, PropertyService, $location, $timeout, ModelService, growl) {
+  function($rootScope, $q, $log, $scope, $state, $http, IAService, DataSourceService, WorkspaceService, DiscoveryService, PropertyService, $location, $timeout, ModelService, growl) {
 
     // Instance Collections
     $scope.mainNavDatasources = []; // initialized further down
@@ -131,7 +117,7 @@ app.controller('StudioController', [
             $rootScope.$broadcast('IANavEvent');
           }).
           catch(function(response) {
-            console.warn('problem activating instance: ' + '[' + id + ']' + response);
+            $log.warn('problem activating instance: ' + '[' + id + ']' + response);
           }
         );
       }
@@ -170,7 +156,7 @@ app.controller('StudioController', [
     $scope.createNewInstance = function(type, initialData) {
       // start New Model
       if (!type) {
-        console.warn('createNewInstance called with no type argument');
+        $log.warn('createNewInstance called with no type argument');
         return;
       }
       var newDefaultInstance = {};
@@ -236,7 +222,7 @@ app.controller('StudioController', [
               });
           }
           else {
-            console.warn('unable to get type from open instance ref: ' + id);
+            $log.warn('unable to get type from open instance ref: ' + id);
           }
         }
       }
@@ -291,7 +277,7 @@ app.controller('StudioController', [
             loadModels();
           }).
           catch(function(error) {
-          console.warn('bad update model definition: ' + error);
+            $log.warn('bad update model definition: ' + error);
         });
       }
       else {
@@ -478,7 +464,7 @@ app.controller('StudioController', [
               return $scope.activeInstance;
             })
             .catch(function(error){
-              console.warn('bad datasource definition update: ' + error);
+              $log.warn('bad datasource definition update: ' + error);
               growl.addErrorMessage('error updating datasource definition');
             }
 
@@ -665,35 +651,5 @@ app.controller('StudioController', [
 ]);
 
 
-app.controller('HomeMainController',[
-  '$scope',
-  '$location',
-  function($scope, $location){
-    var viewModel = {};
-    viewModel.message = 'StrongLoop Studio';
-    $scope.viewModel = viewModel;
 
-
-  }
-]);
-/*
-*
-* */
-app.controller('GlobalNavController',[
-  '$scope',
-  'ProfileService',
-  '$location',
-  function($scope, ProfileService, $location) {
-    $scope.isAuthUser = function(){
-      return ProfileService.getCurrentUserId();
-    };
-  }
-]);
-
-app.controller('DevToolsController',[
-  '$scope',
-  '$location',
-  function($scope, $location){
-  }
-]);
 

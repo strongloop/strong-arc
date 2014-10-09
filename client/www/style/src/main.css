@@ -346,7 +346,7 @@ Validation CSS
     display:none;
 }
 
-#devtools {
+#ProfilerContainer {
     position: absolute;
     top: 8rem; /* size of header */
     bottom: 0;
@@ -354,7 +354,7 @@ Validation CSS
     right: 0;
 }
 
-#devtools iframe {
+#ProfilerContainer iframe {
     width: 100%;
     height: 100%;
     border: none;

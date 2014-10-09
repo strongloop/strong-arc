@@ -11,10 +11,10 @@ var CONST = {
   DEFAULT_DATASOURCE: 'none',
   DEFAULT_DATASOURCE_BASE_MODEL: 'PersistedModel',
   MODEL_TYPE: 'model',
-  APP_FACET: 'server',
+  APP_FACET: 'server'
 };
 
-var app = angular.module('app', [
+var Studio = angular.module('Studio', [
   'ui.router',
   'ngResource',
   'ngSanitize',
@@ -24,7 +24,9 @@ var app = angular.module('app', [
   'angular-growl',
   'lbServices',
   'oldServices',
-  'Profile',
+  'Composer',
+  'Profiler',
+  'StudioUser',
   'IA',
   'Common',
   'Property',
@@ -39,17 +41,10 @@ var app = angular.module('app', [
   'checklist-model',
   'ngGrid'
 ]);
-app.value('CONST', CONST);
-app.config(['growlProvider', function (growlProvider) {
-  growlProvider.globalTimeToLive(1800);
-}]);
-app.config([
-  '$httpProvider',
-  function ($httpProvider) {
-    $httpProvider.interceptors.push('requestInterceptor');
-  }
-]);
-app.config([
+
+Studio.value('CONST', CONST);
+
+Studio.config([
   '$stateProvider',
   '$urlRouterProvider',
 
@@ -61,17 +56,17 @@ app.config([
       state('home', {
         url: '/',
         controller: 'HomeMainController',
-        templateUrl: './scripts/modules/app/templates/home.main.html'
+        templateUrl: './scripts/modules/studio/templates/studio.main.html'
       }).
-      state('devtools', {
-        url: '/devtools',
-        templateUrl: './scripts/modules/app/templates/devtools.html',
-        controller: 'DevToolsController'
+      state('profiler', {
+        url: '/profiler',
+        templateUrl: './scripts/modules/profiler/templates/profiler.main.html',
+        controller: 'ProfilerMainController'
       }).
-      state('studio', {
-        url: '/studio',
-        templateUrl: './scripts/modules/app/templates/studio.main.html',
-        controller: 'StudioController',
+      state('composer', {
+        url: '/composer',
+        templateUrl: './scripts/modules/composer/templates/composer.main.html',
+        controller: 'ComposerMainController',
         resolve: {
           // Wait for all metadata requests to finish
           'studioMetadataResults': [
@@ -97,22 +92,27 @@ app.config([
       state('login', {
         url: '/login',
         controller: 'LoginController',
-        templateUrl: './scripts/modules/profile/templates/login.html'
+        templateUrl: './scripts/modules/studio-user/templates/login.html'
       }).
       state('register', {
         url: '/register',
         controller: 'RegisterController',
-        templateUrl: './scripts/modules/profile/templates/register.html'
+        templateUrl: './scripts/modules/studio-user/templates/register.html'
       });
 
   }
 ]);
-app.factory('requestInterceptor', [
+Studio.config([
+  '$httpProvider',
+  function ($httpProvider) {
+    $httpProvider.interceptors.push('composerRequestInterceptor');
+  }
+]);
+Studio.factory('composerRequestInterceptor', [
   '$q',
-  '$rootScope',
   '$location',
   '$cookieStore',
-  function ($q, $rootScope, $location, $cookieStore) {
+  function ($q, $location, $cookieStore) {
     return {
       'request': function (config) {
         var at = $cookieStore.get('accessToken');
@@ -132,57 +132,9 @@ app.factory('requestInterceptor', [
         if (rejection.status == 401) {
           $location.path('/login');
         }
-        if ((rejection.status > 499) || (rejection.status === 422)) {
-
-          $rootScope.$broadcast('GlobalExceptionEvent', {
-              requestUrl: rejection.config.url,
-              message: rejection.data.error.message,
-              details: rejection.data.error.details,
-              name: rejection.data.error.name,
-              stack: rejection.data.error.stack,
-              code: rejection.data.error.code,
-              status: rejection.status
-            }
-          );
-        }
         return $q.reject(rejection);
       }
     };
   }
 ]);
 
-// global autofocus
-app.factory('Focus', [
-  '$rootScope', '$timeout', (function ($rootScope, $timeout) {
-    return function (name) {
-      return $timeout(function () {
-        return $rootScope.$broadcast('focusOn', name);
-      });
-    };
-  })
-]);
-
-
-app.controller('MainNavController', [
-  '$scope',
-  '$location',
-  function ($scope, $location) {
-
-    $scope.isActive = function (viewLocation) {
-      return viewLocation === $location.path();
-    };
-
-  }
-]);
-
-// Get project name from package.json
-app.run(['$rootScope', 'PackageDefinition', function ($rootScope, PackageDefinition) {
-  var pkg = PackageDefinition.findOne();
-  return pkg.$promise
-    .then(function () {
-      $rootScope.projectName = pkg.name;
-    })
-    .catch(function (err) {
-      console.warn('Cannot get project\'s package definition.', err);
-    });
-}]);
