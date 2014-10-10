@@ -5,12 +5,17 @@
  *
  * */
 var ExplorerMain = (ExplorerMain = React).createClass({
-
+  toggleExplorerView: function() {
+    var component = this;
+    component.props.scope.$apply(function() {
+      component.props.scope.toggleExplorerView();
+    });
+  },
   render: function () {
     var scope = this.props.scope;
     var explorerResources = scope.explorerResources;
     var cx = React.addons.classSet;
-    var that = this;
+    var component = this;
 
 //    var mainClasses = cx({
 //      'explorer-model is-open': this.state.isOpen,
@@ -35,6 +40,8 @@ var ExplorerMain = (ExplorerMain = React).createClass({
      * */
     return (
       <div className="explorer-view-container">
+        <button className="explorer-slider-button" onClick={component.toggleExplorerView}><label>explorer</label></button>
+
         <div className="ia-drag-view-title-container">
           <span className="title">explorer</span>
         </div>
@@ -57,11 +64,18 @@ var ExploreModelApiEndPointListItem = (ExploreModelApiEndPointListItem = React).
     };
   },
   getNameFromPath: function(resource) {
-    var rawPath = resource.path;
-    var parts = rawPath.split("/");
-    var returnPath = parts[(parts.length - 1)];
+    var returnName = '';
+    if (resource.apis && resource.apis.length) {
+      var rawPath = resource.apis[0].path;
+      var parts = rawPath.split("/");
+      if (parts.length > 1) {
+        returnName = parts[1];
+      }
 
-    return returnPath;
+
+
+    }
+    return returnName;
   },
   getSingularlarVersion: function(name) {
     // if the last letter of the name is an 's'
@@ -99,7 +113,7 @@ var ExploreModelApiEndPointListItem = (ExploreModelApiEndPointListItem = React).
     }
     var config = JSON.stringify(resource.config);
 
-    var apis = resource.config.apis.map(function (api) {
+    var apis = resource.apis.map(function (api) {
       var apiDetails = api.operations[0];
 
       // api endpoint injection
@@ -134,7 +148,7 @@ var ExploreModelApiEndPointListItem = (ExploreModelApiEndPointListItem = React).
     else {
       mainClasses = 'explorer-model is-closed'
     }
-    if (that.props.scope.activeInstance.name === singularResourceName) {
+    if (that.props.scope.activeInstance && (that.props.scope.activeInstance.name === singularResourceName)) {
       mainClasses = 'explorer-model is-open is-active';
       modelButtonClass += ' is-active';
 
@@ -241,19 +255,19 @@ var ExploreModelApiEndPoint = (ExploreModelApiEndPoint = React).createClass({
     };
 
     var modelProperties = [];
-    if (modelDef.props && modelDef.props.properties) {
-      if ((apiDetails.httpMethod === 'POST') || (apiDetails.httpMethod === 'PUT')) {
-        modelProperties = modelDef.props.properties.map(function(property) {
+    if (modelDef.properties) {
+      if ((apiDetails.method === 'POST') || (apiDetails.method === 'PUT')) {
+        modelProperties = modelDef.properties.map(function(property) {
           var reqVal = false;
-          if (property.props && property.props.required) {
-            reqVal = property.props.required;
+          if (property.props && property.required) {
+            reqVal = property.required;
           }
 
           var labelClass = '';
           if (reqVal) {
             labelClass = 'is-required';
           }
-          switch (property.props.type.toLowerCase()) {
+          switch (property.type.toLowerCase()) {
             case 'string':
               return (<div className="form-group"><label className={labelClass}>{property.name}</label><input required={reqVal} className="form-control" type="text" name={property.name} /></div>);
               break;

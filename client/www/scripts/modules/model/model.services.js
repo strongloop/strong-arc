@@ -176,6 +176,11 @@ Model.service('ModelService', [
                   });
                   instance.options = lOptions;
                 }
+                instance.properties = svc.getModelPropertiesById(instance.id).
+                  then(function(properties) {
+                    return instance.properties = properties;
+
+                  });
 
                 instance.config = configMap[value.name];
                 if (instance.config.dataSource) {
@@ -186,6 +191,10 @@ Model.service('ModelService', [
                 else {
                   instance.config.dataSource = CONST.DEFAULT_DATASOURCE;
                 }
+                instance.canMigrate = svc.isModelConfigMigrateable(instance.config)
+                  .then(function(canMigrate) {
+                    return instance.canMigrate = canMigrate;
+                  });
                 modelInstances.push(instance);
               }, log);
 

@@ -6,6 +6,30 @@ Explorer.directive('slExplorerView', [
       replace:true,
       controller: function($scope) {
 
+        $scope.isExplorerViewOpen = function() {
+
+          var currentExplorerWidth = $('[data-id="ExplorerContainer"]').width();
+          if (currentExplorerWidth > 20) {
+            return true;
+          }
+          return false;
+        };
+        $scope.openExplorerView = function() {
+
+          var currentExplorerWidth = $('[data-id="ExplorerContainer"]').width();
+          if (currentExplorerWidth > 20) {
+            return true;
+          }
+          return false;
+        };
+        $scope.closeExplorerView = function() {
+
+          var currentExplorerWidth = $('[data-id="ExplorerContainer"]').width();
+          if (currentExplorerWidth > 21) {
+            return true;
+          }
+          return false;
+        };
         /*
          *
          * API Explorer View
@@ -15,6 +39,16 @@ Explorer.directive('slExplorerView', [
           .then(function(result) {
             $scope.explorerResources = result;
           });
+        $scope.toggleExplorerView = function() {
+          var currentExplorerWidth = $('[data-id="ExplorerContainer"]').width();
+          if (currentExplorerWidth > 25) {
+            $('[data-id="ExplorerContainer"]').animate({width:'24px'}, 400);
+          }
+          else {
+            $('[data-id="ExplorerContainer"]').animate({width:'97%'}, 400);
+          }
+
+        }
       },
       link: function(scope, el, attrs) {
 

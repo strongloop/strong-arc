@@ -7,6 +7,31 @@
 
 
 */
+.explorer-view-container {
+    position:relative;
+}
+.explorer-slider-button {
+    height:800px;
+    position:absolute;
+    top:0;
+    right:0;
+    width:24px;
+
+}
+.explorer-slider-button label{
+    display:inline-block;
+    margin-left:16px;
+/* Rotate from top left corner (not default) */
+    -webkit-transform-origin: 0 0;
+    -moz-transform-origin:    0 0;
+    -ms-transform-origin:     0 0;
+    -o-transform-origin:      0 0;
+
+    -webkit-transform: rotate(90deg);
+    -moz-transform:    rotate(90deg);
+    -ms-transform:     rotate(90deg);
+    -o-transform:      rotate(90deg);
+}
 .explorer-view-body {
     padding-top: 2rem;
 }
