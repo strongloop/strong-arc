@@ -437,17 +437,38 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
 * */
 var IAMainControls = (IAMainControls = React).createClass({
   getInitialState: function() {
+    var component = this;
     return {
       showNewModel: false,
-      newModelText: 'new model'
+      newModelText: 'new model',
+      isAppRunning: !component.props.scope.isAppRunning
     };
   },
   componentDidMount: function() {
     window.setUI();
   },
+  componentWillReceiveProps: function(nextProps) {
+    var component = this;
+    component.setState({
+      isAppRunning: !nextProps.scope.isAppRunning
+    });
+  },
+  startRestartApp: function() {
+    var component = this;
+    component.props.scope.$apply(function() {
+      component.props.scope.startRestartApp();
+    });
+  },
+  stopApp: function() {
+    var component = this;
+    component.props.scope.$apply(function() {
+      component.props.scope.stopApp();
+    });
+  },
   render: function() {
-    var that = this;
-    var scope = that.props.scope;
+    var component = this;
+    var scope = component.props.scope;
+    var cx = React.addons.classSet;
 
     var createModelViewRequest = function() {
 
@@ -456,6 +477,16 @@ var IAMainControls = (IAMainControls = React).createClass({
       });
 
     };
+
+    var startAppIconClass = cx({
+      'maincontrol-main-icon  sl-icon sl-icon-play': !scope.isAppRunning,
+      'maincontrol-main-icon  sl-icon sl-icon-restart': scope.isAppRunning
+    });
+    var startAppButtonTitleText = 'Start App';
+    if (scope.isAppRunning) {
+      startAppButtonTitleText = 'Restart App';
+    }
+
     var addNewInstanceRequest = function(event) {
       if (event.target.attributes['data-type'] || event.target.parentElement.attributes['data-type']){
         var val = '';
@@ -478,100 +509,90 @@ var IAMainControls = (IAMainControls = React).createClass({
       }
     };
 
-    var renderAppViewRequest = function() {
-      window.open(
-        '/#demo',
-        '_blank'
-      );
-
-    };
-    var showExplorerViewRequest = function() {
-      scope.$apply(function() {
-        scope.showExplorerViewRequest();
-      });
-    };
     return (
       <div data-id="IAMainControlsContainer">
         <div className="main-controls-title">Create</div>
 
-
         <div className="main-controls-container">
-
-        <div data-ui-type="table">
-          <div data-ui-type="row">
-            <div data-ui-type="cell">
-              <label className="main-control-command-label">MODEL</label>
-              <button onClick={createModelViewRequest} type="button" className="btn btn-sm btn-primary">
-                <span className="maincontrol-main-icon sl-icon sl-icon-plus-sign"></span>
-                <span className="maincontrol-main-button-label">New</span>
-              </button>
-            </div>
-            <div data-ui-type="cell" className="main-control-apprender-container">
-              <label className="main-control-command-label">APP</label>
-              <button disabled="disabled" onClick={renderAppViewRequest} type="button" className="btn btn-primary btn-sm">
-                <span className="maincontrol-main-icon sl-icon sl-icon-play"></span>
-                <span className="maincontrol-main-button-label">Render</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-
-        <label className="main-control-command-label">DATASOURCE</label>
-        <div data-ui-type="table">
-          <div data-ui-type="row">
-            <div data-ui-type="cell">
-              <button onClick={addNewInstanceRequest}
-                data-type="datasource"
-                data-name="oracle"
-                className="btn btn-default btn-control-ds"
-                title="oracle connector">
-                  <span className="sl-icon sl-icon-database"></span>
-              </button>
-              <div className="ds-type-name">Oracle</div>
-            </div>
-            <div data-ui-type="cell">
-              <button className="btn btn-default btn-control-ds"
-                data-type="datasource"
-                data-name="mssql"
-                onClick={addNewInstanceRequest}
-                title="mssql connector">
-                  <span className="sl-icon sl-icon-database"></span>
-              </button>
-              <div className="ds-type-name">MS SQL</div>
-            </div>
-            <div data-ui-type="cell">
-              <button onClick={addNewInstanceRequest}
-                data-type="datasource"
-                className="btn btn-default btn-control-ds"
-                data-name="mysql"
-                title="mysql connector">
-                  <span className="sl-icon sl-icon-database"></span>
-              </button>
-              <div className="ds-type-name">MySQL</div>
-            </div>
-            <div data-ui-type="cell">
-              <button onClick={addNewInstanceRequest}
-                data-type="datasource"
-                className="btn btn-default btn-control-ds"
-                data-name="postgresql"
-                title="postgres connector">
-                <span className="sl-icon sl-icon-database"></span>
-              </button>
-              <div className="ds-type-name">PostgreSQL</div>
-            </div>
-            <div data-ui-type="cell">
-              <button onClick={addNewInstanceRequest}
-                data-type="datasource"
-                className="btn btn-default btn-control-ds"
-                data-name="mongodb"
-                title="mongodb connector">
-                  <span className="sl-icon sl-icon-database"></span>
-              </button>
-              <div className="ds-type-name">MongoDB</div>
+          <div data-ui-type="table">
+            <div data-ui-type="row">
+              <div data-ui-type="cell">
+                <label className="main-control-command-label">MODEL</label>
+                <button onClick={createModelViewRequest} type="button" className="btn btn-primary btn-fullsize">
+                  <span className="maincontrol-main-icon sl-icon sl-icon-plus-sign"></span>
+                  <span className="maincontrol-main-button-label">New</span>
+                </button>
+              </div>
+              <div data-ui-type="cell" className="main-control-apprender-container">
+                <label className="main-control-command-label">APP</label>
+                <div data-id="StartStopAppControlsContainer">
+                  <button disabled={component.state.isAppRunning} onClick={component.stopApp} title="Stop App" type="button" className="btn btn-primary btn-halfsize">
+                    <span className="maincontrol-main-icon sl-icon sl-icon-stop"></span>
+                  </button>
+                  <button onClick={component.startRestartApp} type="button" title={startAppButtonTitleText} className="btn btn-primary btn-halfsize">
+                    <span className={startAppIconClass}></span>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+
+
+          <label className="main-control-command-label">DATASOURCE</label>
+          <div data-ui-type="table">
+            <div data-ui-type="row">
+              <div data-ui-type="cell">
+                <button onClick={addNewInstanceRequest}
+                  data-type="datasource"
+                  data-name="oracle"
+                  className="btn btn-default btn-control-ds"
+                  title="oracle connector">
+                    <span className="sl-icon sl-icon-database"></span>
+                </button>
+                <div className="ds-type-name">Oracle</div>
+              </div>
+              <div data-ui-type="cell">
+                <button className="btn btn-default btn-control-ds"
+                  data-type="datasource"
+                  data-name="mssql"
+                  onClick={addNewInstanceRequest}
+                  title="mssql connector">
+                    <span className="sl-icon sl-icon-database"></span>
+                </button>
+                <div className="ds-type-name">MS SQL</div>
+              </div>
+              <div data-ui-type="cell">
+                <button onClick={addNewInstanceRequest}
+                  data-type="datasource"
+                  className="btn btn-default btn-control-ds"
+                  data-name="mysql"
+                  title="mysql connector">
+                    <span className="sl-icon sl-icon-database"></span>
+                </button>
+                <div className="ds-type-name">MySQL</div>
+              </div>
+              <div data-ui-type="cell">
+                <button onClick={addNewInstanceRequest}
+                  data-type="datasource"
+                  className="btn btn-default btn-control-ds"
+                  data-name="postgresql"
+                  title="postgres connector">
+                  <span className="sl-icon sl-icon-database"></span>
+                </button>
+                <div className="ds-type-name">PostgreSQL</div>
+              </div>
+              <div data-ui-type="cell">
+                <button onClick={addNewInstanceRequest}
+                  data-type="datasource"
+                  className="btn btn-default btn-control-ds"
+                  data-name="mongodb"
+                  title="mongodb connector">
+                    <span className="sl-icon sl-icon-database"></span>
+                </button>
+                <div className="ds-type-name">MongoDB</div>
+              </div>
+            </div>
+          </div>
 
         </div>
 

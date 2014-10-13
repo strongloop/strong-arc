@@ -171,16 +171,70 @@ IA.directive('slIaMainSearch', [
 * */
 IA.directive('slIaMainControls', [
   '$timeout',
-  function($timeout) {
+  'growl',
+  function($timeout, growl) {
     return  {
       replace: true,
+      controller: function($scope, WorkspaceService, CONST) {
+        $scope.isAppRunning = false;
+
+        function checkAppRunningState() {
+          return WorkspaceService.isAppRunning()
+            .then(function appRunningResponse(response) {
+              if (response.running) {
+                $scope.isAppRunning = true;
+                $timeout(function() {
+                  checkAppRunningState();
+                }, CONST.APP_RUNNING_CHECK_INTERVAL);
+              }
+              else {
+                $scope.isAppRunning = false;
+              }
+            })
+            .catch(function onWorkspaceStartError(error) {
+              growl.addWarnMessage("something is wrong check app status");
+              $scope.isAppRunning = false;
+            });
+        }
+        checkAppRunningState();
+
+        $scope.startRestartApp = function() {
+          // add app service call here
+          WorkspaceService.startApp()
+            .then(function onWorkspaceStart() {
+              growl.addSuccessMessage("app is running");
+              $scope.isAppRunning = true;
+              checkAppRunningState();
+            })
+            .catch(function onWorkspaceStartError(error) {
+              growl.addWarnMessage("something is wrong check app status");
+              $scope.isAppRunning = false;
+            });
+        };
+        $scope.stopApp = function() {
+          WorkspaceService.stopApp()
+            .then(function onWorkspaceStop() {
+              growl.addSuccessMessage("app is stopped");
+              checkAppRunningState();
+            })
+            .catch(function onWorkspaceStartError(error) {
+              growl.addWarnMessage("something is wrong check app status");
+              checkAppRunningState();
+            });
+
+
+        };
+      },
       link: function(scope, el, attrs) {
 
+        var renderComp = function() {
+          React.renderComponent(IAMainControls({scope:scope}), el[0]);
+        };
         scope.$watch('activeInstance', function(instance) {
-          $timeout(function() {
-            React.renderComponent(IAMainControls({scope:scope}), el[0]);
-          }, 200);
-
+          renderComp();
+        });
+        scope.$watch('isAppRunning', function(state) {
+          renderComp();
         });
 
       }

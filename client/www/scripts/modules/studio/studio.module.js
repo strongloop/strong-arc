@@ -11,7 +11,8 @@ var CONST = {
   DEFAULT_DATASOURCE: 'none',
   DEFAULT_DATASOURCE_BASE_MODEL: 'PersistedModel',
   MODEL_TYPE: 'model',
-  APP_FACET: 'server'
+  APP_FACET: 'server',
+  APP_RUNNING_CHECK_INTERVAL:  18000
 };
 
 var Studio = angular.module('Studio', [
