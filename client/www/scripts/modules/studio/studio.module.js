@@ -35,6 +35,7 @@ var Studio = angular.module('Studio', [
   'Explorer',
   'Model',
   'Landing',
+  'BuildDeploy',
   'UI',
   'Datasource',
   'ui.bootstrap',
@@ -84,6 +85,11 @@ Studio.config([
             }
           ]
         }
+      })
+      .state('build-deploy', {
+        url: '/build-deploy',
+        templateUrl: './scripts/modules/build-deploy/templates/build-deploy.main.html',
+        controller: 'BuildDeployController'
       })
       .state('login', {
         url: '/login',

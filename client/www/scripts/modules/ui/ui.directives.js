@@ -52,7 +52,6 @@ UI.directive('slUiToggle', [
   }
 ]);
 
-
 UI.directive('slUiSwitch', [
   '$log',
   function($log){
