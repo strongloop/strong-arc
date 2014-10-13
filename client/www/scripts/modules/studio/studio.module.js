@@ -34,6 +34,7 @@ var Studio = angular.module('Studio', [
   'Discovery',
   'Model',
   'Landing',
+  'BuildDeploy',
   'UI',
   'Datasource',
   'Explorer',
@@ -89,8 +90,13 @@ Studio.config([
         url: '/landing',
         templateUrl: './scripts/modules/landing/templates/landing.main.html',
         controller: 'LandingController'
-      }).
-      state('login', {
+      })
+      .state('build-deploy', {
+        url: '/build-deploy',
+        templateUrl: './scripts/modules/build-deploy/templates/build-deploy.main.html',
+        controller: 'BuildDeployController'
+      })
+      .state('login', {
         url: '/login',
         controller: 'LoginController',
         templateUrl: './scripts/modules/studio-user/templates/login.html'
