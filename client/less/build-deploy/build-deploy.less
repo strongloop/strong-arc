@@ -1,0 +1,59 @@
+.sl-build-deploy {
+  @min-width: 1024px;
+
+  .sl-forms-toggler {
+    display: block;
+    text-align: center;
+    width: 30rem;
+    margin: auto;
+    border: 1px solid blue;
+    min-width: @min-width;
+    margin-bottom: 1rem;
+  }
+
+  .sl-forms-toggler-inline {
+    width: 30rem;
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 20rem;
+    margin-left: -15rem;
+  }
+
+  .sl-forms {
+    min-width: @min-width;
+    text-align: center;
+    border: 1px solid green;
+    position: relative;
+
+    .sl-forms-left, .sl-forms-right {
+      display: inline-block;
+      width: 40rem;
+      height: 30rem;
+      text-align: left;
+      border: 1px solid black;
+
+      &.sl-forms-left {
+        margin-right: 10rem;
+      }
+
+      &.sl-forms-right {
+        margin-left: 10rem;
+      }
+
+      form {
+        width: 100%;
+        height: 100%;
+
+        fieldset {
+          min-height: 30rem;
+          margin-bottom: 1rem;
+        }
+
+        .sl-actions {
+          text-align: right;
+        }
+      }
+    }
+  }
+}

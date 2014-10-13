@@ -1,0 +1,59 @@
+<section class="sl-build-deploy">
+  <h1>Build and Deploy</h1>
+  {{data}}
+
+  <div class="sl-forms-toggler">
+    <sl-ui-toggle togglers="buildTogglers"></sl-ui-toggle>
+  </div>
+
+  <div class="sl-forms">
+    <div class="sl-forms-left">
+      <form ng-show="buildId == 'git'">
+        <fieldset>
+          <legend>Build Git</legend>
+        </fieldset>
+        <div class="sl-actions">
+          <button>Build</button>
+          <button>Build and Deploy</button>
+        </div>
+      </form>
+
+      <form ng-show="buildId == 'universal'">
+        <fieldset>
+          <legend>Build universal</legend>
+        </fieldset>
+        <div class="sl-actions">
+          <button>Build</button>
+          <button>Build and Deploy</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="sl-forms-toggler-inline">
+      <sl-ui-toggle togglers="deployTogglers"></sl-ui-toggle>
+    </div>
+
+    <div class="sl-forms-right">
+      <form ng-show="deployId == 'new'">
+        <fieldset>
+          <legend>Deploy new</legend>
+        </fieldset>
+        <div class="sl-actions">
+          <button>Deploy</button>
+        </div>
+      </form>
+
+      <form ng-show="deployId == 'existing'">
+        <fieldset>
+          <legend>Deploy Existing</legend>
+        </fieldset>
+        <div class="sl-actions">
+          <button>Deploy</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  buildId: {{buildId}}<br>
+  deployId: {{deployId}}
+</section>
