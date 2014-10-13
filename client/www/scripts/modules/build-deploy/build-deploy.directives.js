@@ -1,0 +1,183 @@
+// Copyright StrongLoop 2014
+BuildDeploy.directive('slBuildDeployBuildForm', [
+  function () {
+    return {
+      restrict: "E",
+      replace: true,
+      templateUrl: './scripts/modules/build-deploy/templates/build-deploy.build-form.html',
+      controller: function($scope, $attrs, $log, BuildDeployService){
+        $scope.buildGit = function(form){
+          $scope.build.git.submitted = true;
+          $scope.viewConsole.logs = [];
+          $log.log(form);
+
+          if ( form.$valid ) {
+            var buildData = {
+              type: "git",
+              branch: $scope.build.git.deploy
+            };
+
+            BuildDeployService.buildGit(buildData, $scope.viewConsole)
+              .then(function(data){
+                $log.log(data);
+                $scope.build.git.message = 'Successfully built using git';
+              });
+          }
+        };
+
+        $scope.buildUniversal = function(form){
+          $scope.build.universal.submitted = true;
+          $scope.viewConsole.logs = [];
+          //$log.log(form);
+
+          if ( form.$valid ) {
+            var buildData = {
+              type: 'universal',
+              archive: $scope.build.universal.archive
+            };
+
+            BuildDeployService.buildUniversal(buildData, $scope.viewConsole)
+              .then(function(data){
+                $log.log(data);
+                $scope.build.universal.message = 'Successfully built using universal';
+                $scope.deploy.universal.archive = data.archive;
+              });
+          }
+        };
+      },
+      link: function(scope, el, attrs){
+        scope.$watch('build.git.url', function(newVal){
+          scope.deploy.git.url = newVal;
+        });
+
+        scope.$watch('build.git.deploy', function(newVal){
+          scope.deploy.git.deploy = newVal;
+        });
+      }
+    };
+  }
+]);
+
+BuildDeploy.directive('slBuildDeployDeployForm', [
+  function () {
+    return {
+      restrict: "E",
+      replace: true,
+      templateUrl: './scripts/modules/build-deploy/templates/build-deploy.deploy-form.html',
+      controller: function($scope, $attrs, $log, $upload, BuildDeployService){
+
+        //todo waiting for StromPM to support multi-part uploads (currently not in use)
+        function uploadFile(file, uploadUrl){
+          $scope.upload = $upload.upload({
+            url: uploadUrl, //upload.php script, node.js route, or servlet url
+            //method: 'POST' or 'PUT',
+            //headers: {'header-key': 'header-value'},
+            //withCredentials: true,
+            //data: {myObj: $scope.myModelObj},
+            file: file, // or list of files ($files) for html5 only
+            //fileName: 'doc.jpg' or ['1.jpg', '2.jpg', ...] // to modify the name of the file(s)
+            // customize file formData name ('Content-Disposition'), server side file variable name.
+            //fileFormDataName: myFile, //or a list of names for multiple files (html5). Default is 'file'
+            // customize how data is added to formData. See #40#issuecomment-28612000 for sample code
+            //formDataAppender: function(formData, key, val){}
+          }).progress(function(evt) {
+            $log.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+          }).success(function(data, status, headers, config) {
+            // file is uploaded successfully
+            $log.log(data);
+            $scope.deploy.git.message = 'Successfully deployed using universal';
+
+          });
+          //.error(...)
+          //.then(success, error, progress);
+          // access or attach event listeners to the underlying XMLHttpRequest.
+          //.xhr(function(xhr){xhr.upload.addEventListener(...)})
+
+        }
+
+
+        $scope.deployGit = function(form){
+          $scope.deploy.git.submitted = true;
+
+          if ( form.$valid ) {
+            var deployData = {
+              type: "git",
+              branch: $scope.deploy.git.deploy,
+              host: $scope.deploy.host.hostname,
+              port: $scope.deploy.host.port,
+              processes: $scope.deploy.host.processes
+            };
+
+            BuildDeployService.deployGit(deployData, $scope.viewConsole)
+              .then(function(data){
+                $log.log('deploy done!', data);
+                $scope.deploy.git.message = 'Successfully deployed using git';
+              });
+          }
+
+        };
+
+        $scope.deployUniversal = function(form){
+          if ( form.$valid ) {
+
+            var deployData = {
+              type: 'universal',
+              archive: $scope.deploy.universal.archive,
+              host: $scope.deploy.host.hostname,
+              port: $scope.deploy.host.port,
+              processes: $scope.deploy.host.processes
+            };
+
+            BuildDeployService.deployUniversal(deployData, $scope.viewConsole)
+              .then(function(data){
+                $log.log('deploy done!', data);
+                $scope.deploy.universal.message = 'Successfully deployed using universal';
+              });
+          }
+        };
+
+        //not implemented yet
+        $scope.deployUniversalStrongPM = function(form){
+          $scope.deploy.universal.submitted = true;
+          $log.log(form);
+
+          var hostname = $scope.deploy.host.hostname;
+          var port = $scope.deploy.host.port;
+          var uploadUrl = 'https://' + hostname + ':' + port;
+
+          if ( form.$valid ) {
+            uploadFile($scope.deploy.universal.file, uploadUrl);
+          }
+        };
+
+
+        //save file in memory
+        //for strongPM implementation (not used yet)
+        $scope.onFileSelect = function($files){
+          for (var i = 0; i < $files.length; i++) {
+            var file = $files[i];
+            $scope.deploy.universal.file = file;
+            $scope.deploy.universal.archive = file.name;
+          }
+        };
+
+        //for strongPM implementation (not used yet)
+        $scope.clickUploadFile = function(e){
+          angular.element('#deploy-file-upload').trigger('click');
+        };
+      }
+    };
+  }
+]);
+
+BuildDeploy.directive('slBuildDeployNav', [
+  function () {
+    return {
+      restrict: "E",
+      replace: true,
+      templateUrl: './scripts/modules/build-deploy/templates/build-deploy.nav.html'
+    }
+  }
+]);
+
+

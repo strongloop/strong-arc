@@ -1,0 +1,123 @@
+.sl-build-deploy {
+  @min-width: 1024px;
+  padding: 0;
+  margin-top: 4rem;
+  min-width: @min-width;
+
+  .sl-forms-toggler {
+    display: block;
+    text-align: center;
+    width: 30rem;
+    margin: auto;
+    min-width: @min-width;
+    margin-bottom: 1rem;
+  }
+
+  .sl-forms-toggler-inline {
+    width: 21rem;
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    margin-left: -10.5rem;
+    height: 100%;
+    bottom: 0;
+
+    h4 {
+      color: @gray-light;
+      font-weight: 300;
+      font-size: 2.1rem;
+      text-align: left;
+      margin-top: 0;
+      margin-bottom: .75rem;
+    }
+
+    .sl-toggler {
+      background: @gray-lighter;
+      padding: 1.5rem 1rem 1rem;
+      height: 90%;
+    }
+  }
+
+  .sl-forms {
+    .clearfix;
+    width: @min-width;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+
+    .sl-forms-left, .sl-forms-right {
+      display: block;
+      width: 40rem;
+      //height: 30rem;
+      text-align: left;
+
+      &.sl-forms-left {
+        float: left;
+        margin-right: 10rem;
+      }
+
+      &.sl-forms-right {
+        float: right;
+        margin-left: 10rem;
+      }
+
+      form {
+        width: 100%;
+        min-height: 28rem;
+
+        &.disabled {
+          opacity: .4;
+        }
+
+        &[name=deployuniversal] {
+          input[name=archive] {
+            width: 31rem;
+          }
+        }
+
+        fieldset {
+          margin-bottom: 1rem;
+        }
+
+        .sl-server {
+          label {
+            display: inline-block;
+
+            input {
+              display: block;
+            }
+
+            &:nth-child(1){
+              input {
+                width: 16rem;
+              }
+            }
+
+            &:nth-child(2) {
+              input {
+                width: 7rem;
+              }
+            }
+
+            &:nth-child(3) {
+              input {
+                width: 7rem;
+              }
+            }
+          }
+        }
+
+        .sl-actions {
+          text-align: right;
+        }
+      }
+    }
+  }
+}
+
+.sl-build-deploy-nav {
+  color: @white;
+  padding: 1rem;
+}
+

@@ -206,6 +206,7 @@ Common.directive('slPopoverHelp', [
     return {
       restrict: 'E',
       replace: true,
+      scope: {},
       templateUrl: './scripts/modules/common/templates/common.popover.html',
       link: function(scope, el, attrs){
         scope.loading = false;
@@ -222,9 +223,49 @@ Common.directive('slPopoverHelp', [
                 scope.loading = false;
                 scope.title = res.data.title;
                 scope.content = res.data.body.view.value;
-              })
+              });
           }
         });
       }
     };
 }]);
+
+Common.directive('slCommonFormMessage', [
+  function () {
+    return {
+      restrict: "E",
+      replace: true,
+      scope: {
+        message: '='
+      },
+      templateUrl: './scripts/modules/common/templates/common.form-message.html',
+      controller: function($scope, $attrs, $log, $timeout){
+        var to;
+
+        function hideMessage(){
+          if ( to ) {
+            $timeout.cancel(to);
+          }
+
+          to = $timeout(function() {
+            $scope.message = '';
+          }, 3000);
+        }
+
+        $scope.$watch('message', function(newVal){
+          hideMessage();
+        });
+      }
+    }
+  }
+]);
+
+Common.directive('slCommonConsoleLog', [
+  function () {
+    return {
+      restrict: "E",
+      replace: true,
+      templateUrl: './scripts/modules/common/templates/common.console.html'
+    }
+  }
+]);
