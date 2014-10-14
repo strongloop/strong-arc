@@ -8,23 +8,39 @@
 
   <div class="sl-forms">
     <div class="sl-forms-left">
-      <form ng-show="buildId == 'git'">
+      <form ng-show="buildId == 'git'" class="ui-form">
         <fieldset>
-          <legend>Build Git</legend>
+          <legend>Build git</legend>
+          <div class="ui-form-group">
+            <label>Git URL for master branch:</label>
+            <input type="text" placeholder="eg: git@github.com/project/master" ng-disabled="deployId == 'existing'">
+          </div>
+          <div class="ui-form-group">
+            <label>Git deploy branch:</label>
+            <input type="text" placeholder="eg: /deploy" ng-disabled="deployId == 'existing'">
+          </div>
         </fieldset>
-        <div class="sl-actions">
-          <button>Build</button>
-          <button>Build and Deploy</button>
+        <div class="ui-actions">
+          <button ng-disabled="deployId == 'existing'">Build</button>
+          <button ng-disabled="deployId == 'existing'">Build and Deploy</button>
         </div>
       </form>
 
-      <form ng-show="buildId == 'universal'">
+      <form ng-show="buildId == 'universal'" class="ui-form">
         <fieldset>
           <legend>Build universal</legend>
+          <div class="ui-form-group">
+            <label>Git URL for master branch:</label>
+            <input type="text" placeholder="eg: git@github.com/project/master" ng-disabled="deployId == 'existing'">
+          </div>
+          <div class="ui-form-group">
+            <label>Archive filename:</label>
+            <input type="text" placeholder="eg: project-v1.0.1.tgz" ng-disabled="deployId == 'existing'">
+          </div>
         </fieldset>
-        <div class="sl-actions">
-          <button>Build</button>
-          <button>Build and Deploy</button>
+        <div class="ui-actions">
+          <button ng-disabled="deployId == 'existing'">Build</button>
+          <button ng-disabled="deployId == 'existing'">Build and Deploy</button>
         </div>
       </form>
     </div>
@@ -34,20 +50,55 @@
     </div>
 
     <div class="sl-forms-right">
-      <form ng-show="deployId == 'new'">
+      <form ng-show="buildId == 'git'" class="ui-form">
         <fieldset>
-          <legend>Deploy new</legend>
+          <legend>Deploy git</legend>
+          <div class="ui-form-group">
+            <label>Git deploy branch:</label>
+            <input type="text" placeholder="eg: /deploy">
+          </div>
+          <div class="ui-form-group sl-server">
+            <label>Hostname:
+              <input type="text" placeholder="host1.example.com">
+            </label>
+            <label>Port:
+              <input type="text" placeholder="8000">
+            </label>
+            <label>Processes:
+              <input type="text" placeholder="4">
+            </label>
+          </div>
         </fieldset>
-        <div class="sl-actions">
+        <div class="ui-actions">
           <button>Deploy</button>
         </div>
       </form>
 
-      <form ng-show="deployId == 'existing'">
+      <form ng-show="buildId == 'universal'" class="ui-form">
         <fieldset>
-          <legend>Deploy Existing</legend>
+          <legend>Deploy universal</legend>
+          <div class="ui-form-group">
+            <div class="ui-form-group">
+              <label>Archive filename:</label>
+              <input type="text" placeholder="eg: project-v1.0.1.tgz">
+              <button class="ui-file" ng-click="clickUploadFile()">...</button>
+              <input id="file-upload" type="file" class="hide">
+            </div>
+            <div class="ui-form-group sl-server">
+              <label>Hostname:
+                <input type="text" placeholder="host1.example.com">
+              </label>
+              <label>Port:
+                <input type="text" placeholder="8000">
+              </label>
+              <label>Processes:
+                <input type="text" placeholder="4">
+              </label>
+            </div>
+          </div>
+
         </fieldset>
-        <div class="sl-actions">
+        <div class="ui-actions">
           <button>Deploy</button>
         </div>
       </form>

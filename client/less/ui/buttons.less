@@ -123,3 +123,20 @@
     background-color: @ui-button-hover-bg-color;
   }
 }
+
+.ui-actions {
+  text-align: right;
+
+  button {
+    border: none;
+    border-radius: @ui-radius;
+    background: @ui-button-bg-color;
+    color: @ui-button-color;
+    padding: .5rem 1rem;
+    margin-left: 1rem;
+
+    &[disabled] {
+      background: @ui-disabled-button-bg-color;
+    }
+  }
+}
