@@ -1,0 +1,20 @@
+form.ui-form {
+  .ui-form-group {
+    margin-bottom: 2rem;
+  }
+
+  label {
+    display: block;
+  }
+
+  input[type=text] {
+    border: 1px solid @ui-form-field-border-color;
+    width: 30rem;
+    padding: .5rem 1rem;
+    border-radius: @ui-radius;
+
+    &[disabled] {
+      background: @ui-disabled-input-bg-color;
+    }
+  }
+}
