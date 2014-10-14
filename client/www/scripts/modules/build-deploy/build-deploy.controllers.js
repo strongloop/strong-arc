@@ -28,6 +28,10 @@ BuildDeploy.controller('BuildDeployController', [
 
     $scope.activeId = $scope.buildTogglers[0].id;
 
+    $scope.clickUploadFile = function(e){
+      $('[type=file]').click();
+    };
+
     BuildDeployService.doSomething()
       .then(function (data) {
         $scope.data = data;

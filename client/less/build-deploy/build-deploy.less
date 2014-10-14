@@ -6,7 +6,6 @@
     text-align: center;
     width: 30rem;
     margin: auto;
-    border: 1px solid blue;
     min-width: @min-width;
     margin-bottom: 1rem;
   }
@@ -23,7 +22,6 @@
   .sl-forms {
     min-width: @min-width;
     text-align: center;
-    border: 1px solid green;
     position: relative;
 
     .sl-forms-left, .sl-forms-right {
@@ -31,7 +29,6 @@
       width: 40rem;
       height: 30rem;
       text-align: left;
-      border: 1px solid black;
 
       &.sl-forms-left {
         margin-right: 10rem;
@@ -48,10 +45,34 @@
         fieldset {
           min-height: 30rem;
           margin-bottom: 1rem;
-        }
 
-        .sl-actions {
-          text-align: right;
+          .sl-server {
+            label {
+              display: inline-block;
+
+              input {
+                display: block;
+              }
+
+              &:nth-child(1){
+                input {
+                  width: 18rem;
+                }
+              }
+
+              &:nth-child(2) {
+                input {
+                  width: 7rem;
+                }
+              }
+
+              &:nth-child(3) {
+                input {
+                  width: 5rem;
+                }
+              }
+            }
+          }
         }
       }
     }
