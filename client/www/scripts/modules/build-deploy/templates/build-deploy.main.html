@@ -1,260 +1,42 @@
-<section class="sl-build-deploy">
-  <h1>Build and Deploy</h1>
-  <p>build: {{build}}</p>
-  <p>deploy: {{deploy}}</p>
+<div data-ui-type="table" data-id="MainBody">
+  <div data-ui-type="row">
+    <!--<div data-ui-type="cell" data-id="MainSidebarContainer" class="top-level-container">-->
+      <!--<sl-build-deploy-nav></sl-build-deploy-nav>-->
+    <!--</div>-->
+    <div data-ui-type="cell"
+         data-id="MainContentContainer"
+         class="top-level-container">
+      <section class="sl-build-deploy">
+          <h1>Build and Deploy</h1>
+          <p>build: {{build}}</p>
+          <p>deploy: {{deploy}}</p>
 
-  <div class="sl-forms-toggler">
-    <sl-ui-toggle togglers="buildTogglers"></sl-ui-toggle>
-  </div>
-
-  <div class="sl-forms">
-    <div class="sl-forms-left">
-      <form
-        name="buildgit"
-        ng-show="buildId == 'git'"
-        class="ui-form"
-        novalidate
-        ng-submit="buildGit(buildgit)"
-        >
-        <fieldset>
-          <legend>Build git</legend>
-          <div
-            class="ui-form-group"
-            ng-class="{
-              valid: buildgit.url.$valid && build.git.submitted,
-              invalid: buildgit.url.$invalid && build.git.submitted
-            }">
-            <label>Git URL for master branch:</label>
-            <input
-              type="text"
-              placeholder="eg: git@github.com/project/master"
-              ng-disabled="deployId == 'existing'"
-              ng-model="build.git.url"
-              name="url"
-              required
-              >
-            <p class="error" ng-show="buildgit.url.$error.required && build.git.submitted">Git URL is required</p>
-          </div>
-          <div class="ui-form-group"
-             ng-class="{
-              valid: buildgit.deploy.$valid && build.git.submitted,
-              invalid: buildgit.deploy.$invalid && build.git.submitted
-            }">
-            <label>Git deploy branch:</label>
-            <input
-              type="text"
-              placeholder="eg: /deploy"
-              ng-disabled="deployId == 'existing'"
-              ng-model="build.git.deploy"
-              name="deploy"
-              required
-              >
-            <p class="error" ng-show="buildgit.deploy.$error.required && build.git.submitted">Git deploy branch is required</p>
-          </div>
-        </fieldset>
-        <div class="ui-actions">
-          <button ng-disabled="deployId == 'existing'">Build</button>
-          <button ng-disabled="deployId == 'existing'">Build and Deploy</button>
-        </div>
-      </form>
-
-      <form
-        name="builduniversal"
-        ng-show="buildId == 'universal'"
-        class="ui-form"
-        ng-submit="buildUniversal(builduniversal)"
-        novalidate
-        >
-        <fieldset>
-          <legend>Build universal</legend>
-          <div class="ui-form-group"
-            ng-class="{
-              valid: builduniversal.git.$valid && build.universal.submitted,
-              invalid: builduniversal.git.$invalid && build.universal.submitted
-            }">
-
-            <label>Git URL for master branch:</label>
-            <input
-              type="text"
-              placeholder="eg: git@github.com/project/master"
-              ng-disabled="deployId == 'existing'"
-              ng-model="build.universal.git"
-              name="git"
-              required
-              >
-            <p class="error" ng-show="builduniversal.git.$error.required && build.git.submitted">Git URL is required</p>
-          </div>
-          <div class="ui-form-group"
-            ng-class="{
-              valid: builduniversal.archive.$valid && build.universal.submitted,
-              invalid: builduniversal.archive.$invalid && build.universal.submitted
-            }">
-
-          <label>Archive filename:</label>
-            <input
-              type="text"
-              placeholder="eg: project-v1.0.1.tgz"
-              ng-disabled="deployId == 'existing'"
-              ng-model="build.universal.archive"
-              name="archive"
-              required
-              >
-            <p class="error" ng-show="builduniversal.archive.$error.required && build.universal.submitted">Archive filename is required</p>
-          </div>
-        </fieldset>
-        <div class="ui-actions">
-          <button ng-disabled="deployId == 'existing'">Build</button>
-          <button ng-disabled="deployId == 'existing'">Build and Deploy</button>
-        </div>
-      </form>
-    </div>
-
-    <div class="sl-forms-toggler-inline">
-      <sl-ui-toggle togglers="deployTogglers"></sl-ui-toggle>
-    </div>
-
-    <div class="sl-forms-right">
-      <form
-        name="deploygit"
-        ng-show="buildId == 'git'"
-        class="ui-form"
-        novalidate
-        ng-submit="deployGit(deploygit)"
-        >
-        <fieldset>
-          <legend>Deploy git</legend>
-          <div class="ui-form-group"
-            ng-class="{
-              valid: deploygit.deploy.$valid && deploy.git.submitted,
-              invalid: deploygit.deploy.$invalid && deploy.git.submitted
-            }">
-
-          <label>Git deploy branch:</label>
-            <input
-              type="text"
-              placeholder="eg: /deploy"
-              ng-model="deploy.git.deploy"
-              name="deploy"
-              required
-              >
-            <p class="error" ng-show="deploygit.deploy.$error.required && deploy.git.submitted">Git deploy branch is required</p>
-          </div>
-          <div class="ui-form-group sl-server"
-             ng-class="{
-              valid: ( deploygit.hostname.$valid || deploygit.port.$valid || deploygit.processes.$valid ) && deploy.git.submitted,
-              invalid: ( deploygit.deploy.$invalid || deploygit.port.$invalid || deploygit.processes.$invalid ) && deploy.git.submitted
-            }">
-
-            <label>Hostname:
-              <input
-                type="text"
-                placeholder="host1.example.com"
-                ng-model="deploy.host.hostname"
-                name="hostname"
-                required
-                >
-            </label>
-            <label>Port:
-              <input
-                type="text"
-                placeholder="8000"
-                ng-model="deploy.host.port"
-                name="port"
-                required
-                >
-            </label>
-            <label>Processes:
-              <input
-                type="text"
-                placeholder="4"
-                ng-model="deploy.host.processes"
-                name="processes"
-                required
-                >
-            </label>
-            <p class="error" ng-show="deploygit.hostname.$error.required && deploy.git.submitted">Hostname is required</p>
-            <p class="error" ng-show="deploygit.port.$error.required && deploy.git.submitted">Port is required</p>
-            <p class="error" ng-show="deploygit.processes.$error.required && deploy.git.submitted">Number of processes are required</p>
-          </div>
-        </fieldset>
-        <div class="ui-actions">
-          <button>Deploy</button>
-        </div>
-      </form>
-
-      <form
-        name="deployuniversal"
-        ng-show="buildId == 'universal'"
-        class="ui-form"
-        novalidate
-        ng-submit="deployUniversal(deployuniversal)"
-        >
-        <fieldset>
-          <legend>Deploy universal</legend>
-          <div class="ui-form-group"
-            ng-class="{
-              valid: deployuniversal.archive.$valid && deploy.universal.submitted,
-              invalid: deployuniversal.archive.$invalid && deploy.universal.submitted
-            }">
-
-
-            <label>Archive filename:</label>
-            <input
-              type="text"
-              placeholder="eg: project-v1.0.1.tgz"
-              ng-model="deploy.universal.archive"
-              name="archive"
-              required
-              >
-            <button class="ui-file" ng-click="clickUploadFile()">...</button>
-            <input id="file-upload" type="file" class="hide" name="uploadarchive">
-            <p class="error" ng-show="deployuniversal.archive.$error.required && deploy.universal.submitted">Archive filename is required</p>
-          </div>
-          <div class="ui-form-group sl-server"
-             ng-class="{
-              valid: ( deployuniversal.hostname.$valid || deployuniversal.port.$valid || deployuniversal.processes.$valid ) && deploy.universal.submitted,
-              invalid: ( deployuniversal.deploy.$invalid || deployuniversal.port.$invalid || deployuniversal.processes.$invalid ) && deploy.universal.submitted
-             }">
-            <label>Hostname:
-              <input
-                type="text"
-                placeholder="host1.example.com"
-                ng-model="deploy.host.hostname"
-                name="hostname"
-                required
-                >
-            </label>
-            <label>Port:
-              <input
-                type="text"
-                placeholder="8000"
-                ng-model="deploy.host.port"
-                name="port"
-                required
-                >
-            </label>
-            <label>Processes:
-              <input
-                type="text"
-                placeholder="4"
-                ng-model="deploy.host.processes"
-                name="processes"
-                required
-                >
-            </label>
-            <p class="error" ng-show="deployuniversal.hostname.$error.required && deploy.universal.submitted">Hostname is required</p>
-            <p class="error" ng-show="deployuniversal.port.$error.required && deploy.universal.submitted">Port is required</p>
-            <p class="error" ng-show="deployuniversal.processes.$error.required && deploy.universal.submitted">Number of processes are required</p>
+          <div class="sl-forms-toggler">
+            <sl-ui-toggle togglers="buildTogglers"></sl-ui-toggle>
           </div>
 
-        </fieldset>
-        <div class="ui-actions">
-          <button>Deploy</button>
-        </div>
-      </form>
+          <div class="sl-forms">
+            <sl-build-form></sl-build-form>
+
+            <div class="sl-forms-toggler-inline">
+              <sl-ui-toggle togglers="deployTogglers"></sl-ui-toggle>
+            </div>
+
+            <sl-deploy-form></sl-deploy-form>
+          </div>
+
+          buildId: {{buildId}}<br>
+          deployId: {{deployId}}
+
+          <div class="sl-console-log">
+            <ol>
+              <li ng-repeat="line in logs">{{line.msg}}</li>
+            </ol>
+          </div>
+        </section>
     </div>
   </div>
+</div>
 
-  buildId: {{buildId}}<br>
-  deployId: {{deployId}}
-</section>
+
+
