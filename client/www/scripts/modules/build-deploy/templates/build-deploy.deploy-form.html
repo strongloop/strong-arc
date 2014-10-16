@@ -92,8 +92,9 @@
           name="archive"
           required
           >
-        <button class="ui-file" ng-click="clickUploadFile()">...</button>
-        <input id="file-upload" type="file" class="hide" name="uploadarchive">
+        <button class="ui-file" ng-click="clickUploadFile()" type="button">...</button>
+        <input id="upload" type="file" class="hide" ng-file-select="onFileSelect($files)" name="uploadarchive">
+
         <p class="error" ng-show="deployuniversal.archive.$error.required && deploy.universal.submitted">Archive filename is required</p>
       </div>
       <div class="ui-form-group sl-server"
