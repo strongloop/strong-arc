@@ -1,0 +1,100 @@
+.sl-build-deploy {
+  @min-width: 1024px;
+  padding: 0 2rem;
+
+  .sl-forms-toggler {
+    display: block;
+    text-align: center;
+    width: 30rem;
+    margin: auto;
+    min-width: @min-width;
+    margin-bottom: 1rem;
+  }
+
+  .sl-forms-toggler-inline {
+    width: 30rem;
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 20rem;
+    margin-left: -15rem;
+  }
+
+  .sl-forms {
+    min-width: @min-width;
+    text-align: center;
+    position: relative;
+
+    .sl-forms-left, .sl-forms-right {
+      display: inline-block;
+      width: 40rem;
+      height: 30rem;
+      text-align: left;
+
+      &.sl-forms-left {
+        margin-right: 10rem;
+      }
+
+      &.sl-forms-right {
+        margin-left: 10rem;
+      }
+
+      form {
+        width: 100%;
+        height: 100%;
+
+        fieldset {
+          min-height: 30rem;
+          margin-bottom: 1rem;
+
+          .sl-server {
+            label {
+              display: inline-block;
+
+              input {
+                display: block;
+              }
+
+              &:nth-child(1){
+                input {
+                  width: 18rem;
+                }
+              }
+
+              &:nth-child(2) {
+                input {
+                  width: 7rem;
+                }
+              }
+
+              &:nth-child(3) {
+                input {
+                  width: 5rem;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.sl-console-log {
+  background: rgba(0,0,0, .65);
+  color: #fff;
+  padding: 1rem 2rem;
+  max-height: 10rem;
+  overflow-y: auto;
+
+  ol {
+    padding-left: 0;
+    list-style-type: none;
+  }
+}
+
+
+.sl-build-deploy-nav {
+  color: white;
+  padding: 1rem;
+}

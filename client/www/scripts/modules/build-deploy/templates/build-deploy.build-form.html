@@ -1,0 +1,101 @@
+<div class="sl-forms-left">
+  <!-- build form directive -->
+  <form
+    name="buildgit"
+    ng-show="buildId == 'git'"
+    class="ui-form"
+    novalidate
+    ng-submit="buildGit(buildgit)"
+    >
+    <fieldset>
+      <legend>Build git</legend>
+      <div
+        class="ui-form-group"
+        ng-class="{
+                valid: buildgit.url.$valid && build.git.submitted,
+                invalid: buildgit.url.$invalid && build.git.submitted
+              }">
+        <label>Git URL for master branch:</label>
+        <input
+          type="text"
+          placeholder="eg: git@github.com/project/master"
+          ng-disabled="deployId == 'existing'"
+          ng-model="build.git.url"
+          name="url"
+          required
+          >
+        <p class="error" ng-show="buildgit.url.$error.required && build.git.submitted">Git URL is required</p>
+      </div>
+      <div class="ui-form-group"
+           ng-class="{
+                valid: buildgit.deploy.$valid && build.git.submitted,
+                invalid: buildgit.deploy.$invalid && build.git.submitted
+              }">
+        <label>Git deploy branch:</label>
+        <input
+          type="text"
+          placeholder="eg: /deploy"
+          ng-disabled="deployId == 'existing'"
+          ng-model="build.git.deploy"
+          name="deploy"
+          required
+          >
+        <p class="error" ng-show="buildgit.deploy.$error.required && build.git.submitted">Git deploy branch is required</p>
+      </div>
+    </fieldset>
+    <div class="ui-actions">
+      <button ng-disabled="deployId == 'existing'">Build</button>
+      <button ng-disabled="deployId == 'existing'">Build and Deploy</button>
+    </div>
+  </form>
+
+  <form
+  name="builduniversal"
+  ng-show="buildId == 'universal'"
+  class="ui-form"
+  ng-submit="buildUniversal(builduniversal)"
+  novalidate
+  >
+  <fieldset>
+    <legend>Build universal</legend>
+    <div class="ui-form-group"
+         ng-class="{
+              valid: builduniversal.git.$valid && build.universal.submitted,
+              invalid: builduniversal.git.$invalid && build.universal.submitted
+            }">
+
+      <label>Git URL for master branch:</label>
+      <input
+        type="text"
+        placeholder="eg: git@github.com/project/master"
+        ng-disabled="deployId == 'existing'"
+        ng-model="build.universal.git"
+        name="git"
+        required
+        >
+      <p class="error" ng-show="builduniversal.git.$error.required && build.git.submitted">Git URL is required</p>
+    </div>
+    <div class="ui-form-group"
+         ng-class="{
+              valid: builduniversal.archive.$valid && build.universal.submitted,
+              invalid: builduniversal.archive.$invalid && build.universal.submitted
+            }">
+
+      <label>Archive filename:</label>
+      <input
+        type="text"
+        placeholder="eg: project-v1.0.1.tgz"
+        ng-disabled="deployId == 'existing'"
+        ng-model="build.universal.archive"
+        name="archive"
+        required
+        >
+      <p class="error" ng-show="builduniversal.archive.$error.required && build.universal.submitted">Archive filename is required</p>
+    </div>
+  </fieldset>
+  <div class="ui-actions">
+    <button ng-disabled="deployId == 'existing'">Build</button>
+    <button ng-disabled="deployId == 'existing'">Build and Deploy</button>
+  </div>
+</form>
+</div>

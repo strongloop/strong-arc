@@ -1,0 +1,9 @@
+<div class="ui-toggler">
+  <button
+    ng-repeat="toggler in togglers"
+    ng-click="setActive(toggler)"
+    ng-class="{ active: toggler.isActive }"
+    >
+    {{toggler.label}}
+  </button>
+</div>

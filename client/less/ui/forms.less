@@ -1,0 +1,33 @@
+form.ui-form {
+  .ui-form-group {
+    margin-bottom: 2rem;
+
+    &.invalid {
+      color: @ui-msg-error-color;
+
+      .error {
+        margin: 1rem;
+        font-size: 1.3rem;
+      }
+
+      input {
+        border-color: @ui-msg-error-color;
+      }
+    }
+  }
+
+  label {
+    display: block;
+  }
+
+  input[type=text] {
+    border: 1px solid @ui-form-field-border-color;
+    width: 30rem;
+    padding: .5rem 1rem;
+    border-radius: @ui-radius;
+
+    &[disabled] {
+      background: @ui-disabled-input-bg-color;
+    }
+  }
+}

@@ -1,0 +1,362 @@
+/* @override
+	http://0.0.0.0:3003/style/dev/main.css
+	http://0.0.0.0:4800/style/src/main.css */
+
+
+body {
+  font-size: 16px;
+  width: 100%;
+  background-color:#ffffff;
+  margin: 0;
+  overflow: hidden;
+}
+
+input:focus, select:focus {
+  outline:none;
+}
+
+/*
+
+    Data Table Grid
+
+*/
+[data-ui-type="table"] {
+  display: table;
+  table-layout: fixed;
+  width:100%;
+}
+[data-ui-type="row"] {
+  display: table-row;
+}
+[data-ui-type="cell"] {
+  display: table-cell;
+  vertical-align: top;
+
+}
+button:focus,
+button:active:focus,
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus {
+  outline: transparent;
+  outline-color: transparent;
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+label {
+  font-weight: normal;
+  margin-right: 2rem;
+}
+label {
+  color: #808080;
+}
+input {
+  border: none;
+  font-size: 90%;
+}
+pre {
+  background-color: #F8F8F8;
+  border: 1px solid #DDD;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+code {
+  color: #000;
+}
+.center_div {
+  margin: 0 auto;
+  width: 80% /* value of your choice which suits your alignment */;
+}
+.btn-command {
+  border:0;
+  background:transparent;
+  margin:0;
+  padding:0;
+}
+
+/*
+
+	forms
+
+*/
+.field-label {
+  padding-left: 0.7rem;
+  font-size: 10pt;
+  margin-top: 1rem;
+  margin-left: 0.5rem;
+}
+.lineBreak {
+  height: 1.6rem;
+  border-bottom: 1px solid #DDDDDD;
+}
+
+/*
+
+    growl
+
+*/
+.growl {
+  top: 100px;
+  left:50rem;
+}
+/*
+
+    Header
+
+*/
+
+.headerContainer {
+  position: relative;
+  z-index: 1;
+  background-color: #7dbd33;
+  padding-top: 2.3rem;
+  padding-right: 3rem;
+  padding-left: 4rem;
+  width: 100%;
+  height: 8rem;
+}
+.header-help-container{
+  font-size: 17pt;
+}
+.headerContainer li {
+  display: inline-block;
+}
+.navButtons{
+  width: 10rem;
+  position: absolute;
+  right: 2rem;
+  top: 3rem;
+}
+.dropdown-menu {
+  min-width: 50px;
+  top: 4rem;
+  left: -1.4rem;
+}
+.dropdown-menu li {
+  display: block;
+}
+.branding{
+  width: 25rem;
+  float: left;
+}
+.logo{
+  margin-top: 0.8rem;
+  width: 18rem;
+}
+.wordbrand{
+  font-family: ubuntu;
+  font-size: 20pt;
+  font-weight: 400;
+  color:  #08592B;
+  float: left;
+}
+
+.header-version{
+  position: absolute;
+  font-size: 0.7em;
+  right: 0.5em;
+  top: 0.5em;
+  color: #08592B;
+}
+.activity-indicator {
+  background-image: url('images/spinner3-greenie.gif');
+  background-repeat: no-repeat;
+}
+
+/*
+
+	Login
+
+*/
+#LoginMainContainer {
+  position:relative;
+}
+#LoginMainContainer .center_div {
+  max-width:50rem;
+  margin-top: 5rem;
+  padding: 6rem;
+  border: 1px solid #DDDDDD;
+  border-radius: 5px;
+}
+.login-form-title {
+  margin-top:1rem;
+  font-size: 22pt;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+[data-id="LoginForm"] {
+  max-width:45rem;
+  display:block;
+  margin: 0 auto 0 auto;
+}
+[data-id="AuthExceptionMessageContainer"] {
+  position:absolute;
+  top:1rem;
+  max-width:38rem;
+}
+.login-fail-message-container {
+  padding:1.4rem;
+  font-size:115%;
+  color: #d0021b;
+  border: 1px solid #d0021b;
+  border-radius: 0.5rem;
+  background-color: rgba(208, 2, 27, 0.1);
+}
+.login-button-container{
+  display: inline-block;
+  margin-top: 2rem;
+  width: 100%;
+  height: 5rem;
+}
+[data-id="LoginRegisterLinksContainer"] {
+  margin-top:1rem;
+}
+[data-id="RegisterLink"] {
+  float:right;
+}
+
+/*
+
+	Splash
+
+*/
+
+.jumbotron {
+  background-color: #ffffff;
+}
+.img-main-splash {
+  width: 100%;
+}
+
+/*
+
+    ide container
+
+*/
+[data-id="MainBody"] {
+  width: 100%;
+}
+[data-id="MainSidebarContainer"] {
+  background-color: #444444;
+}
+.top-level-container {
+  border: 0px solid #cccccc;
+  width: 28.5rem;
+  /*padding:.5rem;*/
+  /*height:600px;
+  overflow:scroll;*/
+}
+/*
+
+    Loading Indicator
+
+*/
+.loading-indicator {
+  width: 180px;
+  height: 180px;
+  margin: 35px auto 0 auto;
+}
+/*
+
+    Modal Window
+
+*/
+.app-modal-window .modal-dialog {
+  width: 1000px;
+}
+.app-modal-window .modal-dialog .modal-body {
+  height: 550px;
+  overflow: scroll;
+}
+
+/*
+
+Validation CSS
+
+*/
+.validation-error-message{
+  font-size: 11pt;
+  font-weight: lighter;
+  color: #9e9b9b;
+}
+.is-valid {
+  display: none;
+}
+/*
+
+    Global Exception
+
+*/
+.ia-global-exception-container {
+  color: #d0021b;
+  margin: 1rem;
+  padding: 2rem 3rem;
+  border: 1px solid #d0021b;
+  border-radius: 0.5rem;
+  background-color: rgba(208, 2, 27, 0.1);
+}
+.ia-global-exception-header {
+  margin-bottom: 1rem;
+}
+.ia-global-exception-body {
+  font-size: 10pt;
+}
+.ia-global-exception-label {
+  font-weight: bold;
+}
+.ia-global-exception-value {
+  font-size:11pt;
+
+}
+.ia-global-exception-close-button{
+  float: right;
+  font-size: 18pt;
+}
+.ia-global-exception-close-button:hover {
+
+  color: #4a90e2;
+  cursor: pointer;
+}
+.ia-global-exception-link{
+  float:right;
+  padding-top: 1rem;
+  text-decoration: underline;
+}
+.ia-global-exception-link:hover{
+  color: #4a90e2;
+  cursor: pointer;
+}
+.global-exception-stack-display {
+  width:100%;
+  height: 15rem;
+  border: 1px solid #d0021b;
+  margin-top: 1rem;
+  padding: 1rem;
+  font-size: 10pt;
+  background-color: rgba(208, 2, 27, 0.1);;
+  overflow:auto;
+  white-space:pre;
+}
+[data-id="GlobalExceptionDetailsContainer"] {
+  display:none;
+}
+
+#ProfilerContainer {
+  position: absolute;
+  top: 8rem; /* size of header */
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+#ProfilerContainer iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+

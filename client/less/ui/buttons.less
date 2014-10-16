@@ -1,0 +1,43 @@
+.ui-toggler {
+  button {
+    font-size: 1.2rem;
+    color: black;
+    background: white;
+    border-radius: @ui-radius;
+    border: 1px solid black;
+    padding: .5rem 1rem;
+    width: 8rem;
+    text-align: center;
+
+    &:nth-child(1) {
+      border-radius: @ui-radius 0 0 @ui-radius;
+      border-right: none;
+    }
+
+    &:nth-child(2) {
+      border-radius: 0 @ui-radius @ui-radius 0;
+    }
+
+    &.active {
+      color: white;
+      background: black;
+    }
+  }
+}
+
+.ui-actions {
+  text-align: right;
+
+  button {
+    border: none;
+    border-radius: @ui-radius;
+    background: @ui-button-bg-color;
+    color: @ui-button-color;
+    padding: .5rem 1rem;
+    margin-left: 1rem;
+
+    &[disabled] {
+      background: @ui-disabled-button-bg-color;
+    }
+  }
+}
