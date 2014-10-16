@@ -41,7 +41,8 @@ var Studio = angular.module('Studio', [
   'ui.bootstrap',
   'ui.utils',
   'checklist-model',
-  'ngGrid'
+  'ngGrid',
+  'angularFileUpload'
 ]);
 
 Studio.value('CONST', CONST);
