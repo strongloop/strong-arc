@@ -54,5 +54,7 @@ BuildDeploy.controller('BuildDeployController', [
 
     //set the default active toggler state
     $scope.activeId = $scope.buildTogglers[0].id;
+
+    setUI();
   }
 ]);
