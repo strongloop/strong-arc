@@ -42,11 +42,13 @@ var ExplorerMain = (ExplorerMain = React).createClass({
       <div className="explorer-view-container">
         <button className="explorer-slider-button" onClick={component.toggleExplorerView}><label>explorer</label></button>
 
-        <div className="ia-drag-view-title-container">
-          <span className="title">explorer</span>
-        </div>
-        <div className="explorer-view-body">
-          <ul className="explorer-model-list">{items}</ul>
+        <div className="explorer-view-content-container">
+          <div data-id="ExplorerViewTitleContainer" className="ia-drag-view-title-container">
+            <span className="title">explorer</span>
+          </div>
+          <div className="explorer-view-body">
+            <ul className="explorer-model-list">{items}</ul>
+          </div>
         </div>
       </div>
       );
@@ -111,20 +113,29 @@ var ExploreModelApiEndPointListItem = (ExploreModelApiEndPointListItem = React).
         break;
       }
     }
+
     var config = JSON.stringify(resource.config);
+    var apis = (<li></li>);
 
-    var apis = resource.apis.map(function (api) {
-      var apiDetails = api.operations[0];
+    if (modelDef) {
+      apis = resource.apis.map(function (api) {
+        var apiDetails = api.operations[0];
 
-      // api endpoint injection
-      return (
-        <li className="explorer-api-detail-item">
-          <ExploreModelApiEndPoint modelDef={modelDef} apiDetails={apiDetails} api={api} scope={scope} />
-        </li>
-        );
+        // api endpoint injection
+        return (
+          <li className="explorer-api-detail-item">
+            <ExploreModelApiEndPoint modelDef={modelDef} apiDetails={apiDetails} api={api} scope={scope} />
+          </li>
+          );
 
 
-    });
+      });
+
+    }
+    else {
+      console.log('No modelDef');
+    }
+
 
 
 
@@ -143,16 +154,16 @@ var ExploreModelApiEndPointListItem = (ExploreModelApiEndPointListItem = React).
     var modelButtonClass = 'btn btn-default btn-block btn-explorer-model-main'
 
     if (this.state.isOpen) {
-      mainClasses = 'explorer-model is-open';
+      mainClasses = 'explorer-model-container is-open';
     }
     else {
       mainClasses = 'explorer-model is-closed'
     }
-    if (that.props.scope.activeInstance && (that.props.scope.activeInstance.name === singularResourceName)) {
-      mainClasses = 'explorer-model is-open is-active';
-      modelButtonClass += ' is-active';
-
-    }
+//    if (that.props.scope.activeInstance && (that.props.scope.activeInstance.name === singularResourceName)) {
+//      mainClasses = 'explorer-model is-closed is-active';
+//      modelButtonClass += ' is-active';
+//
+//    }
     return (
       <li>
         <button onClick={explorerMainModelClicked} className={modelButtonClass}>/{resourceName}</button>

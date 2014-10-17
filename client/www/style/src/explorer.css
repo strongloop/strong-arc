@@ -9,6 +9,11 @@
 */
 .explorer-view-container {
     position:relative;
+    /*overflow-x:hidden;*/
+}
+.explorer-view-content-container {
+    /*overflow-x:auto;*/
+    /*overflow-y:auto;*/
 }
 .explorer-slider-button {
     height:800px;
@@ -33,7 +38,10 @@
     -o-transform:      rotate(90deg);
 }
 .explorer-view-body {
+    margin-right:25px;
     padding-top: 2rem;
+    overflow-x:auto;
+    overflow-y:scroll;
 }
 
 .explorer-model.is-closed {
@@ -66,7 +74,12 @@
     color: blue;
     text-decoration: underline;
 }
-
+.explorer-model-container.is-open {
+    background: rgba(208, 208, 208, 0.31);
+    display: block;
+    width:99%;
+    overflow:auto;
+}
 .btn-explorer-model-main {
     font-size: 130%;
 }
@@ -83,7 +96,7 @@
     padding: .5rem 0 .5rem 1.4rem;
 }
 .explorer-item-form-layout {
-    width: 100rem;
+    /*width: 100rem;*/
 }
 .explorer-api-detail-item {
     border-bottom: 1px solid #aaaaaa;
@@ -202,10 +215,8 @@
     margin-top: 1rem;
     background-color: transparent;
 }
-.explorer-model.is-open {
-	background: rgba(208, 208, 208, 0.31);
-    display: block;
-}
+
+
 .item-row-table{
 
 }
@@ -228,10 +239,6 @@
 
 }
 .explorer-endpoint-form {
-	position: relative;
-	top: -7rem;
-	left: 6rem;
-    padding: 4rem;
-    width: 400px;
+    max-width: 400px;
 }
 

@@ -23,6 +23,7 @@ Composer.controller('ComposerMainController', [
     $scope.activeInstance = {};
     $scope.modelNavIsVisible = true;
     $scope.dsNavIsVisible = true;
+    $scope.toggleIsAppRestarted = true;
     $scope.globalExceptionStack = [];
     $scope.datasource = {
       connectionTestResponse: '',
@@ -574,6 +575,10 @@ Composer.controller('ComposerMainController', [
         });
     };
 
+    $scope.showEditorView = function() {
+      $('[data-id="ExplorerContainer"]').animate({width:'24px'}, 400);
+
+    };
 
     /*
     *
@@ -590,6 +595,7 @@ Composer.controller('ComposerMainController', [
 
       var currActiveInstance = $scope.activeInstance;
       var openInstanceRefs = IAService.getOpenInstanceRefs();
+      $scope.showEditorView();
 
       $scope.clearTestMessage();
 

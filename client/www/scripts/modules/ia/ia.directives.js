@@ -199,17 +199,33 @@ IA.directive('slIaMainControls', [
         checkAppRunningState();
 
         $scope.startRestartApp = function() {
-          // add app service call here
-          WorkspaceService.startApp()
-            .then(function onWorkspaceStart() {
-              growl.addSuccessMessage("app is running");
-              $scope.isAppRunning = true;
-              checkAppRunningState();
+          WorkspaceService.stopApp()
+            .then(function onWorkspaceStop() {
+              WorkspaceService.startApp()
+                .then(function onWorkspaceStart() {
+                  growl.addSuccessMessage("app is running");
+                  $scope.isAppRunning = true;
+                  $scope.toggleIsAppRestarted = !$scope.toggleIsAppRestarted;
+                  checkAppRunningState();
+                })
+                .catch(function onWorkspaceStartError(error) {
+                  growl.addWarnMessage("something is wrong check app status");
+                  $scope.isAppRunning = false;
+                });
             })
             .catch(function onWorkspaceStartError(error) {
-              growl.addWarnMessage("something is wrong check app status");
-              $scope.isAppRunning = false;
+              WorkspaceService.startApp()
+                .then(function onWorkspaceStart() {
+                  growl.addSuccessMessage("app is running");
+                  $scope.isAppRunning = true;
+                  checkAppRunningState();
+                })
+                .catch(function onWorkspaceStartError(error) {
+                  growl.addWarnMessage("something is wrong check app status");
+                  $scope.isAppRunning = false;
+                });
             });
+
         };
         $scope.stopApp = function() {
           WorkspaceService.stopApp()

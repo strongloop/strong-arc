@@ -5,6 +5,7 @@ Explorer.directive('slExplorerView', [
     return {
       replace:true,
       controller: function($scope) {
+        $scope.explorerResources = [];
 
         $scope.isExplorerViewOpen = function() {
 
@@ -35,31 +36,36 @@ Explorer.directive('slExplorerView', [
          * API Explorer View
          *
          * */
-        $scope.explorerResources = ExplorerService.getSwaggerResources()
-          .then(function(result) {
-            $scope.explorerResources = result;
-          });
+        $scope.refreshExplorerResources = function() {
+          ExplorerService.getSwaggerResources()
+            .then(function(result) {
+              $scope.explorerResources = result;
+            });
+        };
+        $scope.refreshExplorerResources();
+
         $scope.toggleExplorerView = function() {
           var currentExplorerWidth = $('[data-id="ExplorerContainer"]').width();
           if (currentExplorerWidth > 25) {
+            $('[data-id="ExplorerViewTitleContainer"]').hide(400);
             $('[data-id="ExplorerContainer"]').animate({width:'24px'}, 400);
           }
           else {
-            $('[data-id="ExplorerContainer"]').animate({width:'97%'}, 400);
+            $('[data-id="ExplorerViewTitleContainer"]').show();
+            $('[data-id="ExplorerContainer"]').animate({width:'100%'}, 400);
           }
 
         }
       },
       link: function(scope, el, attrs) {
 
-//        jQuery('[data-id="InstanceSliderBtn"]').click(function() {
-//          scope.toggleInstanceContainer();
-//        });
         function renderComp() {
           React.renderComponent(ExplorerMain({scope:scope}), el[0]);
+          // Element Height = Viewport height - element.offset.top - desired bottom margin
+          var headerHeight = $('[data-id="AppHeaderContainer"]').outerHeight();
+          var windowHeight = $(window).outerHeight();
+          $('.explorer-view-body').height(windowHeight - headerHeight);
         }
-
-//        jQuery('[data-id="ExplorerContainer"]').drags();
         scope.$watch('explorerResources', function(models) {
           renderComp();
         }, true);
@@ -75,9 +81,12 @@ Explorer.directive('slExplorerView', [
         scope.$watch('explorerDataModelChanged', function(response) {
           renderComp();
         }, true);
-
-
-
+        scope.$watch('toggleIsAppRestarted', function(response) {
+          scope.explorerResources = ExplorerService.getSwaggerResources()
+            .then(function(result) {
+              scope.explorerResources = result;
+            });
+        }, true);
 
       }
     }
