@@ -6,8 +6,8 @@ var setUI = function() {
   var navHeight = (windowHeight - headerHeight - mainControlsHeight);
   var contentHeight = (windowHeight - headerHeight);
 
-  jQuery('[data-id="MainNavContainer"]').css('height', navHeight);
-  jQuery('.common-instance-view-container').css('height', contentHeight);
+  $('[data-id="MainNavContainer"]').css('height', navHeight);
+  $('.common-instance-view-container').css('height', contentHeight);
 
 };
 var triggerResizeUpdate = function() {
