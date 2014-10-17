@@ -5,9 +5,9 @@ BuildDeploy.service('BuildDeployService', [
   function ($q, $http) {
     var svc = this;
 
-    svc.doSomething = function () {
+    svc.buildGit = function (buildData) {
       var def = $q.defer();
-      var data = { foo: 'bar' };
+      var data = buildData; //mock response
 
       def.resolve(data);
 
@@ -19,6 +19,33 @@ BuildDeploy.service('BuildDeployService', [
 //
 //          return data.something;
 //        });
+    };
+
+    svc.buildUniversal = function(buildData){
+      var def = $q.defer();
+      var data = buildData; //mock response
+
+      def.resolve(data);
+
+      return def.promise;
+    };
+
+    svc.deployGit = function(data){
+      var def = $q.defer();
+      var data = { foo: 'bar' };
+
+      def.resolve(data);
+
+      return def.promise;
+    };
+
+    svc.deployUniversal = function(data){
+      var def = $q.defer();
+      var data = { foo: 'bar' };
+
+      def.resolve(data);
+
+      return def.promise;
     };
 
     return svc;

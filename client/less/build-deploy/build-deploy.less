@@ -1,3 +1,5 @@
+body { overflow: auto; }
+
 .sl-build-deploy {
   @min-width: 1024px;
   padding: 0 2rem;
@@ -81,15 +83,16 @@
 }
 
 .sl-console-log {
-  background: rgba(0,0,0, .65);
-  color: #fff;
-  padding: 1rem 2rem;
-  max-height: 10rem;
-  overflow-y: auto;
 
   ol {
     padding-left: 0;
     list-style-type: none;
+    background: rgba(0,0,0, .65);
+    color: #fff;
+    padding: 1rem 2rem;
+    max-height: 20rem;
+    margin-bottom: 2rem;
+    overflow-y: auto;
   }
 }
 

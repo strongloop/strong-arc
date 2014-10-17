@@ -52,11 +52,7 @@ BuildDeploy.controller('BuildDeployController', [
       { id: 'existing', label: 'Existing', activeId: 'deployId' }
     ];
 
+    //set the default active toggler state
     $scope.activeId = $scope.buildTogglers[0].id;
-
-    BuildDeployService.doSomething()
-      .then(function (data) {
-        $scope.data = data;
-      });
   }
 ]);

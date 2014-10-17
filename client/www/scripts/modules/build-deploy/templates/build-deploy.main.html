@@ -8,8 +8,8 @@
          class="top-level-container">
       <section class="sl-build-deploy">
           <h1>Build and Deploy</h1>
-          <p>build: {{build}}</p>
-          <p>deploy: {{deploy}}</p>
+          <!--<p>build: {{build}}</p>-->
+          <!--<p>deploy: {{deploy}}</p>-->
 
           <div class="sl-forms-toggler">
             <sl-ui-toggle togglers="buildTogglers"></sl-ui-toggle>
@@ -19,20 +19,16 @@
             <sl-build-form></sl-build-form>
 
             <div class="sl-forms-toggler-inline">
-              <sl-ui-toggle togglers="deployTogglers"></sl-ui-toggle>
+              <sl-ui-switch switches="deployTogglers"></sl-ui-switch>
             </div>
 
             <sl-deploy-form></sl-deploy-form>
           </div>
 
-          buildId: {{buildId}}<br>
-          deployId: {{deployId}}
+          <!--buildId: {{buildId}}<br>-->
+          <!--deployId: {{deployId}}-->
 
-          <div class="sl-console-log">
-            <ol>
-              <li ng-repeat="line in logs">{{line.msg}}</li>
-            </ol>
-          </div>
+        <sl-console-log></sl-console-log>
         </section>
     </div>
   </div>

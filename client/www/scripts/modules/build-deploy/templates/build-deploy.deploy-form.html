@@ -5,8 +5,7 @@
     ng-show="buildId == 'git'"
     class="ui-form"
     novalidate
-    ng-submit="deployGit(deploygit)"
-    >
+    ng-submit="deployGit(deploygit)">
     <fieldset>
       <legend>Deploy git</legend>
       <div class="ui-form-group"
@@ -21,8 +20,7 @@
           placeholder="eg: /deploy"
           ng-model="deploy.git.deploy"
           name="deploy"
-          required
-          >
+          required>
         <p class="error" ng-show="deploygit.deploy.$error.required && deploy.git.submitted">Git deploy branch is required</p>
       </div>
       <div class="ui-form-group sl-server"
@@ -37,8 +35,7 @@
             placeholder="host1.example.com"
             ng-model="deploy.host.hostname"
             name="hostname"
-            required
-            >
+            required>
         </label>
         <label>Port:
           <input
@@ -55,8 +52,7 @@
             placeholder="4"
             ng-model="deploy.host.processes"
             name="processes"
-            required
-            >
+            required>
         </label>
         <p class="error" ng-show="deploygit.hostname.$error.required && deploy.git.submitted">Hostname is required</p>
         <p class="error" ng-show="deploygit.port.$error.required && deploy.git.submitted">Port is required</p>
@@ -73,8 +69,7 @@
     ng-show="buildId == 'universal'"
     class="ui-form"
     novalidate
-    ng-submit="deployUniversal(deployuniversal)"
-    >
+    ng-submit="deployUniversal(deployuniversal)">
     <fieldset>
       <legend>Deploy universal</legend>
       <div class="ui-form-group"
@@ -90,8 +85,7 @@
           placeholder="eg: project-v1.0.1.tgz"
           ng-model="deploy.universal.archive"
           name="archive"
-          required
-          >
+          required>
         <button class="ui-file" ng-click="clickUploadFile()" type="button">...</button>
         <input id="upload" type="file" class="hide" ng-file-select="onFileSelect($files)" name="uploadarchive">
 
@@ -108,8 +102,7 @@
             placeholder="host1.example.com"
             ng-model="deploy.host.hostname"
             name="hostname"
-            required
-            >
+            required>
         </label>
         <label>Port:
           <input
@@ -117,8 +110,7 @@
             placeholder="8000"
             ng-model="deploy.host.port"
             name="port"
-            required
-            >
+            required>
         </label>
         <label>Processes:
           <input
@@ -126,8 +118,7 @@
             placeholder="4"
             ng-model="deploy.host.processes"
             name="processes"
-            required
-            >
+            required>
         </label>
         <p class="error" ng-show="deployuniversal.hostname.$error.required && deploy.universal.submitted">Hostname is required</p>
         <p class="error" ng-show="deployuniversal.port.$error.required && deploy.universal.submitted">Port is required</p>
