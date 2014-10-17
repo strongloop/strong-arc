@@ -5,15 +5,39 @@ BuildDeploy.directive('slBuildForm', [
       restrict: "E",
       replace: true,
       templateUrl: './scripts/modules/build-deploy/templates/build-deploy.build-form.html',
-      controller: function($scope, $attrs, $log){
+      controller: function($scope, $attrs, $log, BuildDeployService){
         $scope.buildGit = function(form){
           $scope.build.git.submitted = true;
           $log.log(form);
+
+          if ( form.$valid ) {
+            var buildData = {
+              type: "git",
+              branch: $scope.build.git.deploy
+            };
+
+            BuildDeployService.buildGit(buildData)
+              .then(function(data){
+                $log.log(data);
+              });
+          }
         };
 
         $scope.buildUniversal = function(form){
           $scope.build.universal.submitted = true;
           $log.log(form);
+
+          if ( form.$valid ) {
+            var buildData = {
+              type: "universal",
+              archive: $scope.build.universal.archive
+            };
+
+            BuildDeployService.buildUniversal(buildData)
+              .then(function(data){
+                $log.log(data);
+              });
+          }
         };
       },
       link: function(scope, el, attrs){
@@ -25,9 +49,10 @@ BuildDeploy.directive('slBuildForm', [
           scope.deploy.git.deploy = newVal;
         });
 
-        scope.$watch('build.universal.archive', function(newVal){
-          scope.deploy.universal.archive = newVal;
-        });
+//        //@deprecated user has to upload file
+//        scope.$watch('build.universal.archive', function(newVal){
+//          scope.deploy.universal.archive = newVal;
+//        });
       }
     };
   }
@@ -81,7 +106,9 @@ BuildDeploy.directive('slDeployForm', [
           var port = $scope.deploy.host.port;
           var uploadUrl = 'https://' + hostname + ':' + port;
 
-          uploadFile($scope.deploy.universal.file, uploadUrl);
+          if ( form.$valid ) {
+            uploadFile($scope.deploy.universal.file, uploadUrl);
+          }
         };
 
 
@@ -109,6 +136,16 @@ BuildDeploy.directive('slBuildDeployNav', [
       restrict: "E",
       replace: true,
       templateUrl: './scripts/modules/build-deploy/templates/build-deploy.nav.html'
+    }
+  }
+]);
+
+BuildDeploy.directive('slConsoleLog', [
+  function () {
+    return {
+      restrict: "E",
+      replace: true,
+      templateUrl: './scripts/modules/build-deploy/templates/build-deploy.console.html'
     }
   }
 ]);

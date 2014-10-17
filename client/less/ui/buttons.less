@@ -124,6 +124,56 @@
   }
 }
 
+.ui-switch {
+  background: transparent;
+  border: none;
+  overflow: visible;
+
+  .ui-switch-toggle {
+    display: inline-block;
+    position: relative;
+    font-size: 1.2rem;
+    color: black;
+    background: white;
+    border-radius: 50px;
+    border: 1px solid black;
+    width: 4.6rem;
+    height: 2.6rem;
+    margin: 0 .75rem;
+    overflow: hidden;
+
+    .ui-switch-circle {
+      transition: left .2s ease-in-out;
+      position: absolute;
+      top: .2rem;
+      left: .2rem;
+      display: block;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50px;
+      background-color: black;
+    }
+  }
+
+  &.ui-switch-right {
+    .ui-switch-circle {
+      left: 2.2rem;
+    }
+  }
+
+  .ui-switch-label {
+    display: inline-block;
+    position: relative;
+    top: -.7rem;
+    width: 5rem;
+    text-align: left;
+
+    &:nth-child(1) {
+      text-align: right;
+    }
+  }
+}
+
 .ui-actions {
   text-align: right;
 
@@ -136,6 +186,7 @@
     margin-left: 1rem;
 
     &[disabled] {
+      color: @ui-disabled-button-color;
       background: @ui-disabled-button-bg-color;
     }
   }
