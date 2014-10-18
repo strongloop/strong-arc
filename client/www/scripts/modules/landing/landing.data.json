@@ -14,7 +14,7 @@
       "id": "build-deploy",
       "name": "Build & Deploy",
       "description": "Build and deploy self-contained app package or Git branch.",
-      "disabled": true
+      "disabled": false
     },
     {
       "id": "metrics",
