@@ -11,7 +11,7 @@ BuildDeploy.controller('BuildDeployController', [
     $scope.build = {
       git: {
         url: '',
-        deploy: ''
+        deploy: 'deploy'
       },
       universal: {
         git: '',
