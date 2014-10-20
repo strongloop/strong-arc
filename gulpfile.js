@@ -38,7 +38,7 @@ gulp.task('build-less-devtools', function() {
     .pipe(gulp.dest('devtools/custom/'));
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', ['build'], function() {
   // Watch all the .less files, then run the less tasks
   gulp.watch('client/less/**/*.less', ['build-less']);
   gulp.watch('devtools/custom/less/**/*.less', ['build-less-devtools']);
