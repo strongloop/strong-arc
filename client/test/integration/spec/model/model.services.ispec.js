@@ -17,6 +17,18 @@ describe('ModelService', function() {
 
   beforeEach(given.emptyWorkspace);
 
+  describe('.getAllModelInstances()', function() {
+    it('ignores readonly models', function() {
+      // A temporary test until this task is implemented:
+      // https://github.com/strongloop/strong-studio/issues/431
+      return ModelService.getAllModelInstances()
+        .then(function(instances) {
+          var names = instances.map(function(i) { return i.name; });
+          expect(names).to.not.include('RoleMapping');
+        });
+    });
+  });
+
   describe('.createModelInstance()', function() {
     it('removes internal Studio properties', function() {
       var instance = given.modelInstance();
