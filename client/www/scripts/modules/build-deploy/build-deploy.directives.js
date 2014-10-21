@@ -19,6 +19,7 @@ BuildDeploy.directive('slBuildForm', [
             BuildDeployService.buildGit(buildData)
               .then(function(data){
                 $log.log(data);
+                $scope.build.git.message = 'Successfully built using git';
               });
           }
         };
@@ -36,6 +37,8 @@ BuildDeploy.directive('slBuildForm', [
             BuildDeployService.buildUniversal(buildData)
               .then(function(data){
                 $log.log(data);
+                $scope.build.universal.message = 'Successfully built using universal';
+
               });
           }
         };
@@ -84,6 +87,8 @@ BuildDeploy.directive('slDeployForm', [
           }).success(function(data, status, headers, config) {
             // file is uploaded successfully
             $log.log(data);
+            $scope.deploy.git.message = 'Successfully deployed using universal';
+
           });
           //.error(...)
           //.then(success, error, progress);
@@ -96,6 +101,8 @@ BuildDeploy.directive('slDeployForm', [
         $scope.deployGit = function(form){
           $scope.deploy.git.submitted = true;
           $log.log(form);
+
+          $scope.deploy.git.message = 'Successfully deployed using git';
         };
 
         $scope.deployUniversal = function(form){
@@ -146,6 +153,36 @@ BuildDeploy.directive('slConsoleLog', [
       restrict: "E",
       replace: true,
       templateUrl: './scripts/modules/build-deploy/templates/build-deploy.console.html'
+    }
+  }
+]);
+
+BuildDeploy.directive('slFormMessage', [
+  function () {
+    return {
+      restrict: "E",
+      replace: true,
+      scope: {
+        message: '='
+      },
+      templateUrl: './scripts/modules/build-deploy/templates/build-deploy.form-message.html',
+      controller: function($scope, $attrs, $log, $timeout){
+        var to;
+
+        function hideMessage(){
+          if ( to ) {
+            $timeout.cancel(to);
+          }
+
+          to = $timeout(function() {
+            $scope.message = '';
+          }, 3000);
+        }
+
+        $scope.$watch('message', function(newVal){
+            hideMessage();
+        });
+      }
     }
   }
 ]);

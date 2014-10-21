@@ -45,6 +45,7 @@
     <div class="ui-actions">
       <button ng-disabled="deployId == 'existing'">Build</button>
     </div>
+    <sl-form-message message="build.git.message"></sl-form-message>
   </form>
 
   <form
@@ -53,27 +54,28 @@
   class="ui-form"
   ng-submit="buildUniversal(builduniversal)"
   novalidate>
-  <fieldset>
-    <legend>Build universal</legend>
-    <div class="ui-form-group"
-         ng-class="{
-              valid: builduniversal.archive.$valid && build.universal.submitted,
-              invalid: builduniversal.archive.$invalid && build.universal.submitted
-            }">
+    <fieldset>
+      <legend>Build universal</legend>
+      <div class="ui-form-group"
+           ng-class="{
+                valid: builduniversal.archive.$valid && build.universal.submitted,
+                invalid: builduniversal.archive.$invalid && build.universal.submitted
+              }">
 
-      <label>Archive filename:</label>
-      <input
-        type="text"
-        placeholder="eg: project-v1.0.1.tgz"
-        ng-disabled="deployId == 'existing'"
-        ng-model="build.universal.archive"
-        name="archive"
-        required>
-      <p class="error" ng-show="builduniversal.archive.$error.required && build.universal.submitted">Archive filename is required</p>
+        <label>Archive filename:</label>
+        <input
+          type="text"
+          placeholder="eg: project-v1.0.1.tgz"
+          ng-disabled="deployId == 'existing'"
+          ng-model="build.universal.archive"
+          name="archive"
+          required>
+        <p class="error" ng-show="builduniversal.archive.$error.required && build.universal.submitted">Archive filename is required</p>
+      </div>
+    </fieldset>
+    <div class="ui-actions">
+      <button ng-disabled="deployId == 'existing'">Build</button>
     </div>
-  </fieldset>
-  <div class="ui-actions">
-    <button ng-disabled="deployId == 'existing'">Build</button>
-  </div>
-</form>
+    <sl-form-message message="build.universal.message"></sl-form-message>
+  </form>
 </div>
