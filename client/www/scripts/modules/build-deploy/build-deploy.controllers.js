@@ -11,22 +11,26 @@ BuildDeploy.controller('BuildDeployController', [
     $scope.build = {
       git: {
         url: '',
-        deploy: 'deploy'
+        deploy: 'deploy',
+        message: ''
       },
       universal: {
         git: '',
-        archive: ''
+        archive: '',
+        message: ''
       }
     };
 
     $scope.deploy = {
       git: {
         url: '',
-        deploy: ''
+        deploy: '',
+        message: ''
       },
       universal: {
         git: '',
-        archive: ''
+        archive: '',
+        message: ''
       },
       host: {
         hostname: '',
