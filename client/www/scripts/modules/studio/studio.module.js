@@ -103,12 +103,25 @@ Studio.config([
 
   }
 ]);
+
+//if user is logged in, redirect them to landing page
+Studio.run([
+    '$location',
+    'StudioUserService',
+    function($location, StudioUserService){
+      if ( ( $location.path() === '/' || $location.path() === '' ) &&  StudioUserService.isAuthUser() ) {
+        $location.path('/landing');
+      }
+    }
+  ]);
+
 Studio.config([
   '$httpProvider',
   function ($httpProvider) {
     $httpProvider.interceptors.push('composerRequestInterceptor');
   }
 ]);
+
 Studio.factory('composerRequestInterceptor', [
   '$q',
   '$location',
