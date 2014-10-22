@@ -53,18 +53,18 @@ Studio.config([
 
     $urlRouterProvider.otherwise('/');
 
-    $stateProvider.
-      state('home', {
+    $stateProvider
+      .state('home', {
         url: '/',
-        controller: 'HomeMainController',
-        templateUrl: './scripts/modules/studio/templates/studio.main.html'
-      }).
-      state('profiler', {
+        templateUrl: './scripts/modules/landing/templates/landing.main.html',
+        controller: 'LandingController'
+      })
+      .state('profiler', {
         url: '/profiler',
         templateUrl: './scripts/modules/profiler/templates/profiler.main.html',
         controller: 'ProfilerMainController'
-      }).
-      state('composer', {
+      })
+      .state('composer', {
         url: '/composer',
         templateUrl: './scripts/modules/composer/templates/composer.main.html',
         controller: 'ComposerMainController',
@@ -85,17 +85,12 @@ Studio.config([
           ]
         }
       })
-      .state('landing', {
-        url: '/landing',
-        templateUrl: './scripts/modules/landing/templates/landing.main.html',
-        controller: 'LandingController'
-      }).
-      state('login', {
+      .state('login', {
         url: '/login',
         controller: 'LoginController',
         templateUrl: './scripts/modules/studio-user/templates/login.html'
-      }).
-      state('register', {
+      })
+      .state('register', {
         url: '/register',
         controller: 'RegisterController',
         templateUrl: './scripts/modules/studio-user/templates/register.html'
@@ -103,12 +98,32 @@ Studio.config([
 
   }
 ]);
+
+Studio.run([
+    '$location',
+    '$state',
+    '$rootScope',
+    'StudioUserService',
+    function($location, $state, $rootScope, StudioUserService){
+
+      // Redirect to login if route requires auth and you're not logged in
+      $rootScope.$on('$stateChangeStart', function (event, next) {
+
+        if ( !StudioUserService.isAuthUser() && next.url !== '/login' ) {
+          event.preventDefault(); //prevent current page from loading
+          $state.go('login');
+        }
+      });
+    }
+  ]);
+
 Studio.config([
   '$httpProvider',
   function ($httpProvider) {
     $httpProvider.interceptors.push('composerRequestInterceptor');
   }
 ]);
+
 Studio.factory('composerRequestInterceptor', [
   '$q',
   '$location',

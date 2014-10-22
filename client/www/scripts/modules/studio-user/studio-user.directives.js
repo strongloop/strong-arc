@@ -24,7 +24,7 @@ StudioUser.directive('slUserLoginView', [
         $scope.loginRequest = function (formConfig) {
           $scope.loginResult = StudioUserService.loginRequest(formConfig).
             then(function(response) {
-              $location.path('/landing');
+              $location.path('/');
             }).catch(function(response) {
               $scope.loginErrorMessage = 'Authentication attempt failed. Please check your username (email) and password and try again';
               $scope.resetCredentials();
