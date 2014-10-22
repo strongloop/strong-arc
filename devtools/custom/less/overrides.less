@@ -1,3 +1,15 @@
+body, body.platform-mac, .go-to-line-dialog {
+  font-family: 'helvetica neue', helvetica, arial, sans-serif;
+}
+
+body.platform-mac {
+  font-family: 'helvetica neue', helvetica, arial, sans-serif;
+
+  .help-key {
+    font-family: 'helvetica neue', helvetica, arial, sans-serif;
+  }
+}
+
 /* hide the top toolbar, only "Profiles" tab is used at the moment */
 .toolbar { display: none; }
 
@@ -13,22 +25,32 @@
   }
 
   /* hide radio buttons */
-  label {
-    input {
-      display: none;
-    }
-
-    .sl-icon {
-      color: @bullet-color;
-      margin-right: .5rem;
-    }
-
-    p {
-      margin-left: 1.5rem;
-    }
-  }
+//  label {
+//    input {
+//      //display: none;
+//    }
+//
+//    .sl-icon {
+//      color: @bullet-color;
+//      margin-right: .5rem;
+//    }
+//
+//    p {
+//      margin-left: 1.5rem;
+//    }
+//  }
 }
 
 .record-profile-status-bar-item {
   display: none;
+}
+
+.hide {
+  display: none;
+}
+
+.profile-sidebar-tree-item, .heap-snapshot-sidebar-tree-item {
+   .icon {
+    content: url(Images/menuIcon.png);
+   }
 }

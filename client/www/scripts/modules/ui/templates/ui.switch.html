@@ -1,0 +1,12 @@
+<button type="button" class="ui-switch"
+     ng-class="{
+       'ui-switch-left': switches[0].isActive,
+       'ui-switch-right': switches[1].isActive
+      }"
+     ng-click="setActive( switches[0].isActive ? switches[1] : switches[0] )">
+  <span class="ui-switch-label">{{switches[0].label}}</span>
+  <span class="ui-switch-toggle">
+    <i class="ui-switch-circle"></i>
+  </span>
+  <span class="ui-switch-label">{{switches[1].label}}</span>
+</button>

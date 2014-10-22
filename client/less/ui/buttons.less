@@ -1,0 +1,121 @@
+.ui-toggler {
+  button {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: @ui-toggler-inactive-color;
+    background: @ui-toggler-inactive-bg-color;
+    border-radius: @ui-radius;
+    border: 1px solid @ui-toggler-border-color;
+    padding: .75rem 1.25rem;
+    width: 12rem;
+    text-align: center;
+
+    &:nth-child(1) {
+      border-radius: @ui-radius 0 0 @ui-radius;
+      border-right: none;
+    }
+
+    &:nth-child(2) {
+      border-radius: 0 @ui-radius @ui-radius 0;
+      border-left: none;
+    }
+
+    &.active {
+      color: @ui-toggler-color;
+      background: @ui-toggler-bg-color;
+      box-shadow: inset 0 0 0 .2rem @ui-toggler-active-border-color;
+    }
+  }
+
+  &.small {
+    display: inline-block;
+
+    button {
+      font-size: 1.2rem;
+      padding: .5rem 1rem;
+      width: 6rem;
+      border-color: @ui-toggler-small-border-color;
+
+      &.active {
+        background: @ui-toggler-small-bg-color;
+      }
+    }
+  }
+}
+
+.ui-switch {
+  background: transparent;
+  border: none;
+  overflow: visible;
+
+  .ui-switch-toggle {
+    display: inline-block;
+    position: relative;
+    font-size: 1.2rem;
+    color: @ui-switch-color;
+    background: @ui-switch-wrap-bg-color;
+    border-radius: 50px;
+    border: 1px solid @ui-switch-border-color;
+    width: 4.6rem;
+    height: 2.6rem;
+    margin: 0 .75rem;
+    overflow: hidden;
+
+    .ui-switch-circle {
+      transition: left .2s ease-in-out;
+      position: absolute;
+      top: .2rem;
+      left: .2rem;
+      display: block;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50px;
+      background-color: @ui-switch-bg-color;
+    }
+  }
+
+  &.ui-switch-right {
+    .ui-switch-circle {
+      left: 2.2rem;
+    }
+  }
+
+  .ui-switch-label {
+    display: inline-block;
+    position: relative;
+    top: -.7rem;
+    width: 5rem;
+    text-align: left;
+    color: @ui-label-color;
+
+    &:nth-child(1) {
+      text-align: right;
+    }
+  }
+}
+
+.ui-actions {
+  text-align: right;
+  margin-right: 3rem;
+
+  button {
+    border: none;
+    border-radius: @ui-radius;
+    background: @ui-button-bg-color;
+    color: @ui-button-color;
+    padding: .75rem 2.25rem;
+    margin-left: 1rem;
+    border-bottom: 2px solid @ui-button-border-color;
+    font-weight: 300;
+
+    &[disabled], &[disabled]:hover {
+      color: @ui-disabled-button-color;
+      background: @ui-disabled-button-bg-color;
+      border-bottom: 2px solid @ui-disabled-button-color;
+    }
+
+    &:hover {
+      background-color: @ui-button-hover-bg-color;
+    }
+  }
+}

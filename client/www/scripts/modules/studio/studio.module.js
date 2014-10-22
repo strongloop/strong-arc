@@ -129,11 +129,27 @@ Studio.factory('composerRequestInterceptor', [
   '$location',
   '$cookieStore',
   function ($q, $location, $cookieStore) {
+    function isLocal(url, host){
+      var isLocal = false;
+
+      if ( url.indexOf('./') === 0 || url.indexOf('/') === 0 ) {
+        isLocal = true;
+      } else if ( url.indexOf(host) > -1 ) {
+        isLocal = true;
+      }
+
+      return isLocal;
+    }
+
     return {
       'request': function (config) {
         var at = $cookieStore.get('accessToken');
         if (at) {
-          config.headers.authorization = at;
+          if ( isLocal(config.url, $location.host()) ) {
+            config.headers.authorization = at;
+          } else {
+            delete config.headers.authorization;
+          }
         }
         else {
           // allow users to get to home view
