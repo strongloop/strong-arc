@@ -42,6 +42,9 @@ studio.post('/reset', function(req, res, next) {
         async.eachSeries(
           list,
           function(instance, cb) {
+            if (instance.readonly) {
+              return cb();
+            }
             entity.removeById(instance.id, cb);
           },
           next);
