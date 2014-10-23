@@ -20,6 +20,7 @@ var Arc = angular.module('Arc', [
   'ngResource',
   'ngSanitize',
   'ngAnimate',
+  'nvd3',
   'angularSpinner',
   'ngCookies',
   'angular-growl',
@@ -38,10 +39,12 @@ var Arc = angular.module('Arc', [
   'Model',
   'Landing',
   'BuildDeploy',
+  'Metrics',
   'UI',
   'Datasource',
   'ui.bootstrap',
   'ui.utils',
+  'ui.slider',
   'checklist-model',
   'ngGrid',
   'angularFileUpload'
@@ -67,6 +70,11 @@ Arc.config([
         url: '/profiler',
         templateUrl: './scripts/modules/profiler/templates/profiler.main.html',
         controller: 'ProfilerMainController'
+      })
+      .state('metrics', {
+        url: '/metrics',
+        templateUrl: './scripts/modules/metrics/templates/metrics.main.html',
+        controller: 'MetricsMainController'
       })
       .state('composer', {
         url: '/composer',

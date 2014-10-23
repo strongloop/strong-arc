@@ -41,7 +41,6 @@ Composer.controller('ComposerMainController', [
     $scope.activeModelPropertiesChanged = false;  // dirty flag
     $scope.activeInstanceUpdated = false; // dirty toggle for active instance update
 
-
     // initialize UI state
     // set active instance if available
     $rootScope.$watch('projectName', function(name) {

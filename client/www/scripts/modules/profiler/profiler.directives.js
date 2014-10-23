@@ -7,10 +7,10 @@ Profiler.directive('slProfilerNavbar', [
         replace: true,
         templateUrl: './scripts/modules/profiler/templates/profiler.navbar.html',
         controller: function($scope, $attrs){
-          $scope.server = {
-            host: '',
-            port: ''
-          };
+//          $scope.server = {
+//            host: '',
+//            port: ''
+//          };
 
           $scope.profilerId = 'remote';
           $scope.activeProcess = null;
@@ -66,13 +66,13 @@ Profiler.directive('slProfilerNavbar', [
 
             $scope.activeProcess.status = 'Saving';
 
-            return ProfilerService.fetchHeapSnapshot($scope.server, $scope.activeProcess)
+            return ProfilerService.fetchHeapSnapshot($scope.currentServerConfig, $scope.activeProcess)
               .then(function(data){
                 var fileUrl = data.data.result.url;
                 var pid = $scope.activeProcess.pid;
                 var fileName = pid + '.heapsnapshot';
 
-                return ProfilerService.downloadFile($scope.server, fileUrl, fileName)
+                return ProfilerService.downloadFile($scope.currentServerConfig, fileUrl, fileName)
                   .then(function(file){
                     $scope.activeProcess.status = 'Running';
 
@@ -87,7 +87,7 @@ Profiler.directive('slProfilerNavbar', [
           $scope.startCpuProfiling = function(){
             if ( !$scope.activeProcess ) return;
 
-            return ProfilerService.startCpuProfiling($scope.server, $scope.activeProcess)
+            return ProfilerService.startCpuProfiling($scope.currentServerConfig, $scope.activeProcess)
               .then(function(data){
                 $scope.activeProcess.status = 'Profiling';
 
@@ -102,7 +102,7 @@ Profiler.directive('slProfilerNavbar', [
             if ( !$scope.activeProcess ) return;
 
             //stop cpu profiling
-            return ProfilerService.stopCpuProfiling($scope.server, $scope.activeProcess)
+            return ProfilerService.stopCpuProfiling($scope.currentServerConfig, $scope.activeProcess)
               .then(function(data){
                 $scope.activeProcess.status = 'Saving';
 
@@ -110,7 +110,7 @@ Profiler.directive('slProfilerNavbar', [
                 var pid = $scope.activeProcess.pid;
                 var fileName = pid + '.cpuprofile';
 
-                return ProfilerService.downloadFile($scope.server, fileUrl, fileName)
+                return ProfilerService.downloadFile($scope.currentServerConfig, fileUrl, fileName)
                   .then(function(file){
                     $scope.activeProcess.status = 'Running';
 
