@@ -605,7 +605,17 @@ var DataTypeSelect = (DataTypeSelect = React).createClass({
   render: function() {
     var that = this;
 
-    var val = that.state.modelProperty.type.toLowerCase();
+    var val = 'string';
+    try {
+      val = that.state.modelProperty.type.toLowerCase();
+    }
+    catch(e) {
+      console.warn('bad property data type. set to default string: ' + e.message);
+      val = 'string';
+      var tProp = this.state.modelProperty;
+      tProp.type = 'string';
+      that.setState({modelProperty: tProp});
+    }
 
     var dataTypes = this.props.scope.modelPropertyTypes;
 

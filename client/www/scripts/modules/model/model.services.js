@@ -5,10 +5,11 @@ Model.service('ModelService', [
   'ModelConfig',
   '$q',
   'AppStorageService',
+  'ModelProperty',
   'DataSourceDefinition',
   'connectorMetadata',
   function(Modeldef, ModelDefinition, ModelConfig, $q,
-           AppStorageService, DataSourceDefinition, connectorMetadata) {
+           AppStorageService, ModelProperty, DataSourceDefinition, connectorMetadata) {
     var svc = {};
 
 
@@ -206,6 +207,42 @@ Model.service('ModelService', [
       return deferred.promise;
 
     };
+    svc.updateModelProperty = function(propConfig) {
+      var deferred = $q.defer();
+
+      // `id` is '{facet}.{model}.{name}'
+      var oldName = propConfig.id.split('.').pop();
+
+      // Temporary workaround until loopback-workspace supports renames
+      if (oldName === propConfig.name) {
+        ModelProperty.upsert({}, propConfig,
+          //success
+          function(response) {
+            return deferred.resolve(response);
+          },
+          // fail
+          function(response) {
+            console.warn('bad get model properties: ' + response);
+          }
+        );
+      } else {
+        var oldId = propConfig.id;
+        var updatedDefinition = ModelProperty.create(propConfig);
+        updatedDefinition.$promise
+          .then(function deleteOldModelProperty() {
+            return ModelProperty.deleteById({ id: oldId }).$promise;
+          })
+          .then(function() {
+            deferred.resolve(updatedDefinition);
+          })
+          .catch(function(err) {
+            console.warn('Cannot rename %s to %s.', oldId, propConfig.id, err);
+          });
+      }
+
+      return deferred.promise;
+    };
+
     svc.updateModelInstance = function(targetInstance) {
       var deferred = $q.defer();
 
@@ -219,6 +256,11 @@ Model.service('ModelService', [
           ModelDefinition.upsert(targetInstance.definition,
             function(definition) {
               targetInstance.definition = definition;
+              if (targetInstance.properties && targetInstance.properties.length) {
+                targetInstance.properties.map(function(modelProperty) {
+                  svc.updateModelProperty(modelProperty);
+                });
+              }
               targetInstance.config = angular.extend({
                   name: definition.name,
                   facetName: CONST.APP_FACET
