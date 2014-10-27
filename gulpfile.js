@@ -23,7 +23,7 @@ gulp.task('build', [
     'build-less-devtools',
     'build-version',
     'build-workspace-services',
-    'install-example-modules',
+    'install-example-modules'
 ]);
 
 gulp.task('build-less', function() {
@@ -90,9 +90,11 @@ gulp.task('jshint', function() {
     'gulpfile.js',
     'build-tasks/**/*.js',
     'server/**/*.js',
-    'client/test/**/*.js',
+    'client/test/e2e/**/*.js',
+    'client/test/integration/**/*.js',
     'devtools/server/**/*.js',
     // TODO(bajtos) add more files once they pass the linter
+    '!client/test/{sandbox/,sandbox/**}',
     '!client/test/integration/{sandbox/,sandbox/**}'
   ])
     .pipe(jshint())
@@ -115,7 +117,7 @@ gulp.task('test-client-integration', function(callback) {
       '--single-run',
       '--browsers',
       'PhantomJS',
-      'client/test/integration/karma.integration.js',
+      'client/test/integration/karma.integration.js'
     ],
     {
       cwd: __dirname,
