@@ -1,7 +1,5 @@
 describe('Studio', function() {
-  beforeEach(function() {
-    return given.emptyWorkspace();
-  });
+  beforeEach(given.emptyWorkspace);
 
   it('can get package definition', function() {
     return inject(function(PackageDefinition, throwHttpError) {
