@@ -550,6 +550,7 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
                 <input type="text"
                   data-name="comments"
                   name="comments"
+                  onChange={component.triggerModelPropertyUpdate}
                   onBlur={component.triggerModelPropertyUpdate}
                   value={modelProperty.comments}
                   className="property-doc-textarea model-instance-editor-input" />
