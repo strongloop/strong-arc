@@ -607,7 +607,7 @@ var DataTypeSelect = (DataTypeSelect = React).createClass({
     var getDataTypeString = function(value) {
       var retVal = value;
       if (typeof retVal === 'object') {
-        retVal = retVal.isArray? 'array' : 'object';
+        retVal = Array.isArray(retVal)? 'array' : 'object';
       }
       return retVal;
     };
