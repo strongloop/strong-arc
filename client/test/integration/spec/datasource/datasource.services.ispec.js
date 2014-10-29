@@ -15,7 +15,7 @@ describe('DataSourceService', function() {
     });
   });
 
- // beforeEach(given.emptyWorkspace);
+  //beforeEach(given.emptyWorkspace);
 
   describe('.createDataSourceInstance()', function() {
     it('removes internal Studio properties', function() {
@@ -40,6 +40,36 @@ describe('DataSourceService', function() {
         });
       });
     });
+
+    describe('.updateDataSourceInstance()', function() {
+      it('removes internal Studio properties on update', function() {
+        var instance = given.dataSourceInstance();
+        expect(instance).to.have.property('id');
+        return DataSourceService.createDataSourceInstance(instance)
+          .then(function(created) {
+            expect(created).to.have.property('id');
+            expect(created).to.have.property('name');
+            expect(created).to.have.property('definition');
+            // setActiveInstance used to add `type` property
+            IAService.setActiveInstance(created, CONST.MODEL_TYPE);
+
+            return DataSourceService.updateDataSourceInstance(created);
+          })
+          .then(function(updated) {
+            DataSourceService.getDataSourceInstanceById(updated.id)
+              .then(function(found) {
+                expect(found).to.have.property('config');
+                expect(found).to.have.property('type');
+                expect(found).to.have.property('definition');
+                expect(found.definition).to.not.have.property('config');
+                expect(found.definition).to.not.have.property('type');
+              });
+            });
+          });
+        });
+
+
+
 
   describe('.getDiscoverableDatasourceConnectors()', function() {
     beforeEach(function() {
