@@ -15,7 +15,7 @@ describe('DataSourceService', function() {
     });
   });
 
-  beforeEach(given.emptyWorkspace);
+ // beforeEach(given.emptyWorkspace);
 
   describe('.createDataSourceInstance()', function() {
     it('removes internal Studio properties', function() {
