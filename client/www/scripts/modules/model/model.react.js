@@ -603,9 +603,17 @@ var DataTypeSelect = (DataTypeSelect = React).createClass({
     }
   },
   render: function() {
-    var that = this;
+    var component = this;
+    var getDataTypeString = function(value) {
+      var retVal = value;
+      if (typeof retVal === 'object') {
+        retVal = retVal.isArray? 'array' : 'object';
+      }
+      return retVal;
+    };
 
-    var val = that.state.modelProperty.type.toLowerCase();
+    // account for more complex data type syntax
+    var val = getDataTypeString(component.state.modelProperty.type);
 
     var dataTypes = this.props.scope.modelPropertyTypes;
 
@@ -613,7 +621,7 @@ var DataTypeSelect = (DataTypeSelect = React).createClass({
       return (<option value={type}>{type}</option>)
     });
 
-    return (<select value={val} data-name="type" onChange={this.handleChange}>{options}</select>);
+    return (<select value={val} data-name="type" onChange={component.handleChange}>{options}</select>);
   }
 });
 

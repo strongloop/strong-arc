@@ -5,10 +5,11 @@ Model.service('ModelService', [
   'ModelConfig',
   '$q',
   'AppStorageService',
+  'ModelProperty',
   'DataSourceDefinition',
   'connectorMetadata',
   function(Modeldef, ModelDefinition, ModelConfig, $q,
-           AppStorageService, DataSourceDefinition, connectorMetadata) {
+           AppStorageService, ModelProperty, DataSourceDefinition, connectorMetadata) {
     var svc = {};
 
 
@@ -385,7 +386,6 @@ Model.service('ModelService', [
           deferred.resolve(config);
         },
         function(error) {
-          console.warn('cannot get ModelConfig', response);
           deferred.reject(error);
         });
 
