@@ -386,7 +386,6 @@ Model.service('ModelService', [
           deferred.resolve(config);
         },
         function(error) {
-          console.warn('cannot get ModelConfig', response);
           deferred.reject(error);
         });
 
