@@ -111,7 +111,7 @@ gulp.task('test-client-integration', function(callback) {
   var child = spawn(
     process.execPath,
     [
-      'client/test/integration/test-server',
+      'client/test/test-server',
       'node_modules/.bin/karma',
       'start',
       '--single-run',

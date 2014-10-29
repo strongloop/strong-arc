@@ -28,8 +28,8 @@ var IAMainNavContainer = (IAMainNavContainer = React).createClass({
           </div>
           <span className="ia-project-title-container">{projectName}</span>
         </div>
-        <IAMainModelNav scope={this.props.scope} />
-        <IAMainDatasourceNav scope={this.props.scope} />
+        <IAMainModelNav className="ia-model-nav-container" scope={this.props.scope} />
+        <IAMainDatasourceNav className="ia-datasource-nav-container" scope={this.props.scope} />
       </div>
       );
   }

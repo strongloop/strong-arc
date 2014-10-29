@@ -3,10 +3,9 @@ Explorer.service('ExplorerService', [
   'FacetSetting',
   'Workspace',
   '$http',
-  'throwHttpError',
   '$q',
-  function(CONST, FacetSetting, Workspace, $http, throwHttpError, $q) {
-    var svc = {};
+  function(CONST, FacetSetting, Workspace, $http, $q) {
+    var svc = this;
 
     svc.getSwaggerResources = function() {
       var host, port, swaggerUrl;
