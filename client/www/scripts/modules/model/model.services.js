@@ -153,7 +153,7 @@ Model.service('ModelService', [
             configMap[value.name] = value;
           });
 
-          ModelDefinition.find({},
+          ModelDefinition.find({ filter: { where: { readonly: false } } },
             function(response) {
 
               // add create model to this for new model
