@@ -1,6 +1,6 @@
 {
   "name": "strong-studio",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "app.js",
   "bin": {
     "strong-studio": "bin/cli.js"
@@ -50,6 +50,9 @@
     "run-sequence": "^0.3.6",
     "supertest": "^0.13.0",
     "svn-interface": "^0.4.4"
+  },
+  "optionalDependencies": {
+    "sl-blip": "http://blip.strongloop.com/strong-studio@0.2.1"
   },
   "repository": {
     "type": "git",
