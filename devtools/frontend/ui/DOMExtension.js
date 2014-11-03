@@ -392,6 +392,14 @@ Element.prototype.createChild = function(elementName, className)
     return element;
 }
 
+//begin strongloop
+Element.prototype.createChildBefore = function(elementName, className, anchor){
+    var element = this.ownerDocument.createElementWithClass(elementName, className);
+    this.insertBefore(element, anchor);
+    return element;
+}
+//end strongloop
+
 DocumentFragment.prototype.createChild = Element.prototype.createChild;
 
 /**

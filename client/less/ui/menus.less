@@ -9,6 +9,7 @@
   cursor: pointer;
   height: 4.3rem;
   font-size: @font-size-base;
+  z-index: 2;
 
   &:hover {
     background-color: @ui-select-hover-bg-color;
@@ -110,6 +111,34 @@
         right: 10px;
         top: 8px;
       }
+    }
+  }
+}
+
+.ui-select-scroll {
+  position: absolute;
+  max-height: 10rem;
+  overflow-y: auto;
+  width: 20rem;
+  border: 1px solid black;
+  background: white;
+  padding: .5rem 1rem;
+  margin-left: 1rem;
+
+  li {
+    padding: .5rem 1rem;
+    cursor: pointer;
+
+    &.active {
+      border: 1px solid blue;
+      border-radius: @ui-radius;
+    }
+
+    span:nth-child(1) {
+      width: 10rem;
+    }
+    span:nth-child(2){
+      width: auto;
     }
   }
 }
