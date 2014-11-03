@@ -181,3 +181,7 @@ body.platform-mac .help-key {
 .hide {
   display: none;
 }
+.profile-sidebar-tree-item .icon,
+.heap-snapshot-sidebar-tree-item .icon {
+  content: url(Images/menuIcon.png);
+}
