@@ -60,6 +60,9 @@ Model.directive('modelPropertiesEditor',[
 
         scope.isModelInstancePropertiesActive = true;
         scope.modelPropertyTypes = modelPropertyTypes;
+        for (var i = 0;i < scope.mainNavModels.length;i++) {
+          scope.modelPropertyTypes.push(scope.mainNavModels[i].name);
+        }
 
         function renderComp() {
           if (!scope.properties) {

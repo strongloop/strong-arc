@@ -299,8 +299,17 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
   getInitialState: function() {
     return {
       isOpen:true,
-      isPropertiesContainerOpen:true
+      isPropertiesContainerOpen:true,
+      scope: this.props.scope,
+      properties: this.props.scope.activeInstance.properties
     };
+  },
+  componentWillReceiveProps: function(nextProps) {
+    var component = this;
+    component.setState({
+      scope: nextProps.scope,
+      properties: nextProps.scope.activeInstance.properties
+    });
   },
   shouldComponentUpdate: function(nextProps, nextState) {
 
@@ -329,8 +338,8 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
 
     var component = this;
 
-    var scope = component.props.scope;
-    var properties = scope.activeInstance.properties;
+    var scope = component.state.scope;
+    var properties = component.state.properties;
     var cx = React.addons.classSet;
 
     var classes = cx({
@@ -392,6 +401,8 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
 *
 *   Model Property Row Detail Item
 *
+*   container for each property item
+*
 * */
 var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
   getInitialState: function() {
@@ -399,6 +410,7 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
       currModelId:this.props.modelProperty.modelId,
       modelProperty:this.props.modelProperty,
       isOpen:false,
+      scope: this.props.scope,
       isNameValid: true
     };
   },
@@ -406,6 +418,7 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
     var component = this;
     component.setState({
       modelProperty:nextProps.modelProperty,
+      scope: nextProps.scope,
       isNameValid: component.isNameValid(nextProps.modelProperty.name)
     });
   },
@@ -439,6 +452,7 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
     var scope = this.props.scope;
     if(event.target.attributes['data-name']){
       var tModelPropertyName = event.target.attributes['data-name'].value;
+
       var tModelProperty = this.state.modelProperty;
       if (event.target.attributes['type'] && (event.target.attributes['type'].value === 'checkbox')) {
         tModelProperty[tModelPropertyName] = event.target.checked;
@@ -456,6 +470,7 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
       scope.$apply(function() {
         scope.updateModelPropertyRequest(updateModelPropertyConfig);
       });
+
     }
   },
   deleteModelProperty: function(event) {
@@ -474,7 +489,6 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
     var scope = component.props.scope;
     var modelProperty = component.state.modelProperty;
     var cx = React.addons.classSet;
-
 
     var togglePropertiesView = function(property) {
       component.setState({isOpen:!component.state.isOpen});
@@ -501,13 +515,12 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
       'model-instance-name-validation is-invalid': !component.state.isNameValid
     });
 
-
     return (
       <li>
         <div className={cClasses}>
           <div data-ui-type="table" className="modelproperty-detail-row" >
             <div data-ui-type="row">
-              <span data-ui-type="cell" className={propertyCellValidationClasses}>
+              <div data-ui-type="cell" className={propertyCellValidationClasses}>
                 <input ref="propName"
                   data-name="name"
                   required="true"
@@ -515,11 +528,11 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
                   onChange={component.checkSubmitModelProperty}
                   onBlur={component.triggerModelPropertyUpdate}
                   value={modelProperty.name} />
-              </span>
-              <span data-ui-type="cell" className="props-data-type-cell">
-                <DataTypeSelect scope={scope} modelProperty={component.state.modelProperty} type={modelProperty.type} />
-              </span>
-              <span data-ui-type="cell" className="props-isid-cell">
+              </div>
+              <div data-ui-type="cell" className="props-data-type-cell">
+                <DataTypeSelect scope={component.state.scope} modelProperty={component.state.modelProperty} type={modelProperty.type} />
+              </div>
+              <div data-ui-type="cell" className="props-isid-cell">
                 <input type="checkbox"
                   data-name="isId"
                   name="isId"
@@ -527,8 +540,8 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
                   checked={modelProperty.isId}
                   value={modelProperty.isId}
                   className="model-instance-editor-checkbox" />
-              </span>
-              <span data-ui-type="cell" className="props-required-cell">
+              </div>
+              <div data-ui-type="cell" className="props-required-cell">
                 <input type="checkbox"
                   data-name="required"
                   name="required"
@@ -536,8 +549,8 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
                   checked={modelProperty.required}
                   value={modelProperty.required}
                   className="model-instance-editor-checkbox" />
-              </span>
-              <span data-ui-type="cell" className="props-index-cell">
+              </div>
+              <div data-ui-type="cell" className="props-index-cell">
                 <input type="checkbox"
                   data-name="index"
                   name="index"
@@ -545,8 +558,8 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
                   checked={modelProperty.index}
                   value={modelProperty.index}
                   className="model-instance-editor-checkbox" />
-              </span>
-              <span data-ui-type="cell" className="props-comments-cell">
+              </div>
+              <div data-ui-type="cell" className="props-comments-cell">
                 <input type="text"
                   data-name="comments"
                   name="comments"
@@ -554,14 +567,12 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
                   onBlur={component.triggerModelPropertyUpdate}
                   value={modelProperty.comments}
                   className="property-doc-textarea model-instance-editor-input" />
-              </span>
-              <span data-ui-type="cell" className="props-controls-cell">
+              </div>
+              <div data-ui-type="cell" className="props-controls-cell">
                 <button className="props-remove-btn" onClick={component.deleteModelProperty} data-id={modelProperty.id}>
                   <span data-id={modelProperty.id} className="sl-icon sl-icon-close"></span>
                 </button>
-
-              </span>
-
+              </div>
             </div>
           </div>
           <div className={propertyValidationContainerClasses}>
@@ -572,60 +583,271 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
           <div className={pClasses}>
             <ModelPocketEditorContainer scope={scope} property={modelProperty} />
           </div>
-
-
         </div>
       </li>
       );
   }
 });
 
-
-
-
+/*
+* DataTypeSelect - Component to manage property 'type' value
+* - type value can be a wide variety of patterns including:
+* -- string
+* -- js object
+* -- model name reference
+* -- array of any of the above
+*
+* - it is possible users may edit the json directly in the project
+*     in a way that isn't possible via the gui - generally in the form of
+*     'anonymous' js object patterns
+*     eg:
+         {
+           "x": {
+             "type": "number"
+           },
+           "y": {
+             "type": "string"
+           }
+         }
+* - these can be direct type values or arrays of these patterns
+* - if an 'anonymous' object pattern is detected it is displayed read only
+* - if the user tries to change the value of a property type that includes an
+*     anonymous js object pattern they will be alerted that the current value
+*     will be destroyed if they continue
+*
+* This component may display 2 select components if the data type is an array
+*   so the user can choose the type of array
+* - DataTypeSelectOptions
+*
+* If the value is an ajop either directly or in an array, a control is displayed to
+*   allow the user to view the object pattern
+*
+* */
 var DataTypeSelect = (DataTypeSelect = React).createClass({
   getInitialState: function() {
     return {
+      isArray:(this.getDataTypeString(this.props.modelProperty.type) === 'array'),
+      isAnonObject:(this.isAnonObj(this.props.modelProperty.type)),
       type:this.props.type,
+      arrayType: this.getArrayType(),
+      scope:this.props.scope,
+      val:this.getDataTypeString(this.props.modelProperty.type),
+      showObjDetails:false,
       modelProperty:this.props.modelProperty
     };
+  },
+  componentWillReceiveProps: function(nextProps) {
+    var component = this;
+    component.setState({
+      isArray:(this.getDataTypeString(nextProps.modelProperty.type) === 'array'),
+      isAnonObject:(this.isAnonObj(nextProps.modelProperty.type)),
+      val:this.getDataTypeString(this.props.modelProperty.type),
+      arrayType: this.getArrayType(),
+      type:nextProps.modelProperty.type
+    });
   },
   handleChange: function(event) {
     var scope = this.props.scope;
     var modelPropertyName = '';
     if (event.target.attributes['data-name']) {
       modelPropertyName = event.target.attributes['data-name'].value;
+
       var xState = this.state;
-      xState.modelProperty[modelPropertyName] = event.target.value;
-      this.setState(xState);
-      scope.$apply(function() {
-        scope.updateModelPropertyRequest(xState.modelProperty);
+      if (this.state.isAnonObject) {
+
+        if (confirm('This value has been edited outside the scope of this gui.  ' +
+            'If you change it the existing value will be lost. Continue?')) {
+            xState.modelProperty[modelPropertyName] = event.target.value;
+            this.setState(xState);
+            scope.$apply(function() {
+              scope.updateModelPropertyRequest(xState.modelProperty);
+            });
+          }
+      }
+      else {
+        xState.modelProperty[modelPropertyName] = event.target.value;
+        this.setState(xState);
+        scope.$apply(function() {
+          scope.updateModelPropertyRequest(xState.modelProperty);
+        });
+      }
+    }
+  },
+  getArrayType: function() {
+    var component = this;
+    var retVal = 'any'; // default
+    var typeString = component.getDataTypeString(this.props.modelProperty.type);
+    if (typeString === 'array') {
+      var propType = component.props.modelProperty.type;
+      if (Array.isArray(propType)) {
+        retVal = propType[0];
+        if (typeof retVal === 'object') {
+          retVal = Array.isArray(retVal)? 'array' : 'object';
+        }
+      }
+    }
+    return retVal;
+  },
+  updatePropertyType: function(value) {
+    var component = this;
+    var property = component.state.modelProperty;
+    property.type = [value];
+    component.setState({arrayType: event.target.value});
+    component.setState({modelProperty: property});
+    scope.$apply(function() {
+      scope.updateModelPropertyRequest(component.state.modelProperty);
+    });
+  },
+  handleArrayTypeChange: function(event) {
+    var component = this;
+    var scope = component.props.scope;
+    var modelProperty = component.props.modelProperty;
+    var modelPropertyName = '';
+
+    if (event.target.attributes['data-name']) {
+
+      if (this.state.isAnonObject) {
+
+        if (confirm('This value has been edited outside the scope of this gui. ' +
+          'If you change it the existing value will be lost. Continue?')) {
+            component.updatePropertyType(event.target.value);
+          }
+      }
+      else {
+        component.updatePropertyType(event.target.value);
+      }
+    }
+  },
+  isAnonObj: function(value) {
+    var isAnonObject = false;
+    var tO = (typeof value);
+    if (tO !== 'object') {
+      return isAnonObject;
+    }
+    var isArray = Array.isArray(value)? true : false;
+
+    // if not object, may be an array of anon obj
+    if (isArray) {
+      if (typeof value[0] === 'object') {
+        isAnonObject = true;
+      }
+    }
+    else {
+      isAnonObject = true;
+    }
+    return isAnonObject;
+  },
+  getDataTypeString: function(value) {
+    var retVal = value;
+    if (typeof retVal === 'object') {
+      retVal = Array.isArray(retVal)? 'array' : 'object';
+    }
+    return retVal;
+  },
+  getAppModelNames: function() {
+    var retVal = [];
+    if (this.state.scope && this.state.scope.mainNavModels){
+      this.state.scope.mainNavModels.map(function(model) {
+        retVal.push(model.name);
       });
     }
+    return retVal;
+  },
+
+  render: function() {
+    var component = this;
+    var cx = React.addons.classSet;
+
+    var toggleAnonObjectDetails = function() {
+      var currentState = component.state.showObjDetails;
+      var newState = !currentState;
+      component.setState({showObjDetails:newState});
+
+    };
+
+    var arrayDetailContainer = cx({
+      'array-detail-container is-open': component.state.isArray,
+      'array-detail-container is-closed': !component.state.isArray
+    });
+    var objectDetailContainer = cx({
+      'object-detail-container is-open': component.state.isAnonObject,
+      'object-detail-container is-closed': !component.state.isAnonObject
+    });
+    var objectDetail = cx({
+      'object-detail is-open': component.state.showObjDetails,
+      'object-detail is-closed': !component.state.showObjDetails
+    });
+
+    return (
+      <div>
+        <DataTypeSelectOptions
+          modelProperty={component.state.modelProperty}
+          data-name="type"
+          scope={component.state.scope}
+          val={component.state.val}
+          onChange={component.handleChange} />
+        <div className={arrayDetailContainer}>
+          <label>of</label>
+          <DataTypeSelectOptions
+            modelProperty={component.state.modelProperty}
+            data-name="sub-type"
+            scope={component.state.scope}
+            val={component.state.arrayType}
+            onChange={component.handleArrayTypeChange} />
+        </div>
+        <div className="property-type-object-definition-display">
+          <div className={objectDetailContainer}>
+            <button className="btn-command" onClick={toggleAnonObjectDetails}>details</button>
+            <div className="abs-container">
+              <code className={objectDetail}>
+              {JSON.stringify(component.state.type)}
+              </code>
+            </div>
+          </div>
+        </div>
+      </div>
+      );
+  }
+});
+/*
+* DataTypeSelectOptions - drop down select component to allow users to
+*   choose the type of data or the type of array for a particular model
+*   property type
+*
+*   note: it inherits the onchange method from the parent props.
+*
+* */
+var DataTypeSelectOptions = (DataTypeSelectOptions = React).createClass({
+  getInitialState: function() {
+    return {
+      onChangeFunc:this.props.onChange,
+      value: this.props.val,
+      modelProperty:this.props.modelProperty
+    };
+  },
+  componentWillReceiveProps: function(nextProps) {
+    var component = this;
+    component.setState({
+      onChangeFunc:nextProps.onChange,
+      value: nextProps.val,
+      modelProperty:nextProps.modelProperty
+    });
   },
   render: function() {
     var component = this;
-    var getDataTypeString = function(value) {
-      var retVal = value;
-      if (typeof retVal === 'object') {
-        retVal = Array.isArray(retVal)? 'array' : 'object';
-      }
-      return retVal;
-    };
 
-    // account for more complex data type syntax
-    var val = getDataTypeString(component.state.modelProperty.type);
 
-    var dataTypes = this.props.scope.modelPropertyTypes;
-
-    var options = dataTypes.map(function(type) {
-      return (<option value={type}>{type}</option>)
+    var options = this.props.scope.modelPropertyTypes.map(function(item) {
+        return (<option value={item} >{item}</option>);
     });
-
-    return (<select value={val} data-name="type" onChange={component.handleChange}>{options}</select>);
+    return (
+      <select value={component.state.value} data-name={component.props['data-name']} onChange={component.state.onChangeFunc}>
+        {options}
+      </select>
+      );
   }
-});
 
+});
 /*
  *   Property Comment Editor
  * */
@@ -641,7 +863,7 @@ var PropertyCommentEditor = (PropertyCommentEditor = React).createClass({
 
     return (
       <textarea onChange={updatePropertyDoc} className="model-instance-editor-input">
-          {this.props.doc}
+        {this.props.doc}
       </textarea>
       );
   }
