@@ -5,7 +5,8 @@ describe('model-definition-interactions', function() {
   it('should login navigate to api composer,' +
     ' create a model,' +
     ' add a property,' +
-    ' rename property,' +
+    ' add a comment, ' +
+    ' edit the comment, ' +
     ' delete the model,' +
     ' logout',
     function() {
@@ -39,6 +40,14 @@ describe('model-definition-interactions', function() {
 
       expect(modelEditorView.getFirstPropertyName() === 'mynewproperty');
 
+      modelEditorView.addCommentToProperty(0, 'comment1');
+
+      expect(modelEditorView.getFirstComment() === 'comment1');
+
+      modelEditorView.addCommentToProperty(0, 'comment2');
+
+      expect(modelEditorView.getFirstComment() === 'comment2');
+
       mainTreeNavView.deleteFirstModel();
 
       expect(mainTreeNavView.modelNavRows.count === 0);
@@ -48,3 +57,4 @@ describe('model-definition-interactions', function() {
   );
 
 });
+
