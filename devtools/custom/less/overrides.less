@@ -97,13 +97,18 @@ body.platform-mac {
     }
 }
 
-button.text-button {
-    background-image: none !important;
-    box-shadow: none !important;
-    .ui-btn !important;
+body.inactive button.text-button, button.text-button {
+    &, &:not(:disabled):hover, &:not(:disabled):active {
+        background-image: none;
+        box-shadow: none;
 
-    &.fetch-cpu {
-        background: #d4470f !important;
-        border-bottom-color: darken(#d4470f, 15%) !important;
+        .ui-btn;
+
+        margin-left: 20px;
+
+        &.fetch-cpu {
+            background: #d4470f;
+            border-bottom-color: darken(#d4470f, 15%);
+        }
     }
 }
