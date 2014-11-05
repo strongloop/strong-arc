@@ -149,6 +149,22 @@
 /*contextmenu -> box-arrow-down*/
 /*minus-sign -> minus-thick*/
 /*plus-sign -> plus-thick*/
+@-webkit-keyframes pulsate {
+  0% {
+    opacity: 0.0;
+  }
+  100% {
+    opacity: 1.0;
+  }
+}
+@keyframes pulsate {
+  0% {
+    opacity: 0.0;
+  }
+  100% {
+    opacity: 1.0;
+  }
+}
 .sl-ui-select {
   border-radius: 0.4rem;
   display: inline-block;
@@ -247,6 +263,43 @@
   position: absolute;
   right: 10px;
   top: 8px;
+}
+.sl-ui-select.more {
+  background-color: #fff;
+  color: #999;
+}
+.sl-ui-select.more ul {
+  top: 30px;
+  width: 17rem;
+}
+.sl-ui-select.more ul a:hover {
+  background-color: #5f8de1;
+}
+.sl-ui-select.more span.selected {
+  color: #999;
+  padding: .5rem 4.5rem .5rem 1rem;
+  -webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.35);
+  -moz-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.35);
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.35);
+}
+.sl-ui-select.more span.selected.selected-item {
+  background-color: #5f8de1;
+  color: #fff;
+}
+.sl-ui-select.more span.selected.selected-item .sl-icon {
+  color: #fff;
+}
+.sl-ui-select.more span.selected .sl-icon {
+  color: #999;
+  top: 1rem;
+}
+.sl-ui-select.more.open span.selected.selected-item .sl-icon {
+  color: #fff;
+}
+.sl-ui-select.more.open span.selected.selected-item:after {
+  left: -1px;
+  width: 101%;
+  background-color: #5f8de1;
 }
 .ui-select-scroll {
   position: absolute;
@@ -533,28 +586,54 @@ body.platform-mac .help-key {
 .panel-enabler-view input[type="radio"]:checked:active {
   background: url(Images/radio-selected-active-small.png);
 }
-button.text-button {
-  background-image: none !important;
-  box-shadow: none !important;
-  border: none !important;
-  border-radius: 0.3rem !important;
-  background: #7fc030 !important;
-  color: #ffffff !important;
-  padding: .75rem 2.25rem !important;
-  margin-left: 1rem !important;
-  border-bottom: 2px solid #67992d !important;
-  font-weight: 300 !important;
+body.inactive button.text-button,
+button.text-button,
+body.inactive button.text-button:not(:disabled):hover,
+button.text-button:not(:disabled):hover,
+body.inactive button.text-button:not(:disabled):active,
+button.text-button:not(:disabled):active {
+  background-image: none;
+  box-shadow: none;
+  border: none;
+  border-radius: 0.3rem;
+  background: #7fc030;
+  color: #ffffff;
+  padding: .75rem 2.25rem;
+  margin-left: 1rem;
+  border-bottom: 2px solid #67992d;
+  font-weight: 300;
+  margin-left: 20px;
 }
+body.inactive button.text-button[disabled],
 button.text-button[disabled],
-button.text-button[disabled]:hover {
-  color: #999999 !important;
-  background: #cccccc !important;
-  border-bottom: 2px solid #999999 !important;
+body.inactive button.text-button:not(:disabled):hover[disabled],
+button.text-button:not(:disabled):hover[disabled],
+body.inactive button.text-button:not(:disabled):active[disabled],
+button.text-button:not(:disabled):active[disabled],
+body.inactive button.text-button[disabled]:hover,
+button.text-button[disabled]:hover,
+body.inactive button.text-button:not(:disabled):hover[disabled]:hover,
+button.text-button:not(:disabled):hover[disabled]:hover,
+body.inactive button.text-button:not(:disabled):active[disabled]:hover,
+button.text-button:not(:disabled):active[disabled]:hover {
+  color: #999999;
+  background: #cccccc;
+  border-bottom: 2px solid #999999;
 }
-button.text-button:hover {
-  background-color: #67992d !important;
+body.inactive button.text-button:hover,
+button.text-button:hover,
+body.inactive button.text-button:not(:disabled):hover:hover,
+button.text-button:not(:disabled):hover:hover,
+body.inactive button.text-button:not(:disabled):active:hover,
+button.text-button:not(:disabled):active:hover {
+  background-color: #67992d;
 }
-button.text-button.fetch-cpu {
-  background: #d4470f !important;
-  border-bottom-color: #8d2f0a !important;
+body.inactive button.text-button.fetch-cpu,
+button.text-button.fetch-cpu,
+body.inactive button.text-button:not(:disabled):hover.fetch-cpu,
+button.text-button:not(:disabled):hover.fetch-cpu,
+body.inactive button.text-button:not(:disabled):active.fetch-cpu,
+button.text-button:not(:disabled):active.fetch-cpu {
+  background: #d4470f;
+  border-bottom-color: #8d2f0a;
 }
