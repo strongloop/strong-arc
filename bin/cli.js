@@ -10,6 +10,14 @@ var argv = getArgv();
 var pathArg = argv[0];
 var WORKSPACE_DIR = process.cwd();
 
+if (argv.indexOf('-h') !== -1 || argv.indexOf('--help') !== -1) {
+  printHelp();
+  return;
+} else if (argv.indexOf('-v') !== -1 || argv.indexOf('--version') !== -1) {
+  printVersion();
+  return;
+}
+
 if(pathArg) {
   WORKSPACE_DIR = path.join(WORKSPACE_DIR, pathArg);
 }
@@ -37,4 +45,25 @@ var server = studio.listen(port, function(err) {
 
 function getArgv() {
   return process.argv.slice(2);
+}
+
+function printHelp() {
+  console.log('Usage');
+  console.log('  %s [options]', process.env.CMD || 'strong-studio');
+  console.log();
+  console.log('Options');
+  console.log('  --cli   Start the studio backend only, do not open the browser.');
+  console.log();
+  console.log('The program must be run in the project directory created by');
+  console.log('`slc loopback`');
+  console.log();
+  console.log('StrongLoop Studio will use a different port number each time');
+  console.log('you run it. You can provide a specific port number via ');
+  console.log('the environment variable PORT, for example:');
+  console.log('  PORT=4000 strong-studio');
+  console.log();
+}
+
+function printVersion() {
+  console.log(require('../package.json').version);
 }
