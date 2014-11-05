@@ -27,6 +27,18 @@ IA.service('IAService', [
               errorObj.help = 'Run `npm install` in your project and try again.';
               break;
             case 'ER_INVALID_CONNECTOR':
+              if (/\boracle\b/.test(errorObj.message)) {
+                errorObj.help = [
+                  { text: 'Add the connector to your project, configure the environment variables,' },
+                  { text: 'restart Studio and try again.' },
+                  { text: 'See' },
+                  { link: 'http://docs.strongloop.com/display/LB/Installing+the+Oracle+connector',
+                    text: 'docs: Installing the Oracle connector' },
+                  { text: 'for more information.' }
+                ];
+                break;
+              }
+
               errorObj.help = [
                 { text: 'Add the connector to your project and try again.' },
                 { text: 'See' },

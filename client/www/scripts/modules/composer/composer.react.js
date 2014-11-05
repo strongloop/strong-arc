@@ -111,11 +111,8 @@ var ComposerExceptionDisplayView = (ComposerExceptionDisplayView = React).create
               );
             }
             helpElement = (
-              <li>
-                <span  className="ia-global-exception-label">Help: </span>
-                <span className="ia-global-exception-value">{helpString}</span>
-              </li>
-              );
+              <div className="ia-global-exception-help">{helpString}</div>
+            );
           }
           var stackTraceElement;
           if (stackItem.stack) {
@@ -128,8 +125,9 @@ var ComposerExceptionDisplayView = (ComposerExceptionDisplayView = React).create
             <div data-id="IAGlobalExceptionDisplayContainer" className="ia-global-exception-container">
               <span onClick={clearGlobalException} className="sl-icon sl-icon-close ia-global-exception-close-button"></span>
               <div className="ia-global-exception-header">Oops! Something is wrong</div>
+              <div className="ia-global-exception-value">{stackItem.message}</div>
+              {helpElement}
               <div className="ia-global-exception-link" onClick={component.toggleStackView}>Show/hide details</div>
-              <span className="ia-global-exception-value">{stackItem.message}</span>
               <div data-id="GlobalExceptionDetailsContainer">
 
                 <ul className="ia-global-exception-body">
@@ -138,7 +136,6 @@ var ComposerExceptionDisplayView = (ComposerExceptionDisplayView = React).create
                   {detailsElement}
                   {requestUrlElement}
                   {statusElement}
-                  {helpElement}
                 </ul>
                 {stackTraceElement}
 
