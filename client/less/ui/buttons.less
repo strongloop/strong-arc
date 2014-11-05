@@ -99,23 +99,27 @@
   margin-right: 3rem;
 
   button {
-    border: none;
-    border-radius: @ui-radius;
-    background: @ui-button-bg-color;
-    color: @ui-button-color;
-    padding: .75rem 2.25rem;
-    margin-left: 1rem;
-    border-bottom: 2px solid @ui-button-border-color;
-    font-weight: 300;
+    .ui-btn;
+  }
+}
 
-    &[disabled], &[disabled]:hover {
-      color: @ui-disabled-button-color;
-      background: @ui-disabled-button-bg-color;
-      border-bottom: 2px solid @ui-disabled-button-color;
-    }
+.ui-btn {
+  border: none;
+  border-radius: @ui-radius;
+  background: @ui-button-bg-color;
+  color: @ui-button-color;
+  padding: .75rem 2.25rem;
+  margin-left: 1rem;
+  border-bottom: 2px solid @ui-button-border-color;
+  font-weight: 300;
 
-    &:hover {
-      background-color: @ui-button-hover-bg-color;
-    }
+  &[disabled], &[disabled]:hover {
+    color: @ui-disabled-button-color;
+    background: @ui-disabled-button-bg-color;
+    border-bottom: 2px solid @ui-disabled-button-color;
+  }
+
+  &:hover {
+    background-color: @ui-button-hover-bg-color;
   }
 }

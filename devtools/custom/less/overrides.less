@@ -51,6 +51,59 @@ body.platform-mac {
 
 .profile-sidebar-tree-item, .heap-snapshot-sidebar-tree-item {
    .icon {
-    content: url(Images/menuIcon.png);
+    content: url(Images/menu-icon.png);
    }
+}
+
+
+.panel-enabler-view {
+    label:hover input {
+        .box-shadow(none);
+    }
+
+    input[type="radio"] {
+        background-image: auto;
+        border: none;
+        border-radius: 0;
+        background: transparent url(Images/radio-small.png) no-repeat 0 0;
+
+        &:hover {
+            background: url(Images/radio-hover-small.png);
+        }
+
+        &[disabled] {
+            background: url(Images/radio-disabled-small.png);
+        }
+
+        &:active:not(:disabled) {
+            background: url(Images/radio-selected-active-small.png);
+        }
+
+        &:checked {
+            background: url(Images/radio-selected-small.png);
+
+            &:hover {
+                background: url(Images/radio-selected-hover-small.png);
+            }
+
+            &[disabled] {
+                background: url(Images/radio-selected-disabled-small.png);
+            }
+
+            &:active {
+                background: url(Images/radio-selected-active-small.png);
+            }
+        }
+    }
+}
+
+button.text-button {
+    background-image: none !important;
+    box-shadow: none !important;
+    .ui-btn !important;
+
+    &.fetch-cpu {
+        background: #d4470f !important;
+        border-bottom-color: darken(#d4470f, 15%) !important;
+    }
 }

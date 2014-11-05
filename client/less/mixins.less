@@ -31,3 +31,9 @@
   -moz-box-shadow: @x @y @blur @spread rgba(0, 0, 0, @alpha);
   box-shadow: @x @y @blur @spread rgba(0, 0, 0, @alpha);
 }
+
+.box-shadow (@string) {
+  -webkit-box-shadow: @string;
+  -moz-box-shadow:    @string;
+  box-shadow:         @string;
+}

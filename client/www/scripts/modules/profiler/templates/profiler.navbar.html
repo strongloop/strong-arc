@@ -23,7 +23,7 @@
       <span class="title">Processes</span>
       <ul>
         <li
-          ng-repeat="process in processes | limitTo:8"
+          ng-repeat="process in processes | limitTo:1"
           class="process"
           ng-class="{ active: activeProcess.processId == process.processId }"
           ng-click="setActiveProcess(process, false)">
@@ -32,7 +32,7 @@
         </li>
       </ul>
 
-      <div class="sl-select-more" ng-show="false || processes.length > 8">
+      <div class="sl-select-more" ng-show="processes.length > 1">
         <div class="sl-ui-select more"
              data-ui-type="select"
              ng-class="{ open: isOpen }"
@@ -54,7 +54,7 @@
             <li ng-repeat="process in processes | offset:1">
               <a href
                  data-id="{{process.pid}}"
-                 ng-click="setActiveProcess(process, true);"
+                 ng-click="setActiveProcess(process, true); hideMenu()"
                  ng-class="{ selected: activeProcess.processId == process.processId }">
                 {{process.processId}}
                 {{process.status}}

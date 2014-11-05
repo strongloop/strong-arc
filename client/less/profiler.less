@@ -116,12 +116,57 @@
         margin-left: 1rem;
 
         .sl-ui-select {
+          height: auto;
+
           &.more {
+            background-color: #fff;
+            color: #999;
+
+            ul {
+              top: 30px;
+              width: 17rem;
+
+              a:hover {
+                background-color: #5f8de1;
+              }
+            }
 
             span.selected {
+              color: #999;
+              padding: .5rem 4.5rem .5rem 1rem;
+              .drop-shadow(0, 1px, 4px, 0, 0.35);
+
               &.process {
                 background-color: #5f8de1;
                 color: #fff;
+
+                .sl-icon {
+                  color: #fff;
+                }
+              }
+
+              .sl-icon {
+                color: #999;
+                top: 1rem;
+              }
+            }
+
+            &.open {
+              span.selected {
+
+                &.process {
+                  .sl-icon {
+                    color: #fff;
+                  }
+
+                  &:after {
+                    left: -1px;
+                    width: 101%;
+                    background-color: #5f8de1;
+                  }
+                }
+
+
               }
             }
           }
