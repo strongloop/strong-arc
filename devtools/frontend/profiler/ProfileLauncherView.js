@@ -81,7 +81,7 @@ WebInspector.ProfileLauncherView.prototype = {
 
         //dyanmically update the object from parent window object
         document.documentElement.addEventListener('slInit', function(e){
-            console.log('hooray!', e);
+            //console.log('hooray!', e);
             this._profilerId = this._SL.profiler.getProfilerId();
 
             this._toggleFetchButtons();
@@ -219,14 +219,14 @@ WebInspector.ProfileLauncherView.prototype = {
     _fetchHeapButtonClicked: function(){
         var SL = this._SL;
         var process = SL.profiler.getActiveProcess();
-        console.log('fetched process', process);
+        //console.log('fetched process', process);
 
         if ( !process ) return false;
 
         SL.profiler.fetchHeapFile(function(file){
             if ( !file ) return;
 
-            console.log('[iframe] fetched file', file);
+            //console.log('[iframe] fetched file', file);
 
             this._panel._loadFromFile(file);
         }.bind(this));
@@ -235,14 +235,14 @@ WebInspector.ProfileLauncherView.prototype = {
     _startCpuButtonClicked: function(){
         var SL = this._SL;
         var process = SL.profiler.getActiveProcess();
-        console.log('start cpu on process', process);
+        //console.log('start cpu on process', process);
 
         if ( !process ) return false;
 
         SL.profiler.startCpuProfiling(function(data){
             if ( !data ) return;
 
-            console.log('[iframe] start cpu profiling', data);
+            //console.log('[iframe] start cpu profiling', data);
 
             if ( data.status === 200 ) {
                 this._toggleCpuButtons('stop');
@@ -253,14 +253,14 @@ WebInspector.ProfileLauncherView.prototype = {
     _fetchCpuButtonClicked: function(){
         var SL = this._SL;
         var process = SL.profiler.getActiveProcess();
-        console.log('fetched process', process);
+        //console.log('fetched process', process);
 
         if ( !process ) return false;
 
         SL.profiler.fetchCpuFile(function(file){
             if ( !file ) return;
 
-            console.log('[iframe] fetched cpu file', file);
+            //console.log('[iframe] fetched cpu file', file);
 
             this._toggleCpuButtons('start');
             this._panel._loadFromFile(file);
