@@ -265,8 +265,8 @@
   top: 8px;
 }
 .sl-ui-select.more {
-  background-color: #fff;
-  color: #999;
+  background-color: #ffffff;
+  color: #999999;
 }
 .sl-ui-select.more ul {
   top: 30px;
@@ -276,7 +276,7 @@
   background-color: #5f8de1;
 }
 .sl-ui-select.more span.selected {
-  color: #999;
+  color: #999999;
   padding: .5rem 4.5rem .5rem 1rem;
   -webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.35);
   -moz-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.35);
@@ -284,17 +284,17 @@
 }
 .sl-ui-select.more span.selected.selected-item {
   background-color: #5f8de1;
-  color: #fff;
+  color: #ffffff;
 }
 .sl-ui-select.more span.selected.selected-item .sl-icon {
-  color: #fff;
+  color: #ffffff;
 }
 .sl-ui-select.more span.selected .sl-icon {
-  color: #999;
+  color: #999999;
   top: 1rem;
 }
 .sl-ui-select.more.open span.selected.selected-item .sl-icon {
-  color: #fff;
+  color: #ffffff;
 }
 .sl-ui-select.more.open span.selected.selected-item:after {
   left: -1px;
