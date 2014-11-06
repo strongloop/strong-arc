@@ -116,34 +116,34 @@
 
   //more menu
   &.more {
-    background-color: #fff;
-    color: #999;
+    background-color: @ui-select-more-bg-color;
+    color: @ui-select-more-color;
 
     ul {
       top: 30px;
       width: 17rem;
 
       a:hover {
-        background-color: #5f8de1;
+        background-color: @ui-select-more-hover-bg-color;
       }
     }
 
     span.selected {
-      color: #999;
+      color: @ui-select-more-selected-color;
       padding: .5rem 4.5rem .5rem 1rem;
       .drop-shadow(0, 1px, 4px, 0, 0.35);
 
       &.selected-item {
-        background-color: #5f8de1;
-        color: #fff;
+        background-color: @ui-select-more-selected-bg-color;
+        color: @ui-select-more-selected-item-color;
 
         .sl-icon {
-          color: #fff;
+          color: @ui-select-more-selected-item-color;
         }
       }
 
       .sl-icon {
-        color: #999;
+        color: @ui-select-more-selected-color;
         top: 1rem;
       }
     }
@@ -153,13 +153,13 @@
 
         &.selected-item {
           .sl-icon {
-            color: #fff;
+            color: @ui-select-more-selected-item-color;
           }
 
           &:after {
             left: -1px;
             width: 101%;
-            background-color: #5f8de1;
+            background-color: @ui-select-more-selected-bg-color;
           }
         }
       }
