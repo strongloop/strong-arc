@@ -103,6 +103,20 @@
           .status {
             color: black;
             font-style: italic;
+
+            &.profiling {
+              -webkit-animation: pulsate .5s ease-out;
+              -webkit-animation-iteration-count: infinite;
+              animation: pulsate .5s ease-out;
+              animation-iteration-count: infinite;
+            }
+
+            &.saving {
+              -webkit-animation: pulsate 1s ease-out;
+              -webkit-animation-iteration-count: infinite;
+              animation: pulsate 1s ease-out;
+              animation-iteration-count: infinite;
+            }
           }
         }
 
@@ -116,15 +130,7 @@
         margin-left: 1rem;
 
         .sl-ui-select {
-          &.more {
-
-            span.selected {
-              &.process {
-                background-color: #5f8de1;
-                color: #fff;
-              }
-            }
-          }
+          height: auto;
         }
       }
 
@@ -145,3 +151,4 @@
     }
   }
 }
+

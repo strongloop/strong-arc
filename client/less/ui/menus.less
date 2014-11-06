@@ -8,7 +8,7 @@
   position: relative;
   cursor: pointer;
   height: 4.3rem;
-  font-size: @font-size-base;
+  font-size: @ui-font-size-base;
   z-index: 2;
 
   &:hover {
@@ -40,7 +40,7 @@
     border-radius: @radius @radius 0 0;
 
     span.selected, span.selected .sl-icon {
-      color: @link-color;
+      color: @ui-link-color;
     }
 
     span.selected {
@@ -98,7 +98,7 @@
       padding: .5rem 2rem .5rem 1em;
       text-decoration: none;
       border-radius: @radius-inside;
-      color: @gray-light;
+      color: @ui-gray-light;
       position: relative;
 
       &:hover {
@@ -113,6 +113,59 @@
       }
     }
   }
+
+  //more menu
+  &.more {
+    background-color: #fff;
+    color: #999;
+
+    ul {
+      top: 30px;
+      width: 17rem;
+
+      a:hover {
+        background-color: #5f8de1;
+      }
+    }
+
+    span.selected {
+      color: #999;
+      padding: .5rem 4.5rem .5rem 1rem;
+      .drop-shadow(0, 1px, 4px, 0, 0.35);
+
+      &.selected-item {
+        background-color: #5f8de1;
+        color: #fff;
+
+        .sl-icon {
+          color: #fff;
+        }
+      }
+
+      .sl-icon {
+        color: #999;
+        top: 1rem;
+      }
+    }
+
+    &.open {
+      span.selected {
+
+        &.selected-item {
+          .sl-icon {
+            color: #fff;
+          }
+
+          &:after {
+            left: -1px;
+            width: 101%;
+            background-color: #5f8de1;
+          }
+        }
+      }
+    }
+  }
+
 }
 
 .ui-select-scroll {

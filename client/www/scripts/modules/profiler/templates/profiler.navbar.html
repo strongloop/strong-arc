@@ -28,17 +28,17 @@
           ng-class="{ active: activeProcess.processId == process.processId }"
           ng-click="setActiveProcess(process, false)">
           <div class="pid">{{process.processId}}</div>
-          <div class="status">{{process.status}}</div>
+          <div class="status" ng-class="process.status.toLowerCase()">{{process.status}}</div>
         </li>
       </ul>
 
-      <div class="sl-select-more" ng-show="false || processes.length > 8">
+      <div class="sl-select-more" ng-show="processes.length > 8">
         <div class="sl-ui-select more"
              data-ui-type="select"
              ng-class="{ open: isOpen }"
              ng-mouseleave="hideMenu()">
           <span class="selected"
-                ng-class="{ process: isProcessFromMore }"
+                ng-class="{ 'selected-item': isProcessFromMore }"
                 data-id="{{activeProcess.processId}}"
                 ng-click="isOpen = !isOpen">
             <span ng-show="activeProcess && isProcessFromMore">
@@ -51,10 +51,10 @@
             <i class="sl-icon sl-icon-chevron-down"></i>
           </span>
           <ul ng-class="{ hide: !isOpen }">
-            <li ng-repeat="process in processes | offset:1">
+            <li ng-repeat="process in processes | offset:8">
               <a href
                  data-id="{{process.pid}}"
-                 ng-click="setActiveProcess(process, true);"
+                 ng-click="setActiveProcess(process, true); hideMenu()"
                  ng-class="{ selected: activeProcess.processId == process.processId }">
                 {{process.processId}}
                 {{process.status}}
