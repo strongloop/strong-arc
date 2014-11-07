@@ -118,4 +118,64 @@ Common.directive('slCommonLoadingIndicator', [
   }
 ]);
 
+Common.directive('slCommonPidSelector', [
+  '$log',
+  'ProfilerService', function($log, ProfilerService){
+    return {
+      restrict: 'E',
+      replace: true,
+      templateUrl: './scripts/modules/common/templates/common.pid-selector.html',
+      controller: function($scope, $attrs){
+        $scope.server = {
+          host: '',
+          port: ''
+        };
 
+        $scope.activeProcess = null;
+        $scope.showMoreMenu = false;
+        $scope.isRemoteValid = false;
+        $scope.isOpen = false;
+
+        $scope.processes = [];
+
+        $scope.hideMenu = function(){
+          $scope.isOpen = false;
+        };
+
+        $scope.loadProcesses = function(form){
+          if ( form.$valid ) {
+            $log.log('load processes', $scope.server);
+
+            var url = 'http://' + $scope.server.host + ':' + $scope.server.port + '/api/Services/1/instances/1';
+
+            ProfilerService.getProcessIds(url)
+              .then(function(data){
+                $scope.processes = data;
+              });
+          }
+        };
+
+        //clear out active processes and remote state when going back to file
+        $scope.resetRemoteState = function(){
+          $scope.isRemoteValid = false;
+          $scope.processes = [];
+          $scope.activeProcess = null;
+        };
+
+        $scope.$watch('form.$valid', function(newVal, oldVal) {
+          if ( newVal !== oldVal && !newVal ) {
+            $scope.resetRemoteState();
+          }
+        });
+
+        $scope.setActiveProcess = function(process, isMoreClick){
+          if ( $scope.activeProcess && $scope.activeProcess.status !== 'Running' ) return false;
+
+          $scope.activeProcess = process;
+          $scope.isProcessFromMore = isMoreClick;
+          $log.log('active process', process);
+          $scope.isRemoteValid = true;
+        };
+      }
+    }
+  }]);
