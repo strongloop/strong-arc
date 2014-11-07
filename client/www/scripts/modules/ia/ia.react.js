@@ -22,7 +22,7 @@ var IAMainNavContainer = (IAMainNavContainer = React).createClass({
       <div>
         <div className="ia-project-title-header-container" >
           <div className="ia-project-nav-help">
-            <a target="_blank" href="http://docs.strongloop.com/display/SLS/Using+StrongLoop+Studio">
+            <a target="_blank" href="http://docs.strongloop.com/display/SLS/StrongLoop+Studio+beta">
               <span id="mainNavContextHelp" data-id="MainNavContextHelp" className="sl-icon sl-icon-question-mark"></span>
             </a>
           </div>
