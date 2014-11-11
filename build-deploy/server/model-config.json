@@ -1,0 +1,12 @@
+{
+  "_meta": {
+    "sources": [
+      "../common/models",
+      "./models"
+    ]
+  },
+  "Build": {
+    "dataSource": "db",
+    "public": true
+  }
+}

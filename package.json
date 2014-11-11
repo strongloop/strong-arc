@@ -16,7 +16,12 @@
     "loopback-workspace": "^3.5.0",
     "opener": "~1.4.0",
     "request": "^2.34.0",
-    "ws": "^0.4.32"
+    "ws": "^0.4.32",
+    "primus": "~2.4.10",
+    "split": "~0.3.1",
+    "loopback-boot": "~2.3.1",
+    "loopback-datasource-juggler": "~2.10.3",
+    "errorhandler": "~1.2.2"
   },
   "description": "A gui for working with the LoopBack framework",
   "devDependencies": {
