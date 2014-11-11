@@ -1,6 +1,7 @@
 var express = require('express');
 var path = require('path');
 var workspace = require('loopback-workspace');
+var buildDeploy = require('../build-deploy/server/server');
 var devtools = require('../devtools/server/devtools');
 
 var app = module.exports = express();
@@ -10,8 +11,8 @@ app.workspace = workspace;
 
 // REST APIs
 app.use('/workspace', workspace);
-
 app.use('/devtools', devtools);
+app.use('/build-deploy', buildDeploy);
 
 try {
   // API explorer
