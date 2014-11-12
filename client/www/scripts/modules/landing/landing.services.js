@@ -9,8 +9,11 @@ Landing.service('LandingService', [
       return $http.get('./scripts/modules/landing/landing.data.json')
         .then(function (res) {
           var data = res.data;
+          var apps = data.apps.filter(function(app){
+            return !app.disabled;
+          });
 
-          return data.apps;
+          return apps;
         });
     };
 

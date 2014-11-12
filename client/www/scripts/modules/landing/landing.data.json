@@ -9,6 +9,24 @@
       "id": "profiler",
       "name": "Profiler",
       "description": "Profile applications’ CPU and memory consumption."
+    },
+    {
+      "id": "build-deploy",
+      "name": "Build & Deploy",
+      "description": "Build and deploy self-contained app package or Git branch.",
+      "disabled": true
+    },
+    {
+      "id": "metrics",
+      "name": "Metrics",
+      "description": "Gather and view application performance metrics.",
+      "disabled": true
+    },
+    {
+      "id": "advisor",
+      "name": "Node Advisor",
+      "description": "Browse and search curated Node modules with developer reviews.",
+      "disabled": true
     }
   ]
 }
