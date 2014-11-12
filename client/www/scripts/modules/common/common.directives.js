@@ -179,3 +179,33 @@ Common.directive('slCommonPidSelector', [
       }
     }
   }]);
+
+Common.directive('slPopoverHelp', [
+  '$http',
+  '$tooltip',
+  '$log', function($http, $tooltip, $log){
+    return {
+      restrict: 'E',
+      replace: true,
+      templateUrl: './scripts/modules/common/templates/common.popover.html',
+      link: function(scope, el, attrs){
+        scope.loading = false;
+
+        scope.$watch('showHelp', function(newVal, oldVal){
+          if ( newVal ) {
+            //only  show spinner on initial request
+            if ( !scope.content ) {
+              scope.loading = true;
+            }
+
+            $http.get('http://docs.strongloop.com/rest/api/content/'+attrs.id+'?expand=body.view')
+              .then(function(res){
+                scope.loading = false;
+                scope.title = res.data.title;
+                scope.content = res.data.body.view.value;
+              })
+          }
+        });
+      }
+    };
+}]);

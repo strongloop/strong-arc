@@ -1,0 +1,10 @@
+<div class="ui-popover">
+  <i class="sl-icon sl-icon-help" ng-click="showHelp = !showHelp"></i>
+  <div class="ui-popover-content" ng-show="showHelp">
+    <span class="ui-arrow-left"></span>
+    <i class="sl-icon sl-icon-close" ng-click="showHelp = false"></i>
+    <h4 class="ui-popover-title">{{title}}</h4>
+    <div class="ui-popover-body" ng-bind-html="content | rawHtml"></div>
+    <div sl-common-loading-indicator size="small" ng-show="loading"></div>
+  </div>
+</div>
