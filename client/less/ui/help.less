@@ -1,0 +1,47 @@
+.ui-popover {
+  display: inline-block;
+  position: relative;
+  margin-left: 1rem;
+
+  .ui-arrow-left {
+    width: 0;
+    height: 0;
+    position: absolute;
+    left: -1rem;
+    top: 1rem;
+    border-top: 1rem solid transparent;
+    border-bottom: 1rem solid transparent;
+    border-right: 1rem solid @ui-popover-arrow-color;
+  }
+
+  .ui-popover-content {
+    position: absolute;
+    padding: 0;
+    left: 3rem;
+    top: -1rem;
+    width: 300px;
+    border: 1px solid @ui-popover-border-color;
+    border-radius: @ui-radius;
+    background: @ui-popover-bg;
+    z-index: 2;
+    min-height: 10rem;
+
+    .ui-popover-title {
+      margin: 0;
+      padding: 1rem 2rem;
+      color: @ui-popover-title-color;
+      background: @ui-popover-title-bg;
+    }
+
+    .ui-popover-body {
+      padding: 1rem 2rem;
+    }
+
+    .sl-icon-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      color: @ui-popover-icon-color;
+    }
+  }
+}

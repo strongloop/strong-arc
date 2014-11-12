@@ -507,6 +507,48 @@ form.ui-form input[type=number][disabled] {
   color: #999999;
   background: #eeeeee;
 }
+.ui-popover {
+  display: inline-block;
+  position: relative;
+  margin-left: 1rem;
+}
+.ui-popover .ui-arrow-left {
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: -1rem;
+  top: 1rem;
+  border-top: 1rem solid transparent;
+  border-bottom: 1rem solid transparent;
+  border-right: 1rem solid #aaaaaa;
+}
+.ui-popover .ui-popover-content {
+  position: absolute;
+  padding: 0;
+  left: 3rem;
+  top: -1rem;
+  width: 300px;
+  border: 1px solid #aaaaaa;
+  border-radius: 0.3rem;
+  background: #ffffff;
+  z-index: 2;
+  min-height: 10rem;
+}
+.ui-popover .ui-popover-content .ui-popover-title {
+  margin: 0;
+  padding: 1rem 2rem;
+  color: #eeeeee;
+  background: #aaaaaa;
+}
+.ui-popover .ui-popover-content .ui-popover-body {
+  padding: 1rem 2rem;
+}
+.ui-popover .ui-popover-content .sl-icon-close {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  color: #eeeeee;
+}
 .clearfix {
   *zoom: 1;
 }
