@@ -1,5 +1,8 @@
 # StrongLoop Arc
 
+StrongLoop Arc was formerly known as Studio. Stay tuned for exciting product 
+developments around StrongLoop Arc.
+
 ## Install
 
 ### 1. You must have [node.js](http://nodejs.org) and the [StrongLoop CLI](http://docs.strongloop.com/display/LB/Getting+Started+with+LoopBack#GettingStartedwithLoopBack-InstallStrongLoopsoftware) installed.
