@@ -9,7 +9,10 @@
     ng-class="{ disabled: deployId == 'existing' }"
     >
     <fieldset>
-      <legend>Build git</legend>
+      <legend>
+        Build git
+        <sl-popover-help id="4557614"></sl-popover-help>
+      </legend>
       <div
         class="ui-form-group"
         ng-class="{
@@ -57,7 +60,10 @@
   ng-class="{ disabled: deployId == 'existing' }"
   novalidate>
     <fieldset>
-      <legend>Build universal</legend>
+      <legend>
+        Build universal
+        <sl-popover-help id="4557615"></sl-popover-help>
+      </legend>
       <div class="ui-form-group"
            ng-class="{
                 valid: builduniversal.archive.$valid && build.universal.submitted,
