@@ -23,6 +23,7 @@ gulp.task('build', [
     'build-less-devtools',
     'build-version',
     'build-workspace-services',
+    'build-build-and-deploy-services',
     'install-example-modules'
 ]);
 
@@ -65,6 +66,13 @@ gulp.task('build-workspace-services', function() {
   return gulp.src('./node_modules/loopback-workspace/app.js')
     .pipe(loopbackAngular({ apiUrl: '/workspace/api' }))
     .pipe(rename('workspace.services.js'))
+    .pipe(gulp.dest('./client/www/scripts/modules/common'));
+});
+
+gulp.task('build-build-and-deploy-services', function() {
+  return gulp.src('./build-deploy/server/server.js')
+    .pipe(loopbackAngular({ apiUrl: '/build-deploy' }))
+    .pipe(rename('lb-build.js'))
     .pipe(gulp.dest('./client/www/scripts/modules/common'));
 });
 
