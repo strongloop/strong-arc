@@ -1,7 +1,7 @@
 var app = require('../server/server');
 var Build = app.models.Build;
 var sandbox = require('./util/sandbox');
-var sandbox = sandbox.SANDBOX;
+var SANDBOX = sandbox.SANDBOX;
 var expect = require('chai').expect;
 
 describe('Build', function () {

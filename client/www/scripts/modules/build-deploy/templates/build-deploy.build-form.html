@@ -6,6 +6,7 @@
     class="ui-form"
     novalidate
     ng-submit="buildGit(buildgit)"
+    ng-class="{ disabled: deployId == 'existing' }"
     >
     <fieldset>
       <legend>Build git</legend>
@@ -53,6 +54,7 @@
   ng-show="buildId == 'universal'"
   class="ui-form"
   ng-submit="buildUniversal(builduniversal)"
+  ng-class="{ disabled: deployId == 'existing' }"
   novalidate>
     <fieldset>
       <legend>Build universal</legend>
