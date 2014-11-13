@@ -508,16 +508,17 @@ form.ui-form input[type=number][disabled] {
   background: #eeeeee;
 }
 .ui-arrow-next {
-  width: 90%;
-  height: 10rem;
+  width: 70%;
+  height: 1rem;
+  margin: 7rem auto 1rem;
   background: #7fc030;
   position: relative;
 }
 .ui-arrow-next:after {
   content: '';
   position: absolute;
-  right: 0;
-  top: -50%;
+  right: -1rem;
+  top: 0;
   margin-top: -0.5rem;
   border-top: 1rem solid transparent;
   border-bottom: 1rem solid transparent;
