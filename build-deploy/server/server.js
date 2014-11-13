@@ -7,5 +7,7 @@ app.enableAuth = function() {
 }
 
 boot(app, __dirname);
+
+
 app.use(loopback.urlNotFound());
 app.use(loopback.errorHandler());

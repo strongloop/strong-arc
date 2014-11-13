@@ -1,14 +1,18 @@
 var app = require('../server/server');
 var Build = app.models.Build;
 var sandbox = require('./util/sandbox');
-
+var sandbox = sandbox.SANDBOX;
+var expect = require('chai').expect;
 
 describe('Build', function () {
   beforeEach(function (done) {
-    sandbox.createAndChdir(done);
+    sandbox.init(done);
   });
   beforeEach(function (done) {
-    sandbox.createEmptyLoopBackApp(done);
+    process.chdir(SANDBOX);
+  });
+  beforeEach(function (done) {
+    sandbox.createEmptyApp(done);
   });
   beforeEach(function (done) {
     Build.destroyAll(done);
