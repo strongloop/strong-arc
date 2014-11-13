@@ -31,7 +31,8 @@ BuildDeploy.directive('slBuildForm', [
           if ( form.$valid ) {
             var buildData = {
               type: "universal",
-              archive: $scope.build.universal.archive
+              archive: $scope.build.universal.archive,
+              logs: $scope.logs
             };
 
             BuildDeployService.buildUniversal(buildData)

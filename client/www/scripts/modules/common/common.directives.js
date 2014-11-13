@@ -203,7 +203,7 @@ Common.directive('slPopoverHelp', [
                 scope.loading = false;
                 scope.title = res.data.title;
                 scope.content = res.data.body.view.value;
-              })
+              });
           }
         });
       }
