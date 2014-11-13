@@ -18,7 +18,6 @@ var module = angular.module("lbServices", ['ngResource']);
 /**
  * @ngdoc object
  * @name lbServices.Build
- * @header lbServices.Build
  * @object
  *
  * @description
@@ -58,13 +57,13 @@ module.factory(
          *
          * This method expects a subset of model properties as request parameters.
          *
-         * @param {function(Object,Object)=} successCb
+         * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
          *
-         * @param {function(Object)=} errorCb Error callback with one argument:
+         * @param {Function(Object)=} errorCb Error callback with one argument:
          *   `httpResponse`.
          *
-         * @returns {Object} An empty reference that will be
+         * @return {Object} An empty reference that will be
          *   populated with the actual data once the response is returned
          *   from the server.
          *
@@ -96,13 +95,13 @@ module.factory(
          *
          * This method expects a subset of model properties as request parameters.
          *
-         * @param {function(Object,Object)=} successCb
+         * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
          *
-         * @param {function(Object)=} errorCb Error callback with one argument:
+         * @param {Function(Object)=} errorCb Error callback with one argument:
          *   `httpResponse`.
          *
-         * @returns {Object} An empty reference that will be
+         * @return {Object} An empty reference that will be
          *   populated with the actual data once the response is returned
          *   from the server.
          *
@@ -129,19 +128,19 @@ module.factory(
          *
          *  - `id` – `{*}` - Model id
          *
-         * @param {function(Object,Object)=} successCb
+         * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
          *
-         * @param {function(Object)=} errorCb Error callback with one argument:
+         * @param {Function(Object)=} errorCb Error callback with one argument:
          *   `httpResponse`.
          *
-         * @returns {Object} An empty reference that will be
+         * @return {Object} An empty reference that will be
          *   populated with the actual data once the response is returned
          *   from the server.
          *
          * Data properties:
          *
-         *  - `exists` – `{boolean=}` -
+         *  - `exists` – `{boolean=}` - 
          */
         "exists": {
           url: urlBase + "/Builds/:id/exists",
@@ -161,13 +160,13 @@ module.factory(
          *
          *  - `id` – `{*}` - Model id
          *
-         * @param {function(Object,Object)=} successCb
+         * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
          *
-         * @param {function(Object)=} errorCb Error callback with one argument:
+         * @param {Function(Object)=} errorCb Error callback with one argument:
          *   `httpResponse`.
          *
-         * @returns {Object} An empty reference that will be
+         * @return {Object} An empty reference that will be
          *   populated with the actual data once the response is returned
          *   from the server.
          *
@@ -194,13 +193,13 @@ module.factory(
          *
          *  - `filter` – `{object=}` - Filter defining fields, where, orderBy, offset, and limit
          *
-         * @param {function(Array.<Object>,Object)=} successCb
+         * @param {Function(Array.<Object>, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
          *
-         * @param {function(Object)=} errorCb Error callback with one argument:
+         * @param {Function(Object)=} errorCb Error callback with one argument:
          *   `httpResponse`.
          *
-         * @returns {Array.<Object>} An empty reference that will be
+         * @return {Array.<Object>} An empty reference that will be
          *   populated with the actual data once the response is returned
          *   from the server.
          *
@@ -228,13 +227,13 @@ module.factory(
          *
          *  - `filter` – `{object=}` - Filter defining fields, where, orderBy, offset, and limit
          *
-         * @param {function(Object,Object)=} successCb
+         * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
          *
-         * @param {function(Object)=} errorCb Error callback with one argument:
+         * @param {Function(Object)=} errorCb Error callback with one argument:
          *   `httpResponse`.
          *
-         * @returns {Object} An empty reference that will be
+         * @return {Object} An empty reference that will be
          *   populated with the actual data once the response is returned
          *   from the server.
          *
@@ -265,13 +264,13 @@ module.factory(
          *
          * This method expects a subset of model properties as request parameters.
          *
-         * @param {function(Object,Object)=} successCb
+         * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
          *
-         * @param {function(Object)=} errorCb Error callback with one argument:
+         * @param {Function(Object)=} errorCb Error callback with one argument:
          *   `httpResponse`.
          *
-         * @returns {Object} An empty reference that will be
+         * @return {Object} An empty reference that will be
          *   populated with the actual data once the response is returned
          *   from the server.
          *
@@ -295,13 +294,13 @@ module.factory(
          *
          *  - `id` – `{*}` - Model id
          *
-         * @param {function(Object,Object)=} successCb
+         * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
          *
-         * @param {function(Object)=} errorCb Error callback with one argument:
+         * @param {Function(Object)=} errorCb Error callback with one argument:
          *   `httpResponse`.
          *
-         * @returns {Object} An empty reference that will be
+         * @return {Object} An empty reference that will be
          *   populated with the actual data once the response is returned
          *   from the server.
          *
@@ -325,19 +324,19 @@ module.factory(
          *
          *  - `where` – `{object=}` - Criteria to match model instances
          *
-         * @param {function(Object,Object)=} successCb
+         * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
          *
-         * @param {function(Object)=} errorCb Error callback with one argument:
+         * @param {Function(Object)=} errorCb Error callback with one argument:
          *   `httpResponse`.
          *
-         * @returns {Object} An empty reference that will be
+         * @return {Object} An empty reference that will be
          *   populated with the actual data once the response is returned
          *   from the server.
          *
          * Data properties:
          *
-         *  - `count` – `{number=}` -
+         *  - `count` – `{number=}` - 
          */
         "count": {
           url: urlBase + "/Builds/count",
@@ -361,13 +360,13 @@ module.factory(
          *
          * This method expects a subset of model properties as request parameters.
          *
-         * @param {function(Object,Object)=} successCb
+         * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
          *
-         * @param {function(Object)=} errorCb Error callback with one argument:
+         * @param {Function(Object)=} errorCb Error callback with one argument:
          *   `httpResponse`.
          *
-         * @returns {Object} An empty reference that will be
+         * @return {Object} An empty reference that will be
          *   populated with the actual data once the response is returned
          *   from the server.
          *
@@ -401,13 +400,13 @@ module.factory(
          *
          * This method expects a subset of model properties as request parameters.
          *
-         * @param {function(Object,Object)=} successCb
+         * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
          *
-         * @param {function(Object)=} errorCb Error callback with one argument:
+         * @param {Function(Object)=} errorCb Error callback with one argument:
          *   `httpResponse`.
          *
-         * @returns {Object} An empty reference that will be
+         * @return {Object} An empty reference that will be
          *   populated with the actual data once the response is returned
          *   from the server.
          *
@@ -443,13 +442,13 @@ module.factory(
          *
          * This method expects a subset of model properties as request parameters.
          *
-         * @param {function(Object,Object)=} successCb
+         * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
          *
-         * @param {function(Object)=} errorCb Error callback with one argument:
+         * @param {Function(Object)=} errorCb Error callback with one argument:
          *   `httpResponse`.
          *
-         * @returns {Object} An empty reference that will be
+         * @return {Object} An empty reference that will be
          *   populated with the actual data once the response is returned
          *   from the server.
          *
@@ -477,13 +476,13 @@ module.factory(
          *
          * This method expects a subset of model properties as request parameters.
          *
-         * @param {function(Object,Object)=} successCb
+         * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
          *
-         * @param {function(Object)=} errorCb Error callback with one argument:
+         * @param {Function(Object)=} errorCb Error callback with one argument:
          *   `httpResponse`.
          *
-         * @returns {Object} An empty reference that will be
+         * @return {Object} An empty reference that will be
          *   populated with the actual data once the response is returned
          *   from the server.
          *
@@ -504,13 +503,13 @@ module.factory(
          *
          *  - `id` – `{*}` - Model id
          *
-         * @param {function(Object,Object)=} successCb
+         * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
          *
-         * @param {function(Object)=} errorCb Error callback with one argument:
+         * @param {Function(Object)=} errorCb Error callback with one argument:
          *   `httpResponse`.
          *
-         * @returns {Object} An empty reference that will be
+         * @return {Object} An empty reference that will be
          *   populated with the actual data once the response is returned
          *   from the server.
          *
@@ -531,19 +530,20 @@ module.factory(
          *
          *  - `id` – `{*}` - Model id
          *
-         * @param {function(Object,Object)=} successCb
+         * @param {Function(Object, Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
          *
-         * @param {function(Object)=} errorCb Error callback with one argument:
+         * @param {Function(Object)=} errorCb Error callback with one argument:
          *   `httpResponse`.
          *
-         * @returns {Object} An empty reference that will be
+         * @return {Object} An empty reference that will be
          *   populated with the actual data once the response is returned
          *   from the server.
          *
          * This method returns no data.
          */
         R["removeById"] = R["deleteById"];
+
 
 
     /**
@@ -555,7 +555,6 @@ module.factory(
     * i.e. `Build`.
     */
     R.modelName = "Build";
-
 
     return R;
   }]);
@@ -641,24 +640,8 @@ module
     }])
 
   /**
-   * @ngdoc object
+   * @ngdoc provider
    * @name lbServices.LoopBackResourceProvider
-   * @header lbServices.LoopBackResourceProvider
-   * @description
-   * Use `LoopBackResourceProvider` to change the global configuration
-   * settings used by all models. Note that the provider is available
-   * to Configuration Blocks only, see
-   * {@link https://docs.angularjs.org/guide/module#module-loading-dependencies Module Loading & Dependencies}
-   * for more details.
-   *
-   * ## Example
-   *
-   * ```js
-   * angular.module('app')
-   *  .config(function(LoopBackResourceProvider) {
-   *     LoopBackResourceProvider.setAuthHeader('X-Access-Token');
-   *  });
-   * ```
    */
   .provider('LoopBackResource', function LoopBackResourceProvider() {
     /**
@@ -666,10 +649,6 @@ module
      * @name lbServices.LoopBackResourceProvider#setAuthHeader
      * @methodOf lbServices.LoopBackResourceProvider
      * @param {string} header The header name to use, e.g. `X-Access-Token`
-     * @description
-     * Configure the REST transport to use a different header for sending
-     * the authentication token. It is sent in the `Authorization` header
-     * by default.
      */
     this.setAuthHeader = function(header) {
       authHeader = header;
@@ -679,10 +658,7 @@ module
      * @ngdoc method
      * @name lbServices.LoopBackResourceProvider#setUrlBase
      * @methodOf lbServices.LoopBackResourceProvider
-     * @param {string} url The URL to use, e.g. `/api` or `//example.com/api`.
-     * @description
-     * Change the URL of the REST API server. By default, the URL provided
-     * to the code generator (`lb-ng` or `grunt-loopback-sdk-angular`) is used.
+     * @param {string} url
      */
     this.setUrlBase = function(url) {
       urlBase = url;
