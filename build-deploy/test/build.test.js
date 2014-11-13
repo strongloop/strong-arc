@@ -8,7 +8,7 @@ describe('Build', function () {
   beforeEach(function (done) {
     sandbox.init(done);
   });
-  beforeEach(function (done) {
+  beforeEach(function () {
     process.chdir(SANDBOX);
   });
   beforeEach(function (done) {

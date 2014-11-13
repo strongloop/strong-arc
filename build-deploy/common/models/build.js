@@ -51,7 +51,7 @@ module.exports = function(Build) {
         args.push(build.branch || 'deploy');
       break;
       default:
-        build.type = 'archive';
+        build.type = 'universal';
       break;
     }
 
@@ -63,7 +63,10 @@ module.exports = function(Build) {
 
     buildProcess.on('exit', function(errCode) {
       delete processes[build.id];
-      build.refresh(function() {
+      Build.findById(build.id, function(err, build) {
+        if(err) {
+          build.error = err.toString();
+        }
         build.finished = new Date();
         if(errCode) {
           build.errorCode = errCode;
@@ -71,6 +74,7 @@ module.exports = function(Build) {
         build.save();
       });
     });
+
     build.save(cb);
   }
 }
