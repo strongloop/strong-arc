@@ -8,5 +8,9 @@
   "Build": {
     "dataSource": "db",
     "public": true
+  },
+  "Deployment": {
+    "dataSource": "db",
+    "public": true
   }
 }

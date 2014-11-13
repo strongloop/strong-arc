@@ -1,0 +1,27 @@
+{
+  "name": "Deployment",
+  "base": "Model",
+  "properties": {
+    "host": {
+      "type": "string",
+      "required": true
+    },
+    "port": {
+      "type": "number",
+      "required": true
+    },
+    "branch": {
+      "type": "string"
+    },
+    "archive": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}
