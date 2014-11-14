@@ -103,6 +103,7 @@ gulp.task('test', ['build'], function(callback) {
   runSequence(
     'jshint',
     'test-server',
+    'test-pm',
     'setup-mysql',
     'test-client-integration',
     callback);
@@ -127,6 +128,11 @@ gulp.task('jshint', function() {
 
 gulp.task('test-server', function() {
   return gulp.src('server/test/*.js', { read: false })
+    .pipe(mocha());
+});
+
+gulp.task('test-pm', function() {
+  return gulp.src('process-manager/test/*.js', { read: false })
     .pipe(mocha());
 });
 

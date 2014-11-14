@@ -3,6 +3,7 @@ var path = require('path');
 var workspace = require('loopback-workspace');
 var buildDeploy = require('../build-deploy/server/server');
 var devtools = require('../devtools/server/devtools');
+var pm = require('../process-manager/server');
 
 var app = module.exports = express();
 
@@ -13,6 +14,7 @@ app.workspace = workspace;
 app.use('/workspace', workspace);
 app.use('/devtools', devtools);
 app.use('/build-deploy', buildDeploy);
+app.use('/process-manager', pm);
 
 try {
   // API explorer

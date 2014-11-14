@@ -10,3 +10,5 @@ bower_components
 /devtools/custom/strongloop.css
 *-xunit.xml
 sandbox
+client/test/integration/sandbox/
+.strong-pm
