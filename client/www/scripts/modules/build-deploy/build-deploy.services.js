@@ -31,10 +31,11 @@ BuildDeploy.service('BuildDeployService', [
         .then(function(build) {
         // reference the build from teh view if needed
         buildData.build = build;
+        buildData.logs = build.stdout;
 
         // 2. poll for changes
           (function poll() {
-          return Build.findById(build.id)
+          return Build.findById(build.id).$promise
             .then(function(updatedBuild) {
             buildData.build = updatedBuild;
             buildData.logs = updatedBuild.stdout;
