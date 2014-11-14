@@ -507,6 +507,23 @@ form.ui-form input[type=number][disabled] {
   color: #999999;
   background: #eeeeee;
 }
+.ui-arrow-next {
+  width: 70%;
+  height: 1rem;
+  margin: 7rem auto 1rem;
+  background: #7fc030;
+  position: relative;
+}
+.ui-arrow-next:after {
+  content: '';
+  position: absolute;
+  right: -1rem;
+  top: 0;
+  margin-top: -0.5rem;
+  border-top: 1rem solid transparent;
+  border-bottom: 1rem solid transparent;
+  border-left: 1rem solid #7fc030;
+}
 .ui-popover {
   display: inline-block;
   position: relative;

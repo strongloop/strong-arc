@@ -35,12 +35,14 @@ var Studio = angular.module('Studio', [
   'Explorer',
   'Model',
   'Landing',
+  'BuildDeploy',
   'UI',
   'Datasource',
   'ui.bootstrap',
   'ui.utils',
   'checklist-model',
-  'ngGrid'
+  'ngGrid',
+  'angularFileUpload'
 ]);
 
 Studio.value('CONST', CONST);
@@ -84,6 +86,11 @@ Studio.config([
             }
           ]
         }
+      })
+      .state('build-deploy', {
+        url: '/build-deploy',
+        templateUrl: './scripts/modules/build-deploy/templates/build-deploy.main.html',
+        controller: 'BuildDeployController'
       })
       .state('login', {
         url: '/login',
