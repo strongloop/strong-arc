@@ -1,9 +1,9 @@
 {
-  "name": "strong-studio",
-  "version": "0.2.1",
+  "name": "strong-arc",
+  "version": "0.3.0",
   "main": "app.js",
   "bin": {
-    "strong-studio": "bin/cli.js"
+    "strong-arc": "bin/cli.js"
   },
   "scripts": {
     "prepublish": "gulp build",
@@ -55,11 +55,11 @@
     "jasmine-given": "^2.6.2"
   },
   "optionalDependencies": {
-    "sl-blip": "http://blip.strongloop.com/strong-studio@0.2.1"
+    "sl-blip": "http://blip.strongloop.com/strong-arc@0.3.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/strongloop/strong-studio.git"
+    "url": "https://github.com/strongloop/strong-arc.git"
   },
   "keywords": [
     "studio",
@@ -68,8 +68,8 @@
   ],
   "license": {
     "name": "StrongLoop",
-    "url": "https://github.com/strongloop/strong-studio/blob/master/LICENSE"
+    "url": "https://github.com/strongloop/strong-arc/blob/master/LICENSE"
   },
   "author": "Sean Brookes",
-  "homepage": "https://github.com/strongloop/strong-studio"
+  "homepage": "https://github.com/strongloop/strong-arc"
 }
