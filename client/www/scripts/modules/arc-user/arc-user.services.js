@@ -1,4 +1,4 @@
-StudioUser.service('StudioUserService', [
+ArcUser.service('ArcUserService', [
   'User',
   '$q',
   '$cookieStore',

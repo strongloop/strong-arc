@@ -15,7 +15,7 @@ var CONST = {
   APP_RUNNING_CHECK_INTERVAL:  18000
 };
 
-var Studio = angular.module('Studio', [
+var Arc = angular.module('Arc', [
   'ui.router',
   'ngResource',
   'ngSanitize',
@@ -27,7 +27,7 @@ var Studio = angular.module('Studio', [
   'oldServices',
   'Composer',
   'Profiler',
-  'StudioUser',
+  'ArcUser',
   'IA',
   'Common',
   'Property',
@@ -43,9 +43,9 @@ var Studio = angular.module('Studio', [
   'ngGrid'
 ]);
 
-Studio.value('CONST', CONST);
+Arc.value('CONST', CONST);
 
-Studio.config([
+Arc.config([
   '$stateProvider',
   '$urlRouterProvider',
 
@@ -70,11 +70,11 @@ Studio.config([
         controller: 'ComposerMainController',
         resolve: {
           // Wait for all metadata requests to finish
-          'studioMetadataResults': [
+          'ArcMetadataResults': [
             'modelPropertyTypes',
             'connectorMetadata',
             '$q',
-            function waitForAllStudioMetadata(modelPropertyTypes,
+            function waitForAllArcMetadata(modelPropertyTypes,
                                               connectorMetadata,
                                               $q) {
               return $q.all([
@@ -88,28 +88,28 @@ Studio.config([
       .state('login', {
         url: '/login',
         controller: 'LoginController',
-        templateUrl: './scripts/modules/studio-user/templates/login.html'
+        templateUrl: './scripts/modules/arc-user/templates/login.html'
       })
       .state('register', {
         url: '/register',
         controller: 'RegisterController',
-        templateUrl: './scripts/modules/studio-user/templates/register.html'
+        templateUrl: './scripts/modules/arc-user/templates/register.html'
       });
 
   }
 ]);
 
-Studio.run([
+Arc.run([
     '$location',
     '$state',
     '$rootScope',
-    'StudioUserService',
-    function($location, $state, $rootScope, StudioUserService){
+    'ArcUserService',
+    function($location, $state, $rootScope, ArcUserService){
 
       // Redirect to login if route requires auth and you're not logged in
       $rootScope.$on('$stateChangeStart', function (event, next) {
 
-        if ( !StudioUserService.isAuthUser() && next.url !== '/login' ) {
+        if ( !ArcUserService.isAuthUser() && next.url !== '/login' ) {
           event.preventDefault(); //prevent current page from loading
           $state.go('login');
         }
@@ -117,14 +117,14 @@ Studio.run([
     }
   ]);
 
-Studio.config([
+Arc.config([
   '$httpProvider',
   function ($httpProvider) {
     $httpProvider.interceptors.push('composerRequestInterceptor');
   }
 ]);
 
-Studio.factory('composerRequestInterceptor', [
+Arc.factory('composerRequestInterceptor', [
   '$q',
   '$location',
   '$cookieStore',

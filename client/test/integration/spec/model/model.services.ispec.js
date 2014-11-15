@@ -38,7 +38,7 @@ describe('ModelService', function() {
   });
 
   describe('.createModelInstance()', function() {
-    it('removes internal Studio properties', function() {
+    it('removes internal Arc properties', function() {
       var instance = given.modelInstance();
 
       // setActiveInstance used to add `type` property
@@ -58,7 +58,7 @@ describe('ModelService', function() {
   });
 
   describe('.updateModelInstance()', function() {
-    it('removes internal Studio properties on update', function() {
+    it('removes internal Arc properties on update', function() {
       var instance = given.modelInstance();
 
       return ModelService.createModelInstance(instance)

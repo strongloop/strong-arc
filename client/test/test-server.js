@@ -1,27 +1,27 @@
 var async = require('async');
 var fs = require('fs-extra');
 var path = require('path');
-var studio = require('../../server/server');
-var workspace = studio.workspace;
+var arc = require('../../server/server');
+var workspace = arc.workspace;
 
 var given = require('loopback-workspace/test/helpers/given');
 
 var SANDBOX = path.resolve(__dirname, 'sandbox');
-var STUDIO_ROOT = path.resolve(__dirname, '..',  '..');
-var EMPTY_PROJECT = path.resolve(STUDIO_ROOT, 'examples', 'empty');
+var ARC_ROOT = path.resolve(__dirname, '..',  '..');
+var EMPTY_PROJECT = path.resolve(ARC_ROOT, 'examples', 'empty');
 
 fs.removeSync(SANDBOX);
 fs.copySync(EMPTY_PROJECT, SANDBOX);
 process.env.WORKSPACE_DIR = SANDBOX;
 
 // karma listens on port 9876 by default
-// let's use a similar port number for the Studio server
+// let's use a similar port number for the Arc server
 var port = 9800;
 
 var sandboxNeedsFullReset = false;
 
 // Inject `POST /reset` to reset the sandbox to initial state
-studio.post('/reset', function(req, res, next) {
+arc.post('/reset', function(req, res, next) {
   console.log('--reset-start--');
 
   if (sandboxNeedsFullReset) {
@@ -57,7 +57,7 @@ studio.post('/reset', function(req, res, next) {
     });
 });
 
-studio.post('/delete-facet/:facetName', function(req, res, next) {
+arc.post('/delete-facet/:facetName', function(req, res, next) {
   console.log('--delete-facet-start--');
   var facetName = req.params.facetName;
   fs.remove(
@@ -70,7 +70,7 @@ studio.post('/delete-facet/:facetName', function(req, res, next) {
     });
 });
 
-studio.post('/given/unique-server-port', function(req, res, next) {
+arc.post('/given/unique-server-port', function(req, res, next) {
   given.uniqueServerPort(function(err, configEntry) {
     if (err) return next(err);
     res.json({ succcess: true, port: configEntry.value });
@@ -81,14 +81,14 @@ workspace.models.Workspace.remoteMethod('reset', {
   http: { verb: 'POST' }
 });
 
-var server = studio.listen(port, function(err) {
+var server = arc.listen(port, function(err) {
   if(err) {
-    console.error('Could not start studio!');
+    console.error('Could not start arc!');
     console.error(err);
     process.exit(1);
   }
 
-  console.log('Studio running at http://localhost:%s', server.address().port);
+  console.log('Arc running at http://localhost:%s', server.address().port);
   if (process.argv.length > 2)
     runAndExit(process.argv[2], process.argv.slice(3));
 });

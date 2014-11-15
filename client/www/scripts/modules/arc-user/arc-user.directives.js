@@ -1,10 +1,10 @@
 // Copyright StrongLoop 2014
-StudioUser.directive('slUserLoginView', [
-  'StudioUserService',
-  function(StudioUserService) {
+ArcUser.directive('slUserLoginView', [
+  'ArcUserService',
+  function(ArcUserService) {
 
     return {
-      controller: function ($scope, $location, StudioUserService) {
+      controller: function ($scope, $location, ArcUserService) {
 
         $scope.loginErrorMessage = '';
         $scope.credentials = {
@@ -22,7 +22,7 @@ StudioUser.directive('slUserLoginView', [
         };
 
         $scope.loginRequest = function (formConfig) {
-          $scope.loginResult = StudioUserService.loginRequest(formConfig).
+          $scope.loginResult = ArcUserService.loginRequest(formConfig).
             then(function(response) {
               $location.path('/');
             }).catch(function(response) {
@@ -45,65 +45,65 @@ StudioUser.directive('slUserLoginView', [
     }
   }
 ]);
-StudioUser.directive('slUserLogoutNavItem', [
-  'StudioUserService',
+ArcUser.directive('slUserLogoutNavItem', [
+  'ArcUserService',
   '$location',
-  'StudioNavigationService',
-  function (StudioUserService, $location, StudioNavigationService) {
+  'ArcNavigationService',
+  function (ArcUserService, $location, ArcNavigationService) {
     return{
       template: '<li ng-show="isUserAuth()"><a data-id="StudioLogoutLink" href="#" ng-click="logout()">logout</a></li>',
       link: function(scope,element, attribs) {
         scope.logout = function () {
-          StudioUserService.logCurrentUserOut(function() {
-            StudioNavigationService.postLogoutNav();
+          ArcUserService.logCurrentUserOut(function() {
+            ArcNavigationService.postLogoutNav();
           });
         };
         scope.isUserAuth = function () {
-          return StudioUserService.getCurrentUserId();
+          return ArcUserService.getCurrentUserId();
         };
       },
       replace: true
     };
   }
 ]);
-StudioUser.directive('lbLoginNavItem', [
-  'StudioUserService',
-  function (StudioUserService) {
+ArcUser.directive('lbLoginNavItem', [
+  'ArcUserService',
+  function (ArcUserService) {
     return{
       template: '<li ng-hide="isUserAuth()"><a ui-sref="login" title="login">login</a></li>',
       link: function(scope,element, attribs) {
         scope.isUserAuth = function () {
-          return StudioUserService.getCurrentUserId();
+          return ArcUserService.getCurrentUserId();
         };
       },
       replace: true
     };
   }
 ]);
-StudioUser.directive('lbRegisterNavItem', [
-  'StudioUserService',
-  function (StudioUserService, $location, NavigationService) {
+ArcUser.directive('lbRegisterNavItem', [
+  'ArcUserService',
+  function (ArcUserService, $location, NavigationService) {
     return{
       template: '<li ng-hide="isUserAuth()"><a href="https://strongloop.com/register/" target="_blank">register</a></li>',
       link: function(scope,element, attribs) {
         scope.isUserAuth = function () {
-          return StudioUserService.getCurrentUserId();
+          return ArcUserService.getCurrentUserId();
         };
       },
       replace: true
     };
   }
 ]);
-StudioUser.directive('lbGreetingNavItem', [
-  'StudioUserService',
-  function (StudioUserService) {
+ArcUser.directive('lbGreetingNavItem', [
+  'ArcUserService',
+  function (ArcUserService) {
     return{
       template: '<li ng-show="isUserAuth()"><a href="#profile" us-sref="profile">Hi {{ currentUser.firstName }}</a></li>',
       link: function(scope,element, attribs) {
         scope.currentUser = {};
-        var isAuthUser = StudioUserService.getCurrentUserId();
+        var isAuthUser = ArcUserService.getCurrentUserId();
         if (isAuthUser) {
-          scope.currentUser = StudioUserService.getCurrentUser();
+          scope.currentUser = ArcUserService.getCurrentUser();
         }
 
         scope.isUserAuth = function () {

@@ -1,4 +1,4 @@
-Studio.service('StudioNavigationService', [
+Arc.service('ArcNavigationService', [
   '$location',
   function($location) {
     var svc = {};

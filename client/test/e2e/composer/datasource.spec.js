@@ -1,14 +1,14 @@
-var StudioViews = require('../studio/views/');
+var ArcViews = require('../arc/views/');
 var ComposerViews = require('../composer/views/');
 
 describe('datasource-definition-interactions', function() {
   it('should login, open default db, logout',
     function() {
-      var loginView = new StudioViews.LoginView();
-      var landingView = new StudioViews.LandingView();
+      var loginView = new ArcViews.LoginView();
+      var landingView = new ArcViews.LandingView();
       var mainTreeNavView = new ComposerViews.MainTreeNavView();
       var dataSourceEditorView = new ComposerViews.DataSourceEditorView();
-      var headerView = new StudioViews.HeaderView();
+      var headerView = new ArcViews.HeaderView();
 
       loginView.loginToLandingView();
 
@@ -27,11 +27,11 @@ describe('datasource-definition-interactions', function() {
     ' delete datasource,' +
     ' logout',
     function() {
-      var loginView = new StudioViews.LoginView();
-      var landingView = new StudioViews.LandingView();
+      var loginView = new ArcViews.LoginView();
+      var landingView = new ArcViews.LandingView();
       var mainTreeNavView = new ComposerViews.MainTreeNavView();
       var dataSourceEditorView = new ComposerViews.DataSourceEditorView();
-      var headerView = new StudioViews.HeaderView();
+      var headerView = new ArcViews.HeaderView();
 
       loginView.loginToLandingView();
 

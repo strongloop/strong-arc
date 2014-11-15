@@ -1,7 +1,7 @@
 # Integration tests
 
 This folder contains integration tests executing Angular code
-and communicating directly with the Studio backend.
+and communicating directly with the Arc backend.
 
 ## Setting up the environment
 

@@ -1,4 +1,4 @@
-describe('Studio', function() {
+describe('Arc', function() {
   beforeEach(given.emptyWorkspace);
 
   it('can get package definition', function() {
