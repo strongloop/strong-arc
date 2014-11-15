@@ -131,6 +131,7 @@ Common.directive('slCommonPidSelector', [
           port: ''
         };
 
+        $scope.hasIframe = $attrs.iframe;
         $scope.activeProcess = null;
         $scope.showMoreMenu = false;
         $scope.isRemoteValid = false;
@@ -160,6 +161,14 @@ Common.directive('slCommonPidSelector', [
           $scope.isRemoteValid = false;
           $scope.processes = [];
           $scope.activeProcess = null;
+
+          if ( $scope.hasIframe ) {
+            var iframe = window.frames['devtools'];
+
+            if ( iframe.SL ) {
+              iframe.SL.child.profiler.slInit();
+            }
+          }
         };
 
         $scope.$watch('form.$valid', function(newVal, oldVal) {
@@ -175,6 +184,16 @@ Common.directive('slCommonPidSelector', [
           $scope.isProcessFromMore = isMoreClick;
           $log.log('active process', process);
           $scope.isRemoteValid = true;
+
+          if ( $scope.hasIframe ) {
+            var iframe = window.frames['devtools'];
+
+            if ( iframe.SL ) {
+              iframe.SL.child.profiler.slInit();
+              iframe.SL.child.profiler.setServer($scope.server);
+              iframe.SL.child.profiler.setActiveProcess(process);
+            }
+          }
         };
       }
     }

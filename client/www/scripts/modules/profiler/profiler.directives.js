@@ -28,16 +28,17 @@ Profiler
             }
           });
 
-          //clear out active processes and remote state when going back to file
-          $scope.resetRemoteState = function(){
-            var iframe = window.frames['devtools'];
-
-            $scope.isRemoteValid = false;
-            $scope.processes = [];
-            $scope.activeProcess = null;
-
-            iframe.SL.child.profiler.slInit();
-          };
+          //@deprecated moved to common.directives.js
+          ////clear out active processes and remote state when going back to file
+          //$scope.resetRemoteState = function(){
+          //  var iframe = window.frames['devtools'];
+          //
+          //  $scope.isRemoteValid = false;
+          //  $scope.processes = [];
+          //  $scope.activeProcess = null;
+          //
+          //  iframe.SL.child.profiler.slInit();
+          //};
 
           $scope.$watch('form.$valid', function(newVal, oldVal) {
             if ( newVal !== oldVal && !newVal ) {
@@ -45,19 +46,20 @@ Profiler
             }
           });
 
-          $scope.$watch('activeProcess', function(process, oldVal){
-            if ( !process || $scope.activeProcess && $scope.activeProcess.status !== 'Running' ) return false;
-
-            var iframe = window.frames['devtools'];
-
-            $scope.activeProcess = process;
-            $log.log('active process', process);
-            $scope.isRemoteValid = true;
-
-            iframe.SL.child.profiler.slInit();
-            iframe.SL.child.profiler.setServer($scope.server);
-            iframe.SL.child.profiler.setActiveProcess(process);
-          });
+          //@deprecated moved to common.directives.js
+          //$scope.$watch('activeProcess', function(process, oldVal){
+          //  if ( !process || $scope.activeProcess && $scope.activeProcess.status !== 'Running' ) return false;
+          //
+          //  var iframe = window.frames['devtools'];
+          //
+          //  $scope.activeProcess = process;
+          //  $log.log('active process', process);
+          //  $scope.isRemoteValid = true;
+          //
+          //  iframe.SL.child.profiler.slInit();
+          //  iframe.SL.child.profiler.setServer($scope.server);
+          //  iframe.SL.child.profiler.setActiveProcess(process);
+          //});
 
           $scope.fetchHeapFile = function(){
             if ( !$scope.activeProcess ) return;
@@ -152,12 +154,12 @@ Profiler
               });
           },
 
-            SL.parent.profiler.startCpuProfiling = function(cb){
-              $scope.startCpuProfiling()
-                .then(function(data){
-                  cb(data);
-                });
-            }
+          SL.parent.profiler.startCpuProfiling = function(cb){
+            $scope.startCpuProfiling()
+              .then(function(data){
+                cb(data);
+              });
+          }
         }
       }
     }]);
