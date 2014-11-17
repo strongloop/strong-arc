@@ -52,3 +52,8 @@ SL.child.profiler = {
     document.documentElement.dispatchEvent(event);
   }
 };
+
+//initialize itself when iframe loads
+(function(){
+    SL.child.profiler.slInit();
+})();
