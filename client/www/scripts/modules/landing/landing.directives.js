@@ -25,7 +25,7 @@ Landing.directive('slAppSelector', [
           .then(function(data){
             $scope.suiteIA.apps = data;
             //todo if we have multiple pages w/in an app
-            //we need to parse out just the base route like /studio/foo -> 'studio'
+            //we need to parse out just the base route like /arc/foo -> 'arc'
             $scope.suiteIA.appId = $location.path().replace(/^\//, '');
           });
 

@@ -38,7 +38,7 @@ Datasource.service('DataSourceService', [
       var instance = {};
       // double check to clear out 'new' id
       if (targetInstance.definition.id) {
-        // remove internal studio properties
+        // remove internal model properties
         delete targetInstance.definition.type;
 
         // `id` is '{facet}.{name}'

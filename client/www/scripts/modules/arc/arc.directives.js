@@ -1,14 +1,14 @@
 // Copyright StrongLoop 2014
-Studio.directive('greetingMain', [
+Arc.directive('greetingMain', [
   function() {
     return {
-      templateUrl: './scripts/modules/studio/templates/home.main.html'
+      templateUrl: './scripts/modules/arc/templates/home.main.html'
     }
   }
 ]);
 
 
-Studio.directive('slAppChooser', [
+Arc.directive('slAppChooser', [
   function() {
     return {
       replace:true,

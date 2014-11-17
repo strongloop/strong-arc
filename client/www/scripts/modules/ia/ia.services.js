@@ -30,7 +30,7 @@ IA.service('IAService', [
               if (/\boracle\b/.test(errorObj.message)) {
                 errorObj.help = [
                   { text: 'Add the connector to your project, configure the environment variables,' },
-                  { text: 'restart Studio and try again.' },
+                  { text: 'restart Arc and try again.' },
                   { text: 'See' },
                   { link: 'http://docs.strongloop.com/display/LB/Installing+the+Oracle+connector',
                     text: 'docs: Installing the Oracle connector' },

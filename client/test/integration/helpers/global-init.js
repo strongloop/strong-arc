@@ -1,6 +1,6 @@
 var inject;
 
-angular.module('test', ['Studio'])
+angular.module('test', ['Arc'])
   .provider({
     // mock a fresh new root element for every test
     $rootElement: function RootElementProvider() {

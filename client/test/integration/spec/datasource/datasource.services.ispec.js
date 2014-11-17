@@ -18,7 +18,7 @@ describe('DataSourceService', function() {
   beforeEach(given.emptyWorkspace);
 
   describe('.createDataSourceInstance()', function() {
-    it('removes internal Studio properties', function() {
+    it('removes internal Arc properties', function() {
       var instance = given.dataSourceInstance();
       expect(instance).to.have.property('id');
 
@@ -40,7 +40,7 @@ describe('DataSourceService', function() {
     });
 
     describe('.updateDataSourceInstance()', function() {
-      it('removes internal Studio properties on update', function() {
+      it('removes internal Arc properties on update', function() {
         var instance = given.dataSourceInstance();
         expect(instance).to.have.property('id');
         return DataSourceService.createDataSourceInstance(instance)

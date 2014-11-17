@@ -1,5 +1,5 @@
-var StudioHeaderView = (function () {
-  function StudioHeaderView() {
+var ArcHeaderView = (function () {
+  function ArcHeaderView() {
     this.accountDropdown = element(
       by.css('span[data-id="StudioAccountDropdown"] a.dropdown-toggle'));
     this.logoutLink = element(by.css('[data-id="StudioLogoutLink"]'));
@@ -12,7 +12,7 @@ var StudioHeaderView = (function () {
         });
     };
   }
-  return StudioHeaderView;
+  return ArcHeaderView;
 })();
 
-module.exports = StudioHeaderView;
+module.exports = ArcHeaderView;

@@ -1,4 +1,4 @@
-var StudioViews = require('../studio/views/');
+var ArcViews = require('../arc/views/');
 var ComposerViews = require('../composer/views/');
 
 describe('composer-navigation', function() {
@@ -7,10 +7,10 @@ describe('composer-navigation', function() {
     ' and log out',
     function() {
 
-      var loginView = new StudioViews.LoginView();
-      var landingView = new StudioViews.LandingView();
+      var loginView = new ArcViews.LoginView();
+      var landingView = new ArcViews.LandingView();
       var composerHomeView = new ComposerViews.ComposerHomeView();
-      var headerView = new StudioViews.HeaderView();
+      var headerView = new ArcViews.HeaderView();
 
       loginView.loginToLandingView();
 

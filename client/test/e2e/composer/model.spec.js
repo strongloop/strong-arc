@@ -1,4 +1,4 @@
-var StudioViews = require('../studio/views/');
+var ArcViews = require('../arc/views/');
 var ComposerViews = require('../composer/views/');
 
 describe('model-definition-interactions', function() {
@@ -11,11 +11,11 @@ describe('model-definition-interactions', function() {
     ' logout',
     function() {
 
-      var loginView = new StudioViews.LoginView();
-      var landingView = new StudioViews.LandingView();
+      var loginView = new ArcViews.LoginView();
+      var landingView = new ArcViews.LandingView();
       var mainTreeNavView = new ComposerViews.MainTreeNavView();
       var modelEditorView = new ComposerViews.ModelEditorView();
-      var headerView = new StudioViews.HeaderView();
+      var headerView = new ArcViews.HeaderView();
 
       loginView.loginToLandingView();
 

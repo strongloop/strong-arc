@@ -1,15 +1,15 @@
-describe('StudioUserService', function() {
-  var StudioUserService;
+describe('ArcUserService', function() {
+  var ArcUserService;
 
   beforeEach(function() {
-    inject(function(_StudioUserService_) {
-      StudioUserService = _StudioUserService_;
+    inject(function(_ArcUserService_) {
+      ArcUserService = _ArcUserService_;
     });
   });
 
   describe('buildLoginRequest', function() {
     it('interprets nameOrEmail as an email', function() {
-      var result = StudioUserService.buildLoginRequest({
+      var result = ArcUserService.buildLoginRequest({
         nameOrEmail: 'user@example.com'
       });
 
@@ -17,7 +17,7 @@ describe('StudioUserService', function() {
     });
 
     it('interprets nameOrEmail as a user name', function() {
-      var result = StudioUserService.buildLoginRequest({
+      var result = ArcUserService.buildLoginRequest({
         nameOrEmail: 'aName'
       });
 
@@ -25,7 +25,7 @@ describe('StudioUserService', function() {
     });
 
     it('includes password in the request', function() {
-      var result = StudioUserService.buildLoginRequest({
+      var result = ArcUserService.buildLoginRequest({
         password: '12345'
       });
 

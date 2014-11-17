@@ -59,7 +59,7 @@ var LoginFormView = (LoginFormView = React).createClass({
           <div data-id="AuthExceptionMessageContainer" className="item item-divider assertive">
           {errorDisplay}
           </div>
-          <h2 className="login-form-title">StrongLoop Studio Sign In</h2>
+          <h2 className="login-form-title">StrongLoop Arc Sign In</h2>
           <form data-id="LoginForm" name="LoginForm" role="form">
             <div className="form-group">
               <label for="InputUserName" className="field-label">Username or E-mail</label>
@@ -89,8 +89,8 @@ var LoginFormView = (LoginFormView = React).createClass({
             <div className="lineBreak"></div>
           </form>
           <div data-id="LoginRegisterLinksContainer">
-            <a href="https://strongloop.com/register/" target="_blank" title="StrongLoop Studio register link" data-id="RegisterLink" className="login-register-link">Register</a>
-            <a href="https://strongloop.com/login?action=lostpassword" target="_blank" title="StrongLoop Studio forgot password link" data-id="ForgotPasswordLink" className="login-forgot-password-link">Forgot password</a>
+            <a href="https://strongloop.com/register/" target="_blank" title="StrongLoop Arc register link" data-id="RegisterLink" className="login-register-link">Register</a>
+            <a href="https://strongloop.com/login?action=lostpassword" target="_blank" title="StrongLoop Arc forgot password link" data-id="ForgotPasswordLink" className="login-forgot-password-link">Forgot password</a>
           </div>
         </div>
       </div>
