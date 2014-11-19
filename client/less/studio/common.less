@@ -1,3 +1,46 @@
 .hide {
   display: none;
 }
+
+.sl-console-log {
+  background: @gray-lighter;
+  padding: 1rem 2rem;
+  margin-top: 2rem;
+  border-top: 1px solid @gray-light-2;
+
+  h4 {
+    color: @gray-light;
+    font-weight: 300;
+    font-size: 2.1rem;
+  }
+
+  ol {
+    border: 1px solid @gray-light-2;
+    background: @white;
+    color: @gray-light;
+    list-style-type: none;
+    padding: 1rem 2rem 1rem 1rem;
+    max-height: 20rem;
+    margin-bottom: 2rem;
+    overflow-y: auto;
+
+  }
+}
+
+.sl-forms {
+  .sl-form-message {
+    font-size: 1.3rem;
+    margin-top: 1rem;
+    color: @gray-light;
+    background: @gray-lighter;
+    padding: 1rem 1rem 1rem 2rem;
+    position: relative;
+
+    .sl-icon {
+      left: -1rem;
+      top: 0;
+      color: @gray-light;
+      width: 1rem;
+    }
+  }
+}
