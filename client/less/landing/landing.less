@@ -28,10 +28,10 @@
   .sl-app {
     .box-sizing(border-box);
     text-align: center;
-    height: 20rem;
-    max-width: 40rem;
+    width: 23rem;
+    height: 23rem;
     display: block;
-    margin: 2.5rem auto 5rem;
+    margin: 0 auto;
     cursor: pointer;
 
     .app-container {
@@ -92,10 +92,13 @@
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: @tablet-min-width) {
   .sl-landing-page {
+    .sl-apps {
+      text-align: center; //todo: make 'left' remove when we have at least two rows
+    }
+
     .sl-app {
-      width: 24rem;
       display: inline-block;
-      margin-right: 2.5rem;
+      //margin-right: 2.5rem;
       margin-top: 0;
     }
   }
