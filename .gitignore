@@ -6,5 +6,6 @@ bower_components
 /client/test/sandbox
 /client/www/scripts/modules/common/workspace.services.js
 /client/www/style/style.css
+/client/www/help/
 *-xunit.xml
 sandbox

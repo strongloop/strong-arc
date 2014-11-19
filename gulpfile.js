@@ -15,6 +15,7 @@ var loopbackAngular = require('gulp-loopback-sdk-angular');
 var spawn = require('child_process').spawn;
 var pullDevTools = require('./build-tasks/pull-devtools');
 var setupMysql = require('./build-tasks/setup-mysql');
+var downloadHelpAssets = require('./build-tasks/download-help-assets');
 
 gulp.task('default', ['build', 'test', 'watch']);
 
@@ -24,6 +25,7 @@ gulp.task('build', [
     'build-version',
     'build-workspace-services',
     'build-build-and-deploy-services',
+    'build-help-assets',
     'install-example-modules'
 ]);
 
@@ -77,6 +79,16 @@ gulp.task('build-build-and-deploy-services', function() {
     }))
     .pipe(rename('lb-build.js'))
     .pipe(gulp.dest('./client/www/scripts/modules/common'));
+});
+
+gulp.task('build-help-assets', function(callback) {
+  var helpData = fs.readJsonFileSync(
+    path.resolve(__dirname, 'client/help.json'));
+
+  downloadHelpAssets(
+    helpData.ids,
+    path.resolve(__dirname, 'client/www/help'),
+    callback);
 });
 
 gulp.task('install-example-modules', function() {
