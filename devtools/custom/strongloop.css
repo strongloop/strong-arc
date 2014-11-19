@@ -137,6 +137,10 @@
   font-weight: lighter;
 }
 /* end custom rules */
+.sl-icon-app-profiler {
+  background: url(/images/icon-profiler.svg);
+  width: 3.75rem;
+}
 /* renamed */
 /*connecticon -> link*/
 /*document -> file*/
