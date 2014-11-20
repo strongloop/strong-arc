@@ -218,7 +218,7 @@ Common.directive('slPopoverHelp', [
               scope.loading = true;
             }
 
-            $http.get('http://docs.strongloop.com/rest/api/content/'+attrs.id+'?expand=body.view')
+            $http.get('/help/'+attrs.id+'.json')
               .then(function(res){
                 scope.loading = false;
                 scope.title = res.data.title;
