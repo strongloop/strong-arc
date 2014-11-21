@@ -4,7 +4,7 @@ var workspace = require('loopback-workspace');
 var buildDeploy = require('../build-deploy/server/server');
 var devtools = require('../devtools/server/devtools');
 var pm = require('../process-manager/server');
-
+var arcApi = require('../arc-api/server/server');
 var app = module.exports = express();
 
 // export the workspace object, useful e.g. in tests
@@ -15,6 +15,7 @@ app.use('/workspace', workspace);
 app.use('/devtools', devtools);
 app.use('/build-deploy', buildDeploy);
 app.use('/process-manager', pm);
+app.use('/api', arcApi);
 
 try {
   // API explorer

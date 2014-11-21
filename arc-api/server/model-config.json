@@ -7,6 +7,11 @@
     ]
   },
   "Project": {
+    "dataSource": null,
+    "public": true
+  },
+  "ArcApp": {
+    "dataSource": null,
     "public": true
   }
 }

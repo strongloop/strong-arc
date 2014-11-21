@@ -9,7 +9,6 @@ Landing.directive('slLandingApp', [
   }
 ]);
 
-
 Landing.directive('slAppSelector', [
   function(){
     return {
@@ -22,8 +21,11 @@ Landing.directive('slAppSelector', [
         $scope.selected = $scope.suiteIA.selectedApp;
 
         LandingService.getApps()
+          .$promise
           .then(function(data){
-            $scope.suiteIA.apps = data;
+            $scope.suiteIA.apps = data.results.filter(function(app) {
+              return !app.disabled && app.supportsCurrentProject;
+            });
             //todo if we have multiple pages w/in an app
             //we need to parse out just the base route like /arc/foo -> 'arc'
             $scope.suiteIA.appId = $location.path().replace(/^\//, '');
@@ -39,6 +41,10 @@ Landing.directive('slAppSelector', [
           function(event, toState, toParams, fromState, fromParams){
             $scope.suiteIA.appId = toState.name;
           });
+
+        $scope.getSref = function(app) {
+          return app.supportsCurrentProject ? app.id : false;
+        }
       },
       link: function(scope, el, attrs){
         scope.$watch('suiteIA.apps', function(newVal, oldVal){
