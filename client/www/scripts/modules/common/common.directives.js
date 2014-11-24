@@ -120,7 +120,9 @@ Common.directive('slCommonLoadingIndicator', [
 
 Common.directive('slCommonPidSelector', [
   '$log',
-  'ProfilerService', function($log, ProfilerService){
+  'ProfilerService',
+  'CommonPidService',
+  function($log, ProfilerService, CommonPidService){
     return {
       restrict: 'E',
       replace: true,
@@ -147,11 +149,9 @@ Common.directive('slCommonPidSelector', [
           if ( form.$valid ) {
             $log.log('load processes', $scope.server);
 
-            var url = 'http://' + $scope.server.host + ':' + $scope.server.port + '/api/Services/1/instances/1';
-
-            ProfilerService.getProcessIds(url)
-              .then(function(data){
-                $scope.processes = data;
+            CommonPidService.getDefaultPidData($scope.server, 1)
+              .then(function(pidCollection) {
+                $scope.processes = pidCollection;
               });
           }
         };
