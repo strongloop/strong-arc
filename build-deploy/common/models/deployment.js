@@ -13,7 +13,8 @@ module.exports = function(Deployment) {
     }
 
     function resize(err) {
-      request.post(baseURL + '/api/Services/1/actions', {
+      //todo check status of deploy first
+      request.post(baseURL + '/api/ServiceInstances/1/actions', {
         json: true,
         body: {
           request: {
@@ -24,7 +25,7 @@ module.exports = function(Deployment) {
         }
       }, cb);
     }
-  }
+  };
 
   Deployment.remoteMethod('create', {
     http: {verb: 'post', path: '/'},

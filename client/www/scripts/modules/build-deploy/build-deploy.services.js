@@ -17,8 +17,17 @@ BuildDeploy.service('BuildDeployService', [
         .then(function(updatedBuild) {
           buildData.build = updatedBuild;
           //          viewConsole.logs = updatedBuild.stdout;
-          viewConsole.logs = viewConsole.logs.concat(updatedBuild.stdout);
+          viewConsole.logs = viewConsole.logs.concat(updatedBuild.stdout, updatedBuild.stderr);
           viewConsole.logs = _.uniq(viewConsole.logs);
+
+          //remove array items with empty values
+          updatedBuild.stderr = updatedBuild.stderr.filter(function(item){
+            return item.length;
+          });
+
+          if ( updatedBuild.stderr.length ) {
+            def.reject(updatedBuild);
+          }
 
           if (updatedBuild.finished) {
             def.resolve(updatedBuild);
@@ -40,12 +49,14 @@ BuildDeploy.service('BuildDeployService', [
           // reference the build from teh view if needed
           buildData.build = build;
           viewConsole.logs.push('STARTING BUILD....');
-          viewConsole.logs = viewConsole.logs.concat(build.stdout);
+          viewConsole.logs = viewConsole.logs.concat(build.stdout, build.stderr);
           viewConsole.logs = _.uniq(viewConsole.logs);
 
           $log.log(1, build);
           poll(def, buildData, build, viewConsole);
         }).catch(function(err){
+          viewConsole.logs = viewConsole.logs.concat(err.stderr);
+          viewConsole.logs = _.uniq(viewConsole.logs);
           def.reject(err);
         });
 

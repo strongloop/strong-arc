@@ -236,7 +236,8 @@ Common.directive('slCommonFormMessage', [
       restrict: "E",
       replace: true,
       scope: {
-        message: '='
+        message: '=',
+        type: '=?'
       },
       templateUrl: './scripts/modules/common/templates/common.form-message.html',
       controller: function($scope, $attrs, $log, $timeout){
@@ -249,6 +250,7 @@ Common.directive('slCommonFormMessage', [
 
           to = $timeout(function() {
             $scope.message = '';
+            $scope.type = '';
           }, 3000);
         }
 
