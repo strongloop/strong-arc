@@ -48,7 +48,8 @@ var Arc = angular.module('Arc', [
   'ui.slider',
   'checklist-model',
   'ngGrid',
-  'angularFileUpload'
+  'angularFileUpload',
+  'segmentio'
 ]);
 
 Arc.value('CONST', CONST);
