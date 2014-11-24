@@ -21,6 +21,12 @@ BuildDeploy.directive('slBuildDeployBuildForm', [
               .then(function(data){
                 $log.log(data);
                 $scope.build.git.message = 'Successfully built using git';
+                $scope.build.git.messageType = 'success';
+              })
+              .catch(function(err){
+                $log.log(err);
+                $scope.build.git.message = 'Unable to build using git';
+                $scope.build.git.messageType = 'error';
               });
           }
         };
@@ -40,7 +46,13 @@ BuildDeploy.directive('slBuildDeployBuildForm', [
               .then(function(data){
                 $log.log(data);
                 $scope.build.universal.message = 'Successfully built using universal';
+                $scope.build.universal.messageType = 'success';
                 $scope.deploy.universal.archive = data.archive;
+              })
+              .catch(function(err){
+                $log.log(err);
+                $scope.build.universal.message = 'Unable to build using universal';
+                $scope.build.universal.messageType = 'error';
               });
           }
         };
@@ -132,6 +144,12 @@ BuildDeploy.directive('slBuildDeployDeployForm', [
               .then(function(data){
                 $log.log('deploy done!', data);
                 $scope.deploy.universal.message = 'Successfully deployed using universal';
+                $scope.deploy.universal.messageType = 'success';
+              })
+              .catch(function(err){
+                $log.log(err);
+                $scope.deploy.universal.message = 'There was an error';
+                $scope.deploy.universal.messageType = 'error';
               });
           }
         };

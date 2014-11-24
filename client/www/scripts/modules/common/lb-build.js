@@ -75,7 +75,7 @@ module.factory(
          */
         "create": {
           url: urlBase + "/Builds",
-          method: "POST",
+          method: "POST"
         },
 
         /**
@@ -113,7 +113,7 @@ module.factory(
          */
         "upsert": {
           url: urlBase + "/Builds",
-          method: "PUT",
+          method: "PUT"
         },
 
         /**
@@ -145,7 +145,7 @@ module.factory(
          */
         "exists": {
           url: urlBase + "/Builds/:id/exists",
-          method: "GET",
+          method: "GET"
         },
 
         /**
@@ -178,7 +178,7 @@ module.factory(
          */
         "findById": {
           url: urlBase + "/Builds/:id",
-          method: "GET",
+          method: "GET"
         },
 
         /**
@@ -210,9 +210,9 @@ module.factory(
          * </em>
          */
         "find": {
-          url: urlBase + "/Builds",
-          method: "GET",
           isArray: true,
+          url: urlBase + "/Builds",
+          method: "GET"
         },
 
         /**
@@ -245,7 +245,7 @@ module.factory(
          */
         "findOne": {
           url: urlBase + "/Builds/findOne",
-          method: "GET",
+          method: "GET"
         },
 
         /**
@@ -279,7 +279,7 @@ module.factory(
          */
         "updateAll": {
           url: urlBase + "/Builds/update",
-          method: "POST",
+          method: "POST"
         },
 
         /**
@@ -309,7 +309,7 @@ module.factory(
          */
         "deleteById": {
           url: urlBase + "/Builds/:id",
-          method: "DELETE",
+          method: "DELETE"
         },
 
         /**
@@ -341,7 +341,7 @@ module.factory(
          */
         "count": {
           url: urlBase + "/Builds/count",
-          method: "GET",
+          method: "GET"
         },
 
         /**
@@ -378,7 +378,7 @@ module.factory(
          */
         "prototype$updateAttributes": {
           url: urlBase + "/Builds/:id",
-          method: "PUT",
+          method: "PUT"
         },
 
         /**
@@ -418,7 +418,7 @@ module.factory(
          */
         "start": {
           url: urlBase + "/Builds/start",
-          method: "POST",
+          method: "POST"
         },
       }
     );
@@ -622,7 +622,7 @@ module.factory(
          */
         "create": {
           url: urlBase + "/Deployments",
-          method: "POST",
+          method: "POST"
         },
       }
     );
