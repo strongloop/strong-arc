@@ -23,7 +23,6 @@
     max-height: 20rem;
     margin-bottom: 2rem;
     overflow-y: auto;
-
   }
 }
 
@@ -35,6 +34,15 @@
     background: @gray-lighter;
     padding: 1rem 1rem 1rem 2rem;
     position: relative;
+
+    &.error {
+      color: @white;
+      background: @brand-danger;
+
+      .sl-icon {
+        color: @white;
+      }
+    }
 
     .sl-icon {
       left: -1rem;

@@ -15,12 +15,14 @@ BuildDeploy.controller('BuildDeployController', [
       git: {
         url: '',
         deploy: 'deploy',
-        message: ''
+        message: '',
+        messageType: 'success'
       },
       universal: {
         git: '',
         archive: '',
-        message: ''
+        message: '',
+        messageType: 'success'
       }
     };
 
@@ -28,12 +30,14 @@ BuildDeploy.controller('BuildDeployController', [
       git: {
         url: '',
         deploy: '',
-        message: ''
+        message: '',
+        messageType: 'success'
       },
       universal: {
         git: '',
         archive: '',
-        message: ''
+        message: '',
+        messageType: 'success'
       },
       host: {
         hostname: '',
