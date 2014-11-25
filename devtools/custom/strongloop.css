@@ -137,9 +137,26 @@
   font-weight: lighter;
 }
 /* end custom rules */
-.sl-icon-app-profiler {
+.sl-app-icon {
+  width: 6rem;
+  height: 6rem;
+  display: block;
+  margin: 1.5rem auto 0;
+}
+.sl-app-icon-profiler {
   background: url(/images/icon-profiler.svg);
-  width: 3.75rem;
+}
+.sl-app-icon-composer {
+  background: url(/images/icon-composer.svg);
+}
+.sl-app-icon-metrics {
+  background: url(/images/icon-metrics.svg);
+}
+.sl-app-icon-advisor {
+  background: url(/images/icon-composer.svg);
+}
+.sl-app-icon-build-deploy {
+  background: url(/images/icon-build-deploy.svg);
 }
 /* renamed */
 /*connecticon -> link*/
