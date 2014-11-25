@@ -443,3 +443,129 @@ Common.service('WorkspaceService', [
     };
   }
 ]);
+Common.service('CommonPidService', [
+  'CommonPMServerService',
+  'CommonPMServiceInstance',
+  'CommonPMServiceProcess',
+  function(CommonPMServerService, CommonPMServiceInstance, CommonPMServiceProcess) {
+
+    var svc = this;
+
+    svc.getDefaultPidData = function(server, id) {
+      return CommonPMServerService.find(server, {id:id})
+        .then(function(response) {
+          // get first [0]
+          var firstService = response[0];
+          // query for all instances
+          return CommonPMServiceInstance.find(server, {serverServiceId: firstService.id})
+            .then(function(instances) {
+              var firstInstance = instances[0];
+
+              return CommonPMServiceProcess.find(server, {serviceInstanceid: firstInstance.id})
+                .then(function(response) {
+                  for (var i = 0;i < response.length;i++) {
+                    response[i].status = 'Running';
+                  }
+                  return response;
+                });
+
+            });
+        })
+        .catch(function(error) {
+          $log.error('no service found for id: ' + id + ' ' + error.message);
+        });
+    };
+
+    return svc;
+  }
+
+]);
+
+Common.service('CommonPMServerService', ['$http', '$log',
+  function($http, $log) {
+    return {
+      find: function(server, filter) {
+        var apiRequestPath = 'http://' + server.host + ':' + server.port + '/api/Services';
+        return $http({
+          url: apiRequestPath,
+          method: "GET",
+          params: {where:filter}
+        })
+          .then(function(response) {
+            return response.data;
+          })
+          .catch(function(error) {
+            $log.error(error.message + ':' + error);
+            return error;
+          });
+      }
+    }
+  }
+]);
+Common.service('CommonPMServiceInstance', ['$http', '$log',
+  function($http, $log) {
+    return {
+      find: function(server, filter) {
+        var apiRequestPath = 'http://' + server.host + ':' + server.port + '/api/ServiceInstances';
+        return $http({
+          url: apiRequestPath,
+          method: "GET",
+          params: {where:filter}
+        })
+          .then(function(response) {
+            return response.data;
+          })
+          .catch(function(error) {
+            $log.error(error.message + ':' + error);
+            return error;
+          });
+      }
+    }
+  }
+
+]);
+Common.service('CommonPMServiceProcess', ['$http', '$log',
+  function($http, $log) {
+    return {
+      find: function(server, filter) {
+        var apiRequestPath = 'http://' + server.host + ':' + server.port + '/api/ServiceProcesses';
+        return $http({
+          url: apiRequestPath,
+          method: "GET",
+          params: {where:filter}
+        })
+          .then(function(response) {
+            return response.data;
+          })
+          .catch(function(error) {
+            $log.error(error.message + ':' + error);
+            return error;
+          });
+      }
+    }
+  }
+
+]);
+Common.service('CommonPMServiceMetric', [
+  '$http', '$log',
+  function($http, $log) {
+    return {
+      find: function(server, filter) {
+        var apiRequestPath = 'http://' + server.host + ':' + server.port + '/api/ServiceMetrics';
+        return $http({
+          url: apiRequestPath,
+          method: "GET",
+          params: {where:filter}
+        })
+          .then(function(response) {
+            return response.data;
+          })
+          .catch(function(error) {
+            $log.error(error.message + ':' + error);
+            return error;
+          });
+      }
+    }
+  }
+
+]);

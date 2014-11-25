@@ -18,9 +18,9 @@
       <li
         ng-repeat="process in processes | limitTo:8"
         class="process"
-        ng-class="{ active: activeProcess.processId == process.processId }"
+        ng-class="{ active: activeProcess.pid == process.pid }"
         ng-click="setActiveProcess(process, false)">
-        <div class="pid">{{process.processId}}</div>
+        <div class="pid">{{process.pid}}</div>
         <div class="status" ng-class="process.status.toLowerCase()">{{process.status}}</div>
       </li>
     </ul>
