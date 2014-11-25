@@ -35,8 +35,8 @@ function downloadHelpHtml(id, destDir, cb) {
     var data;
     try {
       data = JSON.parse(body);
-    } catch (err) {
-      var msg = 'Cannot parse help item #' + id + ': ' + err.message;
+    } catch (error) {
+      var msg = 'Cannot parse help item #' + id + ': ' + error.message;
       gutil.log(gutil.colors.red(msg));
       gutil.log(body || '(empty body)');
       return cb(new Error(msg));
