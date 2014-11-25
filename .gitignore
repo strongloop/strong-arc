@@ -7,5 +7,6 @@ bower_components
 /client/www/scripts/modules/common/workspace.services.js
 /client/www/style/style.css
 /client/www/help/
+/devtools/custom/strongloop.css
 *-xunit.xml
 sandbox
