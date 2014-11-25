@@ -5,7 +5,7 @@ var opener = require('opener');
 var studio = require('../server/server');
 var DEFAULT_STUDIO_HOST = 'localhost';
 var STUDIO_RUNNING_MSG =
-exports.STUDIO_RUNNING_MSG = 'Your studio is running here:';
+exports.STUDIO_RUNNING_MSG = 'Your Arc is running here:';
 var argv = getArgv();
 var pathArg = argv[0];
 var WORKSPACE_DIR = process.cwd();
@@ -30,7 +30,7 @@ var port = process.env.PORT || 0;
 
 var server = studio.listen(port, function(err) {
   if(err) {
-    console.error('could not start studio!');
+    console.error('could not start Arc!');
     console.error(err);
     process.exit(1);
   }
@@ -48,19 +48,17 @@ function getArgv() {
 }
 
 function printHelp() {
+  var cmd = process.env.CMD || 'strong-arc';
   console.log('Usage');
-  console.log('  %s [options]', process.env.CMD || 'strong-studio');
+  console.log('  %s [options]', cmd);
   console.log();
   console.log('Options');
-  console.log('  --cli   Start the studio backend only, do not open the browser.');
+  console.log('  --cli   Start the backend only, do not open the browser.');
   console.log();
-  console.log('The program must be run in the project directory created by');
-  console.log('`slc loopback`');
-  console.log();
-  console.log('StrongLoop Studio will use a different port number each time');
+  console.log('StrongLoop Arc will use a different port number each time');
   console.log('you run it. You can provide a specific port number via ');
   console.log('the environment variable PORT, for example:');
-  console.log('  PORT=4000 strong-studio');
+  console.log('  PORT=4000 ' + cmd);
   console.log();
 }
 
