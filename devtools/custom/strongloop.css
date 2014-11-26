@@ -437,6 +437,7 @@
 .ui-actions {
   text-align: right;
   margin-right: 3rem;
+  position: relative;
 }
 .ui-actions button {
   border: none;
@@ -591,11 +592,15 @@ form.ui-form input[type=number][disabled] {
   padding: 1rem 4rem 1rem 2rem;
   color: #eeeeee;
   background: #aaaaaa;
+  font-size: 2rem;
+  font-weight: 400;
 }
 .ui-popover .ui-popover-content .ui-popover-body {
   padding: 1rem 2rem;
   max-height: 40rem;
   overflow-y: auto;
+  font-size: 1.6rem;
+  color: #999;
 }
 .ui-popover .ui-popover-content .sl-icon-close {
   position: absolute;
