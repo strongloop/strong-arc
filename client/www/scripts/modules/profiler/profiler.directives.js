@@ -12,12 +12,13 @@ Profiler
             host: '',
             port: ''
           };
-          $scope.profilerId = 'file';
+
+          $scope.profilerId = 'remote';
           $scope.activeProcess = null;
 
           $scope.profilerTogglers = [
-            { id: 'file', label: 'File', activeId: 'profilerId' },
-            { id: 'remote', label: 'Remote', activeId: 'profilerId' }
+            { id: 'remote', label: 'Remote', activeId: 'profilerId'},
+            { id: 'file', label: 'File', activeId: 'profilerId' }
           ];
 
           $scope.processes = [];
