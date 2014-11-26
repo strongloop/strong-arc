@@ -210,6 +210,7 @@ Common.directive('slPopoverHelp', [
       templateUrl: './scripts/modules/common/templates/common.popover.html',
       link: function(scope, el, attrs){
         scope.loading = false;
+        scope.position = attrs.position || 'right';
 
         scope.$watch('showHelp', function(newVal, oldVal){
           if ( newVal ) {
