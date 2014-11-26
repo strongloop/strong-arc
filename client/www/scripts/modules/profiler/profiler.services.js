@@ -8,28 +8,14 @@ Profiler.service('ProfilerService', [
   function ($q, $http, $log, $interval, $q) {
     var svc = this;
 
-    svc.getProcessIds = function (url) {
-      return $http.get(url)
-        .then(function (res) {
-          var data = res.data;
-
-          //All pids have a status of running by default
-          data.processes.forEach(function(p){
-            p.status = 'Running';
-          });
-
-          return data.processes;
-        });
-    };
-
     svc.startCpuProfiling = function(server, process){
       var api = 'http://' + server.host + ':' + server.port;
-      var url = api + '/api/Services/1/actions';
+      var url = api + '/api/ServiceInstances/1/actions';
       var postData = {
         request: {
           cmd: 'current',
           sub: 'start-cpu-profiling',
-          target: process.processId
+          target: process.pid
         },
         serverServiceId: 1
       };
@@ -88,12 +74,12 @@ Profiler.service('ProfilerService', [
 
     svc.stopCpuProfiling = function(server, process){
       var api = 'http://' + server.host + ':' + server.port;
-      var url = api + '/api/Services/1/actions';
+      var url = api + '/api/ServiceInstances/1/actions';
       var postData = {
         request: {
           cmd: 'current',
           sub: 'stop-cpu-profiling',
-          target: process.processId
+          target: process.pid
         },
         serverServiceId: 1
       };
@@ -104,12 +90,12 @@ Profiler.service('ProfilerService', [
 
     svc.fetchHeapSnapshot = function(server, process){
       var api = 'http://' + server.host + ':' + server.port;
-      var url = api + '/api/Services/1/actions';
+      var url = api + '/api/ServiceInstances/1/actions';
       var postData = {
         request: {
           cmd: 'current',
           sub: 'heap-snapshot',
-          target: process.processId
+          target: process.pid
         },
         serverServiceId: 1
       };

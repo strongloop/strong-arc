@@ -98,7 +98,7 @@ WebInspector.ProfileLauncherView.prototype = {
         document.documentElement.addEventListener('setActiveProcess', function(e){
             var data = e.detail;
             var process = data.process;
-            var text = process.processId;
+            var text = process.pid;
 
             this._setTitlePid(text);
         }.bind(this));

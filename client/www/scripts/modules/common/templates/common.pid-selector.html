@@ -35,7 +35,7 @@
                   data-id="{{activeProcess.processId}}"
                   ng-click="isOpen = !isOpen">
               <span ng-show="activeProcess && isProcessFromMore">
-                {{activeProcess.processId}}
+                {{activeProcess.pid}}
                 {{activeProcess.status}}
               </span>
               <span ng-hide="isProcessFromMore">
@@ -48,10 +48,10 @@
             <a href
                data-id="{{process.pid}}"
                ng-click="setActiveProcess(process, true); hideMenu()"
-               ng-class="{ selected: activeProcess.processId == process.processId }">
-              {{process.processId}}
+               ng-class="{ selected: activeProcess.pid == process.pid }">
+              {{process.pid}}
               {{process.status}}
-              <i class="sl-icon sl-icon-checkmark" ng-show="activeProcess.processId == process.processId"></i>
+              <i class="sl-icon sl-icon-checkmark" ng-show="activeProcess.pid == process.pid"></i>
             </a>
           </li>
         </ul>

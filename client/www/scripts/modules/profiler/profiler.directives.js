@@ -12,12 +12,13 @@ Profiler
             host: '',
             port: ''
           };
-          $scope.profilerId = 'file';
+
+          $scope.profilerId = 'remote';
           $scope.activeProcess = null;
 
           $scope.profilerTogglers = [
-            { id: 'file', label: 'File', activeId: 'profilerId' },
-            { id: 'remote', label: 'Remote', activeId: 'profilerId' }
+            { id: 'remote', label: 'Remote', activeId: 'profilerId'},
+            { id: 'file', label: 'File', activeId: 'profilerId' }
           ];
 
           $scope.processes = [];
@@ -69,7 +70,7 @@ Profiler
             return ProfilerService.fetchHeapSnapshot($scope.server, $scope.activeProcess)
               .then(function(data){
                 var fileUrl = data.data.result.url;
-                var pid = $scope.activeProcess.processId;
+                var pid = $scope.activeProcess.pid;
                 var fileName = pid + '.heapsnapshot';
 
                 return ProfilerService.downloadFile($scope.server, fileUrl, fileName)
@@ -107,7 +108,7 @@ Profiler
                 $scope.activeProcess.status = 'Saving';
 
                 var fileUrl = data.data.result.url;
-                var pid = $scope.activeProcess.processId;
+                var pid = $scope.activeProcess.pid;
                 var fileName = pid + '.cpuprofile';
 
                 return ProfilerService.downloadFile($scope.server, fileUrl, fileName)
