@@ -2,6 +2,7 @@
   display: inline-block;
   position: relative;
   margin-left: 1rem;
+  text-align: left;
 
   .ui-arrow-left {
     width: 0;
@@ -14,27 +15,48 @@
     border-right: 1rem solid @ui-popover-arrow-color;
   }
 
+  .ui-arrow-right {
+    width: 0;
+    height: 0;
+    position: absolute;
+    right: -1rem;
+    top: 1rem;
+    border-top: 1rem solid transparent;
+    border-bottom: 1rem solid transparent;
+    border-left: 1rem solid @ui-popover-arrow-color;
+  }
+
   .ui-popover-content {
     position: absolute;
     padding: 0;
     left: 3rem;
     top: -1rem;
-    width: 300px;
+    width: 30rem;
     border: 1px solid @ui-popover-border-color;
     border-radius: @ui-radius;
     background: @ui-popover-bg;
     z-index: 2;
     min-height: 10rem;
 
+    &.left {
+      left: -31rem;
+    }
+
     .ui-popover-title {
       margin: 0;
-      padding: 1rem 2rem;
+      padding: 1rem 4rem 1rem 2rem;
       color: @ui-popover-title-color;
       background: @ui-popover-title-bg;
+      font-size: 2rem;
+      font-weight: 400;
     }
 
     .ui-popover-body {
       padding: 1rem 2rem;
+      max-height: 40rem;
+      overflow-y: auto;
+      font-size: 1.6rem;
+      color: #999;
     }
 
     .sl-icon-close {

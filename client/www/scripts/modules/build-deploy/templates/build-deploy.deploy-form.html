@@ -7,7 +7,10 @@
     novalidate
     ng-submit="deployGit(deploygit)">
     <fieldset>
-      <legend>Deploy git</legend>
+      <legend>
+        Deploy git
+        <sl-popover-help id="4557616" position="left"></sl-popover-help>
+      </legend>
       <div class="ui-form-group"
            ng-class="{
               valid: deploygit.deploy.$valid && deploy.git.submitted,
@@ -73,7 +76,10 @@
     novalidate
     ng-submit="deployUniversal(deployuniversal)">
     <fieldset>
-      <legend>Deploy universal</legend>
+      <legend>
+        Deploy universal
+        <sl-popover-help id="4557617" position="left"></sl-popover-help>
+      </legend>
       <div class="ui-form-group"
            ng-class="{
               valid: deployuniversal.archive.$valid && deploy.universal.submitted,

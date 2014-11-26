@@ -549,6 +549,7 @@ form.ui-form input[type=number][disabled] {
   display: inline-block;
   position: relative;
   margin-left: 1rem;
+  text-align: left;
 }
 .ui-popover .ui-arrow-left {
   width: 0;
@@ -560,26 +561,41 @@ form.ui-form input[type=number][disabled] {
   border-bottom: 1rem solid transparent;
   border-right: 1rem solid #aaaaaa;
 }
+.ui-popover .ui-arrow-right {
+  width: 0;
+  height: 0;
+  position: absolute;
+  right: -1rem;
+  top: 1rem;
+  border-top: 1rem solid transparent;
+  border-bottom: 1rem solid transparent;
+  border-left: 1rem solid #aaaaaa;
+}
 .ui-popover .ui-popover-content {
   position: absolute;
   padding: 0;
   left: 3rem;
   top: -1rem;
-  width: 300px;
+  width: 30rem;
   border: 1px solid #aaaaaa;
   border-radius: 0.3rem;
   background: #ffffff;
   z-index: 2;
   min-height: 10rem;
 }
+.ui-popover .ui-popover-content.left {
+  left: -31rem;
+}
 .ui-popover .ui-popover-content .ui-popover-title {
   margin: 0;
-  padding: 1rem 2rem;
+  padding: 1rem 4rem 1rem 2rem;
   color: #eeeeee;
   background: #aaaaaa;
 }
 .ui-popover .ui-popover-content .ui-popover-body {
   padding: 1rem 2rem;
+  max-height: 40rem;
+  overflow-y: auto;
 }
 .ui-popover .ui-popover-content .sl-icon-close {
   position: absolute;

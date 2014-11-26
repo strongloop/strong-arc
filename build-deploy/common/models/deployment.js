@@ -6,24 +6,27 @@ module.exports = function(Deployment) {
   Deployment.create = function(deployment, cb) {
     // TODO(ritch) handle custom CWDs
     var baseURL = 'http://' + deployment.host + ':' + deployment.port;
-    if(deployment.type === 'git') {
-      performGitDeployment(baseURL, deployment.branch, resize);
-    } else {
-      performHttpPutDeployment(baseURL, '', deployment.archive, resize);
+
+    resize();
+
+    function deploy(err){
+      if ( err ) return cb(err);
+
+      if(deployment.type === 'git') {
+        performGitDeployment(baseURL, deployment.branch, cb);
+      } else {
+        performHttpPutDeployment(baseURL, '', deployment.archive, cb);
+      }
     }
 
-    function resize(err) {
+    function resize() {
       //todo check status of deploy first
-      request.post(baseURL + '/api/ServiceInstances/1/actions', {
+      request.put(baseURL + '/api/ServiceInstances/1', {
         json: true,
         body: {
-          request: {
-            cmd: 'current',
-            sub: 'set-size',
-            size: deployment.processes
-          }
+          cpus: deployment.processes
         }
-      }, cb);
+      }, deploy);
     }
   };
 

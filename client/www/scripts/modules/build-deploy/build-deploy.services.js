@@ -16,7 +16,8 @@ BuildDeploy.service('BuildDeployService', [
       return Build.findById({id: build.id}).$promise
         .then(function(updatedBuild) {
           buildData.build = updatedBuild;
-          //          viewConsole.logs = updatedBuild.stdout;
+
+          //viewConsole.logs = updatedBuild.stdout;
           viewConsole.logs = viewConsole.logs.concat(updatedBuild.stdout, updatedBuild.stderr);
           viewConsole.logs = _.uniq(viewConsole.logs);
 
@@ -34,7 +35,7 @@ BuildDeploy.service('BuildDeployService', [
           } else {
             $timeout(function(){
               poll(def, buildData, build, viewConsole);
-            }, 500);
+            }, 2000);
           }
         });
     }

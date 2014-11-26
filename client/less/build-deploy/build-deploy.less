@@ -11,6 +11,19 @@
     margin: auto;
     min-width: @min-width;
     margin-bottom: 1rem;
+    position: relative;
+
+    .ui-popover {
+      position: absolute;
+      left: 50%;
+      margin-left: 13.75rem;
+      top: .75rem;
+
+      > .sl-icon {
+        color: #999;
+        font-size: 21px;
+      }
+    }
   }
 
   .sl-forms-toggler-inline {
