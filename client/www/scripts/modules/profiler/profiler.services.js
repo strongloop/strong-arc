@@ -8,21 +8,6 @@ Profiler.service('ProfilerService', [
   function ($q, $http, $log, $interval, $q) {
     var svc = this;
 
-    //@deprecated moved to CommonPidService.getDefaultPidData
-    //svc.getProcessIds = function (url) {
-    //  return $http.get(url)
-    //    .then(function (res) {
-    //      var data = res.data;
-    //
-    //      //All pids have a status of running by default
-    //      data.processes.forEach(function(p){
-    //        p.status = 'Running';
-    //      });
-    //
-    //      return data.processes;
-    //    });
-    //};
-
     svc.startCpuProfiling = function(server, process){
       var api = 'http://' + server.host + ':' + server.port;
       var url = api + '/api/ServiceInstances/1/actions';
