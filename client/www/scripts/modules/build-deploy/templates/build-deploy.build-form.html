@@ -47,7 +47,10 @@
       </div>
     </fieldset>
     <div class="ui-actions">
-      <button ng-disabled="deployId == 'existing'">Build</button>
+      <button ng-disabled="deployId == 'existing'">
+        Build
+        <span class="loading" sl-common-loading-indicator size="small" ng-show="build.git.loading"></span>
+      </button>
     </div>
     <sl-common-form-message message="build.git.message" type="build.git.messageType"></sl-common-form-message>
   </form>
@@ -81,7 +84,10 @@
       </div>
     </fieldset>
     <div class="ui-actions">
-      <button ng-disabled="deployId == 'existing'">Build</button>
+      <button ng-disabled="deployId == 'existing'">
+        Build
+        <span class="loading" sl-common-loading-indicator size="small" ng-show="build.universal.loading"></span>
+      </button>
     </div>
     <sl-common-form-message message="build.universal.message" type="build.universal.messageType"></sl-common-form-message>
   </form>

@@ -17,16 +17,20 @@ BuildDeploy.directive('slBuildDeployBuildForm', [
               branch: $scope.build.git.deploy
             };
 
+            $scope.build.git.loading = true;
+
             BuildDeployService.buildGit(buildData, $scope.viewConsole)
               .then(function(data){
                 $log.log(data);
                 $scope.build.git.message = 'Successfully built using git';
                 $scope.build.git.messageType = 'success';
+                $scope.build.git.loading = false;
               })
               .catch(function(err){
                 $log.log(err);
                 $scope.build.git.message = 'Unable to build using git';
                 $scope.build.git.messageType = 'error';
+                $scope.build.git.loading = false;
               });
           }
         };
@@ -42,17 +46,21 @@ BuildDeploy.directive('slBuildDeployBuildForm', [
               archive: $scope.build.universal.archive
             };
 
+            $scope.build.universal.loading = true;
+
             BuildDeployService.buildUniversal(buildData, $scope.viewConsole)
               .then(function(data){
                 $log.log(data);
                 $scope.build.universal.message = 'Successfully built using universal';
                 $scope.build.universal.messageType = 'success';
                 $scope.deploy.universal.archive = data.archive;
+                $scope.build.universal.loading = false;
               })
               .catch(function(err){
                 $log.log(err);
                 $scope.build.universal.message = 'Unable to build using universal';
                 $scope.build.universal.messageType = 'error';
+                $scope.build.universal.loading = false;
               });
           }
         };
@@ -120,16 +128,27 @@ BuildDeploy.directive('slBuildDeployDeployForm', [
               processes: $scope.deploy.host.processes
             };
 
+            $scope.deploy.git.loading = true;
+
             BuildDeployService.deployGit(deployData, $scope.viewConsole)
               .then(function(data){
                 $log.log('deploy done!', data);
                 $scope.deploy.git.message = 'Successfully deployed using git';
+                $scope.deploy.git.loading = false;
+              })
+              .catch(function(err){
+                $log.error(err);
+                $scope.deploy.git.message = 'Unable to deploy using git';
+                $scope.deploy.git.messageType = 'error';
+                $scope.deploy.git.loading = false;
               });
           }
 
         };
 
         $scope.deployUniversal = function(form){
+          $scope.deploy.universal.submitted = true;
+
           if ( form.$valid ) {
 
             var deployData = {
@@ -140,16 +159,20 @@ BuildDeploy.directive('slBuildDeployDeployForm', [
               processes: $scope.deploy.host.processes
             };
 
+            $scope.deploy.universal.loading = true;
+
             BuildDeployService.deployUniversal(deployData, $scope.viewConsole)
               .then(function(data){
                 $log.log('deploy done!', data);
                 $scope.deploy.universal.message = 'Successfully deployed using universal';
                 $scope.deploy.universal.messageType = 'success';
+                $scope.deploy.universal.loading = false;
               })
               .catch(function(err){
                 $log.log(err);
-                $scope.deploy.universal.message = 'There was an error';
+                $scope.deploy.universal.message = 'Unable to deploy using universal';
                 $scope.deploy.universal.messageType = 'error';
+                $scope.deploy.universal.loading = false;
               });
           }
         };

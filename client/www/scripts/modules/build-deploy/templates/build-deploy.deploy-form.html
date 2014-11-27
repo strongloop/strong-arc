@@ -64,7 +64,10 @@
       </div>
     </fieldset>
     <div class="ui-actions">
-      <button>Deploy</button>
+      <button>
+        Deploy
+        <span class="loading" sl-common-loading-indicator size="small" ng-show="deploy.git.loading"></span>
+      </button>
     </div>
     <sl-common-form-message message="deploy.git.message" type="deploy.git.messageType"></sl-common-form-message>
   </form>
@@ -136,7 +139,10 @@
 
     </fieldset>
     <div class="ui-actions">
-      <button>Deploy</button>
+      <button>
+        Deploy
+        <span class="loading" sl-common-loading-indicator size="small" ng-show="deploy.universal.loading"></span>
+      </button>
     </div>
     <sl-common-form-message message="deploy.universal.message" type="deploy.universal.messageType"></sl-common-form-message>
   </form>
