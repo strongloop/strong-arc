@@ -32,7 +32,8 @@
               invalid: ( deploygit.deploy.$invalid || deploygit.port.$invalid || deploygit.processes.$invalid ) && deploy.git.submitted
             }">
 
-        <label>Hostname:
+        <label>
+          <span>Hostname:</span>
           <input
             type="text"
             placeholder="host1.example.com"
@@ -40,7 +41,8 @@
             name="hostname"
             required>
         </label>
-        <label>Port:
+        <label>
+          <span>Port:</span>
           <input
             type="text"
             placeholder="8000"
@@ -49,7 +51,8 @@
             required
             >
         </label>
-        <label>Processes:
+        <label>
+          <span>Processes:</span>
           <input
             type="number"
             min="1"
@@ -107,7 +110,8 @@
               valid: ( deployuniversal.hostname.$valid || deployuniversal.port.$valid || deployuniversal.processes.$valid ) && deploy.universal.submitted,
               invalid: ( deployuniversal.deploy.$invalid || deployuniversal.port.$invalid || deployuniversal.processes.$invalid ) && deploy.universal.submitted
              }">
-        <label>Hostname:
+        <label>
+          <span>Hostname:</span>
           <input
             type="text"
             placeholder="host1.example.com"
@@ -115,7 +119,8 @@
             name="hostname"
             required>
         </label>
-        <label>Port:
+        <label>
+          <span>Port:</span>
           <input
             type="text"
             placeholder="8000"
@@ -123,7 +128,8 @@
             name="port"
             required>
         </label>
-        <label>Processes:
+        <label>
+          <span>Processes:</span>
           <input
             type="number"
             min="1"

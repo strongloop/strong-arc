@@ -448,6 +448,7 @@
   margin-left: 1rem;
   border-bottom: 2px solid #67992d;
   font-weight: 300;
+  position: relative;
 }
 .ui-actions button[disabled],
 .ui-actions button[disabled]:hover {
@@ -457,6 +458,11 @@
 }
 .ui-actions button:hover {
   background-color: #67992d;
+}
+.ui-actions button .loading {
+  position: absolute;
+  left: -2rem;
+  top: 1.75rem;
 }
 .ui-btn {
   border: none;

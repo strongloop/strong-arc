@@ -8,6 +8,7 @@ BuildDeploy.directive('slBuildDeployBuildForm', [
       controller: function($scope, $attrs, $log, BuildDeployService){
         $scope.buildGit = function(form){
           $scope.build.git.submitted = true;
+          $scope.build.git.message = '';
           $scope.viewConsole.logs = [];
           $log.log(form);
 
@@ -37,6 +38,7 @@ BuildDeploy.directive('slBuildDeployBuildForm', [
 
         $scope.buildUniversal = function(form){
           $scope.build.universal.submitted = true;
+          $scope.build.universal.message = '';
           $scope.viewConsole.logs = [];
           //$log.log(form);
 
@@ -118,6 +120,7 @@ BuildDeploy.directive('slBuildDeployDeployForm', [
 
         $scope.deployGit = function(form){
           $scope.deploy.git.submitted = true;
+          $scope.deploy.git.message = '';
 
           if ( form.$valid ) {
             var deployData = {
@@ -148,6 +151,7 @@ BuildDeploy.directive('slBuildDeployDeployForm', [
 
         $scope.deployUniversal = function(form){
           $scope.deploy.universal.submitted = true;
+          $scope.deploy.universal.message = '';
 
           if ( form.$valid ) {
 
