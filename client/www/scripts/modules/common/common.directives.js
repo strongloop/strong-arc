@@ -241,23 +241,11 @@ Common.directive('slCommonFormMessage', [
         type: '=?'
       },
       templateUrl: './scripts/modules/common/templates/common.form-message.html',
-      controller: function($scope, $attrs, $log, $timeout){
-        var to;
-
-        function hideMessage(){
-          if ( to ) {
-            $timeout.cancel(to);
-          }
-
-          to = $timeout(function() {
-            $scope.message = '';
-            $scope.type = '';
-          }, 3000);
-        }
-
-        $scope.$watch('message', function(newVal){
-          hideMessage();
-        });
+      controller: function($scope, $attrs, $log){
+        $scope.hideMessage = function(){
+          $scope.message = '';
+          $scope.type = '';
+        };
       }
     }
   }
