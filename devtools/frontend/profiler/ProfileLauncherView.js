@@ -76,6 +76,7 @@ WebInspector.ProfileLauncherView.prototype = {
                 this._hideCpuButtons();
             } else {
                 this._toggleFetchButtons();
+                this._showFetchButtons();
             }
         }.bind(this);
 
