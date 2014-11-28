@@ -13,8 +13,11 @@ module.exports = function(Deployment) {
       if ( err ) return cb(err);
 
       if(deployment.type === 'git') {
-        performGitDeployment(baseURL, deployment.branch, cb);
+        var cwd = process.cwd();
+        // args are: workingDir, baseUrl, config, branch, callback
+        performGitDeployment(cwd, baseURL, '', deployment.branch, cb);
       } else {
+        // args are: baseURL, config, npmPkg, callback
         performHttpPutDeployment(baseURL, '', deployment.archive, cb);
       }
     }
