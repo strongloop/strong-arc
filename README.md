@@ -34,7 +34,7 @@ $ strong-arc
 
 ### Releases
 
-Commits to the `production` branch trigger a build and publish to get-studio.storngloop.com.
+Commits to the `production` branch trigger a build and publish to get-studio.strongloop.com.
 Previous releases are available at `http://get-studio.strongloop.com/strong-studio-$VERSION.tgz`
 
 #### Updating angular services for loopback-workspace
