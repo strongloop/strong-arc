@@ -112,3 +112,33 @@ body.inactive button.text-button, button.text-button {
         }
     }
 }
+
+.sidebar {
+    background-color: @sidebar-bg-color;
+}
+
+.status-bar {
+    background-color: @statusbar-bg-color;
+    border-bottom-color: @statusbar-bg-color;
+}
+
+.profiles.panel .status-bar {
+    border-bottom-color: @statusbar-bg-color;
+}
+
+.split-view.hbox > .split-view-resizer > .split-view-resizer-border {
+    border-left-color: @resizer-border-color;
+}
+
+.sidebar-tree-section, select.status-bar-item, .profiles-sidebar-tree-box {
+    text-shadow: none;
+    color: @sidebar-color;
+}
+
+.sidebar-tree-item.selected {
+    text-shadow: none;
+}
+
+.sidebar-tree-item {
+    color: @sidebar-color;
+}
