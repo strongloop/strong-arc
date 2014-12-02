@@ -1,5 +1,4 @@
-Profiler
-  .directive('slProfilerNavbar', [
+Profiler.directive('slProfilerNavbar', [
     '$http',
     '$log',
     'ProfilerService', function($http, $log, ProfilerService){
@@ -141,6 +140,10 @@ Profiler
                 cb(file);
               });
           };
+          // fix profiler header disappearing when files are loaded in the iframe, etc
+          SL.parent.profiler.setProfilerLayout = function(cb){
+            $scope.setProfilerLayout();
+          };
 
           SL.parent.profiler.getProfilerId = function(){
             return $scope.profilerId;
@@ -163,4 +166,20 @@ Profiler
           }
         }
       }
-    }]);
+    }
+]);
+Profiler.directive('slProfilerDevtools', [
+  '$log',
+  function($log) {
+    return {
+      template: '<iframe id="DevToolsIFrame" src="/devtools" name="devtools" ng-class="{ disabled: profilerId == \'remote\' && !isRemoteValid }"></iframe>',
+      link: function(scope, el, attrs) {
+
+        window.onresize = function(event) {
+          scope.setProfilerLayout();
+        };
+        scope.setProfilerLayout();
+      }
+    }
+  }
+]);

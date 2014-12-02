@@ -236,11 +236,20 @@ code {
 
 /*
 
+  app module container
+
+*/
+.app-module-container {
+  position:relative;
+}
+/*
+
     ide container
 
 */
 [data-id="MainBody"] {
   width: 100%;
+  position: relative;
 }
 [data-id="MainSidebarContainer"] {
   background-color: #444444;
@@ -347,14 +356,6 @@ Validation CSS
 }
 [data-id="GlobalExceptionDetailsContainer"] {
   display:none;
-}
-
-#ProfilerContainer {
-  position: absolute;
-  top: 8rem; /* size of header */
-  bottom: 0;
-  left: 0;
-  right: 0;
 }
 
 #ProfilerContainer iframe {

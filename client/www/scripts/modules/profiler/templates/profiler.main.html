@@ -1,18 +1,4 @@
-<div data-ui-type="table" data-id="MainBody">
-  <div data-ui-type="row">
-    <div data-ui-type="cell"
-         data-id="MainContentContainer"
-         class="top-level-container">
-      <div class="common-instance-view-container">
-
-        <div id="ProfilerContainer" class="sl-profiler">
-          <sl-profiler-navbar></sl-profiler-navbar>
-          <iframe
-            src="/devtools"
-            name="devtools"
-            ng-class="{ disabled: profilerId == 'remote' && !isRemoteValid }"></iframe>
-        </div>
-      </div>
-    </div>
-  </div>
+<div id="ProfilerContainer" class="sl-profiler">
+  <sl-profiler-navbar></sl-profiler-navbar>
+  <div sl-profiler-devtools id="ProfilerDevtoolsContainer"></div>
 </div>
