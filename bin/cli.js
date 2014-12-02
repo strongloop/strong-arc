@@ -36,8 +36,10 @@ var server = studio.listen(port, function(err) {
   }
 
   var url = util.format('http://%s:%s/%s', DEFAULT_STUDIO_HOST,
-    server.address().port, '#studio');
+    server.address().port, '#/');
+
   console.log('%s %s', STUDIO_RUNNING_MSG, url);
+
   if (argv.indexOf('--cli') === -1) {
     opener(url);
   }
