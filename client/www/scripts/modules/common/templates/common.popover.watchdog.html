@@ -1,0 +1,17 @@
+<div class="ui-popover watchdog">
+  <div class="status"
+       ng-class="process.status.toLowerCase()"
+       ng-click="showPopover = !showPopover">
+    {{process.status}}
+  </div>
+  <div class="ui-popover-content"
+       ng-class="{ bottom: position == 'bottom' }"
+       ng-show="showPopover"
+       ng-mouseleave="showPopover = false">
+    <span class="ui-arrow-top" ng-show="position == 'bottom'"></span>
+    <h4 class="ui-popover-title">Watchdog - PID {{process.pid}}</h4>
+    <div class="ui-popover-body">
+      stuff goes here
+    </div>
+  </div>
+</div>

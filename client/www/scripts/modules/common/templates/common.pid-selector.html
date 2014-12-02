@@ -21,7 +21,8 @@
         ng-class="{ active: activeProcess.pid == process.pid }"
         ng-click="setActiveProcess(process, false)">
         <div class="pid">{{process.pid}}</div>
-        <div class="status" ng-class="process.status.toLowerCase()">{{process.status}}</div>
+        <div class="status" ng-class="process.status.toLowerCase()" ng-show="!isMetrics">{{process.status}}</div>
+        <sl-popover-watch-dog process="process" ng-show="isMetrics"></sl-popover-watch-dog>
       </li>
     </ul>
 

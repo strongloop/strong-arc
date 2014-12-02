@@ -4,6 +4,10 @@
   margin-left: 1rem;
   text-align: left;
 
+  &.watchdog {
+    cursor: auto;
+  }
+
   .ui-arrow-left {
     width: 0;
     height: 0;
@@ -26,6 +30,17 @@
     border-left: 1rem solid @ui-popover-arrow-color;
   }
 
+  .ui-arrow-top {
+    width: 0;
+    height: 0;
+    position: absolute;
+    right: 1rem;
+    top: -1rem;
+    border-bottom: 1rem solid @ui-popover-arrow-color;
+    border-right: 1rem solid transparent;
+    border-left: 1rem solid transparent;
+  }
+
   .ui-popover-content {
     position: absolute;
     padding: 0;
@@ -40,6 +55,12 @@
 
     &.left {
       left: -31rem;
+    }
+
+    &.bottom {
+      top: 2.2rem;
+      right: 0;
+      left: auto;
     }
 
     .ui-popover-title {
