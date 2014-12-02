@@ -231,6 +231,31 @@ Common.directive('slPopoverHelp', [
     };
 }]);
 
+Common.directive('slPopoverWatchDog', [
+  '$http',
+  '$tooltip',
+  '$log', function($http, $tooltip, $log){
+    return {
+      restrict: 'E',
+      replace: true,
+      scope: {
+        process: '='
+      },
+      templateUrl: './scripts/modules/common/templates/common.popover.watchdog.html',
+      link: function(scope, el, attrs){
+        scope.position = attrs.position || 'bottom';
+
+        scope.$watch('showPopover', function(newVal, oldVal){
+        });
+
+        scope.onClickFoo = function(){
+
+        }
+
+      }
+    };
+  }]);
+
 Common.directive('slCommonFormMessage', [
   function () {
     return {
