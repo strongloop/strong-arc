@@ -582,8 +582,8 @@ form.ui-form input[type=number][disabled] {
   width: 0;
   height: 0;
   position: absolute;
-  right: -1rem;
-  top: 1rem;
+  right: 1rem;
+  top: -1rem;
   border-bottom: 1rem solid #aaaaaa;
   border-right: 1rem solid transparent;
   border-left: 1rem solid transparent;
@@ -602,6 +602,11 @@ form.ui-form input[type=number][disabled] {
 }
 .ui-popover .ui-popover-content.left {
   left: -31rem;
+}
+.ui-popover .ui-popover-content.bottom {
+  top: 2.2rem;
+  right: 0;
+  left: auto;
 }
 .ui-popover .ui-popover-content .ui-popover-title {
   margin: 0;
