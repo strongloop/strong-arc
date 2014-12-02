@@ -744,3 +744,28 @@ button.text-button:not(:disabled):active.fetch-cpu {
   background: #d4470f;
   border-bottom-color: #8d2f0a;
 }
+.sidebar {
+  background-color: #595959;
+}
+.status-bar {
+  background-color: #656565;
+  border-bottom-color: #656565;
+}
+.profiles.panel .status-bar {
+  border-bottom-color: #656565;
+}
+.split-view.hbox > .split-view-resizer > .split-view-resizer-border {
+  border-left-color: #000000;
+}
+.sidebar-tree-section,
+select.status-bar-item,
+.profiles-sidebar-tree-box {
+  text-shadow: none;
+  color: #ffffff;
+}
+.sidebar-tree-item.selected {
+  text-shadow: none;
+}
+.sidebar-tree-item {
+  color: #ffffff;
+}
