@@ -443,6 +443,69 @@ Common.service('WorkspaceService', [
     };
   }
 ]);
+// TODO migrate the strong-pm to its own module (part of start/stop story)
+/*
+*
+* A set of services to add convenience to the user by remembering a list of
+* last used strong-pm server host/ports
+*
+* this is used in Common PID selector component help the user preserved context
+* accrsss the app modules
+*
+* currently it only shows the last successful server reference but it does store
+* each unique reference for further enhancement:
+* i.e choosing from a list of previously used host/port combos
+*
+* */
+Common.service('CommonPMService', [
+  '$log',
+  function($log) {
+    var svc = this;
+
+    svc.getPMServers = function() {
+      var pmServers = JSON.parse(window.localStorage.getItem('pmServers'));
+      if (pmServers) {
+        return pmServers;
+      }
+      return [];
+    };
+    svc.clearPMServers = function() {
+      window.localStorage.removeItem('pmServers');
+      return [];
+    };
+    svc.addPMServer = function(server) {
+      // check the list to see if it exists
+      // if it does then make it the most recent
+      // dont' add dup
+      var pmServers = JSON.parse(window.localStorage.getItem('pmServers'));
+      if (!pmServers) {
+        pmServers = [];
+      }
+      if (server.host && server.port) {
+        for (var i = 0;i < pmServers.length;i++) {
+          if ((server.host === pmServers[i].host) && (server.host === pmServers[i].host)) {
+            pmServers.splice(i,1);
+            break;
+          }
+        }
+        pmServers.push(server);
+      }
+      window.localStorage.setItem('pmServers', JSON.stringify(pmServers));
+      return server;
+    };
+    svc.getLastPMServer = function() {
+      // get the last entry in the array
+      var pmServers = JSON.parse(window.localStorage.getItem('pmServers'));
+
+      if (pmServers) {
+        return pmServers[pmServers.length - 1];
+      }
+      return [];
+    };
+
+    return svc;
+  }
+]);
 Common.service('CommonPidService', [
   'CommonPMServerService',
   'CommonPMServiceInstance',
