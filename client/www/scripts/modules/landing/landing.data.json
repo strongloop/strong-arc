@@ -2,7 +2,7 @@
   "apps": [
     {
       "id": "composer",
-      "name": "API Composer",
+      "name": "Composer",
       "description": "Develop and test LoopBack apps, models, and data sources."
     },
     {
