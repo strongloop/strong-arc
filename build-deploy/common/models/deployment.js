@@ -2,11 +2,18 @@ var performGitDeployment = require('strong-deploy/lib/git').performGitDeployment
 var performHttpPutDeployment = require('strong-deploy/lib/put-file').performHttpPutDeployment;
 var performLocalDeployment = require('strong-deploy/lib/post-json').performLocalDeployment;
 var request = require('request');
+var DEFAULT = 'default'; // the config for strong-deploy
 
 module.exports = function(Deployment) {
   Deployment.create = function(deployment, cb) {
     // TODO(ritch) handle custom CWDs
     var baseURL = 'http://' + deployment.host + ':' + deployment.port;
+    var cwd = process.cwd();
+
+    if(deployment.type === 'local') {
+      // this should be configurable in the ui
+      deployment.processes = deployment.processes || 1;
+    }
 
     resize();
 
@@ -14,19 +21,19 @@ module.exports = function(Deployment) {
       if ( err ) return cb(err);
 
       if(deployment.type === 'local') {
-        // Note: I strongly recommend a `deployment.processes` of 1 for local,
-        // especially since its not configurable in the UI.
-        var cwd = process.cwd();
         // args are: baseUrl, localdir, config, callback
-        performLocalDeployment(baseURL, cwd, '', cb);
+        performLocalDeployment(baseURL, cwd, DEFAULT, done);
       } else if(deployment.type === 'git') {
-        var cwd = process.cwd();
         // args are: workingDir, baseUrl, config, branch, callback
-        performGitDeployment(cwd, baseURL, '', deployment.branch, cb);
+        performGitDeployment(cwd, baseURL, DEFAULT, deployment.branch, done);
       } else {
         // args are: baseURL, config, npmPkg, callback
-        performHttpPutDeployment(baseURL, '', deployment.archive, cb);
+        performHttpPutDeployment(baseURL, DEFAULT, deployment.archive, done);
       }
+    }
+
+    function done(err) {
+      cb(err, deployment);
     }
 
     function resize() {
