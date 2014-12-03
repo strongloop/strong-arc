@@ -16,7 +16,7 @@ Profiler.directive('slProfilerNavbar', [
           $scope.activeProcess = null;
 
           $scope.profilerTogglers = [
-            { id: 'remote', label: 'Remote', activeId: 'profilerId'},
+            { id: 'remote', label: 'Server', activeId: 'profilerId'},
             { id: 'file', label: 'File', activeId: 'profilerId' }
           ];
 
