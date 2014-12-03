@@ -2,7 +2,9 @@
 Arc.controller('ArcMainController', [
   '$scope',
   'ArcUserService',
-  '$location', function($scope, ArcUserService){
+  '$log',
+  '$rootScope',
+  function($scope, ArcUserService, $log, $rootScope){
 
     $scope.suiteIA = {
       apps: []
@@ -10,6 +12,10 @@ Arc.controller('ArcMainController', [
 
     $scope.isAuthUser = function(){
       return ArcUserService.isAuthUser();
+    };
+
+    $scope.pageClick = function($event){
+      $rootScope.$broadcast('pageClick', $event);
     };
 }]);
 

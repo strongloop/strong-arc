@@ -1,0 +1,16 @@
+<div class="ui-popover menu">
+  <span
+    class="sl-icon"
+    ng-class="icon"
+    ng-click="showPopover = !showPopover"
+    ng-mouseleave="hidePopover()"
+    ></span>
+  <div class="ui-popover-content"
+       ng-class="{ bottom: position == 'bottom' }"
+       ng-show="showPopover"
+       ng-mouseenter="cancelHide()"
+       ng-mouseleave="!hideOnPageClick && ( showPopover = false )">
+    <span class="ui-arrow-top" ng-show="position == 'bottom'"></span>
+    <div class="ui-popover-body"></div>
+  </div>
+</div>

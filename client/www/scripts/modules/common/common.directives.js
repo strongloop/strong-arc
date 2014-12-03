@@ -231,6 +231,59 @@ Common.directive('slPopoverHelp', [
     };
 }]);
 
+Common.directive('slPopoverMenu', [
+  '$http',
+  '$tooltip',
+  '$log',
+  '$rootScope',
+  '$timeout', function($http, $tooltip, $log, $rootScope, $timeout){
+    return {
+      restrict: 'E',
+      replace: true,
+      scope: {},
+      transclude: true,
+      templateUrl: './scripts/modules/common/templates/common.popover.menu.html',
+      link: function(scope, element, attrs, ctrl, transclude){
+        var to;
+        scope.position = attrs.position || 'bottom';
+        scope.icon = attrs.icon;
+        scope.hideOnPageClick = attrs.hideonpageclick;
+
+        scope.$watch('showPopover', function(newVal, oldVal){
+        });
+
+        $rootScope.$on('pageClick', function(e, $event){
+          var isMenuClick = !!$($event.target).parents('.ui-popover.menu').length;
+
+          if ( scope.hideOnPageClick && !isMenuClick ) {
+            scope.showPopover = false;
+          }
+        });
+
+        scope.hidePopover = function(){
+          if ( scope.hideOnPageClick ) return;
+
+          to = $timeout(function(){
+            scope.showPopover = false;
+          }, 400);
+        };
+
+        scope.cancelHide = function(){
+          if ( scope.hideOnPageClick ) return;
+
+          if ( to ) {
+            $timeout.cancel(to);
+          }
+        };
+
+        transclude(scope.$parent, function(clone, scope) {
+          clone.removeClass('hide');
+          element.find('.ui-popover-body').append(clone);
+        });
+      }
+    };
+  }]);
+
 Common.directive('slCommonFormMessage', [
   function () {
     return {
