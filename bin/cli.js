@@ -2,10 +2,10 @@
 var path = require('path');
 var util = require('util');
 var opener = require('opener');
-var studio = require('../server/server');
-var DEFAULT_STUDIO_HOST = 'localhost';
-var STUDIO_RUNNING_MSG =
-exports.STUDIO_RUNNING_MSG = 'Your Arc is running here:';
+var arc = require('../server/server');
+var DEFAULT_ARC_HOST = 'localhost';
+var STRONG_ARC_RUNNING_MSG =
+exports.STRONG_ARC_RUNNING_MSG = 'Your Arc is running here:';
 var argv = getArgv();
 var pathArg = argv[0];
 var WORKSPACE_DIR = process.cwd();
@@ -28,17 +28,17 @@ console.log('Loading workspace %s', process.env.WORKSPACE_DIR);
 
 var port = process.env.PORT || 0;
 
-var server = studio.listen(port, function(err) {
+var server = arc.listen(port, function(err) {
   if(err) {
     console.error('could not start Arc!');
     console.error(err);
     process.exit(1);
   }
 
-  var url = util.format('http://%s:%s/%s', DEFAULT_STUDIO_HOST,
+  var url = util.format('http://%s:%s/%s', DEFAULT_ARC_HOST,
     server.address().port, '#/');
 
-  console.log('%s %s', STUDIO_RUNNING_MSG, url);
+  console.log('%s %s', STRONG_ARC_RUNNING_MSG, url);
 
   if (argv.indexOf('--cli') === -1) {
     opener(url);
