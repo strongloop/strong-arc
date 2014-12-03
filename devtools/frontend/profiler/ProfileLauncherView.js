@@ -224,12 +224,18 @@ WebInspector.ProfileLauncherView.prototype = {
 
         if ( !process ) return false;
 
+        this._disableProfilerRadioButtons();
+
         SL.profiler.fetchHeapFile(function(file){
-            if ( !file ) return;
+            if ( !file ) {
+                this._enableProfilerRadioButtons();
+                return;
+            }
 
             //console.log('[iframe] fetched file', file);
 
             this._panel._loadFromFile(file);
+            this._enableProfilerRadioButtons();
         }.bind(this));
     },
 
@@ -247,10 +253,12 @@ WebInspector.ProfileLauncherView.prototype = {
 
             if ( data.status === 200 ) {
                 this._toggleCpuButtons('stop');
+                this._disableProfilerRadioButtons();
             }
         }.bind(this));
     },
 
+    //stop profiling button clicked
     _fetchCpuButtonClicked: function(){
         var SL = this._SL;
         var process = SL.profiler.getActiveProcess();
@@ -264,6 +272,7 @@ WebInspector.ProfileLauncherView.prototype = {
             //console.log('[iframe] fetched cpu file', file);
 
             this._toggleCpuButtons('start');
+            this._enableProfilerRadioButtons();
             this._panel._loadFromFile(file);
         }.bind(this));
     },
@@ -400,6 +409,24 @@ WebInspector.MultiProfileLauncherView.prototype = {
     },
 
     //being strongloop
+    _disableProfilerRadioButtons: function(){
+        var items = this._profileTypeSelectorForm.elements;
+
+        for (var i = 0; i < items.length; ++i) {
+            if (items[i].type === "radio")
+                items[i].disabled = true;
+        }
+    },
+
+    _enableProfilerRadioButtons: function(){
+        var items = this._profileTypeSelectorForm.elements;
+
+        for (var i = 0; i < items.length; ++i) {
+            if (items[i].type === "radio")
+                items[i].disabled = false;
+        }
+    },
+
     _toggleCpuButtons: function(type){
         if ( type == 'stop' ) {
             this._fetchCpuButton.style.display = '';
