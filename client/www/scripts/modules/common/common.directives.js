@@ -122,7 +122,8 @@ Common.directive('slCommonPidSelector', [
   '$log',
   'ProfilerService',
   'CommonPidService',
-  function($log, ProfilerService, CommonPidService){
+  'CommonPMService',
+  function($log, ProfilerService, CommonPidService, CommonPMService){
     return {
       restrict: 'E',
       replace: true,
@@ -132,6 +133,9 @@ Common.directive('slCommonPidSelector', [
           host: '',
           port: ''
         };
+        if (CommonPMService.getPMServers().length) {
+          $scope.server = CommonPMService.getLastPMServer();
+        }
 
         $scope.hasIframe = $attrs.iframe;
         $scope.activeProcess = null;
@@ -151,6 +155,7 @@ Common.directive('slCommonPidSelector', [
 
             CommonPidService.getDefaultPidData($scope.server, 1)
               .then(function(pidCollection) {
+                CommonPMService.addPMServer($scope.server);
                 $scope.processes = pidCollection;
               });
           }
