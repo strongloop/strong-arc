@@ -59,8 +59,12 @@ function resolveRelativeHrefs(html) {
 
   $('a').each(function() {
     var href = $(this).attr('href');
-    if (/^\/display/.test(href))
+
+    if (/^\/display/.test(href)) {
       $(this).attr('href', CONFLUENCE_URL_BASE + href.slice(1));
+    }
+
+    $(this).attr('target', '_new');
   });
   return $.html();
 }
