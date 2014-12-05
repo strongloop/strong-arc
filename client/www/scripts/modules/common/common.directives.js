@@ -103,7 +103,7 @@ Common.directive('slCommonInstanceTabsView', [
  * by single clicking the content
  *
  * */
-module.directive('slCommonSelectOnClick', function () {
+Common.directive('slCommonSelectOnClick', function () {
   return {
     restrict: 'A',
     link: function (scope, element, attrs) {
