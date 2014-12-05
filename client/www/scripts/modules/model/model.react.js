@@ -446,6 +446,10 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
     component.setState({
       isNameValid: component.isNameValid(event.target.value)
     });
+
+    if ( this.state.isNameValid ){
+      component.triggerModelPropertyUpdate(event);
+    }
   },
   triggerModelPropertyUpdate: function(event) {
     var component = this;
@@ -526,7 +530,6 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
                   required="true"
                   type="text"
                   onChange={component.checkSubmitModelProperty}
-                  onBlur={component.triggerModelPropertyUpdate}
                   value={modelProperty.name} />
               </div>
               <div data-ui-type="cell" className="props-data-type-cell">
