@@ -1,0 +1,19 @@
+{
+  "name": "Project",
+  "base": "Model",
+  "properties": {
+    "dir": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

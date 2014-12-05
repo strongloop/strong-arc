@@ -1,7 +1,12 @@
 <div class="sl-app">
-  <div class="app-container" ui-sref="{{app.id}}">
+  <div class="app-container {{app.supportsCurrentProject ? '' : 'app-unsupported'}}" ui-sref="{{getSref(app)}}">
     <i class="app-image sl-app-icon sl-app-icon-{{app.id}}"></i>
     <a class="app-name" ui-sref="{{app.id}}">{{app.name}}</a>
     <p class="app-description">{{app.description}}</p>
+    <!--
+    <div ng-show="{{!app.supportsCurrentProject}}">
+      <strong>{{app.name}} is not compatibile with your application: {{project.dir}}</strong>
+    </div>
+    -->
   </div>
 </div>

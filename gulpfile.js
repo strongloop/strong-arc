@@ -26,6 +26,7 @@ gulp.task('build', [
     'build-workspace-services',
     'build-build-and-deploy-services',
     'build-help-assets',
+    'build-arc-services',
     'install-example-modules'
 ]);
 
@@ -68,6 +69,16 @@ gulp.task('build-workspace-services', function() {
   return gulp.src('./node_modules/loopback-workspace/app.js')
     .pipe(loopbackAngular({ apiUrl: '/workspace/api' }))
     .pipe(rename('workspace.services.js'))
+    .pipe(gulp.dest('./client/www/scripts/modules/common'));
+});
+
+gulp.task('build-arc-services', function() {
+  return gulp.src('./arc-api/server/server.js')
+    .pipe(loopbackAngular({
+      apiUrl: '/api',
+      ngModuleName: 'ArcServices'
+    }))
+    .pipe(rename('arc-services.js'))
     .pipe(gulp.dest('./client/www/scripts/modules/common'));
 });
 

@@ -1,0 +1,17 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ]
+  },
+  "Project": {
+    "dataSource": null,
+    "public": true
+  },
+  "ArcApp": {
+    "dataSource": null,
+    "public": true
+  }
+}
