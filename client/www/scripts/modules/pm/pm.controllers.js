@@ -6,7 +6,7 @@ PM.controller('PMAppController', [
   function($scope, $log, PMAppService) {
 
     $scope.startApp = function() {
-      PMAppService.startLocalApp()
+      PMAppService.restartLocalApp()
         .then(function() {
           $log('App Started = woot');
         });
