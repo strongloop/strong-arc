@@ -545,6 +545,12 @@ Common.service('CommonPidService', [
                     for (var i = 0;i < response.length;i++) {
                       response[i].status = 'Running';
                     }
+
+                    //filter out dead pids
+                    response = response.filter(function(process){
+                      return !process.stopTime;
+                    });
+
                     return response;
                   })
                   .catch(function(error) {
