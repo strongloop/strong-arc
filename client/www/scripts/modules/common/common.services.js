@@ -473,7 +473,7 @@ Common.service('CommonPMService', [
       window.localStorage.removeItem('pmServers');
       return [];
     };
-    svc.addPMServer = function(server) {
+    svc.addPMServer = function(serverConfig) {
       // check the list to see if it exists
       // if it does then make it the most recent
       // dont' add dup
@@ -481,17 +481,17 @@ Common.service('CommonPMService', [
       if (!pmServers) {
         pmServers = [];
       }
-      if (server.host && server.port) {
+      if (serverConfig.host && serverConfig.port) {
         for (var i = 0;i < pmServers.length;i++) {
-          if ((server.host === pmServers[i].host) && (server.host === pmServers[i].host)) {
+          if ((serverConfig.host === pmServers[i].host) && (serverConfig.port === pmServers[i].port)) {
             pmServers.splice(i,1);
             break;
           }
         }
-        pmServers.push(server);
+        pmServers.push(serverConfig);
       }
       window.localStorage.setItem('pmServers', JSON.stringify(pmServers));
-      return server;
+      return serverConfig;
     };
     svc.getLastPMServer = function() {
       // get the last entry in the array
@@ -500,42 +500,62 @@ Common.service('CommonPMService', [
       if (pmServers) {
         return pmServers[pmServers.length - 1];
       }
-      return [];
+      return {
+        server: '',
+        port: 0
+      };
     };
 
     return svc;
   }
 ]);
 Common.service('CommonPidService', [
+  '$log',
+  'growl',
   'CommonPMServerService',
   'CommonPMServiceInstance',
   'CommonPMServiceProcess',
-  function(CommonPMServerService, CommonPMServiceInstance, CommonPMServiceProcess) {
+  function($log, growl, CommonPMServerService, CommonPMServiceInstance, CommonPMServiceProcess) {
 
     var svc = this;
 
-    svc.getDefaultPidData = function(server, id) {
-      return CommonPMServerService.find(server, {id:id})
+    /**
+     * Initial integration with strong-pm
+     * - assumes first service and instance 'instance'
+     * */
+    svc.getDefaultPidData = function(serverConfig, id) {
+      return CommonPMServerService.find(serverConfig, {id:id})
         .then(function(response) {
-          // get first [0]
-          var firstService = response[0];
-          // query for all instances
-          return CommonPMServiceInstance.find(server, {serverServiceId: firstService.id})
-            .then(function(instances) {
-              var firstInstance = instances[0];
+          if (!response.length) {
+            $log.warn('no services found for id: ' + id);
+            growl.addWarnMessage('no services found for id: ' + id)
+            return [];
+          }
+          else {
+            // assume first found for now
+            var firstService = response[0];
 
-              return CommonPMServiceProcess.find(server, {serviceInstanceid: firstInstance.id})
-                .then(function(response) {
-                  for (var i = 0;i < response.length;i++) {
-                    response[i].status = 'Running';
-                  }
-                  return response;
-                });
+            return CommonPMServiceInstance.find(serverConfig, {serverServiceId: firstService.id})
+              .then(function(instances) {
+                // first child
+                var firstInstance = instances[0];
 
-            });
+                return CommonPMServiceProcess.find(serverConfig, {serviceInstanceId: firstInstance.id})
+                  .then(function(response) {
+                    for (var i = 0;i < response.length;i++) {
+                      response[i].status = 'Running';
+                    }
+                    return response;
+                  })
+                  .catch(function(error) {
+                    $log.error('no service processes returned: ' + error.message);
+                  });
+              });
+          }
         })
         .catch(function(error) {
           $log.error('no service found for id: ' + id + ' ' + error.message);
+          throw error;
         });
     };
 
@@ -544,11 +564,16 @@ Common.service('CommonPidService', [
 
 ]);
 
+/**
+ *
+ * Abstractions in lieu of Angular SDK interface
+ *
+ * */
 Common.service('CommonPMServerService', ['$http', '$log',
   function($http, $log) {
     return {
-      find: function(server, filter) {
-        var apiRequestPath = 'http://' + server.host + ':' + server.port + '/api/Services';
+      find: function(serverConfig, filter) {
+        var apiRequestPath = 'http://' + serverConfig.host + ':' + serverConfig.port + '/api/Services';
         return $http({
           url: apiRequestPath,
           method: "GET",
@@ -568,8 +593,8 @@ Common.service('CommonPMServerService', ['$http', '$log',
 Common.service('CommonPMServiceInstance', ['$http', '$log',
   function($http, $log) {
     return {
-      find: function(server, filter) {
-        var apiRequestPath = 'http://' + server.host + ':' + server.port + '/api/ServiceInstances';
+      find: function(serverConfig, filter) {
+        var apiRequestPath = 'http://' + serverConfig.host + ':' + serverConfig.port + '/api/ServiceInstances';
         return $http({
           url: apiRequestPath,
           method: "GET",
@@ -590,8 +615,8 @@ Common.service('CommonPMServiceInstance', ['$http', '$log',
 Common.service('CommonPMServiceProcess', ['$http', '$log',
   function($http, $log) {
     return {
-      find: function(server, filter) {
-        var apiRequestPath = 'http://' + server.host + ':' + server.port + '/api/ServiceProcesses';
+      find: function(serverConfig, filter) {
+        var apiRequestPath = 'http://' + serverConfig.host + ':' + serverConfig.port + '/api/ServiceProcesses';
         return $http({
           url: apiRequestPath,
           method: "GET",
@@ -613,8 +638,8 @@ Common.service('CommonPMServiceMetric', [
   '$http', '$log',
   function($http, $log) {
     return {
-      find: function(server, filter) {
-        var apiRequestPath = 'http://' + server.host + ':' + server.port + '/api/ServiceMetrics';
+      find: function(serverConfig, filter) {
+        var apiRequestPath = 'http://' + serverConfig.host + ':' + serverConfig.port + '/api/ServiceMetrics';
         return $http({
           url: apiRequestPath,
           method: "GET",

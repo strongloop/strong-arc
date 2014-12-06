@@ -36,10 +36,20 @@ Landing.directive('slAppSelector', [
           return $scope.isAuthUser() && $scope.suiteIA.selectedApp;
         };
 
+        function getDTName(studioName) {
+          var retVal = 'profiles';
+          if (studioName === 'metrics') {
+            retVal = 'timeline';
+          }
+          return retVal;
+        }
+
         //update page id when changing states
         $rootScope.$on('$stateChangeStart',
           function(event, toState, toParams, fromState, fromParams){
             $scope.suiteIA.appId = toState.name;
+            var dtName = getDTName(toState.name);
+            window.localStorage.setItem('lastActiveDTPanel', dtName);
           });
 
         $scope.getSref = function(app) {

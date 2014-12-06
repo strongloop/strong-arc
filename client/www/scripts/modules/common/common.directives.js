@@ -96,7 +96,23 @@ Common.directive('slCommonInstanceTabsView', [
     }
   }
 ]);
-
+/**
+ * sl-common-select-on-click
+ *
+ * generic attribute directive to autoselect the contents of an input
+ * by single clicking the content
+ *
+ * */
+Common.directive('slCommonSelectOnClick', function () {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attrs) {
+      element.on('click', function () {
+        this.select();
+      });
+    }
+  };
+});
 Common.directive('slCommonLoadingIndicator', [
   function() {
     return {
@@ -120,23 +136,25 @@ Common.directive('slCommonLoadingIndicator', [
 
 Common.directive('slCommonPidSelector', [
   '$log',
-  'ProfilerService',
   'CommonPidService',
   'CommonPMService',
-  function($log, ProfilerService, CommonPidService, CommonPMService){
+  function($log, CommonPidService, CommonPMService){
     return {
       restrict: 'E',
       replace: true,
       templateUrl: './scripts/modules/common/templates/common.pid-selector.html',
       controller: function($scope, $attrs){
-        $scope.server = {
+        $scope.currentServerConfig = {
           host: '',
-          port: ''
+          port: 0
         };
+        $scope.pmServers = CommonPMService.getPMServers();
+        $scope.candidateServerConfig = {};
+        // set value to last referenced server if available
         if (CommonPMService.getPMServers().length) {
-          $scope.server = CommonPMService.getLastPMServer();
+          $scope.candidateServerConfig = CommonPMService.getLastPMServer();
         }
-
+        $scope.selected = undefined;
         $scope.hasIframe = $attrs.iframe;
         $scope.activeProcess = null;
         $scope.showMoreMenu = false;
@@ -145,18 +163,23 @@ Common.directive('slCommonPidSelector', [
 
         $scope.processes = [];
 
+        $scope.onPMServerSelect = function(item) {
+         $scope.candidateServerConfig = item;
+        };
         $scope.hideMenu = function(){
           $scope.isOpen = false;
         };
 
         $scope.loadProcesses = function(form){
           if ( form.$valid ) {
-            $log.log('load processes', $scope.server);
+            $scope.processes = [];
+            $scope.currentServerConfig = $scope.candidateServerConfig;
 
-            CommonPidService.getDefaultPidData($scope.server, 1)
+            CommonPidService.getDefaultPidData($scope.currentServerConfig, 1)
               .then(function(pidCollection) {
-                CommonPMService.addPMServer($scope.server);
+                CommonPMService.addPMServer($scope.currentServerConfig);
                 $scope.processes = pidCollection;
+                $scope.pmServers = CommonPMService.getPMServers();
               });
           }
         };
@@ -195,7 +218,7 @@ Common.directive('slCommonPidSelector', [
 
             if ( iframe.SL ) {
               iframe.SL.child.profiler.slInit();
-              iframe.SL.child.profiler.setServer($scope.server);
+              iframe.SL.child.profiler.setServer($scope.currentServerConfig);
               iframe.SL.child.profiler.setActiveProcess(process);
             }
           }

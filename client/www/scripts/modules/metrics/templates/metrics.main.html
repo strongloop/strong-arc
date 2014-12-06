@@ -1,0 +1,21 @@
+<div data-id="MetricsMainContainer">
+  <sl-common-pid-selector></sl-common-pid-selector>
+  <div sl-metrics-title data-id="MetricsContentTitle"></div>
+  <div data-ui-type="table" data-id="MetricsMainLayout">
+    <div data-ui-type="row">
+      <div data-ui-type="cell" class="metrics-nav-column" data-id="MetricsSidebarContainer">
+        <div sl-metrics-chart-controls class="metrics-nav-controls-container"></div>
+      </div>
+      <div data-ui-type="cell">
+        <div class="common-instance-view-container">
+          <nvd3 options="cpuChartOptions" data="cpuChartModel"></nvd3>
+          <nvd3 options="loopChartOptions" data="loopChartModel"></nvd3>
+          <nvd3 options="heapChartOptions" data="heapChartModel"></nvd3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+

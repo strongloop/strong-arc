@@ -2,7 +2,9 @@
 /*global InspectorBackendClass:true */
 
 // Show the "profiles" panel on startup
-localStorage.lastActivePanel = JSON.stringify('profiles');
+var lastActiveDTPanel = window.localStorage.getItem('lastActiveDTPanel')? window.localStorage.getItem('lastActiveDTPanel') : 'profiles';
+localStorage.lastActivePanel = JSON.stringify(lastActiveDTPanel);
+//localStorage.lastActivePanel = JSON.stringify('profiles');
 
 // Wire up websocket to talk to backend
 WebInspector.Main.prototype._createConnection = function() {

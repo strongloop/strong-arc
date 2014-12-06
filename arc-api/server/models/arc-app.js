@@ -59,7 +59,7 @@ module.exports = function(ArcApp) {
       "id": "metrics",
       "name": "Metrics",
       "description": "Gather and view application performance metrics.",
-      "disabled": true,
+      "disabled": false,
       "supports": "*"
     },
     {
