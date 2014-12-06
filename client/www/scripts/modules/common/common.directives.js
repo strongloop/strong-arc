@@ -96,6 +96,7 @@ Common.directive('slCommonInstanceTabsView', [
     }
   }
 ]);
+
 /**
  * sl-common-select-on-click
  *
