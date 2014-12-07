@@ -30,7 +30,7 @@ app.use(express.static(path.join(__dirname, '../client/www')));
 
 var listen = app.listen;
 app.listen = function() {
-  var server = listen.apply(app, arguments);
+  var server = process.server = listen.apply(app, arguments);
   devtools.setupWebSocketServer(server);
   return server;
 };
