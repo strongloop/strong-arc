@@ -259,25 +259,29 @@ Composer.controller('ComposerMainController', [
       $scope.activeInstanceUpdated = !$scope.activeInstanceUpdated;
     };
 
-
+    // flag to prevent 'double' saves and race conditions during intial creation
+    $scope.isCreatingModelDef = false;
     // save model
     $scope.saveModelInstanceRequest = function(instance) {
       var originalModelId = instance.definition.id;
 
       if (instance.id && (instance.id !== CONST.NEW_MODEL_PRE_ID)) {
         // update model
-        ModelService.updateModelInstance(instance).
-          then(function(instance) {
-            growl.addSuccessMessage("model saved");
-            $scope.activeInstance = instance;
-            IAService.updateOpenInstanceRef(originalModelId, $scope.activeInstance.type, $scope.activeInstance);
-            $scope.updateActiveInstance(
-              $scope.activeInstance, CONST.DATASOURCE_TYPE, originalModelId);
-            loadModels();
-          }).
-          catch(function(error) {
-            $log.warn('bad update model definition: ' + error);
-        });
+        if (!$scope.isCreatingModelDef) { // test to ensure not in init create cycle still
+          ModelService.updateModelInstance(instance).
+            then(function(instance) {
+              growl.addSuccessMessage("model saved");
+              $scope.activeInstance = instance;
+              IAService.updateOpenInstanceRef(originalModelId, $scope.activeInstance.type, $scope.activeInstance);
+              $scope.updateActiveInstance(
+                $scope.activeInstance, CONST.DATASOURCE_TYPE, originalModelId);
+              loadModels();
+            }).
+            catch(function(error) {
+              $log.warn('bad update model definition: ' + error);
+            });
+        }
+
       }
       else {
         // double check to clear out 'new' id
@@ -285,18 +289,27 @@ Composer.controller('ComposerMainController', [
           delete instance.id;
           delete instance.definition.id;
         }
-        // create model
-        ModelService.createModelInstance(instance).
-          then(function(instanceResponse) {
-            growl.addSuccessMessage("model created");
-            $scope.activeInstance = instanceResponse;
-            IAService.updateOpenInstanceRef(originalModelId, $scope.activeInstance.type, $scope.activeInstance);
-            $scope.updateActiveInstance(
-              $scope.activeInstance, CONST.MODEL_TYPE, originalModelId);
-            loadModels();
-            $rootScope.$broadcast('IANavEvent');
-          }
-        );
+        if (!$scope.isCreatingModelDef) {
+          $scope.isCreatingModelDef = true;
+          // create model
+          ModelService.createModelInstance(instance).
+            then(function(instanceResponse) {
+
+              growl.addSuccessMessage("model created");
+              $scope.activeInstance = instanceResponse;
+              $scope.isCreatingModelDef = false;  // toggle off creating flag
+              IAService.updateOpenInstanceRef(originalModelId, $scope.activeInstance.type, $scope.activeInstance);
+              $scope.updateActiveInstance(
+                $scope.activeInstance, CONST.MODEL_TYPE, originalModelId);
+              loadModels();
+              $rootScope.$broadcast('IANavEvent');
+
+            })
+            .catch(function(error) {
+              $scope.isCreatingModelDef = false;  // toggle off creating flag
+              $log.error('bad create model instance ' + error.message);
+            });
+        }
       }
     };
     $scope.createModelViewRequest = function() {
