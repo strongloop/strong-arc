@@ -180,6 +180,8 @@ Common.directive('slCommonPidSelector', [
                 CommonPMService.addPMServer($scope.currentServerConfig);
                 $scope.processes = pidCollection;
                 $scope.pmServers = CommonPMService.getPMServers();
+
+                $scope.initProfiler();
               });
           }
         };
@@ -190,6 +192,11 @@ Common.directive('slCommonPidSelector', [
           $scope.processes = [];
           $scope.activeProcess = null;
 
+          $scope.initProfiler();
+        };
+
+
+        $scope.initProfiler = function(){
           if ( $scope.hasIframe ) {
             var iframe = window.frames['devtools'];
 
