@@ -32,7 +32,10 @@ function start(next) {
   pm = spawn('node', args);
   pm.stdout.pipe(split()).on('data', function(line) {
     console.log(line);
+    if(PORT) return;
+
     PORT = parsePort(line);
+    
     if(PORT && !isRunning) {
       isRunning = true;
       next();
