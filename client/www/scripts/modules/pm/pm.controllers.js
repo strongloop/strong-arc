@@ -14,6 +14,14 @@ PM.controller('PMAppController', [
           $log.debug('App Started = woot: ' + response);
         });
     };
+
+    $scope.reStartApp = function() {
+      PMAppService.restartLocalApp()
+        .then(function(response) {
+          $log.debug('App re-started = woot: ' + response);
+        });
+    };
+
     $scope.stopApp = function() {
       PMAppService.stopLocalApp()
         .then(function(response) {

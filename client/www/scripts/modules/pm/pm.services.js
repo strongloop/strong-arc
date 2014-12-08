@@ -2,12 +2,20 @@
 PM.service('PMAppService', [
   '$q',
   '$log',
+  '$timeout',
   '$http',
   'Deployment',
-  function($q, $log, $http, Deployment) {
+  function($q, $log, $timeout, $http, Deployment) {
     var svc = this;
 
+    var isLocalApp = true;
+    var isLocalAppRunning = false;
+
     svc.startLocalApp = function() {
+//      return $timeout(function(){
+//        isLocalAppRunning = true;
+//        return isLocalAppRunning;
+//      },350);
       return Deployment.create({
           type: 'local'
         })
@@ -21,7 +29,10 @@ PM.service('PMAppService', [
     };
     svc.isLocalAppRunning = function() {
 
-      var reqUrl = '/process-manager/api/actions';
+      return $timeout(function(){
+        return isLocalAppRunning;
+      },350);
+      var reqUrl = '/process-manager/api/ServiceInstances/1/actions';
       $http.get(reqUrl);
 
       return $http({
@@ -39,12 +50,12 @@ PM.service('PMAppService', [
         });
     };
     svc.stopLocalApp = function() {
+//      return $timeout(function(){
+//        isLocalAppRunning = false;
+//        return isLocalAppRunning;
+//      },350);
       var apiRequestPath = '/process-manager/api/ServiceInstances/1/actions';
-      return $http({
-          url: apiRequestPath,
-          method: "POST",
-          params: {"request":{"cmd":"stop"}}
-        })
+      return $http.post(apiRequestPath,  {"request":{"cmd":"stop"}})
         .then(function(response) {
           $log.debug('stop app success: ' + response.data);
           return response.data;
@@ -55,18 +66,24 @@ PM.service('PMAppService', [
         });
     };
     svc.restartLocalApp = function() {
+//      return $timeout(function(){
+//        isLocalAppRunning = true;
+//        return isLocalAppRunning;
+//      },479);
+
+
+
+
+
+
       var apiRequestPath = '/process-manager/api/ServiceInstances/1/actions';
-      return $http({
-          url: apiRequestPath,
-          method: "POST",
-          params: {"request":{"cmd":"restart"}}
-        })
+      return $http.post(apiRequestPath,{"request":{"cmd":"restart"}})
         .then(function(response) {
           $log.debug('Good restart: ' + response.data);
           return response.data;
         })
         .catch(function(error) {
-          $log.error(error.message + ':' + error);
+          $log.error('bad restart: ' + error.message + ':' + error);
           return error;
         });
 //      var reqUrl = '/process-manager/ServiceInstances/1/actions';

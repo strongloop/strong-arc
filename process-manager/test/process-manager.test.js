@@ -17,11 +17,18 @@ describe('process-manager-proxy', function() {
       .expect(200)
       .end(done);
   });
-//  it('should restart local instance', function(done) {
-//    request(processManager)
-//      .post('/api/ServiceInstances/1')
-//      .set('accept', 'application/json')
-//      .expect(200)
-//      .end(done);
-//  });
+  it('should return local services', function(done) {
+    request(processManager)
+      .get('/api/Services')
+      .set('accept', 'application/json')
+      .expect(200)
+      .end(done);
+  });
+  it('should return local instance actions', function(done) {
+    request(processManager)
+      .get('/api/ServiceInstances/1/actions')
+      .set('accept', 'application/json')
+      .expect(200)
+      .end(done);
+  });
 });
