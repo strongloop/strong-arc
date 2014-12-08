@@ -5,7 +5,7 @@ BuildDeploy.controller('BuildDeployController', [
   '$log',
   function ($scope, BuildDeployService, $log) {
 
-    $scope.buildId = 'git';
+    $scope.buildId = 'universal';
     $scope.deployId = 'new';
     $scope.viewConsole = {
       logs: []
@@ -47,8 +47,8 @@ BuildDeploy.controller('BuildDeployController', [
     };
 
     $scope.buildTogglers = [
-      { id: 'git', label: 'Git', activeId: 'buildId' },
-      { id: 'universal', label: 'Universal', activeId: 'buildId' }
+      { id: 'universal', label: 'Tarball', activeId: 'buildId' },
+      { id: 'git', label: 'Git', activeId: 'buildId' }
     ];
 
     $scope.deployTogglers = [
@@ -57,7 +57,9 @@ BuildDeploy.controller('BuildDeployController', [
     ];
 
     //set the default active toggler state
-    $scope.activeId = $scope.buildTogglers[0].id;
+    var defaultActiveToggler = $scope.buildTogglers[0];
+    $scope.activeId = defaultActiveToggler.id;
+    defaultActiveToggler.isActive = true;
 
     setUI();
   }
