@@ -31,7 +31,11 @@ function start(next) {
   var pathToPm = require.resolve('strong-pm/bin/sl-pm');
   var args = [pathToPm, '--listen', '0'];
   // TODO(ritch) use exec path
-  pm = spawn('node', args);
+  pm = spawn('node', args, {
+    stdio: [0, 'pipe', 2, 'ipc']
+  });
+  // TODO(sam) pm should report it's pm-port via node ipc so arc can directly
+  // receive it, to avoid fragile parsing of pm's stdout.
   pm.stdout.pipe(split()).on('data', function(line) {
     console.log(line);
     if(PORT) return;
@@ -54,7 +58,7 @@ function start(next) {
 }
 
 function parsePort(line) {
-  var match = line.match(/listen on (\d+)/);
+  var match = line.match(/: listen on (\d+)/);
   if(match) {
     return match[1];
   }
