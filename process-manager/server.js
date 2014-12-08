@@ -7,6 +7,8 @@ var PORT = null;
 var pm = null;
 var httpProxy = require('http-proxy');
 var proxy = httpProxy.createProxyServer();
+var fs = require('fs-extra');
+var path = require('path');
 
 module.exports = server;
 
@@ -35,10 +37,17 @@ function start(next) {
     PORT = parsePort(line);
     if(PORT && !isRunning) {
       isRunning = true;
-      next();
+      removeDir(function(err) {
+        if(err) {
+          console.error('Error when removing embedded pm dir');
+          console.error(err);
+        }
+        next();
+      });
     }
   });
   pm.stderr.pipe(process.stderr);
+  pm.once('exit', onExit);
 }
 
 function parsePort(line) {
@@ -47,3 +56,15 @@ function parsePort(line) {
     return match[1];
   }
 }
+
+function removeDir(cb) {
+  var dir = path.join(process.cwd(), '.strong-pm');
+  fs.remove(dir, cb);
+}
+
+function onExit(code) {
+  console.log('Embedded PM exited with code: %s', code);
+  removeDir(noop);
+}
+
+function noop() {}
