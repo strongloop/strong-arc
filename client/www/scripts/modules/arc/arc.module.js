@@ -122,7 +122,8 @@ Arc.run([
     '$state',
     '$rootScope',
     'ArcUserService',
-    function($location, $state, $rootScope, ArcUserService){
+    'PMAppService',
+    function($location, $state, $rootScope, ArcUserService, PMAppService){
 
       // Redirect to login if route requires auth and you're not logged in
       $rootScope.$on('$stateChangeStart', function (event, next) {
@@ -132,6 +133,8 @@ Arc.run([
           $state.go('login');
         }
       });
+
+      PMAppService.startLocalAppPolling();
     }
   ]);
 

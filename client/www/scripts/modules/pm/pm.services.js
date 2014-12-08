@@ -3,9 +3,10 @@ PM.service('PMAppService', [
   '$q',
   '$log',
   '$timeout',
+  '$interval',
   '$http',
   'Deployment',
-  function($q, $log, $timeout, $http, Deployment) {
+  function($q, $log, $timeout, $interval, $http, Deployment) {
     var svc = this;
 
     var isLocalApp = true;
@@ -27,27 +28,60 @@ PM.service('PMAppService', [
           $log.error('bad deploy local app: ' + error.message);
         });
     };
+    svc.startLocalAppPolling = function() {
+
+      if (!isLocalApp) {
+        return;
+      }
+      if (!isLocalAppRunning) {
+        $interval(function() {
+          svc.isLocalAppRunning()
+            .then(function(response) {
+              $log.debug('is app running: ' + response);
+            })
+            .catch(function(error) {
+              $log.warn('bad polling for is app running');
+            });
+        }, 5000);
+      }
+    };
     svc.isLocalAppRunning = function() {
-
-      return $timeout(function(){
-        return isLocalAppRunning;
-      },350);
-      var reqUrl = '/process-manager/api/ServiceInstances/1/actions';
-      $http.get(reqUrl);
-
-      return $http({
-        url: reqUrl,
-        method: "GET",
-        params: {"started":"true"}
-      })
+//
+//      return $timeout(function(){
+//        return isLocalAppRunning;
+//      },350);
+      var reqUrl = '/process-manager/api/ServiceInstances/1';
+     return $http.get(reqUrl)
         .then(function(response) {
-          $log.debug('app running request response: ' + response.data);
-          return response.data;
+          // check if started = true
+          if (response.data && (response.data.started === true)) {
+            return true;
+          }
+          return false;
         })
         .catch(function(error) {
-          $log.error('bad is app running response: ' + error.message + ':' + error);
-          return error;
+          $log.warn('[test if server is running] bad get ServiceInstance/1: ' + error.message);
         });
+
+      // test response if started = true;
+
+//ServiceProcesses
+
+      // check for stopReason  /  stopTime first instance get the port
+
+//      return $http({
+//        url: reqUrl,
+//        method: "GET",
+//        params: {"filter":{"where":{"started":"true"}}}
+//      })
+//        .then(function(response) {
+//          $log.debug('app running request response: ' + response.data);
+//          return response.data;
+//        })
+//        .catch(function(error) {
+//          $log.error('bad is app running response: ' + error.message + ':' + error);
+//          return error;
+//        });
     };
     svc.stopLocalApp = function() {
 //      return $timeout(function(){
