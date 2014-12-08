@@ -1,13 +1,14 @@
 // Copyright StrongLoop 2014
 PM.service('PMAppService', [
+  '$q',
   '$log',
   '$http',
   'Deployment',
-  function($log, $http, Deployment) {
+  function($q, $log, $http, Deployment) {
     var svc = this;
 
     svc.startLocalApp = function() {
-      Deployment.create({
+      return Deployment.create({
           type: 'local'
         })
         .$promise
@@ -20,28 +21,41 @@ PM.service('PMAppService', [
     };
     svc.isLocalAppRunning = function() {
 
-      var reqUrl = '/process-manager/actions';
+      var reqUrl = '/process-manager/api/actions';
       $http.get(reqUrl);
 
       return $http({
         url: reqUrl,
         method: "GET",
-        params: {"cmd":"restart"}
+        params: {"started":"true"}
       })
         .then(function(response) {
-          $log.debug('Good restart: ' + response.data);
+          $log.debug('app running request response: ' + response.data);
           return response.data;
         })
         .catch(function(error) {
-          $log.error(error.message + ':' + error);
+          $log.error('bad is app running response: ' + error.message + ':' + error);
           return error;
         });
     };
     svc.stopLocalApp = function() {
-
+      var apiRequestPath = '/process-manager/api/ServiceInstances/1/actions';
+      return $http({
+          url: apiRequestPath,
+          method: "POST",
+          params: {"request":{"cmd":"stop"}}
+        })
+        .then(function(response) {
+          $log.debug('stop app success: ' + response.data);
+          return response.data;
+        })
+        .catch(function(error) {
+          $log.error('stop app fail: ' + error.message + ':' + error);
+          return error;
+        });
     };
     svc.restartLocalApp = function() {
-      var apiRequestPath = '/process-manager/ServiceInstances/1/actions';
+      var apiRequestPath = '/process-manager/api/ServiceInstances/1/actions';
       return $http({
           url: apiRequestPath,
           method: "POST",

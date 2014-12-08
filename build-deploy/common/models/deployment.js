@@ -6,6 +6,9 @@ var DEFAULT = 'default'; // the config for strong-deploy
 
 module.exports = function(Deployment) {
   Deployment.create = function(deployment, cb) {
+    console.log('|');
+    console.log('|   DEPLOYMENT CREATE');
+    console.log('|');
     var baseURL;
     var cwd = process.cwd();
 

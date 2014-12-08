@@ -10,4 +10,18 @@ describe('process-manager-proxy', function() {
       .expect(200)
       .end(done);
   });
+  it('should get pm service api ServiceInstances id 1', function(done) {
+    request(processManager)
+      .get('/api/ServiceInstances/1')
+      .set('accept', 'application/json')
+      .expect(200)
+      .end(done);
+  });
+//  it('should restart local instance', function(done) {
+//    request(processManager)
+//      .post('/api/ServiceInstances/1')
+//      .set('accept', 'application/json')
+//      .expect(200)
+//      .end(done);
+//  });
 });
