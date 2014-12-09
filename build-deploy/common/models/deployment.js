@@ -6,23 +6,25 @@ var DEFAULT = 'default'; // the config for strong-deploy
 
 module.exports = function(Deployment) {
   Deployment.create = function(deployment, cb) {
-    // TODO(ritch) handle custom CWDs
-    var baseURL = 'http://' + deployment.host + ':' + deployment.port;
+    var baseURL;
     var cwd = process.cwd();
 
     if(deployment.type === 'local') {
-      // this should be configurable in the ui
       deployment.processes = deployment.processes || 1;
+      baseURL = 'http://localhost:'
+              + process.server.address().port;
+    } else {
+      baseURL = 'http://' + deployment.host + ':' + deployment.port;
     }
 
     resize();
 
     function deploy(err){
-      if ( err ) return cb(err);
+      if (err) return cb(err);
 
       if(deployment.type === 'local') {
         // args are: baseUrl, localdir, config, callback
-        performLocalDeployment(baseURL, cwd, DEFAULT, done);
+        performLocalDeployment(baseURL, cwd, 'process-manager', done);
       } else if(deployment.type === 'git') {
         // args are: workingDir, baseUrl, config, branch, callback
         performGitDeployment(cwd, baseURL, DEFAULT, deployment.branch, done);

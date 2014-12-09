@@ -33,8 +33,20 @@ UI.directive('slUiToggle', [
         togglers: '='
       },
       controller: function($scope, $attrs, $log) {
-        $scope.togglers[0].isActive = true;
-        $scope.activeId = $scope.togglers[0].id;
+        var togglers = $scope.togglers;
+        var anyActive = false;
+        for(var i = 0; i < togglers.length; i++) {
+          if(togglers[i].isActive) {
+            anyActive = true;
+            break;
+          }
+        }
+
+        if(!anyActive) {
+          // if no toggler is active, set the first active
+          $scope.togglers[0].isActive = true;
+          $scope.activeId = $scope.togglers[0].id;
+        }
 
         $scope.setActive = function(toggler){
 

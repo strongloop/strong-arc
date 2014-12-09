@@ -16,4 +16,3 @@ module.exports = server;
 server.use(function (req, res) {
   pm.proxyRequest(req, res);
 });
-
