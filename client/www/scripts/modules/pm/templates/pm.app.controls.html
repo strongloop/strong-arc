@@ -1,6 +1,6 @@
 <div>
   <div>App Controller</div>
-  <div><a target="_new" href="http://localhost:3000/">http://localhost:3000/</a> [running]</div>
+  <div><a target="_new" href="{{ localAppLink }}">{{ localAppLink }}</a> [{{ runningState }}]</div>
   <div>
     <div data-ui-type="table">
       <div data-ui-type="row">
@@ -9,6 +9,9 @@
         </div>
         <div data-ui-type="cell">
           <button ng-click="isAppRunning()" class="btn btn-small">isAppRunning</button>
+        </div>
+        <div data-ui-type="cell">
+          <button ng-click="getLocalAppLink()" class="btn btn-small">get app link</button>
         </div>
         <div data-ui-type="cell">
           <button ng-click="reStartApp()" class="btn btn-primary btn-small">restart</button>

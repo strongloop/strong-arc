@@ -7,6 +7,7 @@ PM.controller('PMAppController', [
 
     $scope.isLocalApp = true;
     $scope.isLocalAppRunning = false;
+    $scope.runningState = 'not running';
 
     $scope.startApp = function() {
       PMAppService.startLocalApp()
@@ -14,18 +15,25 @@ PM.controller('PMAppController', [
           $log.debug('App Started = woot: ' + response);
         });
     };
+    $scope.getLocalAppLink = function() {
+      PMAppService.getLocalAppUrl()
+        .then(function(response) {
+          $scope.localAppLink = response;
+          $scope.runningState = 'running';
+        });
+    };
 
     $scope.reStartApp = function() {
       PMAppService.restartLocalApp()
         .then(function(response) {
-          $log.debug('App re-started = woot: ' + response);
+          $log.debug('App re-started: ' + response);
         });
     };
 
     $scope.stopApp = function() {
       PMAppService.stopLocalApp()
         .then(function(response) {
-          $log.debug('App Stopped = woot: ' + response);
+          $log.debug('App Stopped : ' + response);
         });
     };
     $scope.isAppRunning = function() {

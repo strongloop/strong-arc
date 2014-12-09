@@ -134,7 +134,7 @@ Arc.run([
         }
       });
 
-      PMAppService.startLocalAppPolling();
+     // PMAppService.startLocalAppPolling();
     }
   ]);
 

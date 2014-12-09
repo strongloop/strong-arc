@@ -17,6 +17,12 @@ PM.service('PMAppService', [
 //        isLocalAppRunning = true;
 //        return isLocalAppRunning;
 //      },350);
+
+
+
+
+
+
       return Deployment.create({
           type: 'local'
         })
@@ -46,11 +52,14 @@ PM.service('PMAppService', [
       }
     };
     svc.isLocalAppRunning = function() {
-//
+
 //      return $timeout(function(){
 //        return isLocalAppRunning;
 //      },350);
-      var reqUrl = '/process-manager/api/ServiceInstances/1';
+
+
+//
+     var reqUrl = '/process-manager/api/ServiceInstances/1';
      return $http.get(reqUrl)
         .then(function(response) {
           // check if started = true
@@ -61,33 +70,59 @@ PM.service('PMAppService', [
         })
         .catch(function(error) {
           $log.warn('[test if server is running] bad get ServiceInstance/1: ' + error.message);
+          return false;
         });
+    };
+    svc.getLocalAppUrl = function() {
 
+      var localPort = 80;
+      var bFoundPort = false;
+      var returnUrl = '';
+      var reqUrl = '/process-manager/api/ServiceProcesses';
+      return $http.get(reqUrl)
+        .then(function(response) {
+          // check for stopReason  /  stopTime first instance get the port
+          if (response.data && (response.data.length)) {
+            for (var i = 0;i < response.data.length;i++) {
+              var pi = response.data[i];
+              // found a running process
+              if (!pi.stopReaseon) {
+                localPort = pi.listeningSockets[0].port;
+                bFoundPort = true;
+                break;
+              }
+            }
+            if (bFoundPort) {
+              returnUrl = 'http://localhost:' + localPort;
+            }
+            else {
+              $log.warn('unable to get local app url / port');
+            }
+
+          }
+          return returnUrl;
+        })
+        .catch(function(error) {
+          $log.warn('[get local port] bad get api/ServerProcesses: ' + error.message);
+        });
       // test response if started = true;
 
 //ServiceProcesses
 
       // check for stopReason  /  stopTime first instance get the port
 
-//      return $http({
-//        url: reqUrl,
-//        method: "GET",
-//        params: {"filter":{"where":{"started":"true"}}}
-//      })
-//        .then(function(response) {
-//          $log.debug('app running request response: ' + response.data);
-//          return response.data;
-//        })
-//        .catch(function(error) {
-//          $log.error('bad is app running response: ' + error.message + ':' + error);
-//          return error;
-//        });
+
     };
     svc.stopLocalApp = function() {
 //      return $timeout(function(){
 //        isLocalAppRunning = false;
 //        return isLocalAppRunning;
 //      },350);
+
+
+
+
+//
       var apiRequestPath = '/process-manager/api/ServiceInstances/1/actions';
       return $http.post(apiRequestPath,  {"request":{"cmd":"stop"}})
         .then(function(response) {
@@ -100,78 +135,29 @@ PM.service('PMAppService', [
         });
     };
     svc.restartLocalApp = function() {
-//      return $timeout(function(){
-//        isLocalAppRunning = true;
-//        return isLocalAppRunning;
-//      },479);
+      return $timeout(function(){
+        isLocalAppRunning = true;
+        return isLocalAppRunning;
+      },479);
 
 
 
 
 
 
-      var apiRequestPath = '/process-manager/api/ServiceInstances/1/actions';
-      return $http.post(apiRequestPath,{"request":{"cmd":"restart"}})
-        .then(function(response) {
-          $log.debug('Good restart: ' + response.data);
-          return response.data;
-        })
-        .catch(function(error) {
-          $log.error('bad restart: ' + error.message + ':' + error);
-          return error;
-        });
-//      var reqUrl = '/process-manager/ServiceInstances/1/actions';
-//      $http.post(reqUrl, {},
-//        function(response){
-//          $log.debug('Good restart: ' + reseponse);
-//        },
-//        function(error) {
-//          $log.debug('bad restart: ' + error.message);
-//
-//        }
-//      );
+//      var apiRequestPath = '/process-manager/api/ServiceInstances/1/actions';
+//      return $http.post(apiRequestPath,{"request":{"cmd":"restart"}})
+//        .then(function(response) {
+//          $log.debug('Good restart: ' + response.data);
+//          return response.data;
+//        })
+//        .catch(function(error) {
+//          $log.error('bad restart: ' + error.message + ':' + error);
+//          return error;
+//        });
+
     };
-/*
 
-
- POST /process-manager/ServiceInstances/1/actions
-
- {
-
- "request": {
-
- cmd: "restart"
-
- }
-
- }
-
-
-
- // is the local app running
-
- GET /process-manager/actions
-
-
-
- {
-
- "started": true
-
- }
-
-
-
- // what is the port of the local app
-
- GET /process-manager/ServerProcesses
-
- "listeningSockets": [...]
-
-
-
-
-* */
     return svc;
   }
 ]);
