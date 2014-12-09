@@ -130,7 +130,13 @@ Arc.run([
         if ( !ArcUserService.isAuthUser() && next.url !== '/login' ) {
           event.preventDefault(); //prevent current page from loading
           $state.go('login');
-        }
+        } else {
+          //fire off segment.io identify from cookie values
+          segmentio.identify(ArcUserService.getCurrentUserId(), {
+            name : ArcUserService.getCurrentUsername(),
+            email : ArcUserService.getCurrentUserEmail()
+          });
+        };
       });
 
 
