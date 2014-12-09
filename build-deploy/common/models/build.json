@@ -22,6 +22,9 @@
     },
     "started": {
       "type": "date"
+    },
+    "skipBundle": {
+      "type": "boolean"
     }
   },
   "validations": [],

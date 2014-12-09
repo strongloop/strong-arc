@@ -45,6 +45,8 @@ module.exports = function(Build) {
     var args = ['build'];
     build.started = new Date();
 
+    args.push('--install');
+    
     switch(build.type) {
       case 'git':
         args.push('--commit');
@@ -53,6 +55,9 @@ module.exports = function(Build) {
       break;
       default:
         build.type = 'universal';
+        if(!build.skipBundle) {
+          args.push('--bundle');
+        }
         args.push('--pack');
       break;
     }
