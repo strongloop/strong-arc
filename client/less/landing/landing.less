@@ -1,43 +1,68 @@
 .sl-landing-page {
-  padding: 4.7rem 3.13rem;
+  padding: 0;
   font-weight: 100;
   color: @gray;
+  //background: #dedede url(/images/arc_white.svg) no-repeat 0 15rem;
+  min-height: 100rem;
 
   > header {
     text-align: center;
-    width: 90%;
-    margin: 0 auto 3rem;
+    background: #dedede;
+    border-radius: 0;
+    height: 20rem;
 
     h1 {
       font-weight: 100;
       font-size: 3.2rem;
+      margin: 0 0 1rem 0;
+      padding-top: 2rem;
     }
 
     p {
       font-weight: 100;
       font-size: 2rem;
+      margin: 0;
+    }
+  }
+
+  > footer{
+    .footer-arc {
+      background: #dedede;
+      border-radius: 0;
+      min-height: 20rem;
+    }
+    .footer-spacer {
+      min-height: 40rem;
+      background: #dedede;
     }
   }
 
   .sl-apps {
     text-align: center;
-    max-width: 960px;
     margin: 0 auto;
   }
 
   .sl-app {
     .box-sizing(border-box);
     text-align: center;
-    width: 23rem;
-    height: 23rem;
-    display: block;
+    width: 12rem;
+    height: 12rem;
+    display: inline-block;
     margin: 0 auto;
     cursor: pointer;
 
+    &.app-placeholder {
+      display: none;
+      cursor: default;
+
+      .app-name {
+        visibility: hidden;
+      }
+    }
+
     .app-container {
-      height: 90%;
       width: 100%;
-      padding: 1.5rem 0;
+      padding: 0;
       text-align: center;
     }
 
@@ -47,7 +72,15 @@
 
     &:hover {
       .app-container {
-        background-color: @gray-lighter;
+        //background-color: @gray-lighter;
+      }
+
+      .app-image {
+        display: none;
+      }
+
+      .app-image-hover {
+        display: block;
       }
 
       a {
@@ -55,10 +88,14 @@
       }
     }
 
-    a {
+    .app-name {
       .box-sizing(border-box);
       display: block;
       width: 100%;
+    }
+
+    .app-image-hover {
+      display: none;
     }
 
     .app-image::before {
@@ -73,7 +110,7 @@
     }
 
     .app-name {
-      font-size: 2rem;
+      font-size: 1.5rem;
       color: @gray;
       margin-top: .8rem;
     }
@@ -94,16 +131,25 @@
 }
 
 /* Responsive: Portrait tablets and up */
-@media screen and (min-width: @tablet-min-width) {
+@media screen and (min-width: 480px) {
   .sl-landing-page {
-    .sl-apps {
-      text-align: center; //todo: make 'left' remove when we have at least two rows
+    > header {
+      border-radius: 0 0 100% 100%;
     }
+    > footer .footer-arc {
+      border-radius: 100% 100% 0 0;
+    }
+  }
+}
 
+@media screen and (min-width: 1220px) {
+  .sl-landing-page {
     .sl-app {
       display: inline-block;
-      //margin-right: 2.5rem;
-      margin-top: 0;
+
+      &.app-placeholder {
+        display: inline-block;
+      }
     }
   }
 }

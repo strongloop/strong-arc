@@ -144,19 +144,43 @@
   margin: 1.5rem auto 0;
 }
 .sl-app-icon-profiler {
-  background: url(/images/icon-profiler.svg);
+  background: url(/images/profiler_default.svg);
 }
 .sl-app-icon-composer {
-  background: url(/images/icon-composer.svg);
+  background: url(/images/composer_default.svg);
 }
 .sl-app-icon-metrics {
-  background: url(/images/icon-metrics.svg);
+  background: url(/images/metrics_default.svg);
 }
 .sl-app-icon-advisor {
-  background: url(/images/icon-composer.svg);
+  background: url(/images/profiler_default.svg);
 }
 .sl-app-icon-build-deploy {
-  background: url(/images/icon-build-deploy.svg);
+  background: url(/images/build_deploy_default.svg);
+}
+.sl-app-icon-placeholder {
+  background: url(/images/icon_placeholder.svg);
+}
+.sl-app-icon-placeholder.pos-1 {
+  opacity: .3;
+}
+.sl-app-icon-placeholder.pos-2 {
+  opacity: .6;
+}
+.sl-app-icon-profiler-hover {
+  background: url(/images/profiler_over.svg);
+}
+.sl-app-icon-composer-hover {
+  background: url(/images/composer_over.svg);
+}
+.sl-app-icon-metrics-hover {
+  background: url(/images/metrics_over.svg);
+}
+.sl-app-icon-advisor-hover {
+  background: url(/images/profiler_over.svg);
+}
+.sl-app-icon-build-deploy-hover {
+  background: url(/images/build_deploy_over.svg);
 }
 /* renamed */
 /*connecticon -> link*/

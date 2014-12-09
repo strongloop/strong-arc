@@ -9,6 +9,18 @@ Landing.directive('slLandingApp', [
   }
 ]);
 
+// Copyright StrongLoop 2014
+Landing.directive('slLandingAppPlaceholder', [
+  function () {
+    return {
+      restrict: "E",
+      replace: true,
+      templateUrl: './scripts/modules/landing/templates/landing.app.placeholder.html'
+    };
+  }
+]);
+
+
 Landing.directive('slAppSelector', [
   function(){
     return {
