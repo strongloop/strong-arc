@@ -86,6 +86,7 @@ WebInspector.ProfileLauncherView.prototype = {
             this._profilerId = this._SL.profiler.getProfilerId();
 
             this._toggleFetchButtons();
+            this._panel._showLauncherView();
 
             if ( this._profilerId === 'remote' ) {
                 this._showFetchButtons();
