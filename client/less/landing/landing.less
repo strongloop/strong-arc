@@ -49,7 +49,6 @@
     height: 12rem;
     display: inline-block;
     margin: 0 auto;
-    cursor: pointer;
 
     &.app-placeholder {
       display: none;
@@ -64,10 +63,25 @@
       width: 100%;
       padding: 0;
       text-align: center;
+      cursor: pointer;
     }
 
+    .app-image-unsupported {
+      display: none;
+    }
+
+    //only show unsupported icons
     .app-unsupported {
-      opacity: 0.5;
+      //opacity: 0.5;
+      cursor: default;
+
+      .sl-app-icon {
+        display: none;
+      }
+
+      .app-image-unsupported {
+        display: block;
+      }
     }
 
     &:hover {
@@ -81,6 +95,17 @@
 
       .app-image-hover {
         display: block;
+      }
+
+      //no hover state for unsupported
+      .app-unsupported {
+        .app-image, .app-image-hover {
+          display: none;
+        }
+
+        a {
+          cursor: default;
+        }
       }
 
       a {
