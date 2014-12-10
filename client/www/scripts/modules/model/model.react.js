@@ -26,22 +26,21 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
     var modelPropertyName = '';
     if (event.target.attributes['data-name']) {
       var xState = component.state;
+      var newValue = null;
+      if (event.target.attributes['type'] && (event.target.attributes['type'].value === 'checkbox'))
+        newValue = event.target.checked;
+      } else {
+        newValue = event.target.value;
+      }
       modelPropertyName = event.target.attributes['data-name'].value;
       if (modelPropertyName === 'name') {
         xState.isNameValid = component.isNameValid(event.target.value);
       }
-      if ((modelPropertyName === 'config.public') || (modelPropertyName === 'config.dataSource')){
-        modelPropertyName = modelPropertyName.split('.');
-        if (event.target.attributes['type'] && (event.target.attributes['type'].value === 'checkbox')) {
-          xState.activeInstance.config[modelPropertyName[1]] = event.target.checked;
-        } else {
-          xState.activeInstance.config[modelPropertyName[1]] = event.target.value;
-        }
-      }
-      if (event.target.attributes['type'] && (event.target.attributes['type'].value === 'checkbox')) {
-        xState.activeInstance.definition[modelPropertyName] = event.target.checked;
+      if (/^config\./.test(modelPropertyName)) {
+        modelPropertyName = modelPropertyName.split('.')[1];
+        xState.activeInstance.config[modelPropertyName] = newValue;
       } else {
-        xState.activeInstance.definition[modelPropertyName] = event.target.value;
+        xState.activeInstance.definition[modelPropertyName] = newValue;
       }
       component.setState(xState);
     }
