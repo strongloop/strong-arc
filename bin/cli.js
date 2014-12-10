@@ -2,7 +2,6 @@
 var path = require('path');
 var util = require('util');
 var opener = require('opener');
-var arc = require('../server/server');
 var DEFAULT_ARC_HOST = 'localhost';
 var STRONG_ARC_RUNNING_MSG =
 exports.STRONG_ARC_RUNNING_MSG = 'StrongLoop Arc is running here:';
@@ -17,6 +16,8 @@ if (argv.indexOf('-h') !== -1 || argv.indexOf('--help') !== -1) {
   printVersion();
   return;
 }
+
+var arc = require('../server/server');
 
 if(pathArg) {
   WORKSPACE_DIR = path.join(WORKSPACE_DIR, pathArg);
