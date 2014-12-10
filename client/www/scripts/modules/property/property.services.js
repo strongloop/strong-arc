@@ -35,39 +35,25 @@ Property.service('PropertyService', [
     };
 
     svc.updateModelProperty = function(propConfig) {
-      var deferred = $q.defer();
-
       // `id` is '{facet}.{model}.{name}'
-      var oldName = propConfig.id.split('.').pop();
+      var splitId = propConfig.id.split('.');
+      var oldName = splitId.pop();
+      var oldId = propConfig.id;
 
-      // Temporary workaround until loopback-workspace supports renames
-      if (oldName === propConfig.name) {
-        ModelProperty.upsert({}, propConfig,
-          //success
-          function(response) {
-            return deferred.resolve(response);
-          },
-          // fail
-          function(response) {
-            console.warn('bad get model properties: ' + response);
-          }
-        );
-      } else {
-        var oldId = propConfig.id;
-        var updatedDefinition = ModelProperty.create(propConfig);
-        updatedDefinition.$promise
-          .then(function deleteOldModelProperty() {
-            return ModelProperty.deleteById({ id: oldId }).$promise;
-          })
-          .then(function() {
-            deferred.resolve(updatedDefinition);
-          })
-          .catch(function(err) {
-            console.warn('Cannot rename %s to %s.', oldId, propConfig.id, err);
-          });
-      }
+      // update the id
+      splitId.push(propConfig.name);
+      var newId = splitId.join('.');
 
-      return deferred.promise;
+      return ModelProperty.deleteById({ id: oldId }).$promise
+        .then(function() {
+          delete propConfig.id;
+          var p = ModelProperty.create(propConfig).$promise;
+          propConfig.id = newId;
+          return p;
+        })
+        .catch(function(err) {
+          console.warn('Cannot rename %s to %s.', oldId, propConfig.id, err);
+        });
     };
 
     svc.deleteModelProperty = function(config) {
