@@ -2,6 +2,7 @@ var processManager = require('../server');
 var request = require('supertest');
 
 describe('process-manager-proxy', function() {
+  processManager.start();
   this.timeout(10000);
   it('should proxy requests to the underlying process-manager', function(done) {
     request(processManager)

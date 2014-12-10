@@ -33,5 +33,6 @@ var listen = app.listen;
 app.listen = function() {
   var server = process.server = listen.apply(app, arguments);
   devtools.setupWebSocketServer(server);
+  pm.start();
   return server;
 };
