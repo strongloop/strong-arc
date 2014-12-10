@@ -10,7 +10,7 @@ PM.service('PMAppService', [
     var svc = this;
 
     var defaultPMAppConfig = {
-      appStatePollInterval: 5000
+      appStatePollInterval: 750
     };
     var localAppState = {
       isLocalApp:true,
@@ -23,6 +23,7 @@ PM.service('PMAppService', [
       }, 25);
 
     };
+
 
     svc.startLocalApp = function() {
       return Deployment.create({
@@ -42,11 +43,12 @@ PM.service('PMAppService', [
     };
     svc.isLocalAppRunning = function() {
 
-      var reqUrl = '/process-manager/api/ServiceInstances';
-      stringX = reqUrl + '/findOne?filter={"fields":{"npmModules":false},"where":{"id":1}}';
-      return $http.get(stringX)
+      var baseUrl = '/process-manager/api/ServiceInstances';
+      var reqUrl = baseUrl + '/findOne?filter={"fields":{"npmModules":false},"where":{"id":1}}';
+      return $http.get(reqUrl)
         .then(function(response) {
           $log.debug('is app running?: ' + response.data.started);
+          localAppState.isStarted = response.data.started;
           return response.data;
         })
         .catch(function(error) {
@@ -123,9 +125,6 @@ PM.service('PMAppService', [
                   bFoundPort = true;
                   break;
                 }
-                else {
-                  $log.warn('[getLocalAppUrl] something not right here - should be lisetningSockets but they are missing: ');
-                }
               }
             }
             if (bFoundPort) {
@@ -133,7 +132,7 @@ PM.service('PMAppService', [
               $log.debug('[getLocalAppUrl] got a local url / port: ' + returnUrl);
             }
             else {
-              $log.warn('[getLocalAppUrl] unable to get local app url / port');
+              $log.debug('[getLocalAppUrl] pending port assignment');
             }
           }
           return returnUrl;
