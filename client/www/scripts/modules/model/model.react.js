@@ -27,7 +27,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
     if (event.target.attributes['data-name']) {
       var xState = component.state;
       var newValue = null;
-      if (event.target.attributes['type'] && (event.target.attributes['type'].value === 'checkbox'))
+      if (event.target.attributes['type'] && (event.target.attributes['type'].value === 'checkbox')) {
         newValue = event.target.checked;
       } else {
         newValue = event.target.value;
