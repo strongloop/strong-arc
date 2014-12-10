@@ -26,7 +26,8 @@ try {
 }
 
 // static files
-app.use(express.static(path.join(__dirname, '../client/www')));
+app.use(require('express-jsxtransform')())
+   .use(express.static(path.join(__dirname, '../client/www')));
 
 var listen = app.listen;
 app.listen = function() {
