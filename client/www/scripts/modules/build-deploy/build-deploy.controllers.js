@@ -47,7 +47,7 @@ BuildDeploy.controller('BuildDeployController', [
     };
 
     $scope.buildTogglers = [
-      { id: 'universal', label: 'Tarball', activeId: 'buildId' },
+      { id: 'universal', label: 'Tar file', activeId: 'buildId' },
       { id: 'git', label: 'Git', activeId: 'buildId' }
     ];
 
