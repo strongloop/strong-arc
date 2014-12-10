@@ -77,3 +77,13 @@ form.ui-form {
     border-left: 1rem solid @ui-arrow-next-color;
   }
 }
+
+/* Hide spinners on number inputs that shouldn't have spinners */
+.no-spinner {
+  -moz-appearance:textfield;
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
