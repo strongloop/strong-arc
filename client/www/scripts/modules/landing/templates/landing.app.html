@@ -2,8 +2,9 @@
   <div class="app-container" ng-class="{'app-unsupported' : !app.supportsCurrentProject }" ui-sref="{{getSref(app)}}">
     <i class="app-image sl-app-icon sl-app-icon-{{app.id}}"></i>
     <i class="app-image-hover sl-app-icon sl-app-icon-{{app.id}}-hover"></i>
+    <i class="app-image-unsupported sl-app-icon sl-app-icon-{{app.id}}-unsupported"></i>
 
-    <a class="app-name" ui-sref="{{app.id}}">{{app.name}}</a>
+    <a class="app-name" ui-sref="{{getSref(app)}}">{{app.name}}</a>
     <!--
     <p class="app-description">{{app.description}}</p>
     <div ng-show="{{!app.supportsCurrentProject}}">
