@@ -122,7 +122,8 @@ Arc.run([
     '$state',
     '$rootScope',
     'ArcUserService',
-    function($location, $state, $rootScope, ArcUserService){
+    'segmentio',
+    function($location, $state, $rootScope, ArcUserService, segmentio){
 
       // Redirect to login if route requires auth and you're not logged in
       $rootScope.$on('$stateChangeStart', function (event, next) {

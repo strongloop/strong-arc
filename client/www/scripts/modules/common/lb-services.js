@@ -456,7 +456,7 @@ module.factory(
          * </em>
          */
         "findById": {
-          url: angBase + "/users/:id",
+          url: authBase + "/users/:id",
           method: "GET",
         },
         /**
