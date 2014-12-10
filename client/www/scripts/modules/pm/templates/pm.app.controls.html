@@ -1,0 +1,64 @@
+<div data-id="AppControllerContainer">
+  <!-- App Controller Header -->
+  <div data-id="AppControllerHeaderContainer">
+    <h4>App Controller</h4>
+  </div>
+
+
+  <div data-id="AppControllerBodyContainer">
+
+    <!-- App Controller Status -->
+    <div data-id="AppControllerStatusContainer">
+      <div>{{ projectName }}</div>
+      <div class="app-link-container">
+        <div class="loading"
+             sl-common-loading-indicator
+             size="small"
+             ng-show="isShowAppControlSpinner()"></div>
+        <a ng-show="isShowAppLink()" class="target-app-link" target="_new" href="{{ pm.localAppLink }}" >
+          {{ pm.localAppLink }}
+        </a>
+      </div>
+      <label class="pm-app-state">
+        {{ pm.localAppState }}
+      </label>
+    </div>
+
+
+
+    <!-- App Controller Controls -->
+    <div>
+      <div data-ui-type="table" class="main-control-apprender-container">
+        <div data-ui-type="row">
+          <div data-ui-type="cell">
+            <div class="btn-container">
+              <button class="pm-app-control-btn" ng-click="stopApp()" ng-disabled="isButtonDisabled('stop')">
+                <span class="sl-icon sl-icon-stop"></span>
+              </button>
+              <label>stop</label>
+            </div>
+          </div>
+          <div data-ui-type="cell">
+            <div class="btn-container" ng-show="isShowRestartButton()" >
+              <button class="pm-app-control-btn" ng-click="reStartApp()" ng-disabled="isButtonDisabled('restart')">
+                <span class="sl-icon sl-icon-restart">&nbsp;</span>
+              </button>
+              <label>restart</label>
+            </div>
+            <div class="btn-container"  ng-show="isShowStartButton()">
+              <button class="pm-app-control-btn" ng-click="startApp()" ng-disabled="isButtonDisabled('start')">
+                <span class="sl-icon sl-icon-play">&nbsp;</span>
+              </button>
+              <label>start</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+</div>
+

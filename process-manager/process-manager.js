@@ -30,6 +30,8 @@ ProcessManager.prototype.start = function(cb) {
         stdio: [0, 'pipe', 2, 'ipc']
     });
 
+    pm.process.stdout.pipe(process.stdout);
+
     pm._parseOutputForPort();
     pm._handleExit();
   });
@@ -37,7 +39,8 @@ ProcessManager.prototype.start = function(cb) {
 }
 
 ProcessManager.prototype.log = function(msg) {
-  console.log('Embedded Process Manager: ' + msg);
+  console.log('Embedded Process Manager [%s]: ',
+    this.process ? this.process.pid : '(none)', msg);
 }
 
 ProcessManager.prototype._handleExit = function() {

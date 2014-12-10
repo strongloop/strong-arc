@@ -1,3 +1,4 @@
+var debug = require('debug')('strong-arc:deploy');
 var performGitDeployment = require('strong-deploy/lib/git').performGitDeployment;
 var performHttpPutDeployment = require('strong-deploy/lib/put-file').performHttpPutDeployment;
 var performLocalDeployment = require('strong-deploy/lib/post-json').performLocalDeployment;
@@ -12,10 +13,13 @@ module.exports = function(Deployment) {
     if(deployment.type === 'local') {
       deployment.processes = deployment.processes || 1;
       baseURL = 'http://localhost:'
-              + process.server.address().port;
+              + process.server.address().port
+              + '/process-manager';
     } else {
       baseURL = 'http://' + deployment.host + ':' + deployment.port;
     }
+
+    debug('deploy to %s: %j', baseURL, deployment);
 
     resize();
 
