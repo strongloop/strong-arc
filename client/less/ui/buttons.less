@@ -127,6 +127,38 @@
     border-bottom: 2px solid @ui-disabled-button-color;
   }
 
+  &.secondary {
+    color: @ui-secondary-button-color;
+    background: @ui-secondary-button-bg-color;
+    border-bottom: 2px solid @ui-secondary-button-border-color;
+
+    .sl-icon {
+      color: @ui-secondary-button-color;
+    }
+
+    &:hover {
+      color: @ui-secondary-button-hover-color;
+      background: @ui-secondary-button-hover-bg-color;
+
+      .sl-icon {
+        color: @ui-secondary-button-hover-color;
+      }
+    }
+
+    &[disabled] {
+      opacity: .6;
+      background: @ui-disabled-button-bg-color;
+
+      .sl-icon {
+        color: @ui-disabled-button-color;
+      }
+
+      &:hover {
+        background: @ui-disabled-button-bg-color;
+      }
+    }
+  }
+
   &:hover {
     background-color: @ui-button-hover-bg-color;
   }

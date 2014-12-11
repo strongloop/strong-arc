@@ -1,50 +1,123 @@
-.header-pm-app-control-menu-item .ui-popover .ui-popover-content {
-  width:23rem;
-}
-[data-id="AppControllerContainer"] {
-  text-align:center;
-}
-[data-id="AppControllerStatusContainer"] .pm-app-state {
-//  display:block;
-//  margin:0 auto 0 auto;
+//override the default menu trigger icon
+.header-pm-app-control-menu-item {
+  margin-right: 1.3rem;
+
+  .ui-popover {
+    .toggle-menu-link {
+      color: #01582A;
+      font-size: 155%;
+      position: relative;
+      top: .2rem;
+    }
+
+    &.is-running {
+      .toggle-menu-link {
+        color: #fff;
+      }
+    }
+
+    .ui-popover-content {
+      width: 23rem;
+    }
+  }
 }
 
-[data-id="AppControllerStatusContainer"] .loading {
-  display:block;
-}
-.header-pm-app-control-menu-item  div span.sl-icon{
-  font-size:155%;
-}
-.header-pm-app-control-menu-item  div.is-running span.sl-icon{
-  color:#ffffff;
-}
-[data-id="AppControllerContainer"] a.target-app-link {
-  display:inline-block;
-}
-[data-id="AppControllerContainer"] a.target-app-link.ng-hide {
-  visibility:hidden;
-}
-[data-id="AppControllerContainer"] .app-link-container {
-  height:2rem;
-}
-.main-control-apprender-container {
-  margin:0 auto 0 auto;
-  max-width: 13rem;
-}
-.main-control-apprender-container .btn-container label{
-  margin:0 auto 0 auto;
-  display:block;
-}
-
-.main-control-apprender-container .btn-container {
-  width:6rem;
+.sl-app-controller {
   text-align: center;
-}
-.main-control-apprender-container button {
-  height:2.3rem;
-  width:5rem;
-}
-.main-control-apprender-container button.pm-app-control-btn span.sl-icon {
-  font-size:70%;
-  color:#999999;
+  padding: 0;
+
+  header {
+    background-color: @ui-popover-menu-header-bg;
+    padding: 1rem;
+    border-radius: 1rem 1rem 0 0;
+
+    h4 {
+      margin: 0;
+    }
+  }
+
+
+  section {
+    background-color: @ui-popover-menu-header-bg;
+    border-top: 1px solid @ui-popover-menu-header-border-color;
+    padding: 1rem;
+
+    h4 {
+      margin: 0 0 1rem 0;
+    }
+
+
+    .pm-app-state {
+      margin-top: 1rem;
+      text-transform: uppercase;
+
+      //final states
+      &.running {
+        color: #7dbd33;
+      }
+
+      &.stopped {
+        color: #d9534f;
+      }
+
+      //working
+      &.starting, &.stopping, &.retrieving-port, &.restarting {
+        color: #444;
+      }
+    }
+
+    .loading {
+      display: block;
+    }
+
+    a.target-app-link {
+      display:inline-block;
+    }
+
+    a.target-app-link.ng-hide {
+      visibility:hidden;
+    }
+
+    .app-link-container {
+      height: 2rem;
+      position: relative;
+    }
+
+  }
+
+  footer {
+    padding: 1rem;
+    border-radius: 0 0 1rem 1rem;
+    background: @ui-popover-menu-footer-bg;
+    border-top: 1px solid @ui-popover-menu-footer-border-color;
+    text-align: center;
+
+    .pm-app-control-btn-container {
+      display: inline-block;
+
+      button {
+        .ui-btn;
+
+        height: 3rem;
+        width: 7rem;
+        text-align: center;
+        margin: 0 .5rem;
+
+        &.pm-app-control-btn {
+          display: inline-block;
+
+          .sl-icon {
+            font-size: 80%;
+            display: block;
+          }
+        }
+      }
+
+      span {
+        text-align: center;
+        display: block;
+        font-size: 80%;
+      }
+    }
+  }
 }
