@@ -3,7 +3,15 @@ BuildDeploy.controller('BuildDeployController', [
   '$scope',
   'BuildDeployService',
   '$log',
-  function ($scope, BuildDeployService, $log) {
+  'PackageDefinition',
+  function ($scope, BuildDeployService, $log, PackageDefinition) {
+
+    PackageDefinition.findOne().$promise
+      .then(function(pkg){
+        $scope.pkg = pkg;
+      }).catch(function(err) {
+        $log.warn('Cannot get project\'s package definition.', err);
+      });
 
     $scope.buildId = 'universal';
     $scope.deployId = 'new';
