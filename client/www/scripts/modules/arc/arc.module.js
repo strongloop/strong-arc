@@ -124,7 +124,9 @@ Arc.run([
     'ArcUserService',
     'segmentio',
     function($location, $state, $rootScope, ArcUserService, segmentio){
-
+      // finish initialization of segment.io analytics.js
+      window.analytics.load("8ImiW2DX0W");
+      window.analytics.page();
       // Redirect to login if route requires auth and you're not logged in
       $rootScope.$on('$stateChangeStart', function (event, next) {
 
