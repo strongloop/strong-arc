@@ -19,7 +19,6 @@ PM.controller('PMAppController', [
     };
 
 
-
    /*
     * Check Local App Status
     *
@@ -32,8 +31,8 @@ PM.controller('PMAppController', [
         .then(function(response) {
           if (response.started === true) {
             $scope.getLocalAppLink();  // spawn process to obtain url when it's ready
-            if($scope.pm.localAppState !== PMCONST.RUNNING_STATE) {
-              $scope.pm.localAppState = PMCONST.RETRIEVING_PORT_STATE;
+            if($scope.pm.localAppState !== PM_CONST.RUNNING_STATE) {
+              $scope.pm.localAppState = PM_CONST.RETRIEVING_PORT_STATE;
             }
           }
         })
@@ -53,7 +52,7 @@ PM.controller('PMAppController', [
     *
     * */
     $scope.startApp = function() {
-      $scope.pm.localAppState = PMCONST.STARTING_STATE;
+      $scope.pm.localAppState = PM_CONST.STARTING_STATE;
       return PMAppService.startLocalApp()
         .then(function(response) {
           return response;
@@ -61,7 +60,7 @@ PM.controller('PMAppController', [
     };
     $scope.reStartApp = function() {
       $scope.pm.isLocalAppRunning = false;
-      $scope.pm.localAppState = PMCONST.RESTARTING_STATE;
+      $scope.pm.localAppState = PM_CONST.RESTARTING_STATE;
       $scope.pm.localAppLink = '';
       return PMAppService.restartLocalApp()
         .then(function(response) {
@@ -70,15 +69,15 @@ PM.controller('PMAppController', [
     };
     $scope.stopApp = function() {
       $scope.pm.isLocalAppRunning = false;
-      $scope.pm.localAppState = PMCONST.STOPPING_STATE;
+      $scope.pm.localAppState = PM_CONST.STOPPING_STATE;
       $scope.pm.localAppLink = '';
       PMAppService.stopLocalApp()
         .then(function(response) {
           $scope.pm.localAppLink = '';
-          $scope.pm.localAppState = PMCONST.STOPPED_STATE;
+          $scope.pm.localAppState = PM_CONST.STOPPED_STATE;
         })
         .catch(function(error) {
-          $scope.pm.localAppState = PMCONST.STOPPED_STATE;
+          $scope.pm.localAppState = PM_CONST.STOPPED_STATE;
         });
     };
 
@@ -98,7 +97,7 @@ PM.controller('PMAppController', [
         .then(function(response) {
           if (response){
             $scope.pm.localAppLink = response;
-            $scope.pm.localAppState = PMCONST.RUNNING_STATE;
+            $scope.pm.localAppState = PM_CONST.RUNNING_STATE;
             $scope.pm.isLocalAppRunning = true;  // only used by header icon to show dif color
           }
         });
@@ -110,18 +109,18 @@ PM.controller('PMAppController', [
     *
     * */
     $scope.isShowStartButton = function() {
-      if (($scope.pm.localAppState === PMCONST.STOPPED_STATE) ||
-          ($scope.pm.localAppState === PMCONST.STARTING_STATE) ||
-          ($scope.pm.localAppState === PMCONST.UNKNOWN_STATE)) {
+      if (($scope.pm.localAppState === PM_CONST.STOPPED_STATE) ||
+          ($scope.pm.localAppState === PM_CONST.STARTING_STATE) ||
+          ($scope.pm.localAppState === PM_CONST.UNKNOWN_STATE)) {
         return true;
       }
       return false;
     };
     $scope.isShowRestartButton = function() {
-      if (($scope.pm.localAppState === PMCONST.RUNNING_STATE) ||
-        ($scope.pm.localAppState === PMCONST.RETRIEVING_PORT_STATE) ||
-        ($scope.pm.localAppState === PMCONST.STOPPING_STATE) ||
-        ($scope.pm.localAppState === PMCONST.RESTARTING_STATE)) {
+      if (($scope.pm.localAppState === PM_CONST.RUNNING_STATE) ||
+        ($scope.pm.localAppState === PM_CONST.RETRIEVING_PORT_STATE) ||
+        ($scope.pm.localAppState === PM_CONST.STOPPING_STATE) ||
+        ($scope.pm.localAppState === PM_CONST.RESTARTING_STATE)) {
         return true;
       }
       return false;
@@ -135,7 +134,7 @@ PM.controller('PMAppController', [
       if ($scope.pm.localAppLink) {
         return false;
       }
-      if ($scope.pm.localAppState === PMCONST.STOPPED_STATE){
+      if ($scope.pm.localAppState === PM_CONST.STOPPED_STATE){
         return false;
       }
       return true;
@@ -146,20 +145,20 @@ PM.controller('PMAppController', [
       switch(buttonName) {
 
         case 'stop':
-          if (($scope.pm.localAppState === PMCONST.STOPPED_STATE) ||
-            ($scope.pm.localAppState === PMCONST.STOPPING_STATE)){
+          if (($scope.pm.localAppState === PM_CONST.STOPPED_STATE) ||
+            ($scope.pm.localAppState === PM_CONST.STOPPING_STATE)){
             well = true;
           }
           break;
 
         case 'start':
-          if ($scope.pm.localAppState !== PMCONST.STOPPED_STATE){
+          if ($scope.pm.localAppState !== PM_CONST.STOPPED_STATE){
             well = true;
           }
           break;
 
         case 'restart':
-          if (($scope.pm.localAppState !== PMCONST.RUNNING_STATE)){
+          if (($scope.pm.localAppState !== PM_CONST.RUNNING_STATE)){
             well = true;
           }
           if (!$scope.pm.localAppLink) {
@@ -178,7 +177,7 @@ PM.controller('PMAppController', [
 
        // PM App Control variables
       $scope.pm = {
-        localAppState: PMCONST.STOPPED_STATE,
+        localAppState: PM_CONST.STOPPED_STATE,
         isLocalAppRunning: false,
         localAppLink: '',
         isLocalApp: true

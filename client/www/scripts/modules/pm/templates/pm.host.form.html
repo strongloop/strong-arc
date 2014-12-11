@@ -1,0 +1,26 @@
+<form class="ui-form" name="form" ng-submit="loadProcesses(form)" novalidate>
+  <div class="ui-form-group inline">
+    <label>Host name</label>
+    <input type="text"
+           name="host"
+           placeholder="host1.example.com"
+           ng-model="candidateServerConfig.host"
+           typeahead-on-select="onPMServerSelect($item)"
+           typeahead="server as server.host + ' : ' + server.port for server in pmServers"
+           sl-common-select-on-click
+           required>
+  </div>
+  <div class="ui-form-group inline">
+    <label>Port</label>
+    <input type="number"
+           min="1"
+           name="port"
+           ng-show="!isLocalPMSelected"
+           placeholder="4300"
+           ng-model="candidateServerConfig.port" required>
+    <div ng-show="isLocalPMSelected">xxxx</div>
+  </div>
+  <div class="ui-actions inline">
+    <button ng-disabled="form.$invalid">Load</button>
+  </div>
+</form>

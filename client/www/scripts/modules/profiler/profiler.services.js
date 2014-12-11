@@ -10,6 +10,9 @@ Profiler.service('ProfilerService', [
 
     svc.startCpuProfiling = function(server, process){
       var api = 'http://' + server.host + ':' + server.port;
+      if (server.host === PM_CONST.LOCAL_PM_HOST_NAME) {
+        api = '/process-manager'
+      }
       var url = api + '/api/ServiceInstances/1/actions';
       var postData = {
         request: {
@@ -26,6 +29,9 @@ Profiler.service('ProfilerService', [
 
     svc.downloadFile = function(server, fileUrl, fileName){
       var api = 'http://' + server.host + ':' + server.port;
+      if (server.host === PM_CONST.LOCAL_PM_HOST_NAME) {
+        api = '/process-manager'
+      }
       var downloadUrl = api + fileUrl;
       var def = $q.defer();
       var isRunning = false;
@@ -74,6 +80,9 @@ Profiler.service('ProfilerService', [
 
     svc.stopCpuProfiling = function(server, process){
       var api = 'http://' + server.host + ':' + server.port;
+      if (server.host === PM_CONST.LOCAL_PM_HOST_NAME) {
+        api = '/process-manager'
+      }
       var url = api + '/api/ServiceInstances/1/actions';
       var postData = {
         request: {
@@ -90,6 +99,9 @@ Profiler.service('ProfilerService', [
 
     svc.fetchHeapSnapshot = function(server, process){
       var api = 'http://' + server.host + ':' + server.port;
+      if (server.host === PM_CONST.LOCAL_PM_HOST_NAME) {
+        api = '/process-manager'
+      }
       var url = api + '/api/ServiceInstances/1/actions';
       var postData = {
         request: {
