@@ -12,7 +12,7 @@ PM.controller('PMAppController', [
       STOPPED_STATE: 'stopped',
       STARTING_STATE: 'starting',
       RUNNING_STATE: 'running',
-      RETRIEVING_PORT_STATE: 'retrieving port',
+      RETRIEVING_PORT_STATE: 'retrieving-port',
       RESTARTING_STATE: 'restarting',
       STOPPING_STATE: 'stopping',
       UNKNOWN_STATE: 'unknown'
