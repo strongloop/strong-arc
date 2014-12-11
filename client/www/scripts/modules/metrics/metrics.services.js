@@ -1,8 +1,8 @@
 Metrics.service('MetricsService', [
   '$http',
   '$log',
-  function($http,
-           $log) {
+  'PMServiceMetric',
+  function($http, $log, PMServiceMetric) {
     var svc = this;
 
     var currentService = {};
@@ -67,20 +67,28 @@ Metrics.service('MetricsService', [
     };
 
     svc.getMetricsSnapShot = function(server, filter) {
-      var apiRequestPath = 'http://' + server.host + ':' + server.port + '/api/ServiceMetrics';
 
-      return $http({
-          url: apiRequestPath,
-          method: "GET",
-          params: {filter:filter}
-        })
+      return PMServiceMetric.find(server, filter)
         .then(function(response) {
           return response.data;
         })
         .catch(function(error) {
-          $log.error(error.message + ':' + error);
-          return error;
+          $log.error('bad get metrics snapshot');
         });
+//      var apiRequestPath = 'http://' + server.host + ':' + server.port + '/api/ServiceMetrics';
+//
+//      return $http({
+//          url: apiRequestPath,
+//          method: "GET",
+//          params: {filter:filter}
+//        })
+//        .then(function(response) {
+//          return response.data;
+//        })
+//        .catch(function(error) {
+//          $log.error(error.message + ':' + error);
+//          return error;
+//        });
     };
 
     return svc;

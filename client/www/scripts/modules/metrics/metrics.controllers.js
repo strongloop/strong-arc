@@ -4,13 +4,13 @@ Metrics.controller('MetricsMainController', [
   'growl',
   '$interval',
   'MetricsService',
-  'CommonPidService',
-  'CommonPMService',
+  'PMPidService',
+  'PMHostService',
   'ChartConfigService',
-  function($scope, $log, growl, $interval, MetricsService, CommonPidService, CommonPMService, ChartConfigService) {
+  function($scope, $log, growl, $interval, MetricsService, PMPidService, PMHostService, ChartConfigService) {
 
     $scope.isDisplayChartValid = false; // control display of charts (transition between data sets)
-    $scope.currentServerConfig = CommonPMService.getLastPMServer();
+    $scope.currentServerConfig = PMHostService.getLastPMServer();
     $scope.isCollapsed = true;  // settings
     $scope.maxInitDataPointThreshold = MetricsService.getMaxInitDataPointThreshold();  // limit on the initial data load
     $scope.maxDataPointThrottle = MetricsService.getMaxDataPointThrottle();  // max number of current data points
@@ -246,7 +246,7 @@ Metrics.controller('MetricsMainController', [
             var metricsToRender = rawMetrics;
 
             // reset everything to 0 until timestamp issue is fixed
-            if (rawMetrics.map) {
+            if (rawMetrics && rawMetrics.map) {
               var rawMetricsCount = rawMetrics.length;
               if (rawMetricsCount > $scope.maxInitDataPointThreshold) {
 
