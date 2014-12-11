@@ -53,14 +53,14 @@ BuildDeploy.directive('slBuildDeployBuildForm', [
             BuildDeployService.buildUniversal(buildData, $scope.viewConsole)
               .then(function(data){
                 $log.log(data);
-                $scope.build.universal.message = 'Successfully built using universal';
+                $scope.build.universal.message = 'Successfully built using tar file';
                 $scope.build.universal.messageType = 'success';
                 $scope.deploy.universal.archive = data.archive;
                 $scope.build.universal.loading = false;
               })
               .catch(function(err){
                 $log.log(err);
-                $scope.build.universal.message = 'Unable to build using universal';
+                $scope.build.universal.message = 'Unable to build using tar file';
                 $scope.build.universal.messageType = 'error';
                 $scope.build.universal.loading = false;
               });
@@ -169,13 +169,13 @@ BuildDeploy.directive('slBuildDeployDeployForm', [
             BuildDeployService.deployUniversal(deployData, $scope.viewConsole)
               .then(function(data){
                 $log.log('deploy done!', data);
-                $scope.deploy.universal.message = 'Successfully deployed using universal';
+                $scope.deploy.universal.message = 'Successfully deployed using tar file';
                 $scope.deploy.universal.messageType = 'success';
                 $scope.deploy.universal.loading = false;
               })
               .catch(function(err){
                 $log.log(err);
-                $scope.deploy.universal.message = 'Unable to deploy using universal';
+                $scope.deploy.universal.message = 'Unable to deploy using tar file';
                 $scope.deploy.universal.messageType = 'error';
                 $scope.deploy.universal.loading = false;
               });
