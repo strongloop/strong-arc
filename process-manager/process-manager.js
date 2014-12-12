@@ -26,7 +26,7 @@ ProcessManager.prototype.start = function(cb) {
       return cb(err);
     }
 
-    pm.process = spawn('node', args, {
+    pm.process = spawn(process.execPath, args, {
         stdio: [0, 'pipe', 2, 'ipc']
     });
 
