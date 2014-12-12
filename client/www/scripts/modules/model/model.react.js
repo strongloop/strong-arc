@@ -1060,6 +1060,7 @@ var MigrateButton = (MigrateButton = React).createClass({
         : 'Select a data source that supports migration to enable this feature.'}
       disabled={canMigrate ? '' : 'disabled'}
       className="model-detail-pocket-button model-migrate-button"
+      type="button"
       onClick={this.handleClick}>Migrate Model</button>)
     }
   }
