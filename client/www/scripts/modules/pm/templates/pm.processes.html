@@ -1,5 +1,5 @@
 <div class="sl-profiler-processes">
-  <span class="title">Processes (select a process)</span>
+  <span class="title" ng-show="processes.length">Processes</span>
   <ul>
     <li
             ng-repeat="process in processes | limitTo:8"
