@@ -162,6 +162,35 @@ PM.service('PMHostService', [
       window.localStorage.removeItem('pmServers');
       return [];
     };
+    svc.addLastPMServer = function(serverConfig) {
+      var updatedServers = svc.getPMServers();
+      updatedServers[updatedServers.length] = serverConfig;
+      window.localStorage.setItem('pmServers', JSON.stringify(updatedServers));
+      return updatedServers;
+
+    };
+    svc.initializeInternalPMHost = function() {
+      var defaultLocalPMHostConfig = {
+        host: PM_CONST.LOCAL_PM_HOST_NAME,
+        port: PM_CONST.LOCAL_PM_PORT_MASK
+      };
+      var isExists = false; // only inject it we need to
+      // determine whether or not to inject local pm reference
+      var currentPMHosts = svc.getPMServers();
+      if (!currentPMHosts) {
+        return svc.addPMServer(defaultLocalPMHostConfig);
+      }
+      for (var i = 0;i < currentPMHosts.length;i++) {
+        if (defaultLocalPMHostConfig.host === currentPMHosts[i].host) {
+          isExists = true;
+          break;
+        }
+      }
+      if (!isExists) {
+        // add to the end of the list
+        svc.addLastPMServer(defaultLocalPMHostConfig);
+      }
+    };
     svc.addPMServer = function(serverConfig) {
       // check the list to see if it exists
       // if it does then make it the most recent
