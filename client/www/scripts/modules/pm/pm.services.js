@@ -358,7 +358,7 @@ PM.service('PMServiceMetric', [
         return $http({
           url: apiRequestPath,
           method: "GET",
-          params: {where:filter}
+          params: {filter:filter}
         })
           .then(function(response) {
             return response.data;
