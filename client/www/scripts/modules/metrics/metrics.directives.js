@@ -1,19 +1,10 @@
-Metrics.directive('slMetricsTitle', [
+Metrics.directive('slMetricsVisualTicker', [
   function() {
     return {
-      templateUrl: './scripts/modules/metrics/templates/metrics.title.html'
-    }
-  }
-]);
-Metrics.directive('slMetricsInstrumentation', [
-  function() {
-    return {
+      replace:true,
       link: function(scope, el, attrs) {
-
-        window.setUI();
-
         scope.$watch('sysTime', function(newVal) {
-          React.renderComponent(MetricsUpdateCounter({scope:scope}), el[0]);
+          React.renderComponent(MetricsVisualTicker({scope:scope}), el[0]);
         }, true);
       }
     }
@@ -23,6 +14,18 @@ Metrics.directive('slMetricsSettings', [
   function() {
     return {
       templateUrl: './scripts/modules/metrics/templates/metrics.settings.html'
+    }
+  }
+]);
+Metrics.directive('slMetricsChartContainer', [
+  function() {
+    return {
+      templateUrl: './scripts/modules/metrics/templates/metrics.chart.container.html',
+      link: function(scope, el, attrs) {
+        scope.$watch('cpuChartModel', function() {
+          setScrollView('.metrics-chart-view-container');
+        });
+      }
     }
   }
 ]);

@@ -30,7 +30,6 @@ PM.run([
 PM.run([
   'PMHostService',
   'PMAppService',
-  '$log',
   function (PMHostService, PMAppService) {
 
     PMAppService.isLocalApp()
@@ -39,6 +38,5 @@ PM.run([
           PMHostService.initializeInternalPMHost();
         }
       });
-
   }
 ]);

@@ -206,14 +206,15 @@ Metrics.service('ChartConfigService', [
           type: 'lineChart',
           height: 250,
           margin : {
-            top: 20,
+            top: 40,
             right: 20,
             bottom: 40,
-            left: 55
+            left: 105
           },
           x: function(d){ return d.x; },
           y: function(d){ return d.y; },
           useInteractiveGuideline: true,
+          transitionDuration: 100,
           xAxis: {
             axisLabel: 'timestamp',
             tickFormat: function(d) {
@@ -225,12 +226,12 @@ Metrics.service('ChartConfigService', [
             tickFormat: function(d){
               return d3.format('.02f')(d);
             },
-            axisLabelDistance: 30
+            axisLabelDistance: 0
           }
         },
         title: {
           enable: true,
-          text: ''
+          text: 'gobbledygook'
         },
         subtitle: {
           enable: true,
@@ -256,10 +257,9 @@ Metrics.service('ChartConfigService', [
         case METRIC_CONST.HEAP_CHART_NAME: {
           chartOptions = defaultOptions;
           chartOptions.title = {
-            enable:false,
-            text: 'Heap Chart'
+            text: 'Heap'
           };
-          chartOptions.chart.yAxis.axisLabel = 'Heap';
+          chartOptions.chart.yAxis.axisLabel = 'MB';
 
           break;
         }
@@ -267,20 +267,18 @@ Metrics.service('ChartConfigService', [
         case METRIC_CONST.CPU_CHART_NAME: {
           chartOptions = defaultOptions;
           chartOptions.title = {
-            enable:false,
-            text: 'CPU Chart'
+            text: 'CPU'
           };
-          chartOptions.chart.yAxis.axisLabel = 'CPU';
+          chartOptions.chart.yAxis.axisLabel = '%';
 
           break;
         }
         case METRIC_CONST.LOOP_CHART_NAME: {
           chartOptions = defaultOptions;
           chartOptions.title = {
-            enable:false,
-            text: 'Loop Chart'
+            text: 'Loop'
           };
-          chartOptions.chart.yAxis.axisLabel = 'Loop';
+          chartOptions.chart.yAxis.axisLabel = 'ms';
 
           break;
         }

@@ -26,7 +26,7 @@ Metrics.controller('MetricsMainController', [
     $scope.sysTime = {
       ticker:0
     };
-    var ONE_SECOND = 1000; // counter timer between metrics requestsd
+    var ONE_SECOND = 1000; // counter timer between metrics requestsed
 
     /*
     * Query filter helpers
@@ -359,6 +359,46 @@ Metrics.controller('MetricsMainController', [
         $scope.metricsUpdateInterval = MetricsService.setMetricsUpdateInterval(parseInt(newVal));
       }
     });
+
+    /*
+    *
+    * UI State
+    *
+    * */
+    $scope.isShowMetricChart = function(chartName) {
+
+      var retVar = false;
+      switch(chartName) {
+
+        case 'cpu':
+          if ($scope.cpuChartModel) {
+            retVar = true;
+          }
+          break;
+
+        case 'loop':
+          if ($scope.loopChartModel) {
+            retVar = true;
+          }
+
+          break;
+
+        case 'heap':
+          if ($scope.heapChartModel) {
+            retVar = true;
+          }
+
+          break;
+
+        default:
+
+      }
+      return retVar;
+
+      return false;
+
+    };
+
 
     $scope.startMetrics();
   }
