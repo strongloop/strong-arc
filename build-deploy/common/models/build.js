@@ -1,3 +1,4 @@
+var sl_build = require.resolve('strong-build/bin/slb');
 var split = require('split');
 var spawn = require('child_process').spawn;
 var path = require('path');
@@ -42,7 +43,7 @@ module.exports = function(Build) {
   }
 
   function startBuild(build, cb) {
-    var args = ['build'];
+    var args = [ sl_build ];
     build.started = new Date();
 
     args.push('--install');
@@ -62,7 +63,7 @@ module.exports = function(Build) {
       break;
     }
 
-    var buildProcess = spawn('slc', args);
+    var buildProcess = spawn(process.execPath, args);
     processes[build.id] = buildProcess;
 
     build.handleOutput('out', buildProcess.stdout);
