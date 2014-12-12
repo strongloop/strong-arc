@@ -322,15 +322,15 @@ Metrics.service('ChartConfigService', [
             color: '#7777ff'
           },
           {
-            name: 'cpu.total',
-            display: 'Total',
-            color: '#ff7f0e',
-            active: true
-          },
-          {
             name: 'cpu.system',
             display: 'System',
             color: '#2ca02c',
+            active: true
+          },
+          {
+            name: 'cpu.total',
+            display: 'Total',
+            color: '#ff7f0e',
             active: true
           }
         ]
