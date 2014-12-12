@@ -8,7 +8,7 @@ var PM_CONST = {
   RESTARTING_STATE: 'restarting',
   STOPPING_STATE: 'stopping',
   UNKNOWN_STATE: 'unknown',
-  LOCAL_PM_HOST_NAME: 'arc.local.pm',
+  LOCAL_PM_HOST_NAME: 'local application',
   LOCAL_PM_PORT_MASK: 9999
 };
 PM.value('PM_CONST', PM_CONST);
@@ -29,15 +29,16 @@ PM.run([
 ]);
 PM.run([
   'PMHostService',
+  'PMAppService',
   '$log',
-  function (PMHostService, $log) {
+  function (PMHostService, PMAppService) {
 
-    var defaultLocalPMHostConfig = {
-      host: PM_CONST.LOCAL_PM_HOST_NAME,
-      port: PM_CONST.LOCAL_PM_PORT_MASK
-    };
-    $log.debug('add local Arc PM host reference: ' + JSON.stringify(defaultLocalPMHostConfig));
-    return PMHostService.addPMServer(defaultLocalPMHostConfig)
+    PMAppService.isLocalApp()
+      .then(function(response) {
+        if (response === true) {
+          PMHostService.initializeInternalPMHost();
+        }
+      });
 
   }
 ]);
