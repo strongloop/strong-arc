@@ -70,25 +70,11 @@ Metrics.service('MetricsService', [
 
       return PMServiceMetric.find(server, filter)
         .then(function(response) {
-          return response.data;
+          return response;
         })
         .catch(function(error) {
           $log.error('bad get metrics snapshot');
         });
-//      var apiRequestPath = 'http://' + server.host + ':' + server.port + '/api/ServiceMetrics';
-//
-//      return $http({
-//          url: apiRequestPath,
-//          method: "GET",
-//          params: {filter:filter}
-//        })
-//        .then(function(response) {
-//          return response.data;
-//        })
-//        .catch(function(error) {
-//          $log.error(error.message + ':' + error);
-//          return error;
-//        });
     };
 
     return svc;
