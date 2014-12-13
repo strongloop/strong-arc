@@ -5,11 +5,15 @@
     <i class="app-image-unsupported sl-app-icon sl-app-icon-{{app.id}}-unsupported"></i>
 
     <a class="app-name" ui-sref="{{getSref(app)}}">{{app.name}}</a>
-    <!--
-    <p class="app-description">{{app.description}}</p>
-    <div ng-show="{{!app.supportsCurrentProject}}">
-      <strong>{{app.name}} is not compatibile with your application: {{project.dir}}</strong>
-    </div>
-    -->
+    <!--<p class="app-description">{{app.description}}</p>-->
+    <sl-popover icon="sl-icon sl-icon-question-mark" ng-show="{{!app.supportsCurrentProject}}" position="left" class="app-popover" hideonpageclick="true">
+      <header>
+        <h4>{{app.name}}</h4>
+      </header>
+      <section>
+        <p>{{app.name}} is not compatible with your application:</p>
+        <p>{{project.dir}}</p>
+      </section>
+    </sl-popover>
   </div>
 </div>

@@ -45,26 +45,11 @@
     border-left: 1rem solid transparent;
   }
 
-  &.menu {
-    .ui-arrow-top {
-      border-bottom-color: @ui-popover-menu-arrow-color;
-    }
-
-    .ui-popover-content {
-      border-radius: 1rem;
-
-      &.bottom {
-        top: 3rem;
-        right: -1.2rem;
-        left: auto;
-      }
-
-      .ui-popover-body {
-        padding: 0;
-      }
-
-    }
-  }
+//  &.generic {
+//    .ui-arrow-right {
+//      border-left-color: #eee;
+//    }
+//  }
 
   .ui-popover-content {
     position: absolute;
@@ -110,6 +95,28 @@
       top: 1rem;
       right: 1.5rem;
       color: @ui-popover-icon-color;
+    }
+  }
+
+  &.menu, &.generic {
+    .ui-arrow-top {
+      border-bottom-color: @ui-popover-menu-arrow-color;
+    }
+
+    .ui-popover-content {
+      border-radius: 1rem;
+      min-height: 0;
+
+      &.bottom {
+        top: 3rem;
+        right: -1.2rem;
+        left: auto;
+      }
+
+      .ui-popover-body {
+        padding: 0;
+      }
+
     }
   }
 }

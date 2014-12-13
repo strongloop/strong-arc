@@ -143,7 +143,7 @@ Common.directive('slPopoverHelp', [
       restrict: 'E',
       replace: true,
       scope: {},
-      templateUrl: './scripts/modules/common/templates/common.popover.html',
+      templateUrl: './scripts/modules/common/templates/common.popover.help.html',
       link: function(scope, el, attrs){
         scope.loading = false;
         scope.position = attrs.position || 'right';
@@ -190,6 +190,59 @@ Common.directive('slPopoverMenu', [
 
         $rootScope.$on('pageClick', function(e, $event){
           var isMenuClick = !!$($event.target).parents('.ui-popover.menu').length;
+
+          if ( scope.hideOnPageClick && !isMenuClick ) {
+            scope.showPopover = false;
+          }
+        });
+
+        scope.hidePopover = function(){
+          if ( scope.hideOnPageClick ) return;
+
+          to = $timeout(function(){
+            scope.showPopover = false;
+          }, 400);
+        };
+
+        scope.cancelHide = function(){
+          if ( scope.hideOnPageClick ) return;
+
+          if ( to ) {
+            $timeout.cancel(to);
+          }
+        };
+
+        transclude(scope.$parent, function(clone, scope) {
+          clone.removeClass('hide');
+          element.find('.ui-popover-body').append(clone);
+        });
+      }
+    };
+  }]);
+
+Common.directive('slPopover', [
+  '$http',
+  '$tooltip',
+  '$log',
+  '$rootScope',
+  '$timeout', function($http, $tooltip, $log, $rootScope, $timeout){
+    return {
+      restrict: 'E',
+      replace: true,
+      scope: {},
+      transclude: true,
+      templateUrl: './scripts/modules/common/templates/common.popover.html',
+      link: function(scope, element, attrs, ctrl, transclude){
+        var to;
+        scope.position = attrs.position || 'left';
+        scope.icon = attrs.icon;
+        scope.hideOnPageClick = attrs.hideonpageclick;
+
+        scope.$watch('showPopover', function(newVal, oldVal){
+        });
+
+        $rootScope.$on('pageClick', function(e, $event){
+          var isMenuClick = !!$($event.target).parents('.ui-popover.generic').length;
 
           if ( scope.hideOnPageClick && !isMenuClick ) {
             scope.showPopover = false;

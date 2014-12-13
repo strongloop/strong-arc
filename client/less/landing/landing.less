@@ -49,6 +49,7 @@
     height: 12rem;
     display: inline-block;
     margin: 0 auto;
+    position: relative;
 
     &.app-placeholder {
       display: none;
@@ -149,8 +150,29 @@
       color: @link-color2;
     }
 
-    &:last-child {
-      //margin-right: 0;
+    .app-popover {
+      position: absolute;
+      top: 0;
+      left: 1rem;
+
+      .sl-icon {
+        color: #a7a9ac;
+      }
+
+      header {
+        background: #aaa;
+        color: #fff;
+        padding: 1rem;
+        border-radius: .8rem .8rem 0 0;
+
+        h4 {
+          margin: 0;
+        }
+      }
+
+      section {
+        padding: 1rem;
+      }
     }
   }
 }
