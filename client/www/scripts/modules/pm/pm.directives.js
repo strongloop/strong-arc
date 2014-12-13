@@ -28,6 +28,9 @@ PM.directive('slPmHostForm', [
         '$timeout',
         'PMAppService',
         function($scope, $log, $timeout, PMAppService) {
+
+          var isLocal = false;
+
           $scope.currentServerConfig = {
             host: '',
             port: 0
@@ -43,7 +46,14 @@ PM.directive('slPmHostForm', [
           $scope.showMoreMenu = false;
           $scope.isRemoteValid = false;
           $scope.isOpen = false;
-          $scope.isLocalPMSelected = false;
+
+          $scope.isLocalPMSelected = function() {
+            return isLocal;
+          };
+
+          $scope.pmHostFocus = function() {
+            $log.debug('HOST FOCUS');
+          };
 
 
           $scope.processes = [];
@@ -95,6 +105,10 @@ PM.directive('slPmHostForm', [
               $scope.currentServerConfig = $scope.candidateServerConfig;
 
               if ($scope.currentServerConfig.host === PM_CONST.LOCAL_PM_HOST_NAME) {
+
+                // disable port view
+                isLocal = true;
+
                 // check if server is running or not
                 PMAppService.isLocalAppRunning()
                   .then(function(response) {
@@ -113,6 +127,7 @@ PM.directive('slPmHostForm', [
                   });
               }
               else {
+                isLocal = false;
                 $scope.initServerProcesses($scope.currentServerConfig, 1);
 
               }
