@@ -20,6 +20,13 @@ var triggerResizeUpdate = function() {
     }
   }, 250);
 };
+
+var setScrollView = function(selector) {
+  var targetView = $(selector);
+  var offTop = targetView.offset().top;
+  var windowHeight = $(window).outerHeight();
+  targetView.css('height', (windowHeight - offTop));
+};
 window.onresize = function(event) {
   this.triggerResizeUpdate(event);
 };

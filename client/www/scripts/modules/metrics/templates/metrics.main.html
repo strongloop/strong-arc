@@ -1,18 +1,24 @@
-<div data-id="MetricsMainContainer">
+<div class="metrics-main-container">
   <sl-pm-pid-selector></sl-pm-pid-selector>
-  <div sl-metrics-title data-id="MetricsContentTitle"></div>
-  <div data-ui-type="table" data-id="MetricsMainLayout">
+  <div sl-metrics-title class="metrics-title-container" data-ui-type="table">
+    <div data-ui-type="row">
+      <div data-ui-type="cell">
+        <div class="metrics-title">Metrics</div>
+      </div>
+      <div data-ui-type="cell" class="metrics-data-point-count-col">
+         <div class="metrics-header-label">Data Points: <span class="instrument-value">{{ dataPointCount }}</span></div>
+      </div>
+      <div data-ui-type="cell" class="metrics-visual-ticker-col">
+        <div sl-metrics-visual-ticker class="metrics-visual-ticker-container"></div>
+      </div>
+    </div>
+  </div>
+  <div data-ui-type="table">
     <div data-ui-type="row">
       <div data-ui-type="cell" class="metrics-nav-column" data-id="MetricsSidebarContainer">
         <div sl-metrics-chart-controls class="metrics-nav-controls-container"></div>
       </div>
-      <div data-ui-type="cell">
-        <div class="common-instance-view-container">
-          <nvd3 options="cpuChartOptions" data="cpuChartModel"></nvd3>
-          <nvd3 options="loopChartOptions" data="loopChartModel"></nvd3>
-          <nvd3 options="heapChartOptions" data="heapChartModel"></nvd3>
-        </div>
-      </div>
+      <div data-ui-type="cell" sl-metrics-chart-container class="metrics-main-content-layout"></div>
     </div>
   </div>
 
