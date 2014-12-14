@@ -7,7 +7,6 @@
     border: none;
     padding: 0;
     margin: 0 0 1rem 0;
-    float: left;
 
     .ui-form-group {
       display: inline-block;
@@ -38,11 +37,18 @@
       display: inline-block;
       text-align: left;
     }
-  }
 
+    .pm-readonly-port {
+      width:8rem;
+    }
+
+  }
+  .pm-host-form-layout-col {
+    width:42rem;
+  }
   .sl-profiler-processes {
     font-size: 1.4rem;
-    float: left;
+    min-height:7.2rem;
     position: relative;
 
     .title {
@@ -50,9 +56,13 @@
       display: block;
     }
 
+    .loading {
+      background:pink;
+      float:left;
+    }
+
     ul {
-      .clearfix;
-      float: left;
+      margin:0;
     }
 
     .process {

@@ -11,9 +11,6 @@ Metrics.controller('MetricsMainController', [
 
     $scope.isDisplayChartValid = false; // control display of charts (transition between data sets)
     $scope.currentServerConfig = PMHostService.getLastPMServer();
-    $log.debug('|');
-    $log.debug('|  MetricsMainController: ' + JSON.stringify($scope.currentServerConfig));
-    $log.debug('|');
     $scope.isCollapsed = true;  // settings
     $scope.maxInitDataPointThreshold = MetricsService.getMaxInitDataPointThreshold();  // limit on the initial data load
     $scope.maxDataPointThrottle = MetricsService.getMaxDataPointThrottle();  // max number of current data points
@@ -102,7 +99,9 @@ Metrics.controller('MetricsMainController', [
     function processMetricsTick(metrics) {
       var mStub;  // placeholder for unique server/service metrics 'bucket'
       if (!metrics || !metrics.length) {
-        $log.debug('processMetricsTick called with no metrics');
+        $log.warn('processMetricsTick called with no metrics');
+        growl.addWarnMessage('There are no metrics here.', {ttl: 4000});
+        growl.addWarnMessage('Check your strong-pm configuration and license setup.', {ttl: 4000});
         return;
       }
 
@@ -244,9 +243,6 @@ Metrics.controller('MetricsMainController', [
       if ($scope.isValidProcess()) {
         $scope.currentServerConfig = PMHostService.getLastPMServer();
         // fetch promise
-        $log.debug('|');
-        $log.debug('|  getChartData: ' + JSON.stringify($scope.currentServerConfig));
-        $log.debug('|');
         MetricsService.getMetricsSnapShot($scope.currentServerConfig, filter)
           .then(function(rawMetrics) {
 
@@ -338,13 +334,21 @@ Metrics.controller('MetricsMainController', [
      *
      * */
     $scope.$watch('activeProcess', function(newVal) {
+
+      $scope.cpuChartModel = [];
+      $scope.loopChartModel = [];
+      $scope.heapChartModel = [];
+
+      $scope.currentServerConfig = PMHostService.getLastPMServer();
       if (newVal && newVal.id) {
+        $log.info('arc metric: active process changed');
         $scope.currentWorkerId = newVal.workerId;
         $scope.currentProcessId = newVal.id;
         $scope.currentPMServerName = $scope.currentServerConfig.host + ':' + $scope.currentServerConfig.port;
         $scope.isDisplayChartValid = true;
         $scope.resetCharts();
       }
+
     });
     $scope.$watch('processes', function(newVal) {
       if (newVal && newVal.length < 1) {

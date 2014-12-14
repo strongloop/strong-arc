@@ -126,7 +126,7 @@ PM.service('PMAppService', [
           return returnUrl;
         })
         .catch(function(error) {
-          $log.debug('bad get app url: ' + error.message);
+          $log.warn('bad get app url: ' + error.message);
         });
     };
 
@@ -148,17 +148,11 @@ PM.service('PMAppService', [
  * */
 PM.service('PMHostService', [
   '$log',
+  'growl',
+  '$timeout',
   'PMServerService',
-  function($log, PMServerService) {
+  function($log, growl, $timeout, PMServerService) {
     var svc = this;
-
-    // test server config host value
-    function checkServerConfigHost(methodName, config) {
-      if (typeof config.host === 'object') {
-        $log.error('found it[' + methodName + ']');
-      }
-      return config;
-    }
 
     svc.getPMServers = function() {
       var pmServers = JSON.parse(window.localStorage.getItem('pmServers'));
@@ -172,7 +166,6 @@ PM.service('PMHostService', [
       return [];
     };
     svc.addLastPMServer = function(serverConfig) {
-      checkServerConfigHost('addLastPMServer', serverConfig);
       var updatedServers = svc.getPMServers();
       updatedServers[updatedServers.length] = serverConfig;
       window.localStorage.setItem('pmServers', JSON.stringify(updatedServers));
@@ -201,61 +194,75 @@ PM.service('PMHostService', [
         svc.addLastPMServer(defaultLocalPMHostConfig);
       }
     };
-    svc.addPMServer = function(serverConfig) {
-      checkServerConfigHost('addPMServer', serverConfig);
-      console.log('| ');
-      console.log('| addPMServer: ' + JSON.stringify(serverConfig));
-      console.log('| ');
+    svc.addPMServer = function(serverConfig, doTest) {
 
-      // ensure it is a valid server before adding it
-      // is it a valid object
-      // test the server config
-      return PMServerService.find(serverConfig, {id:1})
-        .then(function(response) {
-
-          if (response.status === 200) {
-            console.log('| ');
-            console.log('| Server Test before saving to localstorage: ' + JSON.stringify(response));
-            console.log('| ');
-            checkServerConfigHost('addPMServer B', serverConfig);
-            // check the list to see if it exists
-            // if it does then make it the most recent
-            // dont' add dup
-            var pmServers = JSON.parse(window.localStorage.getItem('pmServers'));
-            if (!pmServers) {
-              pmServers = [];
+      if (!doTest) {
+        // check the list to see if it exists
+        // if it does then make it the most recent
+        // dont' add dup
+        var pmServers = JSON.parse(window.localStorage.getItem('pmServers'));
+        if (!pmServers) {
+          pmServers = [];
+        }
+        if (serverConfig.host && serverConfig.port) {
+          for (var i = 0;i < pmServers.length;i++) {
+            if ((serverConfig.host === pmServers[i].host) && (serverConfig.port === pmServers[i].port)) {
+              pmServers.splice(i,1);
+              break;
             }
-            if (serverConfig.host && serverConfig.port) {
-              for (var i = 0;i < pmServers.length;i++) {
-                if ((serverConfig.host === pmServers[i].host) && (serverConfig.port === pmServers[i].port)) {
-                  pmServers.splice(i,1);
-                  break;
-                }
-              }
-              checkServerConfigHost('addPMServer C', serverConfig);
-              pmServers.push(serverConfig);
-            }
-            console.log('| ');
-            console.log('| Add Server To Local Storage: ' + JSON.stringify(serverConfig));
-            console.log('| ');
-            window.localStorage.setItem('pmServers', JSON.stringify(pmServers));
-            checkServerConfigHost('addPMServer D', serverConfig);
-            return serverConfig;
-
           }
-          else {
-            $log.warn('| ');
-            $log.warn('| BAD GET SERVERS: [' + response.status + ']' + JSON.stringify(serverConfig));
-            $log.warn('| ');
-            return {};
-          }
+          pmServers.push(serverConfig);
+        }
+        window.localStorage.setItem('pmServers', JSON.stringify(pmServers));
+        $timeout(function() {
+          return serverConfig;
 
-
-
-        })
-        .catch(function(error) {
-          $log.error('bad get server service test: ' + error.message)
         });
+      }
+      else {
+        // ensure it is a valid server before adding it
+        // is it a valid object
+        // test the server config
+        return PMServerService.find(serverConfig, {id:1})
+          .then(function(response) {
+
+
+
+            if (response.status === 200) {
+              // check the list to see if it exists
+              // if it does then make it the most recent
+              // dont' add dup
+              var pmServers = JSON.parse(window.localStorage.getItem('pmServers'));
+              if (!pmServers) {
+                pmServers = [];
+              }
+              if (serverConfig.host && serverConfig.port) {
+                for (var i = 0;i < pmServers.length;i++) {
+                  if ((serverConfig.host === pmServers[i].host) && (serverConfig.port === pmServers[i].port)) {
+                    pmServers.splice(i,1);
+                    break;
+                  }
+                }
+                pmServers.push(serverConfig);
+              }
+              window.localStorage.setItem('pmServers', JSON.stringify(pmServers));
+              return serverConfig;
+
+            }
+            else {
+              $log.warn('invalid PM Host value: ' + JSON.stringify(serverConfig));
+              growl.addWarnMessage('invalid PM Host value: ' + JSON.stringify(serverConfig), {ttl:2200})
+              return {};
+            }
+
+
+
+          })
+          .catch(function(error) {
+            $log.error('bad get server service test: ' + error.message)
+          });
+
+      }
 
 
     };
@@ -265,14 +272,11 @@ PM.service('PMHostService', [
 
       if (pmServers) {
         var config = pmServers[pmServers.length - 1];
-        console.log('|');
-        console.log('|  getLastPMServer: ' + JSON.stringify(config));
-        console.log('|');
         return config;
       }
       return {
-        server: '',
-        port: 0
+        server: PM_CONST.LOCAL_PM_HOST_NAME,
+        port: PM_CONST.LOCAL_PM_PORT_MASK
       };
     };
 
@@ -288,21 +292,12 @@ PM.service('PMPidService', [
 
     var svc = this;
 
-    // test server config host value
-    function checkServerConfigHost(methodName, config) {
-      if (typeof config.host === 'object') {
-        $log.error('found it B[' + methodName + ']');
-      }
-      return config;
-    }
     /**
      * Initial integration with strong-pm
      * - assumes first service and instance 'instance'
      * */
     // need to add logic for local pm instance
      svc.getDefaultPidData = function(serverConfig, id) {
-
-       checkServerConfigHost('getDefaultPidData', serverConfig);
 
        return PMServerService.find(serverConfig, {id:id})
          .then(function(response) {
@@ -442,25 +437,8 @@ PM.service('PMServiceMetric', [
   '$http', '$log', '$timeout',
   function($http, $log, $timeout) {
     return {
-      // test server config host value
-      checkServerConfigHost: function(methodName, config) {
-        if (typeof config.host === 'object') {
-          $log.error('found it C[' + methodName + ']');
-        }
-        return config;
-      },
       find: function(serverConfig, filter) {
-        console.log('|');
-        console.log('|');
-        console.log('|      PMServiceMetric: ' + JSON.stringify(serverConfig));
-        console.log('|');
-        console.log('|');
-//        var baseUrl = 'http://' + serverConfig.host + ':' + serverConfig.port;
-//        if (serverConfig.host ===  PM_CONST.LOCAL_PM_HOST_NAME) {
-//          baseUrl = '/process-manager'
-//        }
         // test server config host value
-        this.checkServerConfigHost('PMServiceMetric', serverConfig);
         var baseUrl = 'http://' + serverConfig.host + ':' + serverConfig.port;
         if (serverConfig.host === PM_CONST.LOCAL_PM_HOST_NAME) {
           baseUrl = '/process-manager'
@@ -470,15 +448,13 @@ PM.service('PMServiceMetric', [
           $timeout(function() {
             return [];
           });
-
         }
-
         var apiRequestPath = baseUrl + '/api/ServiceMetrics';
         return $http({
-          url: apiRequestPath,
-          method: "GET",
-          params: {filter:filter}
-        })
+            url: apiRequestPath,
+            method: "GET",
+            params: {filter:filter}
+          })
           .then(function(response) {
             return response.data;
           })

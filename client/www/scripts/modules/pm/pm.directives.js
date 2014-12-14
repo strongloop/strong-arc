@@ -25,15 +25,17 @@ PM.directive('slPmHostForm', [
       controller: [
         '$scope',
         '$log',
+        'growl',
         '$timeout',
         'PMAppService',
-        function($scope, $log, $timeout, PMAppService) {
+        'PMServerService',
+        function($scope, $log, growl, $timeout, PMAppService, PMServerService) {
 
           var isLocal = false;
 
           $scope.currentServerConfig = {
-            host: '',
-            port: 0
+            host: PM_CONST.LOCAL_PM_HOST_NAME,
+            port: PM_CONST.LOCAL_PM_PORT_MASK
           };
           $scope.pmServers = PMHostService.getPMServers();
           $scope.candidateServerConfig = {};
@@ -52,20 +54,13 @@ PM.directive('slPmHostForm', [
           };
 
           $scope.pmHostFocus = function() {
-            console.log('| ');
-            console.log('| pmHostFocus ');
-            console.log('| ');
             isLocal = false;
-
           };
 
 
           $scope.processes = [];
 
           $scope.onPMServerSelect = function(item) {
-            console.log('| ');
-            console.log('| onPMServerSelect: ' + JSON.stringify(item));
-            console.log('| ');
             if (item.host === PM_CONST.LOCAL_PM_HOST_NAME) {
               isLocal = true;
             }
@@ -88,6 +83,7 @@ PM.directive('slPmHostForm', [
                   }, 250);
                 }
                 else {
+                  growl.addInfoMessage('local app has started');
                   $scope.initServerProcesses(serverConfig, id);
                 }
                });
@@ -108,23 +104,18 @@ PM.directive('slPmHostForm', [
           };
 
           $scope.pmHostBlur = function(event) {
-            console.log('| ');
-            console.log('| pmHostBlur: ' + event.currentTarget.value);
-            console.log('| ');
             if (event.currentTarget.value === PM_CONST.LOCAL_PM_HOST_NAME) {
               isLocal = true;
             }
-
-              // $log.debug('Blur host value :' + event.currentTarget.value);
           };
 
           $scope.loadProcesses = function(){
 
               $scope.processes = [];
 
-
               if ($scope.candidateServerConfig.host === PM_CONST.LOCAL_PM_HOST_NAME) {
                 $scope.currentServerConfig = $scope.candidateServerConfig;
+                PMHostService.addPMServer($scope.currentServerConfig);
                 // disable port view
                 isLocal = true;
 
@@ -132,6 +123,8 @@ PM.directive('slPmHostForm', [
                 PMAppService.isLocalAppRunning()
                   .then(function(response) {
                     if (response.started === false) {
+                      growl.addInfoMessage('local app is not running', {ttl:700});
+                      growl.addInfoMessage('starting local app ...', {ttl:1000});
                       PMAppService.startLocalApp()
                         .then(function(response) {
                           // check to make sure the app comes up
@@ -146,7 +139,7 @@ PM.directive('slPmHostForm', [
               }
               else {
                 // make sure the values are at least valid
-                if ($scope.candidateServerConfig.host && Number.isInteger($scope.candidateServerConfig.port) && ($scope.candidateServerConfig.port > 1)) {
+                if ($scope.candidateServerConfig.host && Number.isInteger(JSON.parse($scope.candidateServerConfig.port)) && (JSON.parse($scope.candidateServerConfig.port) > 1)) {
 
                   $scope.currentServerConfig = $scope.candidateServerConfig;
                   isLocal = false;
@@ -155,27 +148,36 @@ PM.directive('slPmHostForm', [
                 else {
                   $log.warn('invalid server host config form loadProcess request: ' + JSON.stringify($scope.candidateServerConfig));
                 }
-
-
               }
-
-
           };
           $scope.initServerProcesses = function(serverConfig, ServiceId) {
-            PMPidService.getDefaultPidData(serverConfig, ServiceId)
-              .then(function(pidCollection) {
-                console.log('| ');
-                console.log('| getDefaultPidData: ' + JSON.stringify(pidCollection));
-                console.log('| ');
-                PMHostService.addPMServer(serverConfig);
-                $scope.processes = pidCollection;
-                $scope.pmServers = PMHostService.getPMServers();
+            growl.addInfoMessage('retrieving server processes', {ttl:2000});
+            $scope.activeProcess = null;
+            $scope.processes = [];
 
-                //activate first process
-                if ( $scope.processes.length ) {
-                  $scope.setActiveProcess($scope.processes[0], false)
+
+            return PMServerService.find(serverConfig, {id:1})
+              .then(function(response) {
+                if (response.status === 200) {
+                  PMPidService.getDefaultPidData(serverConfig, ServiceId)
+                    .then(function(pidCollection) {
+
+                      PMHostService.addPMServer(serverConfig, false);
+                      $scope.processes = pidCollection;
+                      $scope.pmServers = PMHostService.getPMServers();
+
+                      //activate first process
+                      if ( $scope.processes.length ) {
+                        $scope.setActiveProcess($scope.processes[0], false)
+                      }
+                    });
+                }
+                else {
+                  $log.warn('invalid PM server values');
+                  growl.addWarnMessage('invalid PM server values')
                 }
               });
+
           };
 
           //clear out active processes and remote state when going back to file
@@ -200,12 +202,9 @@ PM.directive('slPmHostForm', [
 
             $scope.activeProcess = process;
             $scope.isProcessFromMore = isMoreClick;
-            $log.debug('active process', process);
             $scope.isRemoteValid = true;
 
-
           };
-
           $scope.loadProcesses();
         }]
     }

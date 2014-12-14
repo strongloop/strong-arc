@@ -15,13 +15,14 @@
   </div>
   <div class="ui-form-group inline">
     <label >Port</label>
-    <input type="number"
+    <input type="text"
            min="1"
            name="port"
            ng-show="showPortInput()"
            placeholder="4300"
+           sl-common-select-on-click
            ng-model="candidateServerConfig.port" required>
-    <div ng-show="!showPortInput()">----</div>
+    <div ng-show="!showPortInput()" class="pm-readonly-port">----</div>
   </div>
   <div class="ui-actions inline">
     <button class="pm-load-pids-btn" ng-disabled="form.$invalid">Load</button>
