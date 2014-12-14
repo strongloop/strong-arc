@@ -11,6 +11,9 @@ Metrics.controller('MetricsMainController', [
 
     $scope.isDisplayChartValid = false; // control display of charts (transition between data sets)
     $scope.currentServerConfig = PMHostService.getLastPMServer();
+    $log.debug('|');
+    $log.debug('|  MetricsMainController: ' + JSON.stringify($scope.currentServerConfig));
+    $log.debug('|');
     $scope.isCollapsed = true;  // settings
     $scope.maxInitDataPointThreshold = MetricsService.getMaxInitDataPointThreshold();  // limit on the initial data load
     $scope.maxDataPointThrottle = MetricsService.getMaxDataPointThrottle();  // max number of current data points
@@ -239,7 +242,11 @@ Metrics.controller('MetricsMainController', [
     function getChartData(filter) {
 
       if ($scope.isValidProcess()) {
+        $scope.currentServerConfig = PMHostService.getLastPMServer();
         // fetch promise
+        $log.debug('|');
+        $log.debug('|  getChartData: ' + JSON.stringify($scope.currentServerConfig));
+        $log.debug('|');
         MetricsService.getMetricsSnapShot($scope.currentServerConfig, filter)
           .then(function(rawMetrics) {
 

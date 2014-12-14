@@ -35,13 +35,17 @@ PM.controller('PMAppController', [
               $scope.pm.localAppState = PM_CONST.RETRIEVING_PORT_STATE;
             }
           }
+          $timeout(function(){
+            checkLocalAppStatus();
+          }, PMAppService.getAppStatePollInterval());
         })
         .catch(function(error) {
           $log.warn('bad polling for is app running');
+          $timeout(function(){
+            checkLocalAppStatus();
+          }, PMAppService.getAppStatePollInterval());
         });
-      $timeout(function(){
-        checkLocalAppStatus();
-      }, PMAppService.getAppStatePollInterval());
+
     }
 
 

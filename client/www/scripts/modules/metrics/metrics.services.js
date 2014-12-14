@@ -65,9 +65,15 @@ Metrics.service('MetricsService', [
       }
       return maxDataPointThrottle;
     };
-
+    // test server config host value
+    function checkServerConfigHost(methodName, config) {
+      if (typeof config.host === 'object') {
+        $log.error('found it S[' + methodName + ']');
+      }
+      return config;
+    }
     svc.getMetricsSnapShot = function(server, filter) {
-
+      checkServerConfigHost('getMetricsSnapShot', server)
       return PMServiceMetric.find(server, filter)
         .then(function(response) {
           return response;

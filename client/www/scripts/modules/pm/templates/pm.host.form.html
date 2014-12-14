@@ -5,6 +5,8 @@
            name="host"
            placeholder="host1.example.com"
            ng-focus="pmHostFocus()"
+           ng-blur="pmHostBlur($event)"
+           typeahead-focus-first="false"
            ng-model="candidateServerConfig.host"
            typeahead-on-select="onPMServerSelect($item)"
            typeahead="server as server.host + ' : ' + server.port for server in pmServers"
@@ -12,14 +14,14 @@
            required>
   </div>
   <div class="ui-form-group inline">
-    <label>Port</label>
+    <label >Port</label>
     <input type="number"
            min="1"
            name="port"
-           ng-show="!isLocalPMSelected()"
+           ng-show="showPortInput()"
            placeholder="4300"
            ng-model="candidateServerConfig.port" required>
-    <div ng-show="isLocalPMSelected()">----</div>
+    <div ng-show="!showPortInput()">----</div>
   </div>
   <div class="ui-actions inline">
     <button class="pm-load-pids-btn" ng-disabled="form.$invalid">Load</button>
