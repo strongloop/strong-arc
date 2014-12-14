@@ -226,8 +226,6 @@ PM.service('PMHostService', [
         return PMServerService.find(serverConfig, {id:1})
           .then(function(response) {
 
-
-
             if (response.status === 200) {
               // check the list to see if it exists
               // if it does then make it the most recent
@@ -247,24 +245,17 @@ PM.service('PMHostService', [
               }
               window.localStorage.setItem('pmServers', JSON.stringify(pmServers));
               return serverConfig;
-
             }
             else {
               $log.warn('invalid PM Host value: ' + JSON.stringify(serverConfig));
               growl.addWarnMessage('invalid PM Host value: ' + JSON.stringify(serverConfig), {ttl:2200})
               return {};
             }
-
-
-
           })
           .catch(function(error) {
             $log.error('bad get server service test: ' + error.message)
           });
-
       }
-
-
     };
     svc.getLastPMServer = function() {
       // get the last entry in the array
