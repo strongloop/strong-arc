@@ -126,7 +126,7 @@ Arc.run([
     'segmentio',
     function($location, $state, $rootScope, ArcUserService, segmentio){
       // finish initialization of segment.io analytics.js
-      if (window.analytics) {
+      if (window.analytics && window.analytics.load) {
         window.analytics.load("8ImiW2DX0W");
         window.analytics.page();
       }
