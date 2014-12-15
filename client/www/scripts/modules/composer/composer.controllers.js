@@ -396,25 +396,38 @@ Composer.controller('ComposerMainController', [
     // create model property
     $scope.createNewModelProperty = function() {
 
+      // make sure the model has finished initializing
+      if ($scope.isCreatingModelDef) {
+        return $timeout(function() {
+          $scope.createNewModelProperty();
+        }, 35);
+      }
+
       // get model id
       var modelId = $scope.activeInstance.id;
       // should get a config (with at least name/type of property)
 
-      var propConfig = {
-        name:'propertyName' + getRandomNumber(),
-        type: 'string',
-        facetName: CONST.NEW_MODEL_FACET_NAME,
-        modelId: modelId
-      };
+      if (modelId) {
+        var propConfig = {
+          name:'propertyName' + getRandomNumber(),
+          type: 'string',
+          facetName: CONST.NEW_MODEL_FACET_NAME,
+          modelId: modelId
+        };
 
-      var newProperty = PropertyService.createModelProperty(propConfig);
-      newProperty.
-        then(function (result) {
-          growl.addSuccessMessage("property created");
-          $scope.activeInstance.properties.push(result);
-          $scope.activeModelPropertiesChanged = !$scope.activeModelPropertiesChanged;
-        }
-      );
+        var newProperty = PropertyService.createModelProperty(propConfig);
+        newProperty.
+          then(function (result) {
+            growl.addSuccessMessage("property created");
+            $scope.activeInstance.properties.push(result);
+            $scope.activeModelPropertiesChanged = !$scope.activeModelPropertiesChanged;
+          }
+        );
+      }
+      else {
+        $log.warn('create model property called without valid modelId');
+      }
+
 
     };
     function getRandomNumber() {
