@@ -1,5 +1,6 @@
 Metrics.controller('MetricsMainController', [
   '$scope',
+  '$state',
   '$log',
   'growl',
   '$interval',
@@ -7,7 +8,7 @@ Metrics.controller('MetricsMainController', [
   'PMPidService',
   'PMHostService',
   'ChartConfigService',
-  function($scope, $log, growl, $interval, MetricsService, PMPidService, PMHostService, ChartConfigService) {
+  function($scope, $state, $log, growl, $interval, MetricsService, PMPidService, PMHostService, ChartConfigService) {
 
     $scope.isDisplayChartValid = false; // control display of charts (transition between data sets)
     $scope.currentServerConfig = PMHostService.getLastPMServer();
@@ -262,8 +263,10 @@ Metrics.controller('MetricsMainController', [
             }
             else {
               $log.warn('getMetricsSnapShot returned no metrics');
-              growl.addWarnMessage('No metrics available.', {ttl: 2000});
-              growl.addWarnMessage('License invalid or not present. Please contact sales@strongloop.com for a valid license.', {ttl: 10000});
+              if ($state.includes('metrics')){
+                growl.addWarnMessage('No metrics available.', {ttl: 2000});
+                growl.addWarnMessage('No metrics available. Your license may be invalid or not present. Please contact sales@strongloop.com for a valid license.', {ttl: 10000});
+              }
               return;
             }
           });

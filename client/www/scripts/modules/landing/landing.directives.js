@@ -1,10 +1,20 @@
 // Copyright StrongLoop 2014
 Landing.directive('slLandingApp', [
-  function () {
+  '$log',
+  function ($log) {
     return {
       restrict: "E",
       replace: true,
-      templateUrl: './scripts/modules/landing/templates/landing.app.html'
+      templateUrl: './scripts/modules/landing/templates/landing.app.html',
+      link: function(scope, el, attrs) {
+
+        // temporary while metrics is in prevew
+        if (attrs.id === 'metrics') {
+          // build a tag and add it to the a.app-name child element
+          $(el).find('a.app-name').append('<div class="early-preview">*early preview</div>');
+        }
+
+      }
     };
   }
 ]);
