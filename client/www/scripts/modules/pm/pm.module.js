@@ -9,7 +9,7 @@ var PM_CONST = {
   STOPPING_STATE: 'stopping',
   UNKNOWN_STATE: 'unknown',
   LOCAL_PM_HOST_NAME: 'local application',
-  LOCAL_PM_PORT_MASK: 9999
+  LOCAL_PM_PORT_MASK: '----'
 };
 PM.value('PM_CONST', PM_CONST);
 PM.run([

@@ -205,6 +205,7 @@ Metrics.service('ChartConfigService', [
         chart: {
           type: 'lineChart',
           height: 250,
+          noData: 'pending data',
           margin : {
             top: 40,
             right: 20,

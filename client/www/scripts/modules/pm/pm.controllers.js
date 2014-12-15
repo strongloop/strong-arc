@@ -29,19 +29,23 @@ PM.controller('PMAppController', [
     function checkLocalAppStatus() {
       PMAppService.isLocalAppRunning()
         .then(function(response) {
-          if (response.started === true) {
+          if (response && response.started === true) {
             $scope.getLocalAppLink();  // spawn process to obtain url when it's ready
             if($scope.pm.localAppState !== PM_CONST.RUNNING_STATE) {
               $scope.pm.localAppState = PM_CONST.RETRIEVING_PORT_STATE;
             }
           }
+          $timeout(function(){
+            checkLocalAppStatus();
+          }, PMAppService.getAppStatePollInterval());
         })
         .catch(function(error) {
           $log.warn('bad polling for is app running');
+          $timeout(function(){
+            checkLocalAppStatus();
+          }, PMAppService.getAppStatePollInterval());
         });
-      $timeout(function(){
-        checkLocalAppStatus();
-      }, PMAppService.getAppStatePollInterval());
+
     }
 
 
