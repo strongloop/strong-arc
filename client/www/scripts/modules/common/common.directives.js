@@ -183,6 +183,7 @@ Common.directive('slPopoverMenu', [
         var to;
         scope.position = attrs.position || 'bottom';
         scope.icon = attrs.icon;
+        scope.title = attrs.title || '';
         scope.hideOnPageClick = attrs.hideonpageclick;
 
         scope.$watch('showPopover', function(newVal, oldVal){
