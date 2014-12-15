@@ -325,12 +325,6 @@ Metrics.service('ChartConfigService', [
         active: true,
         metrics: [
           {
-            name: 'loop.count',
-            display: 'Count',
-            active: true,
-            color: '#23f532'
-          },
-          {
             name:'loop.average',
             display: 'Average',
             active: true,
