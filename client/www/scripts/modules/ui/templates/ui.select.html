@@ -7,15 +7,17 @@
         data-id="{{selected.id}}"
         ng-click="isOpen = !isOpen">
       {{selected.name}}
+      <span class="beta" ng-show="selected.beta">(Early Access)</span>
     <i class="sl-icon sl-icon-chevron-down"></i>
   </span>
   <ul ng-class="{ hide: !isOpen }">
-    <li ng-repeat="item in list">
+    <li ng-repeat="item in list" class="clearfix">
       <a href
          data-id="{{item.id}}"
          ng-click="selectItem(item);"
          ng-class="{ selected: selected.id == item.id }">
         {{item.name}}
+        <span class="beta" ng-show="item.beta">(Early Access)</span>
         <i class="sl-icon sl-icon-checkmark" ng-show="selected.id == item.id"></i>
       </a>
     </li>

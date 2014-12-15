@@ -5,16 +5,7 @@ Landing.directive('slLandingApp', [
     return {
       restrict: "E",
       replace: true,
-      templateUrl: './scripts/modules/landing/templates/landing.app.html',
-      link: function(scope, el, attrs) {
-
-        // temporary while metrics is in prevew
-        if (attrs.id === 'metrics') {
-          // build a tag and add it to the a.app-name child element
-          $(el).find('a.app-name').append('<div class="early-preview">*early preview</div>');
-        }
-
-      }
+      templateUrl: './scripts/modules/landing/templates/landing.app.html'
     };
   }
 ]);
@@ -48,6 +39,7 @@ Landing.directive('slAppSelector', [
             $scope.suiteIA.apps = data.results.filter(function(app) {
               return !app.disabled && app.supportsCurrentProject;
             });
+
             //todo if we have multiple pages w/in an app
             //we need to parse out just the base route like /arc/foo -> 'arc'
             $scope.suiteIA.appId = $location.path().replace(/^\//, '');
