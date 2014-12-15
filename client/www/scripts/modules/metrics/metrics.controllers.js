@@ -102,12 +102,6 @@ Metrics.controller('MetricsMainController', [
     * */
     function processMetricsTick(metrics) {
       var mStub;  // placeholder for unique server/service metrics 'bucket'
-      if (!metrics || !metrics.length) {
-        $log.warn('processMetricsTick called with no metrics');
-        growl.addWarnMessage('There are no metrics here.', {ttl: 4000});
-        growl.addWarnMessage('Check your strong-pm configuration and license setup.', {ttl: 4000});
-        return;
-      }
 
       //iterate over the returned results to normalize the data
       metrics.map(function(metric) {
@@ -265,6 +259,12 @@ Metrics.controller('MetricsMainController', [
 
               }
               processMetricsTick(metricsToRender);
+            }
+            else {
+              $log.warn('getMetricsSnapShot returned no metrics');
+              growl.addWarnMessage('No metrics available.', {ttl: 2000});
+              growl.addWarnMessage('License invalid or not present. Please contact sales@strongloop.com for a valid license.', {ttl: 10000});
+              return;
             }
           });
       }
