@@ -208,7 +208,7 @@ Metrics.service('ChartConfigService', [
           noData: 'pending data',
           margin : {
             top: 40,
-            right: 20,
+            right: 60,
             bottom: 40,
             left: 105
           },
@@ -232,7 +232,7 @@ Metrics.service('ChartConfigService', [
         },
         title: {
           enable: true,
-          text: 'gobbledygook'
+          text: ''
         },
         subtitle: {
           enable: true,
