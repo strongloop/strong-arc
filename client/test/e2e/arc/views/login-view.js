@@ -7,16 +7,19 @@ var LoginView = (function () {
     this.openLoginView = function() {
       var ptor = protractor.getInstance();
       ptor.get('http://127.0.0.1:9800/#/login');
+      browser.ignoreSynchronization = true;
     };
     this.loginAsTestUser = function() {
       this.userNameInput.sendKeys('strongloop-test@grr.la');
       this.passwordInput.sendKeys('Str0ngL00p');
       this.submitButton.click();
+      browser.ignoreSynchronization = true;
     };
     this.loginToLandingView = function() {
       var ptor = protractor.getInstance();
       ptor.get('http://127.0.0.1:9800/#/login');
       this.loginAsTestUser();
+      browser.ignoreSynchronization = true;
     };
   }
 

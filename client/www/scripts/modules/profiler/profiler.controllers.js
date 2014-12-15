@@ -4,7 +4,7 @@ Profiler.controller('ProfilerMainController',[
   function($scope, $log){
 
     $scope.activeProcess;
-
+    $scope.hasIframe = true;
     $scope.initProfiler = function(){
       if ( $scope.hasIframe ) {
         var iframe = window.frames['devtools'];
@@ -24,7 +24,6 @@ Profiler.controller('ProfilerMainController',[
           iframe.SL.child.profiler.setServer($scope.currentServerConfig);
           iframe.SL.child.profiler.setActiveProcess(newVal);
         }
-        $scope.initProfiler();
       }
     });
 
@@ -37,6 +36,8 @@ Profiler.controller('ProfilerMainController',[
       var devToolsHeight = (windowHeight - headerHeight - profilerNavHeight);
       $('#ProfilerDevtoolsContainer').css('height', devToolsHeight);
     };
+
+    $scope.initProfiler();
   }
 ]);
 

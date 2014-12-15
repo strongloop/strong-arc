@@ -7,10 +7,6 @@ Profiler.directive('slProfilerNavbar', [
         replace: true,
         templateUrl: './scripts/modules/profiler/templates/profiler.navbar.html',
         controller: function($scope, $attrs){
-//          $scope.server = {
-//            host: '',
-//            port: ''
-//          };
 
           $scope.profilerId = 'remote';
           $scope.activeProcess = null;
@@ -20,46 +16,29 @@ Profiler.directive('slProfilerNavbar', [
             { id: 'file', label: 'File', activeId: 'profilerId' }
           ];
 
+          //clear out active processes and remote state when going back to file
+          $scope.resetRemoteState = function(){
+
+            $scope.isRemoteValid = false;
+            $scope.processes = [];
+            $scope.activeProcess = null;
+
+          };
+
           $scope.processes = [];
 
           $scope.$watch('profilerId', function(newVal, oldVal){
             if ( newVal !== oldVal ) {
               $scope.resetRemoteState();
+              $scope.initProfiler();
             }
           });
-
-          //@deprecated moved to common.directives.js
-          ////clear out active processes and remote state when going back to file
-          //$scope.resetRemoteState = function(){
-          //  var iframe = window.frames['devtools'];
-          //
-          //  $scope.isRemoteValid = false;
-          //  $scope.processes = [];
-          //  $scope.activeProcess = null;
-          //
-          //  iframe.SL.child.profiler.slInit();
-          //};
 
           $scope.$watch('form.$valid', function(newVal, oldVal) {
             if ( newVal !== oldVal && !newVal ) {
               $scope.resetRemoteState();
             }
           });
-
-          //@deprecated moved to common.directives.js
-          //$scope.$watch('activeProcess', function(process, oldVal){
-          //  if ( !process || $scope.activeProcess && $scope.activeProcess.status !== 'Running' ) return false;
-          //
-          //  var iframe = window.frames['devtools'];
-          //
-          //  $scope.activeProcess = process;
-          //  $log.log('active process', process);
-          //  $scope.isRemoteValid = true;
-          //
-          //  iframe.SL.child.profiler.slInit();
-          //  iframe.SL.child.profiler.setServer($scope.server);
-          //  iframe.SL.child.profiler.setActiveProcess(process);
-          //});
 
           $scope.fetchHeapFile = function(){
             if ( !$scope.activeProcess ) return;
