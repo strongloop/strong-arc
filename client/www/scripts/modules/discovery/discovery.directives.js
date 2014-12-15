@@ -19,6 +19,7 @@ Discovery.directive('slDiscoveryModelPreview', [
           var retCollection = propertyKeys.map(function(key) {
             var propObj = propertiesObj[key];
             propObj.name = key;
+            propObj._selectable = !(propObj.id || propObj.required);
             return propObj
           });
           return retCollection;
@@ -57,6 +58,7 @@ Discovery.directive('slDiscoveryModelPreview', [
               selectWithCheckboxOnly: false,
               selectedItems:  scope.masterSelectedProperties[i],
               multiSelect: true,
+              beforeSelectionChange: beforeSelectionChange,
               rowHeight: 40,
               filterOptions: scope.filterOptions,
               plugins: [new ngGridFlexibleHeightPlugin()]
@@ -68,6 +70,16 @@ Discovery.directive('slDiscoveryModelPreview', [
         });
       }
     };
+
+    function beforeSelectionChange(rowItem) {
+      if (!Array.isArray(rowItem))
+        return rowItem.entity._selectable;
+
+      // rowItem.all(beforeSelectionChange)
+      return !rowItem.some(function(item) {
+        return !beforeSelectionChange(item);
+      });
+    }
   }
 ]).filter('isIdFilter', function() {
     return function(val) {
