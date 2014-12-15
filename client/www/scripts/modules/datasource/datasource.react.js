@@ -127,8 +127,8 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
       isFormValid = true;
     }
     var testButtonClasses = cx({
-      'model-detail-pocket-button activity-indicator model-save-button datasource-test-button': component.state.isTesting,
-      'model-detail-pocket-button model-save-button datasource-test-button': !component.state.isTesting
+      'instance-detail-pocket-button instance-save-button activity-indicator datasource-test-button': component.state.isTesting,
+      'instance-detail-pocket-button instance-save-button datasource-test-button': !component.state.isTesting
     });
 
     var testMessageClasses = cx({

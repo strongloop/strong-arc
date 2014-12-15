@@ -92,6 +92,10 @@
         &[name=builduniversal] {
           .ui-actions {
             margin-top: 10rem;
+
+            button:active {
+              background-color:@default-primary-active-color;
+            }
           }
         }
 
@@ -99,8 +103,22 @@
         &[name=buildgit] {
           .ui-actions {
             margin-top: 1.53rem;
+
+            button:active {
+              background-color:@default-primary-active-color;
+            }
           }
         }
+
+        //align action buttons
+        &[name=deployuniversal] {
+          .ui-actions {
+            button:active {
+              background-color:@default-primary-active-color;
+            }
+          }
+        }
+
 
         fieldset {
           margin-bottom: 1rem;
