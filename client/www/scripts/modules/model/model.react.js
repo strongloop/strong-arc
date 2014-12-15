@@ -199,7 +199,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
             </div>
             <button onClick={component.saveModelInstance}
               disabled={!isFormValid}
-              className="model-detail-pocket-button model-save-button"
+              className="instance-detail-pocket-button instance-save-button"
               data-modelId={modelDef.id} >Save Model</button>
             <MigrateButton scope={scope} />
             <div className={modelNameValidationClasses}>
@@ -1059,7 +1059,7 @@ var MigrateButton = (MigrateButton = React).createClass({
       title={canMigrate ? ''
         : 'Select a data source that supports migration to enable this feature.'}
       disabled={canMigrate ? '' : 'disabled'}
-      className="model-detail-pocket-button model-migrate-button"
+      className="instance-detail-pocket-button model-migrate-button"
       type="button"
       onClick={this.handleClick}>Migrate Model</button>)
     }
