@@ -10,7 +10,7 @@ PM.service('PMAppService', [
     var svc = this;
 
     var defaultPMAppConfig = {
-      appStatePollInterval: 2000
+      appStatePollInterval: 750
     };
     var localAppState = {
       isLocalApp:true,
