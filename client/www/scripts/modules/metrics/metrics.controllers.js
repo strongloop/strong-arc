@@ -20,6 +20,7 @@ Metrics.controller('MetricsMainController', [
     $scope.currentProcessId;
     $scope.activeProcess = null;
     $scope.isTimerRunning = false;
+    $scope.isMetricsLoaded = false;
     $scope.dataPointCount = 0;
     $scope.lastTimeStamp = {}; // object collection of metrics servers and the last metrics received
     $scope.currentMetrics = []; // the root
@@ -70,6 +71,9 @@ Metrics.controller('MetricsMainController', [
       }
     }
 
+    $scope.showMetrics = function(){
+      return $scope.isMetricsLoaded;
+    };
 
     /*
     *
@@ -249,7 +253,9 @@ Metrics.controller('MetricsMainController', [
             var metricsToRender = rawMetrics;
 
             // reset everything to 0 until timestamp issue is fixed
-            if (rawMetrics && rawMetrics.map) {
+            if (rawMetrics && rawMetrics.length) {
+              $scope.isMetricsLoaded = true;
+
               var rawMetricsCount = rawMetrics.length;
               if (rawMetricsCount > $scope.maxInitDataPointThreshold) {
 
@@ -259,7 +265,6 @@ Metrics.controller('MetricsMainController', [
 
               }
               processMetricsTick(metricsToRender);
-
             }
           });
       }
