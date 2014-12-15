@@ -47,7 +47,12 @@ Composer.controller('ComposerMainController', [
       if (name) {
         // initialize active instance
         $scope.activeInstance = IAService.getActiveInstance();
-        $rootScope.$broadcast('IANavEvent');
+        // refresh the instance to avloid stale data between server/client
+        IAService.activateInstanceById($scope.activeInstance.id, $scope.activeInstance.type)
+          .then(function(response) {
+            $scope.activeInstance = response;
+            $rootScope.$broadcast('IANavEvent');
+          });
       }
     });
     // Validate the workspace
