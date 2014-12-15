@@ -76,6 +76,7 @@
     "url": "https://github.com/strongloop/strong-arc.git"
   },
   "keywords": [
+    "arc",
     "studio",
     "loopback",
     "StrongLoop"
@@ -84,6 +85,6 @@
     "name": "StrongLoop",
     "url": "https://github.com/strongloop/strong-arc/blob/master/LICENSE"
   },
-  "author": "Sean Brookes",
+  "author": "engineering@strongloop.com",
   "homepage": "https://github.com/strongloop/strong-arc"
 }

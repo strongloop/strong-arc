@@ -204,7 +204,6 @@ PM.directive('slPmHostForm', [
             $scope.isRemoteValid = true;
 
           };
-          $scope.loadProcesses();
         }]
     }
   }
