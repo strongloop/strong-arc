@@ -380,6 +380,8 @@ var ModelPropertiesEditor = (ModelPropertiesEditor = React).createClass({
 
                   <span data-ui-type="cell" title="controls" className="props-controls-header table-header-cell"></span>
 
+                  <span data-ui-type="cell" title="controls" className="props-controls-header table-header-cell"></span>
+
 
                 </div>
               </div>
@@ -445,10 +447,6 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
     component.setState({
       isNameValid: component.isNameValid(event.target.value)
     });
-
-    if ( this.state.isNameValid ){
-      component.triggerModelPropertyUpdate(event);
-    }
   },
   triggerModelPropertyUpdate: function(event) {
     var component = this;
@@ -529,6 +527,7 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
                   required="true"
                   type="text"
                   onChange={component.checkSubmitModelProperty}
+                  onBlur={component.triggerModelPropertyUpdate}
                   value={modelProperty.name} />
               </div>
               <div data-ui-type="cell" className="props-data-type-cell">
@@ -569,6 +568,11 @@ var ModelPropertyRowDetail = (ModelPropertyRowDetail = React).createClass({
                   onBlur={component.triggerModelPropertyUpdate}
                   value={modelProperty.comments}
                   className="property-doc-textarea model-instance-editor-input" />
+              </div>
+              <div data-ui-type="cell" className="props-controls-cell">
+                <button alt="save" title="save" className="props-remove-btn">
+                  <span className="glyphicon glyphicon-floppy-save"></span>
+                </button>
               </div>
               <div data-ui-type="cell" className="props-controls-cell">
                 <button className="props-remove-btn" onClick={component.deleteModelProperty} data-id={modelProperty.id}>
