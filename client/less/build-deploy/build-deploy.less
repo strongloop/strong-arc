@@ -10,7 +10,7 @@
     width: 30rem;
     margin: auto;
     min-width: @min-width;
-    margin-bottom: 1rem;
+    margin-bottom: 4rem;
     position: relative;
 
     .ui-popover {
@@ -85,6 +85,20 @@
         &[name=deployuniversal] {
           input[name=archive] {
             width: 31rem;
+          }
+        }
+
+        //align action buttons
+        &[name=builduniversal] {
+          .ui-actions {
+            margin-top: 10rem;
+          }
+        }
+
+        //align action buttons
+        &[name=buildgit] {
+          .ui-actions {
+            margin-top: 1.53rem;
           }
         }
 

@@ -4,6 +4,7 @@
     ng-class="icon"
     ng-click="showPopover = !showPopover"
     ng-mouseleave="hidePopover()"
+    title="{{title}}"
     ></span>
   <div class="ui-popover-content"
        ng-class="{ bottom: position == 'bottom' }"
