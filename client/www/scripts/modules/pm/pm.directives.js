@@ -123,7 +123,6 @@ PM.directive('slPmHostForm', [
                 PMAppService.isLocalAppRunning()
                   .then(function(response) {
                     if (response.started === false) {
-                      growl.addInfoMessage('local app is not running', {ttl:700});
                       growl.addInfoMessage('starting local app ...', {ttl:1000});
                       PMAppService.startLocalApp()
                         .then(function(response) {
