@@ -1,0 +1,14 @@
+<div class="metrics-chart-view-container">
+  <div class="chart-container" ng-show="isShowMetricChart('cpu')">
+    <h3>CPU</h3>
+    <nvd3 class="metrics-chart" options="cpuChartOptions" data="cpuChartModel"></nvd3>
+  </div>
+  <div class="chart-container" ng-show="isShowMetricChart('loop')">
+    <h3>LOOP</h3>
+    <nvd3 class="metrics-chart" options="loopChartOptions" data="loopChartModel"></nvd3>
+  </div>
+  <div class="chart-container" ng-show="isShowMetricChart('heap')">
+    <h3>HEAP</h3>
+    <nvd3 class="metrics-chart" options="heapChartOptions" data="heapChartModel"></nvd3>
+  </div>
+</div>

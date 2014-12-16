@@ -8,7 +8,8 @@
   position: relative;
   cursor: pointer;
   height: 4.3rem;
-  font-size: @font-size-base;
+  font-size: @ui-font-size-base;
+  z-index: 2;
 
   &:hover {
     background-color: @ui-select-hover-bg-color;
@@ -39,7 +40,7 @@
     border-radius: @radius @radius 0 0;
 
     span.selected, span.selected .sl-icon {
-      color: @link-color;
+      color: @ui-link-color;
     }
 
     span.selected {
@@ -80,7 +81,7 @@
     display: block;
     position: absolute;
     top: 4.3rem;
-    width: 20rem;
+    width: 22rem;
     padding: 1rem 0;
     left: 0;
     background-color: @ui-select-nav-bg-color;
@@ -97,7 +98,7 @@
       padding: .5rem 2rem .5rem 1em;
       text-decoration: none;
       border-radius: @radius-inside;
-      color: @gray-light;
+      color: @ui-gray-light;
       position: relative;
 
       &:hover {
@@ -110,6 +111,91 @@
         right: 10px;
         top: 8px;
       }
+    }
+  }
+
+  //more menu
+  &.more {
+    background-color: @ui-select-more-bg-color;
+    color: @ui-select-more-color;
+
+    ul {
+      top: 30px;
+      width: 17rem;
+
+      a:hover {
+        background-color: @ui-select-more-hover-bg-color;
+      }
+    }
+
+    span.selected {
+      color: @ui-select-more-selected-color;
+      padding: .5rem 4.5rem .5rem 1rem;
+      .drop-shadow(0, 1px, 4px, 0, 0.35);
+
+      &.selected-item {
+        background-color: @ui-select-more-selected-bg-color;
+        color: @ui-select-more-selected-item-color;
+
+        .sl-icon {
+          color: @ui-select-more-selected-item-color;
+        }
+      }
+
+      .sl-icon {
+        color: @ui-select-more-selected-color;
+        top: 1rem;
+      }
+    }
+
+    &.open {
+      span.selected {
+
+        &.selected-item {
+          .sl-icon {
+            color: @ui-select-more-selected-item-color;
+          }
+
+          &:after {
+            left: -1px;
+            width: 101%;
+            background-color: @ui-select-more-selected-bg-color;
+          }
+        }
+      }
+    }
+  }
+
+  .beta {
+    font-size: 11px;
+  }
+
+}
+
+.ui-select-scroll {
+  position: absolute;
+  max-height: 10rem;
+  overflow-y: auto;
+  width: 20rem;
+  border: 1px solid black;
+  background: white;
+  padding: .5rem 1rem;
+  margin-left: 1rem;
+
+  li {
+    padding: .5rem 1rem;
+    cursor: pointer;
+
+    &.active {
+      border: 1px solid blue;
+      border-radius: @ui-radius;
+    }
+
+    span:nth-child(1) {
+      width: 10rem;
+    }
+    span:nth-child(2){
+      width: auto;
     }
   }
 }

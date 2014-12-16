@@ -97,12 +97,209 @@ Common.directive('slCommonInstanceTabsView', [
   }
 ]);
 
+/**
+ * sl-common-select-on-click
+ *
+ * generic attribute directive to autoselect the contents of an input
+ * by single clicking the content
+ *
+ * */
+Common.directive('slCommonSelectOnClick', function () {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attrs) {
+      element.on('click', function () {
+        this.select();
+      });
+    }
+  };
+});
 Common.directive('slCommonLoadingIndicator', [
   function() {
     return {
-      template: '<span us-spinner="{radius:30, width:8, length: 24, color:\'#7DBD33\'}"></span>'
+      template: '<span us-spinner="{{props}}"></span>',
+      controller: function($scope, $attrs){
+        $scope.size = $attrs.size || 'large';
+
+        switch($scope.size){
+          case 'small':
+            $scope.props = '{radius:6, width:2, length: 4, color:\'#999\'}';
+            break;
+          case 'large':
+          default:
+            $scope.props = '{radius:30, width:8, length: 24, color:\'#7DBD33\'}';
+            break;
+        }
+      }
     }
   }
 ]);
 
+Common.directive('slPopoverHelp', [
+  '$http',
+  '$tooltip',
+  '$log', function($http, $tooltip, $log){
+    return {
+      restrict: 'E',
+      replace: true,
+      scope: {},
+      templateUrl: './scripts/modules/common/templates/common.popover.help.html',
+      link: function(scope, el, attrs){
+        scope.loading = false;
+        scope.position = attrs.position || 'right';
 
+        scope.$watch('showHelp', function(newVal, oldVal){
+          if ( newVal ) {
+            //only  show spinner on initial request
+            if ( !scope.content ) {
+              scope.loading = true;
+            }
+
+            $http.get('/help/'+attrs.id+'.json')
+              .then(function(res){
+                scope.loading = false;
+                scope.title = res.data.title;
+                scope.content = res.data.body.view.value;
+              });
+          }
+        });
+      }
+    };
+}]);
+
+Common.directive('slPopoverMenu', [
+  '$http',
+  '$tooltip',
+  '$log',
+  '$rootScope',
+  '$timeout', function($http, $tooltip, $log, $rootScope, $timeout){
+    return {
+      restrict: 'E',
+      replace: true,
+      scope: {},
+      transclude: true,
+      templateUrl: './scripts/modules/common/templates/common.popover.menu.html',
+      link: function(scope, element, attrs, ctrl, transclude){
+        var to;
+        scope.position = attrs.position || 'bottom';
+        scope.icon = attrs.icon;
+        scope.title = attrs.title || '';
+        scope.hideOnPageClick = attrs.hideonpageclick;
+
+        scope.$watch('showPopover', function(newVal, oldVal){
+        });
+
+        $rootScope.$on('pageClick', function(e, $event){
+          var isMenuClick = !!$($event.target).parents('.ui-popover.menu').length;
+
+          if ( scope.hideOnPageClick && !isMenuClick ) {
+            scope.showPopover = false;
+          }
+        });
+
+        scope.hidePopover = function(){
+          if ( scope.hideOnPageClick ) return;
+
+          to = $timeout(function(){
+            scope.showPopover = false;
+          }, 400);
+        };
+
+        scope.cancelHide = function(){
+          if ( scope.hideOnPageClick ) return;
+
+          if ( to ) {
+            $timeout.cancel(to);
+          }
+        };
+
+        transclude(scope.$parent, function(clone, scope) {
+          clone.removeClass('hide');
+          element.find('.ui-popover-body').append(clone);
+        });
+      }
+    };
+  }]);
+
+Common.directive('slPopover', [
+  '$http',
+  '$tooltip',
+  '$log',
+  '$rootScope',
+  '$timeout', function($http, $tooltip, $log, $rootScope, $timeout){
+    return {
+      restrict: 'E',
+      replace: true,
+      scope: {},
+      transclude: true,
+      templateUrl: './scripts/modules/common/templates/common.popover.html',
+      link: function(scope, element, attrs, ctrl, transclude){
+        var to;
+        scope.position = attrs.position || 'left';
+        scope.icon = attrs.icon;
+        scope.hideOnPageClick = attrs.hideonpageclick;
+
+        scope.$watch('showPopover', function(newVal, oldVal){
+        });
+
+        $rootScope.$on('pageClick', function(e, $event){
+          var isMenuClick = !!$($event.target).parents('.ui-popover.generic').length;
+
+          if ( scope.hideOnPageClick && !isMenuClick ) {
+            scope.showPopover = false;
+          }
+        });
+
+        scope.hidePopover = function(){
+          if ( scope.hideOnPageClick ) return;
+
+          to = $timeout(function(){
+            scope.showPopover = false;
+          }, 400);
+        };
+
+        scope.cancelHide = function(){
+          if ( scope.hideOnPageClick ) return;
+
+          if ( to ) {
+            $timeout.cancel(to);
+          }
+        };
+
+        transclude(scope.$parent, function(clone, scope) {
+          clone.removeClass('hide');
+          element.find('.ui-popover-body').append(clone);
+        });
+      }
+    };
+  }]);
+
+Common.directive('slCommonFormMessage', [
+  function () {
+    return {
+      restrict: "E",
+      replace: true,
+      scope: {
+        message: '=',
+        type: '=?'
+      },
+      templateUrl: './scripts/modules/common/templates/common.form-message.html',
+      controller: function($scope, $attrs, $log){
+        $scope.hideMessage = function(){
+          $scope.message = '';
+          $scope.type = '';
+        };
+      }
+    }
+  }
+]);
+
+Common.directive('slCommonConsoleLog', [
+  function () {
+    return {
+      restrict: "E",
+      replace: true,
+      templateUrl: './scripts/modules/common/templates/common.console.html'
+    }
+  }
+]);

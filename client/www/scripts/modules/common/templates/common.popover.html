@@ -1,0 +1,15 @@
+<div class="ui-popover generic">
+  <span
+    class="sl-icon toggle-popover-link"
+    ng-class="icon"
+    ng-click="showPopover = !showPopover"
+    ></span>
+  <div class="ui-popover-content"
+       ng-class="{ left: position == 'left' }"
+       ng-show="showPopover"
+       ng-mouseenter="cancelHide()">
+    <span class="ui-arrow-left" ng-show="position != 'left'"></span>
+    <span class="ui-arrow-right" ng-show="position == 'left'"></span>
+    <div class="ui-popover-body"></div>
+  </div>
+</div>

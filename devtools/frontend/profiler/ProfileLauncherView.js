@@ -56,10 +56,121 @@ WebInspector.ProfileLauncherView = function(profilesPanel)
     this._loadButton = this._contentElement.createChild("button", "text-button load-profile");
     this._loadButton.textContent = WebInspector.UIString("Load");
     this._loadButton.addEventListener("click", this._loadButtonClicked.bind(this), false);
+
+    //begin strongloop
+    this.slInit();
+    //end strongloop
+
     WebInspector.targetManager.observeTargets(this);
 }
 
 WebInspector.ProfileLauncherView.prototype = {
+    //begin strongloop
+    _SL: window.parent.SL.parent,
+
+    slInit: function(){
+        window.onload = function(e){
+            this._profilerId = this._SL.profiler.getProfilerId();
+
+            if ( this._profilerId === 'file' ) {
+                this._hideCpuButtons();
+            } else {
+                this._toggleFetchButtons();
+                this._showFetchButtons();
+            }
+        }.bind(this);
+
+        //dyanmically update the object from parent window object
+        document.documentElement.addEventListener('slInit', function(e){
+            //console.log('hooray!', e);
+            this._profilerId = this._SL.profiler.getProfilerId();
+
+            this._toggleFetchButtons();
+            this._panel._showLauncherView();
+
+            if ( this._profilerId === 'remote' ) {
+                this._showFetchButtons();
+                this._setTitle('Profile types supported')
+            } else {
+                this._hideCpuButtons();
+                this._setTitle('Profile types supported')
+            }
+        }.bind(this));
+
+        document.documentElement.addEventListener('setActiveProcess', function(e){
+            var data = e.detail;
+            var process = data.process;
+            var text = process.pid;
+
+            this._setTitlePid(text);
+        }.bind(this));
+
+        document.documentElement.addEventListener('setServer', function(e){
+            var data = e.detail;
+            var server = data.server;
+
+            var title = ( 'Create a profile for <span class="server">' +
+                server.host + ':' + server.port +
+                '</span> <span class="pid"></span>' );
+
+            this._setTitle(title);
+        }.bind(this));
+
+        this._addFetchButtons();
+        this._toggleFetchButtons();
+    },
+
+    _setTitle: function(html){
+        var el = this._contentElement.querySelector('div:first-child h1');
+
+        el.innerHTML = html;
+    },
+
+    _setTitlePid: function(text){
+        var el = this._contentElement.querySelector('div:first-child h1 .pid');
+
+        el.innerText = text;
+    },
+
+    _hideCpuButtons: function(){
+        this._fetchHeapButton.style.display = 'none';
+        this._fetchCpuButton.style.display = 'none';
+        this._startCpuButton.style.display = 'none';
+
+        //show load button
+        this._loadButton.style.display = '';
+    },
+
+    _showFetchButtons: function(){
+        if ( this._isInstantProfile ) {
+            this._fetchHeapButton.style.display = '';
+            this._fetchCpuButton.style.display = 'none';
+        } else {
+            this._fetchHeapButton.style.display = 'none';
+
+            //cpu profiling
+            this._startCpuButton.style.display = '';
+            this._fetchCpuButton.style.display = 'none';
+        }
+
+        //hide load button
+        this._loadButton.style.display = 'none';
+    },
+
+    _addFetchButtons: function(){
+        this._fetchHeapButton = this._contentElement.createChildBefore('button', 'text-button fetch-heap', this._contentElement.querySelector('.load-profile'));
+        this._fetchHeapButton.textContent = WebInspector.UIString('Take Snapshot');
+        this._fetchHeapButton.addEventListener('click', this._fetchHeapButtonClicked.bind(this), false);
+
+        this._startCpuButton = this._contentElement.createChildBefore('button', 'text-button start-cpu', this._contentElement.querySelector('.load-profile'));
+        this._startCpuButton.textContent = WebInspector.UIString('Start');
+        this._startCpuButton.addEventListener('click', this._startCpuButtonClicked.bind(this), false);
+
+        this._fetchCpuButton = this._contentElement.createChildBefore('button', 'text-button fetch-cpu', this._contentElement.querySelector('.load-profile'));
+        this._fetchCpuButton.textContent = WebInspector.UIString('Stop');
+        this._fetchCpuButton.addEventListener('click', this._fetchCpuButtonClicked.bind(this), false);
+    },
+    //end strongloop
     /**
      * @param {!WebInspector.Target} target
      */
@@ -105,6 +216,68 @@ WebInspector.ProfileLauncherView.prototype = {
     {
         this._panel.showLoadFromFileDialog();
     },
+
+    //begin strongloop
+    _fetchHeapButtonClicked: function(){
+        var SL = this._SL;
+        var process = SL.profiler.getActiveProcess();
+        //console.log('fetched process', process);
+
+        if ( !process ) return false;
+
+        this._disableProfilerRadioButtons();
+
+        SL.profiler.fetchHeapFile(function(file){
+            if ( !file ) {
+                this._enableProfilerRadioButtons();
+                return;
+            }
+
+            //console.log('[iframe] fetched file', file);
+
+            this._panel._loadFromFile(file);
+            this._enableProfilerRadioButtons();
+        }.bind(this));
+    },
+
+    _startCpuButtonClicked: function(){
+        var SL = this._SL;
+        var process = SL.profiler.getActiveProcess();
+        //console.log('start cpu on process', process);
+
+        if ( !process ) return false;
+
+        SL.profiler.startCpuProfiling(function(data){
+            if ( !data ) return;
+
+            //console.log('[iframe] start cpu profiling', data);
+
+            if ( data.status === 200 ) {
+                this._toggleCpuButtons('stop');
+                this._disableProfilerRadioButtons();
+            }
+        }.bind(this));
+    },
+
+    //stop profiling button clicked
+    _fetchCpuButtonClicked: function(){
+        var SL = this._SL;
+        var process = SL.profiler.getActiveProcess();
+        //console.log('fetched process', process);
+
+        if ( !process ) return false;
+
+        SL.profiler.fetchCpuFile(function(file){
+            if ( !file ) return;
+
+            //console.log('[iframe] fetched cpu file', file);
+
+            this._toggleCpuButtons('start');
+            this._enableProfilerRadioButtons();
+            this._panel._loadFromFile(file);
+        }.bind(this));
+    },
+    //end strongloop
 
     _updateControls: function()
     {
@@ -202,12 +375,13 @@ WebInspector.MultiProfileLauncherView.prototype = {
         if (decorationElement)
             labelElement.appendChild(decorationElement);
 
-        /** STRONGLOOP-BEGIN **/
-        //add bullet icon to labels
-        var iconElement = labelElement.createChild('i');
-        iconElement.className = 'sl-icon sl-icon-logo';
-        labelElement.insertBefore(iconElement, optionElement);
-        /** STRONGLOOP-END **/
+//        /** STRONGLOOP-BEGIN **/
+//        //keeping here for now in case we revert back to icons
+//        //add bullet icon to labels
+//        var iconElement = labelElement.createChild('i');
+//        iconElement.className = 'sl-icon sl-icon-logo';
+//        labelElement.insertBefore(iconElement, optionElement);
+//        /** STRONGLOOP-END **/
     },
 
     restoreSelectedProfileType: function()
@@ -235,6 +409,54 @@ WebInspector.MultiProfileLauncherView.prototype = {
         }
     },
 
+    //being strongloop
+    _disableProfilerRadioButtons: function(){
+        var items = this._profileTypeSelectorForm.elements;
+
+        for (var i = 0; i < items.length; ++i) {
+            if (items[i].type === "radio")
+                items[i].disabled = true;
+        }
+    },
+
+    _enableProfilerRadioButtons: function(){
+        var items = this._profileTypeSelectorForm.elements;
+
+        for (var i = 0; i < items.length; ++i) {
+            if (items[i].type === "radio")
+                items[i].disabled = false;
+        }
+    },
+
+    _toggleCpuButtons: function(type){
+        if ( type == 'stop' ) {
+            this._fetchCpuButton.style.display = '';
+            this._startCpuButton.style.display = 'none';
+        } else {
+            this._fetchCpuButton.style.display = 'none';
+            this._startCpuButton.style.display = '';
+        }
+    },
+
+    _toggleFetchButtons: function(){
+        if ( this._profilerId === 'file' ) {
+            return this._hideCpuButtons();
+        }
+
+        if ( this._isInstantProfile ) {
+            //heap snapshot
+            this._fetchCpuButton.style.display = 'none';
+            this._startCpuButton.style.display = 'none';
+            this._fetchHeapButton.style.display = '';
+        } else {
+            //cpu profiling
+            this._startCpuButton.style.display = '';
+            this._fetchCpuButton.style.display = 'none'; //stop button is hidden at start
+            this._fetchHeapButton.style.display = 'none';
+        }
+    },
+    //end strongloop
+
     /**
      * @param {!WebInspector.ProfileType} profileType
      */
@@ -244,6 +466,11 @@ WebInspector.MultiProfileLauncherView.prototype = {
         this._isInstantProfile = profileType.isInstantProfile();
         this._isEnabled = profileType.isEnabled();
         this._profileTypeId = profileType.id;
+
+        //begin strongloop
+        this._toggleFetchButtons();
+        //end strongloop
+
         this._updateControls();
         WebInspector.settings.selectedProfileType.set(profileType.id);
     },

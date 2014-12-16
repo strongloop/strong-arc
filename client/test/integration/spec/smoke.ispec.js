@@ -1,7 +1,5 @@
-describe('Studio', function() {
-  beforeEach(function() {
-    return given.emptyWorkspace();
-  });
+describe('Arc', function() {
+  beforeEach(given.emptyWorkspace);
 
   it('can get package definition', function() {
     return inject(function(PackageDefinition, throwHttpError) {
@@ -15,6 +13,9 @@ describe('Studio', function() {
   });
 
   it('can autoupdate MySQL database', function() {
+    // We need more time for tests to finish on Jenkins
+    this.timeout(5000);
+
     // Note: this test does not check the result of autoupdate,
     // it only verifies that the process finishes with no errors
     return inject(function(ModelService, throwHttpError) {

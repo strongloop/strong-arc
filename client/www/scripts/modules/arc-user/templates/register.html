@@ -1,0 +1,40 @@
+
+<div class="container card" id="RegisterMainContainer">
+  <div class="center_div">
+    <h2>Sign up  for StrongLoop Arc</h2>
+    <div class="item item-divider assertive" ng-if="registerError">
+      An error has occured.
+    </div>
+    <form name="RegistrationForm" ng-submit="register()"  class="form-horizontal"  role="form">
+        <div class="form-group">
+          <label for="InputFirstName">First name:</label>
+          <input class="form-control" id="InputFirstName" name="InputFirstName" type="text" placeholder="First Name" ng-model="registration.firstName">
+        </div>
+        <div class="form-group">
+          <label for="InputLastName">Last name</label>
+          <input class="form-control" id="InputLastName" name="InputLastName" type="text" placeholder="Last Name" ng-model="registration.lastName">
+        </div>
+        <div class="form-group">
+          <label for="InputEmail">Email</label>
+          <input class="form-control" id="InputEmail" name="InputEmail" type="text" placeholder="Email" ng-model="registration.email">
+        </div>
+        <div class="form-group">
+          <label for="InputPassword">Password:</label>
+          <input class="form-control" id="InputPassword" name="InputPassword" type="password" placeholder="Password" ng-model="registration.password">
+        </div>
+        <div class="form-group">
+          <label for="InputConfirmPassword">Confirm password</label>
+          <input class="form-control" id="InputConfirmPassword" name="InputConfirmPassword" type="password" placeholder="Confrim Password" ng-model="confirmPassword">
+        </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox"> Terms and conditions
+        </label>
+      </div>
+        <button type="submit" class="btn btn-primary pull-right" >
+            Register
+        </button>
+    </form>
+  </div>
+</div>
+

@@ -2,7 +2,9 @@
 /*global InspectorBackendClass:true */
 
 // Show the "profiles" panel on startup
-localStorage.lastActivePanel = JSON.stringify('profiles');
+var lastActiveDTPanel = window.localStorage.getItem('lastActiveDTPanel')? window.localStorage.getItem('lastActiveDTPanel') : 'profiles';
+localStorage.lastActivePanel = JSON.stringify(lastActiveDTPanel);
+//localStorage.lastActivePanel = JSON.stringify('profiles');
 
 // Wire up websocket to talk to backend
 WebInspector.Main.prototype._createConnection = function() {
@@ -18,3 +20,42 @@ WebInspector.Main.prototype._createConnection = function() {
     webSocketUrl,
     this._connectionEstablished.bind(this));
 };
+
+var SL = window.SL || {};
+SL.child = SL.child || {};
+SL.child.profiler = SL.child.profiler || {};
+
+SL.child.profiler = {
+  slInit: function(){
+    var event = new Event('slInit');
+
+    //todo fire event on an object
+    //WebInspector.Main.dispatchEvent(event);
+    document.documentElement.dispatchEvent(event);
+  },
+
+  setActiveProcess: function(process){
+    var event = new CustomEvent('setActiveProcess', {
+      detail: {
+        process: process
+      }
+    });
+
+    document.documentElement.dispatchEvent(event);
+  },
+
+  setServer: function(server){
+    var event = new CustomEvent('setServer', {
+      detail: {
+        server: server
+      }
+    });
+
+    document.documentElement.dispatchEvent(event);
+  }
+};
+
+//initialize itself when iframe loads
+(function(){
+    SL.child.profiler.slInit();
+})();

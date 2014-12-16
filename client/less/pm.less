@@ -1,0 +1,124 @@
+//override the default menu trigger icon
+.header-pm-app-control-menu-item {
+  margin-right: 1.8rem;
+
+  .ui-popover {
+    .toggle-menu-link {
+      color: #999;
+      font-size: 155%;
+      position: relative;
+      top: .2rem;
+      cursor: pointer;
+    }
+
+    &.is-running {
+      .toggle-menu-link {
+        color: #09572b;
+      }
+    }
+
+    .ui-popover-content {
+      width: 23rem;
+    }
+  }
+}
+
+.sl-app-controller {
+  text-align: center;
+  padding: 0;
+
+  header {
+    background-color: @ui-popover-menu-header-bg;
+    padding: 1rem;
+    border-radius: 1rem 1rem 0 0;
+
+    h4 {
+      margin: 0;
+    }
+  }
+
+
+  section {
+    background-color: @ui-popover-menu-header-bg;
+    border-top: 1px solid @ui-popover-menu-header-border-color;
+    padding: 1rem;
+
+    h4 {
+      margin: 0 0 1rem 0;
+    }
+
+
+    .pm-app-state {
+      margin-top: 1rem;
+      text-transform: uppercase;
+
+      //final states
+      &.running {
+        color: #7dbd33;
+      }
+
+      &.stopped {
+        color: #d9534f;
+      }
+
+      //working
+      &.starting, &.stopping, &.retrieving-port, &.restarting {
+        color: #444;
+      }
+    }
+
+    .loading {
+      display: block;
+    }
+
+    a.target-app-link {
+      display:inline-block;
+    }
+
+    a.target-app-link.ng-hide {
+      visibility:hidden;
+    }
+
+    .app-link-container {
+      height: 2rem;
+      position: relative;
+    }
+
+  }
+
+  footer {
+    padding: 1rem;
+    border-radius: 0 0 1rem 1rem;
+    background: @ui-popover-menu-footer-bg;
+    border-top: 1px solid @ui-popover-menu-footer-border-color;
+    text-align: center;
+
+    .pm-app-control-btn-container {
+      display: inline-block;
+
+      button {
+        .ui-btn;
+
+        height: 3rem;
+        width: 7rem;
+        text-align: center;
+        margin: 0 .5rem;
+
+        &.pm-app-control-btn {
+          display: inline-block;
+
+          .sl-icon {
+            font-size: 80%;
+            display: block;
+          }
+        }
+      }
+
+      span {
+        text-align: center;
+        display: block;
+        font-size: 80%;
+      }
+    }
+  }
+}

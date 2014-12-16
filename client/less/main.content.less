@@ -1,0 +1,89 @@
+/* @override
+	http://0.0.0.0:3003/style/dev/main.content.css */
+
+
+/*
+
+    Main Content
+
+*/
+.main-content-item-container {
+    position: absolute;
+    width: 100%;
+    /*min-height:3000px;*/
+    border-left: 0px solid #dddddd;
+    background: #FFFFFF;
+}
+[data-id="IAMainContentContainer"] {
+    position: relative;
+    background: #FFFFFF;
+}
+
+/*API Panel border*/
+[data-id="CommonInstanceContainer"] {
+    width: 8px;
+    background: white;
+    border-color: #dddddd;
+    width:100%;
+    /*border-width: 0 20px 0 0;*/
+    /*border-style: solid;*/
+    /*margin-left: 2rem;*/
+    /*border-style: solid;*/
+    /*-webkit-border-image:*/
+        /*-webkit-gradient(linear, 0 0, 100% 0, from(#AAAAAA), to(#AAAAAA), color-stop(0.04, #D8D8D8), color-stop(0.9, #fff)) 1 100%;*/
+    /*-webkit-border-image:*/
+        /*-webkit-linear-gradient(left, #AAAAAA, #F0F0F0 4%, #FFFFFF 90%, #AAAAAA) 1 100%;*/
+    /*-moz-border-image:*/
+        /*-moz-linear-gradient(left, #AAAAAA, #EEEDED 4%, #FFFFFF 90%, #AAAAAA) 1 100%;*/
+    /*-o-border-image:*/
+        /*-o-linear-gradient(left, #AAAAAA, #EEEDED 4%, #FFFFFF 90%, #AAAAAA) 1 100%;*/
+    /*border-image:*/
+        /*linear-gradient(to left, #AAAAAA, #EEEDED 4%, #FFFFFF 90%, #AAAAAA) 1 100%;*/
+}
+[data-id="CanvasApiContainer"] {
+    position: absolute;
+    border-style: solid;
+    margin-left: 4rem;
+    background-image: url("../../images/canvasBackground.png");
+    /* TODO variable  */
+}
+
+/*Explorer Panel Border*/
+[data-id="ExplorerContainer"] {
+    width: 0;
+    border-width: 0 20px 0 0;
+    border-style: solid;
+    -webkit-border-image:
+        -webkit-gradient(linear, 0 0, 100% 0, from(#AAAAAA), to(#AAAAAA), color-stop(0.04, #D8D8D8), color-stop(0.9, #fff)) 1 100%;
+    -webkit-border-image:
+        -webkit-linear-gradient(left, #AAAAAA, #D8D8D8 4%, #FFFFFF 90%, #AAAAAA) 1 100%;
+    -moz-border-image:
+        -moz-linear-gradient(left, #AAAAAA, #EEEDED 4%, #FFFFFF 90%, #AAAAAA) 1 100%;
+    -o-border-image:
+        -o-linear-gradient(left, #AAAAAA, #EEEDED 4%, #FFFFFF 90%, #AAAAAA) 1 100%;
+    border-image:
+        linear-gradient(to left, #AAAAAA, #EEEDED 4%, #FFFFFF 90%, #AAAAAA) 1 100%;
+}
+[data-id="PreviewInstanceContainer"] {
+    z-index: 113;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+    /*height:1200px;*/
+    width: 100%;
+    display: none;
+}
+[data-id="PreviewBackgroundBlur"] {
+    position: absolute;
+    top: 2rem;
+    background: rgba(223, 230, 200, 0.43);
+    width: 100%;
+    padding-top: 2.6rem;
+}
+.common-instance-view-container {
+    overflow-y:auto;
+    overflow-x:hidden;
+    padding-bottom:5rem;
+}
+

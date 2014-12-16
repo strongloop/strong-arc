@@ -1,4 +1,7 @@
-# StrongLoop Studio
+# StrongLoop Arc
+
+StrongLoop Arc was formerly known as Studio. Stay tuned for exciting product 
+developments around StrongLoop Arc.
 
 ## Install
 
@@ -18,33 +21,27 @@ $ npm install -g http://get-studio.strongloop.com/strong-studio.tgz
 $ slc loopback
 ```
 
-### 2. In the directory you created the application, start the Studio using the `strong-studio` command.
+### 2. In the directory you created the application, start the Arc using the `strong-arc` command.
 
 ```sh
 $ cd my-loopback-application
-$ strong-studio
+$ strong-arc
 ```
 
-### 3. Open the URL printed by the `strong-studio` command in a Chrome browser.
+### 3. Open the URL printed by the `strong-arc` command in a Chrome browser.
 
 ## Developer Guide
 
 ### Releases
 
-Commits to the `production` branch trigger a build and publish to get-studio.storngloop.com.
+Commits to the `production` branch trigger a build and publish to get-studio.strongloop.com.
 Previous releases are available at `http://get-studio.strongloop.com/strong-studio-$VERSION.tgz`
 
 #### Updating angular services for loopback-workspace
 
-Ensure you have the latest version of loopback-sdk-angular-cli installed on
-your machine:
+Angular services are automatically generated during `gulp build`.
 
 ```
-npm install loopback-sdk-angular-cli
-```
-
-Run the code generator in Studio root directory:
-
-```
-lb-ng -u /workspace/api node_modules/loopback-workspace/app.js client/www/scripts/modules/common/workspace.js
+$ npm update
+$ gulp build
 ```

@@ -1,10 +1,22 @@
 // Copyright StrongLoop 2014
 Landing.directive('slLandingApp', [
-  function () {
+  '$log',
+  function ($log) {
     return {
       restrict: "E",
       replace: true,
       templateUrl: './scripts/modules/landing/templates/landing.app.html'
+    };
+  }
+]);
+
+// Copyright StrongLoop 2014
+Landing.directive('slLandingAppPlaceholder', [
+  function () {
+    return {
+      restrict: "E",
+      replace: true,
+      templateUrl: './scripts/modules/landing/templates/landing.app.placeholder.html'
     };
   }
 ]);
@@ -22,10 +34,14 @@ Landing.directive('slAppSelector', [
         $scope.selected = $scope.suiteIA.selectedApp;
 
         LandingService.getApps()
+          .$promise
           .then(function(data){
-            $scope.suiteIA.apps = data;
+            $scope.suiteIA.apps = data.results.filter(function(app) {
+              return !app.disabled && app.supportsCurrentProject;
+            });
+
             //todo if we have multiple pages w/in an app
-            //we need to parse out just the base route like /studio/foo -> 'studio'
+            //we need to parse out just the base route like /arc/foo -> 'arc'
             $scope.suiteIA.appId = $location.path().replace(/^\//, '');
           });
 
@@ -34,11 +50,25 @@ Landing.directive('slAppSelector', [
           return $scope.isAuthUser() && $scope.suiteIA.selectedApp;
         };
 
+        function getDTName(studioName) {
+          var retVal = 'profiles';
+          if (studioName === 'metrics') {
+            retVal = 'timeline';
+          }
+          return retVal;
+        }
+
         //update page id when changing states
         $rootScope.$on('$stateChangeStart',
           function(event, toState, toParams, fromState, fromParams){
             $scope.suiteIA.appId = toState.name;
+            var dtName = getDTName(toState.name);
+            window.localStorage.setItem('lastActiveDTPanel', dtName);
           });
+
+        $scope.getSref = function(app) {
+          return app.supportsCurrentProject ? app.id : false;
+        }
       },
       link: function(scope, el, attrs){
         scope.$watch('suiteIA.apps', function(newVal, oldVal){

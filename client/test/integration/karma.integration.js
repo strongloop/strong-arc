@@ -28,6 +28,9 @@ module.exports = function(config) {
       'client/www/scripts/vendor/spin.js',
 
       'client/www/scripts/vendor/angular/ui-utils.js',
+      'client/www/scripts/vendor/angular/angular-file-upload-shim.js',
+      'client/www/scripts/vendor/angular/angular-nvd3.js',
+      'client/www/scripts/vendor/angular/slider.js',
       'client/www/scripts/vendor/angular/angular-cookies.js',
       'client/www/scripts/vendor/angular/angular-animate.js',
       'client/www/scripts/vendor/angular/angular-ui-router.js',
@@ -40,11 +43,16 @@ module.exports = function(config) {
       'client/www/scripts/vendor/angular/ui-bootstrap-tpls.js',
       'client/www/scripts/vendor/angular/angular-resource.js',
       'client/www/scripts/vendor/angular/angular-growl.min.js',
+      'client/www/scripts/vendor/angular/angular-file-upload.js',
 
       'client/www/scripts/vendor/string.min.js',
 
       'client/www/scripts/vendor/inflection.min.js',
       'client/www/scripts/vendor/chance.js',
+
+      'client/www/scripts/vendor/d3.js',
+
+      'client/www/scripts/vendor/nv.d3.js',
 
       // NOTE(bajtos) the main app script is intentionally omitted:
       //  - it contains UI-specific code depending on jQuery

@@ -1,0 +1,122 @@
+.ui-popover {
+  display: inline-block;
+  position: relative;
+  margin-left: 1rem;
+  text-align: left;
+
+  &.menu {
+    ul {
+      li {
+        display: block;
+      }
+    }
+  }
+
+  .ui-arrow-left {
+    width: 0;
+    height: 0;
+    position: absolute;
+    left: -1rem;
+    top: 1rem;
+    border-top: 1rem solid transparent;
+    border-bottom: 1rem solid transparent;
+    border-right: 1rem solid @ui-popover-arrow-color;
+  }
+
+  .ui-arrow-right {
+    width: 0;
+    height: 0;
+    position: absolute;
+    right: -1rem;
+    top: 1rem;
+    border-top: 1rem solid transparent;
+    border-bottom: 1rem solid transparent;
+    border-left: 1rem solid @ui-popover-arrow-color;
+  }
+
+  .ui-arrow-top {
+    width: 0;
+    height: 0;
+    position: absolute;
+    right: 1rem;
+    top: -1rem;
+    border-bottom: 1rem solid @ui-popover-arrow-color;
+    border-right: 1rem solid transparent;
+    border-left: 1rem solid transparent;
+  }
+
+//  &.generic {
+//    .ui-arrow-right {
+//      border-left-color: #eee;
+//    }
+//  }
+
+  .ui-popover-content {
+    position: absolute;
+    padding: 0;
+    left: 3rem;
+    top: -1rem;
+    width: 30rem;
+    border: 1px solid @ui-popover-border-color;
+    border-radius: @ui-radius;
+    background: @ui-popover-bg;
+    z-index: 2;
+    min-height: 10rem;
+
+    &.left {
+      left: -31rem;
+    }
+
+    &.bottom {
+      top: 2.2rem;
+      right: 0;
+      left: auto;
+    }
+
+    .ui-popover-title {
+      margin: 0;
+      padding: 1rem 4rem 1rem 2rem;
+      color: @ui-popover-title-color;
+      background: @ui-popover-title-bg;
+      font-size: 2rem;
+      font-weight: 400;
+    }
+
+    .ui-popover-body {
+      padding: 1rem 2rem;
+      max-height: 40rem;
+      overflow-y: auto;
+      font-size: 1.6rem;
+      color: #999;
+    }
+
+    .sl-icon-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      color: @ui-popover-icon-color;
+    }
+  }
+
+  &.menu, &.generic {
+    .ui-arrow-top {
+      border-bottom-color: @ui-popover-menu-arrow-color;
+    }
+
+    .ui-popover-content {
+      border-radius: 1rem;
+      min-height: 0;
+
+      &.bottom {
+        top: 3rem;
+        right: -1.2rem;
+        left: auto;
+      }
+
+      .ui-popover-body {
+        padding: 0;
+      }
+
+    }
+  }
+}

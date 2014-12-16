@@ -6,8 +6,8 @@ var setUI = function() {
   var navHeight = (windowHeight - headerHeight - mainControlsHeight);
   var contentHeight = (windowHeight - headerHeight);
 
-  jQuery('[data-id="MainNavContainer"]').css('height', navHeight);
-  jQuery('.common-instance-view-container').css('height', contentHeight);
+  $('[data-id="MainNavContainer"]').css('height', navHeight);
+  $('.common-instance-view-container').css('height', contentHeight);
 
 };
 var triggerResizeUpdate = function() {
@@ -19,6 +19,13 @@ var triggerResizeUpdate = function() {
       that.working = true;
     }
   }, 250);
+};
+
+var setScrollView = function(selector) {
+  var targetView = $(selector);
+  var offTop = targetView.offset().top;
+  var windowHeight = $(window).outerHeight();
+  targetView.css('height', (windowHeight - offTop));
 };
 window.onresize = function(event) {
   this.triggerResizeUpdate(event);
@@ -33,3 +40,14 @@ window.onresize = function(event) {
   window.isLocalStorageEnabled = false;
   return false;
 })();
+
+// ES6 Number.isInteger polyfil, needed for Safari and older IE.
+if (!Number.isInteger) {
+  Number.isInteger = function isInteger(nVal) {
+    return typeof nVal === 'number'
+    && isFinite(nVal)
+    && nVal > -9007199254740992
+    && nVal < 9007199254740992
+    && Math.floor(nVal) === nVal;
+  };
+}

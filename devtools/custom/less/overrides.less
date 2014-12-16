@@ -1,3 +1,15 @@
+body, body.platform-mac, .go-to-line-dialog {
+  font-family: 'helvetica neue', helvetica, arial, sans-serif;
+}
+
+body.platform-mac {
+  font-family: 'helvetica neue', helvetica, arial, sans-serif;
+
+  .help-key {
+    font-family: 'helvetica neue', helvetica, arial, sans-serif;
+  }
+}
+
 /* hide the top toolbar, only "Profiles" tab is used at the moment */
 .toolbar { display: none; }
 
@@ -13,22 +25,120 @@
   }
 
   /* hide radio buttons */
-  label {
-    input {
-      display: none;
-    }
-
-    .sl-icon {
-      color: @bullet-color;
-      margin-right: .5rem;
-    }
-
-    p {
-      margin-left: 1.5rem;
-    }
-  }
+//  label {
+//    input {
+//      //display: none;
+//    }
+//
+//    .sl-icon {
+//      color: @bullet-color;
+//      margin-right: .5rem;
+//    }
+//
+//    p {
+//      margin-left: 1.5rem;
+//    }
+//  }
 }
 
 .record-profile-status-bar-item {
   display: none;
+}
+
+.hide {
+  display: none;
+}
+
+.profile-sidebar-tree-item, .heap-snapshot-sidebar-tree-item {
+   .icon {
+    content: url(Images/menu-icon.png);
+   }
+}
+
+
+.panel-enabler-view {
+    label:hover input {
+        .box-shadow(none);
+    }
+
+    input[type="radio"] {
+        background-image: auto;
+        border: none;
+        border-radius: 0;
+        background: transparent url(Images/radio-small.png) no-repeat 0 0;
+
+        &:hover {
+            background: url(Images/radio-hover-small.png);
+        }
+
+        &[disabled] {
+            background: url(Images/radio-disabled-small.png);
+        }
+
+        &:active:not(:disabled) {
+            background: url(Images/radio-selected-active-small.png);
+        }
+
+        &:checked {
+            background: url(Images/radio-selected-small.png);
+
+            &:hover {
+                background: url(Images/radio-selected-hover-small.png);
+            }
+
+            &[disabled] {
+                background: url(Images/radio-selected-disabled-small.png);
+            }
+
+            &:active {
+                background: url(Images/radio-selected-active-small.png);
+            }
+        }
+    }
+}
+
+body.inactive button.text-button, button.text-button {
+    &, &:not(:disabled):hover, &:not(:disabled):active {
+        background-image: none;
+        box-shadow: none;
+
+        .ui-btn;
+
+        margin-left: 20px;
+
+        &.fetch-cpu {
+            background: #d4470f;
+            border-bottom-color: darken(#d4470f, 15%);
+        }
+    }
+}
+
+.sidebar {
+    background-color: @sidebar-bg-color;
+}
+
+.status-bar {
+    background-color: @statusbar-bg-color;
+    border-bottom-color: @statusbar-bg-color;
+}
+
+.profiles.panel .status-bar {
+    border-bottom-color: @statusbar-bg-color;
+}
+
+.split-view.hbox > .split-view-resizer > .split-view-resizer-border {
+    border-left-color: @resizer-border-color;
+}
+
+.sidebar-tree-section, select.status-bar-item, .profiles-sidebar-tree-box {
+    text-shadow: none;
+    color: @sidebar-color;
+}
+
+.sidebar-tree-item.selected {
+    text-shadow: none;
+}
+
+.sidebar-tree-item {
+    color: @sidebar-color;
 }

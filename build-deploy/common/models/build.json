@@ -1,0 +1,34 @@
+{
+  "name": "Build",
+  "base": "PersistedModel",
+  "properties": {
+    "stdout": {
+      "type": [
+        "string"
+      ],
+      "default": []
+    },
+    "stderr": {
+      "type": [
+        "string"
+      ],
+      "default": []
+    },
+    "type": {
+      "type": "string"
+    },
+    "archive": {
+      "type": "string"
+    },
+    "started": {
+      "type": "date"
+    },
+    "skipBundle": {
+      "type": "boolean"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

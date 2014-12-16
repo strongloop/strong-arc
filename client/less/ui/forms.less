@@ -1,0 +1,89 @@
+form.ui-form {
+  color: @ui-form-color;
+  font-size: 1.4rem;
+  padding: 1rem;
+  margin-top: 3rem;
+  border-radius: @ui-radius;
+  border: 1px solid @ui-form-border-color;
+
+  .ui-form-group {
+    margin-bottom: 2rem;
+
+    &.invalid {
+      color: @ui-msg-error-color;
+
+      .error {
+        margin: 1rem;
+        font-size: 1.3rem;
+      }
+
+      input {
+        border-color: @ui-msg-error-color;
+      }
+    }
+  }
+
+  fieldset {
+    position: relative;
+
+    legend {
+      color: @ui-form-color;
+      font-weight: 300;
+      position: absolute;
+      top: -4.2rem;
+      left: 0;
+      border: none;
+    }
+
+  }
+
+  label {
+    color: @ui-form-color;
+    display: block;
+  }
+
+  input[type=text], input[type=number] {
+    border: 1px solid @ui-form-field-border-color;
+    width: 35rem;
+    padding: .5rem 1rem;
+    border-radius: @ui-radius;
+
+    &[type=number] {
+      padding-right: 0;
+    }
+
+    &[disabled] {
+      color: @ui-disabled-button-color;
+      background: @ui-disabled-input-bg-color;
+    }
+  }
+}
+
+.ui-arrow-next {
+  width: 70%;
+  height: 1rem;
+  margin: 7rem auto 1rem;
+  background: @ui-arrow-next-color;
+  position: relative;
+
+  &:after {
+    content: '';
+    position: absolute;
+    right: -1rem;
+    top: 0;
+    margin-top: -.5rem;
+    border-top: 1rem solid transparent;
+    border-bottom: 1rem solid transparent;
+    border-left: 1rem solid @ui-arrow-next-color;
+  }
+}
+
+/* Hide spinners on number inputs that shouldn't have spinners */
+.no-spinner {
+  -moz-appearance:textfield;
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}

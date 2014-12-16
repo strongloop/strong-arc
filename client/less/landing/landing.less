@@ -1,49 +1,117 @@
 .sl-landing-page {
-  padding: 4.7rem 3.13rem;
+  padding: 0;
   font-weight: 100;
   color: @gray;
+  //background: #dedede url(/images/arc_white.svg) no-repeat 0 15rem;
+  min-height: 100rem;
 
   > header {
     text-align: center;
-    width: 90%;
-    margin: 0 auto 3rem;
+    background: #dedede;
+    border-radius: 0;
+    height: 20rem;
 
     h1 {
-      font-weight: 100;
+      font-weight: 400;
       font-size: 3.2rem;
+      margin: 0 0 1rem 0;
+      padding-top: 6rem;
     }
 
     p {
-      font-weight: 100;
+      font-weight: 300;
       font-size: 2rem;
+      margin: 0;
+    }
+  }
+
+  > footer{
+    .footer-arc {
+      background: #dedede;
+      border-radius: 0;
+      min-height: 20rem;
+    }
+    .footer-spacer {
+      min-height: 40rem;
+      background: #dedede;
     }
   }
 
   .sl-apps {
     text-align: center;
-    max-width: 960px;
     margin: 0 auto;
+    padding-top: 1rem;
   }
 
   .sl-app {
     .box-sizing(border-box);
     text-align: center;
-    height: 20rem;
-    max-width: 40rem;
-    display: block;
-    margin: 2.5rem auto 5rem;
-    cursor: pointer;
+    width: 12rem;
+    height: 12rem;
+    display: inline-block;
+    margin: 0 auto;
+    position: relative;
+
+    &.app-placeholder {
+      display: none;
+      cursor: default;
+
+      .app-name {
+        visibility: hidden;
+      }
+
+      .app-container {
+        cursor: default;
+      }
+    }
 
     .app-container {
-      height: 90%;
       width: 100%;
-      padding: 1.5rem 0;
+      padding: 0;
       text-align: center;
+      cursor: pointer;
+    }
+
+    .app-image-unsupported {
+      display: none;
+    }
+
+    //only show unsupported icons
+    .app-unsupported {
+      //opacity: 0.5;
+      cursor: default;
+
+      .sl-app-icon {
+        display: none;
+      }
+
+      .app-image-unsupported {
+        display: block;
+      }
     }
 
     &:hover {
       .app-container {
-        background-color: @gray-lighter;
+        //background-color: @gray-lighter;
+      }
+
+      .app-image {
+        display: none;
+      }
+
+      .app-image-hover {
+        display: block;
+      }
+
+      //no hover state for unsupported
+      .app-unsupported {
+        .app-image, .app-image-hover {
+          display: none;
+        }
+
+        a {
+          cursor: default;
+        }
       }
 
       a {
@@ -51,10 +119,14 @@
       }
     }
 
-    a {
+    .app-name {
       .box-sizing(border-box);
       display: block;
       width: 100%;
+    }
+
+    .app-image-hover {
+      display: none;
     }
 
     .app-image::before {
@@ -69,7 +141,8 @@
     }
 
     .app-name {
-      font-size: 2rem;
+      position:relative;
+      font-size: 1.5rem;
       color: @gray;
       margin-top: .8rem;
     }
@@ -79,8 +152,29 @@
       color: @link-color2;
     }
 
-    &:last-child {
-      //margin-right: 0;
+    .app-popover {
+      position: absolute;
+      top: 0;
+      left: 1rem;
+
+      .sl-icon {
+        color: #a7a9ac;
+      }
+
+      header {
+        background: #aaa;
+        color: #fff;
+        padding: 1rem;
+        border-radius: .8rem .8rem 0 0;
+
+        h4 {
+          margin: 0;
+        }
+      }
+
+      section {
+        padding: 1rem;
+      }
     }
   }
 }
@@ -90,13 +184,25 @@
 }
 
 /* Responsive: Portrait tablets and up */
-@media screen and (min-width: @tablet-min-width) {
+@media screen and (min-width: 480px) {
+  .sl-landing-page {
+//    > header {
+//      border-radius: 0 0 100% 100%;
+//    }
+//    > footer .footer-arc {
+//      border-radius: 100% 100% 0 0;
+//    }
+  }
+}
+
+@media screen and (min-width: 1220px) {
   .sl-landing-page {
     .sl-app {
-      width: 24rem;
       display: inline-block;
-      margin-right: 2.5rem;
-      margin-top: 0;
+
+      &.app-placeholder {
+        display: inline-block;
+      }
     }
   }
 }

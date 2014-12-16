@@ -1,9 +1,9 @@
 {
-  "name": "strong-studio",
-  "version": "0.2.1",
+  "name": "strong-arc",
+  "version": "1.0.0",
   "main": "app.js",
   "bin": {
-    "strong-studio": "bin/cli.js"
+    "strong-arc": "bin/cli.js"
   },
   "scripts": {
     "prepublish": "gulp build",
@@ -11,28 +11,45 @@
     "start": "node app.js"
   },
   "dependencies": {
+    "async": "~0.9.0",
+    "cookie-parser": "^1.3.3",
     "debug": "^2.0.0",
+    "errorhandler": "~1.2.2",
     "express": "~4.8.4",
-    "loopback-workspace": "^3.5.0",
+    "express-jsxtransform": "^1.1.0",
+    "fs-extra": "^0.12.0",
+    "http-proxy": "^1.6.2",
+    "loopback": "^2.7.0",
+    "loopback-boot": "~2.3.1",
+    "loopback-datasource-juggler": "~2.10.3",
+    "loopback-workspace": "^3.5.1",
     "opener": "~1.4.0",
     "request": "^2.34.0",
-    "ws": "^0.4.32"
+    "serve-favicon": "^2.1.6",
+    "split": "~0.3.1",
+    "strong-build": "^1.0.2",
+    "strong-deploy": "^1.1.0",
+    "strong-pm": "^1.5.0",
+    "ws": "~0.4.32"
   },
   "description": "A gui for working with the LoopBack framework",
   "devDependencies": {
-    "async": "~0.9.0",
     "chai": "^1.9.1",
+    "cheerio": "^0.18.0",
     "es5-shim": "^4.0.3",
     "fs-extra": "~0.11.0",
-    "gulp": "^3.6.2",
+    "gulp": "^3.8.4",
     "gulp-changed": "^0.3.0",
     "gulp-install": "^0.2.0",
     "gulp-jshint": "^1.8.4",
     "gulp-less": "^1.3.3",
+    "gulp-loopback-sdk-angular": "^0.1.2",
     "gulp-minify-html": "^0.1.3",
+    "gulp-rename": "^1.2.0",
     "gulp-spawn-mocha": "^0.1.7-beta.3",
     "gulp-util": "^3.0.1",
     "gulp-watch": "^1.0.0",
+    "jasmine-given": "^2.6.2",
     "jshint-stylish": "^0.4.0",
     "karma": "^0.12.22",
     "karma-chai": "~0.1.0",
@@ -46,27 +63,28 @@
     "loopback-explorer": "^1.2.9",
     "mocha": "^1.21.4",
     "mysql": "^2.5.1",
-    "protractor": "^0.22.0",
+    "protractor": "^1.3.1",
     "run-sequence": "^0.3.6",
     "supertest": "^0.13.0",
     "svn-interface": "^0.4.4"
   },
   "optionalDependencies": {
-    "sl-blip": "http://blip.strongloop.com/strong-studio@0.2.1"
+    "sl-blip": "http://blip.strongloop.com/strong-arc@1.0.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/strongloop/strong-studio.git"
+    "url": "https://github.com/strongloop/strong-arc.git"
   },
   "keywords": [
+    "arc",
     "studio",
     "loopback",
     "StrongLoop"
   ],
   "license": {
     "name": "StrongLoop",
-    "url": "https://github.com/strongloop/strong-studio/blob/master/LICENSE"
+    "url": "https://github.com/strongloop/strong-arc/blob/master/LICENSE"
   },
-  "author": "Sean Brookes",
-  "homepage": "https://github.com/strongloop/strong-studio"
+  "author": "engineering@strongloop.com",
+  "homepage": "https://github.com/strongloop/strong-arc"
 }

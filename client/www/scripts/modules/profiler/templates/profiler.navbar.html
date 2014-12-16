@@ -1,0 +1,11 @@
+<div class="sl-profiler-navbar" id="ProfilerNavBar">
+  <nav class="sl-profiler-selector">
+    <div class="sl-toggler">
+      <span class="sl-toggler-label">Profile Target</span>
+      <sl-ui-toggle togglers="profilerTogglers" class="small"></sl-ui-toggle>
+    </div>
+  </nav>
+  <nav class="sl-profiler-remote" ng-show="profilerId == 'remote'">
+    <sl-pm-pid-selector></sl-pm-pid-selector>
+  </nav>
+</div>

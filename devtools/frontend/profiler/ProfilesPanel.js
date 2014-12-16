@@ -782,6 +782,9 @@ WebInspector.ProfilesPanel.prototype = {
         }
     },
 
+    // StrongLoop global var ref - for resizing
+    _SL: window.parent.SL.parent,
+
     /**
      * @param {?WebInspector.ProfileHeader} profile
      * @return {?WebInspector.View}
@@ -811,6 +814,11 @@ WebInspector.ProfilesPanel.prototype = {
         if (statusBarItems)
             for (var i = 0; i < statusBarItems.length; ++i)
                 this._profileViewStatusBarItemsContainer.appendChild(statusBarItems[i]);
+
+        // StrongLoop specific code
+        // StrongLoop injection for calling resize method
+        var SL = this._SL;
+        SL.profiler.setProfilerLayout(function(){}.bind(this));
 
         return view;
     },

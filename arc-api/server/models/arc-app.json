@@ -1,0 +1,29 @@
+{
+  "name": "ArcApp",
+  "base": "Model",
+  "properties": {
+    "id": {
+      "type": "string",
+      "id": true
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "disabled": {
+      "type": "boolean"
+    },
+    "supports": {
+      "type": "any"
+    },
+    "supportsCurrentProject": {
+      "type": "boolean"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

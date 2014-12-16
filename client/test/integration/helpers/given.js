@@ -1,6 +1,12 @@
 var given = {};
 
 given.emptyWorkspace = function() {
+  // Increase the timeout when run via `beforeEach(given.emptyWorkspace)`
+  // in order to support slow CI build slaves
+  if (typeof this.timeout === 'function') {
+    this.timeout(30000);
+  }
+
   return inject(function($http, $rootScope, $q, throwHttpError) {
     function reset() {
       return $http({
@@ -49,6 +55,16 @@ given.targetAppIsStopped = function() {
   });
 };
 
+given.uniqueServerPort = function() {
+  return inject(function($http, throwHttpError) {
+    return $http.post('/given/unique-server-port')
+      .then(function(response) {
+        return response.data.port;
+      })
+      .catch(throwHttpError);
+  });
+};
+
 var _givenValueCounter = 0;
 
 given.modelInstance = function(definitionData, configData) {
@@ -89,7 +105,7 @@ given.facetConfig = function(facetName, settings) {
   return inject(function($q, FacetSetting) {
     return $q.all(Object.keys(settings).map(function(key) {
       var filter = { where: { facetName: facetName, name: key }};
-      return FacetSetting.find(filter).$promise
+      return FacetSetting.find({ filter: filter }).$promise
         .then(function(list) {
           if (list.length) {
             list[0].value = settings[key];

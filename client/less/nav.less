@@ -1,0 +1,371 @@
+/* @override
+	http://0.0.0.0:3003/style/dev/nav.css
+	http://0.0.0.0:3003/style/src/nav.css
+	http://localhost:4800/style/src/nav.css */
+
+
+/*
+
+Main Search
+
+*/
+#MainNavSearchContainer {
+    visibility: hidden;
+}
+.nav-search-list {
+    padding: 0;
+    width: 90%;
+    margin: 0 auto 0 auto;
+}
+.nav-search-list li {
+    display: inline;
+}
+.main-search-input {
+	font-weight: lighter;
+    border: 1px solid #808080;
+    background-color: #444444;
+    border-radius: 2rem;
+    width: 25rem;
+    padding-left: 1rem;
+
+}
+
+.plus{
+	margin-right: 1rem;
+	font-size: 16pt;
+}
+
+[data-id="MainNavContainer"] {
+    background-color: #595959;
+    color: #ffffff;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-bottom:100rem;
+    position:relative;
+    padding: 0;
+
+}
+[data-id="MainSearchContainer"] {
+	background: #444444;
+	padding-top: 1.7rem;
+	padding-bottom: 1.3rem;
+	border-bottom: 1px solid #7DBD33 !important;
+}
+
+[title="documentation"] {
+	color: #01582A !important;
+}
+
+/*Hacked for demo*/
+.navbar-brand {
+	background-image: url("../../images/hack/logo.png");
+	position:absolute;
+	left:10rem;
+	top: 2.5rem;
+	width: 212px;
+	height: 35px;
+	background-size: 212px 35px;
+	/*font-family: Ubuntu;
+	font-size: 20pt;
+	color: #01582A !important;*/
+}
+
+.header-logo-container{
+
+
+}
+
+.navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-brand:focus {
+	color: transparent;
+	/*background-color: transparent;*/
+}
+
+
+/*End hack*/
+
+
+/*
+
+    Main Controls
+
+*/
+/*[data-id="IAMainControlsContainer"] {*/
+/*border-top:1px solid #444444;*/
+/*padding-top:.6rem;*/
+/*background-color:#ffffff;*/
+/*position: fixed;*/
+/*bottom: 0;*/
+/*text-align: center;*/
+/*width:25rem;*/
+/*}*/
+/*
+    Nav Tree
+
+*/
+
+.nav-tree-item {
+    display: block;
+    border: 0;
+    background: transparent;
+    text-align: left;
+    padding: 0;
+    color:#ffffff;
+}
+.nav-tree-item:hover {
+    color:#AEFF14;
+
+}
+.nav-tree-item-header{
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 16rem;
+    padding-left: 0.3rem;
+    font-size: 13pt;
+}
+
+/*The project title in the tree nav*/
+.nav-tree-root {
+    color: white;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+    padding-left: 2rem;
+    padding-top: 2rem;
+    padding-bottom: .8rem;
+    font-size: 80%;
+}
+.tree-branch {
+    padding: .7rem .2rem .2rem 2rem;
+    color: #ffffff;
+    font-size: 106%;
+
+    letter-spacing: 1px;
+}
+.tree-node {
+    font-weight: lighter;
+    letter-spacing: 0.1rem;
+}
+.nav-tree-item-addnew {
+    border: 0;
+    display: inline-block;
+    background: transparent;
+    color: #BBBBBB;
+    font-size: 90%;
+    margin-top: 0.6rem;
+    margin-left: 4.6rem;
+    font-size: 12pt;
+    font-weight: lighter;
+    letter-spacing: 0.1rem;
+}
+
+.nav-tree-context-menu-button{
+    background: maroon;
+}
+.branch-leaf-list.is-open {
+    margin-top: 0.7rem;
+    display: block;
+}
+.tree-item-row{
+
+}
+.tree-item-row.is-open{
+    background: #666666;
+}
+.tree-item-row.is-active{
+    background: #4a90e2;
+}
+
+.nav-branch-openclose-icon{
+    width: 2rem;
+    height: 2rem;
+    font-size: 10pt;
+    color: #A8A8A8;
+}
+
+.nav-branch-folder-icon{
+
+}
+
+.ia-nav-item-icon-container-col{
+    padding-left: 5rem;
+    text-align: center;
+}
+.ia-nav-item-name-container-col{
+    padding-left: 0.4rem;
+    width: 100%;
+}
+.ia-nav-item-contextmenu-icon-container-col{
+    color: #79BD3F;
+    font-size: 12pt;
+    padding: 0.2rem 1rem 0 0.4rem;
+}
+.ia-nav-item-dsconnect-icon-container-col{
+    color: #79BD3F;;
+    font-size: 11pt;
+    padding: 0.2rem 0.6rem 0 1rem;
+}
+
+.ia-project-title-header-container{
+    padding: 0.5rem 0 1rem 1rem;
+    background: #656565;
+}
+.ia-project-title-container{
+    font-size: 9pt;
+    font-weight: bold;
+    padding-top: 0.7rem;
+    text-transform: uppercase;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 23rem;
+    padding-left: 0.8rem;
+}
+.ia-project-nav-help a{
+    color: #494949;
+    float: right;
+    height: 30px;
+    display: block;
+    padding-top: 0.4rem;
+    padding-right: 1.2rem;
+}
+.tree-item-row [data-ui-type="cell"]{
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+}
+
+
+
+.branch-leaf-list.is-closed {
+    display: none;
+}
+.branch-leaf-list li {
+    line-height: 2.1;
+}
+.branch-leaf-list li.is-open {
+    background-color: #888888;
+}
+.branch-leaf-list li.is-selected {
+    background-color: #eeeeee;
+    border-color: #4a90e2;
+}
+.branch-leaf-list li.is-active {
+    background-color: #4a90e2;
+}
+.branch-leaf-list li.is-active button {
+
+    color: #ffffff;
+}
+[data-id="IAMainControlsContainer"] button {
+    /*display:block;*/
+}
+[data-id="IAMainControlsContainer"] [data-ui-type="table"] {
+}
+.maincontrol-main-button-label{
+    padding-left: 1rem;
+    margin-bottom: 2rem;
+}
+.maincontrol-main-icon{
+    font-size: 14pt;
+    padding-top: 0.5rem;;
+}
+
+
+[data-id="MainControlsContainer"] .btn-primary {
+    color: #ffffff;
+    height: 4.8rem;
+    font-size: 13pt;
+    padding-top: 0.7rem;
+    border-bottom: 3px solid #66992D;
+}
+[data-id="MainControlsContainer"] .btn-primary.btn-fullsize {
+    width: 12.5rem;
+    padding-left: 0;
+}
+[data-id="MainControlsContainer"] .btn-primary.btn-fullsize:active {
+    background:#66992D;
+    color:#444444;
+}
+[data-id="MainControlsContainer"] .btn-primary.btn-halfsize {
+    width: 4.8rem;
+    margin-left:.1rem;
+    margin-right:.1rem;
+}
+[data-id="MainControlsContainer"] .btn-primary.btn-halfsize:active {
+    background:#66992D;
+    color:#444444;
+}
+[data-id="MainControlsContainer"] .btn-default.btn-control-ds:active {
+    background:#66992D;
+    color:#444444;
+}
+
+.main-controls-container .btn-primary:hover {
+    color:#689d2a;
+    background-color: #ffffff;
+    border-bottom: 3px solid #c7c7c7;
+}
+.main-controls-container .btn-default:hover {
+    color:#689d2a;
+    background-color: #ffffff;
+    border-bottom: 3px solid #c7c7c7;
+}
+.main-control-command-label {
+	text-align: center;
+	margin-top: 1.5rem;
+	margin-left: 1rem;
+	color: #919191;
+    font-size:75%;
+    display:block;
+}
+.btn-control-ds {
+    border: 0;
+    width: 4.8rem;
+    height: 4.8rem;
+    border-radius: 4px;
+    background: #7DBC31;
+    font-size: 16pt;
+    color: #ffffff;
+	border-bottom: 3px solid #66992D;
+}
+/*.main-controls-container .btn-default:hover,*/
+/*.main-controls-container .btn-default:focus,*/
+/*.main-controls-container .btn-default:active,*/
+/*.main-controls-container .btn-default.active, .open .dropdown-toggle.btn-default {*/
+    /*background: transparent;*/
+    /*color: white;*/
+/*}*/
+[data-id="MainNavContainer"] .btn-default:hover,
+    [data-id="MainNavContainer"] .btn-default:focus,
+    [data-id="MainNavContainer"] .btn-default:active,
+    [data-id="MainNavContainer"] .btn-default.active,
+    .open .dropdown-toggle.btn-default {
+    background: transparent;
+    color: white;
+}
+
+[data-id="MainControlsContainer"] {
+    background-color: #494949;
+    color: #ffffff;
+    width: 28.5rem;
+    height: 23.5rem;
+    position:fixed;
+    bottom:0;
+    border-top: 1px solid #7DBD33 !important;
+}
+.main-controls-title {
+	text-transform: uppercase;
+	padding-top: 1rem;
+	padding-left: 1.7rem;
+	font-size: 10pt;
+}
+.main-controls-container [data-ui-type="cell"] {
+    text-align: center;
+}
+.ds-type-name {
+    font-size: 8pt;
+    margin-top: 0.8rem;
+    margin-bottom: 2rem;
+}
+

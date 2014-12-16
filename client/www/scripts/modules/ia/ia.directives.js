@@ -171,48 +171,26 @@ IA.directive('slIaMainSearch', [
 * */
 IA.directive('slIaMainControls', [
   '$timeout',
-  function($timeout) {
+  'growl',
+  function($timeout, growl) {
     return  {
       replace: true,
       link: function(scope, el, attrs) {
 
+        var renderComp = function() {
+          React.renderComponent(IAMainControls({scope:scope}), el[0]);
+        };
         scope.$watch('activeInstance', function(instance) {
-          $timeout(function() {
-            React.renderComponent(IAMainControls({scope:scope}), el[0]);
-          }, 200);
-
+          renderComp();
         });
 
-      }
-    }
-  }
-]);
-/*
-*
-*   IA GLOBAL EXCEPTION DISPLAY
-*
-* */
-app.directive('slIaGlobalExceptionView', [
-  function() {
-    return {
-      replace:true,
-      link: function(scope, el, attrs) {
 
-        scope.$watch('globalExceptionStack', function(newVal) {
-          React.renderComponent(IAGlobalExceptionDisplayView({scope:scope}), el[0]);
-          // fatal to Api Composer application
-          newVal.map(function(stackItem) {
-            if (stackItem.isFatal) {
-              $('[data-id="MainSidebarContainer"]').hide();
-              $('[data-id="IAMainContentContainer"]').hide();
-            }
-          });
-        }, true);
       }
     }
   }
 ]);
- /*
+
+/*
  *
  *   IA Main Content
  *
@@ -254,14 +232,14 @@ IA.directive('slIaCleardbNavItem', [
   'growl',
   function(AppStorageService, growl) {
     return {
-      template: '<li><a href="#studio" ng-click="clearDB()">reset</a></li>',
+      template: '<li><a href="#composer" ng-click="clearDB()">reset</a></li>',
       controller: function($scope, $location) {
 
         $scope.clearDB = function() {
           if (confirm('clear local cache?')) {
             AppStorageService.clearStorage();
-            $location.path('/#studio');
-            growl.addSuccessMessage("cleared studio caches");
+            $location.path('/#composer');
+            growl.addSuccessMessage("cleared composer caches");
           }
         }
       },

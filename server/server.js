@@ -1,8 +1,10 @@
 var express = require('express');
 var path = require('path');
 var workspace = require('loopback-workspace');
+var buildDeploy = require('../build-deploy/server/server');
 var devtools = require('../devtools/server/devtools');
-
+var pm = require('../process-manager/server');
+var arcApi = require('../arc-api/server/server');
 var app = module.exports = express();
 
 // export the workspace object, useful e.g. in tests
@@ -10,8 +12,10 @@ app.workspace = workspace;
 
 // REST APIs
 app.use('/workspace', workspace);
-
 app.use('/devtools', devtools);
+app.use('/build-deploy', buildDeploy);
+app.use('/process-manager', pm);
+app.use('/api', arcApi);
 
 try {
   // API explorer
@@ -22,11 +26,13 @@ try {
 }
 
 // static files
-app.use(express.static(path.join(__dirname, '../client/www')));
+app.use(require('express-jsxtransform')())
+   .use(express.static(path.join(__dirname, '../client/www')));
 
 var listen = app.listen;
 app.listen = function() {
-  var server = listen.apply(app, arguments);
+  var server = process.server = listen.apply(app, arguments);
   devtools.setupWebSocketServer(server);
+  pm.start();
   return server;
 };

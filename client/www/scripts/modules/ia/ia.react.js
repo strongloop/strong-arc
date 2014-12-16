@@ -22,14 +22,14 @@ var IAMainNavContainer = (IAMainNavContainer = React).createClass({
       <div>
         <div className="ia-project-title-header-container" >
           <div className="ia-project-nav-help">
-            <a target="_blank" href="http://docs.strongloop.com/display/SLS/Using+StrongLoop+Studio">
+            <a target="_blank" href="http://docs.strongloop.com/display/ARC/StrongLoop+Arc">
               <span id="mainNavContextHelp" data-id="MainNavContextHelp" className="sl-icon sl-icon-question-mark"></span>
             </a>
           </div>
           <span className="ia-project-title-container">{projectName}</span>
         </div>
-        <IAMainModelNav scope={this.props.scope} />
-        <IAMainDatasourceNav scope={this.props.scope} />
+        <IAMainModelNav className="ia-model-nav-container" scope={this.props.scope} />
+        <IAMainDatasourceNav className="ia-datasource-nav-container" scope={this.props.scope} />
       </div>
       );
   }
@@ -437,6 +437,7 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
 * */
 var IAMainControls = (IAMainControls = React).createClass({
   getInitialState: function() {
+    var component = this;
     return {
       showNewModel: false,
       newModelText: 'new model'
@@ -445,9 +446,13 @@ var IAMainControls = (IAMainControls = React).createClass({
   componentDidMount: function() {
     window.setUI();
   },
+  componentWillReceiveProps: function(nextProps) {
+    var component = this;
+  },
   render: function() {
-    var that = this;
-    var scope = that.props.scope;
+    var component = this;
+    var scope = component.props.scope;
+    var cx = React.addons.classSet;
 
     var createModelViewRequest = function() {
 
@@ -456,6 +461,8 @@ var IAMainControls = (IAMainControls = React).createClass({
       });
 
     };
+
+
     var addNewInstanceRequest = function(event) {
       if (event.target.attributes['data-type'] || event.target.parentElement.attributes['data-type']){
         var val = '';
@@ -478,261 +485,86 @@ var IAMainControls = (IAMainControls = React).createClass({
       }
     };
 
-    var renderAppViewRequest = function() {
-      window.open(
-        '/#demo',
-        '_blank'
-      );
-
-    };
-    var showExplorerViewRequest = function() {
-      scope.$apply(function() {
-        scope.showExplorerViewRequest();
-      });
-    };
     return (
       <div data-id="IAMainControlsContainer">
         <div className="main-controls-title">Create</div>
 
-
         <div className="main-controls-container">
+          <div data-ui-type="table">
+            <div data-ui-type="row">
+              <div data-ui-type="cell">
+                <label className="main-control-command-label">MODEL</label>
+                <button onClick={createModelViewRequest} type="button" className="btn btn-primary btn-fullsize">
+                  <span className="maincontrol-main-icon sl-icon sl-icon-plus-sign"></span>
+                  <span className="maincontrol-main-button-label">New</span>
+                </button>
+              </div>
+              <div data-ui-type="cell" className="main-control-apprender-container">
 
-        <div data-ui-type="table">
-          <div data-ui-type="row">
-            <div data-ui-type="cell">
-              <label className="main-control-command-label">MODEL</label>
-              <button onClick={createModelViewRequest} type="button" className="btn btn-sm btn-primary">
-                <span className="maincontrol-main-icon sl-icon sl-icon-plus-sign"></span>
-                <span className="maincontrol-main-button-label">New</span>
-              </button>
-            </div>
-            <div data-ui-type="cell" className="main-control-apprender-container">
-              <label className="main-control-command-label">APP</label>
-              <button disabled="disabled" onClick={renderAppViewRequest} type="button" className="btn btn-primary btn-sm">
-                <span className="maincontrol-main-icon sl-icon sl-icon-play"></span>
-                <span className="maincontrol-main-button-label">Render</span>
-              </button>
+              </div>
             </div>
           </div>
-        </div>
 
 
-        <label className="main-control-command-label">DATASOURCE</label>
-        <div data-ui-type="table">
-          <div data-ui-type="row">
-            <div data-ui-type="cell">
-              <button onClick={addNewInstanceRequest}
-                data-type="datasource"
-                data-name="oracle"
-                className="btn btn-default btn-control-ds"
-                title="oracle connector">
+          <label className="main-control-command-label">DATASOURCE</label>
+          <div data-ui-type="table">
+            <div data-ui-type="row">
+              <div data-ui-type="cell">
+                <button onClick={addNewInstanceRequest}
+                  data-type="datasource"
+                  data-name="oracle"
+                  className="btn btn-default btn-control-ds"
+                  title="oracle connector">
+                    <span className="sl-icon sl-icon-database"></span>
+                </button>
+                <div className="ds-type-name">Oracle</div>
+              </div>
+              <div data-ui-type="cell">
+                <button className="btn btn-default btn-control-ds"
+                  data-type="datasource"
+                  data-name="mssql"
+                  onClick={addNewInstanceRequest}
+                  title="mssql connector">
+                    <span className="sl-icon sl-icon-database"></span>
+                </button>
+                <div className="ds-type-name">MS SQL</div>
+              </div>
+              <div data-ui-type="cell">
+                <button onClick={addNewInstanceRequest}
+                  data-type="datasource"
+                  className="btn btn-default btn-control-ds"
+                  data-name="mysql"
+                  title="mysql connector">
+                    <span className="sl-icon sl-icon-database"></span>
+                </button>
+                <div className="ds-type-name">MySQL</div>
+              </div>
+              <div data-ui-type="cell">
+                <button onClick={addNewInstanceRequest}
+                  data-type="datasource"
+                  className="btn btn-default btn-control-ds"
+                  data-name="postgresql"
+                  title="postgres connector">
                   <span className="sl-icon sl-icon-database"></span>
-              </button>
-              <div className="ds-type-name">Oracle</div>
-            </div>
-            <div data-ui-type="cell">
-              <button className="btn btn-default btn-control-ds"
-                data-type="datasource"
-                data-name="mssql"
-                onClick={addNewInstanceRequest}
-                title="mssql connector">
-                  <span className="sl-icon sl-icon-database"></span>
-              </button>
-              <div className="ds-type-name">MS SQL</div>
-            </div>
-            <div data-ui-type="cell">
-              <button onClick={addNewInstanceRequest}
-                data-type="datasource"
-                className="btn btn-default btn-control-ds"
-                data-name="mysql"
-                title="mysql connector">
-                  <span className="sl-icon sl-icon-database"></span>
-              </button>
-              <div className="ds-type-name">MySQL</div>
-            </div>
-            <div data-ui-type="cell">
-              <button onClick={addNewInstanceRequest}
-                data-type="datasource"
-                className="btn btn-default btn-control-ds"
-                data-name="postgresql"
-                title="postgres connector">
-                <span className="sl-icon sl-icon-database"></span>
-              </button>
-              <div className="ds-type-name">PostgreSQL</div>
-            </div>
-            <div data-ui-type="cell">
-              <button onClick={addNewInstanceRequest}
-                data-type="datasource"
-                className="btn btn-default btn-control-ds"
-                data-name="mongodb"
-                title="mongodb connector">
-                  <span className="sl-icon sl-icon-database"></span>
-              </button>
-              <div className="ds-type-name">MongoDB</div>
+                </button>
+                <div className="ds-type-name">PostgreSQL</div>
+              </div>
+              <div data-ui-type="cell">
+                <button onClick={addNewInstanceRequest}
+                  data-type="datasource"
+                  className="btn btn-default btn-control-ds"
+                  data-name="mongodb"
+                  title="mongodb connector">
+                    <span className="sl-icon sl-icon-database"></span>
+                </button>
+                <div className="ds-type-name">MongoDB</div>
+              </div>
             </div>
           </div>
-        </div>
 
         </div>
 
       </div>
       );
-  }
-});
-/*
-*
-* Exception display
-*
-* */
-var IAGlobalExceptionDisplayView = (IAGlobalExceptionDisplayView = React).createClass({
-  toggleStackView: function() {
-    $('[data-id="GlobalExceptionDetailsContainer"]').toggle(250);
-  },
-  render: function() {
-    var component = this;
-    var scope = component.props.scope;
-    var displayMarkup = (<div />);
-    var clearGlobalException = function() {
-      scope.$apply(function() {
-        scope.clearGlobalException();
-      });
-    };
-
-    if (scope.globalExceptionStack.length) {
-      var prevMessage = '';
-      displayMarkup = scope.globalExceptionStack.map(function(stackItem) {
-        if (stackItem.message !== prevMessage) {
-          prevMessage = stackItem.message;
-          /*
-          * NOTE the var declarations in the set are deliberately not
-          * assigned in a block at the top of the function to make the code
-          * more readable and portable.
-          * */
-          var nameElement;
-          if (stackItem.name) {
-            nameElement =  (
-              <li>
-                <span className="ia-global-exception-label">Name: </span>
-                <span className="ia-global-exception-value">{stackItem.name}</span>
-              </li>
-            );
-          }
-          var messageElement;
-          if (stackItem.message) {
-            messageElement = (
-                <li>
-                  <span  className="ia-global-exception-label">Message: </span>
-                  <span className="ia-global-exception-value">{stackItem.message}</span>
-                </li>
-              );
-          }
-          var detailsElement;
-          if (stackItem.details) {
-            detailsElement = (
-                <li>
-                  <span  className="ia-global-exception-label">Details: </span>
-                  <span className="ia-global-exception-value">{stackItem.details}</span>
-                </li>
-               );
-          }
-          var requestUrlElement;
-          if (stackItem.requestUrl) {
-          requestUrlElement = (
-              <li>
-                <span  className="ia-global-exception-label">Request: </span>
-                <span className="ia-global-exception-value">{stackItem.requestUrl}</span>
-              </li>
-            );
-          }
-          var statusElement;
-          if (stackItem.status) {
-          statusElement = (
-              <li>
-                <span  className="ia-global-exception-label">Staus: </span>
-                <span className="ia-global-exception-value">{stackItem.status}</span>
-              </li>
-            );
-          }
-          /*
-          * The helpElement can contain hyperlinks as pointers to documentation or
-          * examples or straight text as string.
-          * Straight text will get wrapped in a <span> element
-          * Text with hyperlinks must be specified as an array containing
-          * either text or link elements
-          *
-          * the following thrown globalException object eg:
-          *   stackItem.help = [
-          *     { text: 'this is a description of the error' },
-          *     { text: 'See:' },
-          *     { text: 'I am the link text title', link: 'http://www.example.com'},
-          *     { text: 'for more info' }
-          *   ];
-          *
-          *   will get translated into a markup structure as follows:
-          *   <span> this is a description of the error </span>
-          *   <span See </span>
-          *   <a href="http://www.example.com">I am the link text title</a>
-          *   <span> for more info </span>
-          *
-          *   the following eg:
-          *   stackItem.help = 'This is a description of the error';
-          *
-          *   will get translated into the following:
-          *   <span> This is a description of the error </span>
-          *
-          * */
-          var helpElement;
-          if (stackItem.help) {
-            var helpString = stackItem.help;
-            if (Array.isArray(stackItem.help)) {
-              helpString = stackItem.help.map(function(item) {
-                  if (item.link) {
-                    return (<a href={item.link} target="_blank" title={item.text}>{item.text}</a>);
-                  }
-                  else {
-                    return (<span> {item.text} </span>);
-                  }
-                }
-              );
-            }
-            helpElement = (
-                <li>
-                  <span  className="ia-global-exception-label">Help: </span>
-                  <span className="ia-global-exception-value">{helpString}</span>
-                </li>
-              );
-          }
-          var stackTraceElement;
-          if (stackItem.stack) {
-            stackTraceElement = (
-                <div data-id="StackTraceMessageContainer"
-                  className="global-exception-stack-display">{stackItem.stack}</div>
-              );
-          };
-          return (
-            <div data-id="IAGlobalExceptionDisplayContainer" className="ia-global-exception-container">
-              <span onClick={clearGlobalException} className="sl-icon sl-icon-close ia-global-exception-close-button"></span>
-              <div className="ia-global-exception-header">Oops! Something is wrong</div>
-              <div className="ia-global-exception-link" onClick={component.toggleStackView}>Show/hide details</div>
-              <span className="ia-global-exception-value">{stackItem.message}</span>
-              <div data-id="GlobalExceptionDetailsContainer">
-
-                <ul className="ia-global-exception-body">
-                  {nameElement}
-                  {messageElement}
-                  {detailsElement}
-                  {requestUrlElement}
-                  {statusElement}
-                  {helpElement}
-                </ul>
-                {stackTraceElement}
-
-              </div>
-            </div>);
-        }
-
-      });
-    }
-    return (<div>{displayMarkup}</div>);
   }
 });

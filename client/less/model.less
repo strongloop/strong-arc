@@ -1,0 +1,524 @@
+/* @override
+	http://0.0.0.0:3003/style/dev/model.css
+	http://0.0.0.0:3003/style/src/model.css
+	http://localhost:4800/style/src/model.css
+	http://0.0.0.0:4800/style/src/model.css */
+
+
+::-webkit-input-placeholder {
+	color: #CCCCCC;
+}
+
+input[type="checkbox"] {
+
+}
+
+select {
+    height: 2.5rem;
+    -webkit-appearance: none;
+    padding-left: 0.5rem;
+    border-radius: 0;
+}
+
+/*
+    models
+
+*/
+.name-not-unique {
+    background-color: #CFD496;
+}
+.warning-message {
+    line-height: 1.5rem;
+    display: block;
+    color: darkgreen;
+}
+.model-property-editor-container {
+    max-width: 50rem;
+}
+.default-model-editor-controls-list li {
+    display: inline-block;
+    transition: 0.4s all ease-out;
+    -webkit-transition: 0.4s ease-out all;
+}
+.default-model-editor-controls-list li.ng-hide-add,
+.default-model-editor-controls-list li.ng-hide-remove {
+    display: inline-block !important;
+}
+.default-model-editor-controls-list li.ng-hide-remove,
+.default-model-editor-controls-list li.ng-hide-add.ng-hide-add-active {
+    margin-left: -80px;
+    opacity: 0;
+}
+.default-model-editor-controls-list li.ng-hide-remove.ng-hide-remove-active,
+.default-model-editor-controls-list li.ng-hide-add {
+    margin-left: 0;
+    opacity: 1;
+}
+/*
+
+
+    Model Instance Editor
+
+*/
+.sample-show-hide {
+    /*padding:10px;*/
+    /*border:1px solid black;*/
+    /*background:white;*/
+}
+.sample-show-hide.ng-hide-add,
+.sample-show-hide.ng-hide-remove {
+    -webkit-transition: all linear 0.5s;
+    -moz-transition: all linear 0.5s;
+    -o-transition: all linear 0.5s;
+    transition: all linear 0.5s;
+    display: block!important;
+}
+.sample-show-hide.ng-hide-add.ng-hide-add-active,
+.sample-show-hide.ng-hide-remove {
+    opacity: 0;
+}
+.sample-show-hide.ng-hide-add,
+.sample-show-hide.ng-hide-remove.ng-hide-remove-active {
+    opacity: 1;
+}
+[data-id="ModelEditorInstanceContainer"] {
+    margin-left: 2rem;
+    margin-top: 2rem;
+}
+
+.model-definition-save-btn {
+    float:right;
+}
+.model-editor-body-container {
+    display: block;
+    margin-top: 1rem;
+    border-top: 1px solid #cccccc;
+}
+.model-editor-section-title{
+    display: inline-block;
+    font-size: 14pt;
+    padding-left: 0.6rem;
+}
+.model-editor-section-icon{
+    display: inline-block;
+    font-size: 16pt;
+}
+.model-instance-header {
+    display: inline;
+}
+.is-closed {
+    display: none;
+}
+.is-open {
+    /*display: block;*/
+}
+.model-instance-header-btn {
+    text-align: left;
+    border: none;
+    background: none;
+    color:#7DBD33;
+    border-radius: .2rem;
+    margin: .5rem .4rem .5rem 0;
+}
+.model-instance-header-btn:hover {
+    color:#4a90e2;
+}
+.model-instance-header-btn:active {
+    color:#7DBD33;
+}
+.model-instance-header-btn:focus {
+    color:#7DBD33;
+}
+.model-instance-editor-input {
+    color: #4a4a4a;
+    border: 1px solid #dddddd;
+    font-size: 11pt;
+    border-radius: .3rem;
+    width: 100%;
+    height: 3.4rem;
+    padding-left: 1rem;
+}
+.model-detail-label {
+    padding-left: 0.7rem;
+}
+.model-instance-editor-checkbox {
+    margin-top: 0.7rem !important;
+}
+.model-instance-editor-checkbox-label{
+
+}
+.model-detail-input-container label{
+    font-size: 10pt;
+}
+.model-instance-details-container [data-state="isOpen"] {
+    display: block;
+}
+.model-instance-details-container [data-state="isClosed"] {
+    display: none;
+}
+/*
+
+    model properties table
+
+*/
+.property-list-header {
+    margin-left: 1.5rem;
+    width: 89.3rem;
+}
+.btn-model-property-spinner {
+    border: 0;
+}
+
+.new-model-name.is-duplicate {
+    background: yellow;
+}
+.new-model-name.is-unique {
+    background: green;
+}
+.model-instance-container.is-open {
+    background-color: #fafafa;
+    padding-bottom: 1.4rem;
+    border: 1px solid #aaaaaa;
+    border-radius: 1rem;
+}
+.props-data-type-cell .array-detail-container label,
+  .props-data-type-cell .object-detail-container button {
+    margin-left:.5rem;
+    font-style: italic;
+}
+.model-instance-container [data-ui-type="table"] {
+
+    /*border-right:1px solid #aaaaaa;*/
+    /*border-left:1px solid #aaaaaa;*/
+}
+
+.model-instance-container .model-instance-property-table-header-row {
+    background-color: #EDEDED;
+    height: 3rem;
+    color: #999999;
+    font-size: 90%;
+}
+.model-instance-property-table-header-row [data-ui-type="cell"] {
+    text-transform: capitalize;
+    font-size: 10pt;
+    color: #888888;
+}
+.model-instance-property-list [data-ui-type="cell"] {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-color: #DDDDDD;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+}
+
+.model-instance-property-list{
+	color: #4A4A4A;
+	font-size: 1.5rem;
+    margin-left: -2.5rem;
+}
+.model-instance-property-list li:first-child {
+
+}
+.model-instance-property-list select {
+	font-size: 1.4rem;
+	border: none;
+	height: 2rem;
+	text-transform: capitalize;
+	width: 100%;
+	height: 100%;
+}
+
+
+.table-header-cell {
+	padding-top: 0.7rem;
+}
+
+.model-details-pocket-editor-container {
+    margin: .6rem auto 1rem auto;
+    width: 90%;
+    border-left: 1px solid #e1e1e1;
+    border-bottom: 1px solid #e1e1e1;
+    border-top-left-radius: 1.3rem;
+    border-bottom-left-radius: 1.3rem;
+    border-bottom-rigtht-radius: 1.3rem;
+    padding-left: 1.1rem;
+}
+.model-details-pocket-editor-container .tab-box-body {
+    background: transparent;
+    border-right: 1px solid #e1e1e1;
+    border-top: 1px solid #e1e1e1;
+    border-top-right-radius: 1.3rem;
+    border-bottom-rigtht-radius: 1.3rem;
+    padding: .4rem;
+}
+/*
+
+    Model Properties / Pocket Editor
+
+*/
+.pocket-editor-table [data-ui-type="cell"] {
+    text-align: left;
+    vertical-align: top;
+    white-space: nowrap;
+}
+.model-config-tab-list li {
+    display: inline-block;
+}
+/*
+
+    Pocket Popover
+
+*/
+.pocket-popover-container {
+    position: relative;
+}
+.pocket-popover {
+    position: absolute;
+    padding: 1rem;
+    border: 1px solid #dddddd;
+    border-radius: 2rem;
+    background-color: #efefef;
+    z-index: 4000;
+}
+
+
+.lineBreak{
+    height: 1.6rem;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.model-header-container {
+    /*background: #EEEEEE;*/
+    width: 90rem;
+    min-width: 60rem;
+    height: 11.2rem;
+    border-radius: 0.5rem;
+    margin-left: 2rem;
+}
+.model-header-name-container {
+    display: inline-block;
+    margin-top: 0.7rem;
+    margin-left: 1rem;
+    width: 38.7rem;
+}
+.model-header-name-container label{
+    margin-top: 1rem;
+    margin-left: 0.5rem;
+    font-size: 9pt;
+}
+.model-instance-name {
+	border: 1px solid #DDDDDD;
+	border-radius: 0.3rem;
+	padding-left: 1rem;
+}
+.model-detail-container {
+	border-bottom: 1px solid #DDDDDD;
+    width: 90rem;
+}
+.model-migrate-button {
+    color: #777;
+    background-color: #ddd;
+    font-size: 12pt;
+    border: none;
+    border-bottom: 2px solid #999;
+    width: 17rem;
+    height: 3.7rem;
+}
+.model-migrate-button:hover {
+    color: #fff;
+    background-color: #999 !important;
+}
+.model-migrate-loading {
+    margin-left: 6rem;
+    padding: 2px 6px 3px 0 !important;
+    text-align: center;
+    width: 17rem;
+    display: inline-block;
+}
+.model-migrate-button[disabled] {
+    opacity: 0.4;
+    background: #999 !important;
+}
+.model-detail-input-container {
+	padding-right: 1rem;
+	display: inline-block;
+	width: 33%;
+}
+.model-detail-input-row{
+    display:  inline-block;
+    margin-left: 2.5rem;
+    margin-top: 0.7rem;
+    margin-bottom:	2rem;
+    padding-right: 5rem;
+    width: 100%;
+    min-width: 50rem;
+}
+.model-detail-button-row{
+	margin-left: 5rem;
+	margin-bottom: 2rem;
+	width: 100%;
+	min-width: 90rem;
+	text-align: justify;
+}
+.listNarrow{
+	width: 10rem;
+	margin-right: 2rem;
+}
+.listWide{
+	width: 30%;
+	max-width: 20rem;
+	margin-left: 1.1rem;
+}
+
+
+.instance-detail-pocket-button:hover {
+	background-color: #67992d;
+}
+button[disabled].instance-detail-pocket-button {
+    color: #dddddd;
+    background-color: #7dbd34;
+}
+button[disabled].instance-detail-pocket-button:hover {
+    color: #dddddd;
+    background-color: #7dbd34;
+}
+.btn-new-model-property {
+    border: 0;
+    background: transparent;
+    color: #7dbd33;
+    display: inline-block;
+    margin-left: 5rem;
+}
+.btn-new-model-property:hover {
+    color: #4A90E2;
+}
+.modelproperty-container .props-name-cell {
+    border-left: 1px solid #DDDDDD;
+    padding-left: 1.5rem;
+    width: 25rem;
+}
+.props-name-header {
+    width: 30.3rem;
+    padding-left: 1.7rem;
+}
+.props-name-cell input{
+    width: 100%;
+}
+
+.props-data-type-cell {
+    padding-left: 1rem;
+    width: 10rem;
+}
+.props-data-type-header {
+    width: 11rem;
+    padding-left: 1.4rem;
+}
+
+.props-isid-cell{
+    width: 5rem;
+    text-align: center;
+}
+.props-isid-header{
+    width: 6.5rem;
+    padding-left: 2.5rem;
+}
+.props-required-cell {
+    width: 5.5rem;
+    text-align: center;
+}
+.props-required-header {
+    width: 6rem;
+    padding-left: 2.6rem;
+}
+.props-index-cell {
+    width: 5.5rem;
+    text-align: center;
+
+}
+.props-index-header {
+    width: 8rem;
+    padding-left: 3rem;
+}
+.props-comments-cell {
+	width: 20rem;
+}
+.props-comments-cell input{
+	background: transparent;
+	height: 100%;
+	-webkit-appearance: none;
+	padding-left: 0.5rem;
+	border-radius: 0;
+	border: none;
+}
+
+.props-comments-header {
+    padding-left: 1rem;
+}
+.props-controls-header {
+    width:3rem;
+}
+.props-controls-cell {
+    width:3rem;
+    text-align: center;
+}
+.props-spinner-cell {
+	background: red;
+	width: 1rem;
+	text-align: left;
+}
+.props-remove-btn{
+	background: none;
+	border: none;
+	color: #4a90e2;
+}
+.modelproperty-detail-is-open .modelproperty-detail-row{
+	background: navy;
+}
+.modelproperty-detail-row{
+    margin-left: 4rem;
+	width: 89.3rem;
+}
+.btn-new-model-property:disabled {
+    color:#666666;
+}
+.modelproperty-container .validation-error-message{
+    margin-left:40px;
+}
+.modelproperty-detail-is-open{
+	border: 2px solid blue;
+}
+.props-name-cell.has-errors {
+    border-color: #a94442;
+}
+.modelproperty-detail-is-closed{
+}
+.property-doc-textarea {
+    height: 2.6rem;
+    padding-left: .3rem;
+    width: 22rem;
+}
+
+[data-name="name"] {
+
+
+}
+.model-header-container .validation-error-message {
+    margin-left:1.5rem;
+}
+.property-type-object-definition-display {
+  position:relative;
+}
+.property-type-object-definition-display .object-detail-container{
+
+  background-color:#ffffff;
+}
+.abs-container {
+  position:relative;
+}
+.property-type-object-definition-display code {
+  position:absolute;
+}
+.property-type-object-definition-display .object-detail-container .btn-command {
+  color:@brand-primary;
+  text-decoration: underline;
+}

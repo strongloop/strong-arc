@@ -1,0 +1,150 @@
+
+
+.sl-pid-selector {
+  .clearfix;
+
+  form {
+    border: none;
+    padding: 0;
+    margin: 0 0 1rem 0;
+
+    .ui-form-group {
+      display: inline-block;
+      margin: 0 0 0 1rem;
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+
+    label {
+    }
+
+    input {
+      width: auto;
+
+      &[name=port] {
+        width: 8rem;
+        .no-spinner;
+      }
+
+      &[name=host] {
+        width: 20rem;
+      }
+    }
+
+    .ui-actions {
+      display: inline-block;
+      text-align: left;
+
+      button:active {
+        background-color:@default-primary-active-color;
+      }
+    }
+
+    .pm-readonly-port {
+      width:8rem;
+    }
+
+  }
+  .pm-host-form-layout-col {
+    width:42rem;
+  }
+  .sl-profiler-processes {
+    font-size: 1.4rem;
+    min-height:7.2rem;
+    position: relative;
+
+    .title {
+      color: @ui-form-color;
+      display: block;
+    }
+
+    .loading {
+      background:pink;
+      float:left;
+    }
+
+    ul {
+      margin:0;
+    }
+
+    .process {
+      float: left;
+      margin: 0 0 0 .5rem;
+      border: 1px solid transparent;
+      font-size: 1.3rem;
+      cursor: pointer;
+
+      &:first-child {
+        margin-left: 0;
+      }
+
+      .pid {
+        border-radius: .1rem;
+        background: #eee;
+        color: #777;
+        padding: .5rem 1rem;
+        border: 1px solid transparent;
+      }
+
+      .pid:hover {
+        border: 1px solid #5f8de1;
+      }
+
+      .status {
+        font-size: 1.1rem;
+        color: #999;
+        text-align: center;
+      }
+
+      &.active {
+        .pid {
+          color: #fff;
+          background: #5f8de1;
+        }
+
+        .status {
+          color: black;
+          font-style: italic;
+
+          &.profiling {
+            -webkit-animation: pulsate .5s ease-out;
+            -webkit-animation-iteration-count: infinite;
+            animation: pulsate .5s ease-out;
+            animation-iteration-count: infinite;
+          }
+
+          &.saving {
+            -webkit-animation: pulsate 1s ease-out;
+            -webkit-animation-iteration-count: infinite;
+            animation: pulsate 1s ease-out;
+            animation-iteration-count: infinite;
+          }
+        }
+      }
+
+      .status {
+      }
+    }
+
+    .sl-select-more {
+      float: left;
+      position: relative;
+      margin-left: 1rem;
+
+      .sl-ui-select {
+        height: auto;
+      }
+    }
+
+    .sl-profiler-status {
+      float: left;
+      padding: 0;
+      width: 3rem;
+      height: 3rem;
+      margin-left: 1rem;
+      position: relative;
+    }
+  }
+}

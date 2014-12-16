@@ -1,0 +1,40 @@
+<div data-ui-type="table" data-id="MainBody">
+  <div data-ui-type="row">
+    <div data-ui-type="cell"
+         data-id="MainContentContainer"
+         class="top-level-container">
+      <div class="common-instance-view-container">
+
+        <section class="sl-build-deploy">
+
+          <div class="sl-forms-toggler">
+            <sl-ui-toggle togglers="buildTogglers"></sl-ui-toggle>
+            <sl-popover-help id="4557613"></sl-popover-help>
+          </div>
+
+          <div class="sl-forms">
+            <sl-build-deploy-build-form></sl-build-deploy-build-form>
+
+            <div class="sl-forms-toggler-inline">
+              <h4>
+                Build Source
+                <sl-popover-help id="4557618"></sl-popover-help>
+              </h4>
+              <div class="sl-toggler">
+                <sl-ui-switch switches="deployTogglers"></sl-ui-switch>
+                <div class="ui-arrow-next" ng-show="deployId == 'new'"></div>
+              </div>
+            </div>
+
+            <sl-build-deploy-deploy-form></sl-build-deploy-deploy-form>
+          </div>
+
+          <sl-common-console-log ng-show="false"></sl-common-console-log>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

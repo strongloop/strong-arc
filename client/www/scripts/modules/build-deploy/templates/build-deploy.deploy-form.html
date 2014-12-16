@@ -1,0 +1,155 @@
+<div class="sl-forms-right">
+  <!-- deploy form directive -->
+  <form
+    name="deploygit"
+    ng-show="buildId == 'git'"
+    class="ui-form"
+    novalidate
+    ng-submit="deployGit(deploygit)">
+    <fieldset>
+      <legend>
+        Deploy git
+        <sl-popover-help id="4557616" position="left"></sl-popover-help>
+      </legend>
+      <div class="ui-form-group"
+           ng-class="{
+              valid: deploygit.deploy.$valid && deploy.git.submitted,
+              invalid: deploygit.deploy.$invalid && deploy.git.submitted
+            }">
+
+        <label>Git deploy branch:</label>
+        <input
+          type="text"
+          placeholder="eg: /deploy"
+          ng-model="deploy.git.deploy"
+          name="deploy"
+          required>
+        <p class="error" ng-show="deploygit.deploy.$error.required && deploy.git.submitted">Git deploy branch is required</p>
+      </div>
+      <div class="ui-form-group sl-server"
+           ng-class="{
+              valid: ( deploygit.hostname.$valid || deploygit.port.$valid || deploygit.processes.$valid ) && deploy.git.submitted,
+              invalid: ( deploygit.deploy.$invalid || deploygit.port.$invalid || deploygit.processes.$invalid ) && deploy.git.submitted
+            }">
+
+        <label>
+          <span>Hostname:</span>
+          <input
+            type="text"
+            placeholder="host1.example.com"
+            ng-model="deploy.host.hostname"
+            name="hostname"
+            required>
+        </label>
+        <label>
+          <span>Port:</span>
+          <input
+            type="text"
+            placeholder="8000"
+            ng-model="deploy.host.port"
+            name="port"
+            required
+            >
+        </label>
+        <label>
+          <span>Processes:</span>
+          <input
+            type="number"
+            min="1"
+            placeholder="4"
+            ng-model="deploy.host.processes"
+            name="processes"
+            required>
+        </label>
+        <p class="error" ng-show="deploygit.hostname.$error.required && deploy.git.submitted">Hostname is required</p>
+        <p class="error" ng-show="deploygit.port.$error.required && deploy.git.submitted">Port is required</p>
+        <p class="error" ng-show="deploygit.processes.$error.required && deploy.git.submitted">Number of processes are required</p>
+      </div>
+    </fieldset>
+    <div class="ui-actions">
+      <button>
+        Deploy
+        <span class="loading" sl-common-loading-indicator size="small" ng-show="deploy.git.loading"></span>
+      </button>
+    </div>
+    <sl-common-form-message message="deploy.git.message" type="deploy.git.messageType"></sl-common-form-message>
+  </form>
+
+  <form
+    name="deployuniversal"
+    ng-show="buildId == 'universal'"
+    class="ui-form"
+    novalidate
+    ng-submit="deployUniversal(deployuniversal)">
+    <fieldset>
+      <legend>
+        Deploy tar file
+        <sl-popover-help id="4557617" position="left"></sl-popover-help>
+      </legend>
+      <div class="ui-form-group"
+           ng-class="{
+              valid: deployuniversal.archive.$valid && deploy.universal.submitted,
+              invalid: deployuniversal.archive.$invalid && deploy.universal.submitted
+            }">
+
+
+        <label>Fully qualified path to archive:</label>
+        <input
+          type="text"
+          placeholder="eg: /home/user/builds/project-v1.0.1.tgz"
+          ng-model="deploy.universal.archive"
+          name="archive"
+          required>
+        <!--<button class="ui-file" ng-click="clickUploadFile()" type="button">...</button>-->
+        <!--<input id="deploy-file-upload" type="file" class="hide" ng-file-select="onFileSelect($files)" name="uploadarchive">-->
+
+        <p class="error" ng-show="deployuniversal.archive.$error.required && deploy.universal.submitted">Archive filename is required</p>
+      </div>
+      <div class="ui-form-group sl-server"
+           ng-class="{
+              valid: ( deployuniversal.hostname.$valid || deployuniversal.port.$valid || deployuniversal.processes.$valid ) && deploy.universal.submitted,
+              invalid: ( deployuniversal.deploy.$invalid || deployuniversal.port.$invalid || deployuniversal.processes.$invalid ) && deploy.universal.submitted
+             }">
+        <label>
+          <span>Hostname:</span>
+          <input
+            type="text"
+            placeholder="host1.example.com"
+            ng-model="deploy.host.hostname"
+            name="hostname"
+            required>
+        </label>
+        <label>
+          <span>Port:</span>
+          <input
+            type="text"
+            placeholder="8000"
+            ng-model="deploy.host.port"
+            name="port"
+            required>
+        </label>
+        <label>
+          <span>Processes:</span>
+          <input
+            type="number"
+            min="1"
+            placeholder="4"
+            ng-model="deploy.host.processes"
+            name="processes"
+            required>
+        </label>
+        <p class="error" ng-show="deployuniversal.hostname.$error.required && deploy.universal.submitted">Hostname is required</p>
+        <p class="error" ng-show="deployuniversal.port.$error.required && deploy.universal.submitted">Port is required</p>
+        <p class="error" ng-show="deployuniversal.processes.$error.required && deploy.universal.submitted">Number of processes are required</p>
+      </div>
+
+    </fieldset>
+    <div class="ui-actions">
+      <button>
+        Deploy
+        <span class="loading" sl-common-loading-indicator size="small" ng-show="deploy.universal.loading"></span>
+      </button>
+    </div>
+    <sl-common-form-message message="deploy.universal.message" type="deploy.universal.messageType"></sl-common-form-message>
+  </form>
+</div>

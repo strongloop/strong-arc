@@ -1,0 +1,178 @@
+.metrics-main-content-layout {
+  background-color: #f5f5f5;
+}
+.metrics-title-container {
+  height:4.1rem;
+  border-top:1px solid #cccccc;
+  border-bottom:1px solid #cccccc;
+  background-color: #f5f5f5;
+
+  [data-ui-type="cell"] {
+    vertical-align: middle;
+  }
+}
+.metrics-main-container .sl-pid-selector{
+  margin-left:2rem;
+}
+.metrics-visual-ticker-container {
+  position:relative;
+}
+[data-id="MetricsSettingsContainer"] {
+
+}
+.metrics-nav-column {
+  width:22rem;
+  color:#ffffff;
+  font-size:104%;
+  background-color: #444444;
+}
+.metrics-nav-column nav {
+
+}
+.metrics-nav-column ul {
+  list-style: none;
+}
+.metrics-nav-column ul li{
+  margin-left:1rem;
+}
+
+[data-id="MetricsMemoryMapContainer"] {
+  position:absolute;
+  top:1rem;
+  right:1rem;
+  background-color: rgba(200, 200, 220, .7);
+}
+[data-id="MetricCounterContainer"] {
+  position:absolute;
+  right:2rem;
+  margin-right:1rem;
+  width:114rem;
+}
+[data-id="MetricsTimerDisplayContainer"] {
+
+}
+.metrics-title {
+  margin-left:3rem;
+  color:#999999;
+}
+.metrics-header-label {
+  color:#999999;
+}
+.metrics-chart-console{
+  height:7rem;
+  overflow-y:scroll;
+}
+.metrics-dashboard-instrument-value {
+
+}
+.timer-display-value-col {
+  text-align:left;
+}
+
+.metrics-container-wrap {
+  &.disabled {
+    opacity: .3;
+  }
+}
+
+.metrics-chart-view-container {
+  overflow:auto;
+  margin-bottom:100px;
+}
+.metrics-chart-view-container .nvtooltip {
+  background-color:#444444;
+  color: #eeeeee;
+}
+.active-process {
+  background:#4a90e2;
+}
+li.metrics-chart-nav-item {
+  margin-top:.6rem;
+
+  .chart-name {
+    padding:.5rem;
+    display:inline-block;
+    font-size:110%;
+    color:#ffffff;
+  }
+}
+.metrics-nav-controls-container ul li.metrics-chart-nav-item li {
+  padding-top:.4rem;
+  padding-bottom:.4rem;
+  color:#efefef;
+  font-size:90%;
+}
+.metrics-chart-nav-item ul li {
+  display:inline-block;
+  padding-top:.4rem;
+  padding-bottom:.4rem;
+  border-top:1px solid #666666;
+}
+.metrics-chart-nav-item ul li span {
+  display:inline-block;
+  width:1rem;
+  border-width:1px;
+  line-height: .9rem;
+  border-radius:50%;
+}
+.metrics-chart-nav-item ul li button {
+  display:inline-block;
+  width:17rem;
+  overflow:hidden;
+  text-align: left;
+}
+.metrics-chart-nav-item ul li.is-disabled button {
+  color: #aaaaaa;
+}
+.metrics-chart-nav-item ul li button:hover {
+  color: #0791ca;
+}
+.metrics-chart-nav-item ul li button:active {
+  color:#000000;
+}
+text.nv-axislabel {
+  font-size:120%;
+  margin-left:55px;
+}
+ul.metric-timer-list {
+  display:inline-block;
+  margin:0;
+}
+.metric-timer-list li {
+  display:inline-block;
+}
+.metric-timer-list {
+  i.on {
+    color:@brand-primary;
+  }
+  i.off {
+    color:@gray-light-2;
+  }
+}
+.metrics-data-point-count-col {
+  text-align: right;
+  padding-right:3rem;
+
+  .instrument-value {
+    font-weight: bold;
+    color:#444444;
+  }
+}
+.metrics-visual-ticker-col {
+  width:25rem;
+
+}
+.chart-container {
+  margin-right:2rem;
+  h3 {
+    font-weight:300;
+    margin-left:2rem;
+    color:#999999;
+  }
+  .metrics-chart svg{
+    background-color: #ffffff;
+  }
+}
+svg {
+  width:100%;
+}

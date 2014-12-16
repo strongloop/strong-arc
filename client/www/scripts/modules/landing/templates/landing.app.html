@@ -1,8 +1,19 @@
-<div class="sl-app">
-  <div class="app-container" ui-sref="{{app.id}}">
-    <i class="app-image sl-icon sl-icon-folder"></i>
-    <a class="app-name" ui-sref="{{app.id}}">{{app.name}}</a>
-    <p class="app-description">{{app.description}}</p>
-    <a class="app-launch" ui-sref="{{app.id}}">Launch <i class="sl-icon sl-icon-arrow-right"></i></a>
+<div class="sl-app" data-id="{{ app.id }}">
+  <div class="app-container" ng-class="{'app-unsupported' : !app.supportsCurrentProject }" ui-sref="{{getSref(app)}}">
+    <i class="app-image sl-app-icon sl-app-icon-{{app.id}}"></i>
+    <i class="app-image-hover sl-app-icon sl-app-icon-{{app.id}}-hover"></i>
+    <i class="app-image-unsupported sl-app-icon sl-app-icon-{{app.id}}-unsupported"></i>
+
+    <a class="app-name" ui-sref="{{getSref(app)}}">{{app.name}}</a>
+    <!--<p class="app-description">{{app.description}}</p>-->
+    <sl-popover icon="sl-icon sl-icon-question-mark" ng-show="{{!app.supportsCurrentProject}}" position="left" class="app-popover" hideonpageclick="true">
+      <header>
+        <h4>{{app.name}}</h4>
+      </header>
+      <section>
+        <p>{{app.name}} is not compatible with your application:</p>
+        <p>{{project.dir}}</p>
+      </section>
+    </sl-popover>
   </div>
 </div>
