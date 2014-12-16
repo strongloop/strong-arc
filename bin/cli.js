@@ -29,6 +29,8 @@ console.log('Loading workspace %s', process.env.WORKSPACE_DIR);
 
 var port = process.env.PORT || 0;
 
+delete process.env.PORT;
+
 var server = arc.listen(port, function(err) {
   if(err) {
     console.error('could not start Arc!');
