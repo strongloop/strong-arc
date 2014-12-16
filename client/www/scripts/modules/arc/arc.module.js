@@ -27,7 +27,7 @@ var Arc = angular.module('Arc', [
   'lbServices',
   'ArcServices',
   'BuildDeployAPI',
-  'oldServices',
+  'ArcUserAuthFactory',
   'Composer',
   'Profiler',
   'ArcUser',

@@ -14,7 +14,7 @@ var authBase = "https://auth.strongloop.com/api";
  * the models exposed by the LoopBack server via the REST API.
  *
  */
-var module = angular.module("oldServices", ['ngResource']);
+var module = angular.module("ArcUserAuthFactory", ['ngResource']);
 
 /**
  * @ngdoc object
