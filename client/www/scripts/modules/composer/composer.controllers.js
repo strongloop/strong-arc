@@ -47,12 +47,15 @@ Composer.controller('ComposerMainController', [
       if (name) {
         // initialize active instance
         $scope.activeInstance = IAService.getActiveInstance();
-        // refresh the instance to avloid stale data between server/client
-        IAService.activateInstanceById($scope.activeInstance.id, $scope.activeInstance.type)
-          .then(function(response) {
-            $scope.activeInstance = response;
-            $rootScope.$broadcast('IANavEvent');
-          });
+        if ($scope.activeInstance) {
+          // refresh the instance to avloid stale data between server/client
+          IAService.activateInstanceById($scope.activeInstance.id, $scope.activeInstance.type)
+            .then(function(response) {
+              $scope.activeInstance = response;
+              $rootScope.$broadcast('IANavEvent');
+            });
+        }
+
       }
     });
     // Validate the workspace
@@ -368,7 +371,11 @@ Composer.controller('ComposerMainController', [
         PropertyService.updateModelProperty(modelPropertyConfig)
           .then(function(response) {
             growl.addSuccessMessage("property updated");
-            $scope.activeModelPropertiesChanged = !$scope.activeModelPropertiesChanged;
+            PropertyService.getModelProperties(modelPropertyConfig.modelId)
+              .then(function(response) {
+                $scope.activeInstance.properties = response;
+                $scope.activeModelPropertiesChanged = !$scope.activeModelPropertiesChanged;
+              });
           });
       }
     };
