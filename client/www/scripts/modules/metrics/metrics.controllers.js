@@ -264,7 +264,6 @@ Metrics.controller('MetricsMainController', [
             else {
               $log.warn('getMetricsSnapShot returned no metrics');
               if ($state.includes('metrics')){
-                growl.addWarnMessage('No metrics available.', {ttl: 2000});
                 growl.addWarnMessage('No metrics available. Your license may be invalid or not present. Please contact sales@strongloop.com for a valid license.', {ttl: 10000});
               }
               return;
