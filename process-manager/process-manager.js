@@ -27,7 +27,7 @@ ProcessManager.prototype.start = function(cb) {
     }
 
     pm.process = spawn(process.execPath, args, {
-        stdio: [0, 'pipe', 2, 'ipc']
+        stdio: [0, 'pipe', 2, 'ipc'],
     });
 
     pm.process.stdout.pipe(process.stdout);
@@ -93,7 +93,7 @@ ProcessManager.prototype.proxyRequest = function(req, res) {
       });
     break;
     case 'crashed':
-      this.respondCrashError(this.error, req, res);
+      res.setStatus(500).send({error: 'process manager unavailable'});
     break;
     case 'starting':
       this.queueRequest(req, res);
