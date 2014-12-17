@@ -1,3 +1,13 @@
+2014-12-17, Version 1.0.1
+=========================
+
+ * Trim trailing whitespace (Ryan Graham)
+
+ * Update README.md (Rand McKinney)
+
+ * Updated for GA (Rand McKinney)
+
+
 2014-12-16, Version 1.0.0
 =========================
 
