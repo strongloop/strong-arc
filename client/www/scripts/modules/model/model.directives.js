@@ -78,45 +78,23 @@ Model.directive('modelPropertiesEditor',[
           scope.isModelInstancePropertiesActive = !scope.isModelInstancePropertiesActive;
         };
         scope.$watch('isModelInstancePropertiesActive', function(val) {
-          var properties = [];
-          if (scope.activeInstance.definition && scope.activeInstance.properties) {
-            properties = scope.activeInstance.properties;
-          }
-          if (!scope.properties) {
-            scope.properties = properties;
+          if (!scope.activeInstance.properties) {
+            scope.activeInstance.properties = [];
           }
           renderComp();
         }, true);
 
 
         scope.$watch('activeModelPropertiesChanged', function(val) {
-          var properties = [];
           if (!scope.activeInstance.properties) {
-            scope.activeInstance.properties = properties;
-            scope.properties = properties;
-          }
-          else {
-            scope.properties = scope.activeInstance.properties;
-          }
-          if (!scope.properties) {
-            scope.properties = properties;
+            scope.activeInstance.properties = [];
           }
           renderComp();
 
         }, true);
         scope.$watch('activeInstance', function(activeInstance) {
-          var properties = [];
-          if (activeInstance){
-            if (!activeInstance.properties) {
-              activeInstance.properties = properties;
-              scope.properties = properties;
-            }
-            else {
-              scope.properties = activeInstance.properties;
-            }
-          }
-          if (!scope.properties) {
-            scope.properties = properties;
+          if (!scope.activeInstance.properties) {
+            scope.activeInstance.properties = [];
           }
           renderComp();
         }, true);
@@ -124,19 +102,315 @@ Model.directive('modelPropertiesEditor',[
     }
   }
 ]);
-
-/*
- *   Model Property Pocket Editor
- * */
-Model.directive('modelPropertyPocketEditor', [
+Model.directive('slPropertyDataTypeSelectOptions', [
   function() {
+    return  {
+      restrict: 'E',
+      replace: true,
+      templateUrl: './scripts/modules/model/templates/model.property.data-type.options.html',
+    }
+  }
+]);
+/*
+ * DataTypeSelect - Component to manage property 'type' value
+ * - type value can be a wide variety of patterns including:
+ * -- string
+ * -- js object
+ * -- model name reference
+ * -- array of any of the above
+ *
+ * - it is possible users may edit the json directly in the project
+ *     in a way that isn't possible via the gui - generally in the form of
+ *     'anonymous' js object patterns
+ *     eg:
+ {
+ "x": {
+ "type": "number"
+ },
+ "y": {
+ "type": "string"
+ }
+ }
+ * - these can be direct type values or arrays of these patterns
+ * - if an 'anonymous' object pattern is detected it is displayed read only
+ * - if the user tries to change the value of a property type that includes an
+ *     anonymous js object pattern they will be alerted that the current value
+ *     will be destroyed if they continue
+ *
+ * This component may display 2 select components if the data type is an array
+ *   so the user can choose the type of array
+ * - DataTypeSelectOptions
+ *
+ * If the value is an ajop either directly or in an array, a control is displayed to
+ *   allow the user to view the object pattern
+ *
+* Model Property Type Value Examples:
+*
+*   "properties": {
+       "should-be-date": {
+        "type": "date"
+       },
+       "should-be-prim-array": {
+        "type": "array"
+       },
+       "should-be-array-of-anon": {
+         "type": [
+           {
+             "x": {
+               "type": "number"
+             },
+             "y": {
+               "type": "string"
+             }
+           }
+         ]
+       },
+       "should-be-string": {
+        "type": "string"
+       },
+       "should-be-array-of-otherModel": {
+         "type": [
+            "otherModel"
+           ]
+       },
+       "should-be-anon-obj": {
+         "type": {
+           "x": {
+            "type": "number"
+           },
+           "y": {
+            "type": "number"
+           }
+         }
+       },
+       "should-be-array-of-boolean": {
+         "type": [
+          "boolean"
+         ]
+       },
+       "should-be-other-model": {
+        "type": "otherModel"
+      }
+   },
+*
+* */
+Model.directive('slPropertyDataTypeSelect', [
+  function() {
+    return  {
+      restrict: 'E',
+      replace: true,
+      templateUrl: './scripts/modules/model/templates/model.property.data-type.html',
+      controller: ['$scope', '$log', function($scope, $log) {
+
+        $scope.isArray = ($scope.getDataTypeString($scope.property.type) === 'array');
+        $scope.isAnonObject = $scope.isAnonObj($scope.property.type);
+        $scope.arrayType =  $scope.getArrayType($scope.property.type);
+        $scope.val = $scope.getDataTypeString($scope.property.type);
+        $scope.displayType = $scope.getDataTypeString($scope.property.type);
+        $scope.showObjDetails = false;
+
+        $scope.getDataType = function(property) {
+
+          return $scope.getDataTypeString(property.type);
+        };
+        $scope.toggleAnonObjectDetails = function() {
+          $scope.showObjDetails = !$scope.showObjDetails;
+        };
+        $scope.isNameValid = function() {
+          var retVal = /^[\-_a-zA-Z0-9]+$/.test($scope.property.name);
+          return retVal;
+        };
+
+        $scope.handleChange = function(value) {
+
+          var updateModelPropertyConfig = {};
+
+          if ($scope.property.id) {
+            var currProperties = $scope.activeInstance.properties;
+            // get the index of this particular property
+            // put an object together to pass to the update method
+            // properties, property, index
+            updateModelPropertyConfig = {
+              propertyConfig: $scope.property,
+              currProperties: currProperties
+            };
+
+            if ($scope.isAnonObject) {
+
+              if (confirm('This value has been edited outside the scope of this gui.  ' +
+                'If you change it the existing value will be lost. Continue?')) {
+                $log('update property element');
+
+                if ($scope.isNameValid()) {
+                  $scope.updateModelPropertyRequest(updateModelPropertyConfig);
+                }
+              }
+            }
+            else {
+              if ($scope.isNameValid()) {
+                $scope.updateModelPropertyRequest(updateModelPropertyConfig);
+              }
+            }
+          }
+          else {
+            $log.warn('There is no id: ' + JSON.stringify(updateModelPropertyConfig));
+          }
+
+        };
+        $scope.handleArrayTypeChange = function(value) {
+
+          if ($scope.isAnonObject) {
+
+            if (confirm('This value has been edited outside the scope of this gui. ' +
+              'If you change it the existing value will be lost. Continue?')) {
+              $scope.updatePropertyType(value);
+            }
+          }
+          else {
+            $scope.updatePropertyType(value);
+          }
+        };
+
+        $scope.updatePropertyType = function(value) {
+
+          $scope.property.type = [value];
+
+          var currProperties = $scope.activeInstance.properties;
+          // get the index of this particular property
+          // put an object together to pass to the update method
+          // properties, property, index
+          updateModelPropertyConfig = {
+            propertyConfig: $scope.property,
+            currProperties: currProperties
+          };
+
+          if ($scope.isNameValid()) {
+            $scope.updateModelPropertyRequest(updateModelPropertyConfig);
+          }
+
+        };
+      }]
+    }
+  }
+]);
+Model.directive('slModelPropertiesEditor',[
+  'modelPropertyTypes',
+  '$timeout',
+  '$log',
+  function(modelPropertyTypes, $timeout, $log) {
     return {
+      restrict: 'E',
+      replace: true,
+      templateUrl: './scripts/modules/model/templates/model.properties.editor.html',
+      controller: ['$scope', 'growl', '$log', function($scope, growl, $log) {
+        $scope.earlyNewPropertyWarning = function() {
+          growl.addWarnMessage('you should name your model first');
+        };
+
+        $scope.isNameValid = function(name) {
+          var retVal = /^[\-_a-zA-Z0-9]+$/.test(name);
+          return retVal;
+        };
+
+        $scope.getArrayType = function(value) {
+
+          var retVal = 'any'; // default
+          var typeString = $scope.getDataTypeString(value);
+          if (typeString === 'array') {
+            var propType = value;
+            if (Array.isArray(propType)) {
+              retVal = propType[0];
+              if (typeof retVal === 'object') {
+                retVal = Array.isArray(retVal)? 'array' : 'object';
+              }
+            }
+          }
+          return retVal;
+        };
+        $scope.getDataTypeString = function(value) {
+          var retVal = value;
+          if (typeof retVal === 'object') {
+            retVal = Array.isArray(retVal)? 'array' : 'object';
+          }
+          return retVal;
+        };
+        $scope.getAppModelNames = function() {
+          var retVal = [];
+          if ($scope.mainNavModels){
+            $scope.mainNavModels.map(function(model) {
+              retVal.push(model.name);
+            });
+          }
+          return retVal;
+        };
+
+        $scope.isAnonObj = function(value) {
+          var isAnonObject = false;
+          var tO = (typeof value);
+          if (tO !== 'object') {
+            return isAnonObject;
+          }
+          var isArray = Array.isArray(value)? true : false;
+
+          // if not object, may be an array of anon obj
+          if (isArray) {
+            if (typeof value[0] === 'object') {
+              isAnonObject = true;
+            }
+          }
+          else {
+            isAnonObject = true;
+          }
+          return isAnonObject;
+        };
+
+        $scope.triggerModelPropertyUpdate = function(property) {
+
+          updateModelPropertyConfig = {
+            propertyConfig: property,
+            currProperties: $scope.activeInstance.properties
+          };
+          if ($scope.isNameValid(property.name)) {
+            $scope.updateModelPropertyRequest(updateModelPropertyConfig);
+          }
+        };
+
+        $scope.isModelInstancePropertiesActive = true;
+        $scope.modelPropertyTypes = modelPropertyTypes;
+        for (var i = 0;i < $scope.mainNavModels.length;i++) {
+          $scope.modelPropertyTypes.push($scope.mainNavModels[i].name);
+        }
+
+        $scope.currentlPropertyTypes = $scope.modelPropertyTypes;
+      }],
       link: function(scope, el, attrs) {
-        React.renderComponent(ModelPropertyPocketEditor({scope:scope}), el[0]);
+        $timeout(function() {
+          window.setScrollView('[data-id="ModelEditorInstanceContainer"]');
+        }, 400);
+        window.onresize = function() {
+          window.setScrollView('[data-id="ModelEditorInstanceContainer"]');
+        };
+
+        scope.toggleModelPropertiesView = function() {
+          scope.isModelInstancePropertiesActive = !scope.isModelInstancePropertiesActive;
+        };
+
       }
     }
   }
 ]);
+/*
+ *   Model Property Pocket Editor
+ * */
+//Model.directive('modelPropertyPocketEditor', [
+//  function() {
+//    return {
+//      link: function(scope, el, attrs) {
+//        React.renderComponent(ModelPropertyPocketEditor({scope:scope}), el[0]);
+//      }
+//    }
+//  }
+//]);
 
 /*
  *

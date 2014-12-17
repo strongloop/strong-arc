@@ -1,0 +1,24 @@
+<div>
+    <select ng-model="displayType"
+            ng-options="type for type in modelPropertyTypes"
+            ng-change="handleChange(displayType)">
+    </select>
+  <div class="array-detail-container" ng-class="{ 'is-open': isArray, 'is-closed': !isArray }">
+    <label>of</label>
+    <select ng-model="arrayType"
+            data-name="sub-type"
+            ng-options="type for type in modelPropertyTypes"
+            ng-change="handleArrayTypeChange(arrayType)">
+    </select>
+  </div>
+  <div class="property-type-object-definition-display">
+    <div class="object-detail-container" ng-class="{ 'is-closed' : !isAnonObject, 'is-open': isAnonObject}">
+      <button class="btn-command" ng-click="toggleAnonObjectDetails()">details</button>
+      <div ng-show="showObjDetails">
+        <code>
+          {{ property.type  | json}}
+        </code>
+      </div>
+    </div>
+  </div>
+</div>
