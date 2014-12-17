@@ -1,16 +1,17 @@
 # StrongLoop Arc
 
-StrongLoop Arc was formerly known as Studio. Stay tuned for exciting product 
-developments around StrongLoop Arc.
+StrongLoop Arc was formerly known as Studio. 
+
+Please see the [official documentation](http://docs.strongloop.com/display/ARC)
 
 ## Install
 
-### 1. You must have [node.js](http://nodejs.org) and the [StrongLoop CLI](http://docs.strongloop.com/display/LB/Getting+Started+with+LoopBack#GettingStartedwithLoopBack-InstallStrongLoopsoftware) installed.
+### Prerequisite: You must have [Node.js](http://nodejs.org) installed.
 
-### 2. Install using `npm` by running the following:
+### Install using `npm` as follows:
 
 ```sh
-$ npm install -g http://get-studio.strongloop.com/strong-studio.tgz
+$ npm install -g strongloop
 ```
 
 ## Run
@@ -21,14 +22,14 @@ $ npm install -g http://get-studio.strongloop.com/strong-studio.tgz
 $ slc loopback
 ```
 
-### 2. In the directory you created the application, start the Arc using the `strong-arc` command.
+### 2. In the directory you created the application, start the Arc using the `slc arc` command.
 
 ```sh
 $ cd my-loopback-application
-$ strong-arc
+$ slc arc
 ```
 
-### 3. Open the URL printed by the `strong-arc` command in a Chrome browser.
+### 3. StrongLoop Arc will open in your default browser.
 
 ## Developer Guide
 
