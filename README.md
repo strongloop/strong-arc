@@ -2,7 +2,7 @@
 
 StrongLoop Arc was formerly known as Studio. 
 
-Please see the [official documentation](http://docs.strongloop.com/display/ARC)
+Please see the [official documentation](http://docs.strongloop.com/display/ARC).
 
 ## Install
 
@@ -22,16 +22,19 @@ $ npm install -g strongloop
 $ slc loopback
 ```
 
-### 2. In the directory you created the application, start the Arc using the `slc arc` command.
+### 2. In the application root directory, start the Arc using the `slc arc` command.
 
 ```sh
 $ cd my-loopback-application
 $ slc arc
 ```
 
-### 3. StrongLoop Arc will open in your default browser.
+### StrongLoop Arc will open in your default browser.
 
 ## Developer Guide
+
+This information is for developers contributing to the `strong-arc` project itself.  
+For information on using Arc to develop APIs and applications, see the [official documentation](http://docs.strongloop.com/display/ARC). 
 
 ### Releases
 
