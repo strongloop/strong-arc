@@ -21,6 +21,7 @@ app.setupWebSocketServer = function(httpServer) {
 };
 
 app.use(express.static(projectPath('custom')));
+app.use(express.static(projectPath('prefixed')));
 app.use(express.static(projectPath('frontend'), { index: 'inspector.html' }));
 
 function projectPath() {
