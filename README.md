@@ -1,6 +1,6 @@
 # StrongLoop Arc
 
-StrongLoop Arc was formerly known as Studio. 
+StrongLoop Arc was formerly known as Studio.
 
 Please see the [official documentation](http://docs.strongloop.com/display/ARC).
 
@@ -33,8 +33,8 @@ $ slc arc
 
 ## Developer Guide
 
-This information is for developers contributing to the `strong-arc` project itself.  
-For information on using Arc to develop APIs and applications, see the [official documentation](http://docs.strongloop.com/display/ARC). 
+This information is for developers contributing to the `strong-arc` project itself.
+For information on using Arc to develop APIs and applications, see the [official documentation](http://docs.strongloop.com/display/ARC).
 
 ### Releases
 
