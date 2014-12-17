@@ -12,6 +12,9 @@ var mocha = require('gulp-spawn-mocha');
 var runSequence = require('run-sequence');
 var rename = require('gulp-rename');
 var loopbackAngular = require('gulp-loopback-sdk-angular');
+var postcss      = require('gulp-postcss');
+var sourcemaps   = require('gulp-sourcemaps');
+var autoprefixer = require('autoprefixer-core');
 var spawn = require('child_process').spawn;
 var pullDevTools = require('./build-tasks/pull-devtools');
 var setupMysql = require('./build-tasks/setup-mysql');
@@ -22,6 +25,7 @@ gulp.task('default', ['build', 'test', 'watch']);
 gulp.task('build', [
     'build-less',
     'build-less-devtools',
+    'build-devtools-autoprefixer',
     'build-version',
     'build-workspace-services',
     'build-build-and-deploy-services',
@@ -40,6 +44,14 @@ gulp.task('build-less-devtools', function() {
   return gulp.src('devtools/custom/less/strongloop.less')
     .pipe(less())
     .pipe(gulp.dest('devtools/custom/'));
+});
+
+gulp.task('build-devtools-autoprefixer', function() {
+  return gulp.src('devtools/frontend/*.css')
+    .pipe(sourcemaps.init())
+    .pipe(postcss([autoprefixer()]))
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest('devtools/prefixed'));
 });
 
 gulp.task('watch', ['build'], function() {

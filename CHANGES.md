@@ -1,3 +1,13 @@
+2014-12-17, Version 1.0.2
+=========================
+
+ * devtools: fix SplitView in Safari (Miroslav Bajtoš)
+
+ * devtools: automatically prefix styles (Miroslav Bajtoš)
+
+ * Remove PORT from env to avoid passing it to embeded pm (Ritchie Martori)
+
+
 2014-12-17, Version 1.0.1
 =========================
 
