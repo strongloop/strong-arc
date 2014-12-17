@@ -8,7 +8,8 @@ Discovery.directive('slDiscoverySchema', [
   }
 ]);
 Discovery.directive('slDiscoveryModelPreview', [
-  function() {
+  'growl',
+  function(growl) {
     return {
       replace: true,
       templateUrl: './scripts/modules/discovery/templates/discovery.model.preview.html',
@@ -56,7 +57,7 @@ Discovery.directive('slDiscoveryModelPreview', [
               checkboxCellTemplate: '<label class="select-item-cell"><span class="sl-icon sl-icon-checkmark"></span><input type="checkbox" /></label>',
               showSelectionCheckbox: true,
               selectWithCheckboxOnly: false,
-              selectedItems:  scope.masterSelectedProperties[i],
+              selectedItems: scope.masterSelectedProperties[i],
               multiSelect: true,
               beforeSelectionChange: beforeSelectionChange,
               rowHeight: 40,
@@ -72,13 +73,25 @@ Discovery.directive('slDiscoveryModelPreview', [
     };
 
     function beforeSelectionChange(rowItem) {
-      if (!Array.isArray(rowItem))
-        return rowItem.entity._selectable;
+      var changeAllowed;
+      if (!Array.isArray(rowItem)) {
+        changeAllowed = !!rowItem.entity._selectable;
+        if (!changeAllowed)
+          warn('The row must be always selected.');
+      } else {
+        // rowItem.all(isSelectable)
+        changeAllowed = !rowItem.some(function(item) {
+          return !item._selectable;
+        });
+        if (!changeAllowed)
+          warn('Some of the rows must be always selected.');
+      }
 
-      // rowItem.all(beforeSelectionChange)
-      return !rowItem.some(function(item) {
-        return !beforeSelectionChange(item);
-      });
+      return changeAllowed;
+
+      function warn(msg) {
+        growl.addWarnMessage(msg, { ttl: 1000 });
+      }
     }
   }
 ]).filter('isIdFilter', function() {
