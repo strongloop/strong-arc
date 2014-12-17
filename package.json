@@ -1,6 +1,6 @@
 {
   "name": "strong-arc",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "app.js",
   "bin": {
     "strong-arc": "bin/cli.js"
@@ -72,7 +72,7 @@
     "svn-interface": "^0.4.4"
   },
   "optionalDependencies": {
-    "sl-blip": "http://blip.strongloop.com/strong-arc@1.0.1"
+    "sl-blip": "http://blip.strongloop.com/strong-arc@1.0.2"
   },
   "repository": {
     "type": "git",
