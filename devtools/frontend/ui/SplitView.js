@@ -306,6 +306,7 @@ WebInspector.SplitView.prototype = {
     _removeAllLayoutProperties: function()
     {
         this._sidebarElement.style.removeProperty("flexBasis");
+        this._sidebarElement.style.removeProperty("webkitFlexBasis");
 
         this._mainElement.style.removeProperty("width");
         this._mainElement.style.removeProperty("height");
@@ -433,6 +434,7 @@ WebInspector.SplitView.prototype = {
         var sidebarSizeValue = (size / WebInspector.zoomManager.zoomFactor()) + "px";
         var mainSizeValue = (this._totalSize - size / WebInspector.zoomManager.zoomFactor()) + "px";
         this.sidebarElement().style.flexBasis = sidebarSizeValue;
+        this.sidebarElement().style.webkitFlexBasis = sidebarSizeValue;
 
         // Make both sides relayout boundaries.
         if (this._isVertical) {
