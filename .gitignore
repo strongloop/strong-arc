@@ -8,6 +8,7 @@ bower_components
 /client/www/style/style.css
 /client/www/help/
 /devtools/custom/strongloop.css
+/devtools/prefixed/
 *-xunit.xml
 sandbox
 client/test/integration/sandbox/
