@@ -303,3 +303,16 @@ Common.directive('slCommonConsoleLog', [
     }
   }
 ]);
+
+
+Common.directive('slIframeOnload', [function(){
+  return {
+    scope: {
+      callBack: '&slIframeOnload'
+    },
+    link: function(scope, element, attrs){
+      element.on('load', function(){
+        return scope.callBack();
+      })
+    }
+  }}]);
