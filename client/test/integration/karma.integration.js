@@ -26,7 +26,8 @@ module.exports = function(config) {
       // 'client/www/scripts/vendor/react/react-addon.0.10.0.js',
       // 'client/www/scripts/vendor/react/JSXTransformer.js',
       'client/www/scripts/vendor/spin.js',
-
+      'client/www//scripts/vendor/angular-segmentio/angular-segmentio.js',
+      'client/www//scripts/vendor/segmentio/segmentio.js',
       'client/www/scripts/vendor/angular/ui-utils.js',
       'client/www/scripts/vendor/angular/angular-file-upload-shim.js',
       'client/www/scripts/vendor/angular/angular-nvd3.js',
@@ -63,6 +64,8 @@ module.exports = function(config) {
       // by other *.*.js files
       'client/www/scripts/modules/**/*.module.js',
       'client/www/scripts/modules/**/*.js',
+
+
 
       // == test support ==
       'client/test/integration/helpers/global-init.js',

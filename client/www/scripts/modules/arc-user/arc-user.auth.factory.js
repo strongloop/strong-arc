@@ -14,7 +14,7 @@ var authBase = "https://auth.strongloop.com/api";
  * the models exposed by the LoopBack server via the REST API.
  *
  */
-var module = angular.module("oldServices", ['ngResource']);
+var module = angular.module("ArcUserAuthFactory", ['ngResource']);
 
 /**
  * @ngdoc object
@@ -80,14 +80,17 @@ module.factory(
          *
          */
         "login": {
-          url: authBase + "/users/login",
+          url: authBase + "/users/login?include=user",
           method: "POST",
           interceptor: {
             response: function(response) {
               var accessToken = response.data;
+              var user = response.data.user;
               LoopBackAuth.currentUserId = accessToken.userId;
               LoopBackAuth.accessTokenId = accessToken.id;
               LoopBackAuth.rememberMe = response.config.params.rememberMe !== false;
+              LoopBackAuth.currentUsername = user.displayName;
+              LoopBackAuth.currentUserEmail = user.email;
               LoopBackAuth.save();
               return response.resource;
             }
@@ -132,6 +135,8 @@ module.factory(
             response: function(response) {
               LoopBackAuth.currentUserId = null;
               LoopBackAuth.accessTokenId = null;
+              LoopBackAuth.currentUsername = null;
+              LoopBackAuth.currentUserEmail = null;
               LoopBackAuth.save();
               return response.resource;
             }
@@ -451,7 +456,7 @@ module.factory(
          * </em>
          */
         "findById": {
-          url: angBase + "/users/:id",
+          url: authBase + "/users/:id",
           method: "GET",
         },
         /**

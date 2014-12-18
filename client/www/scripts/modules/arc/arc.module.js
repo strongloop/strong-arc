@@ -27,7 +27,7 @@ var Arc = angular.module('Arc', [
   'lbServices',
   'ArcServices',
   'BuildDeployAPI',
-  'oldServices',
+  'ArcUserAuthFactory',
   'Composer',
   'Profiler',
   'ArcUser',
@@ -48,7 +48,8 @@ var Arc = angular.module('Arc', [
   'ui.slider',
   'checklist-model',
   'ngGrid',
-  'angularFileUpload'
+  'angularFileUpload',
+  'segmentio'
 ]);
 
 Arc.value('CONST', CONST);
@@ -122,7 +123,13 @@ Arc.run([
     '$state',
     '$rootScope',
     'ArcUserService',
-    function($location, $state, $rootScope, ArcUserService){
+    'segmentio',
+    function($location, $state, $rootScope, ArcUserService, segmentio){
+      // finish initialization of segment.io analytics.js
+      if (window.analytics && window.analytics.load) {
+        window.analytics.load("8ImiW2DX0W");
+        window.analytics.page();
+      }
 
       // Redirect to login if route requires auth and you're not logged in
       $rootScope.$on('$stateChangeStart', function (event, next) {
@@ -130,7 +137,13 @@ Arc.run([
         if ( !ArcUserService.isAuthUser() && next.url !== '/login' ) {
           event.preventDefault(); //prevent current page from loading
           $state.go('login');
-        }
+        } else {
+          //fire off segment.io identify from cookie values
+          segmentio.identify(ArcUserService.getCurrentUserId(), {
+            name : ArcUserService.getCurrentUsername(),
+            email : ArcUserService.getCurrentUserEmail()
+          });
+        };
       });
 
 
