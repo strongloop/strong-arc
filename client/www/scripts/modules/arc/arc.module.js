@@ -12,7 +12,9 @@ var CONST = {
   DEFAULT_DATASOURCE_BASE_MODEL: 'PersistedModel',
   MODEL_TYPE: 'model',
   APP_FACET: 'server',
-  APP_RUNNING_CHECK_INTERVAL:  18000
+  APP_RUNNING_CHECK_INTERVAL:  18000,
+  SEGMENTIO_WRITE_KEY: '8ImiW2DX0W',
+  NON_ARC_MODULES: ['home', 'login', 'register']
 };
 
 var Arc = angular.module('Arc', [
@@ -127,7 +129,7 @@ Arc.run([
     function($location, $state, $rootScope, ArcUserService, segmentio){
       // finish initialization of segment.io analytics.js
       if (window.analytics && window.analytics.load) {
-        window.analytics.load("8ImiW2DX0W");
+        window.analytics.load(CONST.SEGMENTIO_WRITE_KEY);
         window.analytics.page();
       }
 
@@ -143,7 +145,11 @@ Arc.run([
             name : ArcUserService.getCurrentUsername(),
             email : ArcUserService.getCurrentUserEmail()
           });
-        };
+          //fire off segment.io event on module invocation and ignore home, login, register
+          if (!_.contains(NON_ARC_MODULES, next.name)) {
+            segmentio.track(next.name);
+          }
+        }
       });
 
 
