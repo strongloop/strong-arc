@@ -46,7 +46,7 @@ Model.service('ModelService', [
                     return targetInstance;
                   }).
                   catch(function(error) {
-                    console.log('bad is model config migratable: ' + error);
+                    log.warn('bad is model config migratable: ' + error);
                     return error;
                   });
               })

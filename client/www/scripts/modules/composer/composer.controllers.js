@@ -366,16 +366,58 @@ Composer.controller('ComposerMainController', [
     }
 
     // update model property
-    $scope.updateModelPropertyRequest = function(modelPropertyConfig) {
-      if (modelPropertyConfig && modelPropertyConfig.modelId && modelPropertyConfig.name) {
+    $scope.updateModelPropertyRequest = function(config) {
+      var modelPropertyConfig = config.propertyConfig;
+      if (modelPropertyConfig && modelPropertyConfig.modelId && modelPropertyConfig.id && modelPropertyConfig.name) {
+
+        var propertyNameSnapshot = getPropertyNameSnapshot(config.currProperties);
+        var currentIndex = getPropertyIndex(modelPropertyConfig.name, propertyNameSnapshot);
+
+
         PropertyService.updateModelProperty(modelPropertyConfig)
-          .then(function(response) {
+          .then(function(updatedProperty) {
             growl.addSuccessMessage("property updated");
-            PropertyService.getModelProperties(modelPropertyConfig.modelId)
-              .then(function(response) {
-                $scope.activeInstance.properties = response;
-                $scope.activeModelPropertiesChanged = !$scope.activeModelPropertiesChanged;
-              });
+            $scope.activeInstance.properties[currentIndex] = updatedProperty;
+            IAService.setActiveInstance($scope.activeInstance);
+            $scope.activeModelPropertiesChanged = !$scope.activeModelPropertiesChanged;
+
+          });
+      }
+      else {
+        $log.warn('update property called with insufficient parameters: ' + JSON.stringify(modelPropertyConfig));
+      }
+
+    };
+    function getPropertyNameSnapshot(propArray) {
+      var retArray = [];
+      propArray.map(function(item) {
+        retArray.push(item.name);
+      });
+      return retArray;
+    }
+    function getPropertyIndex(name, list) {
+      for (var i = 0;i < list.length;i++) {
+        if (list[i] === name) {
+          return i;
+        }
+      }
+    }
+
+    // update model property
+    $scope.updateModelPropertyNameRequest = function(config) {
+      var modelPropertyConfig = config.propertyConfig;
+      if (modelPropertyConfig && modelPropertyConfig.modelId && modelPropertyConfig.name) {
+
+        var propertyNameSnapshot = getPropertyNameSnapshot(config.currProperties);
+        var currentIndex = getPropertyIndex(modelPropertyConfig.name, propertyNameSnapshot);
+
+        PropertyService.updateModelProperty(modelPropertyConfig)
+          .then(function(updatedProperty) {
+            growl.addSuccessMessage("property updated");
+            $scope.activeInstance.properties[currentIndex] = updatedProperty;
+            IAService.setActiveInstance($scope.activeInstance);
+            $scope.activeModelPropertiesChanged = !$scope.activeModelPropertiesChanged;
+
           });
       }
     };
