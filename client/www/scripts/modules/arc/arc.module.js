@@ -146,7 +146,7 @@ Arc.run([
             email : ArcUserService.getCurrentUserEmail()
           });
           //fire off segment.io event on module invocation and ignore home, login, register
-          if (!_.contains(NON_ARC_MODULES, next.name)) {
+          if (!_.contains(CONST.NON_ARC_MODULES, next.name)) {
             segmentio.track(next.name);
           }
         }
