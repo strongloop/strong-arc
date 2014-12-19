@@ -1,0 +1,5 @@
+<strong ng-show="activeInstance.isMigrating" className="model-migrate-loading">Migrating...</strong>
+<button ng-disabled="!activeInstance.canMigrate"
+  class="instance-detail-pocket-button model-migrate-button"
+  type="button"
+  ng-click="migrateModel()">Migrate Model</button>

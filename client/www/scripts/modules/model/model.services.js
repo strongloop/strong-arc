@@ -225,7 +225,7 @@ Model.service('ModelService', [
                   facetName: CONST.APP_FACET
                 },
                 targetInstance.config);
-              if (targetInstance.config.dataSource && (targetInstance.config.dataSource === CONST.DEFAULT_DATASOURCE)){
+              if (targetInstance.config.dataSource && (targetInstance.config.dataSource === CONST.NULL_DATASOURCE)){
                 targetInstance.config.dataSource = null;
               }
               ModelConfig.upsert(targetInstance.config,
@@ -529,7 +529,7 @@ Model.service('ModelService', [
       var deferred = $q.defer();
       var promise = deferred.promise;
       var canMigrate = false;
-      if (config.dataSource === CONST.DEFAULT_DATASOURCE) {
+      if (config.dataSource === CONST.NULL_DATASOURCE) {
         config.dataSource = null;
       }
       if(!config || !config.dataSource) {
