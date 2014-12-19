@@ -42,7 +42,7 @@ IA.service('IAService', [
               errorObj.help = [
                 { text: 'Add the connector to your project and try again.' },
                 { text: 'See' },
-                { link: 'http://docs.strongloop.com/display/LB/Data+sources+and+connectors#Datasourcesandconnectors-Installingaconnector',
+                { link: 'http://docs.strongloop.com/display/LB/Connecting+models+to+data+sources#Connectingmodelstodatasources-Installingaconnector',
                   text: 'docs: Installing a connector' },
                 { text: 'for more information' }
               ];
