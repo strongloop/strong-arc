@@ -9,6 +9,7 @@ var CONST = {
   NEW_DATASOURCE_FACET_NAME: 'server',
   DATASOURCE_TYPE: 'datasource',
   DEFAULT_DATASOURCE: 'db',
+  NULL_DATASOURCE: 'none',
   DEFAULT_DATASOURCE_BASE_MODEL: 'PersistedModel',
   MODEL_TYPE: 'model',
   APP_FACET: 'server',
@@ -146,7 +147,7 @@ Arc.run([
             email : ArcUserService.getCurrentUserEmail()
           });
           //fire off segment.io event on module invocation and ignore home, login, register
-          if (!_.contains(NON_ARC_MODULES, next.name)) {
+          if (!_.contains(CONST.NON_ARC_MODULES, next.name)) {
             segmentio.track(next.name);
           }
         }

@@ -5,6 +5,70 @@
  *
  *
  * */
+Model.directive('slModelEditor', [
+  function() {
+    return {
+      templateUrl: './scripts/modules/model/templates/model.editor.html',
+      controller: ['$scope', '$log',
+        function($scope, $log) {
+
+          // TODO - remove as it seems redundant
+          $scope.processModelNameValue = function() {
+            $scope.saveModelInstance();
+          };
+          $scope.isJNameValid = function() {
+            return /^[\-_a-zA-Z0-9]+$/.test($scope.activeInstance.name);
+          };
+          $scope.saveModelInstance = function() {
+            if ($scope.isNameValid($scope.activeInstance.name)) {
+              $scope.saveModelInstanceRequest($scope.activeInstance);
+            }
+          };
+          $scope.setBaseForDataSource = function() {
+
+            var modelDef = $scope.activeInstance.definition;
+            var modelConfig = $scope.activeInstance.config;
+            var base = modelDef.base;
+            var baseIsDefault = base === CONST.NEW_MODEL_BASE;
+            var noDataSourceSelected = modelConfig.dataSource === CONST.DEFAULT_DATASOURCE;
+
+            if(noDataSourceSelected) {
+              $scope.activeInstance.base = CONST.NEW_MODEL_BASE;
+            } else {
+              $scope.activeInstance.base = CONST.DEFAULT_DATASOURCE_BASE_MODEL;
+            }
+
+          };
+          $scope.handleBaseBlur = function() {
+
+            if(!$scope.activeInstance.base) {
+              $scope.setBaseForDataSource();
+            }
+          };
+         }
+      ]
+    }
+  }
+]);
+Model.directive('slModelMigrate', [
+  function() {
+    return {
+      templateUrl: './scripts/modules/model/templates/model.migrate.html',
+      controller: ['$scope', '$log', function($scope, $log) {
+          $scope.canMigrate = function() {
+            return $scope.activeInstance.canMigrate;
+          };
+          $scope.migrateModel = function() {
+            if ($scope.activeInstance.config.dataSource === CONST.DEFAULT_DATASOURCE) {
+              $scope.activeInstance.config.dataSource = null;
+            }
+            $scope.migrateModelConfig($scope.activeInstance.config);
+          };
+        }
+      ]
+    }
+  }
+]);
 
 /*
  *
@@ -70,8 +134,8 @@ Model.directive('modelPropertiesEditor',[
           }
           React.renderComponent(ModelPropertiesEditor({scope:scope}), el[0]);
 
-
         }
+
 
 
         scope.toggleModelPropertiesView = function() {
@@ -107,7 +171,7 @@ Model.directive('slPropertyDataTypeSelectOptions', [
     return  {
       restrict: 'E',
       replace: true,
-      templateUrl: './scripts/modules/model/templates/model.property.data-type.options.html',
+      templateUrl: './scripts/modules/model/templates/model.property.data-type.options.html'
     }
   }
 ]);
@@ -220,10 +284,19 @@ Model.directive('slPropertyDataTypeSelect', [
           var retVal = /^[\-_a-zA-Z0-9]+$/.test($scope.property.name);
           return retVal;
         };
+        $scope.deleteModelProperty = function() {
 
+          if ($scope.property && $scope.property.id) {
+            $scope.deleteModelPropertyRequest($scope.property);
+
+          }
+
+        };
         $scope.handleChange = function(value) {
 
           var updateModelPropertyConfig = {};
+
+          $scope.property.type = value;
 
           if ($scope.property.id) {
             var currProperties = $scope.activeInstance.properties;
