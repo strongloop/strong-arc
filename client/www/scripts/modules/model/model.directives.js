@@ -17,10 +17,10 @@ Model.directive('slModelEditor', [
             $scope.saveModelInstance();
           };
           $scope.isJNameValid = function() {
-            return /^[\-_a-zA-Z0-9]+$/.test($scope.activeInstance.name);
+            return /^[\-_a-zA-Z0-9]+$/.test($scope.activeInstance.definition.name);
           };
           $scope.saveModelInstance = function() {
-            if ($scope.isNameValid($scope.activeInstance.name)) {
+            if ($scope.isNameValid($scope.activeInstance.definition.name)) {
               $scope.saveModelInstanceRequest($scope.activeInstance);
             }
           };
