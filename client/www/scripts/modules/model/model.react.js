@@ -204,7 +204,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
             <MigrateButton scope={scope} />
             <div className={modelNameValidationClasses}>
               <span className="validation-error-message">
-                The name needs to conform with <a target="_blank" href="https://mathiasbynens.be/notes/javascript-identifiers" >javascript conventions</a>
+                The name needs to conform with <a target="_blank" href="http://docs.strongloop.com/display/public/LB/Valid+names+in+LoopBack" >javascript conventions</a>
               </span>
             </div>
           </div>
