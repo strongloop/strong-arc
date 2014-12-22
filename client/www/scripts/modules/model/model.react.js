@@ -246,11 +246,12 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                 <div className="model-detail-label">
                   <label>Data source</label>
                 </div>
-                <select value={component.state.activeInstance.config.dataSource}
+                <select value={component.state.activeInstance.config.dataSource || 'none'}
                   data-name="config.dataSource"
                   name="dataSource"
                   onChange={component.handleDataSourceChange}
                   className="model-instance-editor-input">
+                  <option value="">none</option>
                   {dataSourceOptions}
                 </select>
               </div>

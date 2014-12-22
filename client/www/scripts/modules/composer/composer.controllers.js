@@ -149,9 +149,26 @@ Composer.controller('ComposerMainController', [
             );
           }
           else if (type === CONST.DATASOURCE_TYPE) {
+
             DataSourceService.deleteDataSourceInstance(instanceIdConfig.definitionId).
               then(function(response){
                 $scope.activeInstance = IAService.resetActiveToFirstOpenInstance(instanceIdConfig.definitionId);
+
+                //reset data source for models using the deleted datasource
+                var models = $scope.mainNavModels.filter(function(model){
+                  var dataSourceId = instanceIdConfig.definitionId.split('.')[1];
+
+                  return model.config.dataSource === dataSourceId;
+                });
+
+                models.forEach(function(model){
+                  model.config.dataSource = null;
+
+                  //save the model
+                  ModelService.updateModelInstance(model);
+                });
+
+                loadModels();
                 loadDataSources();
               }
             );
