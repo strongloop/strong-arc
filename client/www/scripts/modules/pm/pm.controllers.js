@@ -35,15 +35,28 @@ PM.controller('PMAppController', [
               $scope.pm.localAppState = PM_CONST.RETRIEVING_PORT_STATE;
             }
           }
-          $timeout(function(){
-            checkLocalAppStatus();
-          }, PMAppService.getAppStatePollInterval());
+          // starting / stopping / restarting etc.
+          if (PM_CONST.STOPPED_STATE !== $scope.pm.localAppState){
+            // in case the app goes down and is spitting 500 or 404 errors
+            if (response.status && (response.status !== 200)) {
+                $log.warn('checkLocalAppStatus returned non 200 response: ' + JSON.stringify(response));
+            }
+            // keep checking as status doesn't always come back in the response when things
+            // are transitioning
+            else {
+              $timeout(function(){
+                checkLocalAppStatus();
+              }, PMAppService.getAppStatePollInterval());
+            }
+          }
         })
         .catch(function(error) {
           $log.warn('bad polling for is app running');
-          $timeout(function(){
-            checkLocalAppStatus();
-          }, PMAppService.getAppStatePollInterval());
+          if (PM_CONST.STOPPED_STATE !== $scope.pm.localAppState){
+            $timeout(function(){
+              checkLocalAppStatus();
+            }, PMAppService.getAppStatePollInterval());
+          }
         });
 
     }
@@ -59,6 +72,7 @@ PM.controller('PMAppController', [
       $scope.pm.localAppState = PM_CONST.STARTING_STATE;
       return PMAppService.startLocalApp()
         .then(function(response) {
+          checkLocalAppStatus();
           return response;
         });
     };
