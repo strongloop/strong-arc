@@ -1,3 +1,53 @@
+2014-12-22, Version 1.0.3
+=========================
+
+ * trigger build (seanbrookes)
+
+ * check to make sure app is running before polling (seanbrookes)
+
+ * fix model definition name reference (seanbrookes)
+
+ * fix incorrect links (seanbrookes)
+
+ * refactor model editor from react to angular (seanbrookes)
+
+ * added missing CONST object (altsang)
+
+ * add segmentio calls to identify module on (altsang)
+
+ * update default model datasource options (seanbrookes)
+
+ * - refactor model property editor back to Angular - add 'endter key' save on model name - fixed regression on #460 property data types (seanbrookes)
+
+ * add iframe onload handler for profiler (Anthony Ettinger)
+
+ * fixup! add growl warning (Miroslav Bajtoš)
+
+ * move lb-services out of the way to prevent overwrite (seanbrookes)
+
+ * - fix spelling - adjust sgment io available test logic (seanbrookes)
+
+ * fix unit test fails (seanbrookes)
+
+ * add segment io lib refs (seanbrookes)
+
+ * add tracking to build and deploy module (altsang)
+
+ * corrected malformed comment (altsang)
+
+ * moved segmentio initialization to Arc.run (altsang)
+
+ * added in more service methods for user (altsang)
+
+ * add angular-segmentio scripts (altsang)
+
+ * segment.io library added (altsang)
+
+ * add user save data service (altsang)
+
+ * discovery: always import id and required props (Miroslav Bajtoš)
+
+
 2014-12-17, Version 1.0.2
 =========================
 
