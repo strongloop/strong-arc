@@ -244,7 +244,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
               </div>
               <div className="model-detail-input-container">
                 <div className="model-detail-label">
-                  <label>Datasource</label>
+                  <label>Data source</label>
                 </div>
                 <select value={component.state.activeInstance.config.dataSource}
                   data-name="config.dataSource"

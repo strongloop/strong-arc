@@ -21,7 +21,7 @@ Discovery.service('DiscoveryService', [
             });
         })
         .catch(function(error) {
-          console.warn('bad get datasource  ' + error);
+          console.warn('bad get data source  ' + error);
         });
     };
 
