@@ -96,8 +96,29 @@ Common.directive('slCommonInstanceTabsView', [
     }
   }
 ]);
-
 /**
+ * sl-common-enter
+ *
+ * calls a scope method on click event
+ *
+ * <input ng-enter="method()" />
+ *
+ *
+ * */
+Common.directive('slCommonEnter', function () {
+  return function (scope, element, attrs) {
+    element.bind("keydown keypress", function (event) {
+      if(event.which === 13) {
+        scope.$apply(function (){
+          scope.$eval(attrs.slCommonEnter);
+        });
+
+        event.preventDefault();
+      }
+    });
+  };
+});
+ /**
  * sl-common-select-on-click
  *
  * generic attribute directive to autoselect the contents of an input
@@ -303,3 +324,16 @@ Common.directive('slCommonConsoleLog', [
     }
   }
 ]);
+
+
+Common.directive('slIframeOnload', [function(){
+  return {
+    scope: {
+      callBack: '&slIframeOnload'
+    },
+    link: function(scope, element, attrs){
+      element.on('load', function(){
+        return scope.callBack();
+      })
+    }
+  }}]);

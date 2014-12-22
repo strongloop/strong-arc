@@ -161,7 +161,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
             <button disabled={!isFormValid} type="button" onClick={component.saveHandler} data-id="datasource-save-button" className="instance-detail-pocket-button instance-save-button">Save Datasource</button>
             <div className={dsNameValidationClasses}>
               <span className="validation-error-message">
-              DataSource name should conform with <a href="https://mathiasbynens.be/notes/javascript-identifiers" target="_new">valid javascript variable name conventions</a>
+              DataSource name should conform with <a href="http://docs.strongloop.com/display/public/LB/Valid+names+in+LoopBack" target="_new">valid javascript variable name conventions</a>
               </span>
             </div>
           </div>

@@ -9,6 +9,14 @@ ArcUser.service('ArcUserService', [
       return $cookieStore.get('currentUserId');
     };
 
+    svc.getCurrentUsername = function () {
+      return $cookieStore.get('currentUsername');
+    };
+
+    svc.getCurrentUserEmail = function () {
+      return $cookieStore.get('currentUserEmail');
+    };
+
     svc.buildLoginRequest = function(data) {
       var result = {
         password: data.password
@@ -28,6 +36,8 @@ ArcUser.service('ArcUserService', [
       var request = svc.buildLoginRequest(config);
       User.login(request,
         function (response) {
+          //save user properties and auth token
+          svc.saveUserData(response);
           svc.saveAuthTokenData(response);
           deferred.resolve(response);
         },
@@ -45,6 +55,12 @@ ArcUser.service('ArcUserService', [
       $cookieStore.put('accessToken', data.id);
 
     };
+    svc.saveUserData = function(data) {
+
+      $cookieStore.put('currentUserEmail', data.user.email);
+      $cookieStore.put('currentUsername', data.user.displayName);
+
+    };
     svc.isAuthUser = function() {
       if (svc.getCurrentUserId()){
         return true;
@@ -54,6 +70,8 @@ ArcUser.service('ArcUserService', [
     svc.logCurrentUserOut = function (cb) {
       $cookieStore.remove('currentUserId');
       $cookieStore.remove('accessToken');
+      $cookieStore.remove('currentUserEmail');
+      $cookieStore.remove('currentUsername');
       var logoutObj = User.logout();
       logoutObj.$promise.
         then(function(result) {

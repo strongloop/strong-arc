@@ -82,8 +82,9 @@ select {
     opacity: 1;
 }
 [data-id="ModelEditorInstanceContainer"] {
-    margin-left: 2rem;
-    margin-top: 2rem;
+  margin-left: 2rem;
+  margin-top: 2rem;
+  overflow:scroll;
 }
 
 .model-definition-save-btn {
@@ -289,9 +290,9 @@ select {
 
 .model-header-container {
     /*background: #EEEEEE;*/
-    width: 90rem;
+    max-width: 83rem;
     min-width: 60rem;
-    height: 11.2rem;
+//    height: 11.2rem;
     border-radius: 0.5rem;
     margin-left: 2rem;
 }
@@ -313,7 +314,7 @@ select {
 }
 .model-detail-container {
 	border-bottom: 1px solid #DDDDDD;
-    width: 90rem;
+    max-width: 95rem;
 }
 .model-migrate-button {
     color: #777;
@@ -343,6 +344,10 @@ select {
 	padding-right: 1rem;
 	display: inline-block;
 	width: 33%;
+}
+.model-save-button-col,  .model-migrate-button-col {
+  width:20rem;
+  padding-top:3.4rem;
 }
 .model-detail-input-row{
     display:  inline-block;
@@ -471,9 +476,7 @@ button[disabled].instance-detail-pocket-button:hover {
 	border: none;
 	color: #4a90e2;
 }
-.modelproperty-detail-is-open .modelproperty-detail-row{
-	background: navy;
-}
+
 .modelproperty-detail-row{
     margin-left: 4rem;
 	width: 89.3rem;
@@ -485,7 +488,7 @@ button[disabled].instance-detail-pocket-button:hover {
     margin-left:40px;
 }
 .modelproperty-detail-is-open{
-	border: 2px solid blue;
+//	border: 2px solid blue;
 }
 .props-name-cell.has-errors {
     border-color: #a94442;

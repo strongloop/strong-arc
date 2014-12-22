@@ -1,0 +1,105 @@
+<form role="form">
+  <div class="model-header-container" >
+    <div data-ui-type="table">
+      <div data-ui-type="row">
+        <div data-ui-type="cell">
+          <div class="model-header-name-container form-group" ng-class="{'has-error': !isNameValid()}">
+            <label>Name</label>
+            <input type="text"
+                   ng-model="activeInstance.definition.name"
+                   ng-blur="processModelNameValue()"
+                   data-name="name"
+                   id="ModelName"
+                   name="ModelName"
+                   placeholder="model name"
+                   class="model-instance-name form-control"
+                   ng-class="{ 'is-invalid': isJNameValid()}" />
+          </div>
+        </div>
+        <div data-ui-type="cell" class="model-save-button-col">
+          <button ng-click="saveModelInstance()"
+                  ng-disabled="!isJNameValid()"
+                  class="instance-detail-pocket-button instance-save-button"
+                  data-modelId="{{ activeInstance.id }}" >Save Model</button>
+        </div>
+        <div data-ui-type="cell" class="model-migrate-button-col">
+          <div sl-model-migrate></div>
+        </div>
+      </div>
+    </div>
+    <div class="model-instance-name-validation is-invalid" ng-show="!isJNameValid()">
+              <span class="validation-error-message">
+                The name needs to conform with <a target="_blank" href="https://mathiasbynens.be/notes/javascript-identifiers" >javascript conventions</a>
+              </span>
+    </div>
+  </div>
+  <div class="lineBreak"></div>
+  <button
+          type="button"
+          class="model-instance-header-btn btn-block"
+          title="Details" >
+    <div class="model-editor-section-title">Details</div>
+  </button>
+  <div class="model-detail-container">
+    <div class="model-detail-input-row">
+      <div class="model-detail-input-container">
+        <div class="model-detail-label">
+          <label>Plural</label>
+        </div>
+
+        <input type="text"
+               ng-model="activeInstance.name"
+               data-name="plural"
+               id="ModelPlural"
+               name="ModelPlural"
+               class="model-instance-editor-input" />
+      </div>
+      <div class="model-detail-input-container">
+        <div class="model-detail-label">
+          <label>Base model</label>
+        </div>
+
+        <input class="model-instance-editor-input"
+                type="text"
+                data-name="base"
+                ng-model="activeInstance.definition.base"
+                ng-change="handleBaseBlur()" />
+      </div>
+      <div class="model-detail-input-container">
+        <div class="model-detail-label">
+          <label>Datasource</label>
+        </div>
+
+        <select ng-model="activeInstance.config.dataSource"
+                data-name="config.dataSource"
+                name="dataSource"
+                ng-options="dataSource.name as dataSource.name for dataSource in mainNavDatasources"
+                class="model-instance-editor-input">
+          <option value="">- none -</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="model-detail-button-row">
+      <div class="model-detail-input-container listNarrow checkbox">
+        <label class="model-instance-editor-checkbox-label">
+          <input type="checkbox"
+                 ng-model="activeInstance.config.public"
+                 data-name="config.public"
+                 name="public"
+                 class="model-instance-editor-checkbox" />public
+        </label>
+      </div>
+      <div class="model-detail-input-container listNarrow checkbox">
+        <label class="model-instance-editor-checkbox-label">
+
+          <input type="checkbox"
+                 data-name="strict"
+                 name="strict"
+                 ng-model="activeInstance.strict"
+                 class="model-instance-editor-checkbox" />strict
+        </label>
+      </div>
+    </div>
+  </div>
+</form>

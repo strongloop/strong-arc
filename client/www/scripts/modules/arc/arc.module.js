@@ -3,16 +3,19 @@ var CONST = {
   NEW_MODEL_PRE_ID: 'sl.temp.new-model',
   NEW_MODEL_NAME: 'newModel',
   NEW_MODEL_FACET_NAME: 'common',
-  NEW_MODEL_BASE: 'Model',
+  NEW_MODEL_BASE: 'PersistedModel',
   NEW_DATASOURCE_PRE_ID: 'sl.temp.new-datasource',
   NEW_DATASOURCE_NAME: 'newDatasource',
   NEW_DATASOURCE_FACET_NAME: 'server',
   DATASOURCE_TYPE: 'datasource',
-  DEFAULT_DATASOURCE: 'none',
+  DEFAULT_DATASOURCE: 'db',
+  NULL_DATASOURCE: 'none',
   DEFAULT_DATASOURCE_BASE_MODEL: 'PersistedModel',
   MODEL_TYPE: 'model',
   APP_FACET: 'server',
-  APP_RUNNING_CHECK_INTERVAL:  18000
+  APP_RUNNING_CHECK_INTERVAL:  18000,
+  SEGMENTIO_WRITE_KEY: '8ImiW2DX0W',
+  NON_ARC_MODULES: ['home', 'login', 'register']
 };
 
 var Arc = angular.module('Arc', [
@@ -27,7 +30,7 @@ var Arc = angular.module('Arc', [
   'lbServices',
   'ArcServices',
   'BuildDeployAPI',
-  'oldServices',
+  'ArcUserAuthFactory',
   'Composer',
   'Profiler',
   'ArcUser',
@@ -48,7 +51,8 @@ var Arc = angular.module('Arc', [
   'ui.slider',
   'checklist-model',
   'ngGrid',
-  'angularFileUpload'
+  'angularFileUpload',
+  'segmentio'
 ]);
 
 Arc.value('CONST', CONST);
@@ -122,7 +126,13 @@ Arc.run([
     '$state',
     '$rootScope',
     'ArcUserService',
-    function($location, $state, $rootScope, ArcUserService){
+    'segmentio',
+    function($location, $state, $rootScope, ArcUserService, segmentio){
+      // finish initialization of segment.io analytics.js
+      if (window.analytics && window.analytics.load) {
+        window.analytics.load(CONST.SEGMENTIO_WRITE_KEY);
+        window.analytics.page();
+      }
 
       // Redirect to login if route requires auth and you're not logged in
       $rootScope.$on('$stateChangeStart', function (event, next) {
@@ -130,6 +140,16 @@ Arc.run([
         if ( !ArcUserService.isAuthUser() && next.url !== '/login' ) {
           event.preventDefault(); //prevent current page from loading
           $state.go('login');
+        } else {
+          //fire off segment.io identify from cookie values
+          segmentio.identify(ArcUserService.getCurrentUserId(), {
+            name : ArcUserService.getCurrentUsername(),
+            email : ArcUserService.getCurrentUserEmail()
+          });
+          //fire off segment.io event on module invocation and ignore home, login, register
+          if (!_.contains(CONST.NON_ARC_MODULES, next.name)) {
+            segmentio.track(next.name);
+          }
         }
       });
 

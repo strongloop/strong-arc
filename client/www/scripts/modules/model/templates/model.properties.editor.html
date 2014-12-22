@@ -1,0 +1,96 @@
+<div>
+  <button type="button"  class="model-instance-header-btn btn-block" title="Properties" >
+    <span class=""></span>
+    <span class="model-editor-section-title">Properties</span>
+  </button>
+  <div data-id="ModelPropertyListContainer" class="" >
+    <div class="model-instance-container property-list-header">
+      <div data-ui-type="table">
+        <div data-ui-type="row" class="model-instance-property-table-header-row">
+
+          <span data-ui-type="cell" title="property name" class="props-name-header table-header-cell">Name</span>
+
+          <span data-ui-type="cell" title="data type" class="props-data-type-header table-header-cell">Type</span>
+
+          <span data-ui-type="cell" title="is id" class="props-isid-header table-header-cell">is id</span>
+
+          <span data-ui-type="cell" title="required" class="props-required-header table-header-cell">Required</span>
+
+          <span data-ui-type="cell" title="is index" class="props-index-header table-header-cell">Index</span>
+
+          <span data-ui-type="cell" title="comments" class="props-comments-header table-header-cell">Comments</span>
+
+          <span data-ui-type="cell" title="controls" class="props-controls-header table-header-cell"></span>
+
+        </div>
+      </div>
+    </div>
+    <ul class="model-instance-property-list">
+      <li ng-repeat="property in activeInstance.properties">
+        <div class="modelproperty-container modelproperty-detail-is-open">
+          <div data-ui-type="table" class="modelproperty-detail-row" >
+            <div data-ui-type="row">
+              <div data-ui-type="cell" class="props-name-cell" ng-class="{'has-errors': !isNameValid()}">
+                <input ref="propName"
+                       data-name="name"
+                       required="true"
+                       sl-common-enter="triggerModelPropertyUpdate(property)"
+                       ng-change="isNameValid(property.name)"
+                       ng-blur="triggerModelPropertyUpdate(property)"
+                       sl-common-select-on-click
+                       ng-model="property.name"
+                       type="text" />
+              </div>
+              <div data-ui-type="cell" class="props-data-type-cell">
+                <sl-property-data-type-select property="property"></sl-property-data-type-select>
+              </div>
+              <div data-ui-type="cell" class="props-isid-cell">
+                <input type="checkbox"
+                       data-name="isId"
+                       name="isId"
+                       ng-change="triggerModelPropertyUpdate(property)"
+                       ng-model="property.isId"
+                       class="model-instance-editor-checkbox" />
+              </div>
+              <div data-ui-type="cell" class="props-required-cell">
+                <input type="checkbox"
+                       data-name="required"
+                       name="required"
+                       ng-change="triggerModelPropertyUpdate(property)"
+                       ng-model="property.required"
+                       class="model-instance-editor-checkbox" />
+              </div>
+              <div data-ui-type="cell" class="props-index-cell">
+                <input type="checkbox"
+                       data-name="index"
+                       ng-model="property.index"
+                       ng-change="triggerModelPropertyUpdate(property)"
+                       name="index"
+                       class="model-instance-editor-checkbox" />
+              </div>
+              <div data-ui-type="cell" class="props-comments-cell">
+                <input type="text"
+                       data-name="comments"
+                       ng-model="property.comments"
+                       sl-common-enter="triggerModelPropertyUpdate(property)"
+                       ng-blur="triggerModelPropertyUpdate(property)"
+                       name="comments"
+                       class="property-doc-textarea model-instance-editor-input" />
+              </div>
+              <div data-ui-type="cell" class="props-controls-cell">
+                <button class="props-remove-btn" ng-click="deleteModelProperty()" data-id="{{modelProperty.id}}">
+                  <span data-id="{{modelProperty.id}}" class="sl-icon sl-icon-close"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="model-instance-name-validation"  ng-class="{'is-valid': isNameValid(),'is-invalid': !isNameValid()}">
+            <div class="validation-error-message">
+            Property name should conform with <a href="http://docs.strongloop.com/display/public/LB/Valid+names+in+LoopBack" target="_new">valid javascript variable name conventions</a>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <button title="New Property" ng-click="createNewModelProperty()" type="button" class="btn-new-model-property" >New Property</button>          </div>
+</div>

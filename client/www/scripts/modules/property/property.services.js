@@ -33,6 +33,7 @@ Property.service('PropertyService', [
 
     svc.updateModelProperty = function(propConfig) {
       if (propConfig) {
+
         // `id` is '{facet}.{model}.{name}'
         var splitId = propConfig.id.split('.');
         var oldName = splitId.pop();

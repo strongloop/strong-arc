@@ -444,6 +444,7 @@ var IAMainControls = (IAMainControls = React).createClass({
     };
   },
   componentDidMount: function() {
+
     window.setUI();
   },
   componentWillReceiveProps: function(nextProps) {

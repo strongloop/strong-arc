@@ -36,8 +36,6 @@ Profiler.controller('ProfilerMainController',[
       var devToolsHeight = (windowHeight - headerHeight - profilerNavHeight);
       $('#ProfilerDevtoolsContainer').css('height', devToolsHeight);
     };
-
-    $scope.initProfiler();
   }
 ]);
 

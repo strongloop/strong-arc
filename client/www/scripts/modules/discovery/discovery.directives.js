@@ -8,7 +8,8 @@ Discovery.directive('slDiscoverySchema', [
   }
 ]);
 Discovery.directive('slDiscoveryModelPreview', [
-  function() {
+  'growl',
+  function(growl) {
     return {
       replace: true,
       templateUrl: './scripts/modules/discovery/templates/discovery.model.preview.html',
@@ -19,6 +20,7 @@ Discovery.directive('slDiscoveryModelPreview', [
           var retCollection = propertyKeys.map(function(key) {
             var propObj = propertiesObj[key];
             propObj.name = key;
+            propObj._selectable = !(propObj.id || propObj.required);
             return propObj
           });
           return retCollection;
@@ -55,8 +57,9 @@ Discovery.directive('slDiscoveryModelPreview', [
               checkboxCellTemplate: '<label class="select-item-cell"><span class="sl-icon sl-icon-checkmark"></span><input type="checkbox" /></label>',
               showSelectionCheckbox: true,
               selectWithCheckboxOnly: false,
-              selectedItems:  scope.masterSelectedProperties[i],
+              selectedItems: scope.masterSelectedProperties[i],
               multiSelect: true,
+              beforeSelectionChange: beforeSelectionChange,
               rowHeight: 40,
               filterOptions: scope.filterOptions,
               plugins: [new ngGridFlexibleHeightPlugin()]
@@ -68,6 +71,28 @@ Discovery.directive('slDiscoveryModelPreview', [
         });
       }
     };
+
+    function beforeSelectionChange(rowItem) {
+      var changeAllowed;
+      if (!Array.isArray(rowItem)) {
+        changeAllowed = !!rowItem.entity._selectable;
+        if (!changeAllowed)
+          warn('The row must be always selected.');
+      } else {
+        // rowItem.all(isSelectable)
+        changeAllowed = !rowItem.some(function(item) {
+          return !item._selectable;
+        });
+        if (!changeAllowed)
+          warn('Some of the rows must be always selected.');
+      }
+
+      return changeAllowed;
+
+      function warn(msg) {
+        growl.addWarnMessage(msg, { ttl: 1000 });
+      }
+    }
   }
 ]).filter('isIdFilter', function() {
     return function(val) {
