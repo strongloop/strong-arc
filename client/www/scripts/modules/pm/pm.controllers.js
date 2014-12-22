@@ -35,7 +35,7 @@ PM.controller('PMAppController', [
               $scope.pm.localAppState = PM_CONST.RETRIEVING_PORT_STATE;
             }
           }
-          // starting / stopping / restarting etc.
+          // starting / stopping / restarting etc
           if (PM_CONST.STOPPED_STATE !== $scope.pm.localAppState){
             // in case the app goes down and is spitting 500 or 404 errors
             if (response.status && (response.status !== 200)) {
