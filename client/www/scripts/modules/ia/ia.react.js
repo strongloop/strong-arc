@@ -420,12 +420,12 @@ var IAMainDatasourceNav = (IAMainDatasourceNav = React).createClass({
         <button onClick={component.toggleDataSourceNav} type="button" data-name="datasources_root" className="btn btn-default btn-block nav-tree-item tree-branch" title="Datasources">
           <span className={navItemOpenCloseIconClasses}></span>
           <span className="nav-branch-folder-icon sl-icon sl-icon-folder"></span>
-          <span className="nav-branch-title">DataSources</span>
+          <span className="nav-branch-title">Data Sources</span>
         </button>
         <div data-ui-type="table" className={navItemContainerClasses}>
           {rowItems}
         </div>
-        <button onClick={component.addNewInstanceRequest} data-type="datasource" className="nav-tree-item-addnew"><span className="plus">+</span>Add New Datasource</button>
+        <button onClick={component.addNewInstanceRequest} data-type="datasource" className="nav-tree-item-addnew"><span className="plus">+</span>Add New Data Source</button>
       </div>
       );
   }
@@ -507,7 +507,7 @@ var IAMainControls = (IAMainControls = React).createClass({
           </div>
 
 
-          <label className="main-control-command-label">DATASOURCE</label>
+          <label className="main-control-command-label">DATA SOURCE</label>
           <div data-ui-type="table">
             <div data-ui-type="row">
               <div data-ui-type="cell">
