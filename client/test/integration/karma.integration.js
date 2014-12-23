@@ -52,6 +52,7 @@ module.exports = function(config) {
       'client/www/scripts/vendor/chance.js',
 
       'client/www/scripts/vendor/d3.js',
+      'client/www/scripts/vendor/lodash.js',
 
       'client/www/scripts/vendor/nv.d3.js',
 
