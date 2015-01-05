@@ -32,6 +32,23 @@
     "strong-pm": "^1.5.0",
     "ws": "~0.4.32"
   },
+  "bundledDependencies": [
+    "cookie-parser",
+    "debug",
+    "errorhandler",
+    "express",
+    "fs-extra",
+    "loopback",
+    "loopback-boot",
+    "loopback-datasource-juggler",
+    "loopback-workspace",
+    "opener",
+    "request",
+    "serve-favicon",
+    "split",
+    "ws",
+    "http-proxy"
+  ],
   "description": "A gui for working with the LoopBack framework",
   "devDependencies": {
     "autoprefixer-core": "^4.0.2",
