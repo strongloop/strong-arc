@@ -1,8 +1,9 @@
 ArcUser.service('ArcUserService', [
   'User',
   '$q',
+  '$log',
   '$cookieStore',
-  function (User, $q, $cookieStore) {
+  function (User, $q, $log, $cookieStore) {
     var svc = this;
 
     svc.getCurrentUserId = function () {
@@ -78,6 +79,9 @@ ArcUser.service('ArcUserService', [
           if (cb) {
             cb();
           }
+        }).catch(function(err){
+          $log.log(err);
+          cb();
         });
     };
     svc.getCurrentUser = function() {
