@@ -206,6 +206,24 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
             <div className="lineBreak"></div>
             <div data-ui-type="table" className="datasource-layout-table">
               <div data-ui-type="row" className="datasource-layout-row">
+                <div data-ui-type="cell" className="datasource-layout-fullwidth-col">
+                  <div className="datasource-form-group">
+                    <label for="host">Url</label>
+                    <input id="url"
+                    className="form-control"
+                    name="url"
+                    value={dsModel.url}
+                    onChange={component.handleChange}
+                    onBlur={component.saveHandler}
+                    data-name="url"
+                    type="text"
+                    placeholder="url" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div data-ui-type="table" className="datasource-layout-table">
+              <div data-ui-type="row" className="datasource-layout-row">
                 <div data-ui-type="cell" className="datasource-layout-col1">
                   <div className="datasource-form-group">
                     <label for="host">Host</label>
