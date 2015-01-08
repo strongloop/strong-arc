@@ -62,7 +62,7 @@ PM.service('PMAppService', [
     svc.getAppStatePollInterval = function() {
       return defaultPMAppConfig.appStatePollInterval;
     };
-    svc.isLocalAppRunning = function() {
+    svc.isSupervisorStarted = function() {
       var baseUrl = '/process-manager/api/ServiceInstances';
       var reqUrl = baseUrl + '/findOne?filter={"fields":{"npmModules":false},"where":{"id":1}}';
       return $http.get(reqUrl)
@@ -73,6 +73,43 @@ PM.service('PMAppService', [
         .catch(function(error) {
           $log.error('bad get service instances: ' + error.message);
           return error;
+        });
+    };
+
+    svc.isLocalAppRunning = function() {
+      return svc.isSupervisorStarted()
+        .then(function(responseData) {
+          if (!responseData.started)
+            return responseData; // It's not running
+          var bFoundPort = false;
+          var returnUrl = '';
+          var reqUrl = '/process-manager/api/ServiceProcesses';
+
+          return $http.get(reqUrl)
+            .then(function(response) {
+              if (response.data && (response.data.length)) {
+                var payload = response.data;
+                for (var i = 0;i < payload.length;i++) {
+                  var pi = payload[i];
+                  if (pi.workerId != 0 && !pi.stopReason) {
+                    // found a running worker, the app is running
+                    return responseData;
+                  }
+                }
+
+                // If we get here, the supervisor is started, but no app is
+                // running, so clear the local app state that was set by
+                // isSupervisorStarted(), and also reset the
+                // responseData.started, in case it's used anywhere to imply
+                // that an app worker is running;
+                localAppState.isStarted = response.data.started = false;
+
+                return responseData;
+              }
+            })
+            .catch(function(error) {
+              $log.warn('bad get app url: ' + error.message);
+            });
         });
     };
 
