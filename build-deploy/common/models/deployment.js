@@ -11,7 +11,7 @@ module.exports = function(Deployment) {
     var cwd = process.cwd();
 
     if(deployment.type === 'local') {
-      deployment.processes = deployment.processes || 1;
+      deployment.processes = deployment.processes || -1;
       baseURL = 'http://localhost:'
               + process.server.address().port
               + '/process-manager';
