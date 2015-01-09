@@ -19,7 +19,7 @@ $ npm install -g strongloop
 ### 1. Create a new LoopBack project by running the following in your terminal:
 
 ```sh
-$ slc loopback
+$ slc loopback my-loopback-application
 ```
 
 ### 2. In the application root directory, start the Arc using the `slc arc` command.
@@ -43,9 +43,8 @@ Previous releases are available at `http://get-studio.strongloop.com/strong-stud
 
 #### Updating angular services for loopback-workspace
 
-Angular services are automatically generated during `gulp build`.
+Angular services are automatically generated via `gulp build` which is called during `npm install`.
 
 ```
-$ npm update
-$ gulp build
+$ npm install
 ```

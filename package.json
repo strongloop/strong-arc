@@ -32,7 +32,7 @@
     "strong-pm": "^1.5.0",
     "ws": "~0.4.32"
   },
-  "description": "A gui for working with the LoopBack framework",
+  "description": "A visual suite for the StrongLoop API Platform",
   "devDependencies": {
     "autoprefixer-core": "^4.0.2",
     "chai": "^1.9.1",
