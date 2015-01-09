@@ -1,0 +1,218 @@
+<section class="forms module">
+  <h2 ng-click="clickModule()">Forms</h2>
+  <article ng-show="show">
+    <pre><code>
+    // $scope.user
+    {{user}}
+
+    // $scope.nolabel
+    {{nolabel}}
+    </code></pre>
+
+    <form class="ui-form" name="form" novalidate ng-submit="submit(form)">
+      <fieldset>
+        <legend>Input fields (legend)</legend>
+        <ul>
+          <li class="ui-form-group" ng-class="{
+            'valid': form.name.$valid,
+            'invalid': form.name.$invalid }">
+            <h4 class="ui-group-label">Input field (text)</h4>
+            <label class="inline">
+              <div class="ui-label-txt">Fullname:</div>
+              <input type="text" class="ui-input" placeholder="Fullname (eg. John Smith)" ng-model="user.name" name="name" ng-minlength="8" autocomplete="off">
+              <span class="msg error" ng-show="form.name.$invalid">Please enter first name</span>
+            </label>
+          </li>
+          <li>
+            <h4 class="ui-group-label">Input fields (text, pull-left) w/ button (small)</h4>
+            <div class="ui-field-group group-inline clearfix">
+              <label class="pull-left ui-form-group" ng-class="{
+            'valid': form.firstname.$valid,
+            'invalid': form.firstname.$invalid }">
+                <div class="ui-label-txt">First name:</div>
+                <input type="text" class="ui-input" placeholder="First name (eg. John)" ng-model="user.firstname" name="firstname" ng-minlength="8" autocomplete="off">
+                <span class="msg error" ng-show="form.firstname.$invalid">Please enter first name</span>
+              </label>
+              <label class="pull-left ui-form-group" ng-class="{
+            'valid': form.age.$valid,
+            'invalid': form.age.$invalid }">
+                <div class="ui-label-txt">Age:</div>
+                <input type="text" class="ui-input skinny" placeholder="(eg. 29)" ng-model="user.age" name="age" ng-minlength="1" ng-maxlength="3" autocomplete="off">
+                <span class="msg error" ng-show="form.age.$invalid">Please enter age</span>
+              </label>
+              <button class="ui-btn small pull-left">Submit</button>
+            </div>
+          </li>
+          <li class="ui-form-group" ng-class="{
+            'valid': form.phone.$valid,
+            'invalid': form.phone.$invalid }">
+            <h4 class="ui-group-label">Input field (text disabled)</h4>
+            <label class="inline">
+              <div class="ui-label-txt">Phone number:</div>
+              <input type="text" class="ui-input" placeholder="Phone (eg. 555-555-5555)" ng-model="user.phone" name="phone" ng-minlength="8" disabled>
+              <span class="msg error" ng-show="form.phone.$invalid">Please enter phone</span>
+            </label>
+          </li>
+          <li class="ui-form-group" ng-class="{
+            'valid': form.search.$valid,
+            'invalid': form.search.$invalid }">
+            <h4 class="ui-group-label">Search input field (text)</h4>
+            <sl-ui-search-input search="user.search" form="form"></sl-ui-search-input>
+          </li>
+          <li>
+            <h4 class="ui-group-label">Field group (radio)</h4>
+            <ol class="ui-field-group" ng-class="{
+            'valid': form.contact.$valid,
+            'invalid': form.contact.$invalid }">
+              <li ng-repeat="contact in ['email', 'SMS', 'phone']">
+                <label class="ui-radio">
+                  <input type="radio" ng-model="user.contact" name="contact" value="{{contact}}" ng-class="{ checked: user.contact == contact }">
+                  <i class="icon"></i>
+                  <span class="ui-label-txt capitalize">{{contact}}</span>
+                </label>
+                <span class="msg error" ng-show="form.contact.$invalid">Please tell us your preferred method of contact</span>
+              </li>
+              <li>
+                <label class="ui-radio">
+                  <input type="radio" ng-model="user.contact" name="contact" value="other" ng-class="{ checked: true }" disabled>
+                  <i class="icon"></i>
+                  <span class="ui-label-txt capitalize">other (disabled, checked)</span>
+                </label>
+                <span class="msg error" ng-show="form.contact.$invalid">Please tell us your preferred method of contact</span>
+              </li>
+              <li>
+                <label class="ui-radio">
+                  <input type="radio" ng-model="user.contact" name="contact" value="other2" ng-class="{ checked: false }" disabled>
+                  <i class="icon"></i>
+                  <span class="ui-label-txt capitalize">other2 (disabled, un-checked)</span>
+                </label>
+                <span class="msg error" ng-show="form.contact.$invalid">Please tell us your preferred method of contact</span>
+              </li>
+            </ol>
+          </li>
+          <li>
+            <h4 class="ui-group-label">Field group inline (radio)</h4>
+            <ol class="ui-field-group group-inline" ng-class="{
+            'valid': form.gender.$valid,
+            'invalid': form.gender.$invalid }">
+              <li ng-repeat="gender in ['male', 'female']">
+                <label class="ui-radio">
+                  <input type="radio" ng-model="user.gender" name="gender" value="{{gender}}" ng-class="{ checked: user.gender == gender }">
+                  <i class="icon"></i>
+                  <span class="ui-label-txt capitalize">{{gender}}</span>
+                </label>
+                <span class="msg error" ng-show="form.gender.$invalid">Please tell us your gender</span>
+              </li>
+            </ol>
+          </li>
+          <li>
+            <h4 class="ui-group-label">Field group inline (checkbox)</h4>
+            <ol class="ui-field-group group-inline">
+              <li ng-repeat="interest in interests">
+                <label class="ui-checkbox">
+                  <input type="checkbox" ng-model="user.interests[interest]" name="interests" ng-class="{ checked: user.interests[interest] }">
+                  <i class="icon"></i>
+                  <span class="ui-label-txt capitalize">{{interest}}</span>
+                </label>
+              </li>
+            </ol>
+          </li>
+          <li>
+            <h4 class="ui-group-label">No labels (radio, checkbox)</h4>
+            <ol class="ui-field-group group-inline">
+              <li ng-repeat="edu in education">
+                <label class="ui-checkbox">
+                  <input type="checkbox" ng-model="nolabel.education[edu]" name="education" ng-class="{ checked: nolabel.education[edu] }">
+                  <i class="icon"></i>
+                </label>
+              </li>
+              <li ng-repeat="contact in ['email', 'SMS', 'phone']">
+                <label class="ui-radio">
+                  <input type="radio" ng-model="nolabel.contact" name="contact" value="{{contact}}" ng-class="{ checked: nolabel.contact == contact }">
+                  <i class="icon"></i>
+                </label>
+              </li>
+            </ol>
+          </li>
+          <li>
+            <h4 class="ui-group-label">Field group (checkbox)</h4>
+            <ol class="ui-field-group">
+              <li ng-repeat="edu in education">
+                <label class="ui-checkbox">
+                  <input type="checkbox" ng-model="user.education[edu]" name="education" ng-class="{ checked: user.education[edu] }">
+                  <i class="icon"></i>
+                  <span class="ui-label-txt capitalize">{{edu}}</span>
+                </label>
+              </li>
+              <li>
+                <label class="ui-checkbox">
+                  <input type="checkbox" ng-model="user.education.none" name="education" ng-class="{ checked: true }" disabled>
+                  <i class="icon"></i>
+                  <span class="ui-label-txt capitalize">none (disabled, checked)</span>
+                </label>
+              </li>
+              <li>
+                <label class="ui-checkbox">
+                  <input type="checkbox" ng-model="user.education.some" name="education" ng-class="{ checked: false }" disabled>
+                  <i class="icon"></i>
+                  <span class="ui-label-txt capitalize">some (disabled, un-checked)</span>
+                </label>
+              </li>
+            </ol>
+          </li>
+        </ul>
+      </fieldset>
+    </form>
+
+    <section>
+      <h4>Togglers</h4>
+      <pre><code>
+        $scope.toggler1: {{toggler1}}
+        $scope.toggler2: {{toggler2}}
+        $scope.toggler3: {{toggler3}}
+      </code></pre>
+      <ul>
+        <li>
+          <sl-ui-toggle togglers="togglers1"></sl-ui-toggle>
+          <div class="note">Two items</div>
+        </li>
+        <li>
+          <sl-ui-toggle togglers="togglers2"></sl-ui-toggle>
+          <div class="note">Three items</div>
+        </li>
+        <li>
+          <sl-ui-toggle togglers="togglers3"></sl-ui-toggle>
+          <div class="note">Multiple items w/ long example</div>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h4>Switches</h4>
+      <pre><code>
+        $scope.switch1: {{switch1}}
+        $scope.switch2: {{switch2}}
+        $scope.switch3: {{switch3}}
+        $scope.switch4: {{switch4}}
+      </code></pre>
+      <ul>
+        <li>
+          <sl-ui-switch switches="switches1" classes="select"></sl-ui-switch>
+          <div class="note">left/right (select)</div>
+        </li>
+        <li>
+          <sl-ui-switch switches="switches2" classes="select" labels="false"></sl-ui-switch>
+          <div class="note">left/right (select w/o labels)</div>
+        </li>
+        <li>
+          <sl-ui-switch switches="switches3" classes="power"></sl-ui-switch>
+          <div class="note">on/off (power)</div>
+        </li>
+        <li>
+          <sl-ui-switch switches="switches4" classes="power" labels="false"></sl-ui-switch>
+          <div class="note">on/off (power w/o labels)</div>
+        </li>
+      </ul>
+    </section>
+  </article>
+</section>

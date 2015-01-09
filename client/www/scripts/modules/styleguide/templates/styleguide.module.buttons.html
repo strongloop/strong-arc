@@ -1,0 +1,61 @@
+<section class="buttons module">
+  <h2 ng-click="clickModule()">Buttons</h2>
+  <article ng-show="show">
+    <ul class="light">
+      <li>
+        <h4 class="module-subheading">Primary</h4>
+        <button class="ui-btn primary">Primary</button>
+        <button class="ui-btn primary" disabled>Primary (disabled)</button>
+        <button class="ui-btn primary small">Primary (small)</button>
+        <button class="ui-btn primary small" disabled>Primary (small, disabled)</button>
+      </li>
+      <li>
+        <h4 class="module-subheading">Secondary</h4>
+        <button class="ui-btn secondary">Secondary</button>
+        <button class="ui-btn secondary" disabled>Secondary (disabled)</button>
+        <button class="ui-btn secondary small">Secondary (small)</button>
+        <button class="ui-btn secondary small" disabled>Secondary (small, disabled)</button>
+      </li>
+      <li>
+        <h4 class="module-subheading">With Icon</h4>
+        <button class="ui-btn primary"><i class="sl-icon sl-icon-checkmark"></i> Primary</button>
+        <button class="ui-btn secondary"><i class="sl-icon sl-icon-help"></i> Secondary</button>
+        <button class="ui-btn primary small"><i class="sl-icon sl-icon-checkmark"></i> Primary (small)</button>
+        <button class="ui-btn secondary small"><i class="sl-icon sl-icon-help"></i> Secondary (small)</button>
+      </li>
+      <li>
+        <h4 class="module-subheading">With Spinner</h4>
+        <button class="ui-btn primary with-spinner">
+          Primary
+          <span sl-common-loading-indicator class="loading" size="small"></span>
+        </button>
+        <button class="ui-btn secondary with-spinner">
+          Secondary
+          <span sl-common-loading-indicator class="loading" size="small"></span>
+        </button>
+        <button class="ui-btn primary small with-spinner">
+          Primary (small)
+          <span sl-common-loading-indicator class="loading" size="small"></span>
+        </button>
+        <button class="ui-btn secondary small with-spinner">
+          Secondary (small)
+          <span sl-common-loading-indicator class="loading" size="small"></span>
+        </button>
+      </li>
+    </ul>
+    <ul class="dark">
+      <li>
+        <h4 class="module-subheading">With Icon (dark background)</h4>
+        <button class="ui-btn primary dark-bg"><i class="sl-icon sl-icon-plus"></i> Primary</button>
+        <button class="ui-btn primary dark-bg selected"><i class="sl-icon sl-icon-plus"></i> Primary (selected)</button>
+        <button class="ui-btn primary dark-bg" disabled><i class="sl-icon sl-icon-plus"></i> Primary (disabled)</button>
+      </li>
+      <li>
+        <h4 class="module-subheading">Icon Only (dark background)</h4>
+        <button class="ui-btn primary dark-bg square"><i class="sl-icon sl-icon-database"></i></button>
+        <button class="ui-btn primary dark-bg square selected"><i class="sl-icon sl-icon-database"></i></button>
+        <button class="ui-btn primary dark-bg square" disabled><i class="sl-icon sl-icon-database"></i></button>
+      </li>
+    </ul>
+  </article>
+</section>

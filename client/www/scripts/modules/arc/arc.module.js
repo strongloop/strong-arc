@@ -42,6 +42,7 @@ var Arc = angular.module('Arc', [
   'Explorer',
   'Model',
   'Landing',
+  'Styleguide',
   'BuildDeploy',
   'Metrics',
   'UI',
@@ -116,6 +117,11 @@ Arc.config([
         url: '/register',
         controller: 'RegisterController',
         templateUrl: './scripts/modules/arc-user/templates/register.html'
+      })
+      .state('styleguide', {
+        url: '/styleguide',
+        controller: 'StyleguideController',
+        templateUrl: './scripts/modules/styleguide/templates/styleguide.main.html'
       });
 
   }

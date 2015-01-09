@@ -72,9 +72,11 @@ UI.directive('slUiSwitch', [
       replace: true,
       templateUrl: './scripts/modules/ui/templates/ui.switch.html',
       scope: {
-        switches: '='
+        switches: '=',
+        classes: '@'
       },
       controller: function($scope, $attrs, $log) {
+        $scope.labels = angular.isDefined($attrs.labels) ? $attrs.labels : true;
         $scope.switches[0].isActive = true;
         $scope.activeId = $scope.switches[0].id;
 
@@ -88,6 +90,47 @@ UI.directive('slUiSwitch', [
           switcher.isActive = true;
           $scope[switcher.activeId] = switcher.id;
           $scope.$parent[switcher.activeId] = switcher.id;
+        }
+      }
+    }
+  }
+]);
+
+UI.directive('slUiSearchInput', [
+  '$log',
+  '$timeout',
+  function($log, $timeout){
+    return {
+      restrict: "E",
+      replace: true,
+      scope: {
+        search: '=',
+        form: '='
+      },
+      templateUrl: './scripts/modules/ui/templates/ui.input.search.html',
+      controller: function($scope, $attrs, $log) {
+        $scope.isClearLink = false;
+
+        $scope.focus = function($event){
+          var $targ = $($event.target);
+          $scope.isClearLink = $targ.hasClass('.clear').length || $targ.find('.clear').length || $targ.parents('.clear').length;
+          var $input = $($event.target).parents('label').find('input');
+
+          if ( $scope.isClearLink ) {
+            $input.addClass('ng-focused');
+          }
+        };
+
+        $scope.clear = function($event){
+          $scope.search = null;
+
+          var $el = $($event.target).parents('label');
+
+          //wait for current $apply to finish
+          $timeout(function(){
+            $el.find('input').addClass('ng-focused').focus();
+            $scope.isClearLink = false;
+          }, 0);
         }
       }
     }

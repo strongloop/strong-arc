@@ -1,0 +1,80 @@
+<section class="text module">
+  <h2 ng-click="clickModule()">Text</h2>
+  <article ng-show="show">
+    <ul>
+      <li>
+        <h4 class="module-subheading">Text</h4>
+        <p>
+          <strong>font-family:</strong>
+          <em>'helvetica neue', helvetica, ubuntu, arial, sans-serif;</em>
+        </p>
+        <p>Sample Paragraph - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vitae leo blandit, elementum diam vel, ullamcorper enim. Cras lorem tortor, eleifend a ultricies sit amet, ultricies id magna. Donec tortor eros, aliquet a mattis non, sagittis finibus ipsum. Suspendisse eget mauris vel urna efficitur blandit. Vivamus rhoncus interdum ligula at sodales. Nulla a pellentesque enim.</p>
+        Regular text (outside any parent)<br><br>
+        <span>Regular text inside span</span><br><br>
+        <strong>Bold text</strong><br><br>
+        <em>Emphasis text</em><br><br>
+        <small>Small text</small><br><br>
+        <small>Small text with <strong>bold inside</strong> and <em>emphasis inside</em>.</small><br><br>
+      </li>
+      <li>
+        <h4 class="module-subheading">Links</h4>
+        <a href>default link</a>
+        <h5>Font icons</h5>
+        <i class="sl-icon sl-icon-checkmark"></i>
+        <i class="sl-icon sl-icon-x"></i>
+        <i class="sl-icon sl-icon-circle-stop-start"></i>
+        <i class="sl-icon sl-icon-circle-hollow"></i>
+        <i class="sl-icon sl-icon-circle-filled"></i>
+        <i class="sl-icon sl-icon-play"></i>
+        <i class="sl-icon sl-icon-restart-2"></i>
+        <i class="sl-icon sl-icon-restart"></i>
+        <i class="sl-icon sl-icon-stop"></i>
+        <i class="sl-icon sl-icon-checkmark-outline"></i>
+        <i class="sl-icon sl-icon-box-arrow-down"></i>
+        <i class="sl-icon sl-icon-link"></i>
+        <i class="sl-icon sl-icon-file"></i>
+        <i class="sl-icon sl-icon-minus"></i>
+        <i class="sl-icon sl-icon-minus-thick"></i>
+        <i class="sl-icon sl-icon-search"></i>
+        <i class="sl-icon sl-icon-question-mark"></i>
+        <i class="sl-icon sl-icon-plus"></i>
+        <i class="sl-icon sl-icon-plus-thick"></i>
+        <i class="sl-icon sl-icon-plus-sign"></i>
+        <i class="sl-icon sl-icon-play2"></i>
+        <i class="sl-icon sl-icon-on-off"></i>
+        <i class="sl-icon sl-icon-logo"></i>
+        <i class="sl-icon sl-icon-help"></i>
+        <i class="sl-icon sl-icon-lightning"></i>
+        <i class="sl-icon sl-icon-folder"></i>
+        <i class="sl-icon sl-icon-down-arrow"></i>
+        <i class="sl-icon sl-icon-database"></i>
+        <i class="sl-icon sl-icon-close"></i>
+        <i class="sl-icon sl-icon-chevron-down"></i>
+        <i class="sl-icon sl-icon-arrow-down"></i>
+        <i class="sl-icon sl-icon-arrow-right"></i>
+        <h5>Link with icon</h5>
+        <a href><i class="sl-icon sl-icon-question-mark"></i></a>
+        <h5>Close link</h5>
+        <a href="javascript:void(0)" class="ui-close">x</a>
+      </li>
+      <li>
+        <h4 class="module-subheading">Headings</h4>
+        <h1>h1 (page heading)</h1>
+        <h2>h2 (page sub-heading)</h2>
+        <h3>h3 (section heading)</h3>
+        <h4>h4 (section sub-heading)</h4>
+        <h5>h5 (small heading)</h5>
+      </li>
+    </ul>
+    <h4 class="module-subheading">Tabs</h4>
+    <pre><code>
+      $scope.activeTab: {{activeTab}}
+    </code></pre>
+    <ul class="ui-tabs">
+      <li ng-repeat="tab in tabs" class="tab" ng-class="{ active: activeTab.id == tab.id }">
+        <a href ng-click="setActiveTab(tab)" class="tab-link">{{tab.name}}</a>
+        <a href ng-click="closeTab(tab)" class="ui-close">x</a>
+      </li>
+    </ul>
+  </article>
+</section>
