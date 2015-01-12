@@ -1,3 +1,35 @@
+2015-01-12, Version 1.0.4
+=========================
+
+ * tweaks to tagline and readme (seanbrookes)
+
+ * add setScrollView method call to ds view to trigger scroll bars (seanbrookes)
+
+ * add url field to DataSource form UI (seanbrookes)
+
+ * handle logout errors on api call (Anthony Ettinger)
+
+ * remove video from landing page (Anthony Ettinger)
+
+ * update landing page with new look and feel (Anthony Ettinger)
+
+ * hide port if local host (Anthony Ettinger)
+
+ * update landing disabled icons with pointer (Anthony Ettinger)
+
+ * fix bug when deleting datasources (Anthony Ettinger)
+
+ * Fix bad CLA URL in CONTRIBUTING.md (Ryan Graham)
+
+ * fix broken unit test (Anthony Ettinger)
+
+ * load lodash into tests (Anthony Ettinger)
+
+ * fix erroneous link in error message (Anthony Ettinger)
+
+ * change datasource to data source (Anthony Ettinger)
+
+
 2014-12-22, Version 1.0.3
 =========================
 
