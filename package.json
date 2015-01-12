@@ -1,6 +1,6 @@
 {
   "name": "strong-arc",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "app.js",
   "bin": {
     "strong-arc": "bin/cli.js"
@@ -32,7 +32,7 @@
     "strong-pm": "^1.5.0",
     "ws": "~0.4.32"
   },
-  "description": "A gui for working with the LoopBack framework",
+  "description": "A visual suite for the StrongLoop API Platform",
   "devDependencies": {
     "autoprefixer-core": "^4.0.2",
     "chai": "^1.9.1",
@@ -72,7 +72,7 @@
     "svn-interface": "^0.4.4"
   },
   "optionalDependencies": {
-    "sl-blip": "http://blip.strongloop.com/strong-arc@1.0.3"
+    "sl-blip": "http://blip.strongloop.com/strong-arc@1.0.4"
   },
   "repository": {
     "type": "git",

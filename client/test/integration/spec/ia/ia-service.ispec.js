@@ -22,9 +22,9 @@ describe('IAService', function() {
       var help = renderHelpAsString(err.help);
       expect(help).to.contain(
         'Add the connector to your project and try again.');
-      expect(help).to.contain('http://docs.strongloop.com/display/LB/' +
-        'Data+sources+and+connectors' +
-        '#Datasourcesandconnectors-Installingaconnector');
+      expect(help).to.contain('http://docs.strongloop.com/display/LB/'+
+      'Connecting+models+to+data+sources' +
+      '#Connectingmodelstodatasources-Installingaconnector');
     });
 
     it('adds custom help message for missing Oracle connector', function() {

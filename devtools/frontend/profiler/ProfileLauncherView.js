@@ -108,9 +108,10 @@ WebInspector.ProfileLauncherView.prototype = {
         document.documentElement.addEventListener('setServer', function(e){
             var data = e.detail;
             var server = data.server;
+            var showPort = server.port !== '----';
 
             var title = ( 'Create a profile for <span class="server">' +
-                server.host + ':' + server.port +
+                server.host + ( showPort ? ':' + server.port : '') +
                 '</span> <span class="pid"></span>' );
 
             this._setTitle(title);

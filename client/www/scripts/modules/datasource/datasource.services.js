@@ -112,7 +112,7 @@ Datasource.service('DataSourceService', [
           deferred.resolve(instances);
         },
         function(response) {
-          console.warn('bad get datasource defninitions: ' + response)
+          console.warn('bad get data source defninitions: ' + response)
         }
       );
 
@@ -164,14 +164,14 @@ Datasource.service('DataSourceService', [
             deferred.resolve(instance);
           },
           function(error) {
-            console.warn('bad get datasource by id: ' + dsId + '  ' + error);
+            console.warn('bad get data source by id: ' + dsId + '  ' + error);
             deferred.reject(error);
           }
         );
 
       }
       else {
-        console.warn('tried to retrieve datasource by new id: ' + dsId );
+        console.warn('tried to retrieve data source by new id: ' + dsId );
       }
       return deferred.promise;
 
@@ -185,7 +185,7 @@ Datasource.service('DataSourceService', [
             deferred.resolve(response);
           },
           function(response) {
-            console.warn('bad delete datasource definition');
+            console.warn('bad delete data source definition');
           }
         );
         return deferred.promise;

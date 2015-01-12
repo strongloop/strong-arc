@@ -134,7 +134,7 @@ Composer.controller('ComposerMainController', [
       if (instanceIdConfig){
         var confirmText = 'delete model?';
         if (type === CONST.DATASOURCE_TYPE){
-          confirmText = 'delete datasource?';
+          confirmText = 'delete data source?';
         }
         if (confirm(confirmText)){
 
@@ -149,9 +149,26 @@ Composer.controller('ComposerMainController', [
             );
           }
           else if (type === CONST.DATASOURCE_TYPE) {
+
             DataSourceService.deleteDataSourceInstance(instanceIdConfig.definitionId).
               then(function(response){
                 $scope.activeInstance = IAService.resetActiveToFirstOpenInstance(instanceIdConfig.definitionId);
+
+                //reset data source for models using the deleted datasource
+                var models = $scope.mainNavModels.filter(function(model){
+                  var dataSourceId = instanceIdConfig.definitionId.split('.')[1];
+
+                  return model.config.dataSource === dataSourceId;
+                });
+
+                models.forEach(function(model){
+                  model.config.dataSource = null;
+
+                  //save the model
+                  ModelService.updateModelInstance(model);
+                });
+
+                loadModels();
                 loadDataSources();
               }
             );
@@ -525,7 +542,7 @@ Composer.controller('ComposerMainController', [
               $scope.updateActiveInstance(
                 $scope.activeInstance, CONST.DATASOURCE_TYPE, originalDataSourceId);
               loadDataSources();
-              growl.addSuccessMessage("datasource created");
+              growl.addSuccessMessage("data source created");
               $rootScope.$broadcast('IANavEvent');
               return $scope.activeInstance;
 
@@ -536,7 +553,7 @@ Composer.controller('ComposerMainController', [
         else {
           return DataSourceService.updateDataSourceInstance(targetInstance).
             then(function(instance) {
-              growl.addSuccessMessage('datasource updated');
+              growl.addSuccessMessage('data source updated');
               $scope.activeInstance = instance;
               IAService.updateOpenInstanceRef(originalDataSourceId, $scope.activeInstance.type, $scope.activeInstance);
               $scope.updateActiveInstance(
@@ -545,8 +562,8 @@ Composer.controller('ComposerMainController', [
               return $scope.activeInstance;
             })
             .catch(function(error){
-              $log.warn('bad datasource definition update: ' + error);
-              growl.addErrorMessage('error updating datasource definition');
+              $log.warn('bad data source definition update: ' + error);
+              growl.addErrorMessage('error updating data source definition');
             }
 
           );

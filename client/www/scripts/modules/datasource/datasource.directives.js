@@ -9,7 +9,8 @@
 Datasource.directive('slDatasourceEditorForm', [
   'DataSourceService',
   'connectorMetadata',
-  function(DataSourceService, connectorMetadata) {
+  '$timeout',
+  function(DataSourceService, connectorMetadata, $timeout) {
     return {
       replace:true,
       link: function(scope, el, attrs) {
@@ -26,7 +27,12 @@ Datasource.directive('slDatasourceEditorForm', [
         scope.$watch('datasource.connectionTestResponse', function(response) {
           React.renderComponent(DatasourceEditorView({scope:scope}), el[0]);
         }, true);
-
+        $timeout(function() {
+          window.setScrollView('[data-id="DatasourceEditorInstanceContainer"]');
+        }, 200);
+        window.onresize = function() {
+          window.setScrollView('[data-id="DatasourceEditorInstanceContainer"]');
+        };
         scope.connectorMetadata = connectorMetadata;
       }
     }

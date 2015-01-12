@@ -3,7 +3,7 @@
     <li ng-show="isDatasourceEditorActive()" >
       <em ng-show="checkUniquePropStatus()" class="warning-message">name must be unique</em>
       <input type="text"
-             placeholder="add new datasource"
+             placeholder="add new data source"
              name="PropertyName"
              ng-model="currDatasource.name"
              ng-change="datasourceNameUpdate()"
@@ -19,7 +19,7 @@
              ng-click="addDatasource()"
              ng-disabled="isAddDatasourceButtonDisabled()"
              class="btn btn-xs btn-primary"
-             value="add Datasource" />
+             value="add Data source" />
     </li>
     <li ng-show="isDatasourceEditorActive()" >
       <input type="button"
