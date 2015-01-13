@@ -112,7 +112,7 @@ WebInspector.ProfileLauncherView.prototype = {
 
             var title = ( 'Create a profile for <span class="server">' +
                 server.host + ( showPort ? ':' + server.port : '') +
-                '</span> <span class="pid"></span>' );
+                '</span>, process ID#<span class="pid"></span>' );
 
             this._setTitle(title);
         }.bind(this));
