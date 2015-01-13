@@ -160,11 +160,11 @@ Arc.run([
 Arc.config([
   '$httpProvider',
   function ($httpProvider) {
-    $httpProvider.interceptors.push('composerRequestInterceptor');
+    $httpProvider.interceptors.push('arcRequestInterceptor');
   }
 ]);
 
-Arc.factory('composerRequestInterceptor', [
+Arc.factory('arcRequestInterceptor', [
   '$q',
   '$location',
   '$cookieStore',
