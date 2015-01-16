@@ -1,29 +1,11 @@
 <div>
   <ul>
-    <li class="metrics-chart-nav-item">
-      <span class="chart-name">CPU</span>
+    <li ng-repeat="chart in chartData" class="metrics-chart-nav-item">
+      <span class="chart-name">{{ chart.displayName }}</span>
       <ul>
-        <li ng-repeat="item in viewCharts.cpu.metrics" ng-class="{true:'', false:'is-disabled'}[item.active]">
-          <button class="btn-command" ng-click="toggleChartMetric(item.name)">{{ item.display }}</button>
-          <span style="{{ getChartControlItemColor(item) }}">&nbsp;</span>
-        </li>
-      </ul>
-    </li>
-    <li class="metrics-chart-nav-item">
-      <span class="chart-name">LOOP</span>
-      <ul>
-        <li ng-repeat="item in viewCharts.loop.metrics" ng-class="{true:'', false:'is-disabled'}[item.active]">
-          <button class="btn-command" ng-click="toggleChartMetric(item.name)">{{ item.display }}</button>
-          <span style="{{ getChartControlItemColor(item) }}">&nbsp;</span>
-        </li>
-      </ul>
-    </li>
-    <li class="metrics-chart-nav-item">
-      <span class="chart-name">HEAP</span>
-      <ul>
-        <li ng-repeat="item in viewCharts.heap.metrics" ng-class="{true:'', false:'is-disabled'}[item.active]">
-          <button class="btn-command" ng-click="toggleChartMetric(item.name)">{{ item.display }}</button>
-          <span style="{{ getChartControlItemColor(item) }}">&nbsp;</span>
+        <li ng-repeat="metric in chart.metrics" ng-class="{true:'', false:'is-disabled'}[metric.active]">
+          <button class="btn-command" ng-click="toggleChartMetric(metric)">{{ metric.name }}</button>
+          <span style="{{ getChartControlItemColor(metric) }}">&nbsp;</span>
         </li>
       </ul>
     </li>

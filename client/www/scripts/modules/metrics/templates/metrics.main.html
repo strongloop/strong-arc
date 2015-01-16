@@ -13,15 +13,9 @@
       </div>
     </div>
   </div>
-  <div data-ui-type="table">
-    <div data-ui-type="row" class="metrics-container-wrap" ng-class="{ disabled: !showMetrics() }">
-      <div data-ui-type="cell" class="metrics-nav-column" data-id="MetricsSidebarContainer">
-        <div sl-metrics-chart-controls class="metrics-nav-controls-container"></div>
-      </div>
-      <div data-ui-type="cell" sl-metrics-chart-container class="metrics-main-content-layout"></div>
-    </div>
+  <div data-id="metrics-main-content-container" ng-class="{ disabled: !isValidProcess() }">
+    <div sl-metrics-chart-container class="metrics-main-content-layout" ></div>
   </div>
-
 </div>
 
 

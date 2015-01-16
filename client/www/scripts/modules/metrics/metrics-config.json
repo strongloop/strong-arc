@@ -1,0 +1,383 @@
+{
+  "charts": [
+    {
+      "name": "cpu",
+      "displayName": "CPU",
+      "chartConfig": "cpuChartConfig",
+      "chartModel": "cpuChartModel",
+      "chartOptions": {
+        "title": {
+          "text": "CPU"
+        },
+        "yAxis": {
+          "axisLabel": "%"
+        }
+      },
+      "metrics": [
+        {
+          "name": "total",
+          "constant": "CPU_TOTAL",
+          "active": true,
+          "key": "Total",
+          "color": "#ff7f0e"
+        },
+        {
+          "name": "user",
+          "active": true,
+          "constant": "CPU_USER",
+          "key": "User",
+          "color": "#7777ff"
+        },
+        {
+          "name": "system",
+          "active": true,
+          "constant": "CPU_SYSTEM",
+          "key": "System",
+          "color": "#2ca02c"
+        }
+      ]
+    },
+    {
+      "name": "heap",
+      "displayName": "Heap",
+      "chartConfig": "heapChartConfig",
+      "chartModel": "heapChartModel",
+      "chartOptions": {
+        "title": {
+          "text": "Heap"
+        },
+        "yAxis": {
+          "axisLabel": "MB"
+        }
+      },
+      "metrics": [
+        {
+          "name": "total",
+          "active": true,
+          "constant": "HEAP_TOTAL",
+          "key": "Total",
+          "color": "#A7Daaa"
+        },
+        {
+          "name": "used",
+          "active": true,
+          "constant": "HEAP_USED",
+          "key": "Used",
+          "color": "#aaa6B0"
+        }
+      ]
+    },
+    {
+      "name": "loopCount",
+      "displayName": "Loop Count",
+      "chartConfig": "loopCountChartConfig",
+      "chartModel": "loopCountChartModel",
+      "chartOptions": {
+        "title": {
+          "text": "Loop Count"
+        },
+        "yAxis": {
+          "axisLabel": "#"
+        }
+      },
+      "metrics": [
+        {
+          "name": "count",
+          "active": true,
+          "constant": "LOOP_COUNT",
+          "key": "Count",
+          "color": "#3079c7"
+        }
+      ]
+    },
+    {
+      "name": "loop",
+      "displayName": "Loop",
+      "chartConfig": "loopChartConfig",
+      "chartModel": "loopChartModel",
+      "chartOptions": {
+        "title": {
+          "text": "Loop"
+        },
+        "yAxis": {
+          "axisLabel": "ms"
+        }
+      },
+      "metrics": [
+        {
+          "name": "maximum",
+          "active": true,
+          "constant": "LOOP_MAX",
+          "key": "Max",
+          "color": "#ff7f0e"
+        },
+        {
+          "name": "average",
+          "active": true,
+          "constant": "LOOP_AVG",
+          "key": "Avg",
+          "color": "#7777ff"
+        },
+        {
+          "name": "minimum",
+          "active": true,
+          "constant": "LOOP_MIN",
+          "key": "Min",
+          "color": "#2ca02c"
+        }
+      ]
+    },
+    {
+      "name": "httpCount",
+      "displayName": "HTTP Count",
+      "chartConfig": "httpCountChartConfig",
+      "chartModel": "httpCountChartModel",
+      "chartOptions": {
+        "title": {
+          "text": "HTTP Count"
+        },
+        "yAxis": {
+          "axisLabel": "#"
+        }
+      },
+      "metrics": [
+        {
+          "name": "count",
+          "active": true,
+          "constant": "HTTP_COUNT",
+          "key": "Count",
+          "color": "#3079c7"
+        }
+      ]
+    },
+    {
+      "name": "http",
+      "displayName": "HTTP",
+      "chartConfig": "httpChartConfig",
+      "chartModel": "httpChartModel",
+      "chartOptions": {
+        "title": {
+          "text": "HTTP"
+        },
+        "yAxis": {
+          "axisLabel": "ms"
+        }
+      },
+      "metrics": [
+        {
+          "name": "maximum",
+          "active": true,
+          "constant": "HTTP_MAX",
+          "key": "Max",
+          "color": "#ff7f0e"
+        },
+        {
+          "name": "average",
+          "active": true,
+          "constant": "HTTP_AVG",
+          "key": "Avg",
+          "color": "#7777ff"
+        },
+        {
+          "name": "minimum",
+          "active": true,
+          "constant": "HTTP_MIN",
+          "key": "Min",
+          "color": "#2ca02c"
+        }
+      ]
+    },
+    {
+      "name": "counters",
+      "displayName": "DB Counters",
+      "chartConfig": "countersChartConfig",
+      "chartModel": "countersChartModel",
+      "chartOptions": {
+        "title": {
+          "text": "Counters"
+        },
+        "yAxis": {
+          "axisLabel": "#"
+        }
+      },
+      "metrics": [
+        {
+          "name": "memcached",
+          "constant": "MEMCACHED_COUNT",
+          "active": true,
+          "key": "Memcached",
+          "color": "#ff7f0e"
+        },
+        {
+          "name": "mongodb",
+          "active": true,
+          "constant": "MONGO_COUNT",
+          "key": "MongoDB",
+          "color": "#7777ff"
+        },
+        {
+          "name": "redis",
+          "active": true,
+          "constant": "REDIS_COUNT",
+          "key": "Redis",
+          "color": "#2ca02c"
+        },
+        {
+          "name": "MySQL",
+          "active": true,
+          "constant": "MYSQL_COUNT",
+          "key": "mysql",
+          "color": "#3079c7"
+        }
+      ]
+    },
+    {
+      "name": "mongodb",
+      "displayName": "MongoDB",
+      "chartConfig": "mongodbChartConfig",
+      "chartModel": "mongodbChartModel",
+      "chartOptions": {
+        "title": {
+          "text": "MongoDB"
+        },
+        "yAxis": {
+          "axisLabel": "#"
+        }
+      },
+      "metrics": [
+        {
+          "name": "maximum",
+          "active": true,
+          "constant": "MONGO_MAX",
+          "key": "Max",
+          "color": "#ff7f0e"
+        },
+        {
+          "name": "average",
+          "active": true,
+          "constant": "MONGO_AVG",
+          "key": "Avg",
+          "color": "#7777ff"
+        },
+        {
+          "name": "minimum",
+          "active": true,
+          "constant": "MONGO_MIN",
+          "key": "Min",
+          "color": "#2ca02c"
+        }
+      ]
+    },
+    {
+      "name": "redis",
+      "displayName": "Redis",
+      "chartConfig": "redisChartConfig",
+      "chartModel": "redisChartModel",
+      "chartOptions": {
+        "title": {
+          "text": "Redis"
+        },
+        "yAxis": {
+          "axisLabel": "#"
+        }
+      },
+      "metrics": [
+        {
+          "name": "maximum",
+          "active": true,
+          "constant": "REDIS_MAX",
+          "key": "Max",
+          "color": "#ff7f0e"
+        },
+        {
+          "name": "average",
+          "active": true,
+          "constant": "REDIS_AVG",
+          "key": "Avg",
+          "color": "#7777ff"
+        },
+        {
+          "name": "minimum",
+          "active": true,
+          "constant": "REDIS_MIN",
+          "key": "Min",
+          "color": "#2ca02c"
+        }
+      ]
+    },
+    {
+      "name": "mysql",
+      "displayName": "MySQL",
+      "chartConfig": "mysqlChartConfig",
+      "chartModel": "mysqlChartModel",
+      "chartOptions": {
+        "title": {
+          "text": "MySQL"
+        },
+        "yAxis": {
+          "axisLabel": "#"
+        }
+      },
+      "metrics": [
+        {
+          "name": "maximum",
+          "active": true,
+          "constant": "MYSQL_MAX",
+          "key": "Max",
+          "color": "#ff7f0e"
+        },
+        {
+          "name": "average",
+          "active": true,
+          "constant": "MYSQL_AVG",
+          "key": "Avg",
+          "color": "#7777ff"
+        },
+        {
+          "name": "minimum",
+          "active": true,
+          "constant": "MYSQL_MIN",
+          "key": "Min",
+          "color": "#2ca02c"
+        }
+      ]
+    },
+    {
+      "name": "memcached",
+      "displayName": "Memcached",
+      "chartConfig": "memcachedChartConfig",
+      "chartModel": "memcachedChartModel",
+      "chartOptions": {
+        "title": {
+          "text": "Memcached"
+        },
+        "yAxis": {
+          "axisLabel": "#"
+        }
+      },
+      "metrics": [
+        {
+          "name": "maximum",
+          "active": true,
+          "constant": "MEMCACHED_MAX",
+          "key": "Max",
+          "color": "#ff7f0e"
+        },
+        {
+          "name": "average",
+          "active": true,
+          "constant": "MEMCACHED_AVG",
+          "key": "Avg",
+          "color": "#7777ff"
+        },
+        {
+          "name": "minimum",
+          "active": true,
+          "constant": "MEMCACHED_MIN",
+          "key": "Min",
+          "color": "#2ca02c"
+        }
+      ]
+    }
+  ]
+}
