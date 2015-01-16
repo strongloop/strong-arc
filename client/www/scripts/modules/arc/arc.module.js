@@ -45,6 +45,7 @@ var Arc = angular.module('Arc', [
   'Styleguide',
   'BuildDeploy',
   'Metrics',
+  'Manager',
   'UI',
   'Datasource',
   'ui.bootstrap',
@@ -81,6 +82,11 @@ Arc.config([
         url: '/metrics',
         templateUrl: './scripts/modules/metrics/templates/metrics.main.html',
         controller: 'MetricsMainController'
+      })
+      .state('manager', {
+        url: '/manager',
+        templateUrl: './scripts/modules/manager/templates/manager.main.html',
+        controller: 'ManagerMainController'
       })
       .state('composer', {
         url: '/composer',

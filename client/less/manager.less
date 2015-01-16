@@ -1,0 +1,190 @@
+
+
+.manager-main-layout {
+
+  width:100%;
+  overflow-y: auto;
+
+  .load-balancer-container {
+    float:right;
+    position:relative;
+    background:#ffffff;
+
+    .load-balancer-content {
+      position:absolute;
+      top:3rem;
+      right:1rem;
+      width:42rem;
+      border:1px solid #eeeeee;
+      background:#ffffff;
+      padding:2rem;
+      z-index: 4000;
+
+      table {
+        width:90%;
+      }
+    }
+  }
+  form.ui-form  {
+
+    margin-top: .2rem;
+
+    [data-id="PortCol"] {
+      width:9.1rem;
+      input {
+        width:9rem;
+      }
+
+    }
+    [data-id="PidCountCol"] {
+
+      input {
+        width:6rem;
+      }
+
+    }
+  }
+  .manager-main-container {
+    width: 100rem;
+    margin: 2rem auto 0 auto;
+//    -webkit-box-shadow: 8px 8px 5px 0px rgba(220, 220, 220, 1);
+//    -moz-box-shadow: 8px 8px 5px 0px rgba(220, 220, 220, 1);
+//    box-shadow: 8px 8px 5px 0px rgba(220, 220, 220, 1);
+//    border-top: 1px solid #eeeeee;
+//    border-left: 1px solid #eeeeee;
+
+    .app-context {
+      text-align: center;
+
+    }
+
+    [data-id="HostCol"] {
+
+    }
+
+    .host-actions-list {
+      background: #ffffff;
+      border: 1px solid #eeeeee;
+      border-radius: .5rem;
+    }
+
+    [data-id="StatusCol"] {
+      width: 13rem;
+
+      .is-problem {
+        color: red;
+
+        span {
+          color: red;
+        }
+
+      }
+      .manager-host-status-container {
+        position: relative;
+      }
+      .btn-host-activate {
+        width: 2rem;
+
+        :active {
+          color:@brand-info;
+        }
+      }
+      .btn-host-status {
+        width: 7.6rem;
+        text-align: left;
+        padding: 0;
+        margin: 0;
+
+      }
+      .host-problem-tooltip-container {
+        position: absolute;
+        top: 2rem;
+        left: 3rem;
+        width: 30rem;
+        border: 1px solid #444444;
+        background: #ffffff;
+        z-index: 4000;
+      }
+      .is-active {
+
+        span {
+          color: #444444;
+        }
+      }
+    }
+    [data-id="ProcessesCol"] {
+      width: 40rem;
+
+    }
+
+    [data-id="PidCol"] {
+      width: 10rem;
+
+    }
+    [data-id="ActionCol"] {
+      width: 4rem;
+    }
+
+    .manager-pm-host-grid {
+
+      width: 100%;
+      border: 1px solid #eeeeee;
+
+      tr {
+        color: #bbbbbb;
+      }
+      th {
+        color: #444444;
+        font-weight: normal;
+      }
+
+      tr.is-active {
+        color: #111111;
+      }
+
+      td {
+        vertical-align: top;
+        border: 1px solid #eeeeee;
+      }
+
+      .manager-hosts-grid-header {
+        background: #dddddd;
+        font-weight: normal;
+      }
+
+      //    .pid-list {
+      //      height: 11rem;
+      //    }
+      .ui-list-scroll {
+        height: 9rem;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+
+      .host-actions-container {
+        float: right;
+        position: relative;
+
+
+        .host-actions-list {
+          position: absolute;
+          top: 2rem;
+          width: 15rem;
+
+          button {
+            display:inline-block;
+            text-align: left;
+            width:100%;
+          }
+          button:active {
+            color:@brand-info;
+            background:#dddddd;
+          }
+        }
+      }
+
+    }
+
+  }
+}
+

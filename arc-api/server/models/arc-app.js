@@ -69,6 +69,14 @@ module.exports = function(ArcApp) {
       "description": "Browse and search curated Node modules with developer reviews.",
       "disabled": true,
       "supports": "*"
+    },
+    {
+      "id": "manager",
+      "name": "Manager",
+      "description": "Manage your StrongLoop processes.",
+      "disabled": false,
+      "beta": true,
+      "supports": "*"
     }
   ].map(function(app) {
     var arcApp = new ArcApp(app);
