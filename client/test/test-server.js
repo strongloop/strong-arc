@@ -25,6 +25,9 @@ arc.post('/reset', function(req, res, next) {
   console.log('--reset-start--');
 
   if (sandboxNeedsFullReset) {
+    if (fs.existsSync(SANDBOX)) {
+      fs.removeSync(SANDBOX);
+    }
     fs.copySync(EMPTY_PROJECT, SANDBOX);
     sandboxNeedsFullReset = false;
   }
