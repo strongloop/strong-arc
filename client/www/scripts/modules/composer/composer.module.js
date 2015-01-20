@@ -21,15 +21,19 @@ Composer.factory('requestInterceptor', [
       },
       responseError: function (rejection) {
         if ((rejection.status > 499) || (rejection.status === 422)) {
+          var error = rejection.data && rejection.data.error;
+          if (!error) {
+            error = { message: rejection.data };
+          }
 
           $rootScope.$broadcast('GlobalExceptionEvent', {
-              requestUrl: rejection.config.url,
-              message: rejection.data.error.message,
-              details: rejection.data.error.details,
-              name: rejection.data.error.name,
-              stack: rejection.data.error.stack,
-              code: rejection.data.error.code,
-              status: rejection.status
+              requestUrl: rejection.config && rejection.config.url,
+              message: error && error.message,
+              details: error && error.details,
+              name: error && error.name,
+              stack: error && error.stack,
+              code: error && error.code,
+              status: rejection.status || 'unknown',
             }
           );
         }
