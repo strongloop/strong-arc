@@ -20,32 +20,49 @@ Composer.factory('requestInterceptor', [
         return config || $q.when(config);
       },
       responseError: function (rejection) {
-        if (rejection && rejection.data && rejection.data.error && rejection.data.error.message) {
-          if ((rejection.status > 499) || (rejection.status === 422)) {
-
-            $rootScope.$broadcast('GlobalExceptionEvent', {
-                requestUrl: rejection.config.url,
-                message: rejection.data.error.message,
-                details: rejection.data.error.details,
-                name: rejection.data.error.name,
-                stack: rejection.data.error.stack,
-                code: rejection.data.error.code,
-                status: rejection.status
-              }
-            );
-          }
-        }
-        else if (rejection.data.error.message) {
-          $rootScope.$broadcast('GlobalExceptionEvent', {
-              message: rejection.data.error.message,
-              status: 'unknown'
-            }
-          );
-        }
-        else {
+        if (!rejection) {
           $rootScope.$broadcast('GlobalExceptionEvent', {
               message: 'poorly formed payload',
               status: 'unknown'
+            }
+          );
+          return $q.reject();
+        }
+        if (!rejection.data) {
+          $rootScope.$broadcast('GlobalExceptionEvent', {
+              message: JSON.stringify(rejection),
+              status: 'unknown'
+            }
+          );
+          return $q.reject(rejection);
+        }
+        if (!rejection.data.error) {
+          $rootScope.$broadcast('GlobalExceptionEvent', {
+              message: JSON.stringify(rejection.data),
+              status: 'unknown'
+            }
+          );
+          return $q.reject(rejection);
+        }
+        if (!rejection.data.error.message) {
+          $rootScope.$broadcast('GlobalExceptionEvent', {
+              message: JSON.stringify(rejection.data.error),
+              status: 'unknown'
+            }
+          );
+          return $q.reject(rejection);
+        }
+
+        if ((rejection.status > 499) || (rejection.status === 422)) {
+
+          $rootScope.$broadcast('GlobalExceptionEvent', {
+              requestUrl: rejection.config.url,
+              message: rejection.data.error.message,
+              details: rejection.data.error.details,
+              name: rejection.data.error.name,
+              stack: rejection.data.error.stack,
+              code: rejection.data.error.code,
+              status: rejection.status
             }
           );
         }
