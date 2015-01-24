@@ -136,7 +136,7 @@ BuildDeploy.directive('slBuildDeployDeployForm', [
             BuildDeployService.deployGit(deployData, $scope.viewConsole)
               .then(function(data){
                 $log.log('deploy done!', data);
-                $scope.deploy.git.message = 'Successfully deployed using git';
+                $scope.deploy.git.message = 'Successfully being deployed using git';
                 $scope.deploy.git.messageType = 'success';
                 $scope.deploy.git.loading = false;
               })
