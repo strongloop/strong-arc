@@ -53,25 +53,26 @@
 
   .sl-forms {
     .clearfix;
-    width: @min-width;
+//    width: @min-width;
     margin: 0 auto;
     text-align: center;
     position: relative;
+    height: 30.5rem;
 
     .sl-forms-left, .sl-forms-right {
       display: block;
       width: 40rem;
       //height: 30rem;
       text-align: left;
+      position: absolute;
+      left: 50%;
 
       &.sl-forms-left {
-        float: left;
-        margin-right: 10rem;
+        margin-left: -51rem;
       }
 
       &.sl-forms-right {
-        float: right;
-        margin-left: 10rem;
+        margin-left: 11rem;
       }
 
       form {
