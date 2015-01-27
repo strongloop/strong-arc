@@ -5,7 +5,8 @@ PM.controller('PMAppController', [
   '$timeout',
   '$interval',
   'PMAppService',
-  function($scope, $log, $timeout, $interval, PMAppService) {
+  'growl',
+  function($scope, $log, $timeout, $interval, PMAppService, growl) {
 
     // app module constants
     var PMCONST = {
@@ -18,6 +19,8 @@ PM.controller('PMAppController', [
       UNKNOWN_STATE: 'unknown'
     };
 
+    var startAttemptCount = 0;
+    var startTimeoutThreshold = 5;
 
    /*
     * Check Local App Status
@@ -33,14 +36,21 @@ PM.controller('PMAppController', [
             $scope.getLocalAppLink();  // spawn process to obtain url when it's ready
             if($scope.pm.localAppState !== PM_CONST.RUNNING_STATE) {
               $scope.pm.localAppState = PM_CONST.RETRIEVING_PORT_STATE;
+              startAttemptCount++;
+            }
+            else {
+              startAttemptCount = 0;
             }
           }
           // starting / stopping / restarting etc
           if (PM_CONST.STOPPED_STATE !== $scope.pm.localAppState){
-            // in case the app goes down and is spitting 500 or 404 errors
-            if (response.status && (response.status !== 200)) {
-                $log.warn('checkLocalAppStatus returned non 200 response: ' + JSON.stringify(response));
+            // in case the app goes down or won't start and is spitting 500 or 404 errors
+            if (startAttemptCount > startTimeoutThreshold){
+              $log.warn('The app should have started by now.  Please check for exceptions');
+              $scope.stopApp();
+              growl.addWarnMessage('The app should have started by now.  Please check for exceptions');
             }
+
             // keep checking as status doesn't always come back in the response when things
             // are transitioning
             else {
@@ -69,6 +79,7 @@ PM.controller('PMAppController', [
     *
     * */
     $scope.startApp = function() {
+      startAttemptCount = 0;
       $scope.pm.localAppState = PM_CONST.STARTING_STATE;
       return PMAppService.startLocalApp()
         .then(function(response) {
@@ -77,6 +88,7 @@ PM.controller('PMAppController', [
         });
     };
     $scope.reStartApp = function() {
+      startAttemptCount = 0;
       $scope.pm.isLocalAppRunning = false;
       $scope.pm.localAppState = PM_CONST.RESTARTING_STATE;
       $scope.pm.localAppLink = '';
