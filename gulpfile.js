@@ -34,9 +34,13 @@ gulp.task('build', [
     'install-example-modules'
 ]);
 
-gulp.task('build-less', function() {
+gulp.task('build-less', function(done) {
   return gulp.src('client/less/style.less')
-    .pipe(less())
+    .pipe(less()).on('error', function(err){
+      //catch error so we don't crash the watcher
+      console.error(err);
+      done();
+    })
     .pipe(gulp.dest('client/www/style/'));
 });
 

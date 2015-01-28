@@ -1,16 +1,18 @@
 /* @override
 	http://0.0.0.0:3003/style/dev/main.css
 	http://0.0.0.0:4800/style/src/main.css */
-
+html {
+  font-size: 62.5%;
+}
 
 body {
-  font-size: 16px;
+  font-size: 1.6rem;
   font-weight: 400;
   width: 100%;
   background-color:#ffffff;
   margin: 0;
   overflow: hidden;
-  font-family: 'helvetica neue', helvetica, arial, sans-serif;
+  font-family: 'helvetica neue', helvetica, ubuntu, arial, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -18,6 +20,9 @@ input:focus, select:focus {
   outline:none;
 }
 
+.pull-left {
+  float: left;
+}
 /*
 
     Data Table Grid
@@ -343,7 +348,7 @@ Validation CSS
   padding-top: 1rem;
   text-decoration: underline;
 }
-.ia-global-exception-link:hover{
+.ia-global-exception-link:hover {
   color: #4a90e2;
   cursor: pointer;
 }

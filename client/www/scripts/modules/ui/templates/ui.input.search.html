@@ -1,0 +1,14 @@
+<span class="ui-input-search">
+  <label class="inline">
+    <span class="search" ng-mousedown="focus($event)">
+      <span class="icon" ng-class="{ focused: form.search.$focused }">
+        <i class="icon-search"></i>
+      </span>
+      <input type="text" class="ui-input" placeholder="Enter keyword" ng-model="search" name="search" ng-minlength="8" ng-focus autocomplete="off">
+      <a href class="clear icon" ng-click="clear($event)" ng-class="{ focused: form.search.$focused }">
+        <i class="icon-close"></i>
+      </a>
+    </span>
+    <span class="msg error" ng-show="form.search.$invalid">Please enter keyword</span>
+  </label>
+</span>

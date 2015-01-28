@@ -1,23 +1,27 @@
 .ui-toggler {
   button {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: 300;
     color: @ui-toggler-inactive-color;
     background: @ui-toggler-inactive-bg-color;
-    border-radius: @ui-radius;
     border: 1px solid @ui-toggler-border-color;
-    padding: .75rem 1.25rem;
-    width: 12rem;
+    padding: .65rem 1.75rem;
+    min-width: 10.5rem;
     text-align: center;
+    border-radius: 0;
+    border-right: none;
+    border-left: none;
 
-    &:nth-child(1) {
+    &:first-child {
       border-radius: @ui-radius 0 0 @ui-radius;
+      border-left: 1px solid @ui-toggler-border-color;
       border-right: none;
     }
 
-    &:nth-child(2) {
+    &:last-child {
       border-radius: 0 @ui-radius @ui-radius 0;
       border-left: none;
+      border-right: 1px solid @ui-toggler-border-color;
     }
 
     &.active {
@@ -48,18 +52,34 @@
   border: none;
   overflow: visible;
 
+  //power switch
+  &.power {
+    &.ui-switch-left {
+      .ui-switch-toggle {
+        border-color: @ui-switch-power-border-color;
+
+        .ui-switch-circle {
+          background: @ui-switch-power-bg-color;
+        }
+      }
+    }
+  }
+
+  //select switch is default
+
   .ui-switch-toggle {
     display: inline-block;
     position: relative;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     color: @ui-switch-color;
     background: @ui-switch-wrap-bg-color;
-    border-radius: 50px;
+    border-radius: @ui-radius;
     border: 1px solid @ui-switch-border-color;
-    width: 4.6rem;
-    height: 2.6rem;
+    width: 5.6rem;
+    height: 3rem;
     margin: 0 .75rem;
     overflow: hidden;
+    transition: border-color .2s ease-in-out;
 
     .ui-switch-circle {
       transition: left .2s ease-in-out;
@@ -67,20 +87,21 @@
       top: .2rem;
       left: .2rem;
       display: block;
-      width: 2rem;
-      height: 2rem;
-      border-radius: 50px;
+      width: 2.4rem;
+      height: 2.4rem;
+      border-radius: @ui-radius/2;
       background-color: @ui-switch-bg-color;
     }
   }
 
   &.ui-switch-right {
     .ui-switch-circle {
-      left: 2.2rem;
+      left: 2.8rem;
     }
   }
 
   .ui-switch-label {
+    font-size: 1.4rem;
     display: inline-block;
     position: relative;
     top: -.7rem;
@@ -113,18 +134,46 @@
 
 .ui-btn {
   border: none;
-  border-radius: @ui-radius;
+  border-radius: @ui-radius/2 + .1;
   background: @ui-button-bg-color;
   color: @ui-button-color;
-  padding: .75rem 2.25rem;
+  padding: .8rem 4rem;
   margin-left: 1rem;
   border-bottom: 2px solid @ui-button-border-color;
-  font-weight: 300;
+  font-weight: 250;
+  position: relative;
+  letter-spacing: .1rem;
 
-  &[disabled], &[disabled]:hover {
-    color: @ui-disabled-button-color;
-    background: @ui-disabled-button-bg-color;
-    border-bottom: 2px solid @ui-disabled-button-color;
+  .loading {
+    position: absolute;
+    left: -2rem;
+    top: 1.75rem;
+  }
+
+  &:hover {
+    background-color: @ui-button-hover-bg-color;
+  }
+
+  &:active {
+    background-color: @ui-button-active-bg-color;
+    border-bottom-color: @ui-button-active-border-color;
+  }
+
+  &[disabled], &[disabled]:hover, &[disabled]:active, &[disabled].dark-bg {
+    opacity: .6;
+
+    &.primary {
+      background-color: @ui-button-bg-color;
+    }
+
+    &.secondary {
+      color: @ui-secondary-button-color;
+      background-color: @ui-secondary-button-bg-color;
+
+      &:hover {
+        border-bottom-color: @ui-secondary-button-border-color;
+      }
+    }
   }
 
   &.secondary {
@@ -138,28 +187,61 @@
 
     &:hover {
       color: @ui-secondary-button-hover-color;
-      background: @ui-secondary-button-hover-bg-color;
+      background-color: @ui-secondary-button-hover-bg-color;
+      border-bottom-color: @ui-secondary-button-hover-border-color;
 
       .sl-icon {
         color: @ui-secondary-button-hover-color;
       }
     }
 
-    &[disabled] {
-      opacity: .6;
-      background: @ui-disabled-button-bg-color;
+    &:active {
+      color: @ui-secondary-button-active-color;
+      background-color: @ui-secondary-button-active-bg-color;
+      border-bottom-color: @ui-secondary-button-active-border-color;
 
       .sl-icon {
-        color: @ui-disabled-button-color;
-      }
-
-      &:hover {
-        background: @ui-disabled-button-bg-color;
+        color: @ui-secondary-button-active-color;
       }
     }
   }
 
-  &:hover {
-    background-color: @ui-button-hover-bg-color;
+
+  &.small {
+    font-size: 1.2rem;
+    padding: .75rem 3rem;
+    letter-spacing: .1rem;
+  }
+
+  &.with-spinner {
+    margin-left: 5rem;
+  }
+
+  &.square {
+    padding: .75rem 1.5rem;
+
+    .sl-icon {
+      &:before {
+        font-size: 2rem;
+      }
+    }
+  }
+
+  &.dark-bg {
+    &.selected, &.selected:hover, &.selected:active {
+      background-color: @ui-button-primary-dark-bg-selected-bg-color;
+      border-bottom-color: @ui-button-primary-dark-bg-selected-border-color;
+    }
+
+    &:hover:not(.selected):not([disabled]) {
+      background-color: @ui-button-primary-dark-bg-hover-bg-color;
+      color: @ui-button-primary-dark-bg-hover-color;
+      border-bottom-color: @ui-button-primary-dark-bg-hover-border-color;
+    }
+
+    &:active:not(.selected):not([disabled]) {
+      background-color: @ui-button-primary-dark-bg-active-bg-color;
+      border-color: @ui-button-primary-dark-bg-active-border-color;
+    }
   }
 }

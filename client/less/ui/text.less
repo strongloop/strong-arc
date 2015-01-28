@@ -1,0 +1,54 @@
+html {
+  font-size: 62.5%;
+
+  body {
+    font-size: 1.6rem;
+  }
+}
+
+a {
+  color: green;
+
+  &:hover {
+    color: darkgreen;
+  }
+
+  &:active {
+    color: darkgreen;
+  }
+}
+
+small {
+  font-size: 1.2rem;
+  font-style: normal;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.lowercase {
+  text-transform: lowercase;
+}
+
+.ui-close {
+  display: inline-block;
+  background: url(/images/x_out.svg) no-repeat center center;
+  width: 2rem;
+  height: 2rem;
+  background-size: 100% 100%;
+  text-indent: -9999px;
+  outline: none;
+
+  &:hover {
+    background-image: url(/images/x_over.svg);
+  }
+
+  &:active {
+    background-image: url(/images/x_down.svg);
+  }
+}

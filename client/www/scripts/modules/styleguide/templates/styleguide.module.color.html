@@ -1,0 +1,66 @@
+<section class="color module">
+  <h2 ng-click="clickModule()">Color</h2>
+  <article ng-show="show">
+    <p>
+      Colors should only be defined and referenced in <code>ui/globals.less</code>.
+      If you want a red background on a <code>div.error</code>, define it in <code>global.less</code>
+      and reference a generically named variable in <code>my-feature.less</code>as:
+    </p>
+    <pre><code>
+    // globals.less
+    @ui-error-bg-color: @red-1;
+
+    // my-feature.less
+    div.error {
+      background-color: @ui-error-bg-color;
+    }
+    </code></pre>
+
+    <p>
+      This allows us to provide a themeable framework where the color scheme
+      can be changed by introducing a new <code>globals.less</code> stylesheet only.
+    </p>
+    <ul>
+      <li>
+        <h4 class="module-subheading">Primary</h4>
+        <ol class="group-inline colors primary">
+          <li ng-repeat="color in colors.primary" class="{{color}}">
+            <div class="color"></div>
+            <div class="css">@{{color}}</div>
+            <div class="hex"></div>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <h4 class="module-subheading">Secondary</h4>
+        <ol class="group-inline colors">
+          <li ng-repeat="color in colors.secondary" class="{{color}}">
+            <div class="color"></div>
+            <div class="css">@{{color}}</div>
+            <div class="hex"></div>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <h4 class="module-subheading">Greytone</h4>
+        <ol class="group-inline colors">
+          <li ng-repeat="color in colors.grey" class="{{color}}">
+            <div class="color"></div>
+            <div class="css">@{{color}}</div>
+            <div class="hex"></div>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <h4 class="module-subheading">Tertiary</h4>
+        <ol class="group-inline colors">
+          <li ng-repeat="color in colors.tertiary" class="{{color}}">
+            <div class="color"></div>
+            <div class="css">@{{color}}</div>
+            <div class="hex"></div>
+          </li>
+        </ol>
+      </li>
+    </ul>
+  </article>
+</section>
