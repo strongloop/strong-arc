@@ -1,14 +1,21 @@
 <div class="metrics-chart-view-container">
-  <div class="chart-container" ng-show="isShowMetricChart('cpu')">
-    <h3>CPU</h3>
-    <nvd3 class="metrics-chart" options="cpuChartOptions" data="cpuChartModel"></nvd3>
-  </div>
-  <div class="chart-container" ng-show="isShowMetricChart('loop')">
-    <h3>LOOP</h3>
-    <nvd3 class="metrics-chart" options="loopChartOptions" data="loopChartModel"></nvd3>
-  </div>
-  <div class="chart-container" ng-show="isShowMetricChart('heap')">
-    <h3>HEAP</h3>
-    <nvd3 class="metrics-chart" options="heapChartOptions" data="heapChartModel"></nvd3>
+  <div ng-repeat="chart in chartData" class="chart-container">
+    <div data-ui-type="table">
+      <div data-ui-type="row">
+        <div data-ui-type="cell" class="nav-chart-col metrics-nav-column metrics-chart-nav-item" data-id="MetricsSidebarContainer">
+          <ul>
+            <li ng-repeat="metric in chart.metrics" ng-class="{true:'', false:'is-disabled'}[metric.active]">
+              <button class="btn-command" ng-click="toggleChartMetric(metric)">{{ metric.name }}</button>
+              <span style="{{ getChartControlItemColor(metric) }}">&nbsp;</span>
+            </li>
+          </ul>
+        </div>
+        <div data-ui-type="cell" class="main-chart-col">
+          <h3>{{ chart.displayName }}</h3>
+          <nvd3 class="metrics-chart" options="getChartOptions(chart.chartConfig)" data="getChartModel(chart.chartModel)"></nvd3>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>

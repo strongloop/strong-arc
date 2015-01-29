@@ -14,12 +14,28 @@
 .metrics-main-container .sl-pid-selector{
   margin-left:2rem;
 }
+.nav-chart-col {
+  width:16%;
+  ul {
+    margin-top:6rem;
+  }
+}
+
 .metrics-visual-ticker-container {
+
   position:relative;
+}
+[data-id="metrics-main-content-container"] {
+  &.disabled {
+    opacity: .3;
+  }
+  overflow:auto;
+
 }
 [data-id="MetricsSettingsContainer"] {
 
 }
+
 .metrics-nav-column {
   width:22rem;
   color:#ffffff;
@@ -67,12 +83,6 @@
 }
 .timer-display-value-col {
   text-align:left;
-}
-
-.metrics-container-wrap {
-  &.disabled {
-    opacity: .3;
-  }
 }
 
 .metrics-chart-view-container {

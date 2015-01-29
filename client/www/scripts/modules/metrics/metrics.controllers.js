@@ -23,19 +23,25 @@ Metrics.controller('MetricsMainController', [
     $scope.isTimerRunning = false;
     $scope.isMetricsLoaded = false;
     $scope.dataPointCount = 0;
+    $scope.lastGoodTS; // fallback
+    $scope.breakLoop = false;
+    $scope.currentStub; // temporary dataset to drive the current context
     $scope.lastTimeStamp = {}; // object collection of metrics servers and the last metrics received
     $scope.currentMetrics = []; // the root
     $scope.sysTime = {
       ticker:0
     };
-    var ONE_SECOND = 1000; // counter timer between metrics requestsed
+    var ONE_SECOND = 1000; // counter timer between metrics requested
+
+    $scope.chartData = [];
+
 
     /*
     * Query filter helpers
     *
     * */
     // test for existing timestamp on given server stub
-     function doesTimeStampExist() {
+    function doesTimeStampExist() {
       if (!$scope.lastTimeStamp) {
         return false;
       }
@@ -82,6 +88,9 @@ Metrics.controller('MetricsMainController', [
     *
     * */
     function ensureThrottledMetric(metricStub, newMetric) {
+      if (!Array.isArray(metricStub)) {
+        metricStub = [];
+      }
       metricStub.push(newMetric);
       var cLength = metricStub.length;
       // check if current count is higher than the threshold
@@ -110,19 +119,62 @@ Metrics.controller('MetricsMainController', [
           timeStamp: metric.timeStamp,
           processId: metric.processId,
           cpu: {
-            total:metric.gauges['cpu.total'],
-            system:metric.gauges['cpu.system'],
-            user:metric.gauges['cpu.user']
+            total:metric.gauges[METRICS_CONST.CPU_TOTAL],
+            system:metric.gauges[METRICS_CONST.CPU_SYSTEM],
+            user:metric.gauges[METRICS_CONST.CPU_USER]
           },
           heap: {
-            total:metric.gauges['heap.total'],
-            used:metric.gauges['heap.used']
+            total:metric.gauges[METRICS_CONST.HEAP_TOTAL],
+            used:metric.gauges[METRICS_CONST.HEAP_USED]
           },
           loop: {
-            minimum:metric.gauges['loop.minimum'],
-            maximum:metric.gauges['loop.maximum'],
-            average:metric.gauges['loop.average'],
-            count:metric.gauges['loop.count']
+            minimum:metric.gauges[METRICS_CONST.LOOP_MIN],
+            maximum:metric.gauges[METRICS_CONST.LOOP_MAX],
+            average:metric.gauges[METRICS_CONST.LOOP_AVG]
+          },
+          loopCount: {
+            count:metric.counters[METRICS_CONST.LOOP_COUNT]
+          },
+          http: {
+            minimum:metric.gauges[METRICS_CONST.HTTP_MIN],
+            maximum:metric.gauges[METRICS_CONST.HTTP_MAX],
+            average:metric.gauges[METRICS_CONST.HTTP_AVG]
+          },
+          httpCount: {
+            count:metric.counters[METRICS_CONST.HTTP_COUNT]
+          },
+          /*
+          *
+          * TIERS
+          *
+          * */
+          mongodb: {
+            minimum:metric.gauges[METRICS_CONST.MONGO_MIN],
+            maximum:metric.gauges[METRICS_CONST.MONGO_MAX],
+            average:metric.gauges[METRICS_CONST.MONGO_AVG]
+          },
+          mysql: {
+            minimum:metric.gauges[METRICS_CONST.MYSQL_MIN],
+            maximum:metric.gauges[METRICS_CONST.MYSQL_MAX],
+            average:metric.gauges[METRICS_CONST.MYSQL_AVG]
+          },
+          redis: {
+            minimum:metric.gauges[METRICS_CONST.REDIS_MIN],
+            maximum:metric.gauges[METRICS_CONST.REDIS_MAX],
+            average:metric.gauges[METRICS_CONST.REDIS_AVG]
+          },
+          memcached: {
+            minimum:metric.gauges[METRICS_CONST.MEMCACHED_MIN],
+            maximum:metric.gauges[METRICS_CONST.MEMCACHED_MAX],
+            average:metric.gauges[METRICS_CONST.MEMCACHED_AVG]
+          },
+          counters: {
+            memcached:metric.counters[METRICS_CONST.MEMCACHED_COUNT],
+            redis:metric.counters[METRICS_CONST.REDIS_COUNT],
+            mysql:metric.counters[METRICS_CONST.MYSQL_COUNT],
+            mongodb:metric.counters[METRICS_CONST.MONGO_COUNT],
+            loop:metric.counters[METRICS_CONST.LOOP_COUNT],
+            http:metric.counters[METRICS_CONST.HTTP_COUNT]
           }
         };
 
@@ -133,7 +185,7 @@ Metrics.controller('MetricsMainController', [
         *   - unique server/port/processId object instance
         *   - track individual metrics as timestamped arrays off
         *   this object
-        *   - eg: mStub.loopMetrics.average.push(newMetric);
+        *   - eg: mStub['loop']['average'].push(newMetric);
         *
         * */
         $scope.currentProcessId = metric.processId;
@@ -146,79 +198,86 @@ Metrics.controller('MetricsMainController', [
           $scope.currentMetrics[$scope.currentPMServerName][$scope.currentProcessId] = {};
         }
         // short reference to unique metric 'stub' instance
-        mStub = $scope.currentMetrics[$scope.currentPMServerName][$scope.currentProcessId];
+        $scope.currentStub = $scope.currentMetrics[$scope.currentPMServerName][$scope.currentProcessId];
 
-        // each metric collection ex chart
-        if (!mStub.loopMetrics) {
-          mStub.loopMetrics = {
-            average: [],
-            minimum: [],
-            maximum: []
-          };
-        }
-        if (!mStub.cpuMetrics) {
-          mStub.cpuMetrics = {
-            total: [],
-            user: [],
-            system: []
-          };
-        }
-        if (!mStub.heapMetrics) {
-          mStub.heapMetrics = {
-            total: [],
-            used: []
-          };
-        }
 
-        // add metric values to chart data
-        mStub.loopMetrics.average =
-          ensureThrottledMetric(mStub.loopMetrics.average,
-            {x: new Date(processedMetric.timeStamp), y: processedMetric.loop.average});
-        mStub.loopMetrics.minimum =
-          ensureThrottledMetric(mStub.loopMetrics.minimum,
-            {x: new Date(processedMetric.timeStamp), y: processedMetric.loop.minimum});
-        mStub.loopMetrics.maximum =
-          ensureThrottledMetric(mStub.loopMetrics.maximum,
-            {x: new Date(processedMetric.timeStamp), y: processedMetric.loop.maximum});
-        mStub.cpuMetrics.total =
-          ensureThrottledMetric(mStub.cpuMetrics.total,
-            {x: new Date(processedMetric.timeStamp), y: processedMetric.cpu.total});
-        mStub.cpuMetrics.user =
-          ensureThrottledMetric(mStub.cpuMetrics.user,
-            {x: new Date(processedMetric.timeStamp), y: processedMetric.cpu.user});
-        mStub.cpuMetrics.system =
-          ensureThrottledMetric(mStub.cpuMetrics.system,
-            {x: new Date(processedMetric.timeStamp), y: processedMetric.cpu.system});
-        mStub.heapMetrics.total =
-          ensureThrottledMetric(mStub.heapMetrics.total,
-            {x: new Date(processedMetric.timeStamp), y: processedMetric.heap.total});
-        mStub.heapMetrics.used =
-          ensureThrottledMetric(mStub.heapMetrics.used,
-            {x: new Date(processedMetric.timeStamp), y: processedMetric.heap.used});
+
+        /*
+        * metrics type/name/group
+        *
+        *
+        *
+        * for each 'data' i.e metric group eg cpu
+        *
+        * iterate over the metrics collection
+        *
+        *
+        * set each metric group
+        *
+        *
+        * */
+
+
+        $scope.chartData.map(function(chart) {
+          /*
+          * data.name
+          * data.displayName
+          * data.metrics []
+          *
+          * */
+          //$log.debug('data name: ' + data.displayName);
+
+          // each metric collection ex chart
+          if (!$scope.currentStub[chart.name]) {
+            $scope.currentStub[chart.name] = {};
+          }
+
+          chart.metrics.map(function(metric) {
+            var yVal = processedMetric[chart.name][metric.name];
+           // $log.debug();
+            if (yVal !== undefined) {
+              $scope.currentStub[chart.name][METRICS_CONST[metric.constant]] =
+                ensureThrottledMetric($scope.currentStub[chart.name][METRICS_CONST[metric.constant]],
+                  {x: new Date(processedMetric.timeStamp), y: yVal});
+            }
+            else {
+             // $log.debug('|     ' + data.name + ':' + metric.name + '  YVAL: ' + yVal)
+            }
+          });
+         });
 
         // last timestamp used for next query filter
         if (!$scope.lastTimeStamp[$scope.currentPMServerName]) {
           $scope.lastTimeStamp[$scope.currentPMServerName] = {};
         }
+
         $scope.lastTimeStamp[$scope.currentPMServerName][$scope.currentProcessId] = processedMetric.timeStamp;
-
-
       });
-      if (mStub) {
+      if ($scope.currentStub) {
 
-        // set the consumable for the chart renderers
-        // make it async to try and lighten things up a little
-        $scope.cpuChartModel = ChartConfigService.getChartDataConfig('cpu', mStub.cpuMetrics);
-        $scope.loopChartModel = ChartConfigService.getChartDataConfig('loop', mStub.loopMetrics);
-        $scope.heapChartModel = ChartConfigService.getChartDataConfig('heap', mStub.heapMetrics);
+        renderTheCharts();
 
-        // data point count
-        $scope.dataPointCount = mStub.cpuMetrics.total.length;
+
       }
+
+      // data point count
+      $scope.dataPointCount = $scope.currentStub['cpu'][METRICS_CONST.CPU_TOTAL].length;
+
+
 
 
     }
 
+    function renderTheCharts() {
+      // assign scope chart model variable data here
+      $scope.chartData.map(function(chart) {
+        var data = $scope.currentStub[chart.name];
+        $scope[chart.chartConfig] = ChartConfigService.getChartOptions(chart.chartOptions);
+        $scope[chart.chartModel] = ChartConfigService.getChartMetricsData(chart, data);
+
+      });
+
+    }
     /*
      *
      * Raw data request
@@ -249,6 +308,9 @@ Metrics.controller('MetricsMainController', [
 
             // reset everything to 0 until timestamp issue is fixed
             if (rawMetrics && rawMetrics.length) {
+              $scope.lastGoodTS = rawMetrics[rawMetrics.length -1].timeStamp;
+              $scope.breakLoop = false;
+
               $scope.isMetricsLoaded = true;
 
               var rawMetricsCount = rawMetrics.length;
@@ -262,7 +324,12 @@ Metrics.controller('MetricsMainController', [
               processMetricsTick(metricsToRender);
             }
             else {
-              $log.warn('getMetricsSnapShot returned no metrics');
+              $log.warn('getMetricsSnapShot returned no metrics ');
+              $scope.lastTimeStamp[$scope.currentPMServerName][$scope.currentProcessId] = $scope.lastGoodTS;
+              if (!$scope.breakLoop) {
+                getMetrics();
+                $scope.breakLoop = true;
+              }
               if ($state.includes('metrics')){
                 growl.addWarnMessage('No metrics available. Your license may be invalid or not present. Please contact sales@strongloop.com for a valid license.', {ttl: 10000});
               }
@@ -275,10 +342,19 @@ Metrics.controller('MetricsMainController', [
       }
     }
 
-    // set chart options
-    $scope.heapChartOptions = ChartConfigService.getChartOptions('heap');
-    $scope.cpuChartOptions = ChartConfigService.getChartOptions('cpu');
-    $scope.loopChartOptions = ChartConfigService.getChartOptions('loop');
+
+
+
+    $scope.getChartOptions = function(configRef) {
+
+      return $scope[configRef];
+
+    };
+    $scope.getChartModel = function(modelRef) {
+      return $scope[modelRef];
+
+    };
+
 
     /*
     *
@@ -293,24 +369,46 @@ Metrics.controller('MetricsMainController', [
       }
       return false;
     };
-    $scope.reRenderChart = function(chartName) {
-      // trigger rernder of chart
-      $scope.resetCharts();
-    };
+
     $scope.resetCharts = function() {
       if ($scope.isValidProcess()) {
         $scope.restartTicker();
         getMetrics();
       }
     };
-    $scope.startMetrics = function() {
-      if ($scope.isValidProcess()) {
-        $scope.currentMetrics = [];
-        getMetrics();
-        $scope.startTicker();
 
+    /*
+     *
+     * CHART CONTROLS - ACTIVE INDICATOR CIRCLE
+     *
+     * */
+    $scope.getChartControlItemColor = function(item) {
+      var x  = item;
+      var styleString = '';
+      if (item.active) {
+        styleString = 'border:1px solid  '+ item.color + ';background-color: '+ item.color;
+        return styleString;
+      }
+      else {
+        styleString = 'border:1px solid #aaaaaa;background-color: #555555;';
+        return styleString;
       }
     };
+    /*
+     *
+     * HTML
+     *
+     * CHART CONTROL
+     *
+     *
+     * */
+    $scope.toggleChartMetric = function(chartMetric) {
+
+      ChartConfigService.toggleMetricStatus(chartMetric);
+      renderTheCharts();
+
+    };
+
      $scope.startTicker = function() {
       $scope.sysTime.ticker = $scope.metricsUpdateInterval;
       $scope.startTimer();
@@ -377,47 +475,18 @@ Metrics.controller('MetricsMainController', [
         $scope.metricsUpdateInterval = MetricsService.setMetricsUpdateInterval(parseInt(newVal));
       }
     });
-
-    /*
-    *
-    * UI State
-    *
-    * */
-    $scope.isShowMetricChart = function(chartName) {
-
-      var retVar = false;
-      switch(chartName) {
-
-        case 'cpu':
-          if ($scope.cpuChartModel) {
-            retVar = true;
-          }
-          break;
-
-        case 'loop':
-          if ($scope.loopChartModel) {
-            retVar = true;
-          }
-
-          break;
-
-        case 'heap':
-          if ($scope.heapChartModel) {
-            retVar = true;
-          }
-
-          break;
-
-        default:
+    $scope.init = function() {
+      $scope.chartData = ChartConfigService.initChartConfigData()
+        .then(function(response) {
+          $scope.chartData = response;
+        }); // replace with dynamic config
+      if ($scope.isValidProcess()) {
+        $scope.currentMetrics = [];
+        getMetrics();
+        $scope.startTicker();
 
       }
-      return retVar;
-
-      return false;
-
     };
-
-
-    $scope.startMetrics();
+    $scope.init();
   }
 ]);
