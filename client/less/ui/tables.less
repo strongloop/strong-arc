@@ -1,0 +1,117 @@
+.ui-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  thead {
+    th {
+      background-color: @ui-table-header-bg-color;
+      color: @ui-table-header-color;
+      font-weight: 200;
+      border: 1px solid @ui-table-border-color;
+      padding: .5rem 1rem;
+
+      &.actions {
+        border: none;
+        background-color: inherit;
+      }
+    }
+  }
+
+  tbody {
+    td {
+      border: 1px solid @ui-table-border-color;
+      padding: .5rem 1rem;
+
+      &.has-selectable {
+        padding: 0;
+      }
+
+      .ui-form-group {
+        margin: 0;
+
+        .ui-input {
+          border: none;
+          line-height: 1.6;
+          .box-shadow(none);
+
+          &:focus {
+            border: none;
+          }
+
+          &.skinny {
+            width: 9rem;
+          }
+        }
+      }
+    }
+
+    tr {
+      &.selected {
+        td:not(.actions) {
+          background-color: @ui-table-cell-hover-bg-color;
+          color: @ui-table-cell-hover-color;
+
+          .ui-input {
+            background-color: @ui-table-cell-hover-bg-color;
+            color: @ui-table-cell-hover-color;
+          }
+
+          button {
+            color: @ui-table-selectable-btn-color;
+          }
+        }
+      }
+
+      &:hover:not(.selected):not(.has-selected-selectable) {
+        td {
+          border-bottom: 1px solid #444;
+          box-shadow: inset 0 1px 0 0 #444;
+
+          &:first-child {
+            border-left: 1px solid #444;
+          }
+
+          &:nth-last-child(2) {
+            border-right: 1px solid #444;
+          }
+
+          &.actions {
+            border: none;
+            box-shadow: none;
+          }
+        }
+      }
+    }
+
+    td {
+      .selectable {
+        border: 1px solid transparent;
+        height: 100%;
+
+        &.selected {
+          border: 1px solid @ui-table-cell-selected-border-color;
+
+          &.invalid {
+            border-color: @ui-msg-error-color;
+          }
+        }
+      }
+
+      .status {
+        cursor: pointer;
+      }
+
+      &.actions {
+        text-align: center;
+        border: none;
+      }
+    }
+  }
+
+  tfoot {
+    td {
+      border: 1px solid @ui-table-border-color;
+      padding: .5rem 1rem;
+    }
+  }
+}

@@ -1,0 +1,151 @@
+<section class="tables module">
+  <h2 ng-click="clickModule()">Tables</h2>
+  <article ng-show="show">
+    <section>
+      <h4>Table (standard)</h4>
+      <table class="ui-table">
+        <thead>
+          <th>column 1</th>
+          <th>column 2</th>
+          <th>column 3</th>
+          <th>column 4</th>
+          <th>column 5</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>example 1</td>
+            <td>example 2</td>
+            <td>example 3</td>
+            <td>example 4</td>
+            <td>example 5</td>
+          </tr>
+          <tr>
+            <td>example 1</td>
+            <td>example 2</td>
+            <td>example 3</td>
+            <td>example 4</td>
+            <td>example 5</td>
+          </tr>
+          <tr>
+            <td>example 1</td>
+            <td>example 2</td>
+            <td>example 3</td>
+            <td>example 4</td>
+            <td>example 5</td>
+          </tr>
+          <tr>
+            <td>example 1</td>
+            <td>example 2</td>
+            <td>example 3</td>
+            <td>example 4</td>
+            <td>example 5</td>
+          </tr>
+          <tr>
+            <td>example 1</td>
+            <td>example 2</td>
+            <td>example 3</td>
+            <td>example 4</td>
+            <td>example 5</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="5">footer</td>
+          </tr>
+        </tfoot>
+      </table>
+    </section>
+    <section>
+      <h4>Table with editable fields (form)</h4>
+      <pre><code>
+        $scope.data: {{data}}
+      </code></pre>
+
+      <form class="ui-form has-table" name="form" novalidate ng-submit="save(form)">
+        <table class="ui-table">
+          <thead>
+            <th>Host</th>
+            <th>Port</th>
+            <th>App status</th>
+            <th>Count</th>
+            <th>PIDs</th>
+            <th class="actions"></th>
+          </thead>
+          <tbody>
+            <tr
+              ng-repeat="id in [1, 2, 3, 4, 5]"
+              ng-click="rowSelect($event)"
+              ng-init="data['example'+id] = {};">
+                <td class="has-selectable">
+                  <ng-form name="hostForm">
+                    <div
+                      class="ui-form-group selectable"
+                      ng-class="{ invalid: hostForm.host.$invalid && hostForm.host.$dirty, valid: hostForm.host.$valid }"
+                      ng-click="itemSelect($event)">
+                      <input
+                        class="ui-input"
+                        type="text"
+                        name="host"
+                        ng-model="data['example'+id].host"
+                        placeholder="Enter host (eg: www{{id}}.example.com)"
+                        ng-minlength="8"
+                        required
+                        ng-focus="itemFocus($event)"
+                        ng-blur="itemBlur($event)">
+                      <span class="msg error" ng-show="hostForm.host.$invalid && hostForm.host.$dirty">Please enter host</span>
+                    </div>
+                  </ng-form>
+                </td>
+                <td class="has-selectable">
+                  <div class="ui-form-group selectable" ng-click="itemSelect($event)">
+                    <input
+                      class="ui-input skinny"
+                      type="text"
+                      name="port{{id}}"
+                      ng-model="data['example'+id].port"
+                      placeholder="(eg: 8000)"
+                      ng-focus="itemFocus($event)"
+                      ng-blur="itemBlur($event)">
+                  </div>
+                </td>
+                <td class="has-selectable">
+                  <div class="selectable" ng-click="itemSelect($event)">
+                    <span class="problem" ng-show="data['example'+id].isProblem">Problem <a href ng-click="showToolTip($event)"><i>?</i></a></span>
+                    <span
+                      ng-hide="data['example'+id].isProblem"
+                      class="status"
+                      ng-click="clickStatus(id)">active <i class="icon icon-active">==| |==</i></span> (active|inactive)
+                  </div>
+                </td>
+                <td class="has-selectable">
+                  <div class="ui-form-group selectable" ng-click="itemSelect($event)">
+                    <input
+                      class="ui-input skinny"
+                      type="number"
+                      name="processes{{id}}"
+                      ng-model="data['example'+id].processes"
+                      placeholder="(eg: 2)"
+                      ng-focus="itemFocus($event)"
+                      ng-blur="itemBlur($event)">
+                  </div>
+                </td>
+                <td>
+                  <ul class="ui-list-scroll skinny">
+                    <li
+                      ng-repeat="pid in [8000, 8001, 8002, 8003, 8004, 8005]"
+                      class="pid"
+                      ng-click="clickPid(pid)">
+                      {{pid}}
+                    </li>
+                  </ul>
+                </td>
+                <td class="actions">
+                  <a href class="ui-close">x</a>
+                </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </section>
+  </article>
+</section>
