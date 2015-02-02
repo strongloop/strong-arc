@@ -136,3 +136,4 @@ UI.directive('slUiSearchInput', [
     }
   }
 ]);
+
