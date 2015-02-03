@@ -206,3 +206,27 @@
   overflow-y: auto;
   margin-bottom: 0;
 }
+
+.ui-menu-action {
+  position: relative;
+  display: inline-block;
+
+  .actions {
+    background-color: @ui-menu-action-bg-color;
+    position: absolute;
+    z-index: 2;
+    top: 1.6rem;
+    min-width: 8rem;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.8);
+
+    ul {
+      margin: 0;
+      padding: 0;
+    }
+
+    li > * {
+      padding: .3rem .8rem;
+      display: block;
+    }
+  }
+}
