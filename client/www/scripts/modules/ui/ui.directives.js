@@ -137,3 +137,45 @@ UI.directive('slUiSearchInput', [
   }
 ]);
 
+UI.directive('slUiMenuAction', [
+  '$http',
+  '$tooltip',
+  '$log',
+  '$rootScope',
+  '$timeout', function($http, $tooltip, $log, $rootScope, $timeout){
+    return {
+      restrict: 'E',
+      replace: true,
+      transclude: true,
+      templateUrl: './scripts/modules/ui/templates/ui.menu.action.html',
+      link: function(scope, element, attrs){
+        var to;
+        scope.showMenu = false;
+        scope.hideOnPageClick = attrs.hideonpageclick;
+
+        $rootScope.$on('pageClick', function(e, $event){
+          var isMenuClick = !!$($event.target).parents('.ui-menu-action').length;
+
+          if ( scope.hideOnPageClick && !isMenuClick ) {
+            scope.showMenu = false;
+          }
+        });
+
+        scope.hideMenu = function(){
+          if ( scope.hideOnPageClick ) return;
+
+          to = $timeout(function(){
+            scope.showMenu = false;
+          }, 300);
+        };
+
+        scope.cancelHide = function(){
+          if ( scope.hideOnPageClick ) return;
+
+          if ( to ) {
+            $timeout.cancel(to);
+          }
+        };
+      }
+    };
+  }]);

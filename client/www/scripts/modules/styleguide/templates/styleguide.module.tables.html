@@ -1,5 +1,5 @@
 <section class="tables module">
-  <h2 ng-click="clickModule()">Tables</h2>
+  <h2>Tables</h2>
   <article ng-show="show">
     <section>
       <h4>Table (standard)</h4>
@@ -93,6 +93,12 @@
                         ng-focus="itemFocus($event)"
                         ng-blur="itemBlur($event)">
                       <span class="msg error" ng-show="hostForm.host.$invalid && hostForm.host.$dirty">Please enter host</span>
+                      <sl-ui-menu-action>
+                        <ul>
+                          <li><button class="ui-sans-btn" ng-click="delete()">Delete</button></li>
+                          <li><button class="ui-sans-btn" ng-click="whatever()">Whatever</button></li>
+                        </ul>
+                      </sl-ui-menu-action>
                     </div>
                   </ng-form>
                 </td>
@@ -140,7 +146,7 @@
                   </ul>
                 </td>
                 <td class="actions">
-                  <a href class="ui-close">x</a>
+                  <a href class="ui-close" ng-click="delete()">x</a>
                 </td>
             </tr>
           </tbody>

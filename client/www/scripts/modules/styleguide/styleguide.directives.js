@@ -254,6 +254,14 @@ Styleguide.directive('slStyleguideModuleTables', [
         $scope.clickStatus = function(id){
           $log.log('clicked %d', id);
         };
+
+        $scope.delete = function(){
+          $log.log('delete clicked');
+        };
+
+        $scope.whatever = function(){
+          $log.log('whatever clicked');
+        };
       }
     };
   }

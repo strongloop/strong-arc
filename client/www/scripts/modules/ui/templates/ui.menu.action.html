@@ -1,0 +1,14 @@
+<span class="ui-menu-action">
+  <span
+    class="trigger"
+    ng-mouseleave="hideMenu()"
+    ng-click="showMenu = !showMenu">
+     <i class="sl-icon sl-icon-box-arrow-down"></i>
+  </span>
+  <div
+    class="actions"
+    ng-show="showMenu"
+    ng-mouseenter="cancelHide()"
+    ng-mouseleave="hideMenu()"
+    ng-transclude></div>
+</span>
