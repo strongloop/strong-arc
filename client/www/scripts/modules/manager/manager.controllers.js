@@ -40,7 +40,25 @@ Manager.controller('ManagerMainController', [
     $scope.toggleManagerLoadBalancer = function() {
       return $scope.showManagerLoadBalancer = !$scope.showManagerLoadBalancer
     };
-
+    $scope.loadBalancers = [];
+    $scope.loadLoadBalancers = function() {
+      $scope.loadBalancers = $scope.mesh.models.LoadBalancer.find({}, function(err, response) {
+        $log.debug('LOAD BALANCERS');
+        if (err) {
+          $log.warn('bad get load balancers');
+          return;
+        }
+        $scope.$apply(function() {
+          $scope.loadBalancers = response;
+          $scope.currentLoadBalancer = {
+            host: '',
+            port: '',
+            username: '',
+            password: ''
+          };
+        });
+      });
+    };
 
     /*
     *
@@ -535,5 +553,6 @@ Manager.controller('ManagerMainController', [
     };
 
     loadHosts();
+    $scope.loadLoadBalancers();
   }
 ]);

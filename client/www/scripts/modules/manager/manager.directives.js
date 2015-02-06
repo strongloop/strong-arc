@@ -73,31 +73,14 @@ Manager.directive('slManagerLoadBalancer', [
       restrict: 'E',
       templateUrl: './scripts/modules/manager/templates/manager.load.balancer.html',
       controller: function($scope) {
-        $scope.loadBalancers = [];
-        $scope.loadLoadBalancers = function() {
-          $scope.loadBalancers = $scope.mesh.models.LoadBalancer.find({}, function(err, response) {
-            $log.debug('LOAD BALANCERS');
-            if (err) {
-              $log.warn('bad get load balancers');
-              return;
-            }
 
-            $scope.$apply(function() {
-              $scope.loadBalancers = response;
-              $scope.currentLoadBalancer = {
-                host: '',
-                port: '',
-                username: '',
-                password: ''
-              };
-            })
-          });
-        };
 
         $scope.saveLoadBalancer = function(){
           if ($scope.currentLoadBalancer.host && $scope.currentLoadBalancer.port) {
             $scope.mesh.models.LoadBalancer.create($scope.currentLoadBalancer, function(err, response) {
-              $scope.loadLoadBalancers();
+
+                $scope.loadLoadBalancers();
+
             });
           }
 
@@ -113,7 +96,7 @@ Manager.directive('slManagerLoadBalancer', [
           }
 
         };
-        $scope.loadLoadBalancers();
+
       }
     }
   }
