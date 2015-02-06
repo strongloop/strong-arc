@@ -1,0 +1,136 @@
+<div class="manager-main-layout">
+  <div class="manager-main-container" ng-controller="ManagerMainController">
+    <div class="load-balancer-container">
+      <button class="link-cmd" ng-click="toggleManagerLoadBalancer()" class="btn-toggle-loadbalancer">Load Balancer</button>
+      <div class="load-balancer-content" ng-show="showManagerLoadBalancer">
+        <sl-manager-load-balancer></sl-manager-load-balancer>
+      </div>
+    </div>
+    <div class="app-context">
+      <a href="#">{{ appContext.name }} {{ appContext.version }}</a>
+    </div>
+
+    <form class="ui-form has-table" name="form" novalidate ng-submit="save(form)">
+
+
+
+      <table class="manager-pm-host-grid ui-table">
+        <thead>
+        <tr class="manager-hosts-grid-header">
+          <th data-id="HostCol">
+            Strong PM
+          </th>
+          <th data-id="PortCol">
+            Port
+          </th>
+          <th data-id="StatusCol">
+            App Status
+          </th>
+          <th data-id="ProcessesCol" colspan="2">
+            Processes
+          </th>
+          <th data-id="ActionCol">
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="manager-host-grid-row" ng-repeat="host in hosts" ng-click="rowSelect($event)" ng-class="{ 'is-active' : isHostActive(host)}">
+          <td data-id="HostCol"  class="has-selectable">
+
+            <div class="ui-form-group selectable" ng-click="itemSelect($event)">
+
+              <!-- host directive -->
+              <sl-manager-host-name></sl-manager-host-name>
+
+            </div>
+
+          </td>
+          <td data-id="PortCol">
+            <div class="ui-form-group selectable" ng-click="itemSelect($event)">
+
+              <!-- port directive -->
+              <sl-manager-host-port></sl-manager-host-port>
+
+            </div>
+
+          </td>
+          <td data-id="StatusCol">
+            <div class="ui-form-group selectable" ng-click="itemSelect($event)">
+              <!-- status directive -->
+              <sl-manager-status></sl-manager-status>
+            </div>
+
+          </td>
+          <td data-id="PidCountCol">
+            <div class="ui-form-group selectable" ng-click="itemSelect($event)">
+
+              <sl-manager-process-count></sl-manager-process-count>
+
+            </div>
+          </td>
+          <td data-id="PidCol">
+            <div class="ui-form-group selectable" ng-click="itemSelect($event)">
+
+              <sl-manager-process-list></sl-manager-process-list>
+
+            </div>
+
+          </td>
+          <td data-id="ActionCol"  class="actions">
+            <a href class="ui-close" ng-click="deleteHost(host)">(X)</a>
+          </td>
+        </tr>
+        </tbody>
+
+      </table>
+
+    </form>
+
+
+
+
+
+
+
+    <form name="pm-host-form" ng-show="isShowAddHostForm">
+      <table class="manager-pm-host-grid">
+        <tr>
+          <td data-id="HostCol">
+            <div>
+              <input type="text"
+                     ng-model="currentPM.host"
+                     class="host-name-input"
+                     name="host"
+                     typeahead-focus-first="false"
+                     typeahead-on-select="onPMServerSelect($item)"
+                     typeahead="server as server.host for server in hostServers"
+                     sl-common-select-on-click
+                     required
+                     placeholder="host" />
+            </div>
+          </td>
+          <td data-id="PortCol">
+            <div>
+              <input ng-model="currentPM.port" placeholder="port" />
+            </div>
+          </td>
+          <td data-id="StatusCol">
+            {{ currentPM.status }}
+            <button class="link-cmd" ng-click="savePM()">activate</button>
+          </td>
+          <td data-id="PidCountCol"></td>
+          <td data-id="PidCol">
+          </td>
+          <td data-id="ActionCol">
+            <button class="link-cmd" ng-click="killNewPMHostForm()">(X)</button>
+          </td>
+        </tr>
+      </table>
+    </form>
+    <button class="link-cmd" ng-click="initAddNewPMHost()">Add PM Host</button>
+
+  </div>
+</div>
+
+
+

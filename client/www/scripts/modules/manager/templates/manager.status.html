@@ -1,0 +1,13 @@
+<div class="manager-host-status-container">
+  <button ng-click="toggleHostProblemTooltip(host)" class="link-cmd btn-host-status" class="link-cmd" ng-class="{false:'is-active', true:'is-problem'}[host.status.isProblem]">
+    <span>{{ host.status.display }}</span>
+    <span ng-show="host.status.isProblem" class="link-cmd sl-icon sl-icon-question-mark" ></span>
+  </button>
+  <button title="activate host" alt="activate host" class="link-cmd btn-host-activate" ng-click="activateHost(host)" ng-class="{true:'', false:'is-active'}[host.status.isProblem]">
+    <span class="glyphicon" ng-class="{false: 'glyphicon-random', true: 'glyphicon-record'}[!host.status.isProblem]"></span>
+  </button>
+  <div class="host-problem-tooltip-container" ng-hide="hideHostProblemTooltip(host)">
+    <span>{{ host.status.problem.title }}</span>
+    <p>{{ host.status.problem.description }}</p>
+  </div>
+</div>
