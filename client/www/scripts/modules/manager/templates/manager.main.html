@@ -29,7 +29,7 @@
           <th data-id="ProcessesCol" colspan="2">
             Processes
           </th>
-          <th data-id="ActionCol">
+          <th data-id="ActionCol" class="actions">
           </th>
         </tr>
         </thead>
@@ -37,21 +37,21 @@
         <tr class="manager-host-grid-row" ng-repeat="host in hosts" ng-click="rowSelect($event)" ng-class="{ 'is-active' : isHostActive(host)}">
           <td data-id="HostCol"  class="has-selectable">
 
-            <div class="ui-form-group selectable" ng-click="itemSelect($event)">
+            <!--<div class="ui-form-group selectable" ng-click="itemSelect($event)">-->
 
               <!-- host directive -->
               <sl-manager-host-name></sl-manager-host-name>
 
-            </div>
+            <!--</div>-->
 
           </td>
           <td data-id="PortCol">
-            <div class="ui-form-group selectable" ng-click="itemSelect($event)">
+            <!--<div class="ui-form-group selectable" ng-click="itemSelect($event)">-->
 
               <!-- port directive -->
               <sl-manager-host-port></sl-manager-host-port>
 
-            </div>
+            <!--</div>-->
 
           </td>
           <td data-id="StatusCol">
@@ -62,11 +62,11 @@
 
           </td>
           <td data-id="PidCountCol">
-            <div class="ui-form-group selectable" ng-click="itemSelect($event)">
+            <!--<div class="ui-form-group selectable" ng-click="itemSelect($event)">-->
 
               <sl-manager-process-count></sl-manager-process-count>
 
-            </div>
+            <!--</div>-->
           </td>
           <td data-id="PidCol">
             <div class="ui-form-group selectable" ng-click="itemSelect($event)">
