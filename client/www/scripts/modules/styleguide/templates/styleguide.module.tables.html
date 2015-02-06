@@ -117,7 +117,7 @@
                 </td>
                 <td>
                   <div class="status-field">
-                    <button class="status" ng-class="{ problem: true, inactive: false, active: false }">
+                    <span class="status ui-sans-btn" ng-class="{ problem: true, inactive: false, active: false }">
                       <span class="status-txt">Status</span>
 
                       <sl-popover-info ng-show="true"
@@ -129,7 +129,7 @@
                           <p>...and here is some example text.</p>
                         </div>
                       </sl-popover-info>
-                    </button>
+                    </span>
                     <button title="state of host" class="status-icon" ng-click="clickStatus(id)">
                       <i class="icon" ng-class="{ active: false, inactive: true }"></i>
                     </button>
