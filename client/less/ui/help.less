@@ -51,6 +51,35 @@
 //    }
 //  }
 
+  &.info {
+    .ui-popover-content {
+      min-height: 0;
+      border-radius: 0;
+      border-color: @grey-5;
+      box-shadow: 1px 1px 3px 0 rgba(0,0,0,.5);
+
+      &.bottom {
+        top: 3rem;
+        left: 50%;
+        right: auto;
+        margin-left: -15rem;
+      }
+
+      h4 {
+        color: @grey-1;
+      }
+
+      .body {
+        color: @grey-1;
+      }
+
+      footer {
+        text-align: right;
+        padding: 1rem;
+      }
+    }
+  }
+
   .ui-popover-content {
     position: absolute;
     padding: 0;
@@ -116,7 +145,6 @@
       .ui-popover-body {
         padding: 0;
       }
-
     }
   }
 }

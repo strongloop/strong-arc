@@ -206,6 +206,7 @@ Common.directive('slPopoverMenu', [
         scope.icon = attrs.icon;
         scope.title = attrs.title || '';
         scope.hideOnPageClick = attrs.hideonpageclick;
+        scope.showPopover = false;
 
         scope.$watch('showPopover', function(newVal, oldVal){
         });
@@ -238,6 +239,55 @@ Common.directive('slPopoverMenu', [
           clone.removeClass('hide');
           element.find('.ui-popover-body').append(clone);
         });
+      }
+    };
+  }]);
+
+Common.directive('slPopoverInfo', [
+  '$http',
+  '$tooltip',
+  '$log',
+  '$rootScope',
+  '$timeout', function($http, $tooltip, $log, $rootScope, $timeout){
+    return {
+      restrict: 'E',
+      replace: true,
+      scope: {},
+      transclude: true,
+      templateUrl: './scripts/modules/common/templates/common.popover.info.html',
+      link: function(scope, element, attrs, ctrl){
+        var to;
+        scope.position = attrs.position || 'bottom';
+        scope.icon = attrs.icon;
+        scope.title = attrs.title || '';
+        scope.hideOnPageClick = attrs.hideonpageclick;
+
+        scope.$watch('showPopover', function(newVal, oldVal){
+        });
+
+        $rootScope.$on('pageClick', function(e, $event){
+          var isPopoverClick = !!$($event.target).parents('.ui-popover.info').length;
+
+          if ( scope.hideOnPageClick && !isPopoverClick ) {
+            scope.showPopover = false;
+          }
+        });
+
+        scope.hidePopover = function(){
+          if ( scope.hideOnPageClick ) return;
+
+          to = $timeout(function(){
+            scope.showPopover = false;
+          }, 400);
+        };
+
+        scope.cancelHide = function(){
+          if ( scope.hideOnPageClick ) return;
+
+          if ( to ) {
+            $timeout.cancel(to);
+          }
+        };
       }
     };
   }]);
@@ -286,11 +336,11 @@ Common.directive('slPopover', [
             $timeout.cancel(to);
           }
         };
-
-        transclude(scope.$parent, function(clone, scope) {
-          clone.removeClass('hide');
-          element.find('.ui-popover-body').append(clone);
-        });
+        //
+        //transclude(scope.$parent, function(clone, scope) {
+        //  clone.removeClass('hide');
+        //  element.find('.ui-popover-body').append(clone);
+        //});
       }
     };
   }]);
