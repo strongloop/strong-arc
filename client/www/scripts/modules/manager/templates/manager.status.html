@@ -1,13 +1,37 @@
-<div class="manager-host-status-container">
-  <button ng-click="toggleHostProblemTooltip(host)" class="link-cmd btn-host-status" class="link-cmd" ng-class="{false:'is-active', true:'is-problem'}[host.status.isProblem]">
-    <span>{{ host.status.display }}</span>
-    <span ng-show="host.status.isProblem" class="link-cmd sl-icon sl-icon-question-mark" ></span>
+<!--<div class="manager-host-status-container">-->
+  <!--<button ng-click="toggleHostProblemTooltip(host)"-->
+          <!--class="link-cmd btn-host-status"-->
+          <!--class="link-cmd"-->
+          <!--ng-class="{false:'is-active', true:'is-problem'}[host.status.isProblem]">-->
+    <!--<span>{{ host.status.display }}</span>-->
+    <!--<span ng-show="host.status.isProblem" class="link-cmd sl-icon sl-icon-question-mark" ></span>-->
+  <!--</button>-->
+  <!--<button title="activate host" alt="activate host" class="link-cmd btn-host-activate" ng-click="activateHost(host)" ng-class="{true:'', false:'is-active'}[host.status.isProblem]">-->
+    <!--<span class="glyphicon" ng-class="{false: 'glyphicon-random', true: 'glyphicon-record'}[!host.status.isProblem]"></span>-->
+  <!--</button>-->
+  <!--<div class="host-problem-tooltip-container" ng-hide="hideHostProblemTooltip(host)">-->
+    <!--<span>{{ host.status.problem.title }}</span>-->
+    <!--<p>{{ host.status.problem.description }}</p>-->
+  <!--</div>-->
+<!--</div>-->
+<div class="status-field">
+  <span class="status ui-sans-btn"
+          ng-class="{ problem: host.status.isProblem, inactive: !host.status.isProblem, active: false }">
+    <span class="status-txt">{{ host.status.display }}</span>
+
+    <sl-popover-info ng-show="host.status.isProblem"
+                     icon="sl-icon sl-icon-question-mark"
+                     hideonpageclick="true" showontrue="clickedButton">
+      <h4>{{ host.status.problem.title }}</h4>
+      <div class="body">
+        <p>{{ host.status.problem.description }}</p>
+      </div>
+    </sl-popover-info>
+  </span>
+
+  <button title="state of host"
+          class="status-icon"
+          ng-click="activateHost(host)">
+    <i class="icon" ng-class="{ active: !host.status.isProblem, inactive: host.status.isProblem }"></i>
   </button>
-  <button title="activate host" alt="activate host" class="link-cmd btn-host-activate" ng-click="activateHost(host)" ng-class="{true:'', false:'is-active'}[host.status.isProblem]">
-    <span class="glyphicon" ng-class="{false: 'glyphicon-random', true: 'glyphicon-record'}[!host.status.isProblem]"></span>
-  </button>
-  <div class="host-problem-tooltip-container" ng-hide="hideHostProblemTooltip(host)">
-    <span>{{ host.status.problem.title }}</span>
-    <p>{{ host.status.problem.description }}</p>
-  </div>
 </div>

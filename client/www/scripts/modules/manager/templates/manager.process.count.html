@@ -1,3 +1,8 @@
-<div>
-  <input type="number" ng-change="updateProcessCount(host)" ng-model="host.processCount">
-</div>
+<ng-form name="hostForm">
+  <div
+    class="ui-form-group selectable"
+    ng-class="{ invalid: hostForm.processes.$invalid && hostForm.processes.$dirty, valid: hostForm.processes.$valid }"
+    ng-click="itemSelect($event)">
+    <input type="number" name="processes" class="ui-input" ng-change="updateProcessCount(host)" ng-model="host.processCount">
+  </div>
+</ng-form>

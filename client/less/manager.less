@@ -69,7 +69,6 @@
     }
 
     [data-id="StatusCol"] {
-      width: 13rem;
 
       .is-problem {
         color: red;
@@ -128,7 +127,7 @@
     .manager-pm-host-grid {
 
       width: 100%;
-      border: 1px solid #eeeeee;
+
 
       tr {
         color: #bbbbbb;
@@ -144,11 +143,15 @@
 
       td {
         vertical-align: top;
-        border: 1px solid #eeeeee;
+
+        .ui-menu-action {
+          position: absolute;
+          top: 1rem;
+          right: 1rem;
+        }
       }
 
       .manager-hosts-grid-header {
-        background: #dddddd;
         font-weight: normal;
       }
 
@@ -156,7 +159,7 @@
       //      height: 11rem;
       //    }
       .ui-list-scroll {
-        height: 9rem;
+        max-height: 9rem;
         overflow-y: auto;
         overflow-x: hidden;
       }
