@@ -268,3 +268,22 @@ Styleguide.directive('slStyleguideModuleTables', [
     };
   }
 ]);
+
+Styleguide.directive('slStyleguideModulePopovers', [
+  '$log',
+  function ($log) {
+    return {
+      restrict: "E",
+      replace: true,
+      templateUrl: './scripts/modules/styleguide/templates/styleguide.module.popovers.html',
+      scope: {},
+      controller: function($scope){
+        $scope.show = true;
+
+        $scope.clickModule = function(){
+          $scope.show = !$scope.show;
+        };
+      }
+    };
+  }
+]);

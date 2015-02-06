@@ -1,0 +1,26 @@
+<section class="popovers module">
+  <h2 ng-click="clickModule()">Popovers</h2>
+  <article ng-show="show">
+    <section>
+      <h4>Popovers (contextual)</h4>
+      <ul class="contextual">
+        <li>
+          Informational
+          <sl-popover-info
+            icon="sl-icon sl-icon-question-mark"
+            hideonpageclick="true">
+            <h4>Title here</h4>
+            <div class="body">
+              <p>Here is some example text.</p>
+              <p>...and here is some example text.</p>
+            </div>
+          </sl-popover-info>
+        </li>
+        <li>
+          Contextual help
+          <sl-popover-help id="4557614"></sl-popover-help>
+        </li>
+      </ul>
+    </section>
+  </article>
+</section>
