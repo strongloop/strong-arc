@@ -115,13 +115,24 @@
                       ng-blur="itemBlur($event)">
                   </div>
                 </td>
-                <td class="has-selectable">
-                  <div class="selectable" ng-click="itemSelect($event)">
-                    <span class="problem" ng-show="data['example'+id].isProblem">Problem <a href ng-click="showToolTip($event)"><i>?</i></a></span>
-                    <span
-                      ng-hide="data['example'+id].isProblem"
-                      class="status"
-                      ng-click="clickStatus(id)">active <i class="icon icon-active">==| |==</i></span> (active|inactive)
+                <td>
+                  <div class="status-field">
+                    <button class="status" ng-class="{ problem: true, inactive: false, active: false }">
+                      <span class="status-txt">Status</span>
+
+                      <sl-popover-info ng-show="true"
+                        icon="sl-icon sl-icon-question-mark"
+                        hideonpageclick="true">
+                        <h4>Title here</h4>
+                        <div class="body">
+                          <p>Here is some example text.</p>
+                          <p>...and here is some example text.</p>
+                        </div>
+                      </sl-popover-info>
+                    </button>
+                    <button title="state of host" class="status-icon" ng-click="clickStatus(id)">
+                      <i class="icon" ng-class="{ active: false, inactive: true }"></i>
+                    </button>
                   </div>
                 </td>
                 <td class="has-selectable">

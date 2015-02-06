@@ -206,7 +206,6 @@
     }
   }
 
-
   &.small {
     font-size: 1.2rem;
     padding: .75rem 3rem;
@@ -247,11 +246,65 @@
 }
 
 .ui-sans-btn {
-  background: transparent;
-  color: @grey-1;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  margin: 0;
-  padding: 0;
+  .ui-reset-btn;
+}
+
+
+.status-field {
+  button.status-icon {
+    .ui-reset-btn;
+
+    .icon {
+      position: relative;
+      top: .2rem;
+      margin-left: 1rem;
+      display: block;
+      background-size: cover;
+
+      &.active {
+        height: 1.45rem;
+        width: 4rem;
+        background: url(/images/connection_on_out_lightbg.svg) no-repeat center center;
+
+        &:hover {
+          background-image: url(/images/connection_on_over_lightbg.svg);
+        }
+
+        &:active {
+          background-image: url(/images/connection_on_down_lightbg.svg);
+        }
+      }
+
+      &.inactive {
+        height: 2rem;
+        width: 3.8rem;
+
+        background: url(/images/connection_off_out_lightbg.svg) no-repeat center center;
+
+        &:hover {
+          background-image: url(/images/connection_off_over_lightbg.svg);
+        }
+
+        &:active {
+          background-image: url(/images/connection_off_down_lightbg.svg);
+        }
+      }
+    }
+  }
+}
+
+button {
+  .ui-popover {
+    margin-left: .5rem;
+  }
+
+  &.status {
+    .ui-reset-btn;
+
+    &.problem {
+      .status-txt, .sl-icon {
+        color: @ui-msg-error-color;
+      }
+    }
+  }
 }
