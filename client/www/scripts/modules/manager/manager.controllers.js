@@ -387,7 +387,16 @@ Manager.controller('ManagerMainController', [
     * */
     $scope.fireHostAction = function(host, cmd) {
       growl.addSuccessMessage('pending action: ' +  cmd);
-      host.action({cmd:cmd}, function(err, res) {
+
+      var command = {cmd:cmd};
+      if (cmd === 'cluster-restart') {
+        command = {
+          cmd: 'current',
+          sub: 'restart'
+        }
+      }
+
+      host.action(command, function(err, res) {
         if (err) {
           $log.warn('bad Strong PM host action ' + cmd + ' error: ' + err.message);
         }
