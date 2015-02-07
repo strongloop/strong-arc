@@ -83,8 +83,9 @@ Metrics.service('MetricsService', [
 Metrics.service('ChartConfigService', [
   '$timeout',
   '$http',
+  '$q',
   '$log',
-  function($timeout, $http, $log) {
+  function($timeout, $http, $q, $log) {
     var svc = this;
     var currentChartConfigData = [];
     function isMetricActive(chartMetric) {
@@ -144,8 +145,15 @@ Metrics.service('ChartConfigService', [
     };
     svc.getChartConfigData = function() {
       if (currentChartConfigData && currentChartConfigData.length > 0) {
-        return currentChartConfigData;
+        //caller is expecting a chainable promise instead of an array
+        var def = $q.defer();
+        var data = { data: { charts: currentChartConfigData }};
+
+        def.resolve(data);
+
+        return def.promise;
       }
+
       return $http.get('./scripts/modules/metrics/metrics-config.json')
         .success(function(charts) {
           return charts;
