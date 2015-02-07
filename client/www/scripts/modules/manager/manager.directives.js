@@ -71,33 +71,7 @@ Manager.directive('slManagerLoadBalancer', [
   function($log) {
     return {
       restrict: 'E',
-      templateUrl: './scripts/modules/manager/templates/manager.load.balancer.html',
-      controller: function($scope) {
-
-
-        $scope.saveLoadBalancer = function(){
-          if ($scope.currentLoadBalancer.host && $scope.currentLoadBalancer.port) {
-            $scope.mesh.models.LoadBalancer.create($scope.currentLoadBalancer, function(err, response) {
-
-                $scope.loadLoadBalancers();
-
-            });
-          }
-
-        };
-        $scope.deleteLoadBalancer = function(loadBalancer) {
-          if (confirm('delete load balancer config?')) {
-            $scope.mesh.models.LoadBalancer.deleteById(loadBalancer.id, function(err) {
-              if (err) {
-                $log.warn('bad load balancer delete: ' + err.message);
-              }
-            });
-            $scope.loadLoadBalancers();
-          }
-
-        };
-
-      }
+      templateUrl: './scripts/modules/manager/templates/manager.load.balancer.html'
     }
   }
 ]);

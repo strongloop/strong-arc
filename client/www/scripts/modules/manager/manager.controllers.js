@@ -40,25 +40,71 @@ Manager.controller('ManagerMainController', [
     $scope.toggleManagerLoadBalancer = function() {
       return $scope.showManagerLoadBalancer = !$scope.showManagerLoadBalancer
     };
-    $scope.loadBalancers = [];
-    $scope.loadLoadBalancers = function() {
-      $scope.loadBalancers = $scope.mesh.models.LoadBalancer.find({}, function(err, response) {
-        $log.debug('LOAD BALANCERS');
+
+    //
+    //$scope.loadBalancers = [];
+    //$scope.loadLoadBalancers = function() {
+    //  $scope.loadBalancers = $scope.mesh.models.LoadBalancer.find({}, function(err, response) {
+    //    $log.debug('LOAD BALANCERS');
+    //    if (err) {
+    //      $log.warn('bad get load balancers');
+    //      return;
+    //    }
+    //    $scope.$apply(function() {
+    //      $scope.loadBalancers = response;
+    //      $scope.currentLoadBalancer = {
+    //        host: '',
+    //        port: '',
+    //        username: '',
+    //        password: ''
+    //      };
+    //    });
+    //  });
+
+    $scope.loadBalancer = {};
+    $scope.loadLoadBalancer = function() {
+      $scope.loadBalancer = $scope.mesh.models.LoadBalancer.find({}, function(err, response) {
+        $log.debug('LOAD BALANCER');
         if (err) {
-          $log.warn('bad get load balancers');
+          $log.warn('bad get load balancer');
           return;
         }
         $scope.$apply(function() {
-          $scope.loadBalancers = response;
-          $scope.currentLoadBalancer = {
-            host: '',
-            port: '',
-            username: '',
-            password: ''
-          };
+          $scope.loadBalancer = response[0];
         });
       });
     };
+    $scope.saveLoadBalancer = function(){
+      if ($scope.loadBalancer.host && $scope.loadBalancer.port) {
+        $scope.mesh.models.LoadBalancer.create($scope.loadBalancer, function(err, response) {
+          growl.addSuccessMessage('load balancer config saved');
+
+          $scope.loadLoadBalancer();
+
+        });
+      }
+
+    };
+    $scope.deleteLoadBalancer = function(loadBalancer) {
+      if (confirm('delete load balancer config?')) {
+        $scope.mesh.models.LoadBalancer.deleteById($scope.loadBalancer.id, function(err) {
+          if (err) {
+            $log.warn('bad load balancer delete: ' + err.message);
+          }
+        });
+        growl.addSuccessMessage('load balancer config removed');
+        $scope.loadLoadBalancer();
+      }
+
+    };
+
+
+
+
+
+
+
+
 
     /*
     *
@@ -549,7 +595,7 @@ Manager.controller('ManagerMainController', [
     };
 
     loadHosts();
-    $scope.loadLoadBalancers();
+    $scope.loadLoadBalancer();
 
 
     //table selection handlers
