@@ -638,5 +638,8 @@ Manager.controller('ManagerMainController', [
       //$selectable.addClass('selected');
     };
 
+    $scope.isPortFieldDisabled = function(){
+
+    };
   }
 ]);
