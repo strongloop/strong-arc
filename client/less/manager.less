@@ -7,6 +7,7 @@
 
   .load-balancer-container {
     float:right;
+    margin-right:4rem;
     position:relative;
     background:#ffffff;
 
@@ -14,14 +15,40 @@
       position:absolute;
       top:3rem;
       right:1rem;
-      width:42rem;
-      border:1px solid #eeeeee;
+      width:80rem;
       background:#ffffff;
       padding:2rem;
       z-index: 4000;
+      border:1px solid #dddddd;
 
-      table {
+      .ui-form {
+        border:0;
+
+        input[type=text] {
+          border:0;
+        }
+      }
+
+      .ui-table {
         width:90%;
+
+        thead{
+          th {
+            background-color: #ffffff;
+            border:0;
+          }
+        }
+
+        td {
+          border:0;
+        }
+
+        .load-balancer-host {
+          width:26rem;
+        }
+        .load-balancer-port {
+          width:8rem;
+        }
       }
     }
   }
@@ -47,11 +74,6 @@
   .manager-main-container {
     width: 100rem;
     margin: 2rem auto 0 auto;
-//    -webkit-box-shadow: 8px 8px 5px 0px rgba(220, 220, 220, 1);
-//    -moz-box-shadow: 8px 8px 5px 0px rgba(220, 220, 220, 1);
-//    box-shadow: 8px 8px 5px 0px rgba(220, 220, 220, 1);
-//    border-top: 1px solid #eeeeee;
-//    border-left: 1px solid #eeeeee;
 
     .app-context {
       text-align: center;
@@ -154,9 +176,6 @@
         font-weight: normal;
       }
 
-      //    .pid-list {
-      //      height: 11rem;
-      //    }
       .ui-list-scroll {
         max-height: 9rem;
         overflow-y: auto;
@@ -166,7 +185,6 @@
       .host-actions-container {
         float: right;
         position: relative;
-
 
         .host-actions-list {
           position: absolute;

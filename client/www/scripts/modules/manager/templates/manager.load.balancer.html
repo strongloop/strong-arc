@@ -1,29 +1,31 @@
-
-<table>
-  <tr>
-    <th>
-      host
-    </th>
-    <th>
-      port
-    </th>
-    <th></th>
-  </tr>
-  <tr ng-repeat="loadbalancer in loadBalancers">
-
-    <td>{{ loadbalancer.host }}</td>
-    <td>{{ loadbalancer.port }}</td>
-    <td><button class="link-cmd" ng-click="deleteLoadBalancer(loadbalancer)"><span>(x)</span></button></td>
-
-  </tr>
-</table>
-
-
 <form class="ui-form">
-  <input placeholder="host" class="ui-input" ng-model="currentLoadBalancer.host" />
-  <input placeholder="port" class="ui-input" ng-model="currentLoadBalancer.port"  />
-  <input placeholder="username" class="ui-input" ng-model="currentLoadBalancer.username" />
-  <input placeholder="password" class="ui-input" ng-model="currentLoadBalancer.password" />
-  <button class="ui-btn small" ng-click="saveLoadBalancer()">add lb</button>
-</form>
+  <h4 class="ui-goup-label">Load Balancer</h4>
+  <table class="ui-table">
+    <thead>
+    <tr>
+      <th>Host</th>
+      <th>Port</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr>
 
+        <td>
+          <input type="text" placeholder="host" sl-common-select-on-click class="ui-input load-balancer-host" ng-model="loadBalancer.host" />
+        </td>
+        <td>
+          <input type="text" placeholder="port" sl-common-select-on-click class="ui-input load-balancer-port" ng-model="loadBalancer.port" />
+        </td>
+        <td>
+          <button class="ui-btn small" ng-click="saveLoadBalancer()">save</button>
+        </td>
+        <td>
+          <a class="ui-close" ng-click="deleteLoadBalancer()">(x)</a>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+
+</form>
