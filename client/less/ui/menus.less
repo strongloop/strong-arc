@@ -205,6 +205,7 @@
   max-height: 4rem; //not sure why sean had commented this out
   overflow-y: auto;
   margin-bottom: 0;
+  padding-left: 1rem;
 }
 
 .ui-menu-action {
@@ -217,7 +218,7 @@
     z-index: 2;
     top: 1.6rem;
     min-width: 8rem;
-    box-shadow: 0 1px 2px 0 rgba(0,0,0,.8);
+    .ui-popover-box-shadow;
 
     ul {
       margin: 0;
@@ -227,6 +228,7 @@
     li > * {
       padding: .3rem .8rem;
       display: block;
+      white-space: nowrap;
     }
   }
 }

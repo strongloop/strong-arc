@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class="app-context">
-      <a href="#">{{ appContext.name }} {{ appContext.version }}</a>
+      {{ appContext.name }} {{ appContext.version }}
     </div>
 
     <form class="ui-form has-table" name="form" novalidate ng-submit="save(form)">
@@ -148,7 +148,11 @@
 
         <tr class="ui-sans-tr">
           <td colspan="5">
-            <button class="link-cmd" ng-click="initAddNewPMHost()">Add PM Host</button>
+            <button
+              class="link-cmd"
+              ng-click="initAddNewPMHost()"
+              tooltip="{{addHostTooltipText}}"
+              ng-class="{ disabled: isAddHostButtonDisabled }">Add PM Host</button>
           </td>
         </tr>
         </tfoot>

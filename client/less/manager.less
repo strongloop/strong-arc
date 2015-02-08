@@ -10,31 +10,36 @@
 
   .load-balancer-container {
     float:right;
-    margin-right:4rem;
     position:relative;
     background:#ffffff;
-    margin: 4rem 4rem 0 0;
+    margin: 0 4rem 0 0;
 
     .load-balancer-content {
-      position:absolute;
-      top:3rem;
-      right:1rem;
-      width:80rem;
-      background:#ffffff;
-      padding:2rem;
+      position: absolute;
+      top: 3rem;
+      right: 1rem;
+      width: 53rem;
+      background: #ffffff;
+      padding: 1rem;
       z-index: 4000;
       border:1px solid #dddddd;
+      .ui-popover-box-shadow;
+
+      h4 {
+        margin-top: 0;
+        color: @grey-1;
+      }
 
       .ui-form {
         border:0;
+        margin-top: 0;
 
         input[type=text] {
-          border:0;
+          //border:0;
         }
       }
 
       .ui-table {
-        width:90%;
 
         thead{
           th {
@@ -53,12 +58,23 @@
         .load-balancer-port {
           width:8rem;
         }
+
+        .ui-close {
+          margin: .5rem 0 0 1rem;
+          display: block;
+        }
       }
     }
   }
+
+  .app-context {
+    margin-top: 2rem;
+    padding-left: 9rem;
+  }
+
   form.ui-form  {
 
-    margin-top: .2rem;
+    margin-top: 1rem;
 
     [data-id="PortCol"] {
       width:9.1rem;
@@ -70,14 +86,14 @@
     [data-id="PidCountCol"] {
 
       input {
-        width:6rem;
+        width: 7rem;
       }
 
     }
   }
   .manager-main-container {
     width: 100rem;
-    margin: 2rem auto 0 auto;
+    margin: 5rem auto 0 auto;
 
     .app-context {
       text-align: center;
@@ -162,14 +178,15 @@
       }
     }
 
-    [data-id="ProcessesCol"], [data-id="PIDsCol"] {
+    [data-id="ProcessesCol"] {
       width: 12rem;
     }
 
-    [data-id="PidCol"] {
-      width: 10rem;
-
+    [data-id="PidCol"], [data-id="PIDsCol"] {
+      width: 8rem;
+      padding: 0;
     }
+
     [data-id="ActionCol"] {
       width: 4rem;
     }
@@ -182,13 +199,14 @@
       tr {
         color: #bbbbbb;
       }
+
       th {
         color: #444444;
         font-weight: normal;
       }
 
       tr.is-active {
-        color: #111111;
+        color: #444;
       }
 
       td {
@@ -205,7 +223,7 @@
       }
 
       .ui-list-scroll {
-        max-height: 9rem;
+        max-height: 8rem;
         overflow-y: auto;
         overflow-x: hidden;
       }
@@ -231,6 +249,14 @@
         }
       }
 
+      tfoot {
+        .link-cmd {
+          &.disabled {
+            color: @ui-disabled-text-color;
+            cursor: default;
+          }
+        }
+      }
     }
 
   }
