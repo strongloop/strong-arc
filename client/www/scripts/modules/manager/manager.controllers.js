@@ -124,7 +124,10 @@ Manager.controller('ManagerMainController', [
 
       host.status = {
         isProblem: true,
+        isActive: false,
+        isInactive: false,
         display: 'Problem',
+        actionLabel: 'Activate',
         problem: {
           title: '',
           description: ''
@@ -223,7 +226,9 @@ Manager.controller('ManagerMainController', [
                 growl.addSuccessMessage("status change: 'Active'");
                 host.status = {
                   isProblem: false,
+                  isActive: true,
                   display: 'Active',
+                  actionLabel: '',
                   problem: {
                     title: '',
                     description: ''
@@ -231,6 +236,10 @@ Manager.controller('ManagerMainController', [
                 };
               }
               else {
+                host.status.isProblem = false;
+                host.status.isActive = false;
+                host.status.isInactive = true;
+                host.status.display = 'Inactive';
                 host.status.problem.title = 'The app is not running';
                 host.status.problem.description = 'The app is not running. Click start in the action menu to start it';
               }
