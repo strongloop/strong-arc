@@ -22,6 +22,16 @@ Manager.controller('ManagerMainController', [
       version: ''
     };
 
+    $scope.isAddHostButtonDisabled = false;
+    $scope.addHostTooltipText = '';
+
+    $scope.$watch('isAddHostButtonDisabled', function(newVal){
+      if ( newVal ) {
+        $scope.addHostTooltipText = 'Please finish adding host';
+      } else {
+        $scope.addHostTooltipText = '';
+      }
+    });
 
 
 
@@ -479,15 +489,19 @@ Manager.controller('ManagerMainController', [
     *
     * */
     $scope.initAddNewPMHost = function() {
+      if ( $scope.isAddHostButtonDisabled ) return;
+
       if (!$scope.isShowAddHostForm) {
         // start the 'add new PM Host flow
         $scope.isShowAddHostForm = true;
+        $scope.isAddHostButtonDisabled = true;
       }
     };
     $scope.killNewPMHostForm = function() {
       // start the 'add new PM Host flow
       if (confirm('clear new PM Host form?')) {
         $scope.killForm();
+        $scope.isAddHostButtonDisabled = false;
       }
     };
     $scope.killForm = function() {

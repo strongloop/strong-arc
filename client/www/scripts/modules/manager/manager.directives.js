@@ -68,10 +68,24 @@ Manager.directive('slManagerHostActivate', [
 ]);
 Manager.directive('slManagerLoadBalancer', [
   '$log',
-  function($log) {
+  '$rootScope',
+  function($log, $rootScope) {
     return {
       restrict: 'E',
-      templateUrl: './scripts/modules/manager/templates/manager.load.balancer.html'
+      templateUrl: './scripts/modules/manager/templates/manager.load.balancer.html',
+      link: function(scope, el, attrs){
+
+
+        $rootScope.$on('pageClick', function(e, $event){
+          var isMenuClick = !!$($event.target).parents('.load-balancer-content').length;
+          var isTriggerClick = $($event.target).hasClass('link-cmd');
+
+          if ( !isMenuClick && !isTriggerClick ) {
+            scope.showManagerLoadBalancer = false;
+          }
+        });
+
+      }
     }
   }
 ]);

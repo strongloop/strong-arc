@@ -7,6 +7,8 @@
       type="number"
       name="processes"
       class="ui-input"
+      placeholder="(eg. 4)"
+      min="1"
       ng-change="updateProcessCount(host)"
       ng-model="host.processCount"
       ng-disabled="host.status.isProblem">

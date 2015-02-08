@@ -1,16 +1,15 @@
 <form class="ui-form">
-  <h4 class="ui-goup-label">Load Balancer</h4>
+  <h4 class="ui-group-label">Load Balancer</h4>
   <table class="ui-table">
     <thead>
     <tr>
       <th>Host</th>
       <th>Port</th>
-      <th></th>
+      <th colspan="2"></th>
     </tr>
     </thead>
     <tbody>
-      <tr>
-
+      <tr class="ui-sans-tr">
         <td>
           <input type="text" placeholder="host" sl-common-select-on-click class="ui-input load-balancer-host" ng-model="loadBalancer.host" />
         </td>
@@ -18,13 +17,12 @@
           <input type="text" placeholder="port" sl-common-select-on-click class="ui-input load-balancer-port" ng-model="loadBalancer.port" />
         </td>
         <td>
-          <button class="ui-btn small" ng-click="saveLoadBalancer()">save</button>
+          <button class="ui-btn small" ng-click="saveLoadBalancer()">Save</button>
         </td>
         <td>
-          <a class="ui-close" ng-click="deleteLoadBalancer()">(x)</a>
+          <a href class="ui-close" ng-click="deleteLoadBalancer()">(x)</a>
         </td>
       </tr>
-
     </tbody>
   </table>
 
