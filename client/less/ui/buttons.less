@@ -254,6 +254,9 @@
   button.status-icon {
     .ui-reset-btn;
 
+    position: relative;
+    top: .2rem;
+
     .icon {
       position: relative;
       top: .2rem;
@@ -304,6 +307,12 @@
     &.problem {
       .status-txt, .sl-icon {
         color: @ui-msg-error-color;
+      }
+    }
+
+    &.active {
+      .status-text {
+        color: @ui-action-primary;
       }
     }
   }

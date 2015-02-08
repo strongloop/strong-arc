@@ -19,9 +19,11 @@
           ng-class="{ problem: host.status.isProblem, inactive: !host.status.isProblem, active: false }">
     <span class="status-txt">{{ host.status.display }}</span>
 
-    <sl-popover-info ng-show="host.status.isProblem"
-                     icon="sl-icon sl-icon-question-mark"
-                     hideonpageclick="true" showontrue="clickedButton">
+    <sl-popover-info
+      ng-show="host.status.isProblem"
+      icon="sl-icon sl-icon-question-mark"
+      hideonpageclick="true"
+      showontrue="clickedButton">
       <h4>{{ host.status.problem.title }}</h4>
       <div class="body">
         <p>{{ host.status.problem.description }}</p>
