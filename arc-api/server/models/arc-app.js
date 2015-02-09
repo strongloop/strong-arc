@@ -71,7 +71,7 @@ module.exports = function(ArcApp) {
       "supports": "*"
     },
     {
-      "id": "manager",
+      "id": "process-manager",
       "name": "Process Manager",
       "description": "Manage your StrongLoop processes.",
       "disabled": false,
