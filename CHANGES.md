@@ -1,3 +1,93 @@
+2015-02-09, Version 1.1.0
+=========================
+
+ * fix wrapping text in menu (Anthony Ettinger)
+
+ * fix missing app selector for process-manager (Anthony Ettinger)
+
+ * pid count updates (seanbrookes)
+
+ * re-enable add host link when host is added (Anthony Ettinger)
+
+ * lower bound for port input (Anthony Ettinger)
+
+ * fix ui tweaks on Load balance in PM (Anthony Ettinger)
+
+ * - upgrade status interaction (seanbrookes)
+
+ * process-manager: disable pmctl channel (Sam Roberts)
+
+ * design tweaks to PM (Anthony Ettinger)
+
+ * - clean out comments (seanbrookes)
+
+ * - visual design load balancer (seanbrookes)
+
+ * add proper colum names for pids on PM (Anthony Ettinger)
+
+ * add the add-row feature to PM (Anthony Ettinger)
+
+ * enforce a promise interface on metrics chart config loader (Anthony Ettinger)
+
+ * re-apply downstream fixes to styleguide (Anthony Ettinger)
+
+ * - visual design application (seanbrookes)
+
+ * add status buttons and icons for styleguide (Anthony Ettinger)
+
+ * fix delayed load balancer rendering (seanbrookes)
+
+ * Rename Manager to Process Manager (Ritchie Martori)
+
+ * add popover info example to styleguide (Anthony Ettinger)
+
+ * fix cluster restart (seanbrookes)
+
+ * initial manager module (seanbrookes)
+
+ * remove extra events in SG controller (Anthony Ettinger)
+
+ * uncomment hidden style modules (Anthony Ettinger)
+
+ * add action menu to styleguide (Anthony Ettinger)
+
+ * uncomment hidden modules on styleguide (Anthony Ettinger)
+
+ * add table form to styleguide (Anthony Ettinger)
+
+ * functionally complete with new gauges (seanbrookes)
+
+ * live styleguide (Anthony Ettinger)
+
+ * use standard error color on composer model name (Anthony Ettinger)
+
+ * change wording on deploy success message (Anthony Ettinger)
+
+ * merge exception logic (seanbrookes)
+
+ * Update deps to use ^ in version specs (Miroslav Bajtoš)
+
+ * fix layout when zooming build & deploy (Anthony Ettinger)
+
+ * client/test: nuke sandbox as part of reset (Ryan Graham)
+
+ * client: more gracefully handle bad errors (Ryan Graham)
+
+ * add shutoff in case of app start error (seanbrookes)
+
+ * client/pm: app is running when a worker exists (Sam Roberts)
+
+ * Default to one-shot mode for App Controller start (Sam Roberts)
+
+ * tweak exception syntax again (seanbrookes)
+
+ * make exception response handling more robust (seanbrookes)
+
+ * fix label for selected pid in profiler (Anthony Ettinger)
+
+ * rename request interceptor to match module (seanbrookes)
+
+
 2015-01-12, Version 1.0.4
 =========================
 
