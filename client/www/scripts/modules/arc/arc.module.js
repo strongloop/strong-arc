@@ -83,7 +83,7 @@ Arc.config([
         templateUrl: './scripts/modules/metrics/templates/metrics.main.html',
         controller: 'MetricsMainController'
       })
-      .state('manager', {
+      .state('process-manager', {
         url: '/process-manager',
         templateUrl: './scripts/modules/manager/templates/manager.main.html',
         controller: 'ManagerMainController'
