@@ -506,6 +506,7 @@ Manager.controller('ManagerMainController', [
     };
     $scope.killForm = function() {
       $scope.isShowAddHostForm = false;
+      $scope.isAddHostButtonDisabled = false;
       $scope.currentPM = {};
     };
 
