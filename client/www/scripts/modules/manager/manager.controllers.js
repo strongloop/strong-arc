@@ -4,8 +4,8 @@ Manager.controller('ManagerMainController', [
   '$location',
   'ManagerServices',
   'growl',
-  function($scope, $log, $location, ManagerServices, growl) {
-    $log.debug('Manager Main Controller');
+  '$timeout',
+  function($scope, $log, $location, ManagerServices, growl, $timeout) {
     $scope.mesh = require('strong-mesh-client')('http://' + $location.host() + ':' + $location.port() + '/manager');
     $scope.currentPM = {};
     var x = 42;
@@ -77,6 +77,7 @@ Manager.controller('ManagerMainController', [
     };
     $scope.deleteLoadBalancer = function(loadBalancer) {
       if (confirm('delete load balancer config?')) {
+
         $scope.mesh.models.LoadBalancer.deleteById($scope.loadBalancer.id, function(err) {
           if (err) {
             $log.warn('bad load balancer delete: ' + err.message);
@@ -143,13 +144,6 @@ Manager.controller('ManagerMainController', [
           description: ''
         }
       };
-      //
-      //host.status.isProblem = true;
-      //host.status.display = 'Problem';
-      //host.status.problem.title = '';
-      //host.status.problem.description = '';
-
-     // $scope.isHostProblem = true;
 
       // is there an exception present
 
@@ -171,7 +165,7 @@ Manager.controller('ManagerMainController', [
       if (host.errorType) {
 
 
-        $log.debug('| ERROR: ' + host.error.message);
+        $log.warn('- ERROR: ' + host.error.message);
         // connection
         // - connection refused
         // - connection timeout
@@ -314,6 +308,7 @@ Manager.controller('ManagerMainController', [
     function loadHosts() {
       if (!$scope.loading) {
         $scope.loading = true;
+
         $scope.mesh.models.ManagerHost.find(function(err, hosts) {
 
           if (hosts && hosts.map) {
@@ -382,10 +377,13 @@ Manager.controller('ManagerMainController', [
               });
 
               // display status
+              // add 'status' property
               host = $scope.processHostStatus(host);
 
-              // Process Count
-              host.processCount = $scope.getProcessCount(host);
+              host = $scope.processPids(host);
+
+
+
               // processes
               if ((host.app && host.app.name) && (host.app.name !== $scope.appContext.name)) {
                 host.actions = [];
@@ -393,16 +391,11 @@ Manager.controller('ManagerMainController', [
 
               }
             });
-            ManagerServices.updateHostServers(addressCollection);
-           // $scope.$apply(function() {
-              $log.debug('| Refresh Manager Hosts');
 
-              $scope.hostServers = ManagerServices.getHostServers();
-              $scope.hosts = hosts;
-              setAppContext();
-              $scope.loading = false;
+            $scope.hosts = hosts;
+            setAppContext();
+            $scope.loading = false;
 
-           // });
 
           }
           else {
@@ -418,18 +411,22 @@ Manager.controller('ManagerMainController', [
     }
 
     /*
-    *
-    * Update Process Count
-    *
-    * */
+     *
+     * Update Process Count
+     *
+     * */
     $scope.updateProcessCount = function(host) {
 
-      host.action({cmd:"current","sub": "set-size", "size": host.processCount }, function(err, res) {
+      if (host.targetProcessCount < 1) {
+        host.targetProcessCount = 1;
+      }
+
+      host.action({cmd:"current","sub": "set-size", "size": host.targetProcessCount }, function(err, res) {
         if (err) {
           $log.warn('bad Strong PM host action ' + cmd + ' error: ' + err.message);
         }
-        $log.debug('| update pid count: ' + host.processCount);
-        //loadHosts();
+        $log.debug('| update pid count: target[' + host.targetProcessCount + ']   actual[' + host.processCount + ']');
+
       });
 
     };
@@ -439,6 +436,25 @@ Manager.controller('ManagerMainController', [
       }
       return host.processes.pids.length;
     };
+
+    $scope.processPids = function(host) {
+      var retVar = [];
+      host.status.isUpdatingProcessCount = false;
+      if (!host.processes) {
+        host.processCount = 0;
+        return host;
+      }
+      host.processes.pids.map(function(process) {
+        if (process.workerId !== 0) {
+          retVar.push(process);
+        }
+      });
+      host.processCount = retVar.length;
+      host.targetProcessCount = host.processCount;
+      host.processes.pids = retVar;
+      return host;
+    };
+
 
     /*
     *
@@ -512,6 +528,7 @@ Manager.controller('ManagerMainController', [
 
     $scope.deleteHost = function(host) {
       if (confirm('delete host?')) {
+
         $scope.mesh.models.ManagerHost.deleteById(host.id, function(err) {
           if (err) {
             $log.warn(err.message);
@@ -523,6 +540,7 @@ Manager.controller('ManagerMainController', [
     $scope.savePM = function() {
       x++;
       if ($scope.currentPM.host && $scope.currentPM.port) {
+
         $scope.mesh.models.ManagerHost.create($scope.currentPM,
           function(err, inst) {
             $scope.killForm();
@@ -569,10 +587,15 @@ Manager.controller('ManagerMainController', [
         delete host.filteredActions;
         delete host.isShowActionList;
         delete host.processCount;
+        delete host.targetProcessCount;
         delete host.displayStatus;
         delete host.status;
 
         growl.addSuccessMessage("activate host ");
+        $log.debug('|');
+        $log.debug('| MESH CALL [SAVE HOST]');
+        $log.debug('|');
+
 
         host.save(function(err, response) {
           if (err) {

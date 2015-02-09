@@ -10,7 +10,8 @@
       placeholder="(eg. 4)"
       min="1"
       ng-change="updateProcessCount(host)"
-      ng-model="host.processCount"
-      ng-disabled="host.status.isProblem">
+      ng-model="host.targetProcessCount"
+      ng-disabled="host.status.isProblem" />
+    <!--<span>{{ host.processCount }}</span>-->
   </div>
 </ng-form>
