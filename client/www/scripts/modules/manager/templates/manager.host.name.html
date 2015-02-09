@@ -1,24 +1,3 @@
-<!--<div class="host-actions-container">-->
-  <!--<button ng-click="toggleHostActions(host)" class="btn-command btn-nav-context" data-id={item.id} data-config-id={item.configId}>-->
-    <!--<span data-name={item.name} data-id={item.id} data-config-id={item.configId} class="sl-icon sl-icon-box-arrow-down"></span>-->
-  <!--</button>-->
-  <!--<div class="host-actions-list" ng-hide="!isShowHostActionList(host)">-->
-    <!--<ul>-->
-      <!--<li ng-repeat="action in host.filteredActions">-->
-        <!--<button ng-click="fireHostAction(host, action)" title="{{ action }}"  alt="{{ action }}" class="link-cmd">{{ action }}</button>-->
-      <!--</li>-->
-    <!--</ul>-->
-  <!--</div>-->
-<!--</div>-->
-<!--<input type="text"-->
-       <!--ng-model="host.host"-->
-       <!--class="host-name-input"-->
-       <!--name="host"-->
-       <!--placeholder="host1.example.com"-->
-       <!--sl-common-select-on-click-->
-       <!--required/>-->
-
-
 <ng-form name="hostForm">
   <div
     class="ui-form-group selectable"
@@ -46,27 +25,3 @@
     </sl-ui-menu-action>
   </div>
 </ng-form>
-
-
-
-
-
-
-
-
-
-
-
-<!--<input type="text"-->
-       <!--ng-model="host.host"-->
-       <!--class="host-name-input"-->
-       <!--name="host"-->
-       <!--placeholder="host1.example.com"-->
-       <!--typeahead-focus-first="false"-->
-       <!--typeahead-on-select="onPMServerSelect($item)"-->
-       <!--typeahead="server as server.host + ' : ' + server.port for server in pmServers"-->
-       <!--sl-common-select-on-click-->
-       <!--required-->
-  <!--/>-->
-<div ng-model="currentHost.validation.name" class="validation-message manager-input-validation"></div>
-
