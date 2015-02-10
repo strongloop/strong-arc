@@ -279,6 +279,7 @@ Styleguide.directive('slStyleguideModulePopovers', [
       scope: {},
       controller: function($scope){
         $scope.show = true;
+        $scope.showClickableInfo = false;
 
         $scope.clickModule = function(){
           $scope.show = !$scope.show;

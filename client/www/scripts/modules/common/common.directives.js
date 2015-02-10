@@ -252,7 +252,9 @@ Common.directive('slPopoverInfo', [
     return {
       restrict: 'E',
       replace: true,
-      scope: {},
+      scope: {
+        showontrue: '='
+      },
       transclude: true,
       templateUrl: './scripts/modules/common/templates/common.popover.info.html',
       link: function(scope, element, attrs, ctrl){
@@ -262,13 +264,22 @@ Common.directive('slPopoverInfo', [
         scope.title = attrs.title || '';
         scope.hideOnPageClick = attrs.hideonpageclick;
 
+        scope.$watch('showontrue', function(newVal, oldVal){
+          $log.log('showontrue', newVal, oldVal);
+          if ( scope.showPopover && newVal ) return;
+          scope.showPopover = newVal;
+        });
+
         scope.$watch('showPopover', function(newVal, oldVal){
+          $log.log('showPopover', newVal);
+          scope.showontrue = newVal;
         });
 
         $rootScope.$on('pageClick', function(e, $event){
           var isPopoverClick = !!$($event.target).parents('.ui-popover.info').length;
+          var isOutsideTriggerClick = !!( $($event.target).parents('.ui-popover-trigger').length || $($event.target).hasClass('ui-popover-trigger') );
 
-          if ( scope.hideOnPageClick && !isPopoverClick ) {
+          if ( scope.hideOnPageClick && !isPopoverClick && !isOutsideTriggerClick ) {
             scope.showPopover = false;
           }
         });
