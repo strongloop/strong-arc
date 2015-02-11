@@ -6,6 +6,7 @@ PM.directive('slPmAppControls', [
     }
   }
 ]);
+
 PM.directive('slPmAppControllerMenu', [
   function() {
     return {
@@ -16,6 +17,7 @@ PM.directive('slPmAppControllerMenu', [
     }
   }
 ]);
+
 PM.directive('slPmHostForm', [
   'PMHostService',
   'PMPidService',
