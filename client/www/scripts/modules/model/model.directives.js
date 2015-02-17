@@ -405,7 +405,7 @@ Model.directive('slModelPropertiesEditor',[
           if (typeof retVal === 'object') {
             retVal = Array.isArray(retVal)? 'array' : 'object';
           }
-          return retVal;
+          return retVal.toLowerCase();
         };
         $scope.getAppModelNames = function() {
           var retVal = [];
