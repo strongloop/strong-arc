@@ -1,4 +1,5 @@
 describe('WorkspaceService', function() {
+  this.timeout(10000);
   var CONST, WorkspaceService, throwHttpError, $injector;
   beforeEach(function() {
     inject(function(_$injector_) {
