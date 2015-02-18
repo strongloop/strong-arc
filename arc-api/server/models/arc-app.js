@@ -43,17 +43,17 @@ module.exports = function(ArcApp) {
       "supports": ['loopback']
     },
     {
-      "id": "profiler",
-      "name": "Profiler",
-      "description": "Profile applications’ CPU and memory consumption.",
-      "supports": "*"
-    },
-    {
       "id": "build-deploy",
       "name": "Build & Deploy",
       "description": "Build and deploy self-contained app package or Git branch.",
       "disabled": false,
       "supports": ['loopback', 'node']
+    },
+    {
+      "id": "profiler",
+      "name": "Profiler",
+      "description": "Profile applications’ CPU and memory consumption.",
+      "supports": "*"
     },
     {
       "id": "metrics",
