@@ -75,12 +75,12 @@
 
         <tfoot>
         <tr  ng-show="isShowAddHostForm">
-          <td data-id="HostCol"  class="has-selectable">
+          <td data-id="HostCol" class="has-selectable">
 
-            <ng-form name="currentPMForm">
+            <ng-form name="currentPMHostForm">
               <div
                 class="ui-form-group selectable"
-                ng-class="{ invalid: currentPMForm.host.$invalid && currentPMForm.host.$dirty, valid: currentPMForm.host.$valid }"
+                ng-class="{ invalid: currentPMHostForm.host.$invalid && currentPMHostForm.host.$dirty, valid: currentPMHostForm.host.$valid }"
                 ng-click="itemSelect($event)">
                 <input type="text"
                        ng-model="currentPM.host"
@@ -88,19 +88,20 @@
                        name="host"
                        sl-common-select-on-click
                        required
+                       ng-minlength="8"
                        ng-focus="itemFocus($event)"
                        ng-blur="itemBlur($event)"
                        placeholder="host">
-                <span class="msg error" ng-show="currentPMForm.host.$invalid && currentPMForm.host.$dirty">Please enter host</span>
+                <span class="msg error" ng-show="currentPMHostForm.host.$invalid && currentPMHostForm.host.$dirty">Please enter host</span>
               </div>
             </ng-form>
           </td>
           <td data-id="PortCol"  class="has-selectable">
 
-            <ng-form name="currentPMForm">
+            <ng-form name="currentPMPortForm">
               <div
                 class="ui-form-group selectable"
-                ng-class="{ invalid: currentPMForm.port.$invalid && currentPMForm.port.$dirty, valid: currentPMForm.port.$valid }"
+                ng-class="{ invalid: currentPMPortForm.port.$invalid && currentPMPortForm.port.$dirty, valid: currentPMPortForm.port.$valid }"
                 ng-click="itemSelect($event)">
                 <input
                   class="ui-input skinny"
