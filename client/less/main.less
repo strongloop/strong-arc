@@ -123,11 +123,11 @@ code {
   position: relative;
   z-index: 1;
   background-color: #7dbd33;
-  padding-top: 2.3rem;
+  padding-top: 2.4rem;
   padding-right: 3rem;
-  padding-left: 4rem;
+  padding-left: 2rem;
   width: 100%;
-  height: 8rem;
+  height: 7.5rem;
 }
 .header-help-container{
   font-size: 17pt;
@@ -136,11 +136,39 @@ code {
   display: inline-block;
 }
 .navButtons{
-  width: 14rem;
+  width: 15rem;
   position: absolute;
-  right: 2rem;
+  right: 1.75rem;
   top: 3rem;
+  text-align: right;
+
+  > ul > li {
+    margin-left: 1rem;
+  }
+
+  .icon {
+    width: 3rem;
+    height: 3rem;
+  }
+  .ui-popover.menu {
+    .ui-popover-content.bottom {
+      top: 4.1rem;
+      right: -.7rem
+    }
+  }
+
+  .dropdown {
+    .dropdown-toggle {
+      display: block;
+    }
+
+    .dropdown-menu {
+      top: 0;
+      left: -8rem;
+    }
+  }
 }
+
 .dropdown-menu {
   min-width: 50px;
   top: 4rem;
@@ -152,11 +180,17 @@ code {
 .branding{
   width: 25rem;
   float: left;
+
+  a {
+    display: block;
+  }
 }
+
 .logo{
   margin-top: 0.8rem;
-  width: 18rem;
+  width: 15.8rem;
 }
+
 .wordbrand{
   font-family: ubuntu;
   font-size: 20pt;
@@ -167,11 +201,12 @@ code {
 
 .header-version{
   position: absolute;
-  font-size: 0.7em;
-  right: 0.5em;
-  top: 0.5em;
+  font-size: 0.55em;
+  right: 2.2em;
+  top: 1em;
   color: #08592B;
 }
+
 .activity-indicator {
   background-image: url('images/spinner3-greenie.gif');
   background-repeat: no-repeat;
