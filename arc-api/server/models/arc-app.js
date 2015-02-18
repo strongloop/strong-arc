@@ -43,17 +43,19 @@ module.exports = function(ArcApp) {
       "supports": ['loopback']
     },
     {
-      "id": "profiler",
-      "name": "Profiler",
-      "description": "Profile applications’ CPU and memory consumption.",
-      "supports": "*"
-    },
-    {
       "id": "build-deploy",
       "name": "Build & Deploy",
       "description": "Build and deploy self-contained app package or Git branch.",
       "disabled": false,
       "supports": ['loopback', 'node']
+    },
+    {
+      "id": "process-manager",
+      "name": "Process Manager",
+      "description": "Manage your StrongLoop processes.",
+      "disabled": false,
+      "beta": true,
+      "supports": "*"
     },
     {
       "id": "metrics",
@@ -64,18 +66,16 @@ module.exports = function(ArcApp) {
       "supports": "*"
     },
     {
+      "id": "profiler",
+      "name": "Profiler",
+      "description": "Profile applications’ CPU and memory consumption.",
+      "supports": "*"
+    },
+    {
       "id": "advisor",
       "name": "Node Advisor",
       "description": "Browse and search curated Node modules with developer reviews.",
       "disabled": true,
-      "supports": "*"
-    },
-    {
-      "id": "process-manager",
-      "name": "Process Manager",
-      "description": "Manage your StrongLoop processes.",
-      "disabled": false,
-      "beta": true,
       "supports": "*"
     }
   ].map(function(app) {
