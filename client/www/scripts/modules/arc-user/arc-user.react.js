@@ -82,7 +82,7 @@ var LoginFormView = (LoginFormView = React).createClass({
               placeholder="Password" />
             </div>
             <div className="login-button-container">
-              <button type="submit" onClick={submitLoginRequest} className="btn btn-primary pull-right">
+              <button type="submit" onClick={submitLoginRequest} className="ui-btn primary pull-right">
               Sign In
               </button>
             </div>

@@ -495,8 +495,8 @@ var IAMainControls = (IAMainControls = React).createClass({
             <div data-ui-type="row">
               <div data-ui-type="cell">
                 <label className="main-control-command-label">MODEL</label>
-                <button onClick={createModelViewRequest} type="button" className="btn btn-primary btn-fullsize">
-                  <span className="maincontrol-main-icon sl-icon sl-icon-plus-sign"></span>
+                <button onClick={createModelViewRequest} type="button" className="ui-btn primary dark-bg btn-fullsize">
+                  <span className="sl-icon sl-icon-plus-sign"></span>
                   <span className="maincontrol-main-button-label">New</span>
                 </button>
               </div>
@@ -514,14 +514,14 @@ var IAMainControls = (IAMainControls = React).createClass({
                 <button onClick={addNewInstanceRequest}
                   data-type="datasource"
                   data-name="oracle"
-                  className="btn btn-default btn-control-ds"
+                  className="ui-btn primary dark-bg square"
                   title="oracle connector">
                     <span className="sl-icon sl-icon-database"></span>
                 </button>
                 <div className="ds-type-name">Oracle</div>
               </div>
               <div data-ui-type="cell">
-                <button className="btn btn-default btn-control-ds"
+                <button className="ui-btn primary dark-bg square"
                   data-type="datasource"
                   data-name="mssql"
                   onClick={addNewInstanceRequest}
@@ -533,7 +533,7 @@ var IAMainControls = (IAMainControls = React).createClass({
               <div data-ui-type="cell">
                 <button onClick={addNewInstanceRequest}
                   data-type="datasource"
-                  className="btn btn-default btn-control-ds"
+                  className="ui-btn primary dark-bg square"
                   data-name="mysql"
                   title="mysql connector">
                     <span className="sl-icon sl-icon-database"></span>
@@ -543,7 +543,7 @@ var IAMainControls = (IAMainControls = React).createClass({
               <div data-ui-type="cell">
                 <button onClick={addNewInstanceRequest}
                   data-type="datasource"
-                  className="btn btn-default btn-control-ds"
+                  className="ui-btn primary dark-bg square"
                   data-name="postgresql"
                   title="postgres connector">
                   <span className="sl-icon sl-icon-database"></span>
@@ -553,7 +553,7 @@ var IAMainControls = (IAMainControls = React).createClass({
               <div data-ui-type="cell">
                 <button onClick={addNewInstanceRequest}
                   data-type="datasource"
-                  className="btn btn-default btn-control-ds"
+                  className="ui-btn primary dark-bg square"
                   data-name="mongodb"
                   title="mongodb connector">
                     <span className="sl-icon sl-icon-database"></span>

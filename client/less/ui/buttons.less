@@ -140,7 +140,7 @@
   padding: .8rem 4rem;
   margin-left: 1rem;
   border-bottom: 2px solid @ui-button-border-color;
-  font-weight: 250;
+  font-weight: 400;
   position: relative;
   letter-spacing: .1rem;
 
@@ -219,6 +219,7 @@
   &.square {
     padding: .75rem 1.5rem;
 
+
     .sl-icon {
       &:before {
         font-size: 2rem;
@@ -241,6 +242,13 @@
     &:active:not(.selected):not([disabled]) {
       background-color: @ui-button-primary-dark-bg-active-bg-color;
       border-color: @ui-button-primary-dark-bg-active-border-color;
+    }
+
+    &.square {
+      &:active, &:focus {
+        background-color: @ui-button-primary-dark-bg-selected-bg-color;
+        border-bottom-color: @ui-button-primary-dark-bg-selected-border-color;
+      }
     }
   }
 }
