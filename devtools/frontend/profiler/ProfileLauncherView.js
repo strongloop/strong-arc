@@ -50,10 +50,10 @@ WebInspector.ProfileLauncherView = function(profilesPanel)
     selectTargetText.textContent = WebInspector.UIString("Target:");
     var targetsSelect = targetSpan.createChild("select", "chrome-select");
     new WebInspector.TargetsComboBoxController(targetsSelect, targetSpan);
-    this._controlButton = this._contentElement.createChild("button", "text-button control-profiling");
+    this._controlButton = this._contentElement.createChild("button", "ui-btn primary control-profiling");
     this._controlButton.addEventListener("click", this._controlButtonClicked.bind(this), false);
     this._recordButtonEnabled = true;
-    this._loadButton = this._contentElement.createChild("button", "text-button load-profile");
+    this._loadButton = this._contentElement.createChild("button", "ui-btn primary load-profile");
     this._loadButton.textContent = WebInspector.UIString("Load");
     this._loadButton.addEventListener("click", this._loadButtonClicked.bind(this), false);
 
@@ -159,15 +159,15 @@ WebInspector.ProfileLauncherView.prototype = {
     },
 
     _addFetchButtons: function(){
-        this._fetchHeapButton = this._contentElement.createChildBefore('button', 'text-button fetch-heap', this._contentElement.querySelector('.load-profile'));
+        this._fetchHeapButton = this._contentElement.createChildBefore('button', 'ui-btn primary fetch-heap', this._contentElement.querySelector('.load-profile'));
         this._fetchHeapButton.textContent = WebInspector.UIString('Take Snapshot');
         this._fetchHeapButton.addEventListener('click', this._fetchHeapButtonClicked.bind(this), false);
 
-        this._startCpuButton = this._contentElement.createChildBefore('button', 'text-button start-cpu', this._contentElement.querySelector('.load-profile'));
+        this._startCpuButton = this._contentElement.createChildBefore('button', 'ui-btn primary start-cpu', this._contentElement.querySelector('.load-profile'));
         this._startCpuButton.textContent = WebInspector.UIString('Start');
         this._startCpuButton.addEventListener('click', this._startCpuButtonClicked.bind(this), false);
 
-        this._fetchCpuButton = this._contentElement.createChildBefore('button', 'text-button fetch-cpu', this._contentElement.querySelector('.load-profile'));
+        this._fetchCpuButton = this._contentElement.createChildBefore('button', 'ui-btn primary fetch-cpu', this._contentElement.querySelector('.load-profile'));
         this._fetchCpuButton.textContent = WebInspector.UIString('Stop');
         this._fetchCpuButton.addEventListener('click', this._fetchCpuButtonClicked.bind(this), false);
     },

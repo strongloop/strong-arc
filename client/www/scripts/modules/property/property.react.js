@@ -85,7 +85,7 @@ var PropertyMapEditor = (PropertyMapEditor = React).createClass({
               <input type="text" placeholder="property name" />
             </div>
             <div data-ui-type="cell">
-              <button className="btn btn-default btn-xs">String</button>
+              <button className="ui-btn primary small">String</button>
             </div>
           </div>
         </div>
