@@ -81,25 +81,32 @@
     </div>
 
     <div class="model-detail-button-row">
-      <div class="model-detail-input-container listNarrow checkbox">
-        <label class="model-instance-editor-checkbox-label">
-          <input type="checkbox"
-                 ng-model="activeInstance.config.public"
-                 data-name="config.public"
-                 name="public"
-                 class="model-instance-editor-checkbox" />public
-        </label>
-      </div>
-      <div class="model-detail-input-container listNarrow checkbox">
-        <label class="model-instance-editor-checkbox-label">
-
-          <input type="checkbox"
-                 data-name="strict"
-                 name="strict"
-                 ng-model="activeInstance.strict"
-                 class="model-instance-editor-checkbox" />strict
-        </label>
-      </div>
+      <ol class="ui-field-group group-inline">
+        <li>
+          <label class="ui-checkbox">
+            <input
+              type="checkbox"
+              ng-model="activeInstance.config.public"
+              data-name="config.public"
+              name="public"
+              ng-class="{ checked: activeInstance.config.public }">
+            <i class="icon"></i>
+            <span class="ui-label-txt capitalize">public</span>
+          </label>
+        </li>
+        <li>
+          <label class="ui-checkbox">
+            <input
+              type="checkbox"
+              data-name="strict"
+              name="strict"
+              ng-model="activeInstance.strict"
+              ng-class="{ checked: activeInstance.strict }">
+            <i class="icon"></i>
+            <span class="ui-label-txt capitalize">strict</span>
+          </label>
+        </li>
+      </ol>
     </div>
   </div>
 </form>
