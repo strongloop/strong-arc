@@ -156,12 +156,24 @@ Discovery.controller('DiscoveryMainController', [
         {field:'owner',displayName:'Owner', maxWidth: 10, cellClass: 'discovery-data-cell'}
       ],
       checkboxHeaderTemplate: '<input class="ngSelectionHeader" type="checkbox" ng-model="allSelected" ng-change="toggleSelectAll(allSelected)"/>',
-      checkboxCellTemplate: '<label class="select-item-cell"><span class="sl-icon sl-icon-checkmark"></span><input type="checkbox" /></label>',
+      checkboxCellTemplate: '<label class="ui-checkbox">' +
+        '<input type="checkbox">' +
+        '<i class="icon"></i>'+
+        '</label>',
       showSelectionCheckbox: true,
       selectWithCheckboxOnly: false,
       afterSelectionChange: function (rowItem) {
         if (!$scope.isAllSchemaTablesSelected) {
           $scope.isAllSchemaTablesSelected = ($scope.schemaSrcTables.length === $scope.tableSelections.length);
+        }
+
+        //add class to checkbox if row is selected
+        var $input = rowItem.elm.find('.ui-checkbox [type=checkbox]');
+
+        if ( rowItem.selected ) {
+          $input.addClass('checked');
+        } else {
+          $input.removeClass('checked');
         }
       },
       rowHeight: 40,

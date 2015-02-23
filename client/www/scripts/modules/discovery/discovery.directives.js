@@ -54,12 +54,16 @@ Discovery.directive('slDiscoveryModelPreview', [
                 {field: 'scale', displayName: 'Scale', cellClass: 'discovery-data-cell'}
               ],
               checkboxHeaderTemplate: '<input class="ngSelectionHeader" type="checkbox" ng-model="allSelected" ng-change="toggleSelectAll(allSelected)"/>',
-              checkboxCellTemplate: '<label class="select-item-cell"><span class="sl-icon sl-icon-checkmark"></span><input type="checkbox" /></label>',
+              checkboxCellTemplate: '<label class="ui-checkbox">' +
+                '<input type="checkbox" class="checked">' +
+                '<i class="icon"></i>'+
+                '</label>',
               showSelectionCheckbox: true,
               selectWithCheckboxOnly: false,
               selectedItems: scope.masterSelectedProperties[i],
               multiSelect: true,
               beforeSelectionChange: beforeSelectionChange,
+              afterSelectionChange: afterSelectionChange,
               rowHeight: 40,
               filterOptions: scope.filterOptions,
               plugins: [new ngGridFlexibleHeightPlugin()]
@@ -71,6 +75,17 @@ Discovery.directive('slDiscoveryModelPreview', [
         });
       }
     };
+
+    function afterSelectionChange(rowItem){
+      //add class to checkbox if row is selected
+      var $input = rowItem.elm.find('.ui-checkbox [type=checkbox]');
+
+      if ( rowItem.selected ) {
+        $input.addClass('checked');
+      } else {
+        $input.removeClass('checked');
+      }
+    }
 
     function beforeSelectionChange(rowItem) {
       var changeAllowed;

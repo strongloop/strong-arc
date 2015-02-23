@@ -304,7 +304,7 @@ form.ui-form .ui-checkbox, .ui-checkbox {
       background: url(/images/checkbox_off.svg) no-repeat center center;
     }
 
-    &.checked {
+    &.checked, &[checked] {
       & + .icon {
         background-image: url(/images/checkbox_on_out.svg);
       }
@@ -323,7 +323,7 @@ form.ui-form .ui-checkbox, .ui-checkbox {
         background-image: url(/images/checkbox_off_over.svg);
       }
 
-      &.checked {
+      &.checked, &[checked] {
         & + .icon {
           background-image: url(/images/checkbox_on_over.svg);
         }
@@ -335,7 +335,7 @@ form.ui-form .ui-checkbox, .ui-checkbox {
         }
       }
 
-      &.checked[disabled] {
+      &.checked[disabled], &[checked][disabled] {
         & + .icon {
           background-image: url(/images/checkbox_on_out.svg);
         }
@@ -355,13 +355,13 @@ form.ui-form .ui-checkbox, .ui-checkbox {
         }
       }
 
-      &.checked {
+      &.checked, &[checked] {
         & + .icon {
           background-image: url(/images/checkbox_off.svg);
         }
       }
 
-      &.checked[disabled] {
+      &.checked[disabled], &[checked][disabled] {
         & + .icon {
           background-image: url(/images/checkbox_on_out.svg);
         }
@@ -393,7 +393,7 @@ form.ui-form .ui-radio, .ui-radio {
       background: url(/images/radio_off.svg) no-repeat center center;
     }
 
-    &.checked {
+    &.checked, &[checked] {
       & + .icon {
         background-image: url(/images/radio_on_out.svg);
       }
@@ -412,7 +412,7 @@ form.ui-form .ui-radio, .ui-radio {
         background-image: url(/images/radio_off_over.svg);
       }
 
-      &.checked {
+      &.checked, &[checked] {
         & + .icon {
           background-image: url(/images/radio_on_over.svg);
         }
@@ -424,7 +424,7 @@ form.ui-form .ui-radio, .ui-radio {
         }
       }
 
-      &.checked[disabled] {
+      &.checked[disabled], &[checked][disabled] {
         & + .icon {
           background-image: url(/images/radio_on_out.svg);
         }
@@ -444,13 +444,13 @@ form.ui-form .ui-radio, .ui-radio {
         }
       }
 
-      &.checked {
+      &.checked, &[checked] {
         & + .icon {
           background-image: url(/images/radio_on_out.svg);
         }
       }
 
-      &.checked[disabled] {
+      &.checked[disabled], &[checked][disabled] {
         & + .icon {
           background-image: url(/images/radio_on_out.svg);
         }
