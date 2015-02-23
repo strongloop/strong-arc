@@ -103,18 +103,25 @@
       }
 
       &.actions {
+        width: 5rem;
         box-shadow: none !important;
         text-align: center;
-        border: none !important;
+        border-color: transparent !important;
         vertical-align: middle;
       }
     }
   }
 
   tbody {
-    tr:not(.selected){
+    tr {
       .ui-close {
         display: none;
+      }
+
+      &:hover {
+        .ui-close {
+          display: inline-block;
+        }
       }
     }
 
