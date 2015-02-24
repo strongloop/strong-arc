@@ -1,0 +1,9 @@
+<ul data-id="TracingBreadcrumbsList">
+  <li>
+    <button ng-class="getFirstCrumbClass()" ng-click="backToTimeline()">{{tracingCtx.currentBreadcrumbs[0].label}}</button>
+  </li>
+  <li ng-hide="!tracingCtx.currentPFKey">&gt;</li>
+  <li ng-hide="!tracingCtx.currentPFKey">
+    <button ng-class="getSecondCrumbClass()" ng-show="tracingCtx.currentBreadcrumbs[1].label" ng-click="backToTrace()">{{tracingCtx.currentBreadcrumbs[1].label}}</button>
+  </li>
+</ul>

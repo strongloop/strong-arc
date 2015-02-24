@@ -10,6 +10,17 @@
     "deploy-git": 4557616,
     "deploy-file": 4557617,
     "build-source": 4557618,
-    "build-type": 4557613
+    "build-type": 4557613,
+    "tracing": 6718803,
+    "trace-cpumemory": 6718806,
+    "trace-transhistory": 6718808,
+    "trace-transseq": 6718814,
+    "trace-eventloop": 6718810,
+    "trace-summary": 6718962,
+    "trace-waterfall": 6718818,
+    "trace-syncasync": 6718819,
+    "trace-flame": 6718821,
+    "trace-inspector": 6718823,
+    "trace-rawtree": 6718825
   }
 }

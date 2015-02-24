@@ -1,0 +1,13 @@
+<div class="inspector">
+  <div class='panel'>
+    <div class="panel-heading section-header">
+      <h2>Inspector</h2>
+      <sl-popover-help name="trace-inspector" position="left"></sl-popover-help>
+    </div>
+    <sl-tracing-inspector-costtree ng-hide="tracingCtx.currentFunction.type == 'eventLoop'" ng-show="tracingCtx.currentFunction.type == 'flame' || 'rawTree'"></sl-tracing-inspector-costtree>
+    <sl-tracing-inspector-eventloop ng-show="tracingCtx.currentFunction.type == 'eventLoop'"></sl-tracing-inspector-eventloop>
+    <ul class='list-group'>
+      <li class='list-group-item'>Nothing selected</li>
+    </ul>
+  </div>
+</div>

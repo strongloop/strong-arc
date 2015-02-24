@@ -58,6 +58,8 @@ module.exports = function(config) {
 
       'client/www/scripts/vendor/nv.d3.js',
 
+
+
       // NOTE(bajtos) the main app script is intentionally omitted:
       //  - it contains UI-specific code depending on jQuery
       //  - the angular part is not relevant for unit/integration tests
@@ -82,7 +84,9 @@ module.exports = function(config) {
     exclude: [
       // TODO(bajtos) Rename react scripts to *.jsx
       // and use karma-react-jsx-preprocessor
-      'client/www/scripts/modules/**/*.react.js'
+      'client/www/scripts/modules/**/*.react.js',
+      'client/www/scripts/modules/tracing/src/**/*.js'
+
     ],
 
     // test results reporter to use
@@ -141,6 +145,9 @@ module.exports = function(config) {
     // If browser does not capture in given timeout [ms], kill it
     captureTimeout: 5000,
 
+    //preprocessors: {
+    //  './e2e/**/*.spec.js': [ 'browserify' ]
+    //},
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit

@@ -1,6 +1,7 @@
 var async = require('async');
 var fs = require('fs-extra');
 var path = require('path');
+process.env.SL_ARC_FEATURE_FLAGS = 'tracing';
 var arc = require('../../server/server');
 var workspace = arc.workspace;
 

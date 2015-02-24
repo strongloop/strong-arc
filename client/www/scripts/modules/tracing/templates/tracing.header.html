@@ -1,0 +1,50 @@
+<div class="tracing-header-container panel">
+
+  <div class="row  section-header panel-heading">
+    <div class="pid-selector-container">
+      <div class="pm-host-selector-container">
+
+        <div class="btn-group pm-host-select" ng-show="managerHosts" dropdown is-open="status.isopen">
+          <div class="title">Host</div>
+          <button type="button"
+                  class="btn btn-default dropdown-toggle"
+                  dropdown-toggle
+                  ng-disabled="disabled">
+            {{selectedPMHost.host}} : {{selectedPMHost.port}}<span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li ng-repeat="host in managerHosts">
+              <button class="link-cmd" ng-click="changePMHost(host)">{{host.host}}:{{host.port}}</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="pm-pids-container">
+        <div class="sl-pid-selector">
+          <sl-tracing-processes></sl-tracing-processes>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <hr />
+  <div class="row">
+    <div class="col-sm-7">
+      <sl-tracing-breadcrumbs></sl-tracing-breadcrumbs>
+    </div>
+    <div class="col-sm-5">
+      <sl-tracing-prev-next ng-hide="tracingCtx.currentWaterfallKey"></sl-tracing-prev-next>
+    </div>
+  </div>
+  <div class="row">
+
+    <div class="col-xs-12">
+
+      <sl-tracing-time-series-charts data-id="TraceHistoryChart" chart-name="cpu" internal-ctx="tracingCtx" ></sl-tracing-time-series-charts>
+
+    </div>
+  </div>
+</div>
+
+
+
