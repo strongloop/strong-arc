@@ -19,6 +19,7 @@
     "express-jsxtransform": "^1.1.0",
     "fs-extra": "^0.14.0",
     "http-proxy": "^1.6.2",
+    "lodash": "^3.3.1",
     "loopback": "^2.7.0",
     "loopback-boot": "^2.6.3",
     "loopback-datasource-juggler": "^2.14.1",

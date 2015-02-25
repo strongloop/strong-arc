@@ -1,5 +1,5 @@
 <div class="ui-popover">
-  <i class="sl-icon sl-icon-question-mark" ng-click="showHelp = !showHelp"></i>
+  <i class="{{iconclass}}" ng-click="showHelp = !showHelp"></i>
   <div class="ui-popover-content" ng-class="{ left: position == 'left' }" ng-show="showHelp">
     <span class="ui-arrow-left" ng-show="position != 'left'"></span>
     <span class="ui-arrow-right" ng-show="position == 'left'"></span>

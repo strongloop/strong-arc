@@ -19,6 +19,7 @@ var spawn = require('child_process').spawn;
 var pullDevTools = require('./build-tasks/pull-devtools');
 var setupMysql = require('./build-tasks/setup-mysql');
 var downloadHelpAssets = require('./build-tasks/download-help-assets');
+var _ = require('lodash');
 
 gulp.task('default', ['build', 'test', 'watch']);
 
@@ -112,8 +113,10 @@ gulp.task('build-help-assets', function(callback) {
   var helpData = fs.readJsonFileSync(
     path.resolve(__dirname, 'client/help.json'));
 
+  var names = helpData.names;
+
   downloadHelpAssets(
-    helpData.ids,
+    names,
     path.resolve(__dirname, 'client/www/help'),
     callback);
 });

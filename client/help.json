@@ -1,10 +1,15 @@
 {
-  "ids": [
-    4557613,
-    4557614,
-    4557615,
-    4557616,
-    4557617,
-    4557618
-  ]
+  "names": {
+    "build-deploy": 6096288,
+    "composer": 6096284,
+    "metrics": 6096290,
+    "profiler": 6096286,
+    "process-manager": 6096292,
+    "build-git": 4557614,
+    "build-file": 4557615,
+    "deploy-git": 4557616,
+    "deploy-file": 4557617,
+    "build-source": 4557618,
+    "build-type": 4557613
+  }
 }
