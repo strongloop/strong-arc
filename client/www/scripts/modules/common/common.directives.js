@@ -163,20 +163,23 @@ Common.directive('slPopoverHelp', [
     return {
       restrict: 'E',
       replace: true,
-      scope: {},
+      scope: {
+        name: '@'
+      },
       templateUrl: './scripts/modules/common/templates/common.popover.help.html',
       link: function(scope, el, attrs){
         scope.loading = false;
         scope.position = attrs.position || 'right';
+        scope.iconclass = attrs.iconclass || 'sl-icon sl-icon-question-mark';
 
-        scope.$watch('showHelp', function(newVal, oldVal){
+         scope.$watch('showHelp', function(newVal, oldVal){
           if ( newVal ) {
             //only  show spinner on initial request
             if ( !scope.content ) {
               scope.loading = true;
             }
 
-            $http.get('/help/'+attrs.id+'.json')
+            $http.get('/help/'+scope.name+'.json')
               .then(function(res){
                 scope.loading = false;
                 scope.title = res.data.title;

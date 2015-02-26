@@ -4,21 +4,24 @@ var path = require('path');
 var request = require('request');
 var gutil = require('gulp-util');
 var cheerio = require('cheerio');
-
+var _ = require('lodash');
 var CONFLUENCE_URL_BASE = 'http://docs.strongloop.com/';
 
-module.exports = function(confluenceIds, destDir, cb) {
+module.exports = function(names, destDir, cb) {
+  var confluenceIds = _.values(names);
+  var namesById = _.invert(names);
   fs.mkdirsSync(destDir);
 
   async.each(
     confluenceIds,
     function(id, next) {
-      downloadHelpHtml(id, destDir, next);
+      var name = namesById[id];
+      downloadHelpHtml(id, name, destDir, next);
     },
     cb);
 };
 
-function downloadHelpHtml(id, destDir, cb) {
+function downloadHelpHtml(id, name, destDir, cb) {
   var url = CONFLUENCE_URL_BASE +
     'rest/api/content/' + id +
     '?expand=body.view';
@@ -36,7 +39,7 @@ function downloadHelpHtml(id, destDir, cb) {
     try {
       data = JSON.parse(body);
     } catch (error) {
-      var msg = 'Cannot parse help item #' + id + ': ' + error.message;
+      var msg = 'Cannot parse help item #' + id + ', ' + name +': ' + error.message;
       gutil.log(gutil.colors.red(msg));
       gutil.log(body || '(empty body)');
       return cb(new Error(msg));
@@ -44,7 +47,7 @@ function downloadHelpHtml(id, destDir, cb) {
 
     data.body.view.value = resolveRelativeHrefs(data.body.view.value);
 
-    var fileName = path.join(destDir, id + '.json');
+    var fileName = path.join(destDir, name + '.json');
 
     gutil.log('Creating help file ' + fileName);
     fs.writeJsonFile(fileName, data, 'utf-8', cb);

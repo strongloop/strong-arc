@@ -22,8 +22,8 @@ Landing.directive('slLandingAppPlaceholder', [
 ]);
 
 
-Landing.directive('slAppSelector', [
-  function(){
+Landing.directive('slAppSelector', ['$log',
+  function($log){
     return {
       restrict: "E",
       replace: true,
@@ -61,7 +61,12 @@ Landing.directive('slAppSelector', [
         //update page id when changing states
         $rootScope.$on('$stateChangeStart',
           function(event, toState, toParams, fromState, fromParams){
-            $scope.suiteIA.appId = toState.name;
+            var isValidApp = $scope.suiteIA.apps.filter(function(app){
+              return app.id == toState.name;
+            }).length;
+
+            $scope.suiteIA.appId = !!isValidApp ? toState.name : null;
+
             var dtName = getDTName(toState.name);
             window.localStorage.setItem('lastActiveDTPanel', dtName);
           });

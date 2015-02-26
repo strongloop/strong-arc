@@ -135,7 +135,7 @@ code {
 .headerContainer li {
   display: inline-block;
 }
-.navButtons{
+.navButtons {
   width: 15rem;
   position: absolute;
   right: 1.75rem;
@@ -150,10 +150,15 @@ code {
     width: 3rem;
     height: 3rem;
   }
-  .ui-popover.menu {
-    .ui-popover-content.bottom {
-      top: 4.1rem;
-      right: -.7rem
+
+  .ui-popover {
+    margin-left: 0;
+
+    &.menu {
+      .ui-popover-content.bottom {
+        top: 4.1rem;
+        right: -.7rem
+      }
     }
   }
 
