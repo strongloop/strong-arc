@@ -45,7 +45,7 @@ module.exports = function(config) {
       'client/www/scripts/vendor/angular/angular-resource.js',
       'client/www/scripts/vendor/angular/angular-growl.min.js',
       'client/www/scripts/vendor/angular/angular-file-upload.js',
-
+      'client/www/scripts/vendor/angular-moment.js',
       'client/www/scripts/vendor/string.min.js',
 
       'client/www/scripts/vendor/inflection.min.js',

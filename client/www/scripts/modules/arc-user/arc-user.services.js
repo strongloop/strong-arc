@@ -19,6 +19,10 @@ ArcUser.service('ArcUserService', [
       return $cookieStore.get('currentUserEmail');
     };
 
+    svc.getAccessToken = function(){
+      return $cookieStore.get('accessToken');
+    };
+
     svc.buildLoginRequest = function(data) {
       var result = {
         password: data.password

@@ -32,6 +32,7 @@
           <span class="dropdown" dropdown on-toggle="toggled(open)" data-id="ArcAccountDropdown" title="logout">
             <a href class="dropdown-toggle" dropdown-toggle><i class="icon icon-on-off"></i></a>
             <ul class="dropdown-menu">
+              <li><a ui-sref="licenses">Licenses</a></li>
               <li lb-register-nav-item></li>
               <li lb-login-nav-item></li>
               <li sl-user-logout-nav-item></li>
@@ -86,6 +87,7 @@
 
 <!-- moment -->
 <script src="./scripts/vendor/moment.js"></script>
+<script src="./scripts/vendor/angular-moment.js"></script>
 
 
 <!-- lb services -->
@@ -244,6 +246,11 @@
 <script src="./scripts/modules/styleguide/styleguide.directives.js"></script>
 <script src="./scripts/modules/styleguide/styleguide.controllers.js"></script>
 
+<!-- licensing -->
+<script src="./scripts/modules/licenses/licenses.module.js"></script>
+<script src="./scripts/modules/licenses/licenses.services.js"></script>
+<!--<script src="./scripts/modules/licenses/licenses.directives.js"></script>-->
+<script src="./scripts/modules/licenses/licenses.controllers.js"></script>
 
 <!-- angular-segmentio -->
 <script src="./scripts/vendor/angular-segmentio/angular-segmentio.js"></script>
