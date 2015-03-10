@@ -38,8 +38,10 @@ var server = arc.listen(port, function(err) {
     process.exit(1);
   }
 
+  //add optional path if flag is passed
+  var path = '#/' + ( argv.indexOf('--login') > -1 ? 'login' : '' );
   var url = util.format('http://%s:%s/%s', DEFAULT_ARC_HOST,
-    server.address().port, '#/');
+    server.address().port, path);
 
   console.log('%s %s', STRONG_ARC_RUNNING_MSG, url);
 
