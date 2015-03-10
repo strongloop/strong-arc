@@ -269,12 +269,15 @@ Metrics.controller('MetricsMainController', [
     }
 
     function renderTheCharts() {
+
+      // clear memory to avoid leaks
+      ChartConfigService.clearChartMemory();
+
       // assign scope chart model variable data here
       $scope.chartData.map(function(chart) {
         var data = $scope.currentStub[chart.name];
         $scope[chart.chartConfig] = ChartConfigService.getChartOptions(chart.chartOptions);
         $scope[chart.chartModel] = ChartConfigService.getChartMetricsData(chart, data);
-
       });
 
     }

@@ -114,6 +114,13 @@ Metrics.service('ChartConfigService', [
       return isActive; //  temporary
 
     }
+    svc.clearChartMemory = function() {
+      // a bit of a hack to solve a memory leak in nvd3 when
+      // updated multiple charts at the same time
+      if (window.nv && window.nv.graphs) {
+        window.nv.graphs = [];
+      }
+    };
     svc.toggleMetricStatus = function(chartMetric) {
       // find metric in the current chart config data
       loop1:
