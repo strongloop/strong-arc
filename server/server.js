@@ -25,7 +25,9 @@ app.use('/manager', meshProxy);
 try {
   // API explorer
   var explorer = require('loopback-explorer');
-  app.use('/explorer', explorer(workspace, { basePath: '/workspace/api' }));
+  app.use('/explorer/workspace', explorer(workspace,
+    { basePath: '/workspace/api' }));
+  app.use('/explorer/arc-api', explorer(arcApi, { basePath: '/api' }));
 } catch(err) {
   // silently ignore the error, the explorer is not available in "production"
 }
