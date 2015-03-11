@@ -1,5 +1,6 @@
 var request = require('request');
 var KeyStore = require('./key-store');
+var debug = require('debug')('strong-arc:subscription');
 
 // Extract the access token from the request
 function getAccessToken(req) {
@@ -207,4 +208,41 @@ module.exports = function(Subscription) {
     returns: {arg: 'subscription', type: 'subscription', root: true},
     http: {verb: 'post', path: '/:userId/renewTrial'}});
 
+  var app = require('../../../server/server');
+  app.meshProxy.models.ManagerHost.observe('before action',
+    function(ctx, next) {
+      debug('Trapping strong-pm command:', ctx.data);
+      if (['stop', 'start', 'restart', 'cluster-restart', 'license-push']
+        .indexOf(ctx.data.cmd) === -1) {
+        return next();
+      }
+      Subscription.getSubscriptions(null, 'offline', null,
+        function(err, subscriptions) {
+          if (err) {
+            return next(err);
+          }
+          debug('Subscriptions:', subscriptions);
+          if (Array.isArray(subscriptions)) {
+            var keys = subscriptions.map(function(s) {
+              return s.licenseKey;
+            }).join(':');
+            debug('Pushing license keys:', keys);
+            ctx.instance.action({
+              cmd: 'env-set',
+              env: {
+                'STRONGLOOP_LICENSE': keys
+              }
+            }, function(err, res) {
+              debug('Response from strong-pm: %j %j', err, res);
+              if (!err && res && res.result && res.result.error) {
+                next(new Error(res.result.error));
+              } else {
+                next(err, res);
+              }
+            });
+          } else {
+            next();
+          }
+        });
+    });
 };
