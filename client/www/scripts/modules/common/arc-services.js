@@ -77,7 +77,7 @@ module.factory(
          */
         "current": {
           url: urlBase + "/Projects/current",
-          method: "POST",
+          method: "POST"
         },
       }
     );
@@ -156,7 +156,7 @@ module.factory(
          */
         "list": {
           url: urlBase + "/ArcApps",
-          method: "GET",
+          method: "GET"
         },
       }
     );
@@ -239,7 +239,7 @@ module.factory(
          */
         "login": {
           url: urlBase + "/Subscriptions/login",
-          method: "POST",
+          method: "POST"
         },
 
         /**
@@ -254,6 +254,8 @@ module.factory(
          * @param {Object=} parameters Request parameters.
          *
          *  - `userId` – `{number}` - User id
+         *
+         *  - `mode` – `{string=}` - Operation mode
          *
          *  - `req` – `{object=}` - 
          *
@@ -273,9 +275,9 @@ module.factory(
          * </em>
          */
         "getSubscriptions": {
-          url: urlBase + "/Subscriptions/:userId/getSubscriptions",
-          method: "GET",
           isArray: true,
+          url: urlBase + "/Subscriptions/:userId/getSubscriptions",
+          method: "GET"
         },
 
         /**
@@ -314,7 +316,7 @@ module.factory(
          */
         "trackUsages": {
           url: urlBase + "/Subscriptions/:userId/trackUsages",
-          method: "POST",
+          method: "POST"
         },
 
         /**
@@ -355,7 +357,7 @@ module.factory(
          */
         "renewTrial": {
           url: urlBase + "/Subscriptions/:userId/renewTrial",
-          method: "POST",
+          method: "POST"
         },
       }
     );
@@ -381,6 +383,7 @@ module.factory(
 module
   .factory('LoopBackAuth', function() {
     var props = ['accessTokenId', 'currentUserId'];
+    var propsPrefix = '$LoopBack$';
 
     function LoopBackAuth() {
       var self = this;
@@ -411,18 +414,25 @@ module
       this.currentUserData = null;
     }
 
+    LoopBackAuth.prototype.clearStorage = function() {
+      props.forEach(function(name) {
+        save(sessionStorage, name, null);
+        save(localStorage, name, null);
+      });
+    };
+
     return new LoopBackAuth();
 
     // Note: LocalStorage converts the value to string
     // We are using empty string as a marker for null/undefined values.
     function save(storage, name, value) {
-      var key = '$LoopBack$' + name;
+      var key = propsPrefix + name;
       if (value == null) value = '';
       storage[key] = value;
     }
 
     function load(name) {
-      var key = '$LoopBack$' + name;
+      var key = propsPrefix + name;
       return localStorage[key] || sessionStorage[key] || null;
     }
   })
@@ -496,7 +506,7 @@ module
      * @ngdoc method
      * @name ArcServices.LoopBackResourceProvider#setUrlBase
      * @methodOf ArcServices.LoopBackResourceProvider
-     * @param {string} url
+     * @param {string} url The URL to use, e.g. `/api` or `//example.com/api`.
      * @description
      * Change the URL of the REST API server. By default, the URL provided
      * to the code generator (`lb-ng` or `grunt-loopback-sdk-angular`) is used.
