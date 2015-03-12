@@ -161,7 +161,7 @@ module.exports = function(Subscription) {
       }
       var userId = body.userId;
       var accessToken = body.id;
-      reloadSubscriptions(userId, accessToken, cb, body);
+      reloadSubscriptions(userId, accessToken, body, cb);
     });
   };
 
