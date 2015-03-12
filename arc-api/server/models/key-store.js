@@ -12,7 +12,7 @@ var homeDir = process.env.HOME || process.env.HOMEPATH ||
  */
 function KeyStore(options) {
   options = options || {};
-  this.root = options.root || path.join(homeDir, '.strong-arc');
+  this.root = options.root || path.join(homeDir, '.strongloop');
   this.perUser = options.perUser || false;
   this.storeQueue = async.queue(function(task, cb) {
     task(cb);

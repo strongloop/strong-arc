@@ -64,16 +64,34 @@ module.exports = function(Subscription) {
           return cb(err, body);
         } else {
           // Fall back to offline mode
-          return store.load(userId, cb);
+          return store.load(userId, function(err, content) {
+            if (err) {
+              return cb(err);
+            } else {
+              return (content && content.licenses) || [];
+            }
+          });
         }
       } else {
         // Refresh the local key store
-        store.save(body, userId, function(err) {
+        store.save({licenses: body, modified: new Date()}, userId, function(err) {
           cb(err, body);
         });
       }
     });
   };
+
+  function reloadSubscriptions(userId, accessToken, result, cb) {
+    Subscription.getSubscriptions(userId, 'online', {
+      query: {access_token: accessToken}
+    }, function(err) {
+      if (err) {
+        return cb(err);
+      } else {
+        return cb(null, result);
+      }
+    });
+  }
 
   /**
    * Renew a trial subscription for a given user/product/features
@@ -85,10 +103,11 @@ module.exports = function(Subscription) {
    */
   Subscription.renewTrial = function(userId, product, features, req, cb) {
     var url = Subscription.settings.authUrl;
+    var accessToken = getAccessToken(req);
     request.post({
       url: url + 'users/' + userId + '/renewTrial',
       qs: {
-        access_token: getAccessToken(req)
+        access_token: accessToken
       },
       json: {
         product: product,
@@ -98,13 +117,7 @@ module.exports = function(Subscription) {
       if (err) {
         return cb(err, body);
       }
-      Subscription.getSubscriptions(userId, 'online', req, function(err) {
-        if (err) {
-          return cb(err);
-        } else {
-          return cb(null, body);
-        }
-      });
+      reloadSubscriptions(userId, accessToken, body, cb);
     });
   };
 
@@ -143,7 +156,12 @@ module.exports = function(Subscription) {
       },
       json: credentials
     }, function(err, res, body) {
-      cb(err, body);
+      if (err || !body) {
+        return cb(err, body);
+      }
+      var userId = body.userId;
+      var accessToken = body.id;
+      reloadSubscriptions(userId, accessToken, cb, body);
     });
   };
 

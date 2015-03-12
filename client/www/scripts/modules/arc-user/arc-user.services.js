@@ -1,9 +1,10 @@
 ArcUser.service('ArcUserService', [
   'User',
+  'Subscription',
   '$q',
   '$log',
   '$cookieStore',
-  function (User, $q, $log, $cookieStore) {
+  function (User, Subscription, $q, $log, $cookieStore) {
     var svc = this;
 
     svc.getCurrentUserId = function () {
@@ -35,7 +36,7 @@ ArcUser.service('ArcUserService', [
     svc.loginRequest = function(config) {
       var deferred = $q.defer();
       var request = svc.buildLoginRequest(config);
-      User.login(request,
+      Subscription.login({include: 'user'}, request,
         function (response) {
           //save user properties and auth token
           svc.saveUserData(response);
