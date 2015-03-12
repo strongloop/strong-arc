@@ -18,7 +18,7 @@
     "dataSource": null,
     "public": true,
     "options": {
-      "authUrl": "http://demo.strongloop.com:3001/api/"
+      "authUrl": "https://auth.strongloop.com/api/"
     }
   }
 }
