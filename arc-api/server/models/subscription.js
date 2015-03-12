@@ -226,6 +226,12 @@ module.exports = function(Subscription) {
     returns: {arg: 'subscription', type: 'subscription', root: true},
     http: {verb: 'post', path: '/:userId/renewTrial'}});
 
+  // FIXME: [rfeng] This is hack to prevent gulp build from hanging due to
+  // active handles in the server
+  if (process.env.GULP_ANGULAR_CODEGEN) {
+    return;
+  }
+
   var app = require('../../../server/server');
   app.meshProxy.models.ManagerHost.observe('before action',
     function(ctx, next) {

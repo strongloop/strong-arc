@@ -14,9 +14,6 @@ function KeyStore(options) {
   options = options || {};
   this.root = options.root || path.join(homeDir, '.strongloop');
   this.perUser = options.perUser || false;
-  this.storeQueue = async.queue(function(task, cb) {
-    task(cb);
-  }, 1);
 }
 
 KeyStore.prototype.getStoreFile = function(userId) {
@@ -27,13 +24,22 @@ KeyStore.prototype.getStoreFile = function(userId) {
   return path.join(this.root, name);
 };
 
+KeyStore.prototype.getQueue = function() {
+  if (!this.storeQueue) {
+    this.storeQueue = async.queue(function(task, cb) {
+      task(cb);
+    }, 1);
+  }
+  return this.storeQueue;
+};
+
 KeyStore.prototype.save = function(data, userId, cb) {
   if (typeof userId === 'function' && cb === undefined) {
     cb = userId;
     userId = undefined;
   }
   var storeFile = this.getStoreFile(userId);
-  this.storeQueue.push(function(done) {
+  this.getQueue().push(function(done) {
     return fs.outputJson(storeFile, data, done);
   }, cb);
 }
@@ -44,7 +50,7 @@ KeyStore.prototype.load = function(userId, cb) {
     userId = undefined;
   }
   var storeFile = this.getStoreFile(userId);
-  this.storeQueue.push(function(done) {
+  this.getQueue().push(function(done) {
     return fs.readJson(storeFile, done);
   }, cb);
 }

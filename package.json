@@ -23,7 +23,7 @@
     "lodash": "^3.5.0",
     "loopback": "^2.14.0",
     "loopback-boot": "^2.6.5",
-    "loopback-datasource-juggler": "^2.19.2",
+    "loopback-datasource-juggler": "^2.20.0",
     "loopback-workspace": "^3.10.0",
     "opener": "^1.4.0",
     "request": "^2.53.0",
@@ -31,7 +31,7 @@
     "split": "^0.3.3",
     "strong-build": "^1.0.3",
     "strong-deploy": "^1.1.4",
-    "strong-mesh-client": "^1.3.5",
+    "strong-mesh-client": "^1.4.0",
     "strong-pm": "^3.0.0",
     "ws": "^0.7.1"
   },
