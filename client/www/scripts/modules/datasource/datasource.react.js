@@ -107,8 +107,8 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
     var cx = React.addons.classSet;
     var dsModel = component.state.activeInstance.definition;
     var dsNameInputClasses = cx({
-      'model-instance-name form-control': component.state.isNameValid,
-      'model-instance-name form-control is-invalid': !component.state.isNameValid
+      'model-instance-name form-control ui-input': component.state.isNameValid,
+      'model-instance-name form-control ui-input is-invalid': !component.state.isNameValid
     });
     var dsNameValidationClasses = cx({
       'model-instance-name-validation is-valid': component.state.isNameValid,
@@ -142,7 +142,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
 
     return (
       <div onClick={component.clearMessages} data-id="DatasourceEditorInstanceContainer" className="datasource-editor-instance-container">
-        <form name="DatasourceForm" role="form">
+        <form name="DatasourceForm" className="ui-form" role="form">
           <div className="model-header-container">
             <div className={formGroupValidationClasses}>
               <label for="name">Name</label>
@@ -174,7 +174,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                     <div className="datasource-form-group">
                       <label for="user">Username</label>
                       <input id="user"
-                        className="form-control"
+                        className="form-control ui-input"
                         name="user"
                         type="text"
                         value={dsModel.user}
@@ -190,7 +190,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                     <div className="datasource-form-group">
                       <label for="password">Password</label>
                       <input id="password"
-                      className="form-control"
+                      className="form-control ui-input"
                       name="password"
                       value={dsModel.password}
                       onChange={component.handleChange}
@@ -210,7 +210,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                   <div className="datasource-form-group">
                     <label for="host">Url</label>
                     <input id="url"
-                    className="form-control"
+                    className="form-control ui-input"
                     name="url"
                     value={dsModel.url}
                     onChange={component.handleChange}
@@ -228,7 +228,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                   <div className="datasource-form-group">
                     <label for="host">Host</label>
                     <input id="host"
-                    className="form-control"
+                    className="form-control ui-input"
                     name="host"
                     value={dsModel.host}
                     onChange={component.handleChange}
@@ -242,7 +242,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                   <div className="datasource-form-group">
                     <label for="port">Port</label>
                     <input id="port"
-                    className="form-control"
+                    className="form-control ui-input"
                     name="port"
                     value={dsModel.port}
                     onChange={component.handleChange}
@@ -259,7 +259,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                   <div className="datasource-form-group">
                     <label for="database">Database</label>
                     <input id="database"
-                    className="form-control"
+                    className="form-control ui-input"
                     name="database"
                     value={dsModel.database}
                     onChange={component.handleChange}

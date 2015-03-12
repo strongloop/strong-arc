@@ -1,4 +1,4 @@
-<form role="form">
+<form role="form" class="ui-form">
   <div class="model-header-container" >
     <div data-ui-type="table">
       <div data-ui-type="row">
@@ -12,7 +12,7 @@
                    id="ModelName"
                    name="ModelName"
                    placeholder="model name"
-                   class="model-instance-name form-control"
+                   class="model-instance-name form-control ui-input"
                    ng-class="{ 'is-invalid': isJNameValid()}" />
           </div>
         </div>
@@ -52,14 +52,14 @@
                data-name="plural"
                id="ModelPlural"
                name="ModelPlural"
-               class="model-instance-editor-input" />
+               class="ui-input" />
       </div>
       <div class="model-detail-input-container">
         <div class="model-detail-label">
           <label>Base model</label>
         </div>
 
-        <input class="model-instance-editor-input"
+        <input class="ui-input"
                 type="text"
                 data-name="base"
                 ng-model="activeInstance.definition.base"

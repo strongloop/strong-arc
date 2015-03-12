@@ -39,6 +39,7 @@
                        ng-blur="triggerModelPropertyUpdate(property)"
                        sl-common-select-on-click
                        ng-model="property.name"
+                       class="ui-input"
                        type="text" />
               </div>
               <div data-ui-type="cell" class="props-data-type-cell">
@@ -85,7 +86,7 @@
                        sl-common-enter="triggerModelPropertyUpdate(property)"
                        ng-blur="triggerModelPropertyUpdate(property)"
                        name="comments"
-                       class="property-doc-textarea model-instance-editor-input" />
+                       class="property-doc-textarea ui-input" />
               </div>
               <div data-ui-type="cell" class="props-controls-cell">
                 <button class="props-remove-btn" ng-click="deleteModelProperty()" data-id="{{modelProperty.id}}">

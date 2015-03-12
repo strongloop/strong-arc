@@ -102,18 +102,17 @@ form.ui-form {
     }
   }
 
-  input[type=text], input[type=number] {
+  input[type=text], input[type=number], input[type=password] {
     border: 1px solid @ui-form-field-border-color;
     width: 35rem;
     padding: .5rem 1rem;
     border-radius: @ui-radius;
 
-
     &[type=number] {
       padding-right: 0;
     }
 
-    &[type=text] {
+    &[type=text], &[type=password] {
       .ui-mixin-placeholder(@grey-4);
     }
 
@@ -172,7 +171,7 @@ ol, ul {
     margin-bottom: 0;
   }
 
-  .ui-input {
+  .ui-input, .ui-number {
     color: @ui-input-color;
     background-color: @ui-input-bg-color;
     padding: .4rem .5rem;
@@ -229,7 +228,7 @@ ol, ul {
       }
     }
 
-    .ui-input {
+    .ui-input, .ui-number {
       .box-shadow(none);
       border-radius: @ui-input-search-radius;
       padding: .5rem 3rem;
@@ -275,7 +274,7 @@ ol, ul {
   }
 
   .invalid {
-    .ui-input {
+    .ui-input, .ui-number {
       border-color: @ui-input-error-border-color;
     }
   }

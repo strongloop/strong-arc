@@ -3,6 +3,7 @@
     <label>Hostname</label>
     <input type="text"
            name="host"
+           class="ui-input"
            placeholder="host1.example.com"
            ng-focus="pmHostFocus()"
            ng-blur="pmHostBlur($event)"
@@ -21,6 +22,7 @@
            ng-show="showPortInput()"
            placeholder="4300"
            sl-common-select-on-click
+           class="ui-input"
            ng-model="candidateServerConfig.port" required>
     <div ng-show="!showPortInput()" class="pm-readonly-port">----</div>
   </div>

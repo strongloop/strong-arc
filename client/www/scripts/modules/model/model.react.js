@@ -142,8 +142,8 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
       'model-editor-section-icon sl-icon sl-icon-plus-thick': !component.state.isDetailsContainerOpen
     });
     var modelNameInputClasses = cx({
-      'model-instance-name form-control': component.state.isNameValid,
-      'model-instance-name form-control is-invalid': !component.state.isNameValid
+      'model-instance-name form-control ui-input': component.state.isNameValid,
+      'model-instance-name form-control ui-input is-invalid': !component.state.isNameValid
     });
     var modelNameValidationClasses = cx({
       'model-instance-name-validation is-valid': component.state.isNameValid,
@@ -183,7 +183,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
     var returnVal = (<div />);
     if (modelDef) {
       returnVal = (
-        <form role="form">
+        <form role="form" className="ui-form">
           <div className="model-header-container">
             <div className={formGroupValidationClasses}>
               <label>Name</label>
@@ -204,7 +204,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
             <MigrateButton scope={scope} />
             <div className={modelNameValidationClasses}>
               <span className="validation-error-message">
-                The name needs to conform with <a target="_blank" href="http://docs.strongloop.com/display/public/LB/Valid+names+in+LoopBack" >javascript conventions</a>
+                The name needs to conform with <a target="_blank" href="http://docs.strongloop.com/display/public/LB/Valid+names+in+LoopBack">javascript conventions</a>
               </span>
             </div>
           </div>
@@ -228,14 +228,14 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                     data-name="plural"
                     id="ModelPlural"
                     name="ModelPlural"
-                    className="model-instance-editor-input" />
+                    className="ui-input" />
               </div>
               <div className="model-detail-input-container">
                 <div className="model-detail-label">
                   <label>Base model</label>
                 </div>
                 <input
-                  className="model-instance-editor-input"
+                  className="ui-input"
                   type="text"
                   data-name="base"
                   value={modelDef.base}
@@ -250,7 +250,7 @@ var ModelDetailEditor = (ModelDetailEditor = React).createClass({
                   data-name="config.dataSource"
                   name="dataSource"
                   onChange={component.handleDataSourceChange}
-                  className="model-instance-editor-input">
+                  className="ui-input">
                   <option value="">none</option>
                   {dataSourceOptions}
                 </select>
