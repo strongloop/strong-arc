@@ -128,7 +128,7 @@ var PropertyValidationEditor = (PropertyValidationEditor = React).createClass({
                   <label>Max Length</label>
                 </div>
                 <div data-ui-type="cell">
-                  <input type="text" className="model-instance-editor-input" placeholder="max length" />
+                  <input type="text" className="ui-input" placeholder="max length" />
                   </div>
                 </div>
                 <div data-ui-type="row">
@@ -136,7 +136,7 @@ var PropertyValidationEditor = (PropertyValidationEditor = React).createClass({
                     <label>Min</label>
                   </div>
                   <div data-ui-type="cell">
-                    <input type="text" className="model-instance-editor-input" placeholder="min" />
+                    <input type="text" className="ui-input" placeholder="min" />
                   </div>
                 </div>
                 <div data-ui-type="row">
@@ -144,7 +144,7 @@ var PropertyValidationEditor = (PropertyValidationEditor = React).createClass({
                     <label>Max</label>
                   </div>
                   <div data-ui-type="cell">
-                    <input type="text" className="model-instance-editor-input" placeholder="max" />
+                    <input type="text" className="ui-input" placeholder="max" />
                     </div>
                   </div>
                   <div data-ui-type="row">
@@ -160,7 +160,7 @@ var PropertyValidationEditor = (PropertyValidationEditor = React).createClass({
                       <label>Presence of</label>
                     </div>
                     <div data-ui-type="cell">
-                      <input type="text" className="model-instance-editor-input" placeholder="includes" />
+                      <input type="text" className="ui-input" placeholder="includes" />
                     </div>
                   </div>
                   <div data-ui-type="row">
@@ -176,7 +176,7 @@ var PropertyValidationEditor = (PropertyValidationEditor = React).createClass({
                       <label>Pattern</label>
                     </div>
                     <div data-ui-type="cell">
-                      <input type="text" className="model-instance-editor-input" placeholder="pattern" />
+                      <input type="text" className="ui-input" placeholder="pattern" />
                     </div>
                   </div>
                   <div data-ui-type="row">

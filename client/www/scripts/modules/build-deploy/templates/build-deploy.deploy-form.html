@@ -20,6 +20,7 @@
         <label>Git deploy branch:</label>
         <input
           type="text"
+          class="ui-input"
           placeholder="eg: /deploy"
           ng-model="deploy.git.deploy"
           name="deploy"
@@ -36,6 +37,7 @@
           <span>Hostname:</span>
           <input
             type="text"
+            class="ui-input"
             placeholder="host1.example.com"
             ng-model="deploy.host.hostname"
             name="hostname"
@@ -45,6 +47,7 @@
           <span>Port:</span>
           <input
             type="text"
+            class="ui-input"
             placeholder="8000"
             ng-model="deploy.host.port"
             name="port"
@@ -96,6 +99,7 @@
         <label>Fully qualified path to archive:</label>
         <input
           type="text"
+          class="ui-input"
           placeholder="eg: /home/user/builds/project-v1.0.1.tgz"
           ng-model="deploy.universal.archive"
           name="archive"
@@ -114,6 +118,7 @@
           <span>Hostname:</span>
           <input
             type="text"
+            class="ui-input"
             placeholder="host1.example.com"
             ng-model="deploy.host.hostname"
             name="hostname"
@@ -123,6 +128,7 @@
           <span>Port:</span>
           <input
             type="text"
+            class="ui-input"
             placeholder="8000"
             ng-model="deploy.host.port"
             name="port"
@@ -132,6 +138,7 @@
           <span>Processes:</span>
           <input
             type="number"
+            class="ui-number"
             min="1"
             placeholder="4"
             ng-model="deploy.host.processes"

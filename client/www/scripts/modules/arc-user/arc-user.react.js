@@ -60,11 +60,11 @@ var LoginFormView = (LoginFormView = React).createClass({
           {errorDisplay}
           </div>
           <h2 className="login-form-title">StrongLoop Arc Sign In</h2>
-          <form data-id="LoginForm" name="LoginForm" role="form">
+          <form data-id="LoginForm" name="LoginForm" className="ui-form" role="form">
             <div className="form-group">
               <label for="InputUserName" className="field-label">Username or E-mail</label>
               <input id="InputUserName" value={credentials.nameOrEmail}
-              className="form-control"
+              className="ui-input"
               name="InputUserName"
               onChange={that.handleChange}
               data-name="nameOrEmail"
@@ -73,7 +73,7 @@ var LoginFormView = (LoginFormView = React).createClass({
             </div>
             <div className="form-group">
               <label for="InputPassword" className="field-label">Password</label>
-              <input type="password" className="form-control"
+              <input type="password" className="ui-input"
               value={credentials.password}
               id="InputPassword"
               data-name="password"
