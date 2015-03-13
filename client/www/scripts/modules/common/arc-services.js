@@ -178,6 +178,207 @@ module.factory(
     return R;
   }]);
 
+/**
+ * @ngdoc object
+ * @name ArcServices.Subscription
+ * @header ArcServices.Subscription
+ * @object
+ *
+ * @description
+ *
+ * A $resource object for interacting with the `Subscription` model.
+ *
+ * ## Example
+ *
+ * See
+ * {@link http://docs.angularjs.org/api/ngResource.$resource#example $resource}
+ * for an example of using this object.
+ *
+ */
+module.factory(
+  "Subscription",
+  ['LoopBackResource', 'LoopBackAuth', '$injector', function(Resource, LoopBackAuth, $injector) {
+    var R = Resource(
+      urlBase + "/Subscriptions/:id",
+      { 'id': '@id' },
+      {
+
+        /**
+         * @ngdoc method
+         * @name ArcServices.Subscription#login
+         * @methodOf ArcServices.Subscription
+         *
+         * @description
+         *
+         * Login a user with username/email and password
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `include` – `{string=}` - Related objects to include in the response. See the description of return value for more details.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * The response body contains properties of the AccessToken created on login.
+         * Depending on the value of `include` parameter, the body may contain additional properties:
+         * 
+         *   - `user` - `{User}` - Data of the currently logged in user. (`include=user`)
+         * 
+         *
+         */
+        "login": {
+          url: urlBase + "/Subscriptions/login",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name ArcServices.Subscription#getSubscriptions
+         * @methodOf ArcServices.Subscription
+         *
+         * @description
+         *
+         * List subscriptions for a given username or email
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `userId` – `{number}` - User id
+         *
+         *  - `mode` – `{string=}` - Operation mode
+         *
+         *  - `req` – `{object=}` - 
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Subscription` object.)
+         * </em>
+         */
+        "getSubscriptions": {
+          isArray: true,
+          url: urlBase + "/Subscriptions/:userId/getSubscriptions",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name ArcServices.Subscription#trackUsages
+         * @methodOf ArcServices.Subscription
+         *
+         * @description
+         *
+         * Track usages
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `userId` – `{number}` - User id
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `usages` – `{array=}` - Usage records
+         *
+         *  - `req` – `{object=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Subscription` object.)
+         * </em>
+         */
+        "trackUsages": {
+          url: urlBase + "/Subscriptions/:userId/trackUsages",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name ArcServices.Subscription#renewTrial
+         * @methodOf ArcServices.Subscription
+         *
+         * @description
+         *
+         * Renew the trial subscription
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `userId` – `{number}` - User id
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `product` – `{string}` - product
+         *
+         *  - `features` – `{string=}` - features
+         *
+         *  - `req` – `{object=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Subscription` object.)
+         * </em>
+         */
+        "renewTrial": {
+          url: urlBase + "/Subscriptions/:userId/renewTrial",
+          method: "POST"
+        },
+      }
+    );
+
+
+
+
+    /**
+    * @ngdoc property
+    * @name ArcServices.Subscription#modelName
+    * @propertyOf ArcServices.Subscription
+    * @description
+    * The name of the model represented by this $resource,
+    * i.e. `Subscription`.
+    */
+    R.modelName = "Subscription";
+
+
+    return R;
+  }]);
+
 
 module
   .factory('LoopBackAuth', function() {

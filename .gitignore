@@ -13,3 +13,4 @@ bower_components
 sandbox
 client/test/integration/sandbox/
 .strong-pm
+npm-debug.log

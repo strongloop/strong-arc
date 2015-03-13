@@ -1,0 +1,30 @@
+{
+  "name": "Subscription",
+  "base": "Model",
+  "properties":{
+    "userId": {
+      "type": "number",
+      "required": true
+    },
+    "product" :{
+      "type": "string",
+      "required": true
+    },
+    "features" :{
+      "type": "string"
+    },
+    "activationDate": {
+      "type": "date"
+    },
+    "expirationDate": {
+      "type": "date"
+    },
+    "licenseKey": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

@@ -13,5 +13,12 @@
   "ArcApp": {
     "dataSource": null,
     "public": true
+  },
+  "Subscription": {
+    "dataSource": null,
+    "public": true,
+    "options": {
+      "authUrl": "https://auth.strongloop.com/api/"
+    }
   }
 }

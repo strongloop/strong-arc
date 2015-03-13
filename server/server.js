@@ -1,18 +1,20 @@
 var express = require('express');
+var app = module.exports = express();
+
 var path = require('path');
 var workspace = require('loopback-workspace');
+// export the workspace object, useful e.g. in tests
+app.workspace = workspace;
+
 var buildDeploy = require('../build-deploy/server/server');
 var devtools = require('../devtools/server/devtools');
 var pm = require('../process-manager/server');
-var arcApi = require('../arc-api/server/server');
-var app = module.exports = express();
 var meshProxy = require('strong-mesh-client/proxy/server')(
   path.join(process.cwd(), process.env.MANAGER_CONFIG || 'arc-manager.json')
 );
+app.meshProxy = meshProxy;
 
-
-// export the workspace object, useful e.g. in tests
-app.workspace = workspace;
+var arcApi = require('../arc-api/server/server');
 
 // REST APIs
 app.use('/workspace', workspace);
@@ -25,7 +27,9 @@ app.use('/manager', meshProxy);
 try {
   // API explorer
   var explorer = require('loopback-explorer');
-  app.use('/explorer', explorer(workspace, { basePath: '/workspace/api' }));
+  app.use('/explorer/workspace', explorer(workspace,
+    { basePath: '/workspace/api' }));
+  app.use('/explorer/arc-api', explorer(arcApi, { basePath: '/api' }));
 } catch(err) {
   // silently ignore the error, the explorer is not available in "production"
 }

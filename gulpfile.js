@@ -33,7 +33,10 @@ gulp.task('build', [
     'build-help-assets',
     'build-arc-services',
     'install-example-modules'
-]);
+], function() {
+  // Remove the env var
+  process.env.GULP_ANGULAR_CODEGEN = undefined;
+});
 
 gulp.task('build-less', function(done) {
   return gulp.src('client/less/style.less')
@@ -90,6 +93,7 @@ gulp.task('build-workspace-services', function() {
 });
 
 gulp.task('build-arc-services', function() {
+  process.env.GULP_ANGULAR_CODEGEN = 'YES';
   return gulp.src('./arc-api/server/server.js')
     .pipe(loopbackAngular({
       apiUrl: '/api',
@@ -198,7 +202,8 @@ gulp.task('setup-mysql', function(callback) {
   var ROOT_PASSWORD = process.env.MYSQL_ROOT_PWD || '';
   setupMysql(ROOT_PASSWORD, function(err) {
     if (err) logMysqlErrorDescription(err);
-    callback(err);
+    // Don't fail the build so that more tests will be run
+    callback(null);
   });
 
   function logMysqlErrorDescription(err) {
