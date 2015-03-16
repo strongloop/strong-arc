@@ -1,5 +1,6 @@
 var express = require('express');
 var app = module.exports = express();
+app.set("legacyExplorer", false);
 
 var path = require('path');
 var workspace = require('loopback-workspace');
