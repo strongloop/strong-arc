@@ -122,6 +122,24 @@ module.exports = function(Subscription) {
   };
 
   /**
+   * List product descriptions
+   * @param {Request} req HTTP request object
+   * @param {Function} cb callback
+   */
+  Subscription.getProducts = function(req, cb) {
+    var url = Subscription.settings.authUrl;
+    request.get({
+      url: url + 'subscriptions/products',
+      qs: {
+        access_token: getAccessToken(req)
+      },
+      json: true
+    }, function(err, res, body) {
+      cb(err, body);
+    });
+  };
+
+  /**
    * Track usages for a given user/product/features
    * @param {Number|String} userId User id
    * @param {Object|Object[]} usages Product usages
@@ -197,6 +215,15 @@ module.exports = function(Subscription) {
     ],
     returns: {arg: 'data', type: ['subscription'], root: true},
     http: {verb: 'get', path: '/:userId/getSubscriptions'}});
+
+  Subscription.remoteMethod('getProducts', {
+    isStatic: true,
+    description: 'List products',
+    accepts: [
+      {arg: 'req', type: 'object', http: {source: 'req'}}
+    ],
+    returns: {arg: 'data', type: 'object', root: true},
+    http: {verb: 'get', path: '/products'}});
 
   Subscription.remoteMethod('trackUsages', {
     isStatic: true,
