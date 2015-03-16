@@ -282,6 +282,39 @@ module.factory(
 
         /**
          * @ngdoc method
+         * @name ArcServices.Subscription#getProducts
+         * @methodOf ArcServices.Subscription
+         *
+         * @description
+         *
+         * List products
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `req` – `{object=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Subscription` object.)
+         * </em>
+         */
+        "getProducts": {
+          url: urlBase + "/Subscriptions/products",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
          * @name ArcServices.Subscription#trackUsages
          * @methodOf ArcServices.Subscription
          *
