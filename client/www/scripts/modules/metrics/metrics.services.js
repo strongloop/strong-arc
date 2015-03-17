@@ -190,6 +190,12 @@ Metrics.service('ChartConfigService', [
       return '#123456';  // this should not happen but not the end of the world
 
     };
+    svc.getMetricData = function(metrics, metricRef) {
+      if (metricRef in metrics) {
+        return metrics[metricRef];
+      }
+      return [];
+    }
 
     svc.getChartMetricsData = function(chart, metrics) {
       var returnArray = [];
@@ -199,23 +205,23 @@ Metrics.service('ChartConfigService', [
         case 'cpu':
           if (isMetricActive(METRICS_CONST.CPU_TOTAL)){
             returnArray.push({
-              values: metrics[METRICS_CONST.CPU_TOTAL],      //values - represents the array of {x,y} data points
+              values: svc.getMetricData(metrics, METRICS_CONST.CPU_TOTAL),      //values - represents the array of {x,y} data points
               key: 'Total', //key  - the name of the series.
               color: svc.getMetricColor(METRICS_CONST.CPU_TOTAL)  //color - optional: choose your own line color.
             });
           }
           if (isMetricActive(METRICS_CONST.CPU_USER)){
             returnArray.push({
-              values: metrics[METRICS_CONST.CPU_USER],      //values - represents the array of {x,y} data points
+              values: svc.getMetricData(metrics, METRICS_CONST.CPU_USER),      //values - represents the array of {x,y} data points
               key: 'User', //key  - the name of the series.
-              color:  svc.getMetricColor(METRICS_CONST.CPU_USER)  //color - optional: choose your own line color.
+              color: svc.getMetricColor(METRICS_CONST.CPU_USER)  //color - optional: choose your own line color.
             });
           }
           if (isMetricActive(METRICS_CONST.CPU_SYSTEM)){
             returnArray.push({
-              values: metrics[METRICS_CONST.CPU_SYSTEM],
+              values: svc.getMetricData(metrics, METRICS_CONST.CPU_SYSTEM),
               key: 'System',
-              color:  svc.getMetricColor(METRICS_CONST.CPU_SYSTEM)
+              color: svc.getMetricColor(METRICS_CONST.CPU_SYSTEM)
             });
           }
           break;
@@ -223,21 +229,21 @@ Metrics.service('ChartConfigService', [
         case 'loop':
           if (isMetricActive(METRICS_CONST.LOOP_AVG)){
             returnArray.push({
-              values: metrics[METRICS_CONST.LOOP_AVG],      //values - represents the array of {x,y} data points
+              values: svc.getMetricData(metrics, METRICS_CONST.LOOP_AVG),      //values - represents the array of {x,y} data points
               key: 'Avg', //key  - the name of the series.
               color: svc.getMetricColor(METRICS_CONST.LOOP_AVG)  //color - optional: choose your own line color.
             });
           }
           if (isMetricActive(METRICS_CONST.LOOP_MIN)){
             returnArray.push({
-              values: metrics[METRICS_CONST.LOOP_MIN],
+              values: svc.getMetricData(metrics, METRICS_CONST.LOOP_MIN),
               key: 'Min',
               color: svc.getMetricColor(METRICS_CONST.LOOP_MIN)
             });
           }
           if (isMetricActive(METRICS_CONST.LOOP_MAX)){
             returnArray.push({
-              values: metrics[METRICS_CONST.LOOP_MAX],
+              values: svc.getMetricData(metrics, METRICS_CONST.LOOP_MAX),
               key: 'Max',
               color: svc.getMetricColor(METRICS_CONST.LOOP_MAX)
             });
@@ -247,7 +253,7 @@ Metrics.service('ChartConfigService', [
         case 'loopCount':
           if (isMetricActive(METRICS_CONST.LOOP_COUNT)){
             returnArray.push({
-              values: metrics[METRICS_CONST.LOOP_COUNT],      //values - represents the array of {x,y} data points
+              values: svc.getMetricData(metrics, METRICS_CONST.LOOP_COUNT),      //values - represents the array of {x,y} data points
               key: 'Count', //key  - the name of the series.
               color: svc.getMetricColor(METRICS_CONST.LOOP_COUNT)  //color - optional: choose your own line color.
             });
@@ -258,7 +264,7 @@ Metrics.service('ChartConfigService', [
           if (isMetricActive(METRICS_CONST.MEMCACHED_COUNT)){
             if (metrics[METRICS_CONST.MEMCACHED_COUNT]) {
               returnArray.push({
-                values: metrics[METRICS_CONST.MEMCACHED_COUNT],      //values - represents the array of {x,y} data points
+                values: svc.getMetricData(metrics, METRICS_CONST.MEMCACHED_COUNT),      //values - represents the array of {x,y} data points
                 key: 'Memcached', //key  - the name of the series.
                 color: svc.getMetricColor(METRICS_CONST.MEMCACHED_COUNT)  //color - optional: choose your own line color.
               });
@@ -267,7 +273,7 @@ Metrics.service('ChartConfigService', [
           if (isMetricActive(METRICS_CONST.LOOP_COUNT)){
             if (metrics[METRICS_CONST.LOOP_COUNT]) {
               returnArray.push({
-                values: metrics[METRICS_CONST.LOOP_COUNT],      //values - represents the array of {x,y} data points
+                values: svc.getMetricData(metrics, METRICS_CONST.LOOP_COUNT),      //values - represents the array of {x,y} data points
                 key: 'Loop', //key  - the name of the series.
                 color: svc.getMetricColor(METRICS_CONST.LOOP_COUNT)  //color - optional: choose your own line color.
               });
@@ -276,7 +282,7 @@ Metrics.service('ChartConfigService', [
           if (isMetricActive(METRICS_CONST.MONGO_COUNT)){
             if (metrics[METRICS_CONST.MONGO_COUNT]) {
               returnArray.push({
-                values: metrics[METRICS_CONST.MONGO_COUNT],      //values - represents the array of {x,y} data points
+                values: svc.getMetricData(metrics, METRICS_CONST.MONGO_COUNT),      //values - represents the array of {x,y} data points
                 key: 'MongoDB', //key  - the name of the series.
                 color: svc.getMetricColor(METRICS_CONST.MONGO_COUNT)  //color - optional: choose your own line color.
               });
@@ -285,7 +291,7 @@ Metrics.service('ChartConfigService', [
           if (isMetricActive(METRICS_CONST.HTTP_COUNT)){
             if (metrics[METRICS_CONST.HTTP_COUNT]) {
               returnArray.push({
-                values: metrics[METRICS_CONST.HTTP_COUNT],      //values - represents the array of {x,y} data points
+                values: svc.getMetricData(metrics, METRICS_CONST.HTTP_COUNT),      //values - represents the array of {x,y} data points
                 key: 'HTTP', //key  - the name of the series.
                 color: svc.getMetricColor(METRICS_CONST.HTTP_COUNT)  //color - optional: choose your own line color.
               });
@@ -294,7 +300,7 @@ Metrics.service('ChartConfigService', [
           if (isMetricActive(METRICS_CONST.MYSQL_COUNT)){
             if (metrics[METRICS_CONST.MYSQL_COUNT]) {
               returnArray.push({
-                values: metrics[METRICS_CONST.MYSQL_COUNT],      //values - represents the array of {x,y} data points
+                values: svc.getMetricData(metrics, METRICS_CONST.MYSQL_COUNT),      //values - represents the array of {x,y} data points
                 key: 'MySQL', //key  - the name of the series.
                 color: svc.getMetricColor(METRICS_CONST.MYSQL_COUNT)  //color - optional: choose your own line color.
               });
@@ -303,7 +309,7 @@ Metrics.service('ChartConfigService', [
           if (isMetricActive(METRICS_CONST.REDIS_COUNT)){
             if (metrics[METRICS_CONST.REDIS_COUNT]) {
               returnArray.push({
-                values: metrics[METRICS_CONST.REDIS_COUNT],      //values - represents the array of {x,y} data points
+                values: svc.getMetricData(metrics, METRICS_CONST.REDIS_COUNT),      //values - represents the array of {x,y} data points
                 key: 'Redis', //key  - the name of the series.
                 color: svc.getMetricColor(METRICS_CONST.REDIS_COUNT)  //color - optional: choose your own line color.
               });
@@ -315,21 +321,21 @@ Metrics.service('ChartConfigService', [
         case 'http':
           if (isMetricActive(METRICS_CONST.HTTP_AVG)){
             returnArray.push({
-              values: metrics[METRICS_CONST.HTTP_AVG],      //values - represents the array of {x,y} data points
+              values: svc.getMetricData(metrics, METRICS_CONST.HTTP_AVG),      //values - represents the array of {x,y} data points
               key: 'Avg', //key  - the name of the series.
               color: svc.getMetricColor(METRICS_CONST.HTTP_AVG)  //color - optional: choose your own line color.
             });
           }
           if (isMetricActive(METRICS_CONST.HTTP_MIN)){
             returnArray.push({
-              values: metrics[METRICS_CONST.HTTP_MIN],
+              values: svc.getMetricData(metrics, METRICS_CONST.HTTP_MIN),
               key: 'Min',
               color: svc.getMetricColor(METRICS_CONST.HTTP_MIN)
             });
           }
           if (isMetricActive(METRICS_CONST.HTTP_MAX)){
             returnArray.push({
-              values: metrics[METRICS_CONST.HTTP_MAX],
+              values: svc.getMetricData(metrics, METRICS_CONST.HTTP_MAX),
               key: 'Max',
               color: svc.getMetricColor(METRICS_CONST.HTTP_MAX)
             });
@@ -339,7 +345,7 @@ Metrics.service('ChartConfigService', [
         case 'httpCount':
           if (isMetricActive(METRICS_CONST.HTTP_COUNT)){
             returnArray.push({
-              values: metrics[METRICS_CONST.HTTP_COUNT],      //values - represents the array of {x,y} data points
+              values: svc.getMetricData(metrics, METRICS_CONST.HTTP_COUNT),      //values - represents the array of {x,y} data points
               key: 'Count', //key  - the name of the series.
               color: svc.getMetricColor(METRICS_CONST.HTTP_COUNT)  //color - optional: choose your own line color.
             });
@@ -349,21 +355,21 @@ Metrics.service('ChartConfigService', [
         case 'mongodb':
           if (isMetricActive(METRICS_CONST.MONGO_AVG)){
             returnArray.push({
-              values: metrics[METRICS_CONST.MONGO_AVG],      //values - represents the array of {x,y} data points
+              values: svc.getMetricData(metrics, METRICS_CONST.MONGO_AVG),      //values - represents the array of {x,y} data points
               key: 'Avg', //key  - the name of the series.
               color: svc.getMetricColor(METRICS_CONST.MONGO_AVG)  //color - optional: choose your own line color.
             });
           }
           if (isMetricActive(METRICS_CONST.MONGO_MIN)){
             returnArray.push({
-              values: metrics[METRICS_CONST.MONGO_MIN],
+              values: svc.getMetricData(metrics, METRICS_CONST.MONGO_MIN),
               key: 'Min',
-              color:  svc.getMetricColor(METRICS_CONST.MONGO_MIN)
+              color: svc.getMetricColor(METRICS_CONST.MONGO_MIN)
             });
           }
           if (isMetricActive(METRICS_CONST.MONGO_MAX)){
             returnArray.push({
-              values: metrics[METRICS_CONST.MONGO_MAX],
+              values: svc.getMetricData(metrics, METRICS_CONST.MONGO_MAX),
               key: 'Max',
               color: svc.getMetricColor(METRICS_CONST.MONGO_MAX)
             });
@@ -373,21 +379,21 @@ Metrics.service('ChartConfigService', [
         case 'memcached':
           if (isMetricActive(METRICS_CONST.MEMCACHED_AVG)){
             returnArray.push({
-              values: metrics[METRICS_CONST.MEMCACHED_AVG],      //values - represents the array of {x,y} data points
+              values: svc.getMetricData(metrics, METRICS_CONST.MEMCACHED_AVG),      //values - represents the array of {x,y} data points
               key: 'Avg', //key  - the name of the series.
               color: svc.getMetricColor(METRICS_CONST.MEMCACHED_AVG)  //color - optional: choose your own line color.
             });
           }
           if (isMetricActive(METRICS_CONST.MEMCACHED_MIN)){
             returnArray.push({
-              values: metrics[METRICS_CONST.MEMCACHED_MIN],
+              values: svc.getMetricData(metrics, METRICS_CONST.MEMCACHED_MIN),
               key: 'Min',
               color: svc.getMetricColor(METRICS_CONST.MEMCACHED_MIN)
             });
           }
           if (isMetricActive(METRICS_CONST.MEMCACHED_MAX)){
             returnArray.push({
-              values: metrics[METRICS_CONST.MEMCACHED_MAX],
+              values: svc.getMetricData(metrics, METRICS_CONST.MEMCACHED_MAX),
               key: 'Max',
               color: svc.getMetricColor(METRICS_CONST.MEMCACHED_MAX)
             });
@@ -398,7 +404,7 @@ Metrics.service('ChartConfigService', [
           if (isMetricActive(METRICS_CONST.MYSQL_AVG)){
             if (metrics[METRICS_CONST.MYSQL_AVG]) {
               returnArray.push({
-                values: metrics[METRICS_CONST.MYSQL_AVG],      //values - represents the array of {x,y} data points
+                values: svc.getMetricData(metrics, METRICS_CONST.MYSQL_AVG),      //values - represents the array of {x,y} data points
                 key: 'Avg', //key  - the name of the series.
                 color: svc.getMetricColor(METRICS_CONST.MYSQL_AVG)  //color - optional: choose your own line color.
               });
@@ -407,7 +413,7 @@ Metrics.service('ChartConfigService', [
           if (isMetricActive(METRICS_CONST.MYSQL_MIN)){
             if (metrics[METRICS_CONST.MYSQL_MIN]) {
               returnArray.push({
-                values: metrics[METRICS_CONST.MYSQL_MIN],
+                values: svc.getMetricData(metrics, METRICS_CONST.MYSQL_MIN),
                 key: 'Min',
                 color: svc.getMetricColor(METRICS_CONST.MYSQL_MIN)
               });
@@ -416,7 +422,7 @@ Metrics.service('ChartConfigService', [
           if (isMetricActive(METRICS_CONST.MYSQL_MAX)){
             if (metrics[METRICS_CONST.MYSQL_MAX]) {
               returnArray.push({
-                values: metrics[METRICS_CONST.MYSQL_MAX],
+                values: svc.getMetricData(metrics, METRICS_CONST.MYSQL_MAX),
                 key: 'Max',
                 color: svc.getMetricColor(METRICS_CONST.MYSQL_MAX)
               });
@@ -427,21 +433,21 @@ Metrics.service('ChartConfigService', [
         case 'redis':
           if (isMetricActive(METRICS_CONST.REDIS_AVG)){
             returnArray.push({
-              values: metrics[METRICS_CONST.REDIS_AVG],      //values - represents the array of {x,y} data points
+              values: svc.getMetricData(metrics, METRICS_CONST.REDIS_AVG),      //values - represents the array of {x,y} data points
               key: 'Avg', //key  - the name of the series.
               color: svc.getMetricColor(METRICS_CONST.REDIS_AVG)  //color - optional: choose your own line color.
             });
           }
           if (isMetricActive(METRICS_CONST.REDIS_MIN)){
             returnArray.push({
-              values: metrics[METRICS_CONST.REDIS_MIN],
+              values: svc.getMetricData(metrics, METRICS_CONST.REDIS_MIN),
               key: 'Min',
               color: svc.getMetricColor(METRICS_CONST.REDIS_MIN)
             });
           }
           if (isMetricActive(METRICS_CONST.REDIS_MAX)){
             returnArray.push({
-              values: metrics[METRICS_CONST.REDIS_MAX],
+              values: svc.getMetricData(metrics, METRICS_CONST.REDIS_MAX),
               key: 'Max',
               color: svc.getMetricColor(METRICS_CONST.REDIS_MAX)
             });
@@ -451,7 +457,7 @@ Metrics.service('ChartConfigService', [
         case 'heap':
           if (isMetricActive(METRICS_CONST.HEAP_USED)){
             returnArray.push({
-              values: metrics[METRICS_CONST.HEAP_USED],      //values - represents the array of {x,y} data points
+              values: svc.getMetricData(metrics, METRICS_CONST.HEAP_USED),      //values - represents the array of {x,y} data points
               key: 'Used', //key  - the name of the series.
               color: svc.getMetricColor(METRICS_CONST.HEAP_USED),  //color - optional: choose your own line color.
               area: true      //area - set to true if you want this line to turn into a filled area chart.
@@ -459,7 +465,7 @@ Metrics.service('ChartConfigService', [
           }
           if (isMetricActive(METRICS_CONST.HEAP_TOTAL)){
             returnArray.push({
-              values: metrics[METRICS_CONST.HEAP_TOTAL],
+              values: svc.getMetricData(metrics, METRICS_CONST.HEAP_TOTAL),
               key: 'Total',
               color: svc.getMetricColor(METRICS_CONST.HEAP_TOTAL)
             });
@@ -537,5 +543,3 @@ Metrics.service('ChartConfigService', [
     return svc;
   }
 ]);
-
-
