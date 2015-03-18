@@ -8,7 +8,9 @@ Metrics.controller('MetricsMainController', [
   'PMPidService',
   'PMHostService',
   'ChartConfigService',
-  function($scope, $state, $log, growl, $interval, MetricsService, PMPidService, PMHostService, ChartConfigService) {
+  'ArcNavigationService',
+  function($scope, $state, $log, growl, $interval, MetricsService, PMPidService,
+           PMHostService, ChartConfigService, ArcNavigationService) {
 
     $scope.isDisplayChartValid = false; // control display of charts (transition between data sets)
     $scope.currentServerConfig = PMHostService.getLastPMServer();
@@ -21,6 +23,7 @@ Metrics.controller('MetricsMainController', [
     $scope.currentProcessId;
     $scope.activeProcess = null;
     $scope.isTimerRunning = false;
+    $scope.wasTimerRunning = false; // holds the timer state when the window is hidden
     $scope.isMetricsLoaded = false;
     $scope.dataPointCount = 0;
     $scope.lastGoodTS; // fallback
@@ -269,7 +272,6 @@ Metrics.controller('MetricsMainController', [
     }
 
     function renderTheCharts() {
-
       // clear memory to avoid leaks
       ChartConfigService.clearChartMemory();
 
@@ -406,13 +408,10 @@ Metrics.controller('MetricsMainController', [
      *
      * */
     $scope.toggleChartMetric = function(chartMetric) {
-
       ChartConfigService.toggleMetricStatus(chartMetric);
       renderTheCharts();
-
     };
-
-     $scope.startTicker = function() {
+    $scope.startTicker = function() {
       $scope.sysTime.ticker = $scope.metricsUpdateInterval;
       $scope.startTimer();
     };
@@ -434,8 +433,21 @@ Metrics.controller('MetricsMainController', [
         }, ONE_SECOND);
       }
     };
+    $scope.sleepUpdates = function() {
+      $scope.wasTimerRunning = $scope.isTimerRunning;
+      $scope.isTimerRunning = false;
+    };
+    $scope.wakeUpdates = function() {
+      $scope.isTimerRunning = $scope.wasTimerRunning;
+      if ($scope.isTimerRunning) {
+        // Force the metrics to update since they are probably out of date.
+        $scope.resetCharts();
+      }
+    };
 
-
+    // Prevent the metrics updating if the window isn't visisble.
+    ArcNavigationService.visibilityChange($scope.sleepUpdates.bind($scope),
+                                          $scope.wakeUpdates.bind($scope));
     /*
      *
      *  WATCHES
