@@ -62,7 +62,7 @@
       </code></pre>
 
       <form class="ui-form has-table" name="form" novalidate ng-submit="save(form)">
-        <table class="ui-table">
+        <table class="ui-table" sl-ui-data-table>
           <thead>
             <th>Host</th>
             <th>Port</th>
@@ -74,14 +74,12 @@
           <tbody>
             <tr
               ng-repeat="id in [1, 2, 3, 4, 5]"
-              ng-click="rowSelect($event)"
               ng-init="data['example'+id] = {};">
                 <td class="has-selectable">
                   <ng-form name="hostForm">
                     <div
                       class="ui-form-group selectable"
-                      ng-class="{ invalid: hostForm.host.$invalid && hostForm.host.$dirty, valid: hostForm.host.$valid }"
-                      ng-click="itemSelect($event)">
+                      ng-class="{ invalid: hostForm.host.$invalid && hostForm.host.$dirty, valid: hostForm.host.$valid }">
                       <input
                         class="ui-input"
                         type="text"
@@ -89,9 +87,7 @@
                         ng-model="data['example'+id].host"
                         placeholder="Enter host (eg: www{{id}}.example.com)"
                         ng-minlength="8"
-                        required
-                        ng-focus="itemFocus($event)"
-                        ng-blur="itemBlur($event)">
+                        required>
                       <span class="msg error" ng-show="hostForm.host.$invalid && hostForm.host.$dirty">Please enter host</span>
 
                       <sl-ui-menu-action>
@@ -111,8 +107,6 @@
                       name="port{{id}}"
                       ng-model="data['example'+id].port"
                       placeholder="(eg: 8701)"
-                      ng-focus="itemFocus($event)"
-                      ng-blur="itemBlur($event)">
                   </div>
                 </td>
                 <td>
@@ -142,9 +136,7 @@
                       type="number"
                       name="processes{{id}}"
                       ng-model="data['example'+id].processes"
-                      placeholder="(eg: 2)"
-                      ng-focus="itemFocus($event)"
-                      ng-blur="itemBlur($event)">
+                      placeholder="(eg: 2)">
                   </div>
                 </td>
                 <td>

@@ -192,69 +192,9 @@ Styleguide.directive('slStyleguideModuleTables', [
           $scope.show = !$scope.show;
         };
 
-        $scope.rowSelect = function($event){
-          var $row = $(event.currentTarget);
-          var $targ = $(event.target);
-          var isSelected = $row.hasClass('selected');
-
-          if ( $targ.prop('tagName') !== 'TD' ) {
-            $row.siblings().removeClass('selected');
-            $row.siblings('.has-selected-selectable').removeClass('has-selected-selectable');
-            $row.removeClass('selected');
-            return;
-          }
-
-          $row.siblings().removeClass('selected');
-          $row.find('.selected').removeClass('selected');
-          $row.siblings().find('.selected').removeClass('selected');
-          if ( isSelected ) {
-            $row.removeClass('selected');
-          } else {
-            $row.addClass('selected');
-          }
-
-          $row.siblings('.has-selected-selectable').removeClass('has-selected-selectable');
-        };
-
-        $scope.itemSelect = function($event){
-          var $el = $($event.currentTarget);
-          var $row = $el.parents('tr');
-          var $targ = $($event.target);
-
-          $row.find('.selected').removeClass('selected');
-          $row.siblings().find('.selected').removeClass('selected');
-          $row.siblings('.has-selected-selectable').removeClass('has-selected-selectable');
-          $row.addClass('has-selected-selectable');
-
-          $el.addClass('selected');
-        };
-
-        $scope.itemFocus = function($event){
-          var $focused = $(event.currentTarget);
-          var $selectable = $focused.parents('.selectable');
-          var $row = $focused.parents('tr');
-
-          $row.find('.selected').removeClass('selected');
-          $row.siblings().find('.selected').removeClass('selected');
-          $row.siblings('.has-selected-selectable').removeClass('has-selected-selectable');
-          $selectable.addClass('selected');
-        };
-
-        $scope.itemBlur = function($event){
-          var $blurred = $(event.currentTarget);
-          var $selectable = $blurred.parents('.selectable');
-          var $row = $blurred.parents('tr');
-
-          $row.find('.selected').removeClass('selected');
-          $row.siblings().find('.selected').removeClass('selected');
-          $row.siblings('.has-selected-selectable').removeClass('has-selected-selectable');
-          //$selectable.addClass('selected');
-        };
-
         $scope.clickStatus = function(id){
           $log.log('clicked %d', id);
         };
-
 
         $scope.delete = function(){
           $log.log('delete clicked');

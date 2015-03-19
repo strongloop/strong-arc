@@ -17,7 +17,7 @@
               invalid: deploygit.deploy.$invalid && deploy.git.submitted
             }">
 
-        <label>Git deploy branch:</label>
+        <label><span class="ui-label-txt">Git deploy branch:</span></label>
         <input
           type="text"
           class="ui-input"
@@ -34,7 +34,7 @@
             }">
 
         <label>
-          <span>Hostname:</span>
+          <span class="ui-label-txt">Hostname:</span>
           <input
             type="text"
             class="ui-input"
@@ -44,7 +44,7 @@
             required>
         </label>
         <label>
-          <span>Port:</span>
+          <span class="ui-label-txt">Port:</span>
           <input
             type="text"
             class="ui-input"
@@ -55,7 +55,7 @@
             >
         </label>
         <label>
-          <span>Processes:</span>
+          <span id="ui-label-txt">Processes:</span>
           <input
             type="number"
             min="1"
@@ -96,7 +96,9 @@
             }">
 
 
-        <label>Fully qualified path to archive:</label>
+        <label>
+          <span class="ui-label-txt">Fully qualified path to archive:</span>
+        </label>
         <input
           type="text"
           class="ui-input"
@@ -115,7 +117,7 @@
               invalid: ( deployuniversal.deploy.$invalid || deployuniversal.port.$invalid || deployuniversal.processes.$invalid ) && deploy.universal.submitted
              }">
         <label>
-          <span>Hostname:</span>
+          <span class="ui-label-txt">Hostname:</span>
           <input
             type="text"
             class="ui-input"
@@ -125,7 +127,7 @@
             required>
         </label>
         <label>
-          <span>Port:</span>
+          <span class="ui-label-txt">Port:</span>
           <input
             type="text"
             class="ui-input"
@@ -135,7 +137,7 @@
             required>
         </label>
         <label>
-          <span>Processes:</span>
+          <span class="ui-label-txt">Processes:</span>
           <input
             type="number"
             class="ui-number"

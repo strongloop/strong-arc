@@ -142,6 +142,7 @@ Common.directive('slCommonSelectOnClick', function () {
     }
   };
 });
+
 Common.directive('slCommonLoadingIndicator', [
   function() {
     return {
