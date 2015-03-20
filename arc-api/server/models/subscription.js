@@ -1,4 +1,5 @@
 var request = require('request');
+var async = require('async');
 var KeyStore = require('./key-store');
 var debug = require('debug')('strong-arc:subscription');
 
@@ -8,7 +9,7 @@ function getAccessToken(req) {
   if (token) {
     return token;
   }
-  token = req.get('authorization');
+  token = req.get && req.get('authorization');
   if (typeof token === 'string') {
     // Add support for oAuth 2.0 bearer token
     // http://tools.ietf.org/html/rfc6750
@@ -36,6 +37,29 @@ function getAccessToken(req) {
   }
 }
 
+// Parse the http response
+function handleRes(err, res, body, done) {
+  if (err) {
+    return done(err);
+  }
+  if (res.statusCode !== 200 && res.statusCode !== 201
+    && res.statusCode !== 204) {
+    debug('Error %d: %j', res.statusCode, body);
+    var msg = 'Error received';
+    if (body) {
+      if (typeof body === 'object') {
+        msg = (body.error && body.error.message) || msg;
+      } else if (typeof body === 'string') {
+        msg = body;
+      }
+    }
+    err = new Error(msg);
+    err.statusCode = res.statusCode;
+    return done(err);
+  }
+  return done(err, body);
+}
+
 module.exports = function(Subscription) {
   var store = new KeyStore();
   /**
@@ -47,22 +71,39 @@ module.exports = function(Subscription) {
    */
   Subscription.getSubscriptions = function(userId, mode, req, cb) {
     if (mode === 'offline') {
+      debug('Loading subscriptions from the local key store (offline)');
       // Read from the local key store
       return store.load(userId, cb);
     }
-    var url = Subscription.settings.authUrl;
-    request.get({
-      url: url + 'users/' + userId + '/subscriptions',
-      qs: {
-        access_token: getAccessToken(req)
-      },
-      json: true
-    }, function(err, res, body) {
+
+    var tasks = {};
+
+    tasks.subscriptions = function(done) {
+      debug('Loading subscriptions from auth service (online)');
+      var url = Subscription.settings.authUrl;
+      request.get({
+        url: url + 'users/' + userId + '/subscriptions',
+        qs: {
+          access_token: getAccessToken(req)
+        },
+        json: true
+      }, function(err, res, body) {
+        handleRes(err, res, body, done);
+      });
+    };
+
+    tasks.products = function(done) {
+      debug('Loading products from auth service (online)');
+      Subscription.getProducts(req, done);
+    };
+
+    async.parallel(tasks, function(err, results) {
       if (err) {
         if (mode === 'online') {
           // Report error for online mode
-          return cb(err, body);
+          return cb(err);
         } else {
+          debug('Falling back to load subscriptions from the local key store');
           // Fall back to offline mode
           return store.load(userId, function(err, content) {
             if (err) {
@@ -73,9 +114,14 @@ module.exports = function(Subscription) {
           });
         }
       } else {
+        var products = results.products;
+        var subscriptions = results.subscriptions;
         // Refresh the local key store
-        store.save({licenses: body, modified: new Date()}, userId, function(err) {
-          cb(err, body);
+        store.save({
+          products: products,
+          licenses: subscriptions,
+          modified: new Date()}, userId, function(err) {
+          cb(err, subscriptions);
         });
       }
     });
@@ -114,10 +160,12 @@ module.exports = function(Subscription) {
         features: features
       }
     }, function(err, res, body) {
-      if (err) {
-        return cb(err, body);
-      }
-      reloadSubscriptions(userId, accessToken, body, cb);
+      handleRes(err, res, body, function(err) {
+        if (err) {
+          return cb(err);
+        }
+        reloadSubscriptions(userId, accessToken, body, cb);
+      });
     });
   };
 
@@ -135,7 +183,7 @@ module.exports = function(Subscription) {
       },
       json: true
     }, function(err, res, body) {
-      cb(err, body);
+      handleRes(err, res, body, cb);
     });
   };
 
@@ -155,7 +203,7 @@ module.exports = function(Subscription) {
       },
       json: usages
     }, function(err, res, body) {
-      cb(err, body);
+      handleRes(err, res, body, cb);
     });
   };
 
@@ -174,12 +222,14 @@ module.exports = function(Subscription) {
       },
       json: credentials
     }, function(err, res, body) {
-      if (err || !body) {
-        return cb(err, body);
-      }
-      var userId = body.userId;
-      var accessToken = body.id;
-      reloadSubscriptions(userId, accessToken, body, cb);
+      handleRes(err, res, body, function(err) {
+        if (err) {
+          return cb(err);
+        }
+        var userId = body.userId;
+        var accessToken = body.id;
+        reloadSubscriptions(userId, accessToken, body, cb);
+      });
     });
   };
 
