@@ -45,16 +45,20 @@ function handleRes(err, res, body, done) {
   if (res.statusCode !== 200 && res.statusCode !== 201
     && res.statusCode !== 204) {
     debug('Error %d: %j', res.statusCode, body);
-    var msg = 'Error received';
     if (body) {
-      if (typeof body === 'object') {
-        msg = (body.error && body.error.message) || msg;
+      if (typeof body.error === 'object') {
+        err = new Error();
+        for (var p in body.error) {
+          err[p] = body.error[p];
+        }
       } else if (typeof body === 'string') {
-        msg = body;
+        err = new Error(body);
+        err.statusCode = res.statusCode;
       }
     }
-    err = new Error(msg);
-    err.statusCode = res.statusCode;
+    if (!err) {
+      err = new Error('Error status: ' + res.statusCode);
+    }
     return done(err);
   }
   return done(err, body);
