@@ -5,6 +5,7 @@ var spawn = require('child_process').spawn;
 var httpProxy = require('http-proxy');
 var fs = require('fs-extra');
 var path = require('path');
+var util = require('util');
 
 function ProcessManager(root) {
   var pm = this;
@@ -18,6 +19,9 @@ ProcessManager.prototype.start = function(cb) {
   var pm = this;
   var pathToPm = require.resolve('strong-pm/bin/sl-pm');
   var args = [pathToPm, '--listen', '0', '--no-control'];
+  var envOverrides = {
+    PORT: '3001'
+  };
 
   this.setStatus('starting');
 
@@ -28,6 +32,7 @@ ProcessManager.prototype.start = function(cb) {
 
     pm.process = spawn(process.execPath, args, {
         stdio: [0, 'pipe', 2, 'ipc'],
+        env: util._extend(process.env, envOverrides)
     });
 
     pm.process.stdout.pipe(process.stdout);
@@ -98,7 +103,7 @@ ProcessManager.prototype.proxyRequest = function(req, res) {
     case 'starting':
       this.queueRequest(req, res);
     break;
-    case 'started': 
+    case 'started':
       fwd();
     break;
   }
