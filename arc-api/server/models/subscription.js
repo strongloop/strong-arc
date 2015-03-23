@@ -66,6 +66,17 @@ function handleRes(err, res, body, done) {
 
 module.exports = function(Subscription) {
   var store = new KeyStore();
+
+  function loadFromStore(userId, cb) {
+    return store.load(userId, function(err, content) {
+      if (err) {
+        return cb(err);
+      } else {
+        return cb(null, (content && content.licenses) || []);
+      }
+    });
+  }
+
   /**
    * Get all product subscriptions for a given user
    * @param {Number|String} userId User id
@@ -77,7 +88,7 @@ module.exports = function(Subscription) {
     if (mode === 'offline') {
       debug('Loading subscriptions from the local key store (offline)');
       // Read from the local key store
-      return store.load(userId, cb);
+      return loadFromStore(userId, cb);
     }
 
     var tasks = {};
@@ -109,13 +120,7 @@ module.exports = function(Subscription) {
         } else {
           debug('Falling back to load subscriptions from the local key store');
           // Fall back to offline mode
-          return store.load(userId, function(err, content) {
-            if (err) {
-              return cb(err);
-            } else {
-              return (content && content.licenses) || [];
-            }
-          });
+          return loadFromStore(userId, cb);
         }
       } else {
         var products = results.products;
