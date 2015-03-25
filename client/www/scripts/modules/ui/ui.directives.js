@@ -179,3 +179,41 @@ UI.directive('slUiMenuAction', [
       }
     };
   }]);
+
+/**
+ * @ngdoc directive
+ *
+ * sl-ui-data-table
+ *
+ * Applies behaviour for complying with the SL styleguide to tables
+ * containing inputs.
+ */
+UI.directive('slUiDataTable', function() {
+  return {
+    restrict: 'A',
+    link: function($scope, element, attrs) {
+      var eventName = 'click.slUiDataTable';
+      var $lastSelected = null;
+
+      $(element).off(eventName)
+        .on(eventName, 'td.has-selectable', function(mouseEvent) {
+          var $input = $(this).find(':input');
+
+          // if the click was in the surrounding td, select the first input
+          if (!$(mouseEvent.target).is(':input') && $input.length) {
+            $input[0].focus();
+          }
+
+          // clear up the previous selections
+          if ($lastSelected) {
+            $lastSelected.removeClass('selected');
+            $lastSelected.parent('tr').removeClass('has-selected-selectable');
+          }
+
+          // apply classes for selection, and preventing hover outline
+          $(this).parent('tr').addClass('has-selected-selectable');
+          $lastSelected = $(this).find('.selectable').addClass('selected');
+      });
+    }
+  };
+});

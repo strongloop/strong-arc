@@ -41,7 +41,7 @@
               <sl-manager-host-name></sl-manager-host-name>
 
           </td>
-          <td data-id="PortCol">
+          <td data-id="PortCol" class="has-selectable">
 
               <!-- port directive -->
               <sl-manager-host-port></sl-manager-host-port>
@@ -54,7 +54,7 @@
             </div>
 
           </td>
-          <td data-id="PidCountCol">
+          <td data-id="PidCountCol" class="has-selectable">
 
               <sl-manager-process-count></sl-manager-process-count>
 
@@ -71,9 +71,6 @@
             <a href class="ui-close" ng-click="deleteHost(host)">(X)</a>
           </td>
         </tr>
-        </tbody>
-
-        <tfoot>
         <tr  ng-show="isShowAddHostForm">
           <td data-id="HostCol" class="has-selectable">
 
@@ -96,7 +93,7 @@
               </div>
             </ng-form>
           </td>
-          <td data-id="PortCol"  class="has-selectable">
+          <td data-id="PortCol" class="has-selectable">
 
             <ng-form name="currentPMPortForm">
               <div
@@ -135,14 +132,18 @@
             <a href class="ui-close" ng-click="killNewPMHostForm()">(X)</a>
           </td>
         </tr>
-
+      </tbody>
+      <tfoot>
         <tr class="ui-sans-tr">
           <td colspan="5">
             <button
-              class="link-cmd"
+              class="ui-btn primary small"
               ng-click="initAddNewPMHost()"
               tooltip="{{addHostTooltipText}}"
-              ng-class="{ disabled: isAddHostButtonDisabled }">Add PM Host</button>
+              ng-class="{ disabled: isAddHostButtonDisabled }">
+              <span class="sl-icon sl-icon-plus-sign"></span>
+              Add PM Host
+            </button>
           </td>
         </tr>
         </tfoot>

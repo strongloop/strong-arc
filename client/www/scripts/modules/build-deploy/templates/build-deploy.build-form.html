@@ -19,7 +19,7 @@
                 valid: buildgit.url.$valid && build.git.submitted,
                 invalid: buildgit.url.$invalid && build.git.submitted
               }">
-        <label>Git current branch:</label>
+        <label><span class="ui-label-txt">Git current branch:</span></label>
         <!-- ng-model="build.git.url" -->
         <input
           type="text"
@@ -36,7 +36,7 @@
                 valid: buildgit.deploy.$valid && build.git.submitted,
                 invalid: buildgit.deploy.$invalid && build.git.submitted
               }">
-        <label>Git deploy branch:</label>
+        <label><span class="ui-label-txt">Git deploy branch:</span></label>
         <input
           type="text"
           class="ui-input"
@@ -76,7 +76,7 @@
               }">
 
         <div>
-          <label>Archive filename:</label>
+          <label><span class="ui-label-txt">Archive filename:</span></label>
           <span class="filename">../{{pkg.name}}-{{pkg.version}}.tgz</span>
           <input
             ng-show="false"
