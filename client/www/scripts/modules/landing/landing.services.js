@@ -8,11 +8,11 @@ Landing.service('LandingService', [
 
     svc.getApps = function() {
       return ArcApp.list();
-    }
+    };
 
     svc.getCurrentProject = function() {
       return Project.current();
-    }
+    };
 
     return svc;
   }

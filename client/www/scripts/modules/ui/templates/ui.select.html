@@ -1,12 +1,11 @@
 <div class="sl-ui-select"
      data-ui-type="select"
      ng-class="{ open: isOpen }"
-     ng-mouseleave="hideMenu()"
-     >
+     ng-mouseleave="hideMenu()">
   <span class="selected"
         data-id="{{selected.id}}"
         ng-click="isOpen = !isOpen">
-      {{selected.name}}
+      {{selected.name || 'Select Module'}}
       <span class="beta" ng-show="selected.beta">(Early Access)</span>
     <i class="sl-icon sl-icon-chevron-down"></i>
   </span>

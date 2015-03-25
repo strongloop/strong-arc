@@ -47,7 +47,7 @@ Landing.directive('slAppSelector', ['$log',
 
 
         $scope.isMenuVisible = function(){
-          return $scope.isAuthUser() && $scope.suiteIA.selectedApp;
+          return $scope.isAuthUser() && ( $scope.suiteIA.selectedApp || $location.path().indexOf('/licenses') === 0 );
         };
 
         function getDTName(studioName) {

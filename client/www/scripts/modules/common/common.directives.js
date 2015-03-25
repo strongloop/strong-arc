@@ -264,7 +264,7 @@ Common.directive('slPopoverInfo', [
       restrict: 'E',
       replace: true,
       scope: {
-        showontrue: '='
+        showontrue: '=?'
       },
       transclude: true,
       templateUrl: './scripts/modules/common/templates/common.popover.info.html',
