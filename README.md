@@ -1,6 +1,15 @@
-# StrongLoop Arc
+# strong-arc
 
-StrongLoop Arc was formerly known as Studio.
+strong-arc is the GUI for the StrongLoop Process Manager, strong-pm, and the
+LoopBack framework.
+
+For more details, see http://strong-pm.io and http://loopback.io.
+
+The `strong-arc` command is exposed in the [strongloop
+CLI](https://github.com/strongloop/strongloop) as the `slc arc` sub-command,
+and is not usually used stand-alone.
+
+Arc was formerly known as Studio.
 
 Please see the [official documentation](http://docs.strongloop.com/display/ARC).
 
@@ -9,9 +18,7 @@ http://strong-pm.io.
 
 ## Install
 
-### Prerequisite: You must have [Node.js](http://nodejs.org) installed.
-
-### Install using `npm` as follows:
+See [StrongLoop](https://github.com/strongloop/strongloop).
 
 ```sh
 $ npm install -g strongloop
