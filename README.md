@@ -4,6 +4,9 @@ StrongLoop Arc was formerly known as Studio.
 
 Please see the [official documentation](http://docs.strongloop.com/display/ARC).
 
+For information on using with the StrongLoop Process Manager, see
+http://strong-pm.io.
+
 ## Install
 
 ### Prerequisite: You must have [Node.js](http://nodejs.org) installed.
