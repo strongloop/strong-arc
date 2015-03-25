@@ -55,15 +55,17 @@ Common.directive('slCommonInstanceTabsView', [
   function(IAService) {
     return {
       link: function(scope, el, attrs) {
-        function renderComp(){
-
+        function renderComp() {
           var tabItems = [];
-         if (scope.openInstanceRefs && scope.openInstanceRefs.length) {
-            for (var i = 0;i < scope.openInstanceRefs.length;i++) {
+
+          if (scope.openInstanceRefs && scope.openInstanceRefs.length) {
+            for (var i = 0; i < scope.openInstanceRefs.length; i++) {
               var isActive = false;
+
               if (scope.openInstanceRefs[i].name === scope.activeInstance.name) {
                 isActive = true;
               }
+
               tabItems.push({
                 id:scope.openInstanceRefs[i].id,
                 name:scope.openInstanceRefs[i].name,
@@ -72,28 +74,33 @@ Common.directive('slCommonInstanceTabsView', [
               });
             }
           }
-          React.renderComponent(CommonInstanceTabsView({scope:scope, tabItems:tabItems}), el[0]);
 
+          React.renderComponent(
+            CommonInstanceTabsView({
+              scope:scope,
+              tabItems:tabItems
+            }), el[0]);
         }
 
         scope.$watch('activeInstance', function(instance) {
           if (scope.activeInstance) {
             renderComp();
           }
-        },true);
+        }, true);
+
         scope.$watch('activeInstanceUpdated', function() {
           if (scope.activeInstance) {
             renderComp();
           }
         }, true);
-//        scope = scope.$parent;
+
         scope.$watch('openInstanceRefs', function(newNames, oldNames) {
           if (scope.activeInstance) {
             renderComp();
           }
         }, true);
       }
-    }
+    };
   }
 ]);
 /**

@@ -53,15 +53,15 @@ var CommonInstanceTabsView = (CommonInstanceTabsView = React).createClass({
     }
 
     items = this.props.tabItems.map(function(item) {
-      var classNameVar = ' instance-tab-item-container';
+      var classNameVar = 'tab';
       if (item.isActive) {
-        classNameVar += ' is-active';
+        classNameVar += ' active';
       }
 
       return (
         <li className={classNameVar}>
-          <button onClick={clickInstanceTabItem} className="instance-tab-item-button" data-name={item.name} data-id={item.id}>{item.name}</button>
-          <button onClick={clickInstanceTabClose} className=" instance-tab-close-button" data-name={item.name} data-id={item.id}>
+          <button onClick={clickInstanceTabItem} className="tab-link" data-name={item.name} data-id={item.id}>{item.name}</button>
+          <button onClick={clickInstanceTabClose} className="ui-close" data-name={item.name} data-id={item.id}>
             <span className="sl-icon sl-icon-close" data-name={item.name} data-id={item.id}></span>
           </button>
         </li>
@@ -71,7 +71,7 @@ var CommonInstanceTabsView = (CommonInstanceTabsView = React).createClass({
     var retVal = (<div />);
     if (scope.activeInstance.name) {
       retVal = (<div>
-          <ul className=" instance-tabs-list">{items}</ul>
+          <ul className="ui-tabs instance-tabs-list">{items}</ul>
         </div>);
     }
     return retVal;
