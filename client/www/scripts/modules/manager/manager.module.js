@@ -7,7 +7,7 @@ var MANAGER_CONST = {
   STOP_ACTION: 'stop',
   CLUSTER_RESTART_ACTION: 'cluster-restart',
   ENV_SET_ACTION: 'env-set',
-  ENV_GET_ACTION: 'env-get',
+  ENV_GET_ACTION: 'env-get'
 };
 Manager.value('MANAGER_CONST', MANAGER_CONST);
 

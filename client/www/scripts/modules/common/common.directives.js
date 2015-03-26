@@ -338,7 +338,7 @@ Common.directive('slPopover', [
         $rootScope.$on('pageClick', function(e, $event){
           var isMenuClick = !!$($event.target).parents('.ui-popover.generic').length;
 
-          if ( scope.hideOnPageClick && !isMenuClick ) {
+          if (scope.hideOnPageClick && !isMenuClick) {
             scope.showPopover = false;
           }
         });
@@ -351,7 +351,7 @@ Common.directive('slPopover', [
           }, 400);
         };
 
-        scope.cancelHide = function(){
+        scope.cancelHide = function() {
           if ( scope.hideOnPageClick ) return;
 
           if ( to ) {
