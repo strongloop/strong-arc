@@ -9,6 +9,10 @@
       name="host"
       ng-model="host.host"
       placeholder="Enter host (eg: www{{id}}.example.com)"
+      typeahead-focus-first="false"
+      typeahead-on-select="onPMServerSelectAutoCompleted($item, 'host')"
+      typeahead="server as server.host + ' : ' + server.port for server in pmServers"
+
       ng-minlength="8"
       required
       ng-focus="itemFocus($event)"

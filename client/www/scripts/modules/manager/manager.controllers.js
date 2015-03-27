@@ -3,9 +3,10 @@ Manager.controller('ManagerMainController', [
   '$log',
   '$location',
   'ManagerServices',
+  'PMHostService',
   'growl',
   '$timeout',
-  function($scope, $log, $location, ManagerServices, growl, $timeout) {
+  function($scope, $log, $location, ManagerServices, PMHostService, growl, $timeout) {
     $scope.mesh = require('strong-mesh-client')('http://' + $location.host() + ':' + $location.port() + '/manager');
     $scope.currentPM = {};
     var x = 42;
@@ -283,17 +284,17 @@ Manager.controller('ManagerMainController', [
 
     };
 
-    $scope.pmServers = ManagerServices.getHostServers();
+    //remove default host from list
+    $scope.pmServers = PMHostService.getPMServers().filter(function(item){
+      return item.port !== '----';
+    });
 
-    $scope.onPMServerSelect = function(item) {
-      if (item.host === PM_CONST.LOCAL_PM_HOST_NAME) {
-        isLocal = true;
-      }
-      else {
-        isLocal = false;
-      }
-      $scope.candidateServerConfig = item;
+    //used by 'add new host' row
+    $scope.onPMServerSelectAutoCompleted = function(item, model){
+      $scope[model].host = item.host;
+      $scope[model].port = item.port;
     };
+
     $scope.hideMenu = function(){
       $scope.isOpen = false;
     };
