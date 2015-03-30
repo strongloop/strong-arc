@@ -83,12 +83,15 @@
                        ng-model="currentPM.host"
                        class="ui-input"
                        name="host"
+                       typeahead-focus-first="false"
                        sl-common-select-on-click
-                       required
+                       typeahead-on-select="onPMServerSelectAutoCompleted($item, 'currentPM')"
+                       typeahead="server as server.host + ' : ' + server.port for server in pmServers"
                        ng-minlength="8"
                        ng-focus="itemFocus($event)"
                        ng-blur="itemBlur($event)"
-                       placeholder="host">
+                       placeholder="host"
+                       required>
                 <span class="msg error" ng-show="currentPMHostForm.host.$invalid && currentPMHostForm.host.$dirty">Please enter host</span>
               </div>
             </ng-form>

@@ -8,6 +8,11 @@ Manager.directive('slManagerHostName', [
 
         $log.debug('Manager Host Name Controller');
 
+        //used by existing host row
+        $scope.onPMServerSelectAutoCompleted = function(item, model){
+          $scope[model].host = item.host;
+          $scope[model].port = item.port;
+        };
       }]
     }
   }
