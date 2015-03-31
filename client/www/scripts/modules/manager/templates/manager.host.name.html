@@ -22,9 +22,11 @@
     <sl-ui-menu-action>
       <ul>
         <li ng-repeat="action in host.filteredActions"  class="ui-sans-btn">
-          <button ng-click="fireHostAction(host, action)" title="{{ action }}"  alt="{{ action }}" class="link-cmd">{{ action }}</button>
+          <button ng-click="fireHostAction(host, action)" class="link-cmd">{{ action }}</button>
         </li>
-
+        <li class="ui-sans-btn">
+          <button ng-click="updateLicense(host)" class="link-cmd">update license</button>
+        </li>
       </ul>
     </sl-ui-menu-action>
   </div>
