@@ -686,8 +686,11 @@ Manager.controller('ManagerMainController', [
       //$selectable.addClass('selected');
     };
 
-    $scope.isPortFieldDisabled = function(){
-
+    $scope.updateLicense = function(host){
+      ManagerServices.updateLicenses(host)
+        .then(function(data){
+          $log.log(data);
+        });
     };
   }
 ]);
