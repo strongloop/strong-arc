@@ -1,11 +1,13 @@
 <div class="ui-popover info">
-  <span
-    class="sl-icon toggle-menu-link"
-    ng-class="icon"
-    ng-click="showPopover = !showPopover"
-    ng-mouseleave="hidePopover()"
-    title="{{title}}"
-    ></span>
+  <a href
+     class="ui-icon-link"
+     ng-click="showPopover = !showPopover"
+     ng-mouseleave="hidePopover()">
+      <span
+        class="sl-icon toggle-menu-link"
+        ng-class="icon"
+        title="{{title}}"></span>
+  </a>
   <div class="ui-popover-content"
        ng-class="{ bottom: position == 'bottom' }"
        ng-show="showPopover"
