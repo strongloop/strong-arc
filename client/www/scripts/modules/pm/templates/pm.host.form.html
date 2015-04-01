@@ -1,6 +1,8 @@
 <form class="ui-form" name="form" ng-submit="loadProcesses(form)" novalidate>
   <div class="ui-form-group inline">
-    <label>Hostname</label>
+    <label>
+      <span class="ui-label-txt">Hostname</span>
+    </label>
     <input type="text"
            name="host"
            class="ui-input"
@@ -15,7 +17,9 @@
            required>
   </div>
   <div class="ui-form-group inline">
-    <label >Port</label>
+    <label>
+      <span class="ui-label-txt">Port</span>
+    </label>
     <input type="text"
            min="1"
            name="port"
