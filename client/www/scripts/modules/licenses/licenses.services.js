@@ -34,7 +34,7 @@ Licenses.service('LicensesService', [
         var isArcLicense = license.product === 'arc';
 
         var expirationDate = moment(license.expirationDate).unix();
-        var isExpired = expirationDate < now+86400*1; //1 day from now
+        var isExpired = expirationDate < now; //already expired
 
         //skip feature check on non-arc licenses as they don't apply here
         if ( !isArcLicense ) return false;
@@ -122,7 +122,7 @@ Licenses.service('LicensesService', [
         var access = license.access || {};
         var expirationDate = moment(license.expirationDate).unix();
         var now = moment().unix();
-        var isExpired = expirationDate < now+86400*1;
+        var isExpired = expirationDate < now;
 
         toRenew[id] = {};
 
@@ -170,7 +170,7 @@ Licenses.service('LicensesService', [
             licenses.forEach(function(lic){
               var expirationDate = moment(lic.expirationDate).unix();
               var now = moment().unix();
-              var isExpired = expirationDate < now+86400*1;
+              var isExpired = expirationDate < now;
 
               if ( lic.product === id ) {
                 var features = lic.features.split(', ');
