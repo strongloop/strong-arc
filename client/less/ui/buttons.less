@@ -206,6 +206,41 @@
     }
   }
 
+  &.accessory {
+    color: @ui-accessory-button-color;
+    background: @ui-accessory-button-bg-color;
+    border-bottom: 2px solid @ui-accessory-button-border-color;
+    padding: 0.5rem 1rem;
+
+    .sl-icon {
+      color: @ui-accessory-button-color;
+    }
+
+    &.small {
+      padding: 0.3rem 0.75rem;
+    }
+
+    &:hover {
+      color: @ui-accessory-button-hover-color;
+      background-color: @ui-accessory-button-hover-bg-color;
+      border-bottom-color: @ui-accessory-button-hover-border-color;
+
+      .sl-icon {
+        color: @ui-accessory-button-hover-color;
+      }
+    }
+
+    &:active {
+      color: @ui-accessory-button-active-color;
+      background-color: @ui-accessory-button-active-bg-color;
+      border-bottom-color: @ui-accessory-button-active-border-color;
+
+      .sl-icon {
+        color: @ui-accessory-button-active-color;
+      }
+    }
+  }
+
   &.small {
     font-size: 1.2rem;
     padding: .75rem 3rem;
