@@ -17,6 +17,18 @@
           </sl-popover-info>
         </li>
         <li>
+          <span class="ui-msg-inline-error">Informational error</span>
+          <sl-popover-info
+                  class="error"
+                  icon="sl-icon sl-icon-question-mark"
+                  hideonpageclick="true">
+            <h4>Gee Wally...</h4>
+            <div class="body">
+              <p>I don't think that would happen.</p>
+            </div>
+          </sl-popover-info>
+        </li>
+        <li>
           <a href ng-click="showClickableInfo = !showClickableInfo" class="ui-popover-trigger">Informational (clickable label)</a>
           <sl-popover-info
             icon="sl-icon sl-icon-question-mark"

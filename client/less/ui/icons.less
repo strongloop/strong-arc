@@ -1,3 +1,14 @@
+//font-icons
+.sl-icon {
+  color: @grey-4;
+}
+
+.error {
+  .sl-icon {
+    color: @red-1;
+  }
+}
+
 //svg icons
 .icon {
   width: 2rem;
@@ -40,5 +51,46 @@
 
   &:active {
     background-image: url(/images/onOff_down.svg);
+  }
+}
+
+//links with icon
+.ui-icon-link {
+  .sl-icon {
+    color: @grey-4;
+
+  }
+
+  &:hover {
+    .sl-icon {
+      color: @grey-2;
+    }
+  }
+
+  &:active {
+    .sl-icon {
+      color: @blue-1;
+    }
+  }
+}
+
+.error {
+  .ui-icon-link {
+    .sl-icon {
+      color: @red-1;
+
+    }
+
+    &:hover {
+      .sl-icon {
+        color: @red-2;
+      }
+    }
+
+    &:active {
+      .sl-icon {
+        color: @blue-1;
+      }
+    }
   }
 }

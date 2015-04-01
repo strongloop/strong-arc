@@ -64,7 +64,7 @@ Styleguide.directive('slStyleguideModuleColor', [
         $scope.colors.primary = 'green-1 green-2'.split(' ');
         $scope.colors.secondary = 'green-3 green-4 blue-1 blue-2'.split(' ');
         $scope.colors.grey = 'grey-1 grey-2 grey-3 grey-4 grey-5 grey-6 grey-7'.split(' ');
-        $scope.colors.tertiary = 'red-1 teal-dark teal-light orange purple-dark purple-light'.split(' ');
+        $scope.colors.tertiary = 'red-1 red-2 teal-dark teal-light orange purple-dark purple-light'.split(' ');
         $scope.hex = {};
 
         $scope.clickModule = function(){
