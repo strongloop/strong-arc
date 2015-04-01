@@ -217,3 +217,46 @@ UI.directive('slUiDataTable', function() {
     }
   };
 });
+
+UI.directive('uiIcon', function () {
+  return {
+    restrict: 'E',
+    replace: true,
+    templateUrl: './scripts/modules/ui/templates/ui.icons.svg.html',
+    scope: {
+      name: '@',
+      classes: '@'
+    },
+    link: function(scope, elem, attrs){
+      var className = '.'+scope.name;
+      var icon = elem.find(className);
+
+      elem.html(icon);
+    }
+  };
+});
+
+UI.directive('uiCrumbs', function () {
+  return {
+    restrict: 'E',
+    replace: true,
+    templateUrl: './scripts/modules/ui/templates/ui.crumbs.html',
+    scope: {
+      crumbs: '=',
+      onClick: '&'
+    },
+    link: function(scope, elem, attrs){
+      scope._onClick = function($index, crumb){
+        var len = scope.crumbs.length-1;
+        var i = $index;
+
+        //skip if clicking on last breadcrumb
+        if ( i === len ) return;
+
+        //remove crumbs after clicked crumb
+        scope.crumbs.splice(i+1, len);
+        scope.onClick({ i: i, crumb: crumb, len: len });
+      }
+    }
+  };
+});

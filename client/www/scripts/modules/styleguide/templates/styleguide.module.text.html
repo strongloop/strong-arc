@@ -65,6 +65,21 @@
         <a href="javascript:void(0)" class="ui-close">x</a>
       </li>
       <li>
+        <h4 class="module-subheading">SVG Icons (.small, .medium, .large)</h4>
+        <ul class="clearfix">
+          <li ng-repeat="name in ['arrow', 'restart', 'separator']" class="pull-left">
+            <ui-icon name="{{name}}" classes="small"></ui-icon>
+            <ui-icon name="{{name}}" classes="medium"></ui-icon>
+            <ui-icon name="{{name}}" classes="large"></ui-icon>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <h4 class="module-subheading">Bread crumbs</h4>
+        <pre class="data">clicked crumb: {{clickedCrumb}}</pre>
+        <ui-crumbs crumbs="crumbs" on-click="onClickCrumb(i, crumb, len)"></ui-crumbs>
+      </li>
+      <li>
         <h4 class="module-subheading">Headings</h4>
         <h1>h1 (page heading)</h1>
         <h2>h2 (page sub-heading)</h2>

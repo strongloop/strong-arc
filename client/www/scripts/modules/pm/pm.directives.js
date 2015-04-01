@@ -23,6 +23,10 @@ PM.directive('slPmHostForm', [
   'PMPidService',
   function(PMHostService, PMPidService) {
     return {
+      scope: {
+        hasClickLoad: '=hasclickload',
+        onClickLoad: '&onclickload'
+      },
       templateUrl: './scripts/modules/pm/templates/pm.host.form.html',
       controller: [
         '$scope',
@@ -104,7 +108,13 @@ PM.directive('slPmHostForm', [
             }
           };
 
-          $scope.loadProcesses = function(){
+          $scope.loadProcesses = function(form){
+            if ( $scope.hasClickLoad ) {
+              if ( form.$valid ) {
+                return $scope.onClickLoad({ form: form });
+              }
+            }
+
             $scope.isLoading = true;
             $scope.processes = [];
 
