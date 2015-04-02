@@ -1,7 +1,7 @@
 <div class="manager-main-layout">
   <div class="manager-main-container" ng-controller="ManagerMainController">
     <div class="load-balancer-container">
-      <button class="link-cmd" ng-click="toggleManagerLoadBalancer()" class="btn-toggle-loadbalancer">Load Balancer</button>
+      <button class="link-cmd ui-btn accessory" ng-click="toggleManagerLoadBalancer()" class="btn-toggle-loadbalancer">Load Balancer</button>
       <div class="load-balancer-content" ng-show="showManagerLoadBalancer">
         <sl-manager-load-balancer></sl-manager-load-balancer>
       </div>
@@ -140,7 +140,7 @@
         <tr class="ui-sans-tr">
           <td colspan="5">
             <button
-              class="ui-btn primary small"
+              class="ui-btn accessory"
               ng-click="initAddNewPMHost()"
               tooltip="{{addHostTooltipText}}"
               ng-class="{ disabled: isAddHostButtonDisabled }">
