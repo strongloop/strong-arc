@@ -61,23 +61,6 @@ Manager.service('ManagerServices', [
       window.localStorage.setItem('hostServers', JSON.stringify(servers));
     };
 
-
-    /**
-     * Update licenses on server
-     */
-    svc.updateLicenses = function(host){
-      var url = host.protocol + '://' + host.host + (host.port === 80 || host.port === 443 ? '' : ':' + host.port );
-
-      return LicensesService.getLicenses()
-        .then(function(licenses){
-          var keys = licenses.map(function(lic){
-            return lic.licenseKey;
-          });
-
-          return $http.put(url + '/api/Services/1/env/STRONGLOOP_LICENSE', { value: keys.join(':') });
-        });
-    };
-
     return svc;
   }
 
