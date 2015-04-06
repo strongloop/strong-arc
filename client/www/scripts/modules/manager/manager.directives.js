@@ -94,4 +94,3 @@ Manager.directive('slManagerLoadBalancer', [
     }
   }
 ]);
-

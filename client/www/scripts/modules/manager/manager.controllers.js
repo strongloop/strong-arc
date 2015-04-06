@@ -6,7 +6,10 @@ Manager.controller('ManagerMainController', [
   'PMHostService',
   'growl',
   '$timeout',
-  function($scope, $log, $location, ManagerServices, PMHostService, growl, $timeout) {
+  '$q',
+  '$modal',
+  function($scope, $log, $location, ManagerServices, PMHostService, growl,
+           $timeout, $q, $modal) {
     $scope.mesh = require('strong-mesh-client')('http://' + $location.host() + ':' + $location.port() + '/manager');
     $scope.currentPM = {};
     var x = 42;
@@ -25,6 +28,10 @@ Manager.controller('ManagerMainController', [
 
     $scope.isAddHostButtonDisabled = false;
     $scope.addHostTooltipText = '';
+    $scope.editHost = {
+      host: null,
+      env: {}
+    };
 
     $scope.$watch('isAddHostButtonDisabled', function(newVal){
       if ( newVal ) {
@@ -470,7 +477,7 @@ Manager.controller('ManagerMainController', [
         command = {
           cmd: 'current',
           sub: 'restart'
-        }
+        };
       }
 
       host.action(command, function(err, res) {
@@ -609,6 +616,59 @@ Manager.controller('ManagerMainController', [
       }
     };
 
+    function updateHostEnv(host, env) {
+      var deferred = $q.defer();
+      var command =  {
+        cmd: 'env-set',
+        env: env
+      };
+
+      if (host) {
+        host.action(command, function(err, res) {
+          if (err) {
+            deferred.reject(err);
+          } else {
+            deferred.resolve(env);
+          }
+        });
+      }
+
+      return deferred.promise;
+    }
+
+    $scope.editHostEnv = function(host) {
+      var command = {
+        cmd: 'env-get'
+      };
+
+      host.action(command, function(err, res) {
+        if (err) {
+          growl.addErrorMessage('Error retrieving host environment settings.');
+          return;
+        }
+
+        var modalDlg = $modal.open({
+          templateUrl: '/scripts/modules/manager/templates/manager.env.editor.html',
+          controller: 'ManagerEnvEditorController',
+          size: 'lg',
+          resolve: {
+            title: function() {
+              return 'Environment Variables - ' + host.host;
+            },
+            env: function() {
+              return res.result.env;
+            }
+          }
+        });
+
+        modalDlg.result.then(function(env) {
+          updateHostEnv(host, env).then(function() {
+            growl.addSuccessMessage('Environment Updated. Restarting process.');
+          });
+        });
+      });
+    };
+
     /*
     *
     * Layout Resize
@@ -625,72 +685,96 @@ Manager.controller('ManagerMainController', [
     loadHosts();
     $scope.loadLoadBalancer();
 
-
-    //table selection handlers
-    $scope.rowSelect = function($event){
-      var $row = $(event.currentTarget);
-      var $targ = $(event.target);
-      var isSelected = $row.hasClass('selected');
-
-      if ( $targ.prop('tagName') !== 'TD' ) {
-        $row.siblings().removeClass('selected');
-        $row.siblings('.has-selected-selectable').removeClass('has-selected-selectable');
-        $row.removeClass('selected');
-        return;
-      }
-
-      $row.siblings().removeClass('selected');
-      $row.find('.selected').removeClass('selected');
-      $row.siblings().find('.selected').removeClass('selected');
-      if ( isSelected ) {
-        $row.removeClass('selected');
-      } else {
-        $row.addClass('selected');
-      }
-
-      $row.siblings('.has-selected-selectable').removeClass('has-selected-selectable');
-    };
-
-    $scope.itemSelect = function($event){
-      var $el = $($event.currentTarget);
-      var $row = $el.parents('tr');
-      var $targ = $($event.target);
-
-      $row.find('.selected').removeClass('selected');
-      $row.siblings().find('.selected').removeClass('selected');
-      $row.siblings('.has-selected-selectable').removeClass('has-selected-selectable');
-      $row.addClass('has-selected-selectable');
-
-      $el.addClass('selected');
-    };
-
-    $scope.itemFocus = function($event){
-      var $focused = $(event.currentTarget);
-      var $selectable = $focused.parents('.selectable');
-      var $row = $focused.parents('tr');
-
-      $row.find('.selected').removeClass('selected');
-      $row.siblings().find('.selected').removeClass('selected');
-      $row.siblings('.has-selected-selectable').removeClass('has-selected-selectable');
-      $selectable.addClass('selected');
-    };
-
-    $scope.itemBlur = function($event){
-      var $blurred = $(event.currentTarget);
-      var $selectable = $blurred.parents('.selectable');
-      var $row = $blurred.parents('tr');
-
-      $row.find('.selected').removeClass('selected');
-      $row.siblings().find('.selected').removeClass('selected');
-      $row.siblings('.has-selected-selectable').removeClass('has-selected-selectable');
-      //$selectable.addClass('selected');
-    };
-
     $scope.updateLicense = function(host){
       ManagerServices.updateLicenses(host)
         .then(function(data){
           $log.log(data);
         });
+    };
+  }
+]);
+
+Manager.controller('ManagerEnvEditorController', [
+  '$scope',
+  '$modalInstance',
+  'env',
+  'title',
+  function($scope, $modalInstance, env, title) {
+    function initKeyValuePairs(env) {
+      var kvPairs = [];
+
+      if (env) {
+        angular.forEach(env, function(value, key) {
+          kvPairs.push({
+            key: key,
+            origKey: key,
+            value: value,
+            priority: 0
+          });
+        });
+      }
+
+      return kvPairs;
+    }
+
+    function genKVObject(env, kvPairs) {
+      var obj = {};
+
+      if (kvPairs) {
+        kvPairs.map(function(pair) {
+          obj[pair.key] = pair.value;
+
+          if (pair.origKey !== null &&
+              pair.origKey !== pair.key) {
+            // this keeps the variable from getting cleared if it was renamed,
+            // but then a new var was created using the old name.
+            obj[pair.origKey] = obj[pair.origKey] || null;
+          }
+        });
+
+        // clean up any leftover deleted variables
+        angular.forEach(env, function(value, key) {
+          if (!obj.hasOwnProperty(key)) {
+            obj[key] = null;
+          }
+        });
+      }
+
+      return obj;
+    }
+
+    var newPriority = 1;
+
+    $scope.envVariables = initKeyValuePairs(env);
+    $scope.title = title;
+
+    $scope.delete = function(removeVariable) {
+      var idx = 0;
+
+      if (removeVariable) {
+        idx = $scope.envVariables.indexOf(removeVariable);
+
+        if (idx !== -1) {
+          $scope.envVariables.splice(idx, 1);
+        }
+      }
+    };
+
+    $scope.new = function() {
+      $scope.envVariables.push({
+        origKey: null,
+        key: '',
+        value: '',
+        priority: newPriority++
+      });
+    };
+
+    $scope.cancel = function() {
+      $modalInstance.dismiss();
+    };
+
+    $scope.save = function() {
+      $modalInstance.close(genKVObject(env, $scope.envVariables));
     };
   }
 ]);

@@ -18,7 +18,22 @@
   }
 
   tbody, tfoot {
-    tr:not(.ui-sans-tr){
+    td.btn-td {
+      padding: 1rem 0;
+      margin-left: -0.5rem;
+    }
+
+    td.btn-td .ui-btn {
+      margin-left: 0;
+      margin-right: 0.75rem;
+    }
+
+    td.btn-td.text-right .ui-btn {
+      margin-left: 0.75remu;
+      margin-right: 0;
+    }
+
+    tr:not(.ui-sans-tr) {
       td {
         border: 1px solid @ui-table-border-color;
         padding: .5rem 1rem;

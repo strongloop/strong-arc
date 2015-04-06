@@ -207,11 +207,11 @@ UI.directive('slUiDataTable', function() {
           // clear up the previous selections
           if ($lastSelected) {
             $lastSelected.removeClass('selected');
-            $lastSelected.parent('tr').removeClass('has-selected-selectable');
+            $lastSelected.closest('tr').removeClass('has-selected-selectable');
           }
 
           // apply classes for selection, and preventing hover outline
-          $(this).parent('tr').addClass('has-selected-selectable');
+          $(this).closest('tr').addClass('has-selected-selectable');
           $lastSelected = $(this).find('.selectable').addClass('selected');
       });
     }
