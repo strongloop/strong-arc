@@ -23,7 +23,7 @@ Metrics.controller('MetricsMainController', [
     $scope.currentProcessId;
     $scope.activeProcess = null;
     $scope.isTimerRunning = false;
-    $scope.wasTimerRunning = false; // holds the timer state when the window is hidden
+    $scope.isBackground = false;
     $scope.isMetricsLoaded = false;
     $scope.dataPointCount = 0;
     $scope.lastGoodTS; // fallback
@@ -35,6 +35,8 @@ Metrics.controller('MetricsMainController', [
       ticker:0
     };
     var ONE_SECOND = 1000; // counter timer between metrics requested
+    var updateInterval = null;
+    var activeProcess = null;
 
     $scope.chartData = [];
 
@@ -181,7 +183,6 @@ Metrics.controller('MetricsMainController', [
           }
         };
 
-
         /*
         *
         *   build the unique metric stub instance
@@ -203,8 +204,6 @@ Metrics.controller('MetricsMainController', [
         // short reference to unique metric 'stub' instance
         $scope.currentStub = $scope.currentMetrics[$scope.currentPMServerName][$scope.currentProcessId];
 
-
-
         /*
         * metrics type/name/group
         *
@@ -219,7 +218,6 @@ Metrics.controller('MetricsMainController', [
         *
         *
         * */
-
 
         $scope.chartData.map(function(chart) {
           /*
@@ -242,12 +240,11 @@ Metrics.controller('MetricsMainController', [
               $scope.currentStub[chart.name][METRICS_CONST[metric.constant]] =
                 ensureThrottledMetric($scope.currentStub[chart.name][METRICS_CONST[metric.constant]],
                   {x: new Date(processedMetric.timeStamp), y: yVal});
-            }
-            else {
-             // $log.debug('|     ' + data.name + ':' + metric.name + '  YVAL: ' + yVal)
+//          } else {
+//            $log.debug('|     ' + data.name + ':' + metric.name + '  YVAL: ' + yVal)
             }
           });
-         });
+        });
 
         // last timestamp used for next query filter
         if (!$scope.lastTimeStamp[$scope.currentPMServerName]) {
@@ -256,33 +253,28 @@ Metrics.controller('MetricsMainController', [
 
         $scope.lastTimeStamp[$scope.currentPMServerName][$scope.currentProcessId] = processedMetric.timeStamp;
       });
+
       if ($scope.currentStub) {
+        ChartConfigService.clearChartMemory();
 
-        renderTheCharts();
-
-
+        if (!$scope.isBackground) {
+          renderTheCharts();
+        }
       }
 
       // data point count
-      $scope.dataPointCount = $scope.currentStub['cpu'][METRICS_CONST.CPU_TOTAL].length;
-
-
-
-
+      $scope.dataPointCount = $scope.currentStub.cpu[METRICS_CONST.CPU_TOTAL].length;
     }
 
     function renderTheCharts() {
-      // clear memory to avoid leaks
-      ChartConfigService.clearChartMemory();
-
       // assign scope chart model variable data here
       $scope.chartData.map(function(chart) {
         var data = $scope.currentStub[chart.name];
         $scope[chart.chartConfig] = ChartConfigService.getChartOptions(chart.chartOptions);
         $scope[chart.chartModel] = ChartConfigService.getChartMetricsData(chart, data);
       });
-
     }
+
     /*
      *
      * Raw data request
@@ -302,7 +294,6 @@ Metrics.controller('MetricsMainController', [
      *
      * */
     function getChartData(filter) {
-
       if ($scope.isValidProcess()) {
         $scope.currentServerConfig = PMHostService.getLastPMServer();
         // fetch promise
@@ -320,46 +311,43 @@ Metrics.controller('MetricsMainController', [
 
               var rawMetricsCount = rawMetrics.length;
               if (rawMetricsCount > $scope.maxInitDataPointThreshold) {
-
                 var startPoint = ((rawMetricsCount - 1) - $scope.maxInitDataPointThreshold);
-
                 metricsToRender = rawMetrics.slice(startPoint);
-
               }
+
               processMetricsTick(metricsToRender);
-            }
-            else {
+            } else {
               $log.warn('getMetricsSnapShot returned no metrics ');
-              $scope.lastTimeStamp[$scope.currentPMServerName][$scope.currentProcessId] = $scope.lastGoodTS;
+
+              var pmTimestamp = $scope.lastTimeStamp[$scope.currentPMServerName];
+
+              if (pmTimestamp === undefined) {
+                pmTimestamp = [];
+                $scope.lastTimeStamp[$scope.currentPMServerName] = pmTimestamp;
+              }
+
+              pmTimestamp[$scope.currentProcessId] = $scope.lastGoodTS;
+
               if (!$scope.breakLoop) {
                 getMetrics();
                 $scope.breakLoop = true;
               }
-              if ($state.includes('metrics')){
-                growl.addWarnMessage('No metrics available. Your license may be invalid or not present. Please contact sales@strongloop.com for a valid license.', {ttl: 10000});
-              }
+
               return;
             }
           });
-      }
-      else {
+      } else {
         $log.warn('no metrics');
       }
     }
 
-
-
-
     $scope.getChartOptions = function(configRef) {
-
       return $scope[configRef];
-
     };
+
     $scope.getChartModel = function(modelRef) {
       return $scope[modelRef];
-
     };
-
 
     /*
     *
@@ -369,7 +357,8 @@ Metrics.controller('MetricsMainController', [
     *
     * */
     $scope.isValidProcess = function() {
-      if (($scope.currentProcessId && $scope.currentProcessId > -1) && ($scope.currentWorkerId > -1)) {
+      if (($scope.currentProcessId && $scope.currentProcessId > -1) &&
+          ($scope.currentWorkerId > -1)) {
         return true;
       }
       return false;
@@ -391,14 +380,15 @@ Metrics.controller('MetricsMainController', [
       var x  = item;
       var styleString = '';
       if (item.active) {
-        styleString = 'border:1px solid  '+ item.color + ';background-color: '+ item.color;
+        styleString = ('border: 1px solid ' + item.color + ';' +
+                       'background-color: ' + item.color);
         return styleString;
-      }
-      else {
+      } else {
         styleString = 'border:1px solid #aaaaaa;background-color: #555555;';
         return styleString;
       }
     };
+
     /*
      *
      * HTML
@@ -420,29 +410,33 @@ Metrics.controller('MetricsMainController', [
       $scope.startTimer();
     };
     $scope.startTimer = function() {
-      if (!$scope.isTimerRunning) {
-        if (!$scope.isTimerRunning) {
-          $scope.isTimerRunning = true;
+      // cancel the previous interval if it wasn't cleaned up
+      $scope.stopTimer();
+
+      updateInterval = $interval(function() {
+        $scope.sysTime.ticker--;
+
+        if ($scope.sysTime.ticker < 1) {
+          $scope.sysTime.ticker = $scope.metricsUpdateInterval;
+          getMetrics();
         }
-        $interval(function() {
-          $scope.sysTime.ticker--;
-          if($scope.sysTime.ticker < 1) {
-            $scope.sysTime.ticker = $scope.metricsUpdateInterval;
-            getMetrics();
-          }
-        }, ONE_SECOND);
+      }, ONE_SECOND);
+
+      $scope.isTimerRunning = true;
+    };
+    $scope.stopTimer = function() {
+      if (updateInterval !== null) {
+        $interval.cancel(updateInterval);
+        updateInterval = null;
+        $scope.isTimerRunning = false;
       }
     };
     $scope.sleepUpdates = function() {
-      $scope.wasTimerRunning = $scope.isTimerRunning;
-      $scope.isTimerRunning = false;
+      $scope.isBackground = true;
     };
     $scope.wakeUpdates = function() {
-      $scope.isTimerRunning = $scope.wasTimerRunning;
-      if ($scope.isTimerRunning) {
-        // Force the metrics to update since they are probably out of date.
-        $scope.resetCharts();
-      }
+      $scope.isBackground = false;
+      renderTheCharts();
     };
 
     // Prevent the metrics updating if the window isn't visisble.
@@ -467,8 +461,9 @@ Metrics.controller('MetricsMainController', [
         $scope.currentPMServerName = $scope.currentServerConfig.host + ':' + $scope.currentServerConfig.port;
         $scope.isDisplayChartValid = true;
         $scope.resetCharts();
+      } else {
+        $scope.stopTimer();
       }
-
     });
     $scope.$watch('processes', function(newVal) {
       if (newVal && newVal.length < 1) {
