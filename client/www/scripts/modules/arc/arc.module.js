@@ -116,8 +116,18 @@ Arc.config([
         templateUrl: './scripts/modules/build-deploy/templates/build-deploy.main.html',
         controller: 'BuildDeployController'
       })
-      .state('login', {
+      .state('login-redirect', {
         url: '/login?ref',
+        controller: 'LoginController',
+        templateUrl: './scripts/modules/arc-user/templates/login.html',
+        resolve: {
+          referrer: ['$stateParams', function($stateParams){
+            return $stateParams.ref;
+          }]
+        }
+      })
+      .state('login', {
+        url: '/login',
         controller: 'LoginController',
         templateUrl: './scripts/modules/arc-user/templates/login.html',
         resolve: {
@@ -171,9 +181,11 @@ Arc.run([
         }
 
         function handleStateChange(){
-          if ( !ArcUserService.isAuthUser() && next.url.indexOf('/login') === -1 ) {
-            event.preventDefault(); //prevent current page from loading
-            $state.go('login', { ref: next.name });
+          if ( !ArcUserService.isAuthUser() ) {
+            if ( next.url.indexOf('/login') === -1 ) {
+              event.preventDefault(); //prevent current page from loading
+              $state.go('login-redirect', { ref: next.name });
+            }
           } else {
             //fire off segment.io identify from cookie values
             segmentio.identify(ArcUserService.getCurrentUserId(), {
@@ -245,14 +257,14 @@ Arc.factory('arcRequestInterceptor', [
           // allow users to get to home view
           // any other navigation requires login
           if ($location.path() !== '/') {
-            $location.path('/login');
+            //$location.path('/login');
           }
         }
         return config || $q.when(config);
       },
       responseError: function (rejection) {
         if (rejection.status == 401) {
-          $location.path('/login');
+          //$location.path('/login');
         }
         return $q.reject(rejection);
       }
