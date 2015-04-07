@@ -117,14 +117,24 @@ Arc.config([
         controller: 'BuildDeployController'
       })
       .state('login-redirect', {
-        url: '/login/:ref',
+        url: '/login?ref',
         controller: 'LoginController',
-        templateUrl: './scripts/modules/arc-user/templates/login.html'
+        templateUrl: './scripts/modules/arc-user/templates/login.html',
+        resolve: {
+          referrer: ['$stateParams', function($stateParams){
+            return $stateParams.ref;
+          }]
+        }
       })
       .state('login', {
         url: '/login',
         controller: 'LoginController',
-        templateUrl: './scripts/modules/arc-user/templates/login.html'
+        templateUrl: './scripts/modules/arc-user/templates/login.html',
+        resolve: {
+          referrer: ['$stateParams', function($stateParams){
+            return $stateParams.ref;
+          }]
+        }
       })
       .state('register', {
         url: '/register',
