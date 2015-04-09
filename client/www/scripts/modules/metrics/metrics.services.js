@@ -508,7 +508,8 @@ Metrics.service('ChartConfigService', [
               return d3.format('.02f')(d);
             },
             axisLabelDistance: 0
-          }
+          },
+          showLegend: false
         },
         title: {
           enable: true,
