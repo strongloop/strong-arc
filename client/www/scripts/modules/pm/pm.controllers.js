@@ -20,7 +20,7 @@ PM.controller('PMAppController', [
     };
 
     var startAttemptCount = 0;
-    var startTimeoutThreshold = 5;
+    var startTimeoutThreshold = 50;
 
    /*
     * Check Local App Status
