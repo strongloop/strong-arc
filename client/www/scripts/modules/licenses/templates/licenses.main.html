@@ -20,7 +20,7 @@
                 <th>Features</th>
                 <th>Activation Date</th>
                 <th>Expiration Date</th>
-                <!--<th class="license-key">License Key</th>-->
+                <th class="license-key">License Key</th>
               </tr>
             </thead>
             <tbody>
@@ -59,7 +59,22 @@
                 </div></td>
                 <td><div class="date activation-date" ng-if="product.license">{{product.license.activationDate | amDateFormat:'MMMM Do YYYY'}}</div></td>
                 <td><div class="date expiration-date" ng-class="{ expired: product.license.isExpired }" ng-if="product.license">{{product.license.expirationDate | amDateFormat:'MMMM Do YYYY'}}</div></td>
-                <!--<td><div class="license-key">{{product.license.licenseKey}}</div></td>-->
+                <td><div class="license-key">
+                  <sl-popover-info
+                    classes="medium"
+                    icon="sl-icon sl-icon-key_out"
+                    hideonpageclick="true"
+                    onshow="selectLicenseText('#id-'+product.license.id)"
+                    secondarybuttontext="Copy"
+                    secondarybuttonaction="copyToClipboard('#id-'+product.license.id)">
+                    <h4>License Key</h4>
+                    <div class="body">
+                      <form class="ui-form sans-style">
+                        <textarea class="ui-textarea key" id="id-{{product.license.id}}">{{product.license.licenseKey}}</textarea>
+                      </form>
+                    </div>
+                  </sl-popover-info>
+                </div></td>
               </tr>
             </tbody>
           </table>

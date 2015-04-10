@@ -264,7 +264,11 @@ Common.directive('slPopoverInfo', [
       restrict: 'E',
       replace: true,
       scope: {
-        showontrue: '=?'
+        showontrue: '=?',
+        onshow: '&?',
+        secondaryButtonText: '@secondarybuttontext',
+        secondaryButtonAction: '&secondarybuttonaction',
+        classes: '@?'
       },
       transclude: true,
       templateUrl: './scripts/modules/common/templates/common.popover.info.html',
@@ -276,14 +280,16 @@ Common.directive('slPopoverInfo', [
         scope.hideOnPageClick = attrs.hideonpageclick;
 
         scope.$watch('showontrue', function(newVal, oldVal){
-          $log.log('showontrue', newVal, oldVal);
           if ( scope.showPopover && newVal ) return;
           scope.showPopover = newVal;
         });
 
         scope.$watch('showPopover', function(newVal, oldVal){
-          $log.log('showPopover', newVal);
           scope.showontrue = newVal;
+
+          if ( newVal && scope.onshow ) {
+            scope.onshow();
+          }
         });
 
         $rootScope.$on('pageClick', function(e, $event){

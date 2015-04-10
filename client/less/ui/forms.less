@@ -6,6 +6,12 @@ form.ui-form {
   border-radius: @ui-radius;
   border: 1px solid @ui-form-border-color;
 
+  &.sans-style {
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+
   &.has-table {
     padding: 0;
     border: none;
@@ -115,7 +121,7 @@ form.ui-form {
     }
   }
 
-  input[type=text], input[type=number], input[type=password] {
+  input[type=text], input[type=number], input[type=password], textarea {
     border: 1px solid @ui-form-field-border-color;
     width: 35rem;
     padding: .5rem 1rem;
@@ -125,7 +131,7 @@ form.ui-form {
       padding-right: 0;
     }
 
-    &[type=text], &[type=password] {
+    &[type=text], &[type=password], &textarea {
       .ui-mixin-placeholder(@grey-4);
     }
 
@@ -184,13 +190,14 @@ ol, ul {
     margin-bottom: 0;
   }
 
-  .ui-input, .ui-number {
+  .ui-input, .ui-number, .ui-textarea {
     color: @ui-input-color;
     background-color: @ui-input-bg-color;
     padding: .4rem .5rem;
     font-size: 1.6rem;
     font-weight: 200;
     transition: border-color .2s ease-in-out;
+    outline: none;
 
     .box-shadow(inset 0px 1px 0px 0px @ui-input-inner-shadow-color);
 
@@ -241,7 +248,7 @@ ol, ul {
       }
     }
 
-    .ui-input, .ui-number {
+    .ui-input, .ui-number, .ui-textarea {
       .box-shadow(none);
       border-radius: @ui-input-search-radius;
       padding: .5rem 3rem;
@@ -287,7 +294,7 @@ ol, ul {
   }
 
   .invalid {
-    .ui-input, .ui-number {
+    .ui-input, .ui-number, .ui-textarea {
       border-color: @ui-input-error-border-color;
     }
   }

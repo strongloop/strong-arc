@@ -1,4 +1,4 @@
-<div class="ui-popover info">
+<div class="ui-popover info {{classes}}">
   <a href
      class="ui-icon-link"
      ng-click="showPopover = !showPopover"
@@ -14,8 +14,15 @@
        ng-mouseenter="cancelHide()"
        ng-mouseleave="!hideOnPageClick && ( showPopover = false )">
     <div class="ui-popover-body" ng-transclude></div>
-    <footer>
-      <button class="ui-btn primary" ng-click="showPopover = false">Ok</button>
+    <footer class="clearfix">
+      <button
+        type="button"
+        class="ui-btn secondary pull-left"
+        ng-if="secondaryButtonText"
+        clip-copy="secondaryButtonAction()">{{secondaryButtonText}}</button>
+      <button
+        class="ui-btn primary pull-right"
+        ng-click="showPopover = false">Ok</button>
     </footer>
   </div>
 </div>
