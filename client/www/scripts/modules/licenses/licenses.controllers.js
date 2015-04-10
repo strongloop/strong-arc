@@ -13,6 +13,16 @@ Licenses.controller('LicensesMainController', [
 
     window.setScrollView('.common-instance-view-container');
 
+
+    $scope.selectLicenseText = function(id){
+      $(id).select();
+    };
+
+    $scope.copyToClipboard = function(id){
+      $log.log(id);
+      return $(id).val();
+    };
+
     function handleSuccess(results){
 
       //handle calls that failed

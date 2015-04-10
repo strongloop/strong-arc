@@ -22,9 +22,9 @@
                   class="error"
                   icon="sl-icon sl-icon-question-mark"
                   hideonpageclick="true">
-            <h4>Gee Wally...</h4>
+            <h4>Ruh-roh...</h4>
             <div class="body">
-              <p>I don't think that would happen.</p>
+              <p>Now you've done it!</p>
             </div>
           </sl-popover-info>
         </li>
@@ -38,6 +38,22 @@
             <div class="body">
               <p>Here is some example text.</p>
               <p>...and here is some example text.</p>
+            </div>
+          </sl-popover-info>
+        </li>
+        <li>
+          Medium sized popup (.medium)
+          <sl-popover-info
+            classes="medium"
+            icon="sl-icon sl-icon-question-mark"
+            hideonpageclick="true"
+            onshow="doSomethingOnShow()"
+            secondarybuttontext="Something"
+            secondarybuttonaction="clickedSecondaryButton()">
+            <h4>Medium popup</h4>
+            <div class="body">
+              Anything goes here.
+              Optional 'onshow' event and 'secondaryButton'.
             </div>
           </sl-popover-info>
         </li>

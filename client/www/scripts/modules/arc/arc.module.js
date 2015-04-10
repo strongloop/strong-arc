@@ -56,7 +56,8 @@ var Arc = angular.module('Arc', [
   'ngGrid',
   'angularFileUpload',
   'segmentio',
-  'angularMoment'
+  'angularMoment',
+  'ngClipboard'
 ]);
 
 Arc.value('CONST', CONST);
@@ -64,7 +65,6 @@ Arc.value('CONST', CONST);
 Arc.config([
   '$stateProvider',
   '$urlRouterProvider',
-
   function ($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise('/');
@@ -215,8 +215,13 @@ Arc.run([
 
 Arc.config([
   '$httpProvider',
-  function ($httpProvider) {
+  'ngClipProvider',
+  function ($httpProvider, ngClipProvider) {
     $httpProvider.interceptors.push('arcRequestInterceptor');
+    ngClipProvider.setPath("/scripts/vendor/zeroclipboard/ZeroClipboard.swf");
+    ngClipProvider.setConfig({
+      zIndex: 1000
+    });
   }
 ]);
 
