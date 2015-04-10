@@ -18,9 +18,9 @@ var MetricsVisualTicker = (MetricsVisualTicker = React).createClass({
 
     var items = [];
     for (var i = 1;i < 16;i++) {
-      var tickerClass = 'glyphicon glyphicon-time on';
+      var tickerClass = 'refresh-icon on';
       if (i > currTickerVal) {
-        tickerClass = 'glyphicon glyphicon-time off';
+        tickerClass = 'refresh-icon off';
       }
       items.push(<li><i className={tickerClass}></i></li>)
     }
