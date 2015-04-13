@@ -211,18 +211,38 @@ Styleguide.directive('slStyleguideModuleTables', [
 
 Styleguide.directive('slStyleguideModulePopovers', [
   '$log',
-  function ($log) {
+  '$modal',
+  function($log, $modal) {
     return {
-      restrict: "E",
+      restrict: 'E',
       replace: true,
       templateUrl: './scripts/modules/styleguide/templates/styleguide.module.popovers.html',
       scope: {},
-      controller: function($scope){
+      controller: function($scope) {
         $scope.show = true;
         $scope.showClickableInfo = false;
 
-        $scope.clickModule = function(){
+        $scope.clickModule = function() {
           $scope.show = !$scope.show;
+        };
+
+        $scope.showModal = function() {
+          var templateBase = '/scripts/modules/styleguide/templates/';
+          var modalDlg = $modal.open({
+            templateUrl: templateBase + 'styleguide.module.popovers.modal.html',
+            size: 'lg',
+            controller: function($scope, $modalInstance, title) {
+              $scope.title = title;
+              $scope.close = function() {
+                $modalInstance.dismiss();
+              };
+            },
+            resolve: {
+              title: function() {
+                return 'Example Modal Dialog';
+              }
+            }
+          });
         };
       }
     };
