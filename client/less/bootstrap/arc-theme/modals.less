@@ -8,19 +8,22 @@
       color: inherit;
       background: inherit;
       padding: 2.0rem 4.0rem;
-      border: none;
     }
 
     .modal-body {
-      padding: 0 4.0rem;
+      padding: 2.0rem 4.0rem;
       border: none;
       max-height: 65vh;
       overflow: auto;
+
+      &.asymmetric {
+        /* for use with dialogs containing tables which require different padding */
+        padding: 2.0rem 0 0 4.0rem;
+      }
     }
 
     .modal-footer {
       padding: 2.0rem 4.0rem;
-      border: none;
 
       .ui-btn.pull-left {
         margin-left: 0;
