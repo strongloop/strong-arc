@@ -312,7 +312,50 @@ Manager.controller('ManagerMainController', [
     * LOAD HOSTS
     *
     * */
-    var actionBlackList = [MANAGER_CONST.DELETE_ACTION, MANAGER_CONST.EDIT_ACTION, MANAGER_CONST.ENV_GET_ACTION, MANAGER_CONST.ENV_SET_ACTION]
+
+    // This is used as a prototype for the availableActions entries.
+    // Any missing properties will be filled in using the values from
+    // here.
+    var hostActionDefaults = {
+      filter: function(host) {
+        return host.actions.indexOf(this.id) >= 0;
+      },
+      handler: function(host) {
+        $scope.fireHostAction(host, this.id);
+      }
+    };
+
+    // Actions that will available to execute on the managed PMs
+    var availableActions = [
+        {
+          id: MANAGER_CONST.START_ACTION,
+          label: 'start'
+        },
+        {
+          id: MANAGER_CONST.STOP_ACTION,
+          label: 'stop'
+        },
+        {
+          id: MANAGER_CONST.RESTART_ACTION,
+          label: 'restart'
+        },
+        {
+          id: MANAGER_CONST.CLUSTER_RESTART_ACTION,
+          label: 'restart cluster'
+        },
+        {
+          id: MANAGER_CONST.ENV_SET_ACTION,
+          label: 'edit host environment',
+          handler: function(host) {
+            $scope.editHostEnv(host);
+          }
+        },
+        {
+          id: MANAGER_CONST.LICENSE_PUSH_ACTION,
+          label: 'push license'
+        }
+    ];
+
     function loadHosts() {
       if (!$scope.loading) {
         $scope.loading = true;
@@ -366,45 +409,27 @@ Manager.controller('ManagerMainController', [
               * Not all actions should be available
               * - edit
               * - delete
-              * - get/set env
-              *
               * */
-              host.filteredActions = [];
-              // actions
-              host.actions.map(function(action) {
-                var addAction = true;
-                actionBlackList.map(function(value) {
-                  if (value === action) {
-                    addAction = false;
-                  }
+              host.filteredActions = availableActions
+                .map(function(action) {
+                  return angular.extend({}, hostActionDefaults, action);
                 });
-                if (addAction) {
-                  host.filteredActions.push(action);
-                }
-
-              });
 
               // display status
               // add 'status' property
               host = $scope.processHostStatus(host);
-
               host = $scope.processPids(host);
-
-
 
               // processes
               if ((host.app && host.app.name) && (host.app.name !== $scope.appContext.name)) {
                 host.actions = [];
                 host.processes = {pids:[]};
-
               }
             });
 
             $scope.hosts = hosts;
             setAppContext();
             $scope.loading = false;
-
-
           }
           else {
             // no hosts returned
@@ -563,7 +588,6 @@ Manager.controller('ManagerMainController', [
       if (!host.exceptionType) {
         // we have an app
         if (host.app) {
-
           if (host.app.name === $scope.appContext.name) {
             if (host.app.version === $scope.appContext.version) {
               /*
@@ -571,10 +595,6 @@ Manager.controller('ManagerMainController', [
                * Ding ding ding
                *
                * */
-              if (host.processes.pids.length > 0) {
-                host.isHostProblem = false;
-                return true;
-              }
             }
           }
         }
