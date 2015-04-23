@@ -5,7 +5,9 @@ var MANAGER_CONST = {
   EDIT_ACTION: 'edit',
   START_ACTION: 'start',
   STOP_ACTION: 'stop',
+  RESTART_ACTION: 'restart',
   CLUSTER_RESTART_ACTION: 'cluster-restart',
+  LICENSE_PUSH_ACTION: 'license-push',
   ENV_SET_ACTION: 'env-set',
   ENV_GET_ACTION: 'env-get'
 };

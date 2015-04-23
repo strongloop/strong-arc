@@ -21,13 +21,8 @@
 
     <sl-ui-menu-action>
       <ul>
-        <li ng-repeat="action in host.filteredActions"  class="ui-sans-btn">
-          <button ng-click="fireHostAction(host, action)" class="link-cmd">{{ action }}</button>
-        </li>
-        <li ng-show="host.processCount > 0">
-          <button ng-click="editHostEnv(host)" title="Edit Environment" class="link-cmd">
-            Edit Host Environment
-          </button>
+        <li ng-repeat="action in host.filteredActions" class="ui-sans-btn" ng-show="action.filter(host)">
+          <button ng-click="action.handler(host)" class="link-cmd">{{ action.label }}</button>
         </li>
       </ul>
     </sl-ui-menu-action>
