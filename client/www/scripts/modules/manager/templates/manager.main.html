@@ -7,7 +7,10 @@
       </div>
     </div>
     <div class="app-context">
-      {{ appContext.name }} {{ appContext.version }}
+      {{ appContext.name }}
+      <span ng-if="appContext.version">
+        {{ appContext.version }}
+      </span>
     </div>
 
     <form class="ui-form has-table" name="form" novalidate ng-submit="save(form)">
