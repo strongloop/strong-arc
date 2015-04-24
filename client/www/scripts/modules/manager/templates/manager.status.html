@@ -3,15 +3,15 @@
           ng-class="{ problem: host.status.isProblem, inactive: host.status.isInactive, active: host.status.isActive }">
     <span class="status-txt">{{ host.status.display }}</span>
 
-
-    <sl-popover-info ng-show="!host.status.isActive"
-                     icon="sl-icon sl-icon-question-mark"
-                     hideonpageclick="true" showontrue="clickedButton">
-      <h4>{{ host.status.problem.title }}</h4>
-      <div class="body">
-        <p>{{ host.status.problem.description }}</p>
-      </div>
-    </sl-popover-info>
+    <span ng-show="host.status.isProblem">
+      <sl-popover-info icon="sl-icon sl-icon-question-mark"
+                       hideonpageclick="true" showontrue="clickedButton">
+        <h4>{{ host.status.problem.title }}</h4>
+        <div class="body">
+          <p>{{ host.status.problem.description }}</p>
+        </div>
+      </sl-popover-info>
+    </span>
   </span>
 
   <button title="{{ host.status.actionLabel }}"
