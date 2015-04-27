@@ -2,7 +2,7 @@
   <div ng-repeat="chart in chartData" class="chart-container">
     <div data-ui-type="table">
       <div data-ui-type="row">
-        <div data-ui-type="cell" class="main-chart-col">
+        <div data-ui-type="cell" class="main-chart-col" ng-show="showChart(chart, chart.chartModel)">
           <ul class="metrics-chart-controls">
             <li ng-repeat="metric in chart.metrics">
               <label class="" ng-click="toggleChartMetric(metric)">
