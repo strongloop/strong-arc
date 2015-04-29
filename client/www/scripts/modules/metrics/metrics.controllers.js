@@ -349,6 +349,18 @@ Metrics.controller('MetricsMainController', [
       return $scope[modelRef];
     };
 
+    $scope.showChart = function(chart, modelRef) {
+      var data = $scope[modelRef];
+
+      if (data) {
+        return data.some(function(x) {
+          return x.values && x.values.length > 0;
+        });
+      }
+
+      return false;
+    };
+
     /*
     *
     *
