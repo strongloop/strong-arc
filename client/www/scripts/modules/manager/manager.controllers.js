@@ -356,12 +356,43 @@ Manager.controller('ManagerMainController', [
         }
     ];
 
+    if ($scope.localPM === undefined) {
+      $scope.localPM = 0;
+    }
+
+    function isLocalPM(host) {
+      return (host.host === '127.0.0.1' ||
+              host.host === 'localhost');
+    }
+
+    function localPMActive(host) {
+      return true;
+    }
+
+    function registerLocalPm() {
+      var localPMConfig = {
+        host: 'localhost',
+        port: '8701'
+      };
+
+      if ($scope.localPM > 0 || !localPMActive(localPMConfig)) {
+        $log.warn('local pm is not active');
+        return;
+      }
+
+      $log.log('registering local pm');
+      $scope.mesh.models.ManagerHost.create(localPMConfig, function(err, host) {
+        $scope.$apply(function() {
+          loadHosts();
+        });
+      });
+    }
+
     function loadHosts() {
       if (!$scope.loading) {
         $scope.loading = true;
 
         $scope.mesh.models.ManagerHost.find(function(err, hosts) {
-
           if (hosts && hosts.map) {
             var addressCollection = [];
 
@@ -403,6 +434,9 @@ Manager.controller('ManagerMainController', [
                 }
               }
 
+              if (isLocalPM(host)) {
+                $scope.localPM += 1;
+              }
 
               /*
               *
@@ -427,6 +461,12 @@ Manager.controller('ManagerMainController', [
               }
             });
 
+            if ($scope.localPM < 1) {
+              registerLocalPm();
+              $scope.localPM += 1;
+              return;
+            }
+
             $scope.hosts = hosts;
             setAppContext();
             $scope.loading = false;
@@ -440,7 +480,6 @@ Manager.controller('ManagerMainController', [
 
         });
       }
-
     }
 
     /*
