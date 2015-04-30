@@ -19,9 +19,7 @@ ProcessManager.prototype.start = function(cb) {
   var pm = this;
   var pathToPm = require.resolve('strong-pm/bin/sl-pm');
   var args = [pathToPm, '--listen', '0', '--no-control'];
-  var envOverrides = {
-    PORT: '3001'
-  };
+  var envOverrides = {};
 
   this.setStatus('starting');
 
