@@ -21,3 +21,34 @@
     margin: 0;
   }
 }
+
+.ui-message {
+  position: absolute;
+  top: 7.5rem;
+  width: 100%;
+  color: @white;
+  z-index: 10;
+  padding: 1rem 14rem;
+  min-height: 7rem;
+  background: @grey-1 url(/images/bell.svg) no-repeat 14rem center;
+  background-size: 3rem auto;
+
+  .body {
+    font-size: 2.2rem;
+    padding: 1rem 10rem 1rem 5rem;
+
+    a {
+      font-size: 1.8rem;
+      display: block;
+      opacity: .85;
+      color: inherit;
+    }
+  }
+
+  button {
+    position: absolute;
+    right: 14rem;
+    top: 50%;
+    margin-top: -17px;
+  }
+}

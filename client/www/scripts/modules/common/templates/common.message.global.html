@@ -1,0 +1,15 @@
+<div class="ui-message global hide">
+  <div class="body">
+    {{body}}
+    <p>
+      <a href="{{link}}" ng-if="link">
+        <span ng-if="linkText">{{linkText}}</span>
+        <span ng-if="!linkText">Get more details</span>
+      </a>
+    </p>
+    <p ng-if="email">
+      <a href="{{email}}">{{emailText}}</a>
+    </p>
+  </div>
+  <button class="ui-btn secondary small" ng-click="onClickDismiss($event)">Got it</button>
+</div>

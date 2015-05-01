@@ -436,3 +436,42 @@ Common.directive('ngFocus', ['$log', function($log) {
     }
   }
 }]);
+
+
+Common.directive('slMessageGlobal', [
+  function(){
+    return {
+      restrict: 'E',
+      replace: true,
+      scope: {
+      },
+      transclude: true,
+      templateUrl: './scripts/modules/common/templates/common.message.global.html',
+      link: function(scope, elem, attrs){
+        scope.$watch('showMessage', function(newVal){
+          if ( !newVal ) {
+            $(elem).addClass('hide');
+          } else {
+            $(elem).removeClass('hide');
+          }
+        })
+      },
+      controller: function($scope, $rootScope, $log){
+        $scope.onClickDismiss = function($event){
+          $scope.showMessage = false;
+        };
+
+        $rootScope.$on('message', function($event, data){
+          $scope.body = data.body;
+          $scope.link = data.link;
+          $scope.linkText = data.linkText;
+          $scope.email = 'mailto:'+data.email+'?subject=Licensing';
+          $scope.emailText = data.emailText;
+
+          $scope.showMessage = true;
+        });
+      }
+    };
+  }
+]);
+
