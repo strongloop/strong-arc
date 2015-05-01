@@ -1,0 +1,25 @@
+<section class="message module">
+  <h2 ng-click="clickModule()">Messages</h2>
+  <article ng-show="show">
+    <section>
+      <h4>Global message</h4>
+      <ul>
+        <li>
+          <button class="ui-btn primary" ng-click="showMessage()">Show message</button>
+        </li>
+        <li>
+          <button class="ui-btn primary" ng-click="showMessage({ link: 'http://google.com' })">Show message w/ link</button>
+        </li>
+        <li>
+          <button class="ui-btn primary" ng-click="showMessage({ link: 'http://google.com', linkText: 'Google.com' })">Show message w/ link text</button>
+        </li>
+        <li>
+          <button class="ui-btn primary" ng-click="showMessage({ email: 'sales@strongloop.com', emailText: 'Please contact sales'})">Show message w/ email</button>
+        </li>
+        <li>
+          <button class="ui-btn primary" ng-click="showMessage({ link: 'http://google.com', linkText: 'Google.com', email: 'sales@strongloop.com', emailText: 'Please contact sales'})">Show message w/ link and email</button>
+        </li>
+      </ul>
+    </section>
+  </article>
+</section>

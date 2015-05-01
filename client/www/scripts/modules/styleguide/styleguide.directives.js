@@ -248,3 +248,32 @@ Styleguide.directive('slStyleguideModulePopovers', [
     };
   }
 ]);
+
+Styleguide.directive('slStyleguideModuleMessage', [
+  '$log',
+  function ($log) {
+    return {
+      restrict: "E",
+      replace: true,
+      templateUrl: './scripts/modules/styleguide/templates/styleguide.module.message.html',
+      scope: {},
+      controller: function($scope, $rootScope){
+        $scope.show = true;
+
+        $scope.clickModule = function(){
+          $scope.show = !$scope.show;
+        };
+
+        $scope.showMessage = function(obj){
+          var data = { body: 'This is something you need to know about' };
+
+          for ( var key in obj ) {
+            data[key] = obj[key];
+          }
+
+          $rootScope.$emit('message', data);
+        };
+      }
+    };
+  }
+]);
