@@ -71,38 +71,13 @@ Metrics.service('MetricsService', [
 
       return PMServiceMetric.find(server, filter)
         .then(function(response) {
-          /*
-           * make sure we get some data
-           * - if no data is returned it could be that none was reported for the period
-           * - or an error
-           * - or bad license
-           */
-          if (!response.length) {
-
-
-
-            // query license service for users current license data
-            LicensesService.getLicenses()
-              .then(function(response) {
-                /*
-                * check the license data returned for metrics license
-                * - if this method returns a payload it means the license is invalid
-                * */
-                LicensesService.getInvalidLicenses(response, '/metrics')
-                .then(function(res) {
-                    if (res.length) {
-                      //trigger license message
-                      LicensesService.alertLicenseInvalid({name:'Metrics'});
-                    }
-                  });
-                });
-          }
           return response;
         })
         .catch(function(error) {
           $log.error('bad get metrics snapshot');
         });
     };
+
     svc.validateLicense = function() {
 
       return LicensesService.validateModuleLicense('Metrics')
