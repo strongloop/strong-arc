@@ -498,16 +498,25 @@ Metrics.controller('MetricsMainController', [
       }
     });
     $scope.init = function() {
-      $scope.chartData = ChartConfigService.initChartConfigData()
-        .then(function(response) {
-          $scope.chartData = response;
-        }); // replace with dynamic config
-      if ($scope.isValidProcess()) {
-        $scope.currentMetrics = [];
-        getMetrics();
-        $scope.startTicker();
 
-      }
+      // check if user has a valid metrics license
+      MetricsService.validateLicense()
+      .then(function() {
+          $scope.chartData = ChartConfigService.initChartConfigData()
+            .then(function(response) {
+              $scope.chartData = response;
+            }); // replace with dynamic config
+          if ($scope.isValidProcess()) {
+            $scope.currentMetrics = [];
+            getMetrics();
+            $scope.startTicker();
+
+          }
+        })
+      .catch(function(error) {
+          $log.warn('exception validating metrics license (controller)');
+        });
+
     };
     $scope.init();
   }

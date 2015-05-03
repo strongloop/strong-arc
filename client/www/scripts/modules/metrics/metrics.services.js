@@ -2,7 +2,8 @@ Metrics.service('MetricsService', [
   '$http',
   '$log',
   'PMServiceMetric',
-  function($http, $log, PMServiceMetric) {
+  'LicensesService',
+  function($http, $log, PMServiceMetric, LicensesService) {
     var svc = this;
 
     var currentService = {};
@@ -75,6 +76,18 @@ Metrics.service('MetricsService', [
         .catch(function(error) {
           $log.error('bad get metrics snapshot');
         });
+    };
+
+    svc.validateLicense = function() {
+
+      return LicensesService.validateModuleLicense('Metrics')
+        .then(function(response) {
+            return response;
+          })
+        .catch(function(error) {
+            $log.warn('exception validating metrics license');
+            return false;
+          });
     };
 
     return svc;
