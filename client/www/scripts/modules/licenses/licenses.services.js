@@ -1,10 +1,11 @@
 Licenses.service('LicensesService', [
   '$q',
   '$http',
+  '$rootScope',
   '$log',
   'ArcUserService',
   'Subscription',
-  function ($q, $http, $log, ArcUserService, Subscription) {
+  function ($q, $http, $rootScope, $log, ArcUserService, Subscription) {
     var svc = this;
 
     svc.getAllProducts = function(){
@@ -157,6 +158,27 @@ Licenses.service('LicensesService', [
       return def.promise;
     };
 
+    svc.validateModuleLicense = function(moduleName) {
+      // query license service for users current license data
+      return svc.getLicenses()
+        .then(function(response) {
+          /*
+           * check the license data returned for metrics license
+           * - if this method returns a payload it means the license is invalid
+           * */
+          return svc.getInvalidLicenses(response, '/' + moduleName.toLowerCase())
+            .then(function(res) {
+              if (res.length) {
+                //trigger license message
+                svc.alertLicenseInvalid({name:moduleName});
+                return false;
+              }
+              return true;
+            });
+        });
+    };
+
+
     svc.getProductsAndLicenses = function(){
       return $q.all([svc.getAllProducts(), svc.getLicenses()])
         .then(function(data){
@@ -191,6 +213,19 @@ Licenses.service('LicensesService', [
 
           return products;
         });
+    };
+
+    svc.alertLicenseInvalid = function(license){
+      if ( license ){
+        $rootScope.$emit('message', {
+          body: 'StrongLoop Arc ' + license.name + ' licensing missing or invalid.  If you have questions about your licenses or licensing please contact sales',
+          link: '/licenses',
+          linkText: 'Verify your licenses',
+          email: 'mailto:sales@strongloop.com?subject=Licensing',
+          emailText: 'Contact sales@strongloop.com'
+        });
+      }
+
     };
 
     return svc;
