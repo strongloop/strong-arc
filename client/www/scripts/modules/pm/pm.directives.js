@@ -157,7 +157,10 @@ PM.directive('slPmHostForm', [
                     .then(function(pidCollection) {
 
                       PMHostService.addPMServer(serverConfig, false);
-                      $scope.processes = pidCollection;
+                      $scope.processes = pidCollection
+                        .filter(function(process) {
+                          return process.serviceInstanceId === 1;
+                        });
                       $scope.pmServers = PMHostService.getPMServers();
                       //activate first process
                       if ( $scope.processes.length ) {
