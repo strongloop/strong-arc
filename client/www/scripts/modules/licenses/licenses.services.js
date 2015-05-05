@@ -25,33 +25,37 @@ Licenses.service('LicensesService', [
       return Subscription.getSubscriptions({ userId: userId }).$promise;
     };
 
-    //check arc licenses on accessing route
-    svc.getInvalidLicenses = function(data, page){
-      var def = $q.defer();
+
+    function isLicenseInvalid(license, page, slProduct){
       var now = moment().unix();
+      var isArcLicense = license.product === slProduct;
+
+      var expirationDate = moment(license.expirationDate).unix();
+      var isExpired = expirationDate < now; //if expired
+
+      //skip feature check on non-arc licenses as they don't apply here
+      if ( !isArcLicense ) return false;
+
+      //check features allowed
+      var features = license.features.split(', ');
+      var isFeatureAllowed = features && _.contains(features, page.substr(1)); //remove '/' in page
+
+      return isExpired || !isFeatureAllowed
+    }
+
+    //check arc licenses on accessing route
+    svc.getInvalidLicenses = function(data, page, product){
       var licenses = data;
+      var slProduct = product || 'arc';
 
-      function isLicenseInvalid(license){
-        var isArcLicense = license.product === 'arc';
+      var retVal = [];
 
-        var expirationDate = moment(license.expirationDate).unix();
-        var isExpired = expirationDate < now+86400*1; //1 day from now
-
-        //skip feature check on non-arc licenses as they don't apply here
-        if ( !isArcLicense ) return false;
-
-        //check features allowed
-        var features = license.features.split(', ');
-        var isFeatureAllowed = features && _.contains(features, page.substr(1)); //remove '/' in page
-
-        return isExpired || !isFeatureAllowed
-      }
-
-      licenses = licenses.filter(isLicenseInvalid);
-
-      def.resolve(licenses);
-
-      return def.promise;
+      licenses.map(function(license) {
+        if (isLicenseInvalid(license, page, slProduct)) {
+          retVal.push(license);
+        }
+      });
+      return retVal;
     };
 
     //for arc routes handling
@@ -158,7 +162,7 @@ Licenses.service('LicensesService', [
       return def.promise;
     };
 
-    svc.validateModuleLicense = function(moduleName) {
+    svc.validateModuleLicense = function(moduleName, product) {
       // query license service for users current license data
       return svc.getLicenses()
         .then(function(response) {
@@ -166,15 +170,12 @@ Licenses.service('LicensesService', [
            * check the license data returned for metrics license
            * - if this method returns a payload it means the license is invalid
            * */
-          return svc.getInvalidLicenses(response, '/' + moduleName.toLowerCase())
-            .then(function(res) {
-              if (res.length) {
-                //trigger license message
-                svc.alertLicenseInvalid({name:moduleName});
-                return false;
-              }
-              return true;
-            });
+          var invalidLicenses = svc.getInvalidLicenses(response, '/' + moduleName.toLowerCase(), product);
+          if (invalidLicenses.length) {
+            svc.alertLicenseInvalid({name:moduleName});
+            return false;
+          }
+          return true;
         });
     };
 
@@ -219,7 +220,7 @@ Licenses.service('LicensesService', [
       if ( license ){
         $rootScope.$emit('message', {
           body: 'StrongLoop Arc ' + license.name + ' licensing missing or invalid.  If you have questions about your licenses or licensing please contact sales',
-          link: '/licenses',
+          link: '/#licenses',
           linkText: 'Verify your licenses',
           email: 'mailto:sales@strongloop.com?subject=Licensing',
           emailText: 'Contact sales@strongloop.com'
