@@ -80,7 +80,7 @@ Metrics.service('MetricsService', [
 
     svc.validateLicense = function() {
 
-      return LicensesService.validateModuleLicense('Metrics')
+      return LicensesService.validateModuleLicense('Metrics', 'agent')
         .then(function(response) {
             return response;
           })

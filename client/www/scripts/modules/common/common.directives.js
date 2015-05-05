@@ -457,6 +457,10 @@ Common.directive('slMessageGlobal', [
         })
       },
       controller: function($scope, $rootScope, $log){
+        $rootScope.$on('dismissMessage', function($event){
+          $scope.showMessage = false;
+        });
+
         $scope.onClickDismiss = function($event){
           $scope.showMessage = false;
         };
