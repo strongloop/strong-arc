@@ -1,4 +1,142 @@
-2015-02-09, Version 1.1.0
+2015-05-06, Version 1.2.0
+=========================
+
+ * updates to align metrics license check (seanbrookes)
+
+ * Fix showing all pids on PM (Joseph Tary)
+
+ * more explicit if/else license logic (seanbrookes)
+
+ * remove redundant code (seanbrookes)
+
+ * add license notification to metrics module (seanbrookes)
+
+ * Remove the Arc app-controller port override. (Joseph Tary)
+
+ * add global messaging to styleguide (Anthony Ettinger)
+
+ * hide empty metrics charts (Joseph Tary)
+
+ * Fix PM help button showing blank dialog (Joseph Tary)
+
+ * Don't show app version if it can't be determined (Joseph Tary)
+
+ * Fixup Arc dropdown menus (Joseph Tary)
+
+ * fix persisting strict on model definition (seanbrookes)
+
+ * Adjust padding for tables (Joseph Tary)
+
+ * Fixes for metrics UX (Joseph Tary)
+
+ * Add modal dialog component to live styleguide (Joseph Tary)
+
+ * update start attempt count (seanbrookes)
+
+ * add license key to licenses page (Anthony Ettinger)
+
+ * Remove sidebar from metrics (Joseph Tary)
+
+ * fix bad login redirect (Anthony Ettinger)
+
+ * fix --licenses redirect (Anthony Ettinger)
+
+ * Improve metrics background stability (Joseph Tary)
+
+ * adjust color and icon size on error help popover (Anthony Ettinger)
+
+ * Add UI to process manager to allow for editing environment variables (Joseph Tary)
+
+ * revert license push api call (Anthony Ettinger)
+
+ * Make the add host button larger and update the colors (Joseph Tary)
+
+ * Fix checkbox alignment (Joseph Tary)
+
+ * Fix indent on PID selector labels (Joseph Tary)
+
+ * Retrofit table buttons with new style (Joseph Tary)
+
+ * Add accessory button type (Joseph Tary)
+
+ * add help icon redesign to styleguide (Anthony Ettinger)
+
+ * add license push to action item menu on process manager (Anthony Ettinger)
+
+ * make help icon red for errors (Anthony Ettinger)
+
+ * fix broken autosuggest on PM (Anthony Ettinger)
+
+ * add basic license renewal against api (Anthony Ettinger)
+
+ * Various retrofits to improve compliance with styleguide (Joseph Tary)
+
+ * readme: add reference to strong-pm.io (Sam Roberts)
+
+ * Retrofit tabs on composer (Joseph Tary)
+
+ * fix/improve arc run behaviour with slc start (Joseph Tary)
+
+ * Fix the loading from local key store (Raymond Feng)
+
+ * Copy properties from received errors (Raymond Feng)
+
+ * Add products to licenses.json and improve error handling (Raymond Feng)
+
+ * 1050-fix don't update the metrics when the tab is hidden to prevent memory leak (Joseph Tary)
+
+ * Fix jshint style (Raymond Feng)
+
+ * Add Subscription.getProducts() (Raymond Feng)
+
+ * Remove the deprecation warning (Raymond Feng)
+
+ * Fix the callback (Raymond Feng)
+
+ * Work around the gulp hang (Raymond Feng)
+
+ * Update auth url (Raymond Feng)
+
+ * retrofit ui-inputs on arc (Anthony Ettinger)
+
+ * Use the proxy login and reload subscriptions (Raymond Feng)
+
+ * Add an observer to pm actions to push licenses (Raymond Feng)
+
+ * Update deps (Raymond Feng)
+
+ * Add arc apis to manage subscriptions (Raymond Feng)
+
+ * add support for --login flag to arc (Anthony Ettinger)
+
+ * fix metrics memory leak (seanbrookes)
+
+ * add contextual help based on app selector to header navbar (Anthony Ettinger)
+
+ * delete x should appear on hover (Anthony Ettinger)
+
+ * add checkboxes on composer (Anthony Ettinger)
+
+ * add new button styles to arc from the styleguide (Anthony Ettinger)
+
+ * add validation to "add host" form (Anthony Ettinger)
+
+ * re-order modules on landing page (Anthony Ettinger)
+
+ * swap build-and-deploy and profiler on landing page (Anthony Ettinger)
+
+ * cleanup header and navbar (Anthony Ettinger)
+
+ * tests: loosen timeouts to account for slow VMs (Ryan Graham)
+
+ * make comparison as lower case to ensure matches (seanbrookes)
+
+ * add outside clickable trigger on info popovers (Anthony Ettinger)
+
+ * remove dead / commented markup (seanbrookes)
+
+
+2015-02-08, Version 1.1.0
 =========================
 
  * fix wrapping text in menu (Anthony Ettinger)
