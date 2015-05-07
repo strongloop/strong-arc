@@ -337,18 +337,19 @@ module.exports = function(Subscription) {
               return s.licenseKey;
             }).join(':');
             debug('Pushing license keys:', keys);
-            ctx.instance.action({
-              cmd: 'env-set',
-              env: {
-                'STRONGLOOP_LICENSE': keys
+            var ServerService = ctx.instance.getPMClient().models.ServerService;
+            ServerService.findById(ctx.service.serverServiceId, function(err, svc) {
+              if (err) {
+                return next(err);
               }
-            }, function(err, res) {
-              debug('Response from strong-pm: %j %j', err, res);
-              if (!err && res && res.result && res.result.error) {
-                next(new Error(res.result.error));
-              } else {
-                next(err, res);
-              }
+              svc.setEnv('STRONGLOOP_LICENSE', keys, function(err, res) {
+                debug('Response from strong-pm: %j %j', err, res);
+                if (!err && res && res.result && res.result.error) {
+                  next(new Error(res.result.error));
+                } else {
+                  next(err, res);
+                }
+              });
             });
           } else {
             next();

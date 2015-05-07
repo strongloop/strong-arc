@@ -8,8 +8,9 @@ Manager.controller('ManagerMainController', [
   '$timeout',
   '$q',
   '$modal',
+  'LicensesService',
   function($scope, $log, $location, ManagerServices, PMHostService, growl,
-           $timeout, $q, $modal) {
+           $timeout, $q, $modal, LicensesService) {
     $scope.mesh = require('strong-mesh-client')('http://' + $location.host() + ':' + $location.port() + '/manager');
     $scope.currentPM = {};
     var x = 42;
@@ -352,9 +353,52 @@ Manager.controller('ManagerMainController', [
         },
         {
           id: MANAGER_CONST.LICENSE_PUSH_ACTION,
-          label: 'push license'
+          label: 'push license',
+          handler: function(host) {
+            pushLicense(host);
+          }
         }
     ];
+
+    function getLicenseKey() {
+      var key = $q.defer();
+
+      LicensesService.getLicenses().then(function(licenses) {
+        key.resolve(licenses.map(function(s) {
+          return s.licenseKey;
+        }).join(':'));
+      });
+
+      return key.promise;
+    }
+
+    function getPmService(host) {
+      var deferred = $q.defer();
+      var client = host.getPMClient();
+
+      client.serviceList(function(err, service) {
+        if (!err && service.length > 0) {
+          deferred.resolve(service[0]);
+        } else {
+          deferred.reject(err);
+        }
+      });
+
+      return deferred.promise;
+    }
+
+    function pushLicense(host) {
+      var result = function(err, result) {
+        if (err) { $log.log(err); }
+      };
+
+      $q.all({service: getPmService(host), licenseKey: getLicenseKey()})
+        .then(function(d) {
+          if (d.service && d.licenseKey) {
+            d.service.setEnv('STRONGLOOP_LICENSE', d.licenseKey);
+          }
+        });
+    }
 
     function loadHosts() {
       if (!$scope.loading) {
@@ -638,20 +682,16 @@ Manager.controller('ManagerMainController', [
 
     function updateHostEnv(host, env) {
       var deferred = $q.defer();
-      var command =  {
-        cmd: 'env-set',
-        env: env
-      };
 
-      if (host) {
-        host.action(command, function(err, res) {
+      getPmService(host).then(function(service) {
+        service.setEnvs(env, function(err, result) {
           if (err) {
             deferred.reject(err);
           } else {
-            deferred.resolve(env);
+            deferred.resolve(result);
           }
         });
-      }
+      });
 
       return deferred.promise;
     }
