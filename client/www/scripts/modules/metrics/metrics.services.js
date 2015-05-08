@@ -101,58 +101,6 @@ Metrics.service('ChartConfigService', [
   function($timeout, $http, $q, $log) {
     var svc = this;
     var currentChartConfigData = [];
-    function isMetricActive(chartMetric) {
-      var chartName = chartMetric.name;
-
-      var isActive = true;
-
-      loop1:
-      for (var i = 0;i < currentChartConfigData.length;i++) {
-
-        var chart = currentChartConfigData[i];
-
-        loop2:
-        for (var k = 0;k < chart.metrics.length;k++) {
-          var metric = chart.metrics[k];
-          // must be correct type of port (tcp4 or tcp6)
-          if (METRICS_CONST[metric.constant] === chartMetric) {
-
-              isActive = metric.active;
-
-              break loop1;
-          }
-        }
-      }
-
-      return isActive; //  temporary
-
-    }
-
-    function getActiveChartMetrics(chart) {
-      var returnArray = [];
-
-      currentChartConfigData.map(function(configChart) {
-        if (configChart.name === chart.name) {
-          configChart.metrics.map(function(metric) {
-            //var metric = chart.metrics[k];
-            // must be correct type of port (tcp4 or tcp6)
-          //  if (METRICS_CONST[metric.constant] === chartMetric) {
-
-            if (metric.active) {
-
-            }
-              isActive = metric.active;
-
-            //  break loop1;
-          //  }
-          });
-        }
-      });
-
-      return returnArray;
-
-
-    }
 
     svc.clearChartMemory = function() {
       // a bit of a hack to solve a memory leak in nvd3 when
