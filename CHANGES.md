@@ -1,4 +1,12 @@
-2015-05-06, Version 1.2.0
+2015-05-08, Version 1.2.1
+=========================
+
+ * Regenerate bundles (Ryan Graham)
+
+ * Fix setting env variables against multi-app pm (Joseph Tary)
+
+
+2015-05-05, Version 1.2.0
 =========================
 
  * updates to align metrics license check (seanbrookes)
