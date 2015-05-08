@@ -101,32 +101,7 @@ Metrics.service('ChartConfigService', [
   function($timeout, $http, $q, $log) {
     var svc = this;
     var currentChartConfigData = [];
-    function isMetricActive(chartMetric) {
-      var chartName = chartMetric.name;
 
-      var isActive = true;
-
-      loop1:
-      for (var i = 0;i < currentChartConfigData.length;i++) {
-
-        var chart = currentChartConfigData[i];
-
-        loop2:
-        for (var k = 0;k < chart.metrics.length;k++) {
-          var metric = chart.metrics[k];
-          // must be correct type of port (tcp4 or tcp6)
-          if (METRICS_CONST[metric.constant] === chartMetric) {
-
-              isActive = metric.active;
-
-              break loop1;
-          }
-        }
-      }
-
-      return isActive; //  temporary
-
-    }
     svc.clearChartMemory = function() {
       // a bit of a hack to solve a memory leak in nvd3 when
       // updated multiple charts at the same time
@@ -208,289 +183,28 @@ Metrics.service('ChartConfigService', [
         return metrics[metricRef];
       }
       return [];
-    }
-
+    };
     svc.getChartMetricsData = function(chart, metrics) {
       var returnArray = [];
 
-      switch(chart.name) {
+      currentChartConfigData.map(function(configChart) {
+        if (configChart.name === chart.name) {
+          configChart.metrics.map(function(metric) {
 
-        case 'cpu':
-          if (isMetricActive(METRICS_CONST.CPU_TOTAL)){
-            returnArray.push({
-              values: svc.getMetricData(metrics, METRICS_CONST.CPU_TOTAL),      //values - represents the array of {x,y} data points
-              key: 'Total', //key  - the name of the series.
-              color: svc.getMetricColor(METRICS_CONST.CPU_TOTAL)  //color - optional: choose your own line color.
-            });
-          }
-          if (isMetricActive(METRICS_CONST.CPU_USER)){
-            returnArray.push({
-              values: svc.getMetricData(metrics, METRICS_CONST.CPU_USER),      //values - represents the array of {x,y} data points
-              key: 'User', //key  - the name of the series.
-              color: svc.getMetricColor(METRICS_CONST.CPU_USER)  //color - optional: choose your own line color.
-            });
-          }
-          if (isMetricActive(METRICS_CONST.CPU_SYSTEM)){
-            returnArray.push({
-              values: svc.getMetricData(metrics, METRICS_CONST.CPU_SYSTEM),
-              key: 'System',
-              color: svc.getMetricColor(METRICS_CONST.CPU_SYSTEM)
-            });
-          }
-          break;
-
-        case 'loop':
-          if (isMetricActive(METRICS_CONST.LOOP_AVG)){
-            returnArray.push({
-              values: svc.getMetricData(metrics, METRICS_CONST.LOOP_AVG),      //values - represents the array of {x,y} data points
-              key: 'Avg', //key  - the name of the series.
-              color: svc.getMetricColor(METRICS_CONST.LOOP_AVG)  //color - optional: choose your own line color.
-            });
-          }
-          if (isMetricActive(METRICS_CONST.LOOP_MIN)){
-            returnArray.push({
-              values: svc.getMetricData(metrics, METRICS_CONST.LOOP_MIN),
-              key: 'Min',
-              color: svc.getMetricColor(METRICS_CONST.LOOP_MIN)
-            });
-          }
-          if (isMetricActive(METRICS_CONST.LOOP_MAX)){
-            returnArray.push({
-              values: svc.getMetricData(metrics, METRICS_CONST.LOOP_MAX),
-              key: 'Max',
-              color: svc.getMetricColor(METRICS_CONST.LOOP_MAX)
-            });
-          }
-          break;
-
-        case 'loopCount':
-          if (isMetricActive(METRICS_CONST.LOOP_COUNT)){
-            returnArray.push({
-              values: svc.getMetricData(metrics, METRICS_CONST.LOOP_COUNT),      //values - represents the array of {x,y} data points
-              key: 'Count', //key  - the name of the series.
-              color: svc.getMetricColor(METRICS_CONST.LOOP_COUNT)  //color - optional: choose your own line color.
-            });
-          }
-          break;
-
-        case 'counters':
-          if (isMetricActive(METRICS_CONST.MEMCACHED_COUNT)){
-            if (metrics[METRICS_CONST.MEMCACHED_COUNT]) {
+            if (metric.active) {
+              //returnArray.push(metric);
               returnArray.push({
-                values: svc.getMetricData(metrics, METRICS_CONST.MEMCACHED_COUNT),      //values - represents the array of {x,y} data points
-                key: 'Memcached', //key  - the name of the series.
-                color: svc.getMetricColor(METRICS_CONST.MEMCACHED_COUNT)  //color - optional: choose your own line color.
+                values: svc.getMetricData(metrics, METRICS_CONST[metric.constant]),      //values - represents the array of {x,y} data points
+                key: metric.key, //key  - the name of the series.
+                color: svc.getMetricColor(METRICS_CONST[metric.constant])  //color - optional: choose your own line color.
               });
             }
-          }
-          if (isMetricActive(METRICS_CONST.LOOP_COUNT)){
-            if (metrics[METRICS_CONST.LOOP_COUNT]) {
-              returnArray.push({
-                values: svc.getMetricData(metrics, METRICS_CONST.LOOP_COUNT),      //values - represents the array of {x,y} data points
-                key: 'Loop', //key  - the name of the series.
-                color: svc.getMetricColor(METRICS_CONST.LOOP_COUNT)  //color - optional: choose your own line color.
-              });
-            }
-          }
-          if (isMetricActive(METRICS_CONST.MONGO_COUNT)){
-            if (metrics[METRICS_CONST.MONGO_COUNT]) {
-              returnArray.push({
-                values: svc.getMetricData(metrics, METRICS_CONST.MONGO_COUNT),      //values - represents the array of {x,y} data points
-                key: 'MongoDB', //key  - the name of the series.
-                color: svc.getMetricColor(METRICS_CONST.MONGO_COUNT)  //color - optional: choose your own line color.
-              });
-            }
-          }
-          if (isMetricActive(METRICS_CONST.HTTP_COUNT)){
-            if (metrics[METRICS_CONST.HTTP_COUNT]) {
-              returnArray.push({
-                values: svc.getMetricData(metrics, METRICS_CONST.HTTP_COUNT),      //values - represents the array of {x,y} data points
-                key: 'HTTP', //key  - the name of the series.
-                color: svc.getMetricColor(METRICS_CONST.HTTP_COUNT)  //color - optional: choose your own line color.
-              });
-            }
-          }
-          if (isMetricActive(METRICS_CONST.MYSQL_COUNT)){
-            if (metrics[METRICS_CONST.MYSQL_COUNT]) {
-              returnArray.push({
-                values: svc.getMetricData(metrics, METRICS_CONST.MYSQL_COUNT),      //values - represents the array of {x,y} data points
-                key: 'MySQL', //key  - the name of the series.
-                color: svc.getMetricColor(METRICS_CONST.MYSQL_COUNT)  //color - optional: choose your own line color.
-              });
-            }
-          }
-          if (isMetricActive(METRICS_CONST.REDIS_COUNT)){
-            if (metrics[METRICS_CONST.REDIS_COUNT]) {
-              returnArray.push({
-                values: svc.getMetricData(metrics, METRICS_CONST.REDIS_COUNT),      //values - represents the array of {x,y} data points
-                key: 'Redis', //key  - the name of the series.
-                color: svc.getMetricColor(METRICS_CONST.REDIS_COUNT)  //color - optional: choose your own line color.
-              });
-            }
-          }
 
-          break;
-
-        case 'http':
-          if (isMetricActive(METRICS_CONST.HTTP_AVG)){
-            returnArray.push({
-              values: svc.getMetricData(metrics, METRICS_CONST.HTTP_AVG),      //values - represents the array of {x,y} data points
-              key: 'Avg', //key  - the name of the series.
-              color: svc.getMetricColor(METRICS_CONST.HTTP_AVG)  //color - optional: choose your own line color.
-            });
-          }
-          if (isMetricActive(METRICS_CONST.HTTP_MIN)){
-            returnArray.push({
-              values: svc.getMetricData(metrics, METRICS_CONST.HTTP_MIN),
-              key: 'Min',
-              color: svc.getMetricColor(METRICS_CONST.HTTP_MIN)
-            });
-          }
-          if (isMetricActive(METRICS_CONST.HTTP_MAX)){
-            returnArray.push({
-              values: svc.getMetricData(metrics, METRICS_CONST.HTTP_MAX),
-              key: 'Max',
-              color: svc.getMetricColor(METRICS_CONST.HTTP_MAX)
-            });
-          }
-          break;
-
-        case 'httpCount':
-          if (isMetricActive(METRICS_CONST.HTTP_COUNT)){
-            returnArray.push({
-              values: svc.getMetricData(metrics, METRICS_CONST.HTTP_COUNT),      //values - represents the array of {x,y} data points
-              key: 'Count', //key  - the name of the series.
-              color: svc.getMetricColor(METRICS_CONST.HTTP_COUNT)  //color - optional: choose your own line color.
-            });
-          }
-          break;
-
-        case 'mongodb':
-          if (isMetricActive(METRICS_CONST.MONGO_AVG)){
-            returnArray.push({
-              values: svc.getMetricData(metrics, METRICS_CONST.MONGO_AVG),      //values - represents the array of {x,y} data points
-              key: 'Avg', //key  - the name of the series.
-              color: svc.getMetricColor(METRICS_CONST.MONGO_AVG)  //color - optional: choose your own line color.
-            });
-          }
-          if (isMetricActive(METRICS_CONST.MONGO_MIN)){
-            returnArray.push({
-              values: svc.getMetricData(metrics, METRICS_CONST.MONGO_MIN),
-              key: 'Min',
-              color: svc.getMetricColor(METRICS_CONST.MONGO_MIN)
-            });
-          }
-          if (isMetricActive(METRICS_CONST.MONGO_MAX)){
-            returnArray.push({
-              values: svc.getMetricData(metrics, METRICS_CONST.MONGO_MAX),
-              key: 'Max',
-              color: svc.getMetricColor(METRICS_CONST.MONGO_MAX)
-            });
-          }
-          break;
-
-        case 'memcached':
-          if (isMetricActive(METRICS_CONST.MEMCACHED_AVG)){
-            returnArray.push({
-              values: svc.getMetricData(metrics, METRICS_CONST.MEMCACHED_AVG),      //values - represents the array of {x,y} data points
-              key: 'Avg', //key  - the name of the series.
-              color: svc.getMetricColor(METRICS_CONST.MEMCACHED_AVG)  //color - optional: choose your own line color.
-            });
-          }
-          if (isMetricActive(METRICS_CONST.MEMCACHED_MIN)){
-            returnArray.push({
-              values: svc.getMetricData(metrics, METRICS_CONST.MEMCACHED_MIN),
-              key: 'Min',
-              color: svc.getMetricColor(METRICS_CONST.MEMCACHED_MIN)
-            });
-          }
-          if (isMetricActive(METRICS_CONST.MEMCACHED_MAX)){
-            returnArray.push({
-              values: svc.getMetricData(metrics, METRICS_CONST.MEMCACHED_MAX),
-              key: 'Max',
-              color: svc.getMetricColor(METRICS_CONST.MEMCACHED_MAX)
-            });
-          }
-          break;
-
-        case 'mysql':
-          if (isMetricActive(METRICS_CONST.MYSQL_AVG)){
-            if (metrics[METRICS_CONST.MYSQL_AVG]) {
-              returnArray.push({
-                values: svc.getMetricData(metrics, METRICS_CONST.MYSQL_AVG),      //values - represents the array of {x,y} data points
-                key: 'Avg', //key  - the name of the series.
-                color: svc.getMetricColor(METRICS_CONST.MYSQL_AVG)  //color - optional: choose your own line color.
-              });
-            }
-          }
-          if (isMetricActive(METRICS_CONST.MYSQL_MIN)){
-            if (metrics[METRICS_CONST.MYSQL_MIN]) {
-              returnArray.push({
-                values: svc.getMetricData(metrics, METRICS_CONST.MYSQL_MIN),
-                key: 'Min',
-                color: svc.getMetricColor(METRICS_CONST.MYSQL_MIN)
-              });
-            }
-          }
-          if (isMetricActive(METRICS_CONST.MYSQL_MAX)){
-            if (metrics[METRICS_CONST.MYSQL_MAX]) {
-              returnArray.push({
-                values: svc.getMetricData(metrics, METRICS_CONST.MYSQL_MAX),
-                key: 'Max',
-                color: svc.getMetricColor(METRICS_CONST.MYSQL_MAX)
-              });
-            }
-          }
-          break;
-
-        case 'redis':
-          if (isMetricActive(METRICS_CONST.REDIS_AVG)){
-            returnArray.push({
-              values: svc.getMetricData(metrics, METRICS_CONST.REDIS_AVG),      //values - represents the array of {x,y} data points
-              key: 'Avg', //key  - the name of the series.
-              color: svc.getMetricColor(METRICS_CONST.REDIS_AVG)  //color - optional: choose your own line color.
-            });
-          }
-          if (isMetricActive(METRICS_CONST.REDIS_MIN)){
-            returnArray.push({
-              values: svc.getMetricData(metrics, METRICS_CONST.REDIS_MIN),
-              key: 'Min',
-              color: svc.getMetricColor(METRICS_CONST.REDIS_MIN)
-            });
-          }
-          if (isMetricActive(METRICS_CONST.REDIS_MAX)){
-            returnArray.push({
-              values: svc.getMetricData(metrics, METRICS_CONST.REDIS_MAX),
-              key: 'Max',
-              color: svc.getMetricColor(METRICS_CONST.REDIS_MAX)
-            });
-          }
-          break;
-
-        case 'heap':
-          if (isMetricActive(METRICS_CONST.HEAP_USED)){
-            returnArray.push({
-              values: svc.getMetricData(metrics, METRICS_CONST.HEAP_USED),      //values - represents the array of {x,y} data points
-              key: 'Used', //key  - the name of the series.
-              color: svc.getMetricColor(METRICS_CONST.HEAP_USED),  //color - optional: choose your own line color.
-              area: true      //area - set to true if you want this line to turn into a filled area chart.
-            });
-          }
-          if (isMetricActive(METRICS_CONST.HEAP_TOTAL)){
-            returnArray.push({
-              values: svc.getMetricData(metrics, METRICS_CONST.HEAP_TOTAL),
-              key: 'Total',
-              color: svc.getMetricColor(METRICS_CONST.HEAP_TOTAL)
-            });
-          }
-          break;
-
-        default:
-
-      }
+          });
+        }
+      });
 
       return returnArray;
-
     };
     svc.getChartOptions = function(chartOptions) {
 
