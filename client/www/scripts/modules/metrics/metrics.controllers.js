@@ -168,6 +168,31 @@ Metrics.controller('MetricsMainController', [
             maximum:metric.gauges[METRICS_CONST.REDIS_MAX],
             average:metric.gauges[METRICS_CONST.REDIS_AVG]
           },
+          dao: { // dao
+            minimum:metric.gauges[METRICS_CONST.DAO_MIN],
+            maximum:metric.gauges[METRICS_CONST.DAO_MAX],
+            average:metric.gauges[METRICS_CONST.DAO_AVG]
+          },
+          leveldown: { // leveldown
+            minimum:metric.gauges[METRICS_CONST.LEVELDOWN_MIN],
+            maximum:metric.gauges[METRICS_CONST.LEVELDOWN_MAX],
+            average:metric.gauges[METRICS_CONST.LEVELDOWN_AVG]
+          },
+          postgres: { // postgres
+            minimum:metric.gauges[METRICS_CONST.POSTGRES_MIN],
+            maximum:metric.gauges[METRICS_CONST.POSTGRES_MAX],
+            average:metric.gauges[METRICS_CONST.POSTGRES_AVG]
+          },
+          oracle: { // oracle
+            minimum:metric.gauges[METRICS_CONST.ORACLE_MIN],
+            maximum:metric.gauges[METRICS_CONST.ORACLE_MAX],
+            average:metric.gauges[METRICS_CONST.ORACLE_AVG]
+          },
+          riak: { // riak
+            minimum:metric.gauges[METRICS_CONST.RIAK_MIN],
+            maximum:metric.gauges[METRICS_CONST.RIAK_MAX],
+            average:metric.gauges[METRICS_CONST.RIAK_AVG]
+          },
           memcached: {
             minimum:metric.gauges[METRICS_CONST.MEMCACHED_MIN],
             maximum:metric.gauges[METRICS_CONST.MEMCACHED_MAX],
@@ -177,7 +202,11 @@ Metrics.controller('MetricsMainController', [
             memcached:metric.counters[METRICS_CONST.MEMCACHED_COUNT],
             redis:metric.counters[METRICS_CONST.REDIS_COUNT],
             mysql:metric.counters[METRICS_CONST.MYSQL_COUNT],
-            mongodb:metric.counters[METRICS_CONST.MONGO_COUNT],
+            dao:metric.counters[METRICS_CONST.DAO_COUNT],
+            leveldown:metric.counters[METRICS_CONST.LEVELDOWN_COUNT],
+            postgres:metric.counters[METRICS_CONST.POSTGRES_COUNT],
+            riak:metric.counters[METRICS_CONST.RIAK_COUNT],
+            oracle:metric.counters[METRICS_CONST.ORACLE_COUNT],
             loop:metric.counters[METRICS_CONST.LOOP_COUNT],
             http:metric.counters[METRICS_CONST.HTTP_COUNT]
           }
@@ -234,14 +263,16 @@ Metrics.controller('MetricsMainController', [
           }
 
           chart.metrics.map(function(metric) {
+            if (!processedMetric[chart.name][metric.name]){
+              //$log.warn('no metric: ' + chart.name + ':' + metric.name);
+              return;
+
+            }
             var yVal = processedMetric[chart.name][metric.name];
-           // $log.debug();
             if (yVal !== undefined) {
               $scope.currentStub[chart.name][METRICS_CONST[metric.constant]] =
                 ensureThrottledMetric($scope.currentStub[chart.name][METRICS_CONST[metric.constant]],
                   {x: new Date(processedMetric.timeStamp), y: yVal});
-//          } else {
-//            $log.debug('|     ' + data.name + ':' + metric.name + '  YVAL: ' + yVal)
             }
           });
         });

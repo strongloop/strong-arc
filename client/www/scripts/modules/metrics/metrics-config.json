@@ -343,6 +343,191 @@
       ]
     },
     {
+      "name": "leveldown",
+      "displayName": "LevelDOWN",
+      "chartConfig": "leveldownChartConfig",
+      "chartModel": "leveldownChartModel",
+      "chartOptions": {
+        "title": {
+          "text": "LevelDOWN"
+        },
+        "yAxis": {
+          "axisLabel": "#"
+        }
+      },
+      "metrics": [
+        {
+          "name": "maximum",
+          "active": true,
+          "constant": "LEVELDOWN_MAX",
+          "key": "Max",
+          "color": "#ff7f0e"
+        },
+        {
+          "name": "average",
+          "active": true,
+          "constant": "LEVELDOWN_AVG",
+          "key": "Avg",
+          "color": "#7777ff"
+        },
+        {
+          "name": "minimum",
+          "active": true,
+          "constant": "LEVELDOWN_MIN",
+          "key": "Min",
+          "color": "#2ca02c"
+        }
+      ]
+    },
+    {
+      "name": "dao",
+      "displayName": "Loopback Datasource Juggler",
+      "chartConfig": "daoChartConfig",
+      "chartModel": "daoChartModel",
+      "chartOptions": {
+        "title": {
+          "text": "Loopback Datasource Juggler"
+        },
+        "yAxis": {
+          "axisLabel": "#"
+        }
+      },
+      "metrics": [
+        {
+          "name": "maximum",
+          "active": true,
+          "constant": "DAO_MAX",
+          "key": "Max",
+          "color": "#ff7f0e"
+        },
+        {
+          "name": "average",
+          "active": true,
+          "constant": "DAO_AVG",
+          "key": "Avg",
+          "color": "#7777ff"
+        },
+        {
+          "name": "minimum",
+          "active": true,
+          "constant": "DAO_MIN",
+          "key": "Min",
+          "color": "#2ca02c"
+        }
+      ]
+    },
+    {
+      "name": "postgres",
+      "displayName": "PostgreSQL",
+      "chartConfig": "postgresChartConfig",
+      "chartModel": "postgresChartModel",
+      "chartOptions": {
+        "title": {
+          "text": "PostgreSQL"
+        },
+        "yAxis": {
+          "axisLabel": "#"
+        }
+      },
+      "metrics": [
+        {
+          "name": "maximum",
+          "active": true,
+          "constant": "POSTGRES_MAX",
+          "key": "Max",
+          "color": "#ff7f0e"
+        },
+        {
+          "name": "average",
+          "active": true,
+          "constant": "POSTGRES_AVG",
+          "key": "Avg",
+          "color": "#7777ff"
+        },
+        {
+          "name": "minimum",
+          "active": true,
+          "constant": "POSTGRES_MIN",
+          "key": "Min",
+          "color": "#2ca02c"
+        }
+      ]
+    },
+    {
+      "name": "riak",
+      "displayName": "Riak",
+      "chartConfig": "riakChartConfig",
+      "chartModel": "riakChartModel",
+      "chartOptions": {
+        "title": {
+          "text": "Riak"
+        },
+        "yAxis": {
+          "axisLabel": "#"
+        }
+      },
+      "metrics": [
+        {
+          "name": "maximum",
+          "active": true,
+          "constant": "RIAK_MAX",
+          "key": "Max",
+          "color": "#ff7f0e"
+        },
+        {
+          "name": "average",
+          "active": true,
+          "constant": "RIAK_AVG",
+          "key": "Avg",
+          "color": "#7777ff"
+        },
+        {
+          "name": "minimum",
+          "active": true,
+          "constant": "RIAK_MIN",
+          "key": "Min",
+          "color": "#2ca02c"
+        }
+      ]
+    },
+    {
+      "name": "oracle",
+      "displayName": "Oracle",
+      "chartConfig": "oracleChartConfig",
+      "chartModel": "oracleChartModel",
+      "chartOptions": {
+        "title": {
+          "text": "Oracle"
+        },
+        "yAxis": {
+          "axisLabel": "#"
+        }
+      },
+      "metrics": [
+        {
+          "name": "maximum",
+          "active": true,
+          "constant": "ORACLE_MAX",
+          "key": "Max",
+          "color": "#ff7f0e"
+        },
+        {
+          "name": "average",
+          "active": true,
+          "constant": "ORACLE_AVG",
+          "key": "Avg",
+          "color": "#7777ff"
+        },
+        {
+          "name": "minimum",
+          "active": true,
+          "constant": "ORACLE_MIN",
+          "key": "Min",
+          "color": "#2ca02c"
+        }
+      ]
+    },
+    {
       "name": "memcached",
       "displayName": "Memcached",
       "chartConfig": "memcachedChartConfig",
