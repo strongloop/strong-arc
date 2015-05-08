@@ -202,6 +202,7 @@ Metrics.controller('MetricsMainController', [
             memcached:metric.counters[METRICS_CONST.MEMCACHED_COUNT],
             redis:metric.counters[METRICS_CONST.REDIS_COUNT],
             mysql:metric.counters[METRICS_CONST.MYSQL_COUNT],
+            mongodb:metric.counters[METRICS_CONST.MONGO_COUNT],
             dao:metric.counters[METRICS_CONST.DAO_COUNT],
             leveldown:metric.counters[METRICS_CONST.LEVELDOWN_COUNT],
             postgres:metric.counters[METRICS_CONST.POSTGRES_COUNT],
