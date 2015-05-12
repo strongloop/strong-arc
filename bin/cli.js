@@ -17,6 +17,10 @@ var opts = minimist(process.argv.slice(2), {
     'help',
     'cli',
   ],
+  string: [
+    'feature',
+    'features',
+  ],
 });
 
 var argv = getArgv();
@@ -30,6 +34,16 @@ if (opts.help) {
 }
 
 var arc = require('../server/server');
+
+// --features foo,bar --feature baz --feature quux
+//  => {feaures: 'foo,bar', feature: ['baz', 'quux']}
+//  => ['foo', 'bar', 'baz', 'quux']
+var features = [].concat(opts.feature, opts.features).map(function(f) {
+  return f && f.split(',');
+}).reduce(function(acc, f) {
+  return f ? acc.concat(f) : acc;
+}, []);
+arc.enableFeatures(features);
 
 if (pathArg) {
   WORKSPACE_DIR = path.join(WORKSPACE_DIR, pathArg);

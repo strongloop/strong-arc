@@ -25,6 +25,27 @@ app.use('/process-manager', pm);
 app.use('/api', arcApi);
 app.use('/manager', meshProxy);
 
+app.enableFeatures = function(features) {
+  // prefix is to namespace features in express config table
+  features = features.map(function(f) {
+    return 'feature:' + f;
+  });
+  features.forEach(function(f) {
+    app.enable(f);
+  });
+  // expose features list via REST so they can be checked by frontend
+  app.get('/feature-flags', function(req, res) {
+    res.json(features);
+  });
+
+  // example feature, "--feature crash" enables a /crash handler
+  if (app.enabled('feature:crash')) {
+    app.use('/crash', function(_req, _res) {
+      process.exit(1);
+    });
+  }
+};
+
 try {
   // API explorer
   var explorer = require('loopback-explorer');
