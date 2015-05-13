@@ -41,13 +41,13 @@ var METRICS_CONST = {
   RIAK_MIN: 'tiers.riak.minimum',
   RIAK_MAX: 'tiers.riak.maximum',
   RIAK_COUNT: 'riak.count',
-  ORACLE_AVG: 'tiers.oracle.average',
-  ORACLE_MIN: 'tiers.oracle.minimum',
-  ORACLE_MAX: 'tiers.oracle.maximum',
+  ORACLE_AVG: 'oracle.average',
+  ORACLE_MIN: 'oracle.minimum',
+  ORACLE_MAX: 'oracle.maximum',
   ORACLE_COUNT: 'oracle.count',
-  MEMCACHED_AVG: 'tiers.oracle.average',
-  MEMCACHED_MIN: 'tiers.oracle.minimum',
-  MEMCACHED_MAX: 'tiers.oracle.maximum',
-  MEMCACHED_COUNT: 'oracle.count'
+  MEMCACHED_AVG: 'tiers.memcached.average',
+  MEMCACHED_MIN: 'tiers.memcached.minimum',
+  MEMCACHED_MAX: 'tiers.memcached.maximum',
+  MEMCACHED_COUNT: 'memcached.count'
 };
 Metrics.value('METRICS_CONST', METRICS_CONST);
