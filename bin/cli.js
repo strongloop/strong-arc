@@ -2,24 +2,50 @@
 var path = require('path');
 var util = require('util');
 var opener = require('opener');
+var minimist = require('minimist');
 var DEFAULT_ARC_HOST = 'localhost';
 var STRONG_ARC_RUNNING_MSG =
 exports.STRONG_ARC_RUNNING_MSG = 'StrongLoop Arc is running here:';
+var opts = minimist(process.argv.slice(2), {
+  alias: {
+    v: 'version',
+    h: 'help',
+  },
+  boolean: [
+    'licenses',
+    'version',
+    'help',
+    'cli',
+  ],
+  string: [
+    'feature',
+    'features',
+  ],
+});
+
 var argv = getArgv();
-var pathArg = argv[0];
+var pathArg = opts._[0];
 var WORKSPACE_DIR = process.cwd();
 
-if (argv.indexOf('-h') !== -1 || argv.indexOf('--help') !== -1) {
-  printHelp();
-  return;
-} else if (argv.indexOf('-v') !== -1 || argv.indexOf('--version') !== -1) {
-  printVersion();
-  return;
+if (opts.help) {
+  return printHelp();
+} else if (opts.version) {
+  return printVersion();
 }
 
 var arc = require('../server/server');
 
-if(pathArg && pathArg.indexOf('--licenses') === -1 ) {
+// --features foo,bar --feature baz --feature quux
+//  => {feaures: 'foo,bar', feature: ['baz', 'quux']}
+//  => ['foo', 'bar', 'baz', 'quux']
+var features = [].concat(opts.feature, opts.features).map(function(f) {
+  return f && f.split(',');
+}).reduce(function(acc, f) {
+  return f ? acc.concat(f) : acc;
+}, []);
+arc.enableFeatures(features);
+
+if (pathArg) {
   WORKSPACE_DIR = path.join(WORKSPACE_DIR, pathArg);
 }
 
@@ -39,7 +65,7 @@ var server = arc.listen(port, function(err) {
   }
 
   //add optional path if flag is passed
-  var path = '#/' + ( argv.indexOf('--licenses') > -1 ? 'licenses' : '' );
+  var path = '#/' + ( opts.licenses ? 'licenses' : '' );
   var url = util.format('http://%s:%s/%s', DEFAULT_ARC_HOST,
     server.address().port, path);
 

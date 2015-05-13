@@ -25,6 +25,7 @@
     "loopback-boot": "^2.6.5",
     "loopback-datasource-juggler": "^2.20.0",
     "loopback-workspace": "^3.10.0",
+    "minimist": "^1.1.1",
     "opener": "^1.4.0",
     "request": "^2.53.0",
     "serve-favicon": "^2.2.0",
