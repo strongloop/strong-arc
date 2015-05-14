@@ -96,7 +96,7 @@ ApiAnalytics.directive('slApiAnalyticsChart', [
 
             //show proper data for current chart
             if ( scope.chartDepth === 2 ) {
-              var keys = 'requestMethod statusCode responseDuration responseSize'.split(' ');
+              var keys = 'requestMethod statusCode responseDuration responseSize clientDetail'.split(' ');
             } else if ( scope.chartDepth === 1 ) {
               var keys = 'GET POST DELETE PUT'.split(' ');
             }
@@ -111,6 +111,12 @@ ApiAnalytics.directive('slApiAnalyticsChart', [
 
               if ( key === 'responseSize' ){
                 val += 'kb';
+              }
+
+              if ( key === 'clientDetail' ){
+                var tmpl = $interpolate('<li>{{key}}: <textarea class="data" onfocus="this.select()">{{val}}</textarea></li>');
+
+                val = JSON.stringify(val);
               }
 
               list += tmpl({ key: key, val: val });
