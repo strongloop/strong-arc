@@ -1,3 +1,21 @@
+2015-05-14, Version 1.3.0
+=========================
+
+ * fix oracle and memcached metrics names (Setogit)
+
+ * add feature flag support (Ryan Graham)
+
+ * use minimist for CLI argument parsing (Ryan Graham)
+
+ * move metrics out of beta (seanbrookes)
+
+ * remove redundant functions (seanbrookes)
+
+ * missed mongodb (seanbrookes)
+
+ * add missing metrics probes (seanbrookes)
+
+
 2015-05-08, Version 1.2.1
 =========================
 
