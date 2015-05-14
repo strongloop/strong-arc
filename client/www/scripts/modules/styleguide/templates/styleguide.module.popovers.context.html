@@ -1,0 +1,27 @@
+<form class="dialog-content ui-dialog-form medium">
+  <div class="dialog-header">
+    <h4 class="header">Configure Example</h4>
+  </div>
+  <div class="dialog-body">
+    <div class="dialog-input">
+      <label for="exp-name" class="ui-label">Name</label>
+      <input id="exp-name" class="ui-input" type="text" ng-model="contextModal.name">
+      <span class="ui-units"></span>
+    </div>
+    <div class="dialog-input">
+      <label for="exp-value" class="ui-label">Value</label>
+      <input id="exp-value" class="ui-input" type="number" ng-model="contextModal.value">
+      <span class="ui-units">pts</span>
+    </div>
+  </div>
+  <div class="dialog-footer">
+    <div class="dialog-footer-group">
+      <span class="dialog-summary">
+        Operation will use {{contextModal.name}} for {{contextModal.value}} pts,
+        or until complete.
+      </span>
+      <div class="dialog-buttons">
+        <button class="ui-btn small" ng-click="hidePopover()">OK</button>
+      </div>
+  </div>
+</form>
