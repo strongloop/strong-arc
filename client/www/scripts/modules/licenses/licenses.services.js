@@ -127,7 +127,7 @@ Licenses.service('LicensesService', [
         var access = license.access || {};
         var expirationDate = moment(license.expirationDate).unix();
         var now = moment().unix();
-        var isExpired = expirationDate < now+86400*1;
+        var isExpired = expirationDate < now;
 
         toRenew[id] = {};
 
@@ -193,7 +193,7 @@ Licenses.service('LicensesService', [
             licenses.forEach(function(lic){
               var expirationDate = moment(lic.expirationDate).unix();
               var now = moment().unix();
-              var isExpired = expirationDate < now+86400*1;
+              var isExpired = expirationDate < now;
 
               if ( lic.product === id ) {
                 var features = lic.features.split(', ');

@@ -1,0 +1,6 @@
+<ul class="ui-crumbs">
+  <li ng-repeat="crumb in crumbs">
+    <a href ng-click="_onClick($index, crumb)">{{crumb.name}}</a>
+    <ui-icon name="separator" classes="small" ng-if="$index < crumbs.length-1"></ui-icon>
+  </li>
+</ul>

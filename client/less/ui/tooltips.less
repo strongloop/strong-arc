@@ -1,0 +1,49 @@
+//strong-arc overrides of ./vendor/d3-tip.less
+.d3-tip.endpoint {
+  border-radius: 0;
+  color: @ui-tooltip-color;
+  padding: 2rem 4rem;
+  box-shadow: 1px 1px 3px 0 rgba(0,0,0,.5);
+  border-radius: 1px solid @grey-5;
+  border: 1px solid @ui-tooltip-border-color;
+  border-radius: @ui-radius;
+  background: @ui-tooltip-bg;
+  position: relative;
+  margin-left: 2.5rem;
+  margin-top: -3.2rem;
+
+  h3 {
+    margin: 0 0 1rem 0;
+  }
+
+  ul {
+    li {
+      font-size: 1.6rem;
+      font-weight: normal;
+      margin-bottom: .5rem;
+    }
+  }
+
+  .ui-icon {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+  }
+
+  &.se {
+    .ui-icon {
+      top: 15px;
+      left: -20px;
+      width: 20px;
+      height: auto;
+      transform: rotate(180deg);
+
+      g path {
+        fill: @ui-tooltip-arrow-color;
+        stroke: @ui-tooltip-border-color;
+        stroke-width: 1px;
+      }
+    }
+  }
+}
+

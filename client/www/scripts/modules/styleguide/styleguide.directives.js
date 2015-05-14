@@ -29,6 +29,8 @@ Styleguide.directive('slStyleguideModuleText', [
         $scope.show = true;
 
         $scope.tabs = [{ id: 1, name: 'Normal' }, { id: 2, name: 'second tab' }, { id: 3, name: 'three' }, { id: 4, name: 'this is the fourth tab' }];
+        $scope.crumbs = [{ name: 'Link 1' }, { name: 'Link 2' }, { name: 'Link 3' }, { name: 'Link 4' }];
+        $scope.clickedCrumb = null;
         $scope.activeTab = null;
 
         $scope.setActiveTab = function(tab){
@@ -41,7 +43,11 @@ Styleguide.directive('slStyleguideModuleText', [
 
         $scope.clickModule = function(){
           $scope.show = !$scope.show;
-        }
+        };
+
+        $scope.onClickCrumb = function(i, crumb, len){
+          $scope.clickedCrumb = crumb;
+        };
       }
     };
   }

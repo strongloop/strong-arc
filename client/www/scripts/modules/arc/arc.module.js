@@ -46,6 +46,7 @@ var Arc = angular.module('Arc', [
   'Styleguide',
   'BuildDeploy',
   'Metrics',
+  'ApiAnalytics',
   'Manager',
   'UI',
   'Datasource',
@@ -84,6 +85,11 @@ Arc.config([
         url: '/metrics',
         templateUrl: './scripts/modules/metrics/templates/metrics.main.html',
         controller: 'MetricsMainController'
+      })
+      .state('api-analytics', {
+        url: '/api-analytics',
+        templateUrl: './scripts/modules/api-analytics/templates/api.analytics.main.html',
+        controller: 'ApiAnalyticsController'
       })
       .state('process-manager', {
         url: '/process-manager',

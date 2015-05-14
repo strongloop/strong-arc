@@ -96,3 +96,31 @@
     }
   }
 }
+
+.ui-icon {
+  display: inline-block;
+  width: 30px;
+
+  &.small {
+    height: 1.5rem;
+  }
+
+  &.medium {
+   height: 3rem;
+  }
+
+  &.large {
+    height: 4rem;
+  }
+
+  svg {
+    g path {
+      fill: @grey-5;
+    }
+
+    &.stroke {
+      stroke: @grey-4;
+      stroke-miterlimit: 10;
+    }
+  }
+}
