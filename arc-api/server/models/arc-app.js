@@ -75,7 +75,7 @@ module.exports = function(ArcApp) {
       "id": "advisor",
       "name": "Node Advisor",
       "description": "Browse and search curated Node modules with developer reviews.",
-      "disabled": true,
+      "featureFlag": "feature:advisor",
       "supports": "*"
     }
   ].filter(function(app) {
