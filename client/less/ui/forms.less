@@ -183,6 +183,90 @@ ol, ul {
   }
 }
 
+/* override for bootstraps default */
+.popover {
+  max-width: 100%;
+  border-radius: 0;
+}
+
+.ui-dialog-form {
+  &.small {
+    width: 25rem;
+  }
+
+  &.medium {
+    width: 50rem;
+  }
+
+  &.large {
+    width: 75rem;
+  }
+
+  .dialog-body {
+    display: table;
+    width: 100%;
+    border-spacing: 0.5rem;
+
+    .dialog-input {
+      display: table-row;
+
+      .ui-label {
+        display: table-cell;
+        color: inherit;
+        width: 100%;
+      }
+
+      .ui-input {
+        display: table-cell;
+        border: 1px solid @ui-form-field-border-color;
+        width: 16rem;
+        padding: .5rem 1rem;
+        border-radius: @ui-radius;
+
+        &[type=number] {
+          padding-right: 0;
+        }
+
+        &[type=text], &[type=password], &textarea {
+          .ui-mixin-placeholder(@grey-4);
+        }
+
+        &[disabled] {
+          color: @ui-disabled-button-color;
+          background: @ui-disabled-input-bg-color;
+        }
+      }
+
+      .ui-units {
+        display: table-cell;
+        color: @grey-4;
+        font-size: small;
+        padding-left: 0.1rem;
+      }
+    }
+  }
+
+  .dialog-footer {
+    display: table;
+    width: 100%;
+
+    .dialog-footer-group {
+      display: table-row;
+    }
+
+    .dialog-summary {
+      display: table-cell;
+      vertical-align: top;
+      font-size: 10pt;
+      color: @grey-4;
+    }
+
+    .dialog-buttons {
+      display: table-cell;
+      vertical-align: bottom;
+    }
+  }
+}
 
 //form inputs v2
 .ui-form {
