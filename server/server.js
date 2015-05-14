@@ -1,8 +1,19 @@
 var express = require('express');
+var path = require('path');
+
 var app = module.exports = express();
 app.set('legacyExplorer', false);
 
-var path = require('path');
+// prefix is to namespace features in express config table
+var features = (process.env.SL_ARC_FEATURE_FLAGS || '')
+                  .split(path.delimiter)
+                  .map(function(f) {
+                    return 'feature:' + f;
+                  });
+features.forEach(function(f) {
+  app.enable(f);
+});
+
 var workspace = require('loopback-workspace');
 // export the workspace object, useful e.g. in tests
 app.workspace = workspace;
@@ -25,26 +36,17 @@ app.use('/process-manager', pm);
 app.use('/api', arcApi);
 app.use('/manager', meshProxy);
 
-app.enableFeatures = function(features) {
-  // prefix is to namespace features in express config table
-  features = features.map(function(f) {
-    return 'feature:' + f;
-  });
-  features.forEach(function(f) {
-    app.enable(f);
-  });
-  // expose features list via REST so they can be checked by frontend
-  app.get('/feature-flags', function(req, res) {
-    res.json(features);
-  });
+// expose features list via REST so they can be checked by frontend
+app.get('/feature-flags', function(req, res) {
+  res.json(features);
+});
 
-  // example feature, "--feature crash" enables a /crash handler
-  if (app.enabled('feature:crash')) {
-    app.use('/crash', function(_req, _res) {
-      process.exit(1);
-    });
-  }
-};
+// example feature, "--feature crash" enables a /crash handler
+if (app.enabled('feature:crash')) {
+  app.use('/crash', function(_req, _res) {
+    process.exit(1);
+  });
+}
 
 try {
   // API explorer

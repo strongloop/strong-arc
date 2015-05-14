@@ -1,5 +1,5 @@
 module.exports = function(ArcApp) {
-  var app = require('../server');
+  var appServer = require('../server');
 
   ArcApp.list = function(cb) {
     var all = ArcApp.getAll();
@@ -78,7 +78,13 @@ module.exports = function(ArcApp) {
       "disabled": true,
       "supports": "*"
     }
-  ].map(function(app) {
+  ].filter(function(app) {
+    if (app.featureFlag) {
+      return appServer.enabled(app.featureFlag);
+    } else {
+      return true;
+    }
+  }).map(function(app) {
     var arcApp = new ArcApp(app);
     return arcApp;
   });
