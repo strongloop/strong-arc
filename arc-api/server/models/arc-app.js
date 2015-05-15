@@ -66,6 +66,14 @@ module.exports = function(ArcApp) {
       "supports": "*"
     },
     {
+      "id": "api-analytics",
+      "name": "API Analytics",
+      "description": "Get detailed information about your API.",
+      "disabled": false,
+      "beta": false,
+      "supports": "*"
+    },
+    {
       "id": "profiler",
       "name": "Profiler",
       "description": "Profile applications’ CPU and memory consumption.",
