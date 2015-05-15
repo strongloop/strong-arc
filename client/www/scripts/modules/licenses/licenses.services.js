@@ -183,8 +183,13 @@ Licenses.service('LicensesService', [
     svc.getProductsAndLicenses = function(){
       return $q.all([svc.getAllProducts(), svc.getLicenses()])
         .then(function(data){
-          var products = JSON.parse(angular.toJson(data[0])); //remove angular properties from object
+          var products = data[0]; //remove angular properties from object
           var licenses = data[1];
+
+          //delete extraneous attributes
+          delete products['$promise'];
+          delete products['$resolved'];
+
           var productKeys = Object.keys(products);
 
           //embed the license (if any) for each product on the object for use in view
