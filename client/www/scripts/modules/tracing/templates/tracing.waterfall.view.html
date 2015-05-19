@@ -1,0 +1,119 @@
+<div data-id="TraceDetailView" class='waterfall-detail container-fluid' ng-show="showDetailView()">
+
+  <div class='row'>
+
+    <div class='left col-sm-9'>
+      <div class="panel">
+        <div class="panel-heading section-header">
+          <h2>Waterfalls</h2>
+          <sl-popover-help name="trace-waterfall"></sl-popover-help>
+        </div>
+        <div class="panel-body waterfall-summary-container">
+          <div class='row'>
+            <div class='col-xs-6 col-sm-6 col-md-3 col-lg-2'>
+              <button ng-click="previousWaterfall()" role='previous'
+                      type="button"
+                      class="ui-btn primary  square">
+                <i class="sl-icon glyphicon glyphicon-arrow-left"></i>
+              </button>
+            </div>
+            <div class='col-xs-6 col-sm-6 col-md-3 col-md-push-6 col-lg-2 col-lg-push-8'>
+              <button ng-click="nextWaterfall()" role='next'
+                      type="button"
+                      class="ui-btn primary  square">
+                <i class="sl-icon glyphicon glyphicon-arrow-right"></i>
+              </button>
+            </div>
+            <div class='col-xs-12 col-sm-12 col-md-6 col-md-pull-3 col-lg-8 col-lg-pull-2'>
+              <div role='summary-text'>
+                <sl-tracing-waterfall-summary></sl-tracing-waterfall-summary>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div  class="panel-heading section-header">
+          <h2>Synchronous vs. Asynchronous Waterfall</h2>
+          <sl-popover-help name="trace-syncasync"></sl-popover-help>
+
+        </div>
+        <div class="panel-body">
+          <div class="hidden alert alert-default" role="help-description">
+            <p>
+              This chart shows the full timing sequence of the selected code path across asynchronous boundaries.
+              Each continuous block of Javascript execution is represented by a solid rectangle, the length of which is proportional to the amount of time spent executing Javascript code.
+              The label of the block shows the most significant function in that sequence of code.
+            </p>
+            <p>
+              Asynchronous callbacks are represented by blue lines connecting the time of the callback being scheduled to when it was invoked.
+            </p>
+            <p>
+              Time is normalized to the start of the profile being examined.
+            </p>
+          </div>
+          <div data-hook='eventloop'></div>
+          <div class='row'>
+            <div class='col-md-12 text-center'>
+              Total Execution Time: <span role='total-execution-time'>{{ (tracingCtx.currentWaterfall.stats.duration / 1000) }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-heading section-header">
+          <h2>Synchronous Code Flame Graph</h2>
+          <sl-popover-help name="trace-flame"></sl-popover-help>
+
+        </div>
+        <div class="panel-body">
+
+          <div class="hidden alert alert-default" role="help-description">
+            <p>
+              The flame graph chart shows the execution time of the synchronous code in this waterfall.
+              The call stack is drawn inverted, with the root of the synchronous calls at the bottom, and the call stack drawn progressively upwards.
+              The x-axis is 100% of the javascript execution time spent during the waterfall.
+            </p>
+          </div>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div data-hook='flame'></div>
+            </div>
+          </div>
+          <div class='row'>
+            <div class='col-md-12 text-center'>
+              Total Synchronous Time: <span role='total-synchronous-time'></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-heading section-header">
+          <h2>Synchronous Raw Data</h2>
+          <sl-popover-help name="trace-rawtree"></sl-popover-help>
+        </div>
+        <div class="panel-body">
+
+          <div class="hidden alert alert-default" role="help-description">
+            <p>
+              The raw data chart shows the time spent executing synchronous javascript, displayed as a familiar text based tree.  The data is the same as the flame graph above.
+            </p>
+          </div>
+
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='rawtree' data-hook='rawtree'></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='inspector-col col-sm-3'>
+      <div role='inspector'>
+        <sl-tracing-inspector-base></sl-tracing-inspector-base>
+      </div>
+    </div>
+  </div>
+
+</div>

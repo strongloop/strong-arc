@@ -1,0 +1,9 @@
+<div class='waterfall-summary'>
+  <h4>{{ tracingCtx.currentWaterfall.costSummary.summaryText }}</h4>
+  <h5>Seen <strong>{{ tracingCtx.currentWaterfall.instance_count }}x</strong> at <strong>{{ (tracingCtx.currentWaterfall.stats['duration'] / 1000) }}</strong> for a total of <strong>{{ (tracingCtx.currentWaterfall.stats['total_duration'] / 1000) }}</strong></h5>
+  <ul class='tagGroups'>
+    <li class='tagGroup' ng-repeat="tag in tracingCtx.currentWaterfall.tags">
+      {{ tag }}
+    </li>
+  </ul>
+</div>

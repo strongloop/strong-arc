@@ -1,6 +1,7 @@
 var async = require('async');
 var fs = require('fs-extra');
 var path = require('path');
+var url = require('url');
 var exec = require('child_process').exec;
 var gulp = require('gulp');
 var gutil = require('gulp-util');
@@ -20,6 +21,7 @@ var pullDevTools = require('./build-tasks/pull-devtools');
 var setupMysql = require('./build-tasks/setup-mysql');
 var downloadHelpAssets = require('./build-tasks/download-help-assets');
 var _ = require('lodash');
+var browserify = require('browserify');
 
 gulp.task('default', ['build', 'test', 'watch']);
 
@@ -32,7 +34,8 @@ gulp.task('build', [
     'build-build-and-deploy-services',
     'build-help-assets',
     'build-arc-services',
-    'install-example-modules'
+    'build-tracing-bundle',
+    'install-example-modules',
 ], function() {
   // Remove the env var
   process.env.GULP_ANGULAR_CODEGEN = undefined;
@@ -125,6 +128,13 @@ gulp.task('build-help-assets', function(callback) {
     callback);
 });
 
+gulp.task('build-tracing-bundle', function() {
+  var bSource = './client/www/scripts/modules/tracing/src/tracing.viz.module.js';
+  return browserify(bSource, {standalone: 'TracingViz'})
+    .bundle()
+    .pipe(fs.createWriteStream('./client/www/scripts/modules/tracing/tracing.viz.module.js'));
+});
+
 gulp.task('install-example-modules', function() {
   return gulp.src('examples/*/package.json')
     .pipe(install({ production: true }));
@@ -169,6 +179,72 @@ gulp.task('test-pm', function() {
   return gulp.src('process-manager/test/*.js', { read: false })
     .pipe(mocha());
 });
+// WIP
+gulp.task('test-e2e', function() {
+  var pmContainerID;
+  /*
+  Components of Tracing focused e2e testing
+  * webdriver
+  * test server
+  * test app
+  * pm instance
+  * protractor
+  * */
+  //var webdriver = spawn(
+  //  'webdriver-manager',
+  //  ['start'],
+  //  {
+  //    cwd: __dirname,
+  //    stdio: 'inherit'
+  //  });
+  //var testServer = spawn(
+  //  process.execPath,
+  //  [
+  //    'client/test/test-server'
+  //  ],
+  //  {
+  //    cwd: __dirname,
+  //    stdio: 'inherit'
+  //  });
+  //
+  //// set up pm instance (variables [host/port])
+  //exec(
+  //  'docker run -P -d strongloop/strong-pm',
+  //  function(err, stdout, stderr) {
+  //    // establish strong pm instance host and port variables
+  //    pmContainerID = stdout.trim();
+  //    exec(
+  //      'docker port ' + pmContainerID + ' 8701/tcp',
+  //      function(err, stdout, stderr) {
+  //        process.env.TEST_PM_PORT = stdout.trim().split(':')[1];
+  //        process.env.TEST_PM_HOST = url.parse(process.env.DOCKER_HOST || 'tcp://127.0.0.1').host;
+  //
+  //
+  //        /*
+  //        TODO:
+  //
+  //        - scaffold a test app
+  //        - spawn test server cwd of scaffolded test app
+  //
+  //        * */
+  //
+  //        /*
+  //        * teardown (pm)
+  //        *
+  //        *
+  //        * exec('docker rm -v -f ' + pmContainerID);
+  //        * */
+  //       }
+  //    );
+  //  }
+  //);
+
+
+
+
+
+
+ });
 
 gulp.task('test-client-integration', function(callback) {
   var child = spawn(

@@ -25,18 +25,16 @@ var MainTreeNavView = (function () {
       this.addDataSourceButton.click();
     };
     this.deleteDataSourceByIndex = function(index) {
-      var ptor = protractor.getInstance();
 
       var dataSourceNavCtx = this.dataSourceCtxBtns.get(1);
       browser.driver.actions().click(dataSourceNavCtx).perform();
       var deleteButton = this.ctxMenuTriggers.get(2);
       browser.driver.actions().click(deleteButton).perform();
-      var alertDialog = ptor.switchTo().alert();
+      var alertDialog = browser.switchTo().alert();
 
       alertDialog.accept();
     };
     this.deleteFirstModel = function() {
-      var ptor = protractor.getInstance();
       // Main Tree Context Menu
       var modelNavCtx = this.modelCtxBtns.get(0);
 
@@ -45,7 +43,7 @@ var MainTreeNavView = (function () {
       var deleteButton = this.ctxMenuTriggers.get(0);
       browser.driver.actions().click(deleteButton).perform();
 
-      var alertDialog = ptor.switchTo().alert();
+      var alertDialog = browser.switchTo().alert();
 
       alertDialog.accept();
     };

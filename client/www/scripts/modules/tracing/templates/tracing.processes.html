@@ -1,0 +1,54 @@
+<div class="sl-profiler-processes">
+  <span class="title" ng-show="processes.length">Processes</span>
+  <div class="loading"
+       sl-common-loading-indicator
+       size="small"
+       ng-show="isShowPidDisplaySpinner()"></div>
+  <ul>
+    <li ng-repeat="process in processes | limitTo:8"
+        class="process"
+        ng-class="{ active: tracingCtx.currentProcess.pid == process.pid }"
+        ng-click="setActiveProcess(process, false)">
+      <div class="pid">{{process.pid}}</div>
+      <div class="status" ng-class="process.status.toLowerCase()">{{process.status}}</div>
+    </li>
+  </ul>
+
+  <div class="sl-select-more" ng-show="processes.length > 8">
+    <div class="sl-ui-select more"
+         data-ui-type="select"
+         ng-class="{ open: isOpen }"
+         ng-mouseleave="hideMenu()">
+            <span class="selected"
+                  ng-class="{ 'selected-item': isProcessFromMore }"
+                  data-id="{{activeProcess.processId}}"
+                  ng-click="isOpen = !isOpen">
+              <span ng-show="activeProcess && isProcessFromMore">
+                {{activeProcess.pid}}
+                {{activeProcess.status}}
+              </span>
+              <span ng-hide="isProcessFromMore">
+                More
+              </span>
+              <i class="sl-icon sl-icon-chevron-down"></i>
+            </span>
+      <ul ng-class="{ hide: !isOpen }">
+        <li ng-repeat="process in processes | offset:8">
+          <a href
+             data-id="{{process.pid}}"
+             ng-click="setActiveProcess(process, true); hideMenu()"
+             ng-class="{ selected: activeProcess.pid == process.pid }">
+            {{process.pid}}
+            {{process.status}}
+            <i class="sl-icon sl-icon-checkmark" ng-show="activeProcess.pid == process.pid"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sl-profiler-status"
+       ng-show="activeProcess.status == 'Saving' || activeProcess.status == 'Profiling'">
+    <div sl-common-loading-indicator size="small"></div>
+  </div>
+</div>

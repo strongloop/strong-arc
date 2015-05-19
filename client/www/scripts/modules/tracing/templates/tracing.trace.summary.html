@@ -1,0 +1,74 @@
+<div class="panel trace-summary">
+  <div class="panel-body">
+    <div class='row'>
+      <div class='col-sm-6'>
+        <table class="table table-striped">
+          <tr>
+            <th>
+              Metric
+              <sl-popover-help name="trace-summary"></sl-popover-help>
+            </th>
+            <th></th>
+          </tr>
+          <tr>
+            <td>
+              Total time executing javascript
+            </td>
+            <td id='summary-js-micros'>
+              {{ msFormat(tracingCtx.currentTrace.summary_stats.jsMicros) }}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Profile time duration
+            </td>
+            <td id='summary-window-micros'>
+              {{msFormat(tracingCtx.currentTrace.summary_stats.windowMicros)}}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Synchronous code execution
+            </td>
+            <td id='summary-percent-blocked'>
+              {{tracingCtx.currentTrace.summary_stats.percentBlocked.toFixed(2)}} %
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Asynchronous wait time
+            </td>
+            <td id='summary-percent-async'>
+              {{tracingCtx.currentTrace.summary_stats.percentAsync.toFixed(2)}} %
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Application execution
+            </td>
+            <td id='summary-percent-operating'>
+              {{tracingCtx.currentTrace.summary_stats.percentOperating.toFixed(2)}} %
+            </td>
+          </tr>
+          <tr>
+            <td>
+              System idle
+            </td>
+            <td id='summary-percent-idle'>
+              {{tracingCtx.currentTrace.summary_stats.percentIdle.toFixed(2)}} %
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div class='col-sm-3 col-push-1 center'>
+        <div role='summary-async-pie'></div>
+      </div>
+      <div class='col-sm-3 col-pull-1 center'>
+        <div role='summary-idle-pie'></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+

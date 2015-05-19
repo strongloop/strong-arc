@@ -1,0 +1,72 @@
+
+.inspector .panel {
+  overflow-x: scroll;
+
+  .list-group-item {
+    word-wrap: break-word;
+  }
+}
+
+.inspector .functions {
+  margin: 10px 0 0 0;
+  padding: 0;
+  list-style: none;
+
+  .function {
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ddd;
+    word-wrap: break-word;
+
+    .header { cursor: pointer; }
+    .lab {  }
+    .value { font-weight: bold; }
+    .lab,
+    .value { word-wrap: break-word; }
+    .function-name { display: inline-block; }
+    .progress {
+      height: 20px;
+      margin-bottom: 0;
+      position: relative;
+    }
+
+    .progress-value {
+      position: absolute;
+      text-align: center;
+      right: 0;
+      line-height: 20px;
+      width: 100%;
+      font-weight: bold;
+      color: #fff;
+      z-index: 1000;
+    }
+
+    .function-details {
+      display: none;
+      font-weight: normal;
+      margin-top: 10px;
+
+      .row {
+        margin-bottom: 10px;
+      }
+    }
+
+  }
+
+  .function.expanded {
+
+    .function-details {
+      display: block;
+    }
+  }
+
+  .name {
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+}
+
+@media (min-width: @screen-lg-min) {
+  .inspector .functions .function .value { text-align: right; }
+}

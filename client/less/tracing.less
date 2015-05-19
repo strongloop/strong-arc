@@ -1,0 +1,1234 @@
+@async: #379f15;
+@wait: #fe6600;
+[data-id="TracingContainer"] {
+
+  .panel {
+    border:0;
+  }
+  hr {
+    margin-top:.4rem;
+
+
+  }
+  .tracing-header-container {
+
+    .pid-selector-container {
+      font-size:1.4rem;
+      color:#999999;
+
+      .pm-host-selector-container {
+        display: inline-block;
+        .dropdown-menu {
+          top:6rem;
+          left:0;
+        }
+      }
+      .pm-pids-container {
+        display: inline-block;
+        position:absolute;
+        top:5px;
+        padding-left:8px;
+        .sl-pid-selector {
+          .sl-profiler-processes {
+            min-height:0;
+          }
+        }
+      }
+    }
+
+  }
+
+
+  .panel-heading {
+    padding:4px 4px;
+
+  }
+  .section-header {
+
+    h2 {
+      font-size: 150%;
+      color: #888888;
+      margin-left: 2rem;
+      display:inline-block;
+    }
+
+  }
+
+}
+
+
+[data-id="TracingBreadcrumbsList"] {
+
+  button {
+    font-size:120%;
+
+    &.readonly-crumb {
+      color:#888888;
+      border:0;
+      background:transparent;
+      cursor: default;
+      &:hover {
+        cursor: default;
+        text-decoration: none;
+      }
+    }
+  }
+}
+[data-id="TracingBreadcrumbsList"] {
+  li {
+    display:inline-block;
+  }
+}
+/*
+
+  Prototyping - port
+
+
+*/
+.tracing-header-container {
+  position:relative;
+  margin-left:2.2rem;
+  &.section-header {
+    background-color:#ffffff;
+
+  }
+
+  .pm-host-select {
+//    margin-top:2.8rem;
+    .title {
+      margin-bottom: 0.75rem;
+    }
+  }
+
+  .sl-pid-selector {
+    display: inline-block;
+  }
+
+  h2 {
+    padding-top:1rem;
+  }
+
+  button {
+
+    &.clear-btn {
+      float:left;
+    }
+    //    float:right;
+  }
+}
+.test-view {
+
+}
+[data-id="TracingTimeseriesChart"] {
+  table {
+    width: 100%;
+
+    .transaction-route {
+      width: 70%;
+    }
+
+    .transaction-total-calls,
+    .transaction-average-mean {
+      width: 15%;
+    }
+
+  }
+  g {
+    &.y {
+      &.axis {
+        display:none;
+      }
+    }
+    &.y1 {
+      &.axis {
+        display:none;
+      }
+    }
+  }
+  .dropdown-menu {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .pid-selector .selected a {
+    font-weight: bold;
+  }
+
+  .transaction table{
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    cursor: pointer;
+
+    svg {
+      //      display: none;
+    }
+  }
+
+  .transaction.expanded {
+
+    &:hover {
+      background: inherit;
+    }
+
+    svg {
+      //      display: block;
+    }
+
+    > table {
+      font-weight: bold;
+    }
+
+  }
+
+  .waterfalls {
+    list-style-position: inside;
+    margin: 0;
+    padding: 0;
+  }
+
+  .waterfall {
+    margin-top: 10px;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    .panel-heading {
+      padding: 5px 7px;
+    }
+
+    table {
+      width: 100%;
+      font-size: 12px;
+
+      .waterfall-title {
+        width: 60%;
+      }
+      .waterfall-micros,
+      .waterfall-async,
+      .waterfall-sync {
+        width: 10%;
+      }
+    }
+  }
+  #stats-history-wait {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .async {
+    fill: @async;
+  }
+
+  .idle {
+    fill: @async;
+  }
+
+  .blocked {
+    fill: @wait;
+  }
+
+  .operating {
+    fill: @wait;
+  }
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+
+  .x.axis path {
+    display: none;
+  }
+
+  .line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+  }
+
+  .hover-line {
+    fill: none;
+    stroke: #ff0000;
+    stroke-width: 5;
+    shape-rendering: crispEdges;
+  }
+
+  .select-line {
+    fill: none;
+    stroke: #FFFF66;
+    shape-rendering: crispEdges;
+    stroke-width: 3px;
+  }
+
+  .gradientLine {
+    fill: none;
+    stroke-width: 1.5px;
+  }
+
+  .grid {
+    fill: none;
+    stroke: lightgrey;
+    opacity: 0.7;
+    shape-rendering: crispEdges;
+  }
+
+  .overlay {
+    fill: none;
+    pointer-events: all;
+  }
+
+  .focus circle {
+    fill: none;
+    stroke: steelblue;
+  }
+  svg {
+    cursor: pointer;
+  }
+}
+[data-id="TracingSystemFeedback"] {
+  position:absolute;
+  background-color: rgba(25, 25, 25, .4);
+  color:#ffffff;
+  padding:.5rem;
+  top:2rem;
+  left:2rem;
+  margin-bottom:1rem;
+  border:1px solid #eeeeee;
+  border-radius:.3rem;
+  z-index: 3000;
+
+  button {
+//    float:right;
+  }
+}
+.tracing-content-container {
+  overflow:auto;
+}
+#AbstractTimelineList {
+  li {
+    display: inline-block;
+
+    &.k-hot {
+      background-color: red;
+    }
+    &.k-selected {
+      background-color:yellow;
+    }
+    &.k-cold {
+      background-color: blue;
+    }
+  }
+
+
+}
+#TracingTransactionHistoryContainer {
+
+  ul {
+
+    &.transactions{
+      border:1px solid #eeeeee;
+      margin:0 2rem 0 2rem;
+
+      header.list-group-item {
+        background-color:#eeeeee;
+        table {
+          th {
+            border-color:transparent;
+          }
+        }
+      }
+
+      .transaction {
+
+        svg {
+          display:none;
+          cursor: pointer;
+        }
+      }
+
+
+
+
+    }
+
+  }
+}
+.timeline-nav-container {
+
+  float:right;
+  text-align: center;
+  margin-right:8rem;
+
+  button.ui-btn.square {
+    margin:0 auto 0 auto;
+
+
+    padding:.25rem .5rem;
+//    width:25px;
+//    height:25px;
+  }
+}
+.panel-info > .panel-heading {
+  color: #222222;
+  background-color: #eeeeee;
+  border-color: #ffffff;
+}
+.trace-summary {
+  table {
+    border:1px solid #cccccc;
+
+    &.table > tbody > tr > td {
+      border-width:0;
+    }
+  }
+}
+
+
+
+/*
+
+  detail-view
+
+*/
+.inspector-col {
+  position: fixed;
+  right: 20px;
+}
+
+.waterfall-detail {
+
+  .panel-body {
+    border:1px solid #e5e5e5;
+    background-color: #fafafa;
+  }
+
+  .waterfall-summary-container{
+    button.ui-btn.square {
+      margin: 0 auto 0 auto;
+      padding: .25rem .5rem;
+    }
+  }
+
+  .btn.right {
+    float: right;
+  }
+
+  .rawtree {
+    overflow: auto;
+
+    li {
+      width: 600px;
+    }
+  }
+
+}
+
+.waterfall-summary {
+
+
+  h4 {
+    overflow-wrap: break-word;
+  }
+
+  .tagGroup {
+
+    .more,
+    .less {
+      color: @link-color;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+        color: @link-hover-color;
+      }
+    }
+
+    .less {
+      display: none;
+    }
+
+    .tags {
+      display: none;
+      list-style: none;
+      margin: 0 0 0 10px;
+      padding: 0;
+    }
+
+  }
+
+  .tagGroup.expanded {
+
+    .more {
+      display: none;
+    }
+
+    .less {
+      display: inline;
+    }
+
+    .tags {
+      display: block;
+    }
+  }
+}
+/*
+
+  Inspector
+
+*/
+
+.inspector .panel {
+
+
+  .list-group-item {
+    word-wrap: break-word;
+  }
+}
+
+.inspector .functions {
+  margin: 10px 0 0 0;
+  padding: 0;
+  list-style: none;
+
+  .function {
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ddd;
+    word-wrap: break-word;
+
+    .header { cursor: pointer; }
+    .lab {  }
+    .value { font-weight: bold; }
+    .lab,
+    .value { word-wrap: break-word; }
+    .function-name { display: inline-block; }
+    .progress {
+      height: 20px;
+      margin-bottom: 0;
+      position: relative;
+    }
+
+    .progress-value {
+      position: absolute;
+      text-align: center;
+      right: 0;
+      line-height: 20px;
+      width: 100%;
+      font-weight: bold;
+      color: #fff;
+      z-index: 1000;
+    }
+
+    .function-details {
+      display: none;
+      font-weight: normal;
+      margin-top: 10px;
+
+      .row {
+        margin-bottom: 10px;
+      }
+    }
+
+  }
+
+  .function.expanded {
+
+    .function-details {
+      display: block;
+    }
+  }
+
+  .name {
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+}
+
+@media (min-width: @screen-lg-min) {
+  .inspector .functions .function .value { text-align: right; }
+}
+/*
+
+  Monitor View
+
+*/
+.monitor-view {
+
+  table {
+    width: 100%;
+
+    .transaction-route {
+      width: 70%;
+    }
+
+    .transaction-total-calls,
+    .transaction-average-mean {
+      width: 15%;
+    }
+
+  }
+
+  .dropdown-menu {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .pid-selector .selected a {
+    font-weight: bold;
+  }
+
+  .transaction table{
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    cursor: pointer;
+
+    svg {
+//      display: none;
+    }
+  }
+
+  .transaction.expanded {
+
+    &:hover {
+      background: inherit;
+    }
+
+    svg {
+//      display: block;
+    }
+
+    > table {
+      font-weight: bold;
+    }
+
+  }
+
+  .waterfalls {
+    list-style-position: inside;
+    margin: 0;
+    padding: 0;
+  }
+
+  .waterfall {
+    margin-top: 10px;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    .panel-heading {
+      padding: 5px 7px;
+    }
+
+    table {
+      width: 100%;
+      font-size: 12px;
+
+      .waterfall-title {
+        width: 60%;
+      }
+      .waterfall-micros,
+      .waterfall-async,
+      .waterfall-sync {
+        width: 10%;
+      }
+    }
+  }
+  #stats-history-wait {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .async {
+    fill: @async;
+  }
+
+  .idle {
+    fill: @async;
+  }
+
+  .blocked {
+    fill: @wait;
+  }
+
+  .operating {
+    fill: @wait;
+  }
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+
+  .x.axis path {
+    display: none;
+  }
+
+  .line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+  }
+
+  .hover-line {
+    fill: none;
+    stroke: #ff0000;
+    stroke-width: 5;
+    shape-rendering: crispEdges;
+  }
+
+  .select-line {
+    fill: none;
+    stroke: #FFFF66;
+    shape-rendering: crispEdges;
+    stroke-width: 3px;
+  }
+
+  .gradientLine {
+    fill: none;
+    stroke-width: 1.5px;
+  }
+
+  .grid {
+    fill: none;
+    stroke: lightgrey;
+    opacity: 0.7;
+    shape-rendering: crispEdges;
+  }
+
+  .overlay {
+    fill: none;
+    pointer-events: all;
+  }
+
+  .focus circle {
+    fill: none;
+    stroke: steelblue;
+  }
+}
+
+.cx-monitor-stddev {
+  fill: #1862b5;
+  opacity: .5;
+}
+
+.cx-monitor-minmax {
+  fill: none;
+  opacity: .5
+}
+
+.cx-monitor-mean {
+  stroke-width: 2px;
+  fill: none;
+}
+
+.cx-monitor-numcalls {
+  stroke-width: 2px;
+  fill: none;
+}
+
+.cx-monitor-loadavg {
+  stroke-width: 1.5px;
+  fill: none;
+}
+
+.cx-monitor-uptime {
+  stroke-width: 1.5px;
+  fill: none;
+}
+
+.gradientLine {
+  fill: none;
+  stroke-width: 1.5px;
+}
+
+.cxviz-timeseries-range-vertical {
+  fill: none;
+  sharp-rendering: crispEdges;
+  stroke-width: 1px;
+  stroke-dasharray: 2, 4;
+}
+
+.cxviz-timeseries-range-endcap {
+  fill: none;
+  sharp-rendering: crispEdges;
+  stroke-width: 1px;
+}
+/*
+
+  Trace View
+
+*/
+.trace-view {
+
+  .panel-primary {
+    border-bottom-color: #ffffff;
+    border:0;
+
+    .panel-heading {
+      background-color: #eeeeee;
+      color:#222222;
+      border-color: #ffffff;
+    }
+
+    .list-group-item {
+      button {
+        &.transaction-route {
+
+          text-align: left;
+        }
+      }
+    }
+
+  }
+  ul.transactions {
+
+    td.toggle-control {
+      width:3rem;
+
+      i {
+        padding-top:.45rem;
+      }
+    }
+
+    ul.waterfalls {
+      display:none;
+
+      &.expanded {
+        display:block;
+      }
+    }
+  }
+  .transaction-badge {
+    .badge {
+      background-color: @brand-primary;
+    }
+  }
+
+  table {
+    width: 100%;
+
+    .transaction-route {
+      width: 63%;
+      text-align:left;
+    }
+
+    .transaction-jsmicros,
+    .transaction-totalmicros,
+    .transaction-async,
+    .transaction-blocked{
+      width: 8%;
+    }
+
+    .transaction-badge {
+      width: 5%;
+    }
+  }
+
+  .transaction {
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    cursor: pointer;
+
+    .panel {
+      display: none;
+
+      h4 {
+        color: #000;
+      }
+    }
+  }
+
+  .transaction.expanded {
+
+    &:hover {
+      background: inherit;
+    }
+
+    .panel {
+      display: block;
+    }
+
+    > table {
+      font-weight: bold;
+    }
+
+    .waterfalls {
+      margin-top: 20px;
+    }
+  }
+
+  .waterfalls {
+    list-style-position: inside;
+    margin: 0;
+    padding: 0;
+  }
+
+  .waterfall {
+    margin-top: 10px;
+
+    .help-text {
+      display:none;
+    }
+    a:hover {
+      text-decoration: none;
+    }
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.1);
+      .help-text {
+        display:inline-block;
+        font-size:90%;
+        margin-left:3rem;
+        font-style: italic;
+        color:#888888;
+      }
+    }
+
+    .panel-heading {
+      padding: 5px 7px;
+    }
+
+    table {
+      width: 100%;
+      font-size: 12px;
+
+      .waterfall-title {
+        width: 60%;
+      }
+      .waterfall-micros,
+      .waterfall-async,
+      .waterfall-sync {
+        width: 10%;
+      }
+    }
+  }
+  #stats-history-wait {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .async {
+    fill: @async;
+  }
+
+  .idle {
+    fill: @async;
+  }
+
+  .blocked {
+    fill: @wait;
+  }
+
+  .operating {
+    fill: @wait;
+  }
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+
+  .x.axis path {
+    display: none;
+  }
+
+  .line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+  }
+
+  .hover-line {
+    fill: none;
+    stroke: #808080;
+    shape-rendering: crispEdges;
+  }
+
+  .select-line {
+    fill: none;
+    stroke: #FFFF66;
+    shape-rendering: crispEdges;
+    stroke-width: 3px;
+  }
+
+  .gradientLine {
+    fill: none;
+    stroke-width: 1.5px;
+  }
+
+  .grid {
+    fill: none;
+    stroke: lightgrey;
+    opacity: 0.7;
+    shape-rendering: crispEdges;
+  }
+
+  .overlay {
+    fill: none;
+    pointer-events: all;
+  }
+
+  .focus circle {
+    fill: none;
+    stroke: steelblue;
+  }
+}
+.trace-view {
+  .summary {
+    .summary-tabs nav {
+      text-align: center;
+    }
+    .tab-pane {
+      display: none;
+    }
+    .tab-pane.active {
+      display: block;
+    }
+  }
+
+  .live-buttons {
+    margin-top: -6px;
+  }
+  .waterfall .panel-body {
+    width:100%;
+  }
+  [data-hook="eventloop"] {
+    width:100%;
+  }
+}
+[data-id="TraceDetailView"] {
+  .panel-primary {
+    border-color: #eeeeee;
+    .panel-heading {
+      background-color: #eeeeee;
+      color:#222222;
+    }
+  }
+  .panel-info {
+    .panel-heading {
+      background-color: #eeeeee;
+      color:#222222;
+    }
+  }
+}
+
+
+/*
+
+  Syntax
+
+*/
+
+.comment {
+  color: #75715E;
+}
+.string {
+  color: #E6DB74;
+}
+.constant.numeric {
+  color: #AE81FF;
+}
+.constant.language {
+  color: #AE81FF;
+}
+.constant.character,
+.constant.other {
+  color: #AE81FF;
+}
+.keyword {
+  color: #F92672;
+}
+.storage {
+  color: #F92672;
+}
+.storage.type {
+  font-style: italic;
+  color: #66D9EF;
+}
+.entity.name.class {
+  text-decoration: underline;
+  color: #A6E22E;
+}
+.entity.other.inherited-class {
+  font-style: italic;
+  text-decoration: underline;
+  color: #A6E22E;
+}
+.entity.name.function {
+  color: #A6E22E;
+}
+.entity.name.instance {
+  color: #66D9EF;
+}
+.variable.parameter {
+  font-style: italic;
+  color: #FD971F;
+}
+.entity.name.tag {
+  color: #F92672;
+}
+.entity.other.attribute-name {
+  color: #A6E22E;
+}
+.support.function {
+  color: #66D9EF;
+}
+.support.constant {
+  color: #66D9EF;
+}
+.support.type,
+.support.class {
+  font-style: italic;
+  color: #66D9EF;
+}
+.invalid {
+  color: #F8F8F0;
+  background-color: #F92672;
+}
+.invalid.deprecated {
+  color: #F8F8F0;
+  background-color: #AE81FF;
+}
+.class.jade {
+  color: #AE81FF;
+}
+/*
+
+  cxviz Event Loop
+
+*/
+.cxviz-eventloop {
+  .cxviz-eventloop-labelCont {
+    text {
+      font-family: 'Lucida Grande', sans-serif;
+      font-size: 12px;
+    }
+  }
+  .cxviz-eventloop-axis path,
+  .cxviz-eventloop-axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+
+  .cxviz-eventloop-row {
+    opacity: 0
+  }
+
+  .cxviz-eventloop-highlight {
+    fill: #FFFF66;
+    opacity: .5;
+  }
+
+  .cxviz-eventloop-selected {
+    fill: #FFFF66;
+    opacity: .5;
+  }
+
+}
+/*
+
+  cxviz - Flame
+
+*/
+[role=flame] {
+  .legend {
+    text-align: center;
+  }
+}
+
+.cxviz-flame {
+  text {
+    font-family: 'Lucida Grande', sans-serif;
+    font-size: 12px;
+  }
+}
+
+.cxviz-flame-axis path,
+.cxviz-flame-axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.cxviz-flame-highlight rect {
+  fill: #ff6;
+}
+
+.cxviz-flame-selected rect {
+  fill: #ff6;
+}
+
+
+
+
+
+/*
+
+  cxviz - Pie
+
+*/
+.cxviz-pie {
+  text {
+    font-family: 'Lucida Grande', sans-serif;
+    font-size: 12px;
+  }
+}
+
+.cxviz-pie-axis path,
+.cxviz-pie-axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+/*
+
+  cxviz - rawTree
+
+*/
+.cxviz-rawtree {
+  font-family: 'Lucida Grande', sans-serif;
+  font-size: 12px;
+
+  ul {
+    list-style: none;
+    padding: 0 0 0 20px;
+  }
+}
+
+.cxviz-rawtree-item {
+  background: transparent;
+}
+
+.cxviz-raw-axis path,
+.cxviz-raw-axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.cxviz-rawtree-highlight > div {
+  background-color: #FFFF66
+}
+
+.cxviz-rawtree-selected > div {
+  background-color: #ffff66;
+}
+
