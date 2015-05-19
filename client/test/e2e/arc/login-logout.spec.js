@@ -10,17 +10,16 @@ describe('arc-login-logout', function() {
       var headerView = new ArcViews.HeaderView();
 
       loginView.openLoginView();
+      browser.waitForAngular().then(function() {
+        expect(loginView.userNameInput.getText()).toEqual('');
 
-      expect(loginView.userNameInput.getText()).toEqual('');
+        loginView.loginToLandingView();
+        expect(landingView.landingTitle.getText()).toEqual('StrongLoop Arc');
 
-      loginView.loginAsTestUser();
-
-      expect(landingView.landingTitle.getText()).toEqual('StrongLoop Arc');
-
-      headerView.logout();
-
-      expect(loginView.userNameInput.getText()).toEqual('');
-
+        headerView.logout();
+        browser.waitForAngular();
+        expect(loginView.userNameInput.getText()).toEqual('');
+      });
     }
   );
 

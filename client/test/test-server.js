@@ -2,8 +2,6 @@ var async = require('async');
 var fs = require('fs-extra');
 var path = require('path');
 process.env.SL_ARC_FEATURE_FLAGS = 'tracing';
-var arc = require('../../server/server');
-var workspace = arc.workspace;
 
 var given = require('loopback-workspace/test/helpers/given');
 
@@ -20,6 +18,9 @@ process.env.WORKSPACE_DIR = SANDBOX;
 var port = 9800;
 
 var sandboxNeedsFullReset = false;
+
+var arc = require('../../server/server');
+var workspace = arc.workspace;
 
 // Inject `POST /reset` to reset the sandbox to initial state
 arc.post('/reset', function(req, res, next) {
