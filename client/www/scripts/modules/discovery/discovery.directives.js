@@ -9,7 +9,8 @@ Discovery.directive('slDiscoverySchema', [
 ]);
 Discovery.directive('slDiscoveryModelPreview', [
   'growl',
-  function(growl) {
+  '$timeout',
+  function(growl, $timeout) {
     return {
       replace: true,
       templateUrl: './scripts/modules/discovery/templates/discovery.model.preview.html',
@@ -70,8 +71,11 @@ Discovery.directive('slDiscoveryModelPreview', [
             });
 
           }
-          scope.gridOptions = tableConfigs;
 
+          //hack to deal with dynamic ng-Grid width/height calculation of cells
+          $timeout(function(){
+            scope.gridOptions = tableConfigs;
+          }, 0);
         });
       }
     };
