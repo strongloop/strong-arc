@@ -47,7 +47,6 @@ ApiAnalytics.directive('slApiAnalyticsChart', [
         .append("line")
         .attr("y1", "100%");
 
-
       function toggleTip(e, tip){
         scope.showToolTip = !scope.showToolTip;
 
@@ -61,6 +60,15 @@ ApiAnalytics.directive('slApiAnalyticsChart', [
       function processData(d, i) {
         if ( !d.children ) return;
         var end = duration + d.children.length * delay;
+
+        if ( scope.chartDepth === 1 ) {
+          d.children = d.children.sort(function(a, b){
+            var aTime = new Date(a.orig.timeStamp).getTime();
+            var bTime = new Date(b.orig.timeStamp).getTime();
+
+            return aTime - bTime;
+          })
+        }
 
         // Mark any currently-displayed bars as exiting.
         var exit = svg.selectAll(".enter")
@@ -251,7 +259,8 @@ ApiAnalytics.directive('slApiAnalyticsChart', [
           .data(d.children)
           .enter().append("g")
           .style("cursor", function(d) { return "pointer"; });
-          //.on("click", down);
+
+        //.on("click", down);
 
         bar.append("text")
           .attr("x", -6)
