@@ -328,7 +328,7 @@ module.factory(
          *
          * @param {Object} postData Request data.
          *
-         *  - `usages` – `{array=}` - Usage records
+         *  - `usages` – `{*=}` - Usage records
          *
          *  - `req` – `{object=}` - 
          *
