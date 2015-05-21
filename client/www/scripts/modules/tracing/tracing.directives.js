@@ -134,10 +134,11 @@ Tracing.directive('slTracingWaterfallView', [
   'Sha1',
   'EventLoop',
   'FlameGraph',
+  'MSFormat',
   'RawTree',
   'Inspector',
   'Color',
-  function($log, Sha1, EventLoop, FlameGraph, RawTree, Inspector, Color) {
+  function($log, Sha1, EventLoop, FlameGraph, msFormat, RawTree, Inspector, Color) {
     return {
       templateUrl: './scripts/modules/tracing/templates/tracing.waterfall.view.html',
       restrict: 'E',
@@ -145,6 +146,8 @@ Tracing.directive('slTracingWaterfallView', [
         '$scope',
         '$log',
         function($scope, $log) {
+
+          $scope.msFormat = msFormat;
 
           $scope.inspectorModel = {};
 
