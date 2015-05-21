@@ -6,11 +6,19 @@ ApiAnalytics.controller('ApiAnalyticsController', [
     '$interval',
     '$timeout',
     'ApiAnalyticsService',
-    function($scope, $state, $log, $q, $interval, $timeout, ApiAnalyticsService) {
+    'LicensesService',
+    function($scope, $state, $log, $q, $interval, $timeout, ApiAnalyticsService, LicensesService) {
       $scope.apiChart = {};
       $scope.server = {};
 
       window.setScrollView('.common-instance-view-container');
+
+      $scope.init = function(){
+        LicensesService.validateModuleLicense('api-analytics', 'arc')
+          .catch(function(err){
+            $log.error(err);
+          });
+      };
 
       $scope.onClickLoad = function(form){
         $log.log('loading chart data...');
@@ -40,4 +48,6 @@ ApiAnalytics.controller('ApiAnalyticsController', [
 
         return def.promise;
       };
+
+      $scope.init();
     }]);
