@@ -1,13 +1,10 @@
-<div class="inspector">
+<div class="inspector" ng-hide="!inspectorModel.item">
   <div class='panel'>
     <div class="panel-heading section-header">
-      <h2>Inspector</h2>
+      <h2>Inspector: {{inspectorModel.type}}</h2>
       <sl-popover-help name="trace-inspector" position="left"></sl-popover-help>
     </div>
-    <sl-tracing-inspector-costtree ng-hide="tracingCtx.currentFunction.type == 'eventLoop'" ng-show="tracingCtx.currentFunction.type == 'flame' || 'rawTree'"></sl-tracing-inspector-costtree>
-    <sl-tracing-inspector-eventloop ng-show="tracingCtx.currentFunction.type == 'eventLoop'"></sl-tracing-inspector-eventloop>
-    <ul class='list-group'>
-      <li class='list-group-item'>Nothing selected</li>
-    </ul>
+    <sl-tracing-inspector-costtree ng-hide="inspectorModel.type == 'eventLoop'" ng-show="inspectorModel.type == 'flame' || 'rawTree'"></sl-tracing-inspector-costtree>
+    <sl-tracing-inspector-eventloop ng-show="inspectorModel.type == 'eventLoop'"></sl-tracing-inspector-eventloop>
   </div>
 </div>

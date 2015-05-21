@@ -7,22 +7,22 @@
         <strong>Name: </strong>{{ inspectorModel.item.name }}
       </li>
 
-      <li ng-show="tracingCtx.currentTrace.functions[inspectorModel.item.id].module" class='list-group-item'><strong>Module: </strong>{{ trace.functions[item.id].module.name }}</li>
-      <li ng-show="tracingCtx.currentTrace.functions[inspectorModel.item.id].module" class='list-group-item'><strong>Version: </strong>{{ trace.functions[item.id].module.version }}</li>
-      <li ng-show="!tracingCtx.currentTrace.functions[inspectorModel.item.id].module" class='list-group-item'><strong>Filename: </strong>{{ trace.functions[item.id].module.filename }}</li>
-      <li ng-show="!tracingCtx.currentTrace.functions[inspectorModel.item.id].module" class='list-group-item'><strong>Line: </strong>{{ trace.functions[item.id].start.line }}</li>
-      <li ng-show="!tracingCtx.currentTrace.functions[inspectorModel.item.id].module" class='list-group-item'><strong>Column: </strong>{{ trace.functions[item.id].start.column }}</li>
+      <li ng-show="tracingCtx.currentTrace.functions[inspectorModel.item.id].module.name" class='list-group-item'><strong>Module: </strong>{{ tracingCtx.currentTrace.functions[inspectorModel.item.id].module.name }}</li>
+      <li ng-show="tracingCtx.currentTrace.functions[inspectorModel.item.id].module.version" class='list-group-item'><strong>Version: </strong>{{ tracingCtx.currentTrace.functions[inspectorModel.item.id].module.version }}</li>
+      <li ng-show="!tracingCtx.currentTrace.functions[inspectorModel.item.id].module.filename" class='list-group-item'><strong>Filename: </strong>{{ tracingCtx.currentTrace.functions[inspectorModel.item.id].module.filename }}</li>
+      <li ng-show="!tracingCtx.currentTrace.functions[inspectorModel.item.id].module.line" class='list-group-item'><strong>Line: </strong>{{ tracingCtx.currentTrace.functions[inspectorModel.item.id].start.line }}</li>
+      <li ng-show="!tracingCtx.currentTrace.functions[inspectorModel.item.id].module.column" class='list-group-item'><strong>Column: </strong>{{ tracingCtx.currentTrace.functions[inspectorModel.item.id].start.column }}</li>
 
       <li class='list-group-item'>
-        <strong>Total Cost: </strong>{{ inspectorModel.item.cost }}
+        <strong>Total Cost: </strong>{{ msFormat(inspectorModel.item.cost) }}
       </li>
 
       <li class='list-group-item'>
-        <strong>Self Cost: </strong>{{ inspectorModel.item.selfCost }}
+        <strong>Self Cost: </strong>{{ msFormat(inspectorModel.item.selfCost) }}
       </li>
 
       <li class='list-group-item'>
-        <strong>Child Cost: </strong>{{ inspectorModel.item.childCost }}
+        <strong>Child Cost: </strong>{{ msFormat(inspectorModel.item.childCost) }}
       </li>
 
       <li class='list-group-item'>
