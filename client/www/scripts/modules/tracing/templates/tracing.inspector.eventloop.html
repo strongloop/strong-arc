@@ -3,26 +3,26 @@
 
     <ul class='list-group'>
       <li class='list-group-item'>
-        <strong>Name: </strong>{{ tracingCtx.currentFunction.item.name }}
+        <strong>Name: </strong>{{ inspectorModel.item.name }}
       </li>
 
       <li class='list-group-item'>
-        <strong>Cost: </strong>{{ tracingCtx.currentFunction.item.cost }}
+        <strong>Cost: </strong>{{ inspectorModel.item.cost }}
       </li>
 
 
-      <li class='top-costs list-group-item' ng-show="isShowTopCosts()">
+      <li class='top-costs list-group-item'>
         <strong>Top Costs</strong>
         <ul class='functions'>
-          <li ng-repeat="costItem in tracingCtx.currentFunction.item.costSummary.topCosts" class="function" data-id='{{ costItem.id }}'>
+          <li ng-repeat="costItem in inspectorModel.item.costSummary.topCosts" class="function" data-id='{{ costItem.id }}'>
             <div class='header row'>
               <div class='function-name col-md-12 col-lg-8'>
-                {{ tracingCtx.currentTrace.functions[costItem.id].name }}
+                {{ tracingCtx.currentTrace.functions[inspectorModel.item.id].name }}
               </div>
               <div class='col-md-12 col-lg-4'>
                 <div class="progress">
                   <span class='progress-value'>{{ costItem.selfPct }}%</span>
-                  <div class="progress-bar" role="progressbar" aria-valuenow="{{  costItem.selfPct }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ d.selfPct }}%;"></div>
+                  <progressbar value="costItem.selfPct"></progressbar>
                 </div>
               </div>
             </div>
