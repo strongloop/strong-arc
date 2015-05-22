@@ -18,6 +18,9 @@ Tracing.controller('TracingMainController', [
     $scope.selectedProcess = {};
     $scope.tracingCtx = {};
     $scope.transactionHistoryRenderToggle = false;
+
+
+
     /*
      *
      * INIT
@@ -287,6 +290,27 @@ Tracing.controller('TracingMainController', [
       if ($scope.tracingCtx.currentProcess) {
         $scope.refreshTimelineProcess();
       }
+    };
+    $scope.tracingActive = 'off';
+    $scope.tracingToggle = [
+      { id: 'off', label: 'Off', activeId: 'tracingActive' },
+      { id: 'on', label: 'On', activeId: 'tracingActive' }
+    ];
+    /*
+    *
+    * Toggle Tracing on/off
+    *
+    * - todo - move into directive
+    *
+    * */
+    $scope.$watch('tracingActive', function(nv, ov) {
+
+      $log.debug('| Is Tracing active for this host? ' + nv);
+
+    });
+     $scope.toggleTracing = function() {
+      //$scope.activeId
+      console.log('|   ' + $scope.tracingToggle);
     };
 
     /*
