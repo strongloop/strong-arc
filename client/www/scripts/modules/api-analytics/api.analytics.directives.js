@@ -27,9 +27,11 @@ ApiAnalytics.directive('slApiAnalyticsChart', [
         .scale(x)
         .orient("top");
 
-      var svg = d3.select(elem.find('.svg-chart')[0]).append("svg")
+      var svgParent = d3.select(elem.find('.svg-chart')[0]).append("svg")
         .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+        .attr("height", height + margin.top + margin.bottom);
+
+      var svg = svgParent
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -261,6 +263,8 @@ ApiAnalytics.directive('slApiAnalyticsChart', [
           .style("cursor", function(d) { return "pointer"; });
 
         //.on("click", down);
+
+        svgParent.attr('height', barHeight*d.children.length + margin.top - margin.bottom);
 
         bar.append("text")
           .attr("x", -6)
