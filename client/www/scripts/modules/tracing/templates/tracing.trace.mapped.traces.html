@@ -1,0 +1,35 @@
+<div class="panel">
+  <div class="panel-heading section-header">
+
+    <h2>Trace Sequences</h2>
+    <sl-popover-help name="trace-transseq"></sl-popover-help>
+  </div>
+  <div class="hidden alert alert-default" role="help-description">
+    <p>
+      Trace sequences are identifiable routes through a program, such as all of the code invoked to respond to an incoming http request.
+      The list below contains all of the idenfitied routes active in the program during the profiling window.
+    </p>
+    <p>
+      Select any trace below to see the distinct code paths that handle the transaction.  Each code path can be clicked on as well to see
+      details on that individual code path (including callback delays and a flame graph of execution time)
+    </p>
+  </div>
+
+  <header class='list-group-item'>
+
+    <table class="ui-table">
+      <tr>
+        <th class='toggle-control'></th>
+        <th class='transaction-badge'></th>
+        <th class='transaction-route'>Route</th>
+        <th class='transaction-jsmicros'>JS</th>
+        <th class='transaction-totalmicros'>Total</th>
+        <th class='transaction-async'>Async</th>
+        <th class='transaction-blocked'>Sync</th>
+      </tr>
+    </table>
+  </header>
+  <ul role='transactions' class='transactions list-group'>
+
+  </ul>
+</div>
