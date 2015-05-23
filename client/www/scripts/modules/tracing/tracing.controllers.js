@@ -110,13 +110,17 @@ Tracing.controller('TracingMainController', [
              * we have processes but they need to be filtered
              * */
             var filteredProcesses = [];
-
+            //filter out dead pids
+            processes = processes.filter(function(process){
+              return !process.stopTime;
+            });
             // filter out the supervisor
             processes.map(function(proc) {
               if (proc.workerId !== 0) {
                 filteredProcesses.push(proc);
               }
             });
+
             $scope.processes = filteredProcesses;
             $scope.tracingCtx.currentProcesses = filteredProcesses;
             $scope.tracingCtx.currentProcess = filteredProcesses[0];  //default
