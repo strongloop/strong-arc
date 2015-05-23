@@ -19,8 +19,6 @@ Tracing.controller('TracingMainController', [
     $scope.tracingCtx = {};
     $scope.transactionHistoryRenderToggle = false;
 
-
-
     /*
      *
      * INIT
@@ -64,19 +62,10 @@ Tracing.controller('TracingMainController', [
      *
      * */
     $scope.main = function() {
-
       if (!$scope.selectedPMHost.host) {
         // set notification banner?
         $log.warn('tracing main: no host selected');
         return;
-      }
-
-      // check for change before re-render
-      if ($scope.tracingCtx.currentPMHost) {
-        if (($scope.selectedPMHost.host === $scope.tracingCtx.currentPMHost.host) &&
-          ($scope.selectedPMHost.port === $scope.tracingCtx.currentPMHost.port)) {
-          return;
-        }
       }
 
       // make sure selected host is working
@@ -98,38 +87,45 @@ Tracing.controller('TracingMainController', [
           host:$scope.selectedPMHost.host,
           port:$scope.selectedPMHost.port
         };
-        $scope.tracingCtx.currentPMInstance = instance;
+
         $scope.tracingCtx.currentBreadcrumbs[0] = {
           instance: $scope.tracingCtx.currentPMInstance,
           label: $scope.tracingCtx.currentPMInstance.applicationName
         };
-        $scope.tracingCtx.currentPMInstance.processes(function(err, processes) {
-          if (err) {
-            $log.warn('bad get processes: ' + err.message);
-            return;
-          }
-          if (!processes) {
-            $log.warn('no processes');
-
-          }
-          /*
-           * we have processes but they need to be filtered
-           * */
-          var filteredProcesses = [];
-
-          // filter out the supervisor
-          processes.map(function(proc) {
-            if (proc.workerId !== 0) {
-              filteredProcesses.push(proc);
-            }
-          });
-          $scope.processes = filteredProcesses;
-          $scope.tracingCtx.currentProcesses = filteredProcesses;
-          $scope.tracingCtx.currentProcess = filteredProcesses[0];  //default
-          $scope.selectedProcess = filteredProcesses[0];
-          $scope.refreshTimelineProcess();
+        $scope.$apply(function() {
+          $scope.processes =  [];
 
         });
+        if ($scope.tracingCtx.currentPMInstance.tracingEnabled) {
+          $scope.tracingCtx.currentPMInstance.processes(function(err, processes) {
+            if (err) {
+              $log.warn('bad get processes: ' + err.message);
+              return;
+            }
+            if (!processes) {
+              $log.warn('no processes');
+
+            }
+            /*
+             * we have processes but they need to be filtered
+             * */
+            var filteredProcesses = [];
+
+            // filter out the supervisor
+            processes.map(function(proc) {
+              if (proc.workerId !== 0) {
+                filteredProcesses.push(proc);
+              }
+            });
+            $scope.processes = filteredProcesses;
+            $scope.tracingCtx.currentProcesses = filteredProcesses;
+            $scope.tracingCtx.currentProcess = filteredProcesses[0];  //default
+            $scope.selectedProcess = filteredProcesses[0];
+            $scope.refreshTimelineProcess();
+
+          });
+        }
+
 
       });
 
@@ -291,27 +287,27 @@ Tracing.controller('TracingMainController', [
         $scope.refreshTimelineProcess();
       }
     };
-    $scope.tracingActive = 'off';
-    $scope.tracingToggle = [
-      { id: 'off', label: 'Off', activeId: 'tracingActive' },
-      { id: 'on', label: 'On', activeId: 'tracingActive' }
-    ];
-    /*
-    *
-    * Toggle Tracing on/off
-    *
-    * - todo - move into directive
-    *
-    * */
-    $scope.$watch('tracingActive', function(nv, ov) {
 
-      $log.debug('| Is Tracing active for this host? ' + nv);
 
-    });
-     $scope.toggleTracing = function() {
-      //$scope.activeId
-      console.log('|   ' + $scope.tracingToggle);
+    $scope.turnTracingOn = function() {
+      $scope.tracingCtx.currentPMInstance.tracingStart(function(err, response) {
+        if (err) {
+          $log.warn('bad start tracing: ' + err);
+          return;
+        }
+        $scope.main();
+      });
     };
+    $scope.turnTracingOff = function() {
+      $scope.tracingCtx.currentPMInstance.tracingStop(function(err, response) {
+        if (err) {
+          $log.warn('bad stop tracing: ' + err);
+          return;
+        }
+        $scope.main();
+      });
+    };
+
 
     /*
      *

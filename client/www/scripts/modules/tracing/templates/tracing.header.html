@@ -25,8 +25,8 @@
         </div>
       </div>
       <div class="pm-tracing-toggle-container">
-        <div class="title">Tracing</div>
-        <sl-ui-switch switches="tracingToggle" classes="power"></sl-ui-switch>
+        <button class="link-cmd" ng-click="turnTracingOn()" ng-show="!tracingCtx.currentPMInstance.tracingEnabled">turn tracing on</button>
+        <button class="link-cmd" ng-click="turnTracingOff()" ng-show="tracingCtx.currentPMInstance.tracingEnabled">turn tracing off</button>
       </div>
 
     </div>
