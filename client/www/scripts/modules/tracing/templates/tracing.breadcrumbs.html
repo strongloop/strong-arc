@@ -6,4 +6,8 @@
   <li ng-hide="!tracingCtx.currentPFKey">
     <button ng-class="getSecondCrumbClass()" ng-show="tracingCtx.currentBreadcrumbs[1].label" ng-click="backToTrace()">{{tracingCtx.currentBreadcrumbs[1].label}}</button>
   </li>
+  <li ng-hide="!tracingCtx.currentTraceSequenceId">&gt;</li>
+  <li ng-hide="!tracingCtx.currentTraceSequenceId">
+    <span ng-show="tracingCtx.currentBreadcrumbs[2].label" >{{tracingCtx.currentBreadcrumbs[2].label}}</span>
+  </li>
 </ul>

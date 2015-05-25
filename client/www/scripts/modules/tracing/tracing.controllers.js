@@ -148,8 +148,10 @@ Tracing.controller('TracingMainController', [
         currentTimelineDuration: 0,
         currentTimelineKeyCollection: [],
         currentTrace: {},
+        currentTraceSequenceId: '',
         currentBreadcrumbs: [],
         currentWaterfallKey: '',
+        currentWaterfalls: [],  // when navigating trace sequence waterfalls
         currentWaterfall: {},
         currentFunction: {},
         currentProcesses: [],
@@ -285,7 +287,7 @@ Tracing.controller('TracingMainController', [
       $scope.tracingCtx.currentTransactionHistoryCollection = [];
       $scope.tracingCtx.currentWaterfallKey = '';
       $scope.tracingCtx.currentTrace = {};
-
+      $scope.tracingCtx.currentTraceSequenceId = '';
       $scope.tracingCtx.currentProcess = process;
       if ($scope.tracingCtx.currentProcess) {
         $scope.refreshTimelineProcess();
@@ -322,6 +324,7 @@ Tracing.controller('TracingMainController', [
       $scope.tracingCtx.currentTrace = {};
       $scope.tracingCtx.currentPFKey = key;
       $scope.tracingCtx.currentWaterfallKey = '';
+      $scope.tracingCtx.currentTraceSequenceId = '';
 
     };
 
@@ -429,6 +432,7 @@ Tracing.controller('TracingMainController', [
       $scope.tracingCtx.currentPFKey = '';
       $scope.tracingCtx.currentTrace = {};
       $scope.tracingCtx.currentWaterfallKey = '';
+      $scope.tracingCtx.currentTraceSequenceId = '';
     };
     /*
      *
@@ -437,6 +441,8 @@ Tracing.controller('TracingMainController', [
      * */
     $scope.backToTrace = function() {
       $scope.tracingCtx.currentWaterfallKey = '';
+      $scope.tracingCtx.currentTraceSequenceId = '';
+      $scope.tracingCtx.currentTraceSequenceId = '';
     };
     /*
      *
@@ -447,6 +453,7 @@ Tracing.controller('TracingMainController', [
       $scope.tracingCtx.currentTrace = {};
       $scope.tracingCtx.currentPFKey = '';
       $scope.tracingCtx.currentWaterfallKey = '';
+      $scope.tracingCtx.currentTraceSequenceId = '';
     };
 
 
@@ -475,7 +482,7 @@ Tracing.controller('TracingMainController', [
     $scope.$watch('tracingCtx.currentPFKey', function(newKey, oldVal) {
       if (newKey) {
         $scope.tracingCtx.currentTrace = {};
-
+        $scope.tracingCtx.currentTraceSequenceId = '';
         $timeout(function() {
           $scope.tracingCtx.currentProcess.getTrace(newKey, function(err, trace) {
             if (err) {

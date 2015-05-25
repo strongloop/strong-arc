@@ -5,13 +5,13 @@
     <div class='left col-sm-9'>
       <div class="panel">
         <div class="panel-heading section-header">
-          <h2>Waterfalls</h2>
+          <h2>Waterfalls ({{waterfallChildIndex}} of {{ tracingCtx.currentWaterfalls.length }})</h2>
           <sl-popover-help name="trace-waterfall"></sl-popover-help>
         </div>
         <div class="panel-body waterfall-summary-container">
           <div class='row'>
             <div class='col-xs-6 col-sm-6 col-md-3 col-lg-2'>
-              <button ng-click="previousWaterfall()" role='previous'
+              <button ng-click="previousWaterfall()" ng-disabled="isPrevDisabled" role='previous'
                       type="button"
                       class="ui-btn primary  square">
                 <i class="sl-icon glyphicon glyphicon-arrow-left"></i>
@@ -20,6 +20,7 @@
             <div class='col-xs-6 col-sm-6 col-md-3 col-md-push-6 col-lg-2 col-lg-push-8'>
               <button ng-click="nextWaterfall()" role='next'
                       type="button"
+                      ng-disabled="isNextDisabled"
                       class="ui-btn primary  square">
                 <i class="sl-icon glyphicon glyphicon-arrow-right"></i>
               </button>
