@@ -58,7 +58,7 @@ Tracing.directive('slTracingProcesses', [
   function(){
     return {
       restrict: 'E',
-      templateUrl: './scripts/modules/tracing/templates/tracing.processes.html',
+      templateUrl: './scripts/modules/tracing/templates/tracing.processes.html'
     }
   }
 ]);
@@ -287,97 +287,61 @@ Tracing.directive('slTracingWaterfallView', [
     }
   }
 ]);
-Tracing.directive('slTracingTraceSummary', [
+Tracing.directive('slTracingTraceMappedTraces', [
   '$log',
   'Sha1',
   'EventLoop',
-  'PieChart',
   'MSFormat',
   'TracingServices',
   '$timeout',
   'Color',
   'Slug',
-  function($log, Sha1, EventLoop, PieChart, msFormat, TracingServices, $timeout, Color, slug) {
+  function($log, Sha1, EventLoop, msFormat, TracingServices, $timeout, Color, slug) {
     return {
-      templateUrl: './scripts/modules/tracing/templates/tracing.trace.summary.html',
+      templateUrl: './scripts/modules/tracing/templates/tracing.trace.mapped.traces.html',
       restrict: 'E',
-      link: function(scope, el, attrs) {
+      link: function (scope, el, attrs) {
+        /*
+         *
+         * Mapped Traces
+         *
+         * */
         scope.mappedTransactions = [];
         scope.format = d3.format('.3s');
 
-        scope.$watch('tracingCtx.currentTraceToggleBool', function(newVal, oldVal) {
+        scope.$watch('tracingCtx.currentTraceToggleBool', function (newVal, oldVal) {
           if (scope.tracingCtx.currentTrace && scope.tracingCtx.currentTrace.transactions) {
-              scope.mappedTransactions = TracingServices.getMappedTransactions(scope.tracingCtx.currentTrace.transactions.transactions);
-              render();
+            scope.mappedTransactions = TracingServices.getMappedTransactions(scope.tracingCtx.currentTrace.transactions.transactions);
+            render();
           }
         }, true);
 
-        scope.msFormat = function(d){
-          return scope.format(d/1000000) + 's';
+        scope.msFormat = function (d) {
+          return scope.format(d / 1000000) + 's';
         };
 
-        var traceToAsyncPie = function(trace){
-          var data = [
-            {
-              key: "async",
-              value: trace.summary_stats.percentAsync,
-              fillClass: 'async'
-            },
-            {
-              key: "sync",
-              value: trace.summary_stats.percentBlocked,
-              fillClass: 'blocked'
-            }
-          ];
-          return data
-        };
 
-        var traceToIdlePie = function(trace){
-          var data = [
-            {
-              key: "idle",
-              value: trace.summary_stats.percentIdle,
-              fillClass: 'idle'
-            },
-            {
-              key: "busy",
-              value: trace.summary_stats.percentOperating,
-              fillClass: 'operating'
-            }
-          ];
-          return data
-        };
-
-        var asyncpie = new PieChart();
-        var idlepie = new PieChart();
-
-        asyncpie.init('[role="summary-async-pie"]', {fixedWidth: 200, fixedHeight: 200});
-        idlepie.init('[role=summary-idle-pie]', {fixedWidth: 200, fixedHeight: 200});
         function render() {
-          /*
-          *
-          * Pie Charts
-          *
-          *
-          * */
-          asyncpie.update(traceToAsyncPie(scope.tracingCtx.currentTrace));
-          idlepie.update(traceToIdlePie(scope.tracingCtx.currentTrace));
 
           /*
-          *
-          * Transaction Sequences
-          *
-          * */
+           *
+           * Trace Sequences
+           *
+           * */
           var trans = d3.select('[role=transactions]')
             .selectAll('li')
-            .data(scope.mappedTransactions, function key(d){ return d.id });
+            .data(scope.mappedTransactions, function key(d) {
+              return d.id
+            });
           trans.exit().remove();
 
-          // transaction enter
+          //transaction enter
           var transactionEnter = trans.enter()
             .append('li')
             .attr('class', 'list-group-item transaction')
-            .classed('expanded', function (d) { return true })
+            .classed('expanded', function (d) {
+              return true
+            });
 
           var transactionTableEnter = transactionEnter.append('table');
           var transactionTableRow = transactionTableEnter.append('tr');
@@ -385,7 +349,9 @@ Tracing.directive('slTracingTraceSummary', [
           transactionTableRow.append('td')
             .attr('class', 'toggle-control')
             .append('i')
-            .attr('data-id', function(d){ return Sha1(d.id) })
+            .attr('data-id', function (d) {
+              return Sha1(d.id)
+            })
             .attr('class', 'sl-icon sl-icon-plus-thick');
           transactionTableRow.append('td').attr('class', 'transaction-badge')
             .attr('class', 'transaction-badge')
@@ -394,7 +360,7 @@ Tracing.directive('slTracingTraceSummary', [
           transactionTableRow.append('td')
             .append('button')
             .attr('class', 'link-cmd transaction-route')
-            .on('click',function (d) {
+            .on('click', function (d) {
 
               $('ul[data-id="' + Sha1(d.id) + '"]').toggle('expanded');
               $('i[data-id="' + Sha1(d.id) + '"]').toggleClass('sl-icon sl-icon');
@@ -405,7 +371,9 @@ Tracing.directive('slTracingTraceSummary', [
                   this.eventloop.update(waterfall, scope.tracingCtx.currentTrace.functions);
                 });
             })
-            .text(function(d){ return d.id });
+            .text(function (d) {
+              return d.id
+            });
           transactionTableRow.append('td').attr('class', 'transaction-jsmicros');
           transactionTableRow.append('td').attr('class', 'transaction-totalmicros');
           transactionTableRow.append('td').attr('class', 'transaction-async');
@@ -418,20 +386,30 @@ Tracing.directive('slTracingTraceSummary', [
           * */
           var panelEnter = transactionEnter.append('ul')
             .attr('class', 'waterfalls')
-            .attr('data-id', function(d){ return Sha1(d.id) });
+            .attr('data-id', function (d) {
+              return Sha1(d.id)
+            });
 
           trans.select('span.badge')
-            .text(function(d){ return d.waterfalls.length});
+            .text(function (d) {
+              return d.waterfalls.length
+            });
 
           var waterfalls = trans.select('.waterfalls')
             .selectAll('.waterfall')
-            .data(function (d) { return d.waterfalls}, function(d){ return d.id});
+            .data(function (d) {
+              return d.waterfalls
+            }, function (d) {
+              return d.id
+            });
 
           var waterfall = waterfalls.enter()
             .append('li')
             .append('div')
             .attr('class', 'waterfall panel panel-default')
-            .attr('data-id', function(d){ return Sha1(d.id) });
+            .attr('data-id', function (d) {
+              return Sha1(d.id)
+            });
 
           var waterfallHeadingTableEnter = waterfall.append('div')
             .attr('class', 'panel-heading')
@@ -470,7 +448,7 @@ Tracing.directive('slTracingTraceSummary', [
             .attr('href', function (d) {
               return '#';
             })
-            .on('click', function(d) {
+            .on('click', function (d) {
               var waterfallId = Sha1(d.id);
               scope.tracingCtx.currentWaterfallKey = waterfallId;
               return false;
@@ -478,35 +456,59 @@ Tracing.directive('slTracingTraceSummary', [
             .append('div')
             .attr('class', 'panel-body')
             .each(function (waterfall) {
-              this.eventloop = EventLoop().init(this, { expanded: true, color: Color })
+              this.eventloop = EventLoop().init(this, {expanded: true, color: Color})
             });
 
           //exit set
           waterfalls.exit().remove();
 
           waterfalls.selectAll('.waterfall-title')
-            .text(function(d, i){ return d.costSummary.summaryText });
+            .text(function (d, i) {
+              return d.costSummary.summaryText
+            });
 
           waterfalls.selectAll('.waterfall-js')
-            .text(function(d, i){ return msFormat(d.timing_stats.jsMicros) });
+            .text(function (d, i) {
+              return msFormat(d.timing_stats.jsMicros)
+            });
 
           waterfalls.selectAll('.waterfall-total')
-            .text(function(d, i){ return msFormat(d.timing_stats.totalMicros) });
+            .text(function (d, i) {
+              return msFormat(d.timing_stats.totalMicros)
+            });
 
           waterfalls.selectAll('.waterfall-async')
-            .text(function(d, i){ return Math.floor(d.timing_stats.percentAsync) + '%' });
+            .text(function (d, i) {
+              return Math.floor(d.timing_stats.percentAsync) + '%'
+            });
 
           waterfalls.selectAll('.waterfall-sync')
-            .text(function(d, i){ return Math.floor(d.timing_stats.percentBlocked) + '%' });
+            .text(function (d, i) {
+              return Math.floor(d.timing_stats.percentBlocked) + '%'
+            });
 
           // Update
-          trans.attr('id', function(d){ return slug(d.id) });
-          trans.select('.transaction-route').text(function(d){ return (d.id === 'untagged') ? 'Untagged Waterfalls' : d.id });
-          trans.select('.transaction-jsmicros').text(function(d){ return msFormat(d.waterfalls.summary_stats.jsMicros) });
-          trans.select('.transaction-async').text(function(d){ return Math.floor(d.waterfalls.summary_stats.percentAsync) + '%' });
-          trans.select('.transaction-blocked').text(function(d){ return Math.floor(d.waterfalls.summary_stats.percentBlocked) + '%' });
-          trans.select('.transaction-totalmicros').text(function(d){ return msFormat(d.waterfalls.summary_stats.totalMicros) });
-          trans.attr('data-id', function(d){ return d.id });
+          trans.attr('id', function (d) {
+            return slug(d.id)
+          });
+          trans.select('.transaction-route').text(function (d) {
+            return (d.id === 'untagged') ? 'Untagged Waterfalls' : d.id
+          });
+          trans.select('.transaction-jsmicros').text(function (d) {
+            return msFormat(d.waterfalls.summary_stats.jsMicros)
+          });
+          trans.select('.transaction-async').text(function (d) {
+            return Math.floor(d.waterfalls.summary_stats.percentAsync) + '%'
+          });
+          trans.select('.transaction-blocked').text(function (d) {
+            return Math.floor(d.waterfalls.summary_stats.percentBlocked) + '%'
+          });
+          trans.select('.transaction-totalmicros').text(function (d) {
+            return msFormat(d.waterfalls.summary_stats.totalMicros)
+          });
+          trans.attr('data-id', function (d) {
+            return d.id
+          });
 
           // only update visible eventloops
           trans.each(function (transaction) {
@@ -522,7 +524,7 @@ Tracing.directive('slTracingTraceSummary', [
           });
 
           //finally, sort the array
-          trans.sort(function(a, b){
+          trans.sort(function (a, b) {
             return b.waterfalls.summary_stats.totalMicros - a.waterfalls.summary_stats.totalMicros
           });
 
@@ -541,18 +543,91 @@ Tracing.directive('slTracingTraceSummary', [
             }
           }, 0);
         }
+      }
+
+    }}
+]);
+/*
+* currently not displayed (v1)
+* */
+Tracing.directive('slTracingTraceSummary', [
+  '$log',
+  'Sha1',
+  'EventLoop',
+  'PieChart',
+  'MSFormat',
+  function($log, Sha1, EventLoop, PieChart, msFormat) {
+    return {
+      templateUrl: './scripts/modules/tracing/templates/tracing.trace.summary.html',
+      restrict: 'E',
+      link: function(scope, el, attrs) {
+
+        scope.msFormat = msFormat;
 
         /*
         *
-        * Pie Charts Render
+        * Pie Charts
         *
         * */
+        var traceToAsyncPie = function(trace){
+          var data = [
+            {
+              key: "async",
+              value: trace.summary_stats.percentAsync,
+              fillClass: 'async'
+            },
+            {
+              key: "sync",
+              value: trace.summary_stats.percentBlocked,
+              fillClass: 'blocked'
+            }
+          ];
+          return data
+        };
+        var asyncpie = new PieChart();
+        var idlepie = new PieChart();
+        asyncpie.init('[role="summary-async-pie"]', {fixedWidth: 200, fixedHeight: 200});
+        idlepie.init('[role=summary-idle-pie]', {fixedWidth: 200, fixedHeight: 200});
+
+        var traceToIdlePie = function(trace){
+          var data = [
+            {
+              key: "idle",
+              value: trace.summary_stats.percentIdle,
+              fillClass: 'idle'
+            },
+            {
+              key: "busy",
+              value: trace.summary_stats.percentOperating,
+              fillClass: 'operating'
+            }
+          ];
+          return data
+        };
+
+        var renderTraceSummary = function() {
+          /*
+           *
+           * Pie Charts
+           *
+           * */
+          asyncpie.update(traceToAsyncPie(scope.tracingCtx.currentTrace));
+          idlepie.update(traceToIdlePie(scope.tracingCtx.currentTrace));
+
+        };
+        /*
+        * Render
+        * */
         if (scope.tracingCtx.currentTrace.summary_stats) {
-          scope.asyncpie.update(scope.traceToAsyncPie(trace));
-          scope.idlepie.update(scope.traceToIdlePie(trace));
+          asyncpie.update(scope.traceToAsyncPie(scope.tracingCtx.currentTrace));
+          idlepie.update(scope.traceToIdlePie(scope.tracingCtx.currentTrace));
         }
 
-
+        scope.$watch('tracingCtx.currentTraceToggleBool', function(newVal, oldVal) {
+          if (scope.tracingCtx.currentTrace) {
+            renderTraceSummary();
+          }
+        }, true);
       }
     }
   }
