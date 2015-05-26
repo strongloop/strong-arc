@@ -17,7 +17,7 @@ Composer.service('AppStorageService', [
     svc.setItem = function(itemName, item) {
       var localScope = getSlScope();
       var mappingFn = function(key, val) {
-        if (typeof val === 'object' && angular.isFunction(val.then)) {
+        if (val && (typeof val === 'object') && angular.isFunction(val.then)) {
           return;
         }
 

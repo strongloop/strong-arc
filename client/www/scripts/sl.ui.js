@@ -23,9 +23,14 @@ var triggerResizeUpdate = function() {
 
 var setScrollView = function(selector) {
   var targetView = $(selector);
-  var offTop = targetView.offset().top;
-  var windowHeight = $(window).outerHeight();
-  targetView.css('height', (windowHeight - offTop));
+  if (targetView && targetView.offset()) {
+    var offTop = targetView.offset().top;
+    var windowHeight = $(window).outerHeight();
+    targetView.css('height', (windowHeight - offTop));
+  }
+  else {
+    console.log('warning: setScrollView no offset: ' + selector);
+  }
 };
 window.onresize = function(event) {
   this.triggerResizeUpdate(event);
