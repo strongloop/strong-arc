@@ -1,3 +1,23 @@
+Arc.service('ArcServices', [
+  '$http',
+  '$log',
+  function($http, $log) {
+    var svc = {};
+
+    svc.getFeatureFlags = function() {
+      return $http.get('/feature-flags')
+        .success(function(flags) {
+          return flags;
+        })
+        .error(function(error) {
+          $log.warn('bad Arc get feature flags: ' + error.message);
+        });
+    };
+
+    return svc;
+  }
+]);
+
 Arc.service('ArcNavigationService', [
   '$location',
   function($location) {
