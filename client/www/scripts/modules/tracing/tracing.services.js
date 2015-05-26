@@ -53,8 +53,8 @@ Tracing.service('TracingServices', [
       ret.cpu = t.map(function(d){
         var item = {
           _t: moment(d.ts).unix()*1000,
-          'Load Average': d['s_la'],
           'Memory Used': d['p_mu'],
+          'Load Average': d['s_la'],
           '__data': d
         };
         return item;
