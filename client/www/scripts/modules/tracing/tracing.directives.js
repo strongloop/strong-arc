@@ -135,7 +135,49 @@ Tracing.directive('slTracingHeader', [
   function($log) {
     return {
       templateUrl: './scripts/modules/tracing/templates/tracing.header.html',
-      restrict: 'E'
+      restrict: 'E',
+      controller: [
+        '$scope',
+        '$log',
+        function($scope, $log) {
+
+        }
+      ],
+      link: function(scope, el, attrs) {
+        scope.$watch('tracingCtx.currentPMInstance', function(newVal, oldVal) {
+          // pm instance is up but app is stopped
+          if (newVal && newVal.setSize === 0) {
+            $log.warn('no processes');
+            scope.tracingProcessCycleActive = false;
+            scope.showTimelineLoading = false;
+            scope.showTraceToggle = false;
+          }
+
+          // check for 'problem' text
+
+
+        }, true);
+        scope.getStatusText = function(instance) {
+          var xp = instance;
+          if (instance.status) {
+
+            if (instance.status.isProblem) {
+              return 'problem';
+
+            }
+
+            else if (instance.status.isInactive){
+              return 'app not running';
+            }
+            else {
+              return '';
+            }
+          }
+          else {
+            $log.warn('| no port on this one');
+          }
+        };
+      }
     }
   }
 ]);
@@ -777,7 +819,10 @@ Tracing.directive('slTracingTimeSeriesCharts', [
         scope.$watch('tracingCtx.currentTimeline', function(tl, oldVal) {
           if (tl) {
             if( tl.length && (tl !== oldVal)){
+              scope.cpugraph = new TimeSeries('#cpu-history-cont', scope.cpuGraphOptions)
+                .on('click', updateCurrentPFKey);
               scope.cpugraph.draw(tl);
+
             }
           }
         }, true);
@@ -820,6 +865,15 @@ Tracing.directive('slTracingTransactionHistory', [
     }
   }
 
+]);
+Tracing.directive('slTracingHostStatus', [
+  '$log',
+  function($log) {
+    return {
+      restrict: 'E',
+      templateUrl: './scripts/modules/tracing/templates/tracing.host.status.html'
+    }
+  }
 ]);
 Tracing.directive('slTracingTimelineView', [
   '$log',

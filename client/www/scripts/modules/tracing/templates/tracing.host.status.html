@@ -1,0 +1,16 @@
+<div class="status-field">
+  <span class="status ui-sans-btn host-status-display problem">
+    <span class="status-txt">{{ getStatusText(selectedPMHost) }}</span>
+
+    <span ng-show="selectedPMHost.errorType || !selectedPMHost.status.isActive">
+      <sl-popover-info icon="sl-icon sl-icon-question-mark"
+                       hideonpageclick="true" showontrue="clickedButton">
+        <h4>{{ selectedPMHost.status.problem.title }}</h4>
+        <div class="body">
+          <p>{{ selectedPMHost.status.problem.description }}</p>
+          <a href="/#/process-manager">go to Process Manager</a>
+        </div>
+      </sl-popover-info>
+    </span>
+  </span>
+</div>

@@ -14,8 +14,17 @@ Tracing.service('TracingServices', [
     svc.alertNoProcesses = function(){
 
         $rootScope.$emit('message', {
-          body: 'No processes found.  Please try another host.'
+          body: 'No processes found.  Please try another host.',
+          link: '/#process-manager',
+          linkText: 'go to Process Manager view'
         });
+    };
+    svc.alertNoHosts = function() {
+      $rootScope.$emit('message', {
+        body: 'No hosts found.  Please add a Strong PM host via the Process Manager view.',
+        link: '/#process-manager',
+        linkText: 'go to Process Manager view'
+      });
     };
     svc.getFirstPMInstance = function(pmHost, cb) {
       var PMClient = require('strong-mesh-models').Client;

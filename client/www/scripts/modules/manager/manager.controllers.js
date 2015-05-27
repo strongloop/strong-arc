@@ -470,7 +470,7 @@ Manager.controller('ManagerMainController', [
 
               // display status
               // add 'status' property
-              host = $scope.processHostStatus(host);
+              host = ManagerServices.processHostStatus(host, $scope.appContext);
               host = $scope.processPids(host);
 
               // processes
