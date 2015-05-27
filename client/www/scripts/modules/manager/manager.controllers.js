@@ -210,12 +210,21 @@ Manager.controller('ManagerMainController', [
 
             break;
           }
+          case 'invalid' : {
+            if (host.error && host.error.message.indexOf('Unknown "ServiceInstance" id "undefined"') !== -1) {
+              host.status.problem.title = 'No app found';
+              host.status.problem.description = 'There is no app here. Ensure an app has been deployed to this instance';
+            }
+            else {
+              host.status.problem.title = 'unknown exception: ' + host.errorType;
+              host.status.problem.description = host.error.message;
+            }
+            break;
+          }
           default:
             host.status.problem.title = 'unknown exception: ' + host.errorType;
             host.status.problem.description = host.error.message;
-
         }
-
       }
       /*
       *
@@ -274,7 +283,7 @@ Manager.controller('ManagerMainController', [
         else {
 
           host.status.problem.title = 'No app found';
-          host.status.problem.description = 'There is no app here. Try clicking start in the action menu to start it';
+          host.status.problem.description = 'There is no app here.  Ensure an app has been deployed to this instance';
         }
       }
 
