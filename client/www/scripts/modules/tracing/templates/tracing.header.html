@@ -26,7 +26,10 @@
       </div>
       <div class="pm-tracing-toggle-container">
         <button class="link-cmd" ng-click="turnTracingOn()" ng-show="!tracingCtx.currentPMInstance.tracingEnabled">turn tracing on</button>
-        <button class="link-cmd" ng-click="turnTracingOff()" ng-show="tracingCtx.currentPMInstance.tracingEnabled">turn tracing off</button>
+        <button class="link-cmd" ng-click="turnTracingOff()" ng-show="tracingCtx.currentPMInstance.tracingEnabled" ng-hide="tracingProcessCycleActive">turn tracing off</button>
+        <span id="TestBlink" ng-show="tracingProcessCycleActive">{{tracingOnOffCycleMessage}}
+          tracing... {{ processes.length }} of {{ targetProcessCount }} processes
+        </span>
       </div>
 
     </div>
