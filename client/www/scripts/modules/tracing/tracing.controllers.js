@@ -210,7 +210,7 @@ Tracing.controller('TracingMainController', [
       });
 
       $scope.tracingCtx.currentTimelineTimestamp = TracingServices.getCurrentTimelineTimestamp();
-      $scope.updateTransactionHistory();
+      //$scope.updateTransactionHistory();  // removed to save overhead as trace history is turned off
     }
     /*
      *
