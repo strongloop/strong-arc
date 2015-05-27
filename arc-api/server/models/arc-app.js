@@ -70,6 +70,7 @@ module.exports = function(ArcApp) {
       "name": "API Analytics",
       "description": "Get detailed information about your API.",
       "disabled": false,
+      "featureFlag": "feature:api-analytics",
       "beta": false,
       "supports": "*"
     },
