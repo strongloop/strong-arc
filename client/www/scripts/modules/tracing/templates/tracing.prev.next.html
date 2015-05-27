@@ -1,8 +1,8 @@
 <div class="timeline-nav-container" ng-hide="!tracingCtx.currentPFKey">
-  <button class="ui-btn primary  square" ng-click="prevPFKey()">
+  <button class="ui-btn primary  square" ng-click="prevPFKey()"  ng-disabled="isFirstPFKey">
     <i class="sl-icon glyphicon glyphicon-arrow-left"></i>
   </button>
-  <button class="ui-btn primary  square" ng-click="nextPFKey()">
+  <button class="ui-btn primary  square" ng-click="nextPFKey()" ng-disabled="isLastPFKey">
     <i class="sl-icon glyphicon glyphicon-arrow-right"></i>
   </button>
 </div>
