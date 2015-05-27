@@ -326,10 +326,11 @@ Tracing.directive('slTracingTraceMappedTraces', [
   'EventLoop',
   'MSFormat',
   'TracingServices',
+  'ArcServices',
   '$timeout',
   'Color',
   'Slug',
-  function($log, Sha1, EventLoop, msFormat, TracingServices, $timeout, Color, slug) {
+  function($log, Sha1, EventLoop, msFormat, TracingServices, ArcServices, $timeout, Color, slug) {
     return {
       templateUrl: './scripts/modules/tracing/templates/tracing.trace.mapped.traces.html',
       restrict: 'E',
@@ -345,7 +346,29 @@ Tracing.directive('slTracingTraceMappedTraces', [
         scope.$watch('tracingCtx.currentTraceToggleBool', function (newVal, oldVal) {
           if (scope.tracingCtx.currentTrace && scope.tracingCtx.currentTrace.transactions) {
             scope.mappedTransactions = TracingServices.getMappedTransactions(scope.tracingCtx.currentTrace.transactions.transactions);
-            render();
+
+            // check if we need to filter untagged waterfalls
+            ArcServices.getFeatureFlags()
+              .then(function(flags) {
+                var includeUntagged = false;
+                for (var i = 0;i < flags.data.length;i++) {
+                  if (flags.data[i] === TRACING_CONST.FF_UNTAGGED_WATERFALLS) {
+                    includeUntagged = true;
+                    break;
+                  }
+                }
+                if (!includeUntagged) {
+                  scope.mappedTransactions = scope.mappedTransactions.filter(function(transaction) {
+                    return transaction.id !== 'untagged';
+                  });
+                }
+                render();
+              })
+              .catch(function(error) {
+                $log.warn('bad get feature flags: ' + error.message);
+                // render regardless
+                render();
+              });
           }
         }, true);
 
