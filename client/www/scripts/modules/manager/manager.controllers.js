@@ -210,7 +210,7 @@ Manager.controller('ManagerMainController', [
 
             break;
           }
-          case 'invalid' : {
+          case 'invalid': {
             if (host.error && host.error.message.indexOf('Unknown "ServiceInstance" id "undefined"') !== -1) {
               host.status.problem.title = 'No app found';
               host.status.problem.description = 'There is no app here. Ensure an app has been deployed to this instance';
