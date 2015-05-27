@@ -377,10 +377,15 @@ Tracing.controller('TracingMainController', [
     $scope.prevPFKey = function() {
       if ($scope.tracingCtx.currentTimelineKeyCollection) {
         var currIndex = $scope.tracingCtx.currentTimelineKeyCollection.indexOf($scope.tracingCtx.currentPFKey);
+        if (currIndex === 1) {
+          $scope.isFirstPFKey = true;
+        }
         if (currIndex > 1) {
           $scope.tracingCtx.currentTrace = {};
           $scope.tracingCtx.currentPFKey = $scope.tracingCtx.currentTimelineKeyCollection[currIndex - 1];
           $scope.tracingCtx.currentWaterfallKey = '';
+          $scope.isFirstPFKey = false;
+          $scope.isLastPFKey = false;
         }
       }
     };
@@ -396,6 +401,11 @@ Tracing.controller('TracingMainController', [
             $scope.tracingCtx.currentTrace = {};
             $scope.tracingCtx.currentPFKey = $scope.tracingCtx.currentTimelineKeyCollection[currIndex + 1];
             $scope.tracingCtx.currentWaterfallKey = '';
+            $scope.isLastPFKey = false;
+            $scope.isFirstPFKey = false;
+          }
+          else {
+            $scope.isLastPFKey = true;
           }
         }
       }
