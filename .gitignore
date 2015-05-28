@@ -15,3 +15,4 @@ client/test/integration/sandbox/
 .strong-pm
 npm-debug.log
 client/www/scripts/modules/tracing/tracing.viz.module.js
+client/www/scripts/vendor

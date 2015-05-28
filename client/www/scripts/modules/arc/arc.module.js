@@ -57,7 +57,8 @@ var Arc = angular.module('Arc', [
   'ui.slider',
   'checklist-model',
   'ngGrid',
-  'angularFileUpload',
+  //'angularFileUpload',
+  'ngFileUpload',
   'segmentio',
   'angularMoment',
   'ngClipboard'

@@ -8,7 +8,7 @@ describe('modelPropertyTypes', function() {
     });
   });
 
-  it('contains all core types', function() {
+  it.skip('contains all core types', function() {
     console.log('modelPropertyTypes', modelPropertyTypes);
     expect(modelPropertyTypes).to.include.members([
       'string',
