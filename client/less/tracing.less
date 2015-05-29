@@ -18,6 +18,7 @@
 
       .pm-host-selector-container {
         display: inline-block;
+       // border:1px solid #cccccc;
         .dropdown-menu {
           top:6rem;
           left:0;
@@ -25,14 +26,17 @@
       }
       .pm-pids-container {
         display: inline-block;
-        position:absolute;
-        top:5px;
+      //  border:1px solid #cccccc;
         padding-left:8px;
         .sl-pid-selector {
           .sl-profiler-processes {
             min-height:0;
           }
         }
+      }
+      .pm-status-container {
+     //   border:1px solid #cccccc;
+        display:inline-block;
       }
       .pm-tracing-toggle-container {
 //        float:right;
@@ -123,6 +127,7 @@
 
 }
 [data-id="TracingTimeseriesChart"] {
+  width:100%;
   table {
     width: 100%;
 

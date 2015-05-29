@@ -5,11 +5,13 @@ Tracing.controller('TracingMainController', [
   '$interval',
   '$location',
   'TracingServices',
+  'ManagerServices',
   'TraceEnhance',
-  function($scope, $log, $timeout, $interval, $location, TracingServices, TraceEnhance) {
+  function($scope, $log, $timeout, $interval, $location, TracingServices, ManagerServices, TraceEnhance) {
 
     $scope.pm = {};
     $scope.tracingProcessCycleActive = false;
+    $scope.showTraceToggle = false;
     $scope.targetProcessCount = 0;
     $scope.tracingOnOffCycleMessage = 'starting';
     $scope.systemFeedback = [];  // FEEDBACK
@@ -41,13 +43,27 @@ Tracing.controller('TracingMainController', [
           $scope.managerHosts = TracingServices.getManagerHosts(function(hosts) {
             $scope.$apply(function() {
               $scope.managerHosts = hosts;
-              if (!$scope.selectedPMHost.host) {
-                $scope.selectedPMHost = {
-                  host: $scope.managerHosts[0].host,
-                  port: $scope.managerHosts[0].port
-                };
+              if ($scope.managerHosts && $scope.managerHosts.length > 0) {
+                if (!$scope.selectedPMHost.host) {
+                  $scope.selectedPMHost = $scope.managerHosts[0];
+                }
+                $scope.main();
               }
-              $scope.main();
+              else {
+                TracingServices.alertNoHosts();
+                $scope.selectedPMHost = {
+                  error: 'no PM Hosts available',
+                  errorType: 'NOHOSTS',
+                  status: {
+                    isProblem: true,
+                    problem: {
+                      title:'No PM Hosts available',
+                      description:'You need to add a PM Host via the Process Manager view'
+                    }
+                  }
+                };
+                $scope.showTimelineLoading = false;
+              }
             });
           });
 
@@ -85,27 +101,39 @@ Tracing.controller('TracingMainController', [
              filteredProcesses.push(proc);
           }
         });
-        if (filteredProcesses.length !== pmInstance.setSize) {
-          if (filteredProcesses.length === 1 && ($scope.processes.length === 0)) {
+        /*
+        *
+        * Note to self - account for 0 processes with a setSize greater than 0
+        * - when app is stopped eg.
+        *
+        * */
+        if (pmInstance.setSize > 0) {
+          if (filteredProcesses.length !== pmInstance.setSize) {
+            if (filteredProcesses.length === 1 && ($scope.processes.length === 0)) {
+              $scope.tracingCtx.currentProcess = filteredProcesses[0];  //default
+              $scope.selectedProcess = filteredProcesses[0];
+              $scope.tracingCtx.currentProcesses = filteredProcesses;
+              $scope.refreshTimelineProcess();
+            }
+            $scope.processes = filteredProcesses;
+            $timeout(function() {
+              $scope.loadTracingProcesses(pmInstance);
+            }, 1000);
+          }
+          else {
             $scope.tracingCtx.currentProcess = filteredProcesses[0];  //default
             $scope.selectedProcess = filteredProcesses[0];
+            $scope.processes = filteredProcesses;
             $scope.tracingCtx.currentProcesses = filteredProcesses;
+            $scope.tracingProcessCycleActive = false;
             $scope.refreshTimelineProcess();
           }
-          $scope.processes = filteredProcesses;
-          $timeout(function() {
-            $scope.loadTracingProcesses(pmInstance);
-          }, 1000);
         }
         else {
-          $scope.tracingCtx.currentProcess = filteredProcesses[0];  //default
-          $scope.selectedProcess = filteredProcesses[0];
-          $scope.processes = filteredProcesses;
-          $scope.tracingCtx.currentProcesses = filteredProcesses;
-          $scope.tracingProcessCycleActive = false;
-          $scope.refreshTimelineProcess();
-        }
+          $scope.processes = [];
+          $scope.tracingCtx.currentProcesses = [];
 
+        }
       });
     };
 
@@ -120,6 +148,16 @@ Tracing.controller('TracingMainController', [
         $log.warn('tracing main: no host selected');
         return;
       }
+      var appContext = {
+        name: '',
+        version: ''
+      };
+      if ($scope.selectedPMHost.app && $scope.selectedPMHost.app.name) {
+        appContext.name = $scope.selectedPMHost.app.name;
+        appContext.version = $scope.selectedPMHost.app.version;
+      }
+
+      $scope.selectedPMHost = ManagerServices.processHostStatus($scope.selectedPMHost, appContext);
 
       // make sure selected host is working
       TracingServices.getFirstPMInstance($scope.selectedPMHost, function(err, instance) {
@@ -129,16 +167,15 @@ Tracing.controller('TracingMainController', [
             $scope.resetTracingCtx();
             TracingServices.alertNoProcesses();
           });
+          $scope.showTraceToggle = false;
           $scope.showTimelineLoading = false;
           return;
         }
+        $scope.showTraceToggle = true;
         $scope.tracingCtx.currentPMInstance = instance;
         $scope.targetProcessCount = $scope.tracingCtx.currentPMInstance.setSize;
 
-        $scope.tracingCtx.currentPMHost = {
-          host:$scope.selectedPMHost.host,
-          port:$scope.selectedPMHost.port
-        };
+        $scope.tracingCtx.currentPMHost = $scope.selectedPMHost;
 
         $scope.tracingCtx.currentBreadcrumbs[0] = {
           instance: $scope.tracingCtx.currentPMInstance,
@@ -149,10 +186,14 @@ Tracing.controller('TracingMainController', [
 
         });
         if ($scope.tracingCtx.currentPMInstance.tracingEnabled) {
-          $scope.loadTracingProcesses($scope.tracingCtx.currentPMInstance);
+          $scope.$apply(function() {
+            $scope.loadTracingProcesses($scope.tracingCtx.currentPMInstance);
+          });
         }
         else {
-          $scope.showTimelineLoading = false;
+          $scope.$apply(function() {
+            $scope.showTimelineLoading = false;
+          });
         }
       });
 
@@ -172,6 +213,7 @@ Tracing.controller('TracingMainController', [
         currentTimelineKeyCollection: [],
         currentTrace: {},
         currentTraceSequenceId: '',
+        currentManagerHost: {},
         currentBreadcrumbs: [],
         currentWaterfallKey: '',
         currentWaterfalls: [],  // when navigating trace sequence waterfalls
@@ -293,7 +335,7 @@ Tracing.controller('TracingMainController', [
       if (host.host && host.port) {
         $scope.resetTracingCtx();
         $scope.selectedPMHost = host;
-
+        $scope.tracingCtx.currentManagerHost
         $scope.main();
       }
     };
@@ -338,6 +380,7 @@ Tracing.controller('TracingMainController', [
       });
     };
     $scope.turnTracingOff = function() {
+
       $scope.tracingCtx.currentPMInstance.processes = [];
       $scope.processes = [];
       $scope.tracingCtx.currentTimeline = [];
@@ -355,6 +398,7 @@ Tracing.controller('TracingMainController', [
           $scope.tracingProcessCycleActive = false;
         }, 5000);
       });
+      $scope.resetTracingCtx();
     };
 
 
