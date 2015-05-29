@@ -187,11 +187,13 @@ Tracing.controller('TracingMainController', [
         });
         if ($scope.tracingCtx.currentPMInstance.tracingEnabled) {
           $scope.$apply(function() {
+            $scope.switch3 = 'on';
             $scope.loadTracingProcesses($scope.tracingCtx.currentPMInstance);
           });
         }
         else {
           $scope.$apply(function() {
+            $scope.switch3 = 'off';
             $scope.showTimelineLoading = false;
           });
         }
@@ -322,6 +324,10 @@ Tracing.controller('TracingMainController', [
     };
 
 
+    $scope.switches3 = [
+      { id: 'off', label: 'Off', activeId: 'switch3' },
+      { id: 'on', label: 'On', activeId: 'switch3' }
+    ];
     /*
 
     DATA MODEL CHANGERS
