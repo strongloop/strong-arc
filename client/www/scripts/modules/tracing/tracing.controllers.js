@@ -23,7 +23,10 @@ Tracing.controller('TracingMainController', [
     $scope.selectedProcess = {};
     $scope.tracingCtx = {};
     $scope.transactionHistoryRenderToggle = false;
-
+    $scope.tracingOnOff = [
+      { id: 'off', label: 'Off', activeId: 'isTracingOn' },
+      { id: 'on', label: 'On', activeId: 'isTracingOn' }
+    ];
     /*
      *
      * INIT
@@ -136,6 +139,18 @@ Tracing.controller('TracingMainController', [
         }
       });
     };
+    $scope.setTracingOnOffToggle = function(value) {
+      if (value == 'on') {
+        $scope.isTracingOn = 'on';
+        $scope.tracingOnOff[0].isActive = false;
+        $scope.tracingOnOff[1].isActive = true;
+      }
+      else if (value === 'off') {
+        $scope.isTracingOn = 'off';
+        $scope.tracingOnOff[0].isActive = true;
+        $scope.tracingOnOff[1].isActive = false;
+      }
+    };
 
     /*
      *
@@ -187,13 +202,13 @@ Tracing.controller('TracingMainController', [
         });
         if ($scope.tracingCtx.currentPMInstance.tracingEnabled) {
           $scope.$apply(function() {
-            $scope.switch3 = 'on';
+            $scope.setTracingOnOffToggle('on');
             $scope.loadTracingProcesses($scope.tracingCtx.currentPMInstance);
           });
         }
         else {
           $scope.$apply(function() {
-            $scope.switch3 = 'off';
+            $scope.setTracingOnOffToggle('off');
             $scope.showTimelineLoading = false;
           });
         }
@@ -324,10 +339,7 @@ Tracing.controller('TracingMainController', [
     };
 
 
-    $scope.switches3 = [
-      { id: 'off', label: 'Off', activeId: 'switch3' },
-      { id: 'on', label: 'On', activeId: 'switch3' }
-    ];
+
     /*
 
     DATA MODEL CHANGERS
@@ -571,6 +583,7 @@ Tracing.controller('TracingMainController', [
 
 
 
+    // Watches   $watch
     /*
      *
      * PF KEY WATCH
@@ -605,6 +618,18 @@ Tracing.controller('TracingMainController', [
       }
     }, true);
 
+    $scope.$watch('tracingOnOff', function(newVal, oldVal) {
+      if ($scope.tracingCtx.currentPMInstance.tracingStop) {
+        // on switch activated
+        if (newVal[1].isActive) {
+          $scope.turnTracingOn();
+        }
+        else {
+          $scope.turnTracingOff();
+        }
+      }
+
+    }, true);
     window.onresize = function() {
       window.setScrollView('.tracing-content-container');
     };
