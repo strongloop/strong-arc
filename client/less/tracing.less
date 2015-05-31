@@ -12,21 +12,21 @@
   }
   .tracing-header-container {
 
-    .pid-selector-container {
+    .tracing-header-controls-container {
       font-size:1.4rem;
       color:#999999;
+    }
+
 
       .pm-host-selector-container {
-        display: inline-block;
-       // border:1px solid #cccccc;
+
         .dropdown-menu {
           top:6rem;
           left:0;
         }
       }
       .pm-pids-container {
-        display: inline-block;
-      //  border:1px solid #cccccc;
+
         padding-left:8px;
         .sl-pid-selector {
           .sl-profiler-processes {
@@ -35,13 +35,17 @@
         }
       }
       .pm-status-container {
-     //   border:1px solid #cccccc;
-        display:inline-block;
+
       }
       .pm-tracing-toggle-container {
-//        float:right;
+
+        .title {
+          margin-left:3.6rem;
+          margin-bottom: .4rem;
+        }
       }
-    }
+      .tracing-ticker-container {
+      }
 
   }
 
@@ -100,8 +104,14 @@
 
   }
 
+  .tracing-header-controls-container {
+    .title {
+      color: #999999;
+      display: block;
+      margin-bottom: 0.75rem;
+    }
+  }
   .pm-host-select {
-//    margin-top:2.8rem;
     .title {
       margin-bottom: 0.75rem;
     }
@@ -170,9 +180,6 @@
 
     cursor: pointer;
 
-    svg {
-      //      display: none;
-    }
   }
 
   .transaction.expanded {
@@ -262,15 +269,15 @@
   .hover-line {
     fill: none;
     stroke: #ff0000;
-    stroke-width: 5;
+    stroke-width: 1px;
     shape-rendering: crispEdges;
   }
 
   .select-line {
     fill: none;
-    stroke: #FFFF66;
+    stroke: #000000;
     shape-rendering: crispEdges;
-    stroke-width: 3px;
+    stroke-width: 1px;
   }
 
   .gradientLine {
@@ -371,16 +378,13 @@
   position:absolute;
   text-align: center;
   margin-right:8rem;
-  top:0;
+  top:8.6rem;
   right:2rem;
 
   button.ui-btn.square {
     margin:0 auto 0 auto;
-
-
     padding:.25rem .5rem;
-//    width:25px;
-//    height:25px;
+
   }
 }
 .panel-info > .panel-heading {

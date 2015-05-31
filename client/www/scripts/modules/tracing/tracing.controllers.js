@@ -4,11 +4,11 @@ Tracing.controller('TracingMainController', [
   '$timeout',
   '$interval',
   '$location',
+  'MSFormat',
   'TracingServices',
   'ManagerServices',
   'TraceEnhance',
-  function($scope, $log, $timeout, $interval, $location, TracingServices, ManagerServices, TraceEnhance) {
-
+  function($scope, $log, $timeout, $interval, $location, msFormat, TracingServices, ManagerServices, TraceEnhance) {
     $scope.pm = {};
     $scope.tracingProcessCycleActive = false;
     $scope.showTraceToggle = false;
@@ -23,10 +23,53 @@ Tracing.controller('TracingMainController', [
     $scope.selectedProcess = {};
     $scope.tracingCtx = {};
     $scope.transactionHistoryRenderToggle = false;
+
     $scope.tracingOnOff = [
       { id: 'off', label: 'Off', activeId: 'isTracingOn' },
       { id: 'on', label: 'On', activeId: 'isTracingOn' }
     ];
+    $scope.sysTime = {ticker:20};
+    var updateInterval;
+    $scope.tracingUpdateInterval = 20;
+    $scope.startTicker = function() {
+      $scope.sysTime.ticker = 20;
+      $scope.startTimer();
+    };
+    $scope.restartTicker = function() {
+      $scope.sysTime.ticker = 20;
+      $scope.startTimer();
+    };
+    $scope.startTimer = function() {
+      // cancel the previous interval if it wasn't cleaned up
+      $scope.stopTimer();
+
+      updateInterval = $interval(function() {
+        // make sure we have a valid process to work with
+        if ($scope.tracingCtx.currentProcess.pid) {
+          $scope.sysTime.ticker--;
+
+          if ($scope.sysTime.ticker < 1) {
+            $scope.sysTime.ticker = $scope.tracingUpdateInterval;
+            $log.debug('make the api call');
+            //getMetrics();
+            $scope.refreshTimelineProcess();
+          }
+        }
+        else {
+          $scope.stopTimer();
+        }
+      }, 1000);
+
+      $scope.isTimerRunning = true;
+    };
+    $scope.stopTimer = function() {
+      if (updateInterval !== null) {
+        $interval.cancel(updateInterval);
+        updateInterval = null;
+        $scope.isTimerRunning = false;
+      }
+    };
+
     /*
      *
      * INIT
@@ -111,8 +154,10 @@ Tracing.controller('TracingMainController', [
         *
         * */
         if (pmInstance.setSize > 0) {
+          $scope.startTicker();
           if (filteredProcesses.length !== pmInstance.setSize) {
             if (filteredProcesses.length === 1 && ($scope.processes.length === 0)) {
+
               $scope.tracingCtx.currentProcess = filteredProcesses[0];  //default
               $scope.selectedProcess = filteredProcesses[0];
               $scope.tracingCtx.currentProcesses = filteredProcesses;
@@ -265,11 +310,9 @@ Tracing.controller('TracingMainController', [
       });
       $scope.$apply(function() {
         $scope.tracingCtx.currentTimeline = self.timeline;
+        $scope.tracingCtx.currentTimelineDuration = msFormat($scope.getCurrentTimelineDuration());
 
       });
-
-      $scope.tracingCtx.currentTimelineTimestamp = TracingServices.getCurrentTimelineTimestamp();
-      //$scope.updateTransactionHistory();  // removed to save overhead as trace history is turned off
     }
     /*
      *
@@ -284,6 +327,7 @@ Tracing.controller('TracingMainController', [
           return;
         }
 
+        $log.debug('|  PFKey Count: ' + rawResponse.length);
         $scope.tracingCtx.currentPFKey = '';
 
         $scope.tracingCtx.timelineStart = 0;
@@ -333,7 +377,7 @@ Tracing.controller('TracingMainController', [
       }
       var dataPointCount = $scope.tracingCtx.currentTimeline.length;
       if (dataPointCount > 0) {
-        return $scope.tracingCtx.currentTimeline[dataPointCount - 1].Uptime
+        return $scope.tracingCtx.currentTimeline[dataPointCount - 1].__data['p_ut'];
       }
       return 0;
     };
@@ -548,6 +592,8 @@ Tracing.controller('TracingMainController', [
       $scope.tracingCtx.currentTrace = {};
       $scope.tracingCtx.currentWaterfallKey = '';
       $scope.tracingCtx.currentTraceSequenceId = '';
+      $scope.startTicker();
+
     };
     /*
      *
@@ -558,6 +604,7 @@ Tracing.controller('TracingMainController', [
       $scope.tracingCtx.currentWaterfallKey = '';
       $scope.tracingCtx.currentTraceSequenceId = '';
       $scope.tracingCtx.currentTraceSequenceId = '';
+      $scope.stopTimer();
     };
     /*
      *
@@ -569,6 +616,7 @@ Tracing.controller('TracingMainController', [
       $scope.tracingCtx.currentPFKey = '';
       $scope.tracingCtx.currentWaterfallKey = '';
       $scope.tracingCtx.currentTraceSequenceId = '';
+      $scope.stopTimer();
     };
 
 
@@ -608,6 +656,7 @@ Tracing.controller('TracingMainController', [
             var obj = JSON.parse(trace);
             var TE = TraceEnhance(obj);
             $scope.tracingCtx.currentTrace = TE;
+            $scope.stopTimer();
             // too expensive to compare the trace
             $scope.$apply(function() {
               $scope.tracingCtx.currentTraceToggleBool = !$scope.tracingCtx.currentTraceToggleBool;
@@ -615,6 +664,11 @@ Tracing.controller('TracingMainController', [
           });
 
         }, 100);
+      }
+      else {
+
+        $scope.startTicker();
+
       }
     }, true);
 
