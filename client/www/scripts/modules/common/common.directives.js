@@ -152,7 +152,7 @@ Common.directive('slCommonLoadingIndicator', [
 
         switch($scope.size){
           case 'small':
-            $scope.props = '{radius:6, width:2, length: 4, color:\'#999\'}';
+            $scope.props = '{ radius:6, width:2, length: 4, color:\'#999\'}';
             break;
           case 'large':
           default:
@@ -456,25 +456,37 @@ Common.directive('slMessageGlobal', [
           }
         })
       },
-      controller: function($scope, $rootScope, $log){
+      controller:['$state', '$scope', '$rootScope', '$log', function($state, $scope, $rootScope, $log){
         $rootScope.$on('dismissMessage', function($event){
           $scope.showMessage = false;
         });
 
         $scope.onClickDismiss = function($event){
           $scope.showMessage = false;
+          if ($scope.stateOnClose) {
+            $state.go($scope.stateOnClose);
+          }
         };
 
+        $scope.links = [];
         $rootScope.$on('message', function($event, data){
+          $scope.stateOnClose = data.stateOnClose;
           $scope.body = data.body;
-          $scope.link = data.link;
-          $scope.linkText = data.linkText;
+          if (data.link) {
+            $scope.links[0] = {
+              link: data.link,
+              linkText: data.linkText
+            };
+          }
+          if (data.links) {
+            $scope.links = data.links;
+          }
           $scope.email = 'mailto:'+data.email+'?subject=Licensing';
           $scope.emailText = data.emailText;
 
           $scope.showMessage = true;
         });
-      }
+      }]
     };
   }
 ]);

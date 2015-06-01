@@ -2,9 +2,9 @@
   <div class="body">
     {{body}}
     <p>
-      <a href="{{link}}" ng-if="link">
-        <span ng-if="linkText">{{linkText}}</span>
-        <span ng-if="!linkText">Get more details</span>
+      <a ng-repeat="link in links" href="{{link.link}}">
+        <span ng-if="link.linkText">{{link.linkText}}</span>
+        <span ng-if="!link.linkText">Get more details</span>
       </a>
     </p>
     <p ng-if="email">

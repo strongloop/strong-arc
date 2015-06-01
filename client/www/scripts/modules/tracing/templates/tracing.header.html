@@ -16,10 +16,11 @@
         </div>
       </div>
       <!-- Processes list -->
-      <div data-ui-type="cell" ng-show="processes.length > 0" class="pm-pids-container">
-        <div class="sl-pid-selector">
+      <div data-ui-type="cell" class="pm-pids-container">
+        <div class="sl-pid-selector" ng-show="processes.length > 0">
           <sl-tracing-processes></sl-tracing-processes>
         </div>
+        <span class="loading" sl-common-loading-indicator size="small" ng-show="tracingProcessCycleActive"></span>
       </div>
       <!-- Host status / Tracing on/off -->
       <div data-ui-type="cell" class="pm-status-container">

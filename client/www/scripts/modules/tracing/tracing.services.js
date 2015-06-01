@@ -15,15 +15,31 @@ Tracing.service('TracingServices', [
 
         $rootScope.$emit('message', {
           body: 'No processes found.  Please try another host.',
-          link: '/#process-manager',
-          linkText: 'go to Process Manager view'
+          links: [{
+              link: '/#process-manager',
+              linkText: 'go to Process Manager view'
+            },
+            {
+              link: 'http://docs.strongloop.com/display/SLC/Tracing',
+              linkText: 'more info...'
+            }
+          ]
         });
     };
     svc.alertNoHosts = function() {
       $rootScope.$emit('message', {
         body: 'No hosts found.  Please add a Strong PM host via the Process Manager view.',
-        link: '/#process-manager',
-        linkText: 'go to Process Manager view'
+        stateOnClose: 'process-manager',
+        links: [{
+            link: '/#process-manager',
+            linkText: 'go to Process Manager view'
+          },
+          {
+            link: 'http://docs.strongloop.com/display/SLC/Tracing',
+            linkText: 'more info...'
+          }
+        ]
+
       });
     };
     svc.getFirstPMInstance = function(pmHost, cb) {
