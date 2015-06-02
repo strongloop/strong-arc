@@ -1,4 +1,5 @@
 <div data-id="TraceView" class='trace-view'>
+  <span class="loading" sl-common-loading-indicator size="medium" ng-show="isShowTraceSequenceLoader"></span>
   <div ng-show="showTraceView()" class="panel">
     <sl-tracing-trace-mapped-traces></sl-tracing-trace-mapped-traces>
   </div>
