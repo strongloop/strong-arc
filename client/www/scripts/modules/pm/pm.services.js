@@ -345,9 +345,9 @@ PM.service('PMPidService', [
                  return PMServiceProcess.find(serverConfig, {serviceInstanceId: firstInstance.id})
                    .then(function(response) {
 
-                     //filter out dead pids
+                     //filter out dead pids and supervisor
                      response = response.filter(function(process){
-                       return !process.stopTime;
+                       return (!process.stopTime && (process.workerId !== 0));
                      });
 
                      for (var i = 0;i < response.length;i++) {
