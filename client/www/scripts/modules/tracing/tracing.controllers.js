@@ -654,14 +654,16 @@ Tracing.controller('TracingMainController', [
               $log.warn('bad get trace: ' + err.message);
               return {};
             }
-            var obj = JSON.parse(trace);
-            var TE = TraceEnhance(obj);
-            $scope.tracingCtx.currentTrace = TE;
-            $scope.stopTimer();
-            // too expensive to compare the trace
-            $scope.$apply(function() {
-              $scope.tracingCtx.currentTraceToggleBool = !$scope.tracingCtx.currentTraceToggleBool;
-            });
+            $timeout(function() {
+              var obj = JSON.parse(trace);
+              var TE = TraceEnhance(obj);
+              $scope.tracingCtx.currentTrace = TE;
+              $scope.stopTimer();
+              // too expensive to compare the trace
+              $scope.$apply(function () {
+                $scope.tracingCtx.currentTraceToggleBool = !$scope.tracingCtx.currentTraceToggleBool;
+              });
+            }, 20);
           });
 
         }, 100);
