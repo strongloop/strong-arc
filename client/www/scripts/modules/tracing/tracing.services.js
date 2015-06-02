@@ -79,7 +79,7 @@ Tracing.service('TracingServices', [
         var item = {
           _t: moment(d.ts).unix()*1000,
           'Memory Used': d['p_mu'],
-          'Load Average': d['s_la'],
+          'OS Load Average': d['s_la'],
           '__data': d
         };
         return item;

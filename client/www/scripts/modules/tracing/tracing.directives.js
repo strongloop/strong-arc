@@ -772,7 +772,7 @@ Tracing.directive('slTracingTimeSeriesCharts', [
             'y1': 'num'
           },
           keySchema: {
-            'Load Average': {
+            'OS Load Average': {
               class: 'cx-monitor-loadavg',
               type: 'line',
               y: 'y'
