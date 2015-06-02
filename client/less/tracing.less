@@ -11,6 +11,7 @@
 
   }
   .tracing-header-container {
+    margin-top: .7rem;
 
     .tracing-header-controls-container {
       font-size:1.4rem;
@@ -27,16 +28,15 @@
       }
       .pm-pids-container {
 
-        padding-left:8px;
+        position:relative;
+
         .sl-pid-selector {
           .sl-profiler-processes {
             min-height:0;
           }
         }
       }
-      .pm-status-container {
-
-      }
+      .pm-status-container {}
       .pm-tracing-toggle-container {
 
         .title {
@@ -391,6 +391,13 @@
   color: #222222;
   background-color: #eeeeee;
   border-color: #ffffff;
+}
+
+[data-id="trace-sequence-container"] {
+  span.inline-help-text {
+    font-weight:400;
+    color:#333333;
+  }
 }
 .trace-summary {
   table {

@@ -161,6 +161,7 @@ Tracing.controller('TracingMainController', [
               $scope.tracingCtx.currentProcess = filteredProcesses[0];  //default
               $scope.selectedProcess = filteredProcesses[0];
               $scope.tracingCtx.currentProcesses = filteredProcesses;
+              $scope.startTicker();
               $scope.refreshTimelineProcess();
             }
             $scope.processes = filteredProcesses;
