@@ -22,6 +22,7 @@ Tracing.controller('TracingMainController', [
     $scope.showTimelineLoading = true;
     $scope.selectedProcess = {};
     $scope.tracingCtx = {};
+    $scope.isShowTraceSequenceLoader = false;
     $scope.transactionHistoryRenderToggle = false;
 
     $scope.tracingOnOff = [
@@ -274,6 +275,7 @@ Tracing.controller('TracingMainController', [
         currentTimelineTimestamp: '',
         currentTimelineDuration: 0,
         currentTimelineKeyCollection: [],
+        mappedTransactions: [],
         currentTrace: {},
         currentTraceSequenceId: '',
         currentManagerHost: {},
@@ -646,6 +648,7 @@ Tracing.controller('TracingMainController', [
      * */
     $scope.$watch('tracingCtx.currentPFKey', function(newKey, oldVal) {
       if (newKey) {
+        $scope.isShowTraceSequenceLoader = true;
         $scope.tracingCtx.currentTrace = {};
         $scope.tracingCtx.currentTraceSequenceId = '';
         $timeout(function() {

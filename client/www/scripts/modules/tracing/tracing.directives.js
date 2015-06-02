@@ -382,12 +382,11 @@ Tracing.directive('slTracingTraceMappedTraces', [
          * Mapped Traces
          *
          * */
-        scope.mappedTransactions = [];
         scope.format = d3.format('.3s');
 
         scope.$watch('tracingCtx.currentTraceToggleBool', function (newVal, oldVal) {
           if (scope.tracingCtx.currentTrace && scope.tracingCtx.currentTrace.transactions) {
-            scope.mappedTransactions = TracingServices.getMappedTransactions(scope.tracingCtx.currentTrace.transactions.transactions);
+            scope.tracingCtx.mappedTransactions = TracingServices.getMappedTransactions(scope.tracingCtx.currentTrace.transactions.transactions);
 
             // check if we need to filter untagged waterfalls
             ArcServices.getFeatureFlags()
@@ -400,7 +399,7 @@ Tracing.directive('slTracingTraceMappedTraces', [
                   }
                 }
                 if (!includeUntagged) {
-                  scope.mappedTransactions = scope.mappedTransactions.filter(function(transaction) {
+                  scope.tracingCtx.mappedTransactions = scope.tracingCtx.mappedTransactions.filter(function(transaction) {
                     return transaction.id !== 'untagged';
                   });
                 }
@@ -420,7 +419,7 @@ Tracing.directive('slTracingTraceMappedTraces', [
 
 
         function render() {
-
+          scope.isShowTraceSequenceLoader = false;
           /*
            *
            * Trace Sequences
@@ -428,7 +427,7 @@ Tracing.directive('slTracingTraceMappedTraces', [
            * */
           var trans = d3.select('[role=transactions]')
             .selectAll('li')
-            .data(scope.mappedTransactions, function key(d) {
+            .data(scope.tracingCtx.mappedTransactions, function key(d) {
               return d.id
             });
           trans.exit().remove();
