@@ -26,7 +26,7 @@
         <sl-tracing-host-status></sl-tracing-host-status>
         <div class="pm-tracing-toggle-container" ng-show="showTraceToggle">
           <span class="title">Tracing</span>
-          <sl-ui-switch switches="tracingOnOff" classes="power"></sl-ui-switch>
+          <sl-ui-switch switches="tracingOnOff"  ng-show="!tracingProcessCycleActive" classes="power"></sl-ui-switch>
           <div ng-show="tracingProcessCycleActive">{{tracingOnOffCycleMessage}} {{ processes.length }} of {{ targetProcessCount }} processes tracing</div>
         </div>
       </div>
