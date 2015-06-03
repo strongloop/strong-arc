@@ -17,7 +17,7 @@
           <li ng-repeat="costItem in inspectorModel.item.costSummary.topCosts" class="function" data-id='{{ costItem.id }}'>
             <div class='header row'>
               <div class='function-name col-md-12 col-lg-8'>
-                {{ tracingCtx.currentTrace.functions[inspectorModel.item.id].name }}
+                {{ tracingCtx.currentTrace.functions[costItem.id].name }}
               </div>
               <div class='col-md-12 col-lg-4'>
                 <div class="progress">
