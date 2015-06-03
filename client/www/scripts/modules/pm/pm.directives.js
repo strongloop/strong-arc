@@ -51,6 +51,8 @@ PM.directive('slPmHostFormApi', [
             port: PM_CONST.LOCAL_PM_PORT_MASK
           };
           $scope.pmServers = PMHostService.getPMServers();
+          $scope.pmServers.unshift({}); //placeholder for user input
+
           $scope.candidateServerConfig = {};
           // set value to last referenced server if available
           if (PMHostService.getPMServers().length) {
@@ -70,6 +72,14 @@ PM.directive('slPmHostFormApi', [
             isLocal = false;
           };
 
+          $scope.$watch('candidateServerConfig.host', function(newVal, oldVal){
+            if ( newVal && newVal !== PM_CONST.LOCAL_PM_HOST_NAME ){
+              $scope.pmServers[0] = {
+                host: newVal,
+                port: $scope.candidateServerConfig.port
+              };
+            }
+          });
 
           $scope.processes = [];
 
@@ -80,8 +90,13 @@ PM.directive('slPmHostFormApi', [
             else {
               isLocal = false;
             }
-            $scope.candidateServerConfig = item;
+
+            //fixes infinite host property being referenced
+            //$scope.candidateServerConfig = item;
+            $scope.candidateServerConfig.host = item.host;
+            $scope.candidateServerConfig.port = item.port;
           };
+
           $scope.hideMenu = function(){
             $scope.isOpen = false;
           };
@@ -178,6 +193,7 @@ PM.directive('slPmHostFormApi', [
                           return process.serviceInstanceId === 1;
                         });
                       $scope.pmServers = PMHostService.getPMServers();
+                      $scope.pmServers.unshift({});
                       //activate first process
                       if ( $scope.processes.length ) {
 
@@ -229,6 +245,8 @@ PM.directive('slPmHostForm', [
             port: PM_CONST.LOCAL_PM_PORT_MASK
           };
           $scope.pmServers = PMHostService.getPMServers();
+          $scope.pmServers.unshift({}); //placeholder for user input
+
           $scope.candidateServerConfig = {};
           // set value to last referenced server if available
           if (PMHostService.getPMServers().length) {
@@ -248,6 +266,14 @@ PM.directive('slPmHostForm', [
             isLocal = false;
           };
 
+          $scope.$watch('candidateServerConfig.host', function(newVal, oldVal){
+            if ( newVal && newVal !== PM_CONST.LOCAL_PM_HOST_NAME ){
+              $scope.pmServers[0] = {
+                host: newVal,
+                port: $scope.candidateServerConfig.port
+              };
+            }
+          });
 
           $scope.processes = [];
 
@@ -258,8 +284,13 @@ PM.directive('slPmHostForm', [
             else {
               isLocal = false;
             }
-            $scope.candidateServerConfig = item;
+
+            //fixes infinite host property being referenced
+            //$scope.candidateServerConfig = item;
+            $scope.candidateServerConfig.host = item.host;
+            $scope.candidateServerConfig.port = item.port;
           };
+
           $scope.hideMenu = function(){
             $scope.isOpen = false;
           };
@@ -351,6 +382,7 @@ PM.directive('slPmHostForm', [
                           return process.serviceInstanceId === 1;
                         });
                       $scope.pmServers = PMHostService.getPMServers();
+                      $scope.pmServers.unshift({}); //placeholder for user input
                       //activate first process
                       if ( $scope.processes.length ) {
 
