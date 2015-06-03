@@ -190,7 +190,8 @@ Tracing.directive('slTracingWaterfallView', [
   'RawTree',
   'Inspector',
   'Color',
-  function($log, Sha1, EventLoop, FlameGraph, msFormat, RawTree, Inspector, Color) {
+  '$timeout',
+  function($log, Sha1, EventLoop, FlameGraph, msFormat, RawTree, Inspector, Color, $timeout) {
     return {
       templateUrl: './scripts/modules/tracing/templates/tracing.waterfall.view.html',
       restrict: 'E',
@@ -283,6 +284,15 @@ Tracing.directive('slTracingWaterfallView', [
           el: jQuery('[role=inspector]')[0]
         });
 
+        function setViewScrolls() {
+          $timeout(function() {
+            var viewPortHeight = $(window).height();
+            var targetColOffset = $('.inspector-col').offset().top;
+            var maxHeight = viewPortHeight - targetColOffset;
+            $('.inspector-col').css('height', maxHeight);
+            $('.waterfall-col').css('height', maxHeight);
+          },10);
+        }
         scope.eventloop.init('[data-hook="eventloop"]', { expanded: true, color: Color });
         scope.flame.init('[data-hook="flame"]', {colors: Color, disableZoom: true});
         scope.rawtree.init('[data-hook="rawtree"]', {colors: Color});
@@ -335,6 +345,7 @@ Tracing.directive('slTracingWaterfallView', [
               chart.select(scope.selected && scope.selected.item);
             }
           });
+          setViewScrolls();
           scope.tracingCtx.currentFunction = scope.selected;
         };
         scope.deselect = function deselect() {
@@ -356,8 +367,11 @@ Tracing.directive('slTracingWaterfallView', [
             scope.eventloop.update(newWaterfall, scope.tracingCtx.currentTrace.functions);
             scope.flame.update(newWaterfall, scope.tracingCtx.currentTrace.functions);
             scope.rawtree.update(newWaterfall);
+            setViewScrolls();
+
           }
         });
+        window.onresize(setViewScrolls);
       }
     }
   }
