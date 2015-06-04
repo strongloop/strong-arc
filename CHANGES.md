@@ -1,4 +1,120 @@
-2015-05-14, Version 1.3.0
+2015-06-04, Version 1.4.0
+=========================
+
+ * fix missing scroll on inspector view take2 (seanbrookes)
+
+ * add user input to typeahead on pm host form (Anthony Ettinger)
+
+ * fix missing scroll on inspector view (seanbrookes)
+
+ * use the right id to get a name of costItem (Setogit)
+
+ * remove redundant directive declaration (seanbrookes)
+
+ * revert chart label change (seanbrookes)
+
+ * update the chart label (seanbrookes)
+
+ * add extra $timeout to un-bind the rendering from the get request (seanbrookes)
+
+ * wire up loading indicator to trace sequences (seanbrookes)
+
+ * add filter to pm services to filter on worker id != 0 (seanbrookes)
+
+ * make toggle switch only visible when it is safe (seanbrookes)
+
+ * add feature flag back - tracing (seanbrookes)
+
+ * final ux tweaks prior to release (seanbrookes)
+
+ * fix broken dropdown (seanbrookes)
+
+ * tracing ticker (seanbrookes)
+
+ * implement styleguide toggle switch (seanbrookes)
+
+ * initial toggle button troubleshooting (seanbrookes)
+
+ * temporary Angular rollback for metrics fix (seanbrookes)
+
+ * tracing view initialization cleanup (seanbrookes)
+
+ * tweak to trigger build (seanbrookes)
+
+ * add api-analytics feature flag (seanbrookes)
+
+ * add new case to codified messages coming from host manager (seanbrookes)
+
+ * remove tracing feature flag (seanbrookes)
+
+ * fix scope problem betweem diff pm host selector versions (seanbrookes)
+
+ * update app controller icon (Anthony Ettinger)
+
+ * comment out code to save requests for trace history (seanbrookes)
+
+ * add logic to show correct state of timline buttons (seanbrookes)
+
+ * fix the ng-show logic (Setogit)
+
+ * complete fix for stale pids on tracing stop/start (seanbrookes)
+
+ * add feature flag to show/hide untagged waterfalls (seanbrookes)
+
+ * add new menu icon to navbar (Anthony Ettinger)
+
+ * resize chart dynamically based on dataset size (Anthony Ettinger)
+
+ * change the drawing order of orange and blue lines (Setogit)
+
+ * fix js exception causing render halt (seanbrookes)
+
+ * rework waterfall navigation - mapped traces (seanbrookes)
+
+ * remove reference to trace history directive (seanbrookes)
+
+ * initial UX streamline: remove pie charts (seanbrookes)
+
+ * filter dead pids in tracing pid selector (seanbrookes)
+
+ * initial tracing on/off function (seanbrookes)
+
+ * add license check to analytics (Anthony Ettinger)
+
+ * ui control to toggle tracing on/off (seanbrookes)
+
+ * remove page heading from analytics (Anthony Ettinger)
+
+ * fix wrong var name (seanbrookes)
+
+ * fix missing inspector values (seanbrookes)
+
+ * add format wrapper to target values as per original (seanbrookes)
+
+ * revert bad readme reference (Anthony Ettinger)
+
+ * sort chart 2 (Anthony Ettinger)
+
+ * ui fixup on licenses page (Anthony Ettinger)
+
+ * Tracing main feature merge (seanbrookes)
+
+ * fix bad object in licenses page (Anthony Ettinger)
+
+ * add api analytics icon to landing page (Anthony Ettinger)
+
+ * add clientDetail to popover on endpoint chart (Anthony Ettinger)
+
+ * Add popover-dialog component to styleguide (Joseph Tary)
+
+ * move advisor behind feature flag (Ryan Graham)
+
+ * set feature flags earlier in boot (Ryan Graham)
+
+ * api analytics charts (Anthony Ettinger)
+
+
+2015-05-13, Version 1.3.0
 =========================
 
  * fix oracle and memcached metrics names (Setogit)
