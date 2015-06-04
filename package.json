@@ -9,7 +9,7 @@
     "prepublish": "gulp build",
     "test": "gulp mocha-and-karma",
     "start": "node server/server.js",
-    "postinstall": "bower install"
+    "postinstall": "gulp clean && bower install"
   },
   "dependencies": {
     "async": "^0.9.0",

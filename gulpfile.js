@@ -22,6 +22,7 @@ var setupMysql = require('./build-tasks/setup-mysql');
 var downloadHelpAssets = require('./build-tasks/download-help-assets');
 var _ = require('lodash');
 var browserify = require('browserify');
+var del = require('del');
 
 gulp.task('default', ['build', 'test', 'watch']);
 
@@ -303,4 +304,10 @@ gulp.task('setup-mysql', function(callback) {
 gulp.task('pull-devtools', function(callback) {
   var DEVTOOLS_DIR = path.resolve(__dirname, 'devtools');
   pullDevTools(DEVTOOLS_DIR, callback);
+});
+
+gulp.task('clean', function (cb) {
+  del([
+    'client/www/scripts/vendor/**/*',
+  ], cb);
 });
