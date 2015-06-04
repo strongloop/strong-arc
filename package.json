@@ -24,6 +24,7 @@
     "cxviz-rawtree": "^1.0.0",
     "cxviz-timeseries": "^1.0.0",
     "debug": "^2.1.2",
+    "del": "^1.2.0",
     "errorhandler": "^1.3.4",
     "express": "^4.12.2",
     "express-jsxtransform": "^1.1.0",
