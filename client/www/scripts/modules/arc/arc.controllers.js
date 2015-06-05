@@ -10,6 +10,12 @@ Arc.controller('ArcMainController', [
       apps: []
     };
 
+    //set help id for app modules
+    $scope.$watch('suiteIA.appId', function(newVal){
+      if ( !newVal ) return;
+      $rootScope.helpId = newVal;
+    });
+
     $scope.isAuthUser = function(){
       return ArcUserService.isAuthUser();
     };
