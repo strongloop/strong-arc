@@ -50,13 +50,13 @@ PM.directive('slPmHostFormApi', [
             host: PM_CONST.LOCAL_PM_HOST_NAME,
             port: PM_CONST.LOCAL_PM_PORT_MASK
           };
-          $scope.pmServers = PMHostService.getPMServers();
+          $scope.pmServers = PMHostService.getPMServers({ excludeLocalApp: true });
           $scope.pmServers.unshift({}); //placeholder for user input
 
           $scope.candidateServerConfig = {};
           // set value to last referenced server if available
           if (PMHostService.getPMServers().length) {
-            $scope.candidateServerConfig = PMHostService.getLastPMServer();
+            $scope.candidateServerConfig = PMHostService.getLastPMServer({ excludeLocalApp: true });
           }
           $scope.selected = undefined;
           $scope.activeProcess = null;
@@ -192,7 +192,7 @@ PM.directive('slPmHostFormApi', [
                         .filter(function(process) {
                           return process.serviceInstanceId === 1;
                         });
-                      $scope.pmServers = PMHostService.getPMServers();
+                      $scope.pmServers = PMHostService.getPMServers({ excludeLocalApp: true });
                       $scope.pmServers.unshift({});
                       //activate first process
                       if ( $scope.processes.length ) {

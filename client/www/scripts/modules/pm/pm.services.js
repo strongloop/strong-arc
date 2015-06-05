@@ -191,9 +191,17 @@ PM.service('PMHostService', [
   function($log, growl, $timeout, PMServerService) {
     var svc = this;
 
-    svc.getPMServers = function() {
+    svc.getPMServers = function(opts) {
+      opts = opts || {};
+
       var pmServers = JSON.parse(window.localStorage.getItem('pmServers'));
       if (pmServers) {
+        if ( opts.excludeLocalApp ) {
+          pmServers = pmServers.filter(function(server){
+            return server.host !== 'local application';
+          });
+        }
+
         return pmServers;
       }
       return [];
@@ -294,10 +302,11 @@ PM.service('PMHostService', [
           });
       }
     };
-    svc.getLastPMServer = function() {
+    svc.getLastPMServer = function(opts) {
       // get the last entry in the array
-      var pmServers = JSON.parse(window.localStorage.getItem('pmServers'));
+      //var pmServers = JSON.parse(window.localStorage.getItem('pmServers'));
 
+      var pmServers = svc.getPMServers(opts);
       if (pmServers) {
         var config = pmServers[pmServers.length - 1];
         return config;
