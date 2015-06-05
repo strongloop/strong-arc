@@ -5,10 +5,10 @@
         <div class="btn-group pm-host-select dropdown" ng-show="managerHosts"  is-open="status.isopen">
           <span class="title">Host</span>
           <button type="button"
-                  class="btn btn-default dropdown-toggle">
+                  class="btn btn-default dropdown-toggle" dropdown-toggle>
             {{selectedPMHost.host}} : {{selectedPMHost.port}}<span class="caret"></span>
           </button>
-          <ul class="dropdown-menu" role="menu">
+          <ul class="dropdown-menu" role="menu" dropdown-menu>
             <li ng-repeat="host in managerHosts">
               <button class="link-cmd" ng-click="changePMHost(host)">{{host.host}}:{{host.port}}</button>
             </li>
