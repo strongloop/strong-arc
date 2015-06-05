@@ -21,6 +21,7 @@
     "trace-syncasync": 6718819,
     "trace-flame": 6718821,
     "trace-inspector": 6718823,
-    "trace-rawtree": 6718825
+    "trace-rawtree": 6718825,
+    "licenses": 6719905
   }
 }

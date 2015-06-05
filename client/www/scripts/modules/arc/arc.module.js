@@ -15,7 +15,8 @@ var CONST = {
   APP_FACET: 'server',
   APP_RUNNING_CHECK_INTERVAL:  18000,
   SEGMENTIO_WRITE_KEY: '8ImiW2DX0W',
-  NON_ARC_MODULES: ['home', 'login', 'register']
+  NON_ARC_MODULES: ['home', 'login', 'register'],
+  NON_ARC_MODULES_WITH_HELP_ID: ['licenses']
 };
 
 var Arc = angular.module('Arc', [
@@ -215,6 +216,13 @@ Arc.run([
               segmentio.track(next.name);
             }
           }
+        }
+
+        //set help id if page isn't an arc module
+        if (_.contains(CONST.NON_ARC_MODULES_WITH_HELP_ID, next.name ) ) {
+          $rootScope.helpId = next.name;
+        } else {
+          $rootScope.helpId = null;
         }
 
         isAppModule(next.url)
