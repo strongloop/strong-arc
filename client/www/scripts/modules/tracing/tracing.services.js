@@ -26,6 +26,20 @@ Tracing.service('TracingServices', [
           ]
         });
     };
+    svc.alertUnlicensedPMHost = function() {
+      $rootScope.$emit('message', {
+        body: 'The processes came up but they are not tracing.  You may need to push a license to your PM Host via the Process Manager view.',
+        links: [{
+          link: '/#process-manager',
+          linkText: 'go to Process Manager view'
+        },
+          {
+            link: 'http://docs.strongloop.com/display/SL/Managing+your+licenses#Managingyourlicenses-Settingyourlicensekeyonaremotehost',
+            linkText: 'more info...'
+          }
+        ]
+      });
+    };
     svc.alertNoHosts = function() {
       $rootScope.$emit('message', {
         body: 'No hosts found.  Please add a Strong PM host via the Process Manager view.',

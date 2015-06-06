@@ -133,57 +133,78 @@ Tracing.controller('TracingMainController', [
           $log.warn('no processes');
           return [];
         }
-
         /*
          * we have processes but they need to be filtered
          * */
         var filteredProcesses = [];
-        //filter out dead pids
-        processes = processes.filter(function(process){
-          return (!process.stopTime && process.isTracing);
-        });
-        // filter out the supervisor
-        processes.map(function(proc) {
-          if (proc.workerId !== 0) {
-             filteredProcesses.push(proc);
-          }
-        });
-        /*
-        *
-        * Note to self - account for 0 processes with a setSize greater than 0
-        * - when app is stopped eg.
-        *
-        * */
-        if (pmInstance.setSize > 0) {
-          $scope.startTicker();
-          if (filteredProcesses.length !== pmInstance.setSize) {
-            if (filteredProcesses.length === 1 && ($scope.processes.length === 0)) {
 
-              $scope.tracingCtx.currentProcess = filteredProcesses[0];  //default
-              $scope.selectedProcess = filteredProcesses[0];
-              $scope.tracingCtx.currentProcesses = filteredProcesses;
-              $scope.startTicker();
-              $scope.refreshTimelineProcess();
-            }
-            $scope.processes = filteredProcesses;
-            $timeout(function() {
-              $scope.loadTracingProcesses(pmInstance);
-            }, 1000);
+        // interim test to check if processes come up without tracing on
+        // would indicate license hasn't been pushed
+        var unlicensedActivePids = [];
+        processes.map(function(process) {
+          if (!process.stopTime && !process.isTracing) {
+            unlicensedActivePids.push(process);
           }
-          else {
-            $scope.tracingCtx.currentProcess = filteredProcesses[0];  //default
-            $scope.selectedProcess = filteredProcesses[0];
-            $scope.processes = filteredProcesses;
-            $scope.tracingCtx.currentProcesses = filteredProcesses;
-            $scope.tracingProcessCycleActive = false;
-            $scope.refreshTimelineProcess();
-          }
+        });
+        // unlicensed PM
+        if (unlicensedActivePids.length >= pmInstance.setSize) {
+          $scope.showTransactionHistoryLoading = false;
+          $scope.showTimelineLoading = false;
+          $scope.tracingProcessCycleActive = false;
+          TracingServices.alertUnlicensedPMHost();
         }
         else {
-          $scope.processes = [];
-          $scope.tracingCtx.currentProcesses = [];
+          // filter out the supervisor
+          processes.filter(function(proc) {
+            return (proc.workerId !== 0);
+          });
+          //filter out dead pids
+          filteredProcesses = processes.filter(function(process){
+            return (!process.stopTime && process.isTracing);
+          });
+          /*
+           *
+           * Note to self - account for 0 processes with a setSize greater than 0
+           * - when app is stopped eg.
+           *
+           * */
+          if (pmInstance.setSize > 0) {
+            $scope.startTicker();
+            // processes are still coming up
+            if (filteredProcesses.length !== pmInstance.setSize) {
+              if (filteredProcesses.length === 1 && ($scope.processes.length === 0)) {
 
+                $scope.tracingCtx.currentProcess = filteredProcesses[0];  //default
+                $scope.selectedProcess = filteredProcesses[0];
+                $scope.tracingCtx.currentProcesses = filteredProcesses;
+                $scope.startTicker();
+                $scope.refreshTimelineProcess();
+              }
+              $scope.processes = filteredProcesses;
+              $timeout(function() {
+                $scope.loadTracingProcesses(pmInstance);
+              }, 1000);
+            }
+            // all processes are up and tracing
+            else {
+              $scope.tracingCtx.currentProcess = filteredProcesses[0];  //default
+              $scope.selectedProcess = filteredProcesses[0];
+              $scope.processes = filteredProcesses;
+              $scope.tracingCtx.currentProcesses = filteredProcesses;
+              $scope.tracingProcessCycleActive = false;
+              $scope.refreshTimelineProcess();
+            }
+          }
+          else {
+            $scope.processes = [];
+            $scope.tracingCtx.currentProcesses = [];
+
+          }
         }
+
+
+
+
       });
     };
     $scope.setTracingOnOffToggle = function(value) {
