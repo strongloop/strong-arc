@@ -100,16 +100,14 @@
     "type": "git",
     "url": "https://github.com/strongloop/strong-arc.git"
   },
+  "bugs": "https://github.com/strongloop/strong-arc/issues",
   "keywords": [
     "arc",
     "studio",
     "loopback",
     "StrongLoop"
   ],
-  "license": {
-    "name": "StrongLoop",
-    "url": "https://github.com/strongloop/strong-arc/blob/master/LICENSE"
-  },
+  "license": "LicenseRef-LICENSE",
   "author": "engineering@strongloop.com",
   "homepage": "https://github.com/strongloop/strong-arc"
 }
