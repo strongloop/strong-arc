@@ -1,5 +1,6 @@
 module.exports = ProcessManager;
 
+var debug = require('debug')('strong-arc:process-manager');
 var split = require('split');
 var spawn = require('child_process').spawn;
 var httpProxy = require('http-proxy');
@@ -33,7 +34,9 @@ ProcessManager.prototype.start = function(cb) {
         env: util._extend(process.env, envOverrides)
     });
 
-    pm.process.stdout.pipe(process.stdout);
+    if (debug.enabled) {
+      pm.process.stdout.pipe(process.stdout);
+    }
 
     pm._parseOutputForPort();
     pm._handleExit();
@@ -42,8 +45,7 @@ ProcessManager.prototype.start = function(cb) {
 }
 
 ProcessManager.prototype.log = function(msg) {
-  console.log('Embedded Process Manager [%s]: ',
-    this.process ? this.process.pid : '(none)', msg);
+  debug(msg);
 }
 
 ProcessManager.prototype._handleExit = function() {
