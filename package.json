@@ -100,6 +100,7 @@
     "type": "git",
     "url": "https://github.com/strongloop/strong-arc.git"
   },
+  "bugs": "https://github.com/strongloop/strong-arc/issues",
   "keywords": [
     "arc",
     "studio",
