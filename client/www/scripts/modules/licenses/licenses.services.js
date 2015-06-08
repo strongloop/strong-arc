@@ -227,7 +227,7 @@ Licenses.service('LicensesService', [
           body: 'StrongLoop Arc ' + license.name + ' licensing missing or invalid.  If you have questions about your licenses or licensing please contact sales',
           link: '/#licenses',
           linkText: 'Verify your licenses',
-          email: 'mailto:sales@strongloop.com?subject=Licensing',
+          email: 'sales@strongloop.com?subject=Licensing',
           emailText: 'Contact sales@strongloop.com'
         });
       }
