@@ -106,10 +106,7 @@
     "loopback",
     "StrongLoop"
   ],
-  "license": {
-    "name": "StrongLoop",
-    "url": "https://github.com/strongloop/strong-arc/blob/master/LICENSE"
-  },
+  "license": "LicenseRef-LICENSE",
   "author": "engineering@strongloop.com",
   "homepage": "https://github.com/strongloop/strong-arc"
 }
