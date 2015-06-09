@@ -9,7 +9,7 @@ Licenses.service('LicensesService', [
     var svc = this;
 
     svc.getAllProducts = function(){
-      return Subscription.getProducts().$promise;
+      return Subscription.getProducts({ mode: 'offline' }).$promise;
     };
 
     svc.getArcFeatures = function(){
@@ -22,7 +22,7 @@ Licenses.service('LicensesService', [
     svc.getLicenses = function() {
       var userId = ArcUserService.getCurrentUserId();
 
-      return Subscription.getSubscriptions({ userId: userId }).$promise;
+      return Subscription.getSubscriptions({ userId: userId, mode: 'offline' }).$promise;
     };
 
 
