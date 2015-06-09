@@ -18,8 +18,12 @@ function ProcessManager(root) {
 
 ProcessManager.prototype.start = function(cb) {
   var pm = this;
-  var pathToPm = require.resolve('strong-pm/bin/sl-pm');
-  var args = [pathToPm, '--listen', '0', '--no-control'];
+  var args = [
+    require.resolve('strong-pm/bin/sl-pm'),
+    '--listen=0',
+    '--base=.strong-pm',
+    '--no-control',
+  ];
   var envOverrides = {};
 
   this.setStatus('starting');
