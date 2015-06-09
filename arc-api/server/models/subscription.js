@@ -77,6 +77,16 @@ module.exports = function(Subscription) {
     });
   }
 
+  function loadProductsFromStore(userId, cb) {
+    return store.load(userId, function(err, content) {
+      if (err) {
+        return cb(err);
+      } else {
+        return cb(null, (content && content.products) || {});
+      }
+    });
+  }
+
   /**
    * Get all product subscriptions for a given user
    * @param {Number|String} userId User id
@@ -109,7 +119,7 @@ module.exports = function(Subscription) {
 
     tasks.products = function(done) {
       debug('Loading products from auth service (online)');
-      Subscription.getProducts(req, done);
+      Subscription.getProducts(mode, req, done);
     };
 
     async.parallel(tasks, function(err, results) {
@@ -180,10 +190,14 @@ module.exports = function(Subscription) {
 
   /**
    * List product descriptions
+   * @param {String} mode Operation mode
    * @param {Request} req HTTP request object
    * @param {Function} cb callback
    */
-  Subscription.getProducts = function(req, cb) {
+  Subscription.getProducts = function(mode, req, cb) {
+    if (mode === 'offline') {
+      return loadProductsFromStore(null, cb);
+    }
     var url = Subscription.settings.authUrl;
     request.get({
       url: url + 'subscriptions/products',
@@ -192,6 +206,11 @@ module.exports = function(Subscription) {
       },
       json: true
     }, function(err, res, body) {
+      if (err && mode !== 'online') {
+        debug('Falling back to load products from the local key store');
+        // Fall back to offline mode
+        return loadProductsFromStore(null, cb);
+      }
       handleRes(err, res, body, cb);
     });
   };
@@ -279,6 +298,8 @@ module.exports = function(Subscription) {
     isStatic: true,
     description: 'List products',
     accepts: [
+      {arg: 'mode', type: 'string', description: 'Operation mode',
+        http: {source: 'query'}},
       {arg: 'req', type: 'object', http: {source: 'req'}}
     ],
     returns: {arg: 'data', type: 'object', root: true},
