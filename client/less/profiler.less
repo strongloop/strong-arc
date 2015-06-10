@@ -1,69 +1,12 @@
 .sl-profiler {
-  display: flex;
-  flex-direction: column;
-
-  .sl-profiler-settings-btn {
-    width: 25rem;
-  }
 
   .sl-profiler-navbar {
     padding: 1rem 2rem;
-    height: 13rem;
+    display: block;
   }
 
-  .profiler-body {
-    display: flex;
-    flex-direction: row;
-    overflow: hidden;
-    height: ~"calc(100vh - 20.5rem)";
-
-    .profiler-sidebar {
-      width: 20rem;
-      overflow: auto;
-      background: #656565 /* matches the devtool bg */;
-      color: @white;
-      padding: 1rem;
-
-      button {
-        width: 100%;
-        background: none;
-        border: none;
-        text-align: left;
-        margin-bottom: 1.0rem;
-        padding-left: 2.0rem;
-
-        &.selected {
-          background: #5f8de1;
-        }
-
-        span.sl-icon {
-          float: left;
-          margin-left: -2.0rem;
-        }
-
-        span.profile-id {
-        }
-
-        span.profile-date {
-          font-size: 8pt;
-          display: block;
-        }
-
-        span.profile-status {
-          font-size: 10pt;
-        }
-      }
-    }
-
-    .profiler-devtools-container {
-      flex-grow: 1;
-      overflow: hidden;
-
-      iframe {
-        height: 100%;
-        width: 100%;
-      }
-    }
+  .profiler-devtools-container {
+    overflow:scroll;
   }
 
   .sl-toggler {

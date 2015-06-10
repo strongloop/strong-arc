@@ -1,23 +1,4 @@
 <div id="ProfilerContainer" ng-controller="ProfilerMainController" class="sl-profiler">
   <sl-profiler-navbar></sl-profiler-navbar>
-  <div class="profiler-body">
-    <div class="profiler-sidebar">
-      <h3>Profiles</h3>
-      <h4>CPU Profiles</h4>
-      <ul class="profile-selector">
-        <li ng-repeat="profile in profiles | filter:{type: 'cpuprofile'} | orderBy:'-startTime'">
-          <sl-profiler-profile profile="profile" on-click="loadProfile(profile)">
-          </sl-profiler-profile>
-        </li>
-      </ul>
-      <h4>Heap Snapshots</h4>
-      <ul class="profile-selector">
-        <li ng-repeat="profile in profiles | filter:{type: 'heapsnapshot'} | orderBy:'-startTime'">
-          <sl-profiler-profile profile="profile" on-click="loadProfile(profile)">
-          </sl-profiler-profile>
-        </li>
-      </ul>    </div>
-    <div sl-profiler-devtools class="profiler-devtools-container"
-      id="ProfilerDevtoolsContainer"></div>
-  </div>
+  <div sl-profiler-devtools id="ProfilerDevtoolsContainer"></div>
 </div>
