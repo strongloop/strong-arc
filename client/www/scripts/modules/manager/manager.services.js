@@ -56,8 +56,7 @@ Manager.service('ManagerServices', [
        * */
       if (host.errorType) {
 
-
-        $log.warn('- ERROR: ' + host.error.message);
+        $log.warn('error-type: ' + host.errorType);
         // connection
         // - connection refused
         // - connection timeout
@@ -93,8 +92,20 @@ Manager.service('ManagerServices', [
 
             break;
           }
+          case 'invalid': {
+            if (host.error.message.indexOf('Unknown "ServiceInstance"') !== -1){
+              host.status.problem.title = 'No Application Found';
+              host.status.problem.description = 'If it is a new host try deploying an app to it via Arc or the command line.';
+            }
+            else {
+              host.status.problem.title = 'exception: ' + host.errorType;
+              host.status.problem.description = host.error.message;
+            }
+
+            break;
+           }
           default:
-            host.status.problem.title = 'unknown exception: ' + host.errorType;
+            host.status.problem.title = 'exception: ' + host.errorType;
             host.status.problem.description = host.error.message;
 
         }
