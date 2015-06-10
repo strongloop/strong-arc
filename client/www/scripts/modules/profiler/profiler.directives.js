@@ -1,7 +1,8 @@
 Profiler.directive('slProfilerNavbar', [
     '$http',
     '$log',
-    'ProfilerService', function($http, $log, ProfilerService){
+    '$q',
+    'ProfilerService', function($http, $log, $q, ProfilerService){
       return {
         restrict: 'E',
         replace: true,
@@ -10,6 +11,20 @@ Profiler.directive('slProfilerNavbar', [
 
           $scope.profilerId = 'remote';
           $scope.activeProcess = null;
+          $scope.processes = [];
+
+          $scope.updateProcesses = function(processes) {
+            $scope.processes = processes;
+            $scope.processes.forEach(function(process) {
+              if (process.isProfiling) {
+                process.status = 'Profiling';
+              }
+            });
+          };
+
+          $scope.updateProcessSelection = function(processes) {
+            $scope.activeProcess = processes;
+          };
 
           $scope.profilerTogglers = [
             { id: 'remote', label: 'Server', activeId: 'profilerId'},
@@ -18,14 +33,10 @@ Profiler.directive('slProfilerNavbar', [
 
           //clear out active processes and remote state when going back to file
           $scope.resetRemoteState = function(){
-
             $scope.isRemoteValid = false;
-            $scope.processes = [];
             $scope.activeProcess = null;
-
+            $scope.updateProcesses([]);
           };
-
-          $scope.processes = [];
 
           $scope.$watch('profilerId', function(newVal, oldVal){
             if ( newVal !== oldVal ) {
@@ -40,65 +51,99 @@ Profiler.directive('slProfilerNavbar', [
             }
           });
 
+          $scope.$watch('profilerSettings.mode', function(newVal, oldVal) {
+            $scope.enableMultiple = newVal === 'smart';
+          });
+
           $scope.fetchHeapFile = function(){
-            if ( !$scope.activeProcess ) return;
+            if ( !$scope.activeProcess.length ) return;
 
-            $scope.activeProcess.status = 'Saving';
+            var activeProcess = $scope.activeProcess[0];
+            activeProcess.status = 'Saving';
 
-            return ProfilerService.fetchHeapSnapshot($scope.currentServerConfig, $scope.activeProcess)
-              .then(function(data){
-                var fileUrl = data.data.result.url;
-                var pid = $scope.activeProcess.pid;
+            return ProfilerService.fetchHeapSnapshot($scope.host, activeProcess)
+              .then(function(data) {
+                var fileUrl = 'http://' + $scope.host.host + ':' + $scope.host.port + data.data.result.url;
+                var pid = activeProcess.pid;
                 var fileName = pid + '.heapsnapshot';
+                var profile = {
+                  id: data.data.result.profileId,
+                  targetId: pid,
+                  startTime: new Date(),
+                  status: 'ready',
+                  type: 'heapsnapshot',
+                  downloadUrl: fileUrl
+                };
 
-                return ProfilerService.downloadFile($scope.currentServerConfig, fileUrl, fileName)
-                  .then(function(file){
-                    $scope.activeProcess.status = 'Running';
+                activeProcess.status = 'Running';
 
-                    return file;
-                  });
+                return profile;
               })
               .catch(function(err){
+                activeProcess.status = 'Running';
                 $log.error(err);
               });
           };
 
-          $scope.startCpuProfiling = function(){
-            if ( !$scope.activeProcess ) return;
+          $scope.startCpuProfilingProcess = function(process) {
+            return ProfilerService
+              .startCpuProfiling(
+                $scope.host, process, $scope.profilerSettings
+              )
+              .then(function(res) {
+                var data = res.data;
 
-            return ProfilerService.startCpuProfiling($scope.currentServerConfig, $scope.activeProcess)
-              .then(function(data){
-                $scope.activeProcess.status = 'Profiling';
+                process.status = 'Profiling';
+                process.isProfiling = true;
 
+                $scope.profiles.push({
+                  targetId: data.request.target,
+                  startTime: new Date(data.timestamp),
+                  status: 'profiling'
+                });
                 return data;
               })
-              .catch(function(data){
+              .catch(function(data) {
                 $log.log('error', data);
               });
           };
 
-          $scope.fetchCpuFile = function(){
-            if ( !$scope.activeProcess ) return;
+          $scope.startCpuProfiling = function() {
+            var promises = [];
 
+            $scope.processes.forEach(function(process) {
+              if (process.isActive) {
+                promises.push($scope.startCpuProfilingProcess(process));
+              }
+            });
+
+            return $q.all(promises);
+          };
+
+          $scope.fetchCpuFileProcess = function(process) {
             //stop cpu profiling
-            return ProfilerService.stopCpuProfiling($scope.currentServerConfig, $scope.activeProcess)
-              .then(function(data){
-                $scope.activeProcess.status = 'Saving';
-
-                var fileUrl = data.data.result.url;
-                var pid = $scope.activeProcess.pid;
-                var fileName = pid + '.cpuprofile';
-
-                return ProfilerService.downloadFile($scope.currentServerConfig, fileUrl, fileName)
-                  .then(function(file){
-                    $scope.activeProcess.status = 'Running';
-
-                    return file;
-                  });
+            return ProfilerService.stopCpuProfiling(
+                $scope.host, process
+              )
+              .then(function(data) {
+                process.status = 'Running';
+                $scope.updateProfiles();
               })
               .catch(function(err){
                 $log.error(err);
               });
+          };
+
+          $scope.fetchCpuFile = function() {
+            var promises = [];
+
+            $scope.processes.forEach(function(process) {
+              if (process.isActive) {
+                promises.push($scope.fetchCpuFileProcess(process));
+              }
+            });
+
+            return $q.all(promises);
           };
 
           //cross-iframe methods
@@ -111,12 +156,9 @@ Profiler.directive('slProfilerNavbar', [
           };
 
           SL.parent.profiler.fetchHeapFile = function(cb){
-            //button click in chrome devtools
-            if ( !$scope.activeProcess ) return false;
-
             $scope.fetchHeapFile()
-              .then(function(file){
-                cb(file);
+              .then(function(profile) {
+                $scope.profiles.push(profile);
               });
           };
           // fix profiler header disappearing when files are loaded in the iframe, etc
@@ -129,11 +171,9 @@ Profiler.directive('slProfilerNavbar', [
           };
 
           SL.parent.profiler.fetchCpuFile = function(cb){
-            if ( !$scope.activeProcess ) return false;
-
             $scope.fetchCpuFile()
-              .then(function(file){
-                cb(file);
+              .then(function(files){
+                cb(files);
               });
           },
 
@@ -142,6 +182,22 @@ Profiler.directive('slProfilerNavbar', [
               .then(function(data){
                 cb(data);
               });
+          };
+
+          SL.parent.profiler.addProfileForFile = function(file) {
+            var fileParts = file.name.split('.');
+            var profile = {
+              id: $scope.profiles.length,
+              targetId: 'From File',
+              startTime: new Date(),
+              status: 'loaded',
+              filename: file.name,
+              type: fileParts.pop()
+            };
+
+            $scope.$apply(function() {
+              $scope.profiles.push(profile);
+            });
           }
         }
       }
@@ -151,14 +207,34 @@ Profiler.directive('slProfilerDevtools', [
   '$log',
   function($log) {
     return {
-      template: '<iframe id="DevToolsIFrame" src="/devtools" name="devtools" ng-class="{ disabled: profilerId == \'remote\' && !isRemoteValid }" sl-iframe-onload="initProfiler()"></iframe>',
+      template: '<iframe id="DevToolsIFrame" src="/devtools" name="devtools"' +
+        'ng-class="{ disabled: profilerId == \'remote\' && !isRemoteValid }"' +
+        'sl-iframe-onload="initProfiler()"></iframe>',
       link: function(scope, el, attrs) {
-
         window.onresize = function(event) {
           scope.setProfilerLayout();
         };
+
         scope.setProfilerLayout();
       }
     }
+  }
+]);
+Profiler.directive('slProfilerProfile', [
+  function() {
+    return {
+      scope: {
+        profile: '=',
+        onClick: '&'
+      },
+      templateUrl: './scripts/modules/profiler/templates/profiler.profile.html',
+      link: function(scope, el, attrs) {
+        $(el).on('click', function() {
+          scope.onClick({
+            profile: scope.profile
+          });
+        });
+      }
+    };
   }
 ]);

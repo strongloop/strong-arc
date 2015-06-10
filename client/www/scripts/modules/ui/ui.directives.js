@@ -24,9 +24,10 @@ UI.directive('slUiSelect', [
 
 UI.directive('slUiToggle', [
   '$log',
-  function($log){
+  '$parse',
+  function($log, $parse) {
     return {
-      restrict: "E",
+      restrict: 'E',
       replace: true,
       templateUrl: './scripts/modules/ui/templates/ui.toggle.html',
       scope: {
@@ -35,32 +36,33 @@ UI.directive('slUiToggle', [
       controller: function($scope, $attrs, $log) {
         var togglers = $scope.togglers;
         var anyActive = false;
-        for(var i = 0; i < togglers.length; i++) {
-          if(togglers[i].isActive) {
+
+        for (var i = 0; i < togglers.length; i++) {
+          if (togglers[i].isActive) {
             anyActive = true;
             break;
           }
         }
 
-        if(!anyActive) {
-          // if no toggler is active, set the first active
-          $scope.togglers[0].isActive = true;
-          $scope.activeId = $scope.togglers[0].id;
-        }
-
-        $scope.setActive = function(toggler){
+        $scope.setActive = function(toggler) {
+          var activeValue = $parse(toggler.activeId);
 
           //reset active flag for all togglers
-          $scope.togglers.forEach(function(togg){
+          $scope.togglers.forEach(function(togg) {
             togg.isActive = false;
           });
 
           toggler.isActive = true;
-          $scope[toggler.activeId] = toggler.id;
-          $scope.$parent[toggler.activeId] = toggler.id;
+          activeValue.assign($scope.$parent, toggler.id);
+        };
+
+        if (!anyActive) {
+          // if no toggler is active, set the first active
+          $scope.togglers[0].isActive = true;
+          $scope.setActive(togglers[0]);
         }
       }
-    }
+    };
   }
 ]);
 
