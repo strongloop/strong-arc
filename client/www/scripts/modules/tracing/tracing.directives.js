@@ -23,7 +23,6 @@ Tracing.directive('slTracingBreadcrumbs', [
         '$log',
         '$scope',
         function($log, $scope) {
-          $log.debug('Tracing Breadcrumbs');
           $scope.getFirstCrumbClass = function() {
             // if there is a current PF key then enable this
             if ($scope.tracingCtx.currentPFKey) {
@@ -158,7 +157,7 @@ Tracing.directive('slTracingHeader', [
 
         }, true);
         scope.getStatusText = function(instance) {
-          var xp = instance;
+         // var xp = instance;
           if (instance.status) {
 
             if (instance.status.isProblem) {
@@ -172,9 +171,6 @@ Tracing.directive('slTracingHeader', [
             else {
               return '';
             }
-          }
-          else {
-            $log.warn('| no port on this one');
           }
         };
       }
