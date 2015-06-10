@@ -188,7 +188,7 @@ Tracing.controller('TracingMainController', [
               var staleWorkderId = $scope.pidCycleCheckCollection[k];
               // still some stale pids to shut down
               if (staleWorkderId === fproc.workerId) {
-                $scope.tracingOnOffCycleMessage = 'stopping';
+                $scope.tracingOnOffCycleMessage = 'restarting';
                 break loop1;
               }
             }
