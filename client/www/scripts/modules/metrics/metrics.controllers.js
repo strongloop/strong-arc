@@ -4,13 +4,14 @@ Metrics.controller('MetricsMainController', [
   '$log',
   'growl',
   '$interval',
+  '$timeout',
   'MetricsService',
   'PMPidService',
   'PMHostService',
   'ChartConfigService',
   'ArcNavigationService',
-  function($scope, $state, $log, growl, $interval, MetricsService, PMPidService,
-           PMHostService, ChartConfigService, ArcNavigationService) {
+  function($scope, $state, $log, growl, $interval, $timeout, MetricsService,
+      PMPidService, PMHostService, ChartConfigService, ArcNavigationService) {
 
     $scope.isDisplayChartValid = false; // control display of charts (transition between data sets)
     $scope.currentServerConfig = PMHostService.getLastPMServer();
@@ -40,6 +41,21 @@ Metrics.controller('MetricsMainController', [
 
     $scope.chartData = [];
 
+    $scope.updateHost = function(host) {
+      $scope.host = host;
+    };
+
+    $scope.updateProcesses = function(processes) {
+      $scope.processes = processes;
+      $scope.updateProcessSelection([processes[0]]);
+    };
+
+    $scope.updateProcessSelection = function(selection) {
+      if (selection.length) {
+        selection[0].isActive = true;
+        $scope.activeProcess = selection[0];
+      }
+    };
 
     /*
     * Query filter helpers
@@ -299,12 +315,18 @@ Metrics.controller('MetricsMainController', [
     }
 
     function renderTheCharts() {
-      // assign scope chart model variable data here
-      $scope.chartData.map(function(chart) {
-        var data = $scope.currentStub[chart.name];
-        $scope[chart.chartConfig] = ChartConfigService.getChartOptions(chart.chartOptions);
-        $scope[chart.chartModel] = ChartConfigService.getChartMetricsData(chart, data);
-      });
+      $scope.readyCharts = true;
+
+      $timeout(function() {
+        // assign scope chart model variable data here
+        $scope.chartData.map(function(chart) {
+          var data = $scope.currentStub[chart.name];
+          $scope[chart.chartConfig] = ChartConfigService.getChartOptions(chart.chartOptions);
+          $scope[chart.chartModel] = ChartConfigService.getChartMetricsData(chart, data);
+        });
+
+        $scope.readyCharts = false;
+      }, 0);
     }
 
     /*
@@ -382,6 +404,10 @@ Metrics.controller('MetricsMainController', [
     };
 
     $scope.showChart = function(chart, modelRef) {
+      if ($scope.readyCharts) {
+        return true;
+      }
+
       var data = $scope[modelRef];
 
       if (data) {

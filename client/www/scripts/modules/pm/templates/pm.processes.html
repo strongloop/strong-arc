@@ -1,15 +1,25 @@
-<div class="sl-profiler-processes">
-  <span class="title" ng-show="processes.length">Processes</span>
+<div class="sl-profiler-processes" ng-show="processes.length">
+  <div class="pull-right" ng-show="multiple">
+    <button ng-click="selectAll()" class="ui-btn small accessory"
+      ng-show="selectCount < processes.length">
+      Select All
+    </button>
+    <button ng-click="deselectAll()" class="ui-btn small accessory"
+      ng-show="selectCount === processes.length">
+      Deselect All
+    </button>
+  </div>
+  <span class="title">Processes</span>
   <div class="loading"
        sl-common-loading-indicator
        size="small"
        ng-show="isShowPidDisplaySpinner()"></div>
   <ul>
     <li
-            ng-repeat="process in processes | limitTo:8"
+            ng-repeat="process in processes | filter:processHidden | limitTo:8"
             class="process"
-            ng-class="{ active: activeProcess.pid == process.pid }"
-            ng-click="setActiveProcess(process, false)">
+            ng-class="{ active: isActive(process) }"
+            ng-click="toggleSelect(process)">
       <div class="pid">{{process.pid}}</div>
       <div class="status" ng-class="process.status.toLowerCase()">{{process.status}}</div>
     </li>
