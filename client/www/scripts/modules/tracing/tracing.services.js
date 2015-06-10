@@ -28,7 +28,7 @@ Tracing.service('TracingServices', [
     };
     svc.alertUnlicensedPMHost = function() {
       $rootScope.$emit('message', {
-        body: 'The processes came up but they are not tracing.  You may need to push a license to your PM Host via the Process Manager view.',
+        body: 'The processes came up but they are not tracing.  You may need to push a license to your PM Host via the Process Manager view. Or you could try stopping and starting tracing again to reset.',
         links: [{
           link: '/#process-manager',
           linkText: 'go to Process Manager view'

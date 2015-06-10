@@ -28,7 +28,7 @@
         <div class="pm-tracing-toggle-container" ng-show="showTraceToggle">
           <span class="title">Tracing</span>
           <sl-ui-switch switches="tracingOnOff"  ng-show="!tracingProcessCycleActive" classes="power"></sl-ui-switch>
-          <div ng-show="tracingProcessCycleActive">{{tracingOnOffCycleMessage}} {{ processes.length }} of {{ targetProcessCount }} processes tracing</div>
+          <div ng-show="tracingProcessCycleActive">{{tracingOnOffCycleMessage}} {{ ( processes.length + 1) }} of {{ targetProcessCount }} processes tracing</div>
         </div>
       </div>
       <!-- Tracing ticker -->
