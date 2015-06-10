@@ -100,7 +100,25 @@ WebInspector.ProfileLauncherView.prototype = {
         document.documentElement.addEventListener('setActiveProcess', function(e){
             var data = e.detail;
             var process = data.process;
-            var text = process.pid;
+            var profilerRunning = false;
+
+            var text = process.map(function(p) {
+              if (p.isProfiling) {
+                profilerRunning = true;
+              }
+
+              return p.pid;
+            }).join(', ');
+
+            if (!this._isInstantProfile) {
+              if (profilerRunning) {
+                  this._toggleCpuButtons('stop');
+                  this._disableProfilerRadioButtons();
+              } else {
+                  this._toggleCpuButtons('start');
+                  this._enableProfilerRadioButtons();
+              }
+            }
 
             this._setTitlePid(text);
         }.bind(this));
@@ -115,6 +133,37 @@ WebInspector.ProfileLauncherView.prototype = {
                 '</span>, process ID#<span class="pid"></span>' );
 
             this._setTitle(title);
+        }.bind(this));
+
+        document.documentElement.addEventListener('loadFile', function(e) {
+            var file = e.detail.file;
+
+            if (file) {
+                this._panel._loadFromFile(file);
+            }
+        }.bind(this));
+
+        document.documentElement.addEventListener('showProfile', function(e) {
+          var profile = e.detail.profile;
+          var nameParts = profile.split('.');
+          var ext = nameParts.pop();
+          var name = nameParts.join('.');
+
+          if (profile) {
+              var type = this._panel._findProfileTypeByExtension(profile);
+              var profile = null;
+
+              type._profiles.forEach(function(d) {
+                if (d.title === name) {
+                  profile = d;
+                  return false;
+                }
+              });
+
+              if (profile) {
+                this._panel.showProfile(profile);
+              }
+          }
         }.bind(this));
 
         this._addFetchButtons();
@@ -135,7 +184,7 @@ WebInspector.ProfileLauncherView.prototype = {
 
     _hideCpuButtons: function(){
         this._fetchHeapButton.style.display = 'none';
-        this._fetchCpuButton.style.display = 'none';
+//        this._fetchCpuButton.style.display = 'none';
         this._startCpuButton.style.display = 'none';
 
         //show load button
@@ -253,10 +302,10 @@ WebInspector.ProfileLauncherView.prototype = {
 
             //console.log('[iframe] start cpu profiling', data);
 
-            if ( data.status === 200 ) {
+//            if ( data.status === 200 ) {
                 this._toggleCpuButtons('stop');
                 this._disableProfilerRadioButtons();
-            }
+//            }
         }.bind(this));
     },
 
@@ -268,14 +317,19 @@ WebInspector.ProfileLauncherView.prototype = {
 
         if ( !process ) return false;
 
-        SL.profiler.fetchCpuFile(function(file){
-            if ( !file ) return;
+        SL.profiler.fetchCpuFile(function(files) {
+            var profilePanel = this._panel;
 
+            if ( !files ) return;
+
+            // we don't need to pull the file down right away,
             //console.log('[iframe] fetched cpu file', file);
+            //files.forEach(function(file) {
+            //  profilePanel._loadFromFile(file);
+            //});
 
-            this._toggleCpuButtons('start');
             this._enableProfilerRadioButtons();
-            this._panel._loadFromFile(file);
+            this._toggleCpuButtons('start');
         }.bind(this));
     },
     //end strongloop
@@ -490,4 +544,3 @@ WebInspector.MultiProfileLauncherView.prototype = {
 
     __proto__: WebInspector.ProfileLauncherView.prototype
 }
-

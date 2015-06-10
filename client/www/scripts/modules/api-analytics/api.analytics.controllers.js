@@ -20,14 +20,22 @@ ApiAnalytics.controller('ApiAnalyticsController', [
           });
       };
 
-      $scope.onClickLoad = function(form){
-        $log.log('loading chart data...');
-        $scope.server.host = form.host.$viewValue;
-        $scope.server.port = form.port.$viewValue;
+      $scope.updateHost = function(host) {
+        $scope.server = host;
         $scope.apiChart = {};
-
-
         $scope.getData(null, 0, 0);
+      };
+
+      $scope.updateProcesses = function(processes) {
+        $scope.processes = processes;
+        $scope.updateProcessSelection([processes[0]]);
+      };
+
+      $scope.updateProcessSelection = function(selection) {
+        if (selection.length) {
+          selection[0].isActive = true;
+          $scope.activeProcess = selection[0];
+        }
       };
 
       $scope.getData = function(d, i, depth, initialModel){

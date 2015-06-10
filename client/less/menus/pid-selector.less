@@ -2,6 +2,24 @@
 
 .sl-pid-selector {
   .clearfix;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .host-form-container {
+    flex-grow: 0;
+  }
+
+  .extensions-container {
+    flex-grow: 0;
+    align-self: flex-end;
+    padding-bottom: 1.6rem;
+    padding-right: 3.0rem;
+  }
+
+  .selector-container {
+    flex-grow: 1;
+  }
 
   form {
     border: none;
@@ -49,9 +67,7 @@
     }
 
   }
-  .pm-host-form-layout-col {
-    width:46rem;
-  }
+
   .sl-profiler-processes {
     font-size: 1.4rem;
     min-height:7.2rem;

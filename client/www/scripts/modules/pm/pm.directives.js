@@ -24,14 +24,15 @@ PM.directive('slPmAppControllerMenu', [
 * - will be replaced with pm selector in the watchdog story
 *
 * */
-PM.directive('slPmHostFormApi', [
+PM.directive('slPmHostForm', [
   'PMHostService',
   'PMPidService',
   function(PMHostService, PMPidService) {
     return {
       scope: {
-        hasClickLoad: '=hasclickload',
-        onClickLoad: '&onclickload'
+        onLoadHost: '&',
+        onUpdateProcesses: '&',
+        onUpdateSelection: '&'
       },
       templateUrl: './scripts/modules/pm/templates/pm.host.form.html',
       controller: [
@@ -41,23 +42,26 @@ PM.directive('slPmHostFormApi', [
         '$timeout',
         'PMAppService',
         'PMServerService',
-        function($scope, $log, growl, $timeout, PMAppService, PMServerService) {
+        '$parse',
+        function($scope, $log, growl, $timeout, PMAppService, PMServerService, $parse) {
 
           var isLocal = false;
           var isInit = true;
-          $scope.isLoading = false;
-          $scope.currentServerConfig = {
+          var serverConfig = {
             host: PM_CONST.LOCAL_PM_HOST_NAME,
             port: PM_CONST.LOCAL_PM_PORT_MASK
           };
+
           $scope.pmServers = PMHostService.getPMServers({ excludeLocalApp: true });
           $scope.pmServers.unshift({}); //placeholder for user input
 
           $scope.candidateServerConfig = {};
+
           // set value to last referenced server if available
           if (PMHostService.getPMServers().length) {
             $scope.candidateServerConfig = PMHostService.getLastPMServer({ excludeLocalApp: true });
           }
+
           $scope.selected = undefined;
           $scope.activeProcess = null;
           $scope.showMoreMenu = false;
@@ -86,8 +90,7 @@ PM.directive('slPmHostFormApi', [
           $scope.onPMServerSelect = function(item) {
             if (item.host === PM_CONST.LOCAL_PM_HOST_NAME) {
               isLocal = true;
-            }
-            else {
+            } else {
               isLocal = false;
             }
 
@@ -137,7 +140,6 @@ PM.directive('slPmHostFormApi', [
             }
 
             $scope.isLoading = true;
-            $scope.processes = [];
 
             if ($scope.candidateServerConfig.host === PM_CONST.LOCAL_PM_HOST_NAME) {
               $scope.currentServerConfig = $scope.candidateServerConfig;
@@ -174,19 +176,32 @@ PM.directive('slPmHostFormApi', [
                 $log.warn('invalid server host config form loadProcess request: ' + JSON.stringify($scope.candidateServerConfig));
               }
             }
+
+            $scope.onLoadHost({host: $scope.currentServerConfig});
           };
+
+          $scope.setProcesses = function(pids) {
+            $scope.processes = pids.filter(function(process) {
+              return process.serviceInstanceId === 1 && process.workerId > 0;
+            });
+
+            $scope.onUpdateProcesses({
+              processes: $scope.processes
+            });
+
+            $scope.isRemoteValid = $scope.processes.length > 0;
+            return $scope.processes;
+          };
+
           $scope.initServerProcesses = function(serverConfig, ServiceId) {
             growl.addInfoMessage('retrieving server processes', {ttl:2000});
             $scope.activeProcess = null;
-            $scope.processes = [];
-
 
             return PMServerService.find(serverConfig, {id:1})
               .then(function(response) {
                 if (response.status === 200) {
                   PMPidService.getDefaultPidData(serverConfig, ServiceId)
                     .then(function(pidCollection) {
-
                       PMHostService.addPMServer(serverConfig, false);
                       $scope.processes = pidCollection
                         .filter(function(process) {
@@ -194,10 +209,12 @@ PM.directive('slPmHostFormApi', [
                         });
                       $scope.pmServers = PMHostService.getPMServers({ excludeLocalApp: true });
                       $scope.pmServers.unshift({});
-                      //activate first process
-                      if ( $scope.processes.length ) {
 
-                        $scope.setActiveProcess($scope.processes[0], false)
+                      var processes = $scope.setProcesses(pidCollection);
+
+                      //activate first process
+                      if (processes.length > 0) {
+                        $scope.setActiveProcess(processes[0], false);
                       }
                     });
                 }
@@ -216,13 +233,12 @@ PM.directive('slPmHostFormApi', [
             $scope.activeProcess = process;
             $scope.isProcessFromMore = isMoreClick;
             $scope.isRemoteValid = true;
-
           };
         }]
     }
   }
 ]);
-PM.directive('slPmHostForm', [
+PM.directive('slPmHostFormGlobal', [
   'PMHostService',
   'PMPidService',
   function(PMHostService, PMPidService) {
@@ -248,10 +264,12 @@ PM.directive('slPmHostForm', [
           $scope.pmServers.unshift({}); //placeholder for user input
 
           $scope.candidateServerConfig = {};
+
           // set value to last referenced server if available
           if (PMHostService.getPMServers().length) {
             $scope.candidateServerConfig = PMHostService.getLastPMServer();
           }
+
           $scope.selected = undefined;
           $scope.activeProcess = null;
           $scope.showMoreMenu = false;
@@ -265,15 +283,6 @@ PM.directive('slPmHostForm', [
           $scope.pmHostFocus = function() {
             isLocal = false;
           };
-
-          $scope.$watch('candidateServerConfig.host', function(newVal, oldVal){
-            if ( newVal && newVal !== PM_CONST.LOCAL_PM_HOST_NAME ){
-              $scope.pmServers[0] = {
-                host: newVal,
-                port: $scope.candidateServerConfig.port
-              };
-            }
-          });
 
           $scope.processes = [];
 
@@ -415,10 +424,70 @@ PM.directive('slPmProcesses', [
   function(){
     return {
       templateUrl: './scripts/modules/pm/templates/pm.processes.html',
-      controller: function() {
+      scope: {
+        processes: '=',
+        multiple: '=',
+        showSupervisor: '=',
+        onUpdateSelection: '&'
+      },
+      controller: function($scope) {
+        $scope.selectCount = 0;
 
+        function updateSelection() {
+          $scope.onUpdateSelection({
+            selection: $scope.processes.filter(function(process) {
+              return process.isActive;
+            })
+          });
+        }
+
+        var selectProcess = function(process) {
+          if (!$scope.multiple) {
+            $scope.deselectAll();
+          }
+
+          if (!process.isActive) {
+            process.isActive = true;
+            $scope.selectCount++;
+          }
+        };
+
+        var deselectProcess = function(process) {
+          if (process.isActive) {
+            process.isActive = false;
+            $scope.selectCount--;
+          }
+        };
+
+        $scope.processHidden = function(process) {
+          return process.workerId > 0 || $scope.showSupervisor;
+        };
+
+        $scope.selectAll = function() {
+          $scope.processes.forEach(selectProcess);
+          updateSelection();
+        };
+
+        $scope.deselectAll = function() {
+          $scope.processes.forEach(deselectProcess);
+          updateSelection();
+        };
+
+        $scope.isActive = function(process) {
+          return process.isActive;
+        };
+
+        $scope.toggleSelect = function(process) {
+          if (!$scope.isActive(process)) {
+            selectProcess(process);
+          } else {
+            deselectProcess(process);
+          }
+
+          updateSelection();
+        };
       }
-    }
+    };
   }
 
 ]);
@@ -428,6 +497,36 @@ PM.directive('slPmPidSelector', [
     return {
       restrict: 'E',
       replace: true,
-      templateUrl: './scripts/modules/pm/templates/pm.pid.selector.html'
+      transclude: true,
+      templateUrl: './scripts/modules/pm/templates/pm.pid.selector.html',
+      scope: {
+        onUpdateHost: '&',
+        onUpdateProcesses: '&',
+        onUpdateSelection: '&',
+        multiple: '='
+      },
+      controller: function($scope) {
+        $scope.processes = [];
+
+        $scope.updateProcesses = function(processes) {
+          $scope.processes = processes;
+
+          $scope.onUpdateProcesses({
+            processes: processes
+          });
+        };
+
+        $scope.updateHost = function(host) {
+          $scope.onUpdateHost({
+            host: host
+          });
+        };
+
+        $scope.updateSelection = function(selection) {
+          $scope.onUpdateSelection({
+            selection: selection
+          });
+        };
+      }
     }
   }]);

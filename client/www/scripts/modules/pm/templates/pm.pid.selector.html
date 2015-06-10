@@ -1,12 +1,14 @@
 <div class="sl-pid-selector">
-  <div data-ui-type="table">
-    <div data-ui-type="row">
-      <div data-ui-type="cell" class="pm-host-form-layout-col">
-        <div sl-pm-host-form></div>
-      </div>
-      <div data-ui-type="cell">
-        <div sl-pm-processes ></div>
-      </div>
+  <div class="host-form-container">
+    <div sl-pm-host-form
+      on-update-processes="updateProcesses(processes)"
+      on-load-host="updateHost(host)">
     </div>
+  </div>
+  <div class="extensions-container" ng-transclude ng-show="processes.length > 0">
+  </div>
+  <div class="selector-containers">
+    <div sl-pm-processes processes="processes" multiple="multiple"
+      show-supervisor="false" on-update-selection="updateSelection(selection)"></div>
   </div>
 </div>

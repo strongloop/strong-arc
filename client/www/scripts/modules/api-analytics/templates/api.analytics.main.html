@@ -6,7 +6,11 @@
       <div class="common-instance-view-container">
         <div class="api-analytics">
             <section>
-              <div sl-pm-host-form-api class="sl-pid-selector" onclickload="onClickLoad(form)" hasclickload="true"></div>
+              <sl-pm-pid-selector
+                on-update-host="updateHost(host)"
+                on-update-processes="updateProcesses(processes)"
+                on-update-selection="updateProcessSelection(selection)">
+              </sl-pm-pid-selector>
               <sl-api-analytics-chart
                 chart="apiChart"
                 getdata="getData(d, i, depth, initialModel)"
