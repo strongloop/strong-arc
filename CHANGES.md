@@ -1,4 +1,50 @@
-2015-06-04, Version 1.4.0
+2015-06-10, Version 1.4.1
+=========================
+
+ * Fix issue with metric charts not displaying properly on load (Joseph Tary)
+
+ * Revert "Add support to Arc for smart-profiling feature" (Joseph Tary)
+
+ * Add support to Arc for smart-profiling feature (Joseph Tary)
+
+ * handle case of brand new pm host with no app (seanbrookes)
+
+ * minor text tweak (seanbrookes)
+
+ * rework logic to test if pids have correct state (seanbrookes)
+
+ * Allow offline model for getProducts() (Raymond Feng)
+
+ * package: add bugs URL (Ryan Graham)
+
+ * package: update license to use SPDX expression (Ryan Graham)
+
+ * Only echo pm output to console during DEBUG mode (Sam Roberts)
+
+ * delete extra mailto: (Setogit)
+
+ * update to test if pm has no license (seanbrookes)
+
+ * add licenses help id (Anthony Ettinger)
+
+ * add api-analytics help id (Anthony Ettinger)
+
+ * add support for non-module help icon (Anthony Ettinger)
+
+ * exclude local app from PMServers service call (Anthony Ettinger)
+
+ * fix dropdown menu in navbar (Anthony Ettinger)
+
+ * include bower libraries in strong-arc package (Anthony Ettinger)
+
+ * add `del` as dependency (Anthony Ettinger)
+
+ * clean vendor directory before running build and bower install (Anthony Ettinger)
+
+ * bower dependencies (Anthony Ettinger)
+
+
+2015-06-03, Version 1.4.0
 =========================
 
  * fix missing scroll on inspector view take2 (seanbrookes)
