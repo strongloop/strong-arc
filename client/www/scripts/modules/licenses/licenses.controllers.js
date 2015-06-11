@@ -2,15 +2,9 @@ Licenses.controller('LicensesMainController', [
   '$scope',
   '$q',
   '$log',
+  '$rootScope',
   'LicensesService',
-  function ($scope, $q, $log, LicensesService) {
-    $scope.errors = {
-      renewal: {},
-      generic: []
-    };
-
-    $scope.hasErrors = false;
-
+  function ($scope, $q, $log, $rootScope, LicensesService) {
     window.setScrollView('.common-instance-view-container');
 
 
@@ -19,67 +13,34 @@ Licenses.controller('LicensesMainController', [
     };
 
     $scope.copyToClipboard = function(id){
-      $log.log(id);
       return $(id).val();
     };
 
-    function handleSuccess(results){
-
-      //handle calls that failed
-      results.forEach(function(res){
-        if ( res.data && res.data.error ) {
-          handleError(res);
-        }
-      });
-
-      //refresh the list
-      LicensesService.getProductsAndLicenses()
-        .then(function(products){
-          $scope.allProducts = products;
-        });
-    }
-
-    function handleError(err){
-      var error = err.data.error;
-
-      if ( error.message.indexOf('cannot be renewed') ) {
-        var id = error.product;
-        var humanName = $scope.origProducts[id].info && $scope.origProducts[id].info.description || id;
-        var msg = error.message.replace(': '+id, ': ' + humanName);
-
-        error.id = id;
-        error.type = 'InvalidRenewal';
-        error.title = humanName + ' cannot be renewed';
-        error.message = 'Please contact sales@strongloop.com for help';
-        $scope.errors.renewal[id] = error;
-      } else {
-        $scope.hasErrors = true;
-        $scope.errors.generic.push(error);
-      }
-
-      $log.error(error);
-    }
-
-    //perform autorenew and respond with updated products list
+    //get all products and user licenses and merge into allProducts
     LicensesService.getProductsAndLicenses()
       .then(function(products){
-        $scope.origProducts = products; //incase of error we can recover the list
+        $scope.allProducts = products; //incase of error we can recover the list
+      });
 
-        return LicensesService.getRenewableProducts(products);
-      })
-      .then(function(product){
-        var def = $q.defer();
 
-        LicensesService.renewProducts(product)
-          .then(function(data){
-            def.resolve(data);
-          })
-          .catch(function(err){
-            def.reject(err);
+    $scope.renewProductFeature = function(product, feature){
+        var license = feature.license;
+
+        //don't both to renew if we don't have a license
+        if ( !license ) {
+          return $rootScope.$emit('message', {
+            body: product.description + ' ' + feature.description + ' licensing missing or invalid.  If you have questions about your licenses or licensing please contact sales',
+            email: 'sales@strongloop.com?subject=Licensing',
+            emailText: 'Contact sales@strongloop.com'
           });
+        }
 
-        return def.promise;
-      })
-      .then(handleSuccess)
-      .catch(handleError);
+        LicensesService.renewProductFeature(product, feature)
+          .then(function(res){
+            LicensesService.alertProductFeatureValid(product, feature);
+          }).catch(function(err){
+            $log.error(err);
+            LicensesService.alertProductFeatureInvalid(product, feature);
+          });
+    };
   }]);
