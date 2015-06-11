@@ -755,7 +755,8 @@ Tracing.directive('slTracingTimeSeriesCharts', [
   '$log',
   '$rootScope',
   'TimeSeries',
-  function($log, $rootScope, TimeSeries) {
+  '$timeout',
+  function($log, $rootScope, TimeSeries, $timeout) {
     return {
       restrict: 'E',
       templateUrl: './scripts/modules/tracing/templates/tracing.timeseries.charts.html',
@@ -830,7 +831,9 @@ Tracing.directive('slTracingTimeSeriesCharts', [
             if( tl.length && (tl !== oldVal)){
               scope.cpugraph = new TimeSeries('#cpu-history-cont', scope.cpuGraphOptions)
                 .on('click', updateCurrentPFKey);
-              scope.cpugraph.draw(tl);
+              $timeout(function() {
+                scope.cpugraph.draw(tl);
+              });
 
             }
           }
