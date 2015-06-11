@@ -1,3 +1,13 @@
+2015-06-11, Version 1.4.2
+=========================
+
+ * fix broken injection (seanbrookes)
+
+ * package: prevent strong-arc from bundling itself (Ryan Graham)
+
+ * deps: remove dependency on slug (Ryan Graham)
+
+
 2015-06-10, Version 1.4.1
 =========================
 
