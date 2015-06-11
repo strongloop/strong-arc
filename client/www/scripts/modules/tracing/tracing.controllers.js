@@ -4,11 +4,12 @@ Tracing.controller('TracingMainController', [
   '$timeout',
   '$interval',
   '$location',
+  'growl',
   'MSFormat',
   'TracingServices',
   'ManagerServices',
   'TraceEnhance',
-  function($scope, $log, $timeout, $interval, $location, msFormat, TracingServices, ManagerServices, TraceEnhance) {
+  function($scope, $log, $timeout, $interval, $location, growl, msFormat, TracingServices, ManagerServices, TraceEnhance) {
     $scope.pm = {};
     $scope.killProcessPoll = true;
     $scope.pidCycleCheckCollection = [];
@@ -128,6 +129,9 @@ Tracing.controller('TracingMainController', [
     * */
     var totalUnlicensedPids = [];
     var totalIterations = 0;
+    // to trigger growl messages as count changes
+    var prevTracingPidCount = 0;
+    var restarting = false;
     /*
     * polls itself until
     * - either all setSize pids come up with tracing enabled
@@ -180,6 +184,8 @@ Tracing.controller('TracingMainController', [
             tracing pids
           */
           $scope.tracingOnOffCycleMessage = 'starting';
+          restarting = false;
+
           loop1:
           for (var i = 0;i < filteredProcesses.length;i++) {
             var fproc = filteredProcesses[i];
@@ -189,6 +195,8 @@ Tracing.controller('TracingMainController', [
               // still some stale pids to shut down
               if (staleWorkderId === fproc.workerId) {
                 $scope.tracingOnOffCycleMessage = 'restarting';
+                growl.addWarnMessage('shutting down existing processes');
+                restarting = true;
                 break loop1;
               }
             }
@@ -220,8 +228,16 @@ Tracing.controller('TracingMainController', [
         if (pmInstance.setSize > 0) {
           $scope.startTicker();
           // processes are still coming up
-          if (filteredProcesses.length !== pmInstance.setSize) {
-            if (filteredProcesses.length === 1 && ($scope.processes.length === 0)) {
+          var fpLen = filteredProcesses.length;
+          if (fpLen !== pmInstance.setSize) {
+            if (!restarting) {
+              if (prevTracingPidCount !== fpLen) {
+                // show progress via growl each time the process count changes
+                growl.addSuccessMessage('starting process: ' + (fpLen + 1));
+                prevTracingPidCount = fpLen;
+              }
+            }
+            if (fpLen === 1 && ($scope.processes.length === 0)) {
 
               $scope.tracingCtx.currentProcess = filteredProcesses[0];  //default
               $scope.selectedProcess = filteredProcesses[0];
@@ -232,6 +248,7 @@ Tracing.controller('TracingMainController', [
             $scope.processes = filteredProcesses;
             $timeout(function() {
               if (!$scope.killProcessPoll) {
+
                 $scope.loadTracingProcesses(pmInstance);
               }
             }, 1000);
@@ -245,6 +262,7 @@ Tracing.controller('TracingMainController', [
             $scope.tracingProcessCycleActive = false;
             $scope.killProcessPoll = true;
             $scope.pidCycleCheckCollection = [];
+            growl.addSuccessMessage('All processes are up and tracing');
 
             $scope.refreshTimelineProcess();
           }
