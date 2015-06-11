@@ -1,5 +1,9 @@
 <div class="metrics-main-container">
-  <sl-pm-pid-selector></sl-pm-pid-selector>
+  <sl-pm-pid-selector
+      on-update-host="updateHost(host)"
+      on-update-processes="updateProcesses(processes)"
+      on-update-selection="updateProcessSelection(selection)">
+  </sl-pm-pid-selector>
   <div sl-metrics-title class="metrics-title-container" data-ui-type="table">
     <div data-ui-type="row">
       <div data-ui-type="cell" class="metrics-data-point-count-col">

@@ -491,6 +491,12 @@ WebInspector.ProfilesPanel = function()
     this.element.addEventListener("contextmenu", this._handleContextMenuEvent.bind(this), true);
     this._registerShortcuts();
 
+    /* strongloop: hide the sidebar */
+    this.sidebarElement().parentNode.style.display = "none";
+    this.sidebarElement().parentNode.parentNode
+      .querySelector('.split-view-resizer').style.display = "none";
+    /* end strongloop */
+
     WebInspector.profilingLock().addEventListener(WebInspector.Lock.Events.StateChanged, this._onProfilingStateChanged, this);
 }
 
@@ -507,7 +513,7 @@ WebInspector.ProfilesPanel.prototype = {
     {
         if (this._fileSelectorElement)
             this.element.removeChild(this._fileSelectorElement);
-        this._fileSelectorElement = WebInspector.createFileSelectorElement(this._loadFromFile.bind(this));
+        this._fileSelectorElement = WebInspector.createFileSelectorElement(this._loadFromFileDirect.bind(this));
         this.element.appendChild(this._fileSelectorElement);
     },
 
@@ -530,10 +536,15 @@ WebInspector.ProfilesPanel.prototype = {
         this.registerShortcuts(WebInspector.ShortcutsScreen.ProfilesPanelShortcuts.StartStopRecording, this.toggleRecordButton.bind(this));
     },
 
+    _loadFromFileDirect: function(file) {
+      this._SL.profiler.addProfileForFile(file);
+      this._loadFromFile(file);
+    },
+
     /**
      * @param {!File} file
      */
-    _loadFromFile: function(file)
+    _loadFromFile: function(file, cb)
     {
         this._createFileSelectorElement();
 
@@ -552,11 +563,11 @@ WebInspector.ProfilesPanel.prototype = {
         }
 
         if (!!profileType.profileBeingRecorded()) {
-            WebInspector.console.error(WebInspector.UIString("Can't load profile while another profile is recording."));
-            return;
+        //    WebInspector.console.error(WebInspector.UIString("Can't load profile while another profile is recording."));
+        //    return;
         }
 
-        profileType.loadFromFile(file);
+        profileType.loadFromFile(file, cb);
     },
 
     /**

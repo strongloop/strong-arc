@@ -52,6 +52,26 @@ SL.child.profiler = {
     });
 
     document.documentElement.dispatchEvent(event);
+  },
+
+  loadFile: function(file) {
+    var event = new CustomEvent('loadFile', {
+      detail: {
+        file: file
+      }
+    });
+
+    document.documentElement.dispatchEvent(event);
+  },
+
+  showProfile: function(profile) {
+    var event = new CustomEvent('showProfile', {
+      detail: {
+        profile: profile
+      }
+    });
+
+    document.documentElement.dispatchEvent(event);
   }
 };
 

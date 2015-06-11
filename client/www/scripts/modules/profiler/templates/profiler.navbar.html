@@ -6,6 +6,19 @@
     </div>
   </nav>
   <nav class="sl-profiler-remote" ng-show="profilerId == 'remote'">
-    <sl-pm-pid-selector></sl-pm-pid-selector>
+    <sl-pm-pid-selector multiple="enableMultiple"
+      on-update-host="updateHost(host)"
+      on-update-processes="updateProcesses(processes)"
+      on-update-selection="updateProcessSelection(selection)">
+      <button class="ui-btn accessory sl-profiler-settings-btn"
+        popover-template="profilerSettings.templateUrl"
+        popover-placement="bottom"
+        ng-show="smartProfilingSupport">
+        Profile Settings ({{profilerSettings.mode}})
+      </button>
+      <div ng-show="smartProfilerError">
+        {{smartProfilerError}}
+      </div>
+    </sl-pm-pid-selector>
   </nav>
 </div>

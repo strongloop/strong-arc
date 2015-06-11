@@ -8,31 +8,67 @@ Profiler.service('ProfilerService', [
   function ($q, $http, $log, $interval, $q) {
     var svc = this;
 
-    svc.startCpuProfiling = function(server, process){
+    function getServerInstanceUrl(server, instance)
+    {
+      var api = 'http://' + server.host + ':' + server.port;
+
+      if (server.host === PM_CONST.LOCAL_PM_HOST_NAME) {
+        api = '/process-manager';
+      }
+
+      return api + '/api/ServiceInstances/' + instance + '/actions';
+    }
+
+    function getServiceUrl(server, instance) {
+      var api = 'http://' + server.host + ':' + server.port;
+
+      if (server.host === PM_CONST.LOCAL_PM_HOST_NAME) {
+        api = '/process-manager';
+      }
+
+      return api + '/api/Services/' + instance;
+    }
+
+    svc.getCpuProfiles = function(server, instanceId) {
+      var url = getServiceUrl(server, instanceId) + '/ProfileDatas/';
+      var addDownloadUrl = function(profile) {
+        profile.downloadUrl = url + profile.id + '/download';
+        return profile;
+      };
+
+      return $http.get(url).then(function(result) {
+        return result.data.map(addDownloadUrl);
+      });
+    };
+
+    svc.startCpuProfiling = function(server, process, settings) {
+      var instance = process.serviceInstanceId;
       var api = 'http://' + server.host + ':' + server.port;
       if (server.host === PM_CONST.LOCAL_PM_HOST_NAME) {
-        api = '/process-manager'
+        api = '/process-manager';
       }
-      var url = api + '/api/ServiceInstances/1/actions';
+      var url = api + '/api/ServiceInstances/' + instance + '/actions';
       var postData = {
         request: {
           cmd: 'current',
           sub: 'start-cpu-profiling',
-          target: process.pid
+          target: process.pid,
+          serviceProcessId: process.id
         },
         serverServiceId: 1
       };
+
+      if (settings.mode === 'smart') {
+        postData.request.timeout = settings.timeout;
+        postData.request.stallout = settings.limit;
+      }
 
       //send start profiling request
       return $http.post(url, postData);
     },
 
     svc.downloadFile = function(server, fileUrl, fileName){
-      var api = 'http://' + server.host + ':' + server.port;
-      if (server.host === PM_CONST.LOCAL_PM_HOST_NAME) {
-        api = '/process-manager'
-      }
-      var downloadUrl = api + fileUrl;
+      var downloadUrl = fileUrl;
       var def = $q.defer();
       var isRunning = false;
       var intv;
@@ -78,17 +114,19 @@ Profiler.service('ProfilerService', [
       return def.promise;
     },
 
-    svc.stopCpuProfiling = function(server, process){
+    svc.stopCpuProfiling = function(server, process) {
+      var instance = process.serviceInstanceId;
       var api = 'http://' + server.host + ':' + server.port;
       if (server.host === PM_CONST.LOCAL_PM_HOST_NAME) {
         api = '/process-manager'
       }
-      var url = api + '/api/ServiceInstances/1/actions';
+      var url = api + '/api/ServiceInstances/' + instance + '/actions';
       var postData = {
         request: {
           cmd: 'current',
           sub: 'stop-cpu-profiling',
-          target: process.pid
+          target: process.pid,
+          serviceProcessId: process.id
         },
         serverServiceId: 1
       };
@@ -98,16 +136,18 @@ Profiler.service('ProfilerService', [
     },
 
     svc.fetchHeapSnapshot = function(server, process){
+      var instance = process.serviceInstanceId;
       var api = 'http://' + server.host + ':' + server.port;
       if (server.host === PM_CONST.LOCAL_PM_HOST_NAME) {
         api = '/process-manager'
       }
-      var url = api + '/api/ServiceInstances/1/actions';
+      var url = api + '/api/ServiceInstances/' + instance + '/actions';
       var postData = {
         request: {
           cmd: 'current',
           sub: 'heap-snapshot',
-          target: process.pid
+          target: process.pid,
+          serviceProcessId: process.id
         },
         serverServiceId: 1
       };

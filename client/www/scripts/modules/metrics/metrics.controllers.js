@@ -41,6 +41,21 @@ Metrics.controller('MetricsMainController', [
 
     $scope.chartData = [];
 
+    $scope.updateHost = function(host) {
+      $scope.host = host;
+    };
+
+    $scope.updateProcesses = function(processes) {
+      $scope.processes = processes;
+      $scope.updateProcessSelection([processes[0]]);
+    };
+
+    $scope.updateProcessSelection = function(selection) {
+      if (selection.length) {
+        selection[0].isActive = true;
+        $scope.activeProcess = selection[0];
+      }
+    };
 
     /*
     * Query filter helpers
