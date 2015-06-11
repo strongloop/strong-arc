@@ -1,18 +1,19 @@
 // Copyright StrongLoop 2014
 Common.service('StringService', [
-  'UserPreferenceService',
-  function(UserPreferenceService) {
+  function() {
     var svc = {};
 
     svc.normalizeString = function(origString) {
 
       var retVal = origString;
+      /*
+        set as hard coded default for now
+         to remove broken dependency on user preferences service (never fully developed)
+         this code is not currently used but with the slugify issue
+         it seems there may be need for some of these services in the
+         future.
+      */
       var normalizationStrategy = 'dasherize';
-
-      if (UserPreferenceService.getUserPref('modelNameNormalizationStrategy')) {
-        normalizationStrategy = UserPreferenceService.getUserPref('modelNameNormalizationStrategy');
-      }
-
       switch(normalizationStrategy){
         case 'camelize':
           retVal = window.S(retVal).camelize().s;
