@@ -381,8 +381,8 @@ Tracing.directive('slTracingTraceMappedTraces', [
   'ArcServices',
   '$timeout',
   'Color',
-  'Slug',
-  function($log, Sha1, EventLoop, msFormat, TracingServices, ArcServices, $timeout, Color, slug) {
+  'StringService',
+  function($log, Sha1, EventLoop, msFormat, TracingServices, ArcServices, $timeout, Color, strSvc) {
     return {
       templateUrl: './scripts/modules/tracing/templates/tracing.trace.mapped.traces.html',
       restrict: 'E',
@@ -588,7 +588,7 @@ Tracing.directive('slTracingTraceMappedTraces', [
 
           // Update
           trans.attr('id', function (d) {
-            return slug(d.id)
+            return strSvc.slugify(d.id)
           });
           trans.select('.transaction-route').text(function (d) {
             return (d.id === 'untagged') ? 'Untagged Waterfalls' : d.id
