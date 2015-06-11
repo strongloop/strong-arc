@@ -3,3 +3,4 @@ node_modules
 .DS_Store
 client/test/integration/sandbox
 *-xunit.xml
+strong-arc-*.tgz
