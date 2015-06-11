@@ -155,8 +155,6 @@ Licenses.service('LicensesService', [
         }
       });
 
-      $log.log('toRenew', toRenew);
-
       def.resolve(toRenew);
 
       return def.promise;
@@ -190,32 +188,24 @@ Licenses.service('LicensesService', [
           delete products['$promise'];
           delete products['$resolved'];
 
-          var productKeys = Object.keys(products);
+          //embed the license for each product on the object for use in view
+          licenses.forEach(function(lic){
+            var product = lic.product;
+            var feature = lic.feature;
+            var expirationDate = moment(lic.expirationDate).unix();
+            var now = moment().unix();
+            var isExpired = expirationDate < now;
 
-          //embed the license (if any) for each product on the object for use in view
-          productKeys.map(function(id){
-            //check user licenses and add them to product list
-            licenses.forEach(function(lic){
-              var expirationDate = moment(lic.expirationDate).unix();
-              var now = moment().unix();
-              var isExpired = expirationDate < now;
+            lic.isExpired = isExpired;
 
-              if ( lic.product === id ) {
-                var features = lic.features.split(', ');
-                lic.access = {};
-                lic.isExpired = isExpired;
+            //apply feature access flag for easy access in view
+            if ( products[product] ) {
+              products[product].features[feature].access = !isExpired;
 
-                //apply feature access flag for easy access in view
-                features.map(function(feature){
-                  lic.access[feature] = true;
-                });
-
-                products[id].license = lic;
-              }
-            });
+              //attach license object to product list
+              products[product].features[feature].license = lic;
+            }
           });
-
-          $log.log('products', products);
 
           return products;
         });
@@ -232,6 +222,31 @@ Licenses.service('LicensesService', [
         });
       }
 
+    };
+
+    svc.alertProductFeatureInvalid = function(product, feature){
+      var license = feature.license;
+
+      $rootScope.$emit('message', {
+        body: product.description + ' ' + feature.description + ' licensing missing or invalid.  If you have questions about your licenses or licensing please contact sales',
+        email: 'sales@strongloop.com?subject=Licensing',
+        emailText: 'Contact sales@strongloop.com'
+      });
+    };
+
+    svc.alertProductFeatureValid = function(product, feature){
+      var productDescription = product.description || '';
+      $rootScope.$emit('message', {
+        body: productDescription + ' ' + feature.description +' licensing has been renewed'
+      });
+    };
+
+    svc.renewProductFeature = function(product, feature){
+      var userId = ArcUserService.getCurrentUserId();
+      var productId = feature.license.product;
+      var feature = feature.license.feature;
+
+      return Subscription.renewTrial({ userId: userId }, { product: productId, features: [feature] }).$promise;
     };
 
     return svc;

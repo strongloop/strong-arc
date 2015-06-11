@@ -67,7 +67,7 @@ function handleRes(err, res, body, done) {
 module.exports = function(Subscription) {
   var store = new KeyStore();
 
-  function loadFromStore(userId, cb) {
+  function loadSubscriptionsFromStore(userId, cb) {
     return store.load(userId, function(err, content) {
       if (err) {
         return cb(err);
@@ -87,6 +87,34 @@ module.exports = function(Subscription) {
     });
   }
 
+  Subscription.provisionSubscriptions = function(cb) {
+    store.load(null, function(err, content) {
+      if (err) return cb(err);
+      if (content && content.userId) {
+        Subscription.provisionTrials(content.userId, content.accessToken,
+          function(err, result) {
+            if (err) return cb(err);
+            debug('Trial subscriptions provisioned:', result);
+            reloadSubscriptions(content.userId, content.accessToken, null, cb);
+          });
+      }
+    });
+  };
+
+  Subscription.provisionTrials = function(userId, accessToken, cb) {
+    var url = Subscription.settings.authUrl;
+    request.post({
+      url: url + 'users/' + userId + '/provisionTrials',
+      qs: {
+        access_token: accessToken
+      },
+      json: true
+    }, function(err, res, body) {
+      handleRes(err, res, body, cb);
+    });
+  };
+
+
   /**
    * Get all product subscriptions for a given user
    * @param {Number|String} userId User id
@@ -98,18 +126,19 @@ module.exports = function(Subscription) {
     if (mode === 'offline') {
       debug('Loading subscriptions from the local key store (offline)');
       // Read from the local key store
-      return loadFromStore(userId, cb);
+      return loadSubscriptionsFromStore(userId, cb);
     }
 
     var tasks = {};
 
+    var accessToken = getAccessToken(req);
     tasks.subscriptions = function(done) {
       debug('Loading subscriptions from auth service (online)');
       var url = Subscription.settings.authUrl;
       request.get({
         url: url + 'users/' + userId + '/subscriptions',
         qs: {
-          access_token: getAccessToken(req)
+          access_token: accessToken
         },
         json: true
       }, function(err, res, body) {
@@ -130,7 +159,7 @@ module.exports = function(Subscription) {
         } else {
           debug('Falling back to load subscriptions from the local key store');
           // Fall back to offline mode
-          return loadFromStore(userId, cb);
+          return loadSubscriptionsFromStore(userId, cb);
         }
       } else {
         var products = results.products;
@@ -139,6 +168,8 @@ module.exports = function(Subscription) {
         store.save({
           products: products,
           licenses: subscriptions,
+          userId: userId,
+          accessToken: accessToken,
           modified: new Date()}, userId, function(err) {
           cb(err, subscriptions);
         });
