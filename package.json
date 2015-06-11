@@ -41,7 +41,6 @@
     "request": "^2.53.0",
     "serve-favicon": "^2.2.0",
     "sha1": "^1.1.0",
-    "slug": "^0.8.0",
     "split": "^0.3.3",
     "strong-build": "^1.0.3",
     "strong-deploy": "^1.1.4",
