@@ -1,3 +1,15 @@
+2015-06-12, Version 1.4.3
+=========================
+
+ * revert path to older version of contextMenu (seanbrookes)
+
+ * add growl messages for pid updates in tracing (seanbrookes)
+
+ * fix initial timeseries chart rendering regression (seanbrookes)
+
+ * fix control alignment issue (seanbrookes)
+
+
 2015-06-11, Version 1.4.2
 =========================
 
