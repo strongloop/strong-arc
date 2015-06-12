@@ -277,7 +277,7 @@ Arc.factory('arcRequestInterceptor', [
         if (at) {
           if (
             isLocal(config.url, $location.host()) ||
-            config.url.indexOf('auth2.strongloop.com/api') > -1
+            config.url.indexOf('auth.strongloop.com/api') > -1
           ) {
             config.headers.authorization = at;
           } else {
