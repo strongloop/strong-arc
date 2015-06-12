@@ -437,7 +437,7 @@ WebInspector.ResourceTreeModel.prototype = {
         var frame = new WebInspector.ResourceTreeFrame(this, parentFrame, framePayload.id, framePayload);
         this._addFrame(frame);
 
-        var frameResource = this._createResourceFromFramePayload(framePayload, framePayload.url, WebInspector.resourceTypes.Document, framePayload.mimeType);
+        var frameResource = this._createResourceFromFramePayload(framePayload, framePayload.url, WebInspector.resourceTypes.Script, framePayload.mimeType);
         if (frame.isMainFrame())
             this._inspectedPageURL = frameResource.url;
         frame.addResource(frameResource);
