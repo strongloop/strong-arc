@@ -1,5 +1,9 @@
-<div ng-show="(tracingCtx.currentTimeline.length > 0)" >
-  <div id='cpu-history-cont' data-id="TracingTimeseriesChart" data-hook='cpumonitor'></div>
-  <span  ng-show="((tracingCtx.currentTimeline.length > 0) && !tracingCtx.currentPFKey)">select a timeframe to view available traces</span>
-  <sl-popover-help  ng-show="((tracingCtx.currentTimeline.length > 0) && !tracingCtx.currentPFKey)" name="trace-cpumemory"></sl-popover-help>
+<div>
+  <img class="tracing-graph-bg" ng-show="(tracingCtx.currentTimeline.length < 2)" src="./images/graph-source.png" />
+  <div ng-show="(tracingCtx.currentTimeline.length > 1)" >
+    <div id='cpu-history-cont' data-id="TracingTimeseriesChart" data-hook='cpumonitor'></div>
+    <span  ng-show="((tracingCtx.currentTimeline.length > 0) && !tracingCtx.currentPFKey)">select a timeframe to view available traces</span>
+    <sl-popover-help  ng-show="((tracingCtx.currentTimeline.length > 0) && !tracingCtx.currentPFKey)" name="trace-cpumemory"></sl-popover-help>
+  </div>
 </div>
+
