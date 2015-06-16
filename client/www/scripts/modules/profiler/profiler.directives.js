@@ -7,14 +7,17 @@ Profiler.directive('slProfilerNavbar', [
         restrict: 'E',
         replace: true,
         templateUrl: './scripts/modules/profiler/templates/profiler.navbar.html',
-        controller: function($scope, $attrs){
+        controller: function($scope, $attrs) {
 
           $scope.profilerId = 'remote';
           $scope.activeProcess = null;
           $scope.processes = [];
+          $scope.refreshProcessesCallback = null;
 
-          $scope.updateProcesses = function(processes) {
+          $scope.updateProcesses = function(processes, refresh) {
             $scope.processes = processes;
+            $scope.refreshProcessesCallback = refresh;
+
             $scope.processes.forEach(function(process) {
               if (process.isProfiling) {
                 process.status = 'Profiling';
@@ -38,7 +41,7 @@ Profiler.directive('slProfilerNavbar', [
             $scope.updateProcesses([]);
           };
 
-          $scope.$watch('profilerId', function(newVal, oldVal){
+          $scope.$watch('profilerId', function(newVal, oldVal) {
             if ( newVal !== oldVal ) {
               $scope.resetRemoteState();
               $scope.initProfiler();

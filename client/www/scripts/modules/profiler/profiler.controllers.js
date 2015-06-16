@@ -27,6 +27,12 @@ Profiler.controller('ProfilerMainController', [
     $scope.processes = [];
     $scope.multiple = false;
 
+    function isValidTarget(profile) {
+      return profile.completed || $scope.processes.some(function(worker) {
+        return worker.id === profile.targetId;
+      });
+    }
+
     function getProfileStatus(profile) {
       if (profile.completed && profile.errored == null) {
         return 'ready';
@@ -36,7 +42,7 @@ Profiler.controller('ProfilerMainController', [
         return 'profiling';
       }
 
-      return profile.errored;
+      return profile.errored || 'invalid';
     }
 
     $scope.updateProfiles = function() {
@@ -49,13 +55,101 @@ Profiler.controller('ProfilerMainController', [
                 profile.status = getProfileStatus(profile);
               });
 
-              $scope.profiles = profiles.filter(function(profile) {
-                return profile.errored == null;
-              });
-
+              $scope.profiles = profiles.filter(isValidTarget);
               $scope.isRemoteValid = true;
             });
-      });
+        });
+    };
+
+    $scope.refreshProcesses = function() {
+      var detectChanges = function(oldPids, newPids) {
+        var exitSet = [];
+        var enterSet = [];
+        var changeSet = [];
+        var pidMap = {};
+        var queue = [].concat(newPids);
+
+        oldPids.map(function(pid) {
+          pidMap[pid.id] = {
+            found: false,
+            pid: pid
+          };
+        });
+
+        while (queue.length) {
+          var pid = queue.pop();
+
+          if (pidMap[pid.id] != null) {
+            changeSet.push([pid, pidMap[pid.id].pid]);
+            pidMap[pid.id].found = true;
+          } else {
+            enterSet.push(pid);
+          }
+        }
+
+        exitSet = oldPids
+          .filter(function(d) {
+            return pidMap[d.id].found === false;
+          });
+
+        return {
+          enter: function(cb) {
+            enterSet.forEach(cb);
+            return this;
+          },
+          exit: function(cb) {
+            exitSet.forEach(cb);
+            return this;
+          },
+          change: function(cb) {
+            changeSet.forEach(function(change) {
+              cb(change[1], change[0]);
+            });
+
+            return this;
+          }
+        };
+      };
+
+      if (!$scope.refreshProcessesCallback) {
+        return;
+      }
+
+      $scope.refreshProcessesCallback()
+        .then(function(processes) {
+          detectChanges($scope.processes, processes)
+            .exit(function(pid) {
+              growl.addInfoMessage('PID ' + pid.pid + ' removed.');
+              for (var i = $scope.processes.length - 1; i >= 0; --i) {
+                if ($scope.processes[i].id === pid.id) {
+                  $scope.processes.splice(i, 1);
+                  break;
+                }
+              }
+            })
+            .enter(function(pid) {
+              growl.addInfoMessage('PID ' + pid.pid + ' added.');
+              $scope.processes.push(pid);
+            })
+            .change(function(oldVal, newVal) {
+              if (oldVal.isProfiling !== newVal.isProfiling) {
+                growl.addInfoMessage('PID ' + newVal.pid + ' changed status.');
+                angular.extend(oldVal, newVal);
+                oldVal.status = oldVal.isProfiling ? 'Profiling' : 'Running';
+              }
+            });
+
+          $scope.updateProfiles();
+        });
+    };
+
+    $scope.startAutomaticUpdates = function() {
+      var pollingInterval = 2000;
+
+      (function update() {
+        $scope.refreshProcesses();
+        $timeout(update, pollingInterval);
+      })();
     };
 
     function getProcessByPid(pid) {
@@ -85,7 +179,7 @@ Profiler.controller('ProfilerMainController', [
     $scope.updateHost = function(host) {
       $scope.host = host;
       $scope.isRemoteValid = false;
-      $scope.updateProfiles();
+      $scope.startAutomaticUpdates();
     };
 
     $scope.profilerModes = profilerModes;
@@ -155,6 +249,7 @@ Profiler.controller('ProfilerMainController', [
     });
 
     var selectedProfile = null;
+
     $scope.selectProfile = function(profile) {
       if (selectedProfile) {
         selectedProfile.isSelected = false;
@@ -162,7 +257,7 @@ Profiler.controller('ProfilerMainController', [
 
       selectedProfile = profile;
       selectedProfile.isSelected = true;
-    }
+    };
 
     $scope.loadProfile = function(profile) {
       var fileName = profile.filename || 'profile-' + profile.id + '.' + profile.type;

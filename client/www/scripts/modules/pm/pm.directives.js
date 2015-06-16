@@ -180,13 +180,14 @@ PM.directive('slPmHostForm', [
             $scope.onLoadHost({host: $scope.currentServerConfig});
           };
 
-          $scope.setProcesses = function(pids) {
+          $scope.setProcesses = function(pids, refresh) {
             $scope.processes = pids.filter(function(process) {
               return process.serviceInstanceId === 1 && process.workerId > 0;
             });
 
             $scope.onUpdateProcesses({
-              processes: $scope.processes
+              processes: $scope.processes,
+              refresh: refresh
             });
 
             $scope.isRemoteValid = $scope.processes.length > 0;
@@ -200,23 +201,26 @@ PM.directive('slPmHostForm', [
             return PMServerService.find(serverConfig, {id:1})
               .then(function(response) {
                 if (response.status === 200) {
-                  PMPidService.getDefaultPidData(serverConfig, ServiceId)
-                    .then(function(pidCollection) {
-                      PMHostService.addPMServer(serverConfig, false);
-                      $scope.processes = pidCollection
-                        .filter(function(process) {
+                  var refresh = function() {
+                    return PMPidService.getDefaultPidData(serverConfig, ServiceId)
+                      .then(function(pidCollection) {
+                        return pidCollection.filter(function(process) {
                           return process.serviceInstanceId === 1;
                         });
-                      $scope.pmServers = PMHostService.getPMServers({ excludeLocalApp: true });
-                      $scope.pmServers.unshift({});
+                      });
+                  };
 
-                      var processes = $scope.setProcesses(pidCollection);
+                  refresh().then(function(processes) {
+                    PMHostService.addPMServer(serverConfig, false);
+                    $scope.pmServers = PMHostService.getPMServers({ excludeLocalApp: true });
+                    $scope.pmServers.unshift({});
+                    $scope.setProcesses(processes, refresh);
 
-                      //activate first process
-                      if (processes.length > 0) {
-                        $scope.setActiveProcess(processes[0], false);
-                      }
-                    });
+                    //activate first process
+                    if (processes.length > 0) {
+                      $scope.setActiveProcess(processes[0], false);
+                    }
+                  });
                 }
                 else {
                   $log.warn('invalid PM server values');
@@ -508,11 +512,12 @@ PM.directive('slPmPidSelector', [
       controller: function($scope) {
         $scope.processes = [];
 
-        $scope.updateProcesses = function(processes) {
+        $scope.updateProcesses = function(processes, refresh) {
           $scope.processes = processes;
 
           $scope.onUpdateProcesses({
-            processes: processes
+            processes: processes,
+            refresh: refresh
           });
         };
 
