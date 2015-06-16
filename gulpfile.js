@@ -132,6 +132,8 @@ gulp.task('build-help-assets', function(callback) {
 gulp.task('build-tracing-bundle', function() {
   var bSource = './client/www/scripts/modules/tracing/src/tracing.viz.module.js';
   return browserify(bSource, {standalone: 'TracingViz'})
+    .require('./client/www/scripts/lib/jquery-from-global.js', {expose: 'jquery'})
+    .require('./client/www/scripts/lib/d3-from-global.js', {expose: 'd3'})
     .bundle()
     .pipe(fs.createWriteStream('./client/www/scripts/modules/tracing/tracing.viz.module.js'));
 });
