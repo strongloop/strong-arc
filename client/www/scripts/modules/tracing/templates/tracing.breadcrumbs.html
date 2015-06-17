@@ -1,12 +1,12 @@
-<ul data-id="TracingBreadcrumbsList">
+<ul data-id="TracingBreadcrumbsList"  class="ui-crumbs">
   <li>
     <button ng-class="getFirstCrumbClass()" ng-click="backToTimeline()">{{tracingCtx.currentBreadcrumbs[0].label}}</button>
+    <ui-icon ng-hide="!tracingCtx.currentPFKey" name="separator" classes="small"></ui-icon>
   </li>
-  <li ng-hide="!tracingCtx.currentPFKey">&gt;</li>
   <li ng-hide="!tracingCtx.currentPFKey">
     <button ng-class="getSecondCrumbClass()" ng-show="tracingCtx.currentBreadcrumbs[1].label" ng-click="backToTrace()">{{tracingCtx.currentBreadcrumbs[1].label}}</button>
+    <ui-icon ng-hide="!tracingCtx.currentTraceSequenceId" name="separator" classes="small"></ui-icon>
   </li>
-  <li ng-hide="!tracingCtx.currentTraceSequenceId">&gt;</li>
   <li ng-hide="!tracingCtx.currentTraceSequenceId">
     <span ng-show="tracingCtx.currentBreadcrumbs[2].label" >{{tracingCtx.currentBreadcrumbs[2].label}}</span>
   </li>
