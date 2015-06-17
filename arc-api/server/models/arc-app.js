@@ -80,7 +80,6 @@ module.exports = function(ArcApp) {
       "description": "Trace through request profiles over time.",
       "disabled": false,
       "beta": true,
-      "featureFlag": "feature:tracing",
       "supports": "*"
     },
     {
