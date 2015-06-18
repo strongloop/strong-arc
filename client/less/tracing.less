@@ -10,6 +10,12 @@
 
 
   }
+  .sl-pid-selector {
+
+    .sl-profiler-processes {
+      min-height:0;
+    }
+  }
   .tracing-header-container {
     margin-top: .7rem;
 
@@ -25,24 +31,29 @@
 
       .pm-host-selector-container {
         position:relative;
+        display:inline-block;
+        margin:0 1rem 0 1rem;
 
-        .sl-pid-selector {
-          position:relative;
-          vertical-align: middle;
-          display:inline-block;
-          margin-left:1rem;
-
-          .sl-profiler-processes {
-            min-height:0;
-          }
-        }
         .dropdown-menu {
           top:6rem;
           left:0;
         }
       }
+
+    .sl-pid-selector {
+      position:relative;
+      vertical-align: middle;
+      display:inline-block;
+      margin-left:1rem;
+      margin-right:1rem;
+
+      .sl-profiler-processes {
+        min-height:0;
+      }
+    }
       .pm-status-container {}
       .pm-tracing-toggle-container {
+        display:inline-block;
 
         .title {
           margin-left:3.6rem;
@@ -50,6 +61,8 @@
         }
       }
       .tracing-ticker-container {
+        text-align: right;
+        padding-right:1rem;
       }
 
   }
@@ -114,6 +127,16 @@
       color: #999999;
       display: block;
       margin-bottom: 0.75rem;
+    }
+    .tracing-header-controls-table {
+      width:100%;
+
+      td {
+
+      }
+      .tracing-controls-table {
+        vertical-align: middle;
+      }
     }
   }
   .pm-host-select {
