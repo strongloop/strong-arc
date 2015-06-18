@@ -27,7 +27,9 @@ Tracing.controller('TracingMainController', [
     $scope.showTransactionHistoryLoading = true;
     $scope.isShowTraceSequenceLoader = false;
     $scope.transactionHistoryRenderToggle = false;
-
+    // timeseries nav buttons
+    $scope.isFirstPFKey = false;  // no key is pre selected during init
+    $scope.isLastPFKey = false; // assume there is more than 1 record
     $scope.tracingOnOff = [
       { id: 'off', label: 'Off', activeId: 'isTracingOn' },
       { id: 'on', label: 'On', activeId: 'isTracingOn' }
@@ -585,22 +587,45 @@ Tracing.controller('TracingMainController', [
 
     };
 
+    function getPFKeyIndex(key) {
+      return $scope.tracingCtx.currentTimelineKeyCollection.indexOf(key) || 0;
+    }
+    function setPrevNextDisabled(key) {
+      var currIndex = getPFKeyIndex(key);
+      var isLastRecord = false;
+      var isFirstRecord = false;
+      var isMoreThanOne = false;
+
+      if ($scope.tracingCtx.currentTimelineKeyCollection.length > 1) {
+        isMoreThanOne = true;
+      }
+      if (currIndex === 0) {
+        isFirstRecord = true;
+      }
+      // last record
+      if (currIndex === ($scope.tracingCtx.currentTimelineKeyCollection.length - 1)) {
+        isLastRecord = true;
+      }
+
+      $timeout(function() {
+        $scope.isFirstPFKey = isFirstRecord;
+        $scope.isLastPFKey = isLastRecord;
+      });
+    }
     /*
      * PREV KEY
      * */
     $scope.prevPFKey = function() {
       if ($scope.tracingCtx.currentTimelineKeyCollection) {
-        var currIndex = $scope.tracingCtx.currentTimelineKeyCollection.indexOf($scope.tracingCtx.currentPFKey);
-        if (currIndex === 1) {
-          $scope.isFirstPFKey = true;
-        }
-        if (currIndex > 1) {
-          $scope.tracingCtx.currentTrace = {};
-          $scope.tracingCtx.currentPFKey = $scope.tracingCtx.currentTimelineKeyCollection[currIndex - 1];
+        var currIndex = getPFKeyIndex($scope.tracingCtx.currentPFKey);
+        if (currIndex !== 0) {
+          // we are good to change
+          currIndex--;
+          setPrevNextDisabled($scope.tracingCtx.currentPFKey);
+          $scope.tracingCtx.currentPFKey = $scope.tracingCtx.currentTimelineKeyCollection[currIndex];
           $scope.tracingCtx.currentWaterfallKey = '';
-          $scope.isFirstPFKey = false;
-          $scope.isLastPFKey = false;
         }
+
       }
     };
     /*
@@ -608,19 +633,13 @@ Tracing.controller('TracingMainController', [
      * */
     $scope.nextPFKey = function() {
       if ($scope.tracingCtx.currentTimelineKeyCollection) {
-        var currIndex = $scope.tracingCtx.currentTimelineKeyCollection.indexOf($scope.tracingCtx.currentPFKey);
-        var len = $scope.tracingCtx.currentTimelineKeyCollection.length;
-        if (len > 0) {
-          if (currIndex < (len - 2)) {
-            $scope.tracingCtx.currentTrace = {};
-            $scope.tracingCtx.currentPFKey = $scope.tracingCtx.currentTimelineKeyCollection[currIndex + 1];
-            $scope.tracingCtx.currentWaterfallKey = '';
-            $scope.isLastPFKey = false;
-            $scope.isFirstPFKey = false;
-          }
-          else {
-            $scope.isLastPFKey = true;
-          }
+        var currIndex = getPFKeyIndex($scope.tracingCtx.currentPFKey);
+        if (currIndex < ($scope.tracingCtx.currentTimelineKeyCollection.length - 1)) {
+          // we are good to change
+          currIndex++;
+          setPrevNextDisabled($scope.tracingCtx.currentPFKey);
+          $scope.tracingCtx.currentPFKey = $scope.tracingCtx.currentTimelineKeyCollection[currIndex];
+          $scope.tracingCtx.currentWaterfallKey = '';
         }
       }
     };
@@ -753,6 +772,7 @@ Tracing.controller('TracingMainController', [
      * */
     $scope.$watch('tracingCtx.currentPFKey', function(newKey, oldVal) {
       if (newKey) {
+        setPrevNextDisabled(newKey);
         $scope.isShowTraceSequenceLoader = true;
         $scope.tracingCtx.currentTrace = {};
         $scope.tracingCtx.currentTraceSequenceId = '';
