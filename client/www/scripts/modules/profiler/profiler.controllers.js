@@ -45,6 +45,63 @@ Profiler.controller('ProfilerMainController', [
       return profile.errored || 'invalid';
     }
 
+    function detectChanges(oldSet, newSet) {
+      var exitSet = [];
+      var enterSet = [];
+      var changeSet = [];
+      var oldMap = {};
+      var queue = [].concat(newSet);
+
+      oldSet.map(function(d) {
+        oldMap[d.id] = {
+          found: false,
+          data: d
+        };
+      });
+
+      while (queue.length) {
+        var obj = queue.pop();
+
+        if (oldMap[obj.id] != null) {
+          changeSet.push([obj, oldMap[obj.id].data]);
+          oldMap[obj.id].found = true;
+        } else {
+          enterSet.push(obj);
+        }
+      }
+
+      exitSet = oldSet
+        .filter(function(d) {
+          return oldMap[d.id].found === false;
+        });
+
+      return {
+        enter: function(cb) {
+          enterSet.forEach(cb);
+          return this;
+        },
+        exit: function(cb) {
+          exitSet.forEach(cb);
+          return this;
+        },
+        change: function(cb) {
+          changeSet.forEach(function(change) {
+            cb(change[0], change[1]);
+          });
+
+          return this;
+        }
+      };
+    }
+
+    function removeFromSet(set, obj) {
+      for (var idx = set.length - 1; idx >= 0; --idx) {
+        if (set[i].id === obj.id) {
+          return set.splice(idx, 1);
+        }
+      }
+    }
+
     $scope.updateProfiles = function() {
       PMServiceInstance.find($scope.host)
         .then(function(instances) {
@@ -55,62 +112,30 @@ Profiler.controller('ProfilerMainController', [
                 profile.status = getProfileStatus(profile);
               });
 
-              $scope.profiles = profiles.filter(isValidTarget);
+              detectChanges($scope.profiles, profiles.filter(isValidTarget))
+                .exit(function(profile) {
+                  growl.addInfoMessage('Profile ' + profile.targetId + ' removed.');
+                  removeFromSet($scope.profiles, profile);
+                })
+                .enter(function(profile) {
+                  growl.addInfoMessage('Profile ' + profile.targetId + ' added.');
+                  $scope.profiles.push(profile);
+                })
+                .change(function(newVal, oldVal) {
+                  if (newVal.status !== oldVal.status &&
+                      oldVal.status !== 'loaded' &&
+                      oldVal.status !== 'downloading') {
+                    growl.addInfoMessage('Profile ' + newVal.targetId + ' changed.');
+                    angular.extend(oldVal, newVal);
+                  }
+                });
+
               $scope.isRemoteValid = true;
             });
         });
     };
 
     $scope.refreshProcesses = function() {
-      var detectChanges = function(oldPids, newPids) {
-        var exitSet = [];
-        var enterSet = [];
-        var changeSet = [];
-        var pidMap = {};
-        var queue = [].concat(newPids);
-
-        oldPids.map(function(pid) {
-          pidMap[pid.id] = {
-            found: false,
-            pid: pid
-          };
-        });
-
-        while (queue.length) {
-          var pid = queue.pop();
-
-          if (pidMap[pid.id] != null) {
-            changeSet.push([pid, pidMap[pid.id].pid]);
-            pidMap[pid.id].found = true;
-          } else {
-            enterSet.push(pid);
-          }
-        }
-
-        exitSet = oldPids
-          .filter(function(d) {
-            return pidMap[d.id].found === false;
-          });
-
-        return {
-          enter: function(cb) {
-            enterSet.forEach(cb);
-            return this;
-          },
-          exit: function(cb) {
-            exitSet.forEach(cb);
-            return this;
-          },
-          change: function(cb) {
-            changeSet.forEach(function(change) {
-              cb(change[1], change[0]);
-            });
-
-            return this;
-          }
-        };
-      };
-
       if (!$scope.refreshProcessesCallback) {
         return;
       }
@@ -120,22 +145,17 @@ Profiler.controller('ProfilerMainController', [
           detectChanges($scope.processes, processes)
             .exit(function(pid) {
               growl.addInfoMessage('PID ' + pid.pid + ' removed.');
-              for (var i = $scope.processes.length - 1; i >= 0; --i) {
-                if ($scope.processes[i].id === pid.id) {
-                  $scope.processes.splice(i, 1);
-                  break;
-                }
-              }
+              removeFromSet($scope.processes, pid);
             })
             .enter(function(pid) {
               growl.addInfoMessage('PID ' + pid.pid + ' added.');
               $scope.processes.push(pid);
             })
-            .change(function(oldVal, newVal) {
+            .change(function(newVal, oldVal) {
               if (oldVal.isProfiling !== newVal.isProfiling) {
                 growl.addInfoMessage('PID ' + newVal.pid + ' changed status.');
                 angular.extend(oldVal, newVal);
-                oldVal.status = oldVal.isProfiling ? 'Profiling' : 'Running';
+                oldVal.status = getProfileStatus(oldVal);
               }
             });
 
