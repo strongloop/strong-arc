@@ -162,6 +162,7 @@ Profiler.directive('slProfilerNavbar', [
             $scope.fetchHeapFile()
               .then(function(profile) {
                 $scope.profiles.push(profile);
+                cb(null);
               });
           };
           // fix profiler header disappearing when files are loaded in the iframe, etc

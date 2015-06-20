@@ -118,6 +118,10 @@ WebInspector.ProfileLauncherView.prototype = {
                   this._toggleCpuButtons('start');
                   this._enableProfilerRadioButtons();
               }
+            } else {
+              if (!profilerRunning) {
+                this._enableProfilerRadioButtons();
+              }
             }
 
             this._setTitlePid(text);
