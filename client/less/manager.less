@@ -112,10 +112,44 @@
       }
     }
 
+    [data-id="HostCol"] {
+
+    }
+    .manager-host-actions-container {
+      .dropdown-menu {
+        min-width:17rem;
+
+        .link-cmd {
+          white-space: nowrap;
+          width:100%;
+          margin:0;
+          text-align: left;
+
+          &:hover {
+            background-color:#f2f2f2;
+          }
+          &:active {
+            background-color:@action-primary;
+            color:#ffffff;
+          }
+        }
+      }
+    }
+    .actions {
+
+      button {
+
+        white-space: nowrap;
+      }
+    }
+
     [data-id="StatusCol"] {
 
       width: 18rem;
-
+      .status-field {
+        padding-top: 0;
+        line-height: inherit;
+      }
       .is-problem {
         color: red;
 

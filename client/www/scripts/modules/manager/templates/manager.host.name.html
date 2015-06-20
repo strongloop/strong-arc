@@ -19,12 +19,19 @@
       ng-blur="itemBlur($event)">
     <span class="msg error" ng-show="hostForm.host.$invalid && hostForm.host.$dirty">Please enter host</span>
 
-    <sl-ui-menu-action>
-      <ul>
+    <!-- host actions -->
+    <div class="btn-group dropdown manager-host-actions-container" dropdown>
+      <button type="button"
+              class="link-cmd dropdown-toggle"
+              ng-disabled="host.errorType"
+              dropdown-toggle>
+        Actions<span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu" dropdown-menu>
         <li ng-repeat="action in host.filteredActions" class="ui-sans-btn" ng-show="action.filter(host)">
           <button ng-click="action.handler(host)" class="link-cmd">{{ action.label }}</button>
         </li>
       </ul>
-    </sl-ui-menu-action>
+    </div>
   </div>
 </ng-form>
