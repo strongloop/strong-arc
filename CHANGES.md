@@ -1,3 +1,27 @@
+2015-06-22, Version 1.4.4
+=========================
+
+ * fix button state on trace navigation (seanbrookes)
+
+ * adjust the alignment of the header controls (seanbrookes)
+
+ * reset file load order after cleaning up deps (seanbrookes)
+
+ * align with styleguide (seanbrookes)
+
+ * use global jQuery and d3 in tracing modules (Ryan Graham)
+
+ * remove tracing feature flag (seanbrookes)
+
+ * add favicon.ico to Arc's root static path (Ryan Graham)
+
+ * process-manager: pass --base explicitly (Sam Roberts)
+
+ * add nicer graphic to tracing init view (seanbrookes)
+
+ * change default icon to use hover icon (Anthony Ettinger)
+
+
 2015-06-12, Version 1.4.3
 =========================
 
@@ -8,10 +32,6 @@
  * fix initial timeseries chart rendering regression (seanbrookes)
 
  * fix control alignment issue (seanbrookes)
-
-
-2015-06-11, Version 1.4.2
-=========================
 
  * fix broken injection (seanbrookes)
 
