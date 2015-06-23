@@ -67,6 +67,16 @@ Profiler.service('ProfilerService', [
       return $http.post(url, postData);
     },
 
+    svc.deleteProfile = function(server, instance, profile) {
+      var deleteUrl = getServiceUrl(server, instance);
+      deleteUrl += '/ProfileDatas/' + profile.id;
+
+      return $http.delete(deleteUrl)
+        .then(function(resp) {
+          return resp;
+        });
+    },
+
     svc.downloadFile = function(server, fileUrl, fileName){
       var downloadUrl = fileUrl;
       var def = $q.defer();
