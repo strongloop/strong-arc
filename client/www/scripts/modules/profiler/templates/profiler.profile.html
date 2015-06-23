@@ -1,6 +1,11 @@
-<button ng-class="{selected:profile.isSelected}">
-  <span class="sl-icon sl-icon-file"></span>
-  <span>
+<div class="profiler-profile" ng-class="{selected:profile.isSelected}">
+  <div class="controls">
+    <button ng-click="delete()">
+      <span class="sl-icon sl-icon-x"></span>
+    </button>
+  </div>
+  <div class="info">
+    <span class="sl-icon sl-icon-file"></span>
     <span class="profile-id">
       {{profile.targetId}}
     </span>
@@ -10,5 +15,5 @@
     <span class="profile-status">
       {{profile.status}}
     </span>
-  </span>
-</button>
+  </div>
+<div>

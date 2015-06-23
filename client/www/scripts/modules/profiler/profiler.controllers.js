@@ -96,7 +96,7 @@ Profiler.controller('ProfilerMainController', [
 
     function removeFromSet(set, obj) {
       for (var idx = set.length - 1; idx >= 0; --idx) {
-        if (set[i].id === obj.id) {
+        if (set[idx].id === obj.id) {
           return set.splice(idx, 1);
         }
       }
@@ -317,6 +317,19 @@ Profiler.controller('ProfilerMainController', [
             }
           });
       }
+    };
+
+    $scope.deleteProfile = function(profile) {
+      ProfilerService.deleteProfile($scope.host, 1, profile)
+        .then(function(err, res) {
+          if (!err) {
+            removeFromSet($scope.profiles, profile);
+            growl.addInfoMessage('Profile ' + profile.targetId + ' deleted.');
+          }
+        })
+        .catch(function(err) {
+          growl.addInfoMessage('Profile ' + profile.targetId + ' deleted.');
+        });
     };
 
     // layout resizing to help control layout with devtools iframe

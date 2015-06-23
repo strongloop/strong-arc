@@ -229,7 +229,8 @@ Profiler.directive('slProfilerProfile', [
     return {
       scope: {
         profile: '=',
-        onClick: '&'
+        onClick: '&',
+        onDelete: '&'
       },
       templateUrl: './scripts/modules/profiler/templates/profiler.profile.html',
       link: function(scope, el, attrs) {
@@ -238,6 +239,16 @@ Profiler.directive('slProfilerProfile', [
             profile: scope.profile
           });
         });
+
+        scope.delete = function() {
+          var deleteFn = scope.onDelete;
+
+          if (deleteFn) {
+            deleteFn({
+              profile: scope.profile
+            });
+          }
+        };
       }
     };
   }

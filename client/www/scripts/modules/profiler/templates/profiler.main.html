@@ -6,14 +6,18 @@
       <h4>CPU Profiles</h4>
       <ul class="profile-selector">
         <li ng-repeat="profile in profiles | filter:{type: 'cpuprofile'} | orderBy:'-startTime'">
-          <sl-profiler-profile profile="profile" on-click="loadProfile(profile)">
+          <sl-profiler-profile profile="profile"
+            on-click="loadProfile(profile)"
+            on-delete="deleteProfile(profile)">
           </sl-profiler-profile>
         </li>
       </ul>
       <h4>Heap Snapshots</h4>
       <ul class="profile-selector">
         <li ng-repeat="profile in profiles | filter:{type: 'heapsnapshot'} | orderBy:'-startTime'">
-          <sl-profiler-profile profile="profile" on-click="loadProfile(profile)">
+          <sl-profiler-profile profile="profile"
+            on-click="loadProfile(profile)"
+            on-delete="deleteProfile(profile)">
           </sl-profiler-profile>
         </li>
       </ul>    </div>

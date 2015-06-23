@@ -24,7 +24,7 @@
       color: @white;
       padding: 1rem;
 
-      button {
+      .profiler-profile {
         width: 100%;
         background: none;
         border: none;
@@ -32,8 +32,22 @@
         margin-bottom: 1.0rem;
         padding-left: 2.0rem;
 
+        .controls {
+          display: none;
+          float: right;
+
+          button {
+            border: none;
+            background: transparent;
+          }
+        }
+
         &.selected {
           background: #5f8de1;
+        }
+
+        &.selected .controls {
+          display: block;
         }
 
         span.sl-icon {
@@ -51,6 +65,10 @@
 
         span.profile-status {
           font-size: 10pt;
+        }
+
+        button.profile-delete {
+          float: right;
         }
       }
     }
