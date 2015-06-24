@@ -98,29 +98,6 @@ Property.service('PropertyService', [
 Property.factory('modelPropertyTypes', [
   'ModelProperty',
   function modelPropertyTypesFactory(ModelProperty) {
-    var list = ModelProperty.getAvailableTypes();
-
-    var result = [];
-    result.$resolved = list.$resolved;
-    result.$promise = list.$promise.then(function() {
-      // Angular converts each string to a Resource object
-      // E.g. { 0: 'S', 1: 't', 2: 'r', 3: 'i', 4: 'n', 5: 'g' }
-      // We need to convert it back to string
-      list.forEach(function(res) {
-        var indices = Object.keys(res)
-          .filter(function isIndex(ix) { return /^[0-9]+$/.test(ix); })
-          .map(function convertToNumber(ix) { return +ix; });
-        indices.sort();
-
-        var str = indices.reduce(function(acc, val) {
-          return acc + res[val];
-        }, '');
-        result.push(str);
-      });
-      result.$resolved = true;
-      return result;
-    });
-
-    return result;
+    return ModelProperty.getAvailableTypes();
   }
 ]);

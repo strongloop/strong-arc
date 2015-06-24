@@ -80,6 +80,45 @@ module.factory(
 
         /**
          * @ngdoc method
+         * @name BuildDeployAPI.Build#createMany
+         * @methodOf BuildDeployAPI.Build
+         *
+         * @description
+         *
+         * Create a new instance of the model and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Build` object.)
+         * </em>
+         */
+        "createMany": {
+          isArray: true,
+          url: urlBase + "/Builds",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
          * @name BuildDeployAPI.Build#upsert
          * @methodOf BuildDeployAPI.Build
          *
@@ -623,6 +662,47 @@ module.factory(
          * </em>
          */
         "create": {
+          url: urlBase + "/Deployments",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name BuildDeployAPI.Deployment#createMany
+         * @methodOf BuildDeployAPI.Deployment
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Deployment` object.)
+         * </em>
+         */
+        "createMany": {
+          isArray: true,
           url: urlBase + "/Deployments",
           method: "POST"
         },
