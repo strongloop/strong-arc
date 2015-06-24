@@ -291,6 +291,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
+         *  - `mode` – `{string=}` - Operation mode
+         *
          *  - `req` – `{object=}` - 
          *
          * @param {function(Object,Object)=} successCb
