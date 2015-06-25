@@ -17,21 +17,14 @@ BuildDeploy.service('BuildDeployService', [
         .then(function(updatedBuild) {
           buildData.build = updatedBuild;
 
-          //viewConsole.logs = updatedBuild.stdout;
           viewConsole.logs = viewConsole.logs.concat(updatedBuild.stdout, updatedBuild.stderr);
           viewConsole.logs = _.uniq(viewConsole.logs);
 
-          //remove array items with empty values
-          updatedBuild.stderr = updatedBuild.stderr.filter(function(item){
-            return item.length;
-          });
-
-          if ( updatedBuild.stderr.length ) {
-            def.reject(updatedBuild);
-          }
-
           if (updatedBuild.finished) {
-            def.resolve(updatedBuild);
+            if (updatedBuild.errorCode)
+              def.reject(updatedBuild);
+            else
+              def.resolve(updatedBuild);
           } else {
             $timeout(function(){
               poll(def, buildData, build, viewConsole);
@@ -40,14 +33,14 @@ BuildDeploy.service('BuildDeployService', [
         });
     }
 
-    //1. start build
+    // 1. start build
     function startBuild(buildData, viewConsole){
       var def = $q.defer();
 
       // 1. Build.start();
       Build.start(buildData).$promise
         .then(function(build) {
-          // reference the build from teh view if needed
+          // reference the build from the view if needed
           buildData.build = build;
           viewConsole.logs.push('STARTING BUILD....');
           viewConsole.logs = viewConsole.logs.concat(build.stdout, build.stderr);

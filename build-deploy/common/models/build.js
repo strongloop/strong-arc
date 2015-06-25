@@ -1,7 +1,9 @@
-var sl_build = require.resolve('strong-build/bin/slb');
-var split = require('split');
-var spawn = require('child_process').spawn;
+var assert = require('assert');
+var debug = require('debug')('strong-arc:build-deploy:build');
 var path = require('path');
+var sl_build = require.resolve('strong-build/bin/sl-build');
+var spawn = require('child_process').spawn;
+var split = require('split');
 
 module.exports = function(Build) {
   var processes = {};
@@ -23,6 +25,7 @@ module.exports = function(Build) {
     var build = this;
     var output = [];
     stream.pipe(split()).on('data', function(line) {
+      debug('std%s: %s', type, line);
       output.push(line);
       build['std' + type] = output;
       build.save();
@@ -63,30 +66,56 @@ module.exports = function(Build) {
       break;
     }
 
+    debug('spawn: %j', args);
+
     var buildProcess = spawn(process.execPath, args);
+
     processes[build.id] = buildProcess;
 
     build.handleOutput('out', buildProcess.stdout);
     build.handleOutput('err', buildProcess.stderr);
 
-    buildProcess.on('exit', function(errCode) {
-      delete processes[build.id];
-      Build.findById(build.id, function(err, build) {
-        if(err) {
-          build.error = err.toString();
-        }
-        build.archive = build._parseArchivePath();
-        build.finished = new Date();
-        if(errCode) {
-          build.errorCode = errCode;
-        }
-        build.save();
-      });
+    buildProcess.on('error', function(err) {
+      debug('spawn errored: %s', err);
+
+      // Not a code... but best we can do without changing Build schema.
+      var errorCode = err.message;
+
+      finish(errorCode);
     });
+
+    buildProcess.on('exit', function(status, signal) {
+      var errorCode = signal || status;
+
+      debug('child %d exit: %s', buildProcess.pid, errorCode);
+
+      // Don't set on status 0, that's success, anything else is an error.
+      if (!errorCode) {
+        errorCode = undefined;
+      }
+
+      finish(errorCode, build._parseArchivePath());
+    });
+
+    function finish(errorCode, archive) {
+      delete processes[build.id];
+
+      build.archive = archive;
+      build.finished = new Date();
+      // Don't set on status 0, that's success, anything else is an error.
+      if(errorCode) {
+        build.errorCode = errorCode;
+      }
+      build.save();
+    }
 
     build.save(cb);
   }
 
+  // XXX This is fragile and unnecessary, implement a --dest option for
+  // sl-build, or just construct:
+  //   p = require(path.resolve('package.json'))
+  //   name = '../' + p.name + '-' + p.version + '.tgz';
   Build.prototype._parseArchivePath = function() {
     var line;
     var ROOT = process.cwd();
