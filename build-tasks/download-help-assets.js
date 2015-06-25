@@ -50,7 +50,7 @@ function downloadHelpHtml(id, name, destDir, cb) {
     var fileName = path.join(destDir, name + '.json');
 
     gutil.log('Creating help file ' + fileName);
-    fs.writeJsonFile(fileName, data, 'utf-8', cb);
+    fs.writeJsonFile(fileName, data, {}, cb);
   });
 }
 
