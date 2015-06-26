@@ -90,7 +90,7 @@ Tracing.controller('TracingMainController', [
             return;
           }
 
-          $scope.managerHosts = TracingServices.getManagerHosts(function(hosts) {
+          $scope.managerHosts = ManagerServices.getManagerHosts(function(hosts) {
             $scope.$apply(function() {
               $scope.managerHosts = hosts;
               if ($scope.managerHosts && $scope.managerHosts.length > 0) {

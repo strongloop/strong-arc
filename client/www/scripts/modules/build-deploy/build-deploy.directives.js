@@ -81,14 +81,38 @@ BuildDeploy.directive('slBuildDeployBuildForm', [
 ]);
 
 BuildDeploy.directive('slBuildDeployDeployForm', [
-  function () {
+  'ManagerServices',
+  '$timeout',
+  function (ManagerServices, $timeout) {
     return {
       restrict: "E",
       replace: true,
       templateUrl: './scripts/modules/build-deploy/templates/build-deploy.deploy-form.html',
       controller: function($scope, $attrs, $log, Upload, BuildDeployService){
+        $scope.selectedPMHost = {};
+        $scope.managerHosts = ManagerServices.getManagerHosts(function(hosts) {
+          $scope.$apply(function () {
+            $scope.managerHosts = hosts;
+            if ($scope.managerHosts.length) {
+              $scope.selectedPMHost = $scope.managerHosts[0];
+              $scope.deploy.host.hostname = $scope.selectedPMHost.host;
+              $scope.deploy.host.port = $scope.selectedPMHost.port;
+              $scope.deploy.host.processes = 1;
+            }
+          });
+        });
+        $scope.changePMHost = function(host) {
+          if (host.host && host.port) {
+            $timeout(function() {
+              $scope.selectedPMHost = host;
+              $scope.deploy.host.hostname = host.host;
+              $scope.deploy.host.port = host.port;
+              $scope.deploy.host.processes = 1;
 
-        //todo waiting for StromPM to support multi-part uploads (currently not in use)
+            });
+          }
+        };
+          //todo waiting for StromPM to support multi-part uploads (currently not in use)
         function uploadFile(file, uploadUrl){
           $scope.upload = Upload.upload({
             url: uploadUrl, //upload.php script, node.js route, or servlet url

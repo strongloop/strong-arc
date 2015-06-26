@@ -59,6 +59,19 @@
     position: relative;
     height: 30.5rem;
 
+    .pm-host-selector-container {
+      display:inline-block;
+
+      button.dropdown-toggle {
+        min-width:24rem;
+        border: 1px solid #cccccc;
+        text-align: left;
+        color:#444444;
+        padding:.75rem 1rem;
+
+      }
+    }
+
     .sl-forms-left, .sl-forms-right {
       display: block;
       width: 38rem;
@@ -83,6 +96,11 @@
           opacity: .4;
         }
 
+        &[name=deploygit] {
+          .ui-actions {
+            margin-right:5rem;
+          }
+        }
         &[name=deployuniversal] {
           input[name=archive] {
             width: 31rem;
@@ -103,6 +121,7 @@
         //align action buttons
         &[name=buildgit] {
           .ui-actions {
+
             margin-top: 1.53rem;
 
             button:active {
@@ -114,6 +133,7 @@
         //align action buttons
         &[name=deployuniversal] {
           .ui-actions {
+            margin-right:5rem;
             button:active {
               background-color:@default-primary-active-color;
             }
