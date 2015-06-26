@@ -18,51 +18,60 @@
       <table class="manager-pm-host-grid ui-table" sl-ui-data-table>
         <thead>
         <tr class="manager-hosts-grid-header">
-          <th data-id="HostCol">
+          <th class="service-col">
+            Service
+          </th>
+          <th class="host-col">
             Strong PM
           </th>
-          <th data-id="PortCol">
+          <th class="port-col">
             Port
           </th>
-          <th data-id="StatusCol">
+          <th class="status-col">
             App Status
           </th>
-          <th data-id="ProcessesCol">
+          <th class="pid-count-col">
             Count
           </th>
-          <th data-id="PIDsCol">
+          <th class="pids-col">
             PIDs
           </th>
-          <th data-id="ActionCol" class="actions"></th>
+          <th class="action-col actions"></th>
         </tr>
         </thead>
         <tbody>
         <tr class="manager-host-grid-row" ng-repeat="host in hosts" ng-click="rowSelect($event)" ng-class="{ 'is-active' : isHostActive(host)}">
-          <td data-id="HostCol"  class="has-selectable">
+          <td class="service-col"  class="has-selectable">
 
-              <!-- host directive -->
-              <sl-manager-host-name></sl-manager-host-name>
+            <!-- host directive -->
+            <span>{{host.app.name}}</span>
 
           </td>
-          <td data-id="PortCol" class="has-selectable">
+          <td class="host-col"  class="has-selectable">
+
+            <!-- host directive -->
+            <sl-manager-host-name></sl-manager-host-name>
+
+          </td>
+          <td class="port-col" class="has-selectable">
 
               <!-- port directive -->
               <sl-manager-host-port></sl-manager-host-port>
 
           </td>
-          <td data-id="StatusCol">
+          <td class="status-col">
             <div class="ui-form-group non-selectable">
               <!-- status directive -->
               <sl-manager-status></sl-manager-status>
             </div>
 
           </td>
-          <td data-id="PidCountCol" class="has-selectable">
+          <td class="pid-count-col" class="has-selectable">
 
               <sl-manager-process-count></sl-manager-process-count>
 
           </td>
-          <td data-id="PidCol">
+          <td class="pid-col">
             <div class="ui-form-group selectable" ng-click="itemSelect($event)">
 
               <sl-manager-process-list></sl-manager-process-list>
@@ -70,12 +79,12 @@
             </div>
 
           </td>
-          <td data-id="ActionCol"  class="actions">
+          <td class="action-col"  class="actions">
             <a href class="ui-close" ng-click="deleteHost(host)">(X)</a>
           </td>
         </tr>
         <tr  ng-show="isShowAddHostForm">
-          <td data-id="HostCol" class="has-selectable">
+          <td class="host-col" class="has-selectable">
 
             <ng-form name="currentPMHostForm">
               <div
@@ -99,7 +108,7 @@
               </div>
             </ng-form>
           </td>
-          <td data-id="PortCol" class="has-selectable">
+          <td class="port-col" class="has-selectable">
 
             <ng-form name="currentPMPortForm">
               <div
@@ -117,7 +126,7 @@
               </div>
             </ng-form>
           </td>
-          <td data-id="StatusCol">
+          <td class="status-col">
             <div class="status-field">
               <span class="status ui-sans-btn"
                     ng-class="{ inactive: true }">
@@ -130,11 +139,11 @@
               </button>
             </div>
           </td>
-          <td data-id="PidCountCol"></td>
-          <td data-id="PidCol">
+          <td class="pid-count-col"></td>
+          <td class="pid-col">
           </td>
 
-          <td data-id="ActionCol"  class="actions">
+          <td class="action-col"  class="actions">
             <a href class="ui-close" ng-click="killNewPMHostForm()">(X)</a>
           </td>
         </tr>

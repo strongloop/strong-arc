@@ -91,16 +91,11 @@
     }
   }
   .manager-main-container {
-    width: 100rem;
+    width: 105rem;
     margin: 5rem auto 0 auto;
 
     .app-context {
       text-align: center;
-
-    }
-
-
-    [data-id="HostCol"] {
 
     }
 
@@ -112,9 +107,6 @@
       }
     }
 
-    [data-id="HostCol"] {
-
-    }
     .manager-host-actions-container {
       .dropdown-menu {
         min-width:17rem;
@@ -143,11 +135,31 @@
       }
     }
 
-    [data-id="StatusCol"] {
+    .service-col {
+      width:20rem;
+      span {
+        display:inline-block;
+        color: #444444;
+        padding-top:1rem;
+      }
+    }
+    .host-col {
+      .manager-host-name-input {
+        width:26rem;
+      }
+    }
+
+    .port-col {
+      width:10rem;
+      input {
+        width:9.5rem;
+      }
+    }
+    .status-col {
 
       width: 18rem;
       .status-field {
-        padding-top: 0;
+        padding-top: .6rem;
         line-height: inherit;
       }
       .is-problem {
@@ -213,16 +225,23 @@
       }
     }
 
-    [data-id="ProcessesCol"] {
+    .processes-col {
       width: 10rem;
     }
 
-    [data-id="PidCol"], [data-id="PIDsCol"] {
+    .pid-count-col {
+      width:7rem;
+      input {
+        width:5rem;
+      }
+    }
+    .pid-col, .pids-col {
       width: 10rem;
     }
 
-    [data-id="ActionCol"] {
+    .action-col {
       width: 1.5rem;
+      border:0;
     }
 
     .manager-pm-host-grid {

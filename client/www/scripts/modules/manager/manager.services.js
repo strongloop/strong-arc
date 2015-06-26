@@ -1,8 +1,9 @@
 Manager.service('ManagerServices', [
   '$log',
   '$http',
+  '$location',
   'LicensesService',
-  function($log, $http, LicensesService) {
+  function($log, $http, $location, LicensesService) {
 
     var svc = this;
 
@@ -122,8 +123,8 @@ Manager.service('ManagerServices', [
         // we have an app
         if (host.app) {
 
-          if (host.app.name === appCtx.name) {
-            if (host.app.version === appCtx.version) {
+
+
               /*
                *
                * Ding ding ding
@@ -150,18 +151,7 @@ Manager.service('ManagerServices', [
                 host.status.problem.title = 'The app is not running';
                 host.status.problem.description = 'The app is not running. Click start in the action menu to start it';
               }
-            }
-            // app version doesn't match
-            else {
-              host.status.problem.title = 'The wrong app version';
-              host.status.problem.description = 'The app version running on this host instance does not match the current context';
-            }
-          }
-          // app name doesn't match
-          else {
-            host.status.problem.title = 'The wrong app name';
-            host.status.problem.description = 'The app name running on this host instance does not match the current context';
-          }
+
 
         }
         // there is no app here
@@ -175,7 +165,18 @@ Manager.service('ManagerServices', [
      // growl.addSuccessMessage("status change: " + host.status.display);
       return host;
     };
-
+    svc.getManagerHosts = function(cb) {
+      var meshManager = require('strong-mesh-client')('http://' + $location.host() + ':' + $location.port() + '/manager');
+      meshManager.models.ManagerHost.find(function(err, hosts) {
+        if (err) {
+          $log.warn('exception requesting manager hosts');
+          return;
+        }
+        if (hosts && hosts.map) {
+          cb(hosts);
+        }
+      });
+    };
     /*
     *
     * Update type-ahead db

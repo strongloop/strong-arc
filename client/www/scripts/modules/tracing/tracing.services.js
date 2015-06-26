@@ -74,18 +74,6 @@ Tracing.service('TracingServices', [
 
       });
     };
-    svc.getManagerHosts = function(cb) {
-      var meshManager = require('strong-mesh-client')('http://' + $location.host() + ':' + $location.port() + '/manager');
-      meshManager.models.ManagerHost.find(function(err, hosts) {
-        if (err) {
-          $log.warn('exception requesting manager hosts');
-          return;
-        }
-        if (hosts && hosts.map) {
-          cb(hosts);
-        }
-      });
-    };
     svc.convertTimeseries = function(t){
       var ret = {};
       // note: item values are displayed in chart legend

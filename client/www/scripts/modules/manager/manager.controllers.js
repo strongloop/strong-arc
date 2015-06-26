@@ -22,10 +22,7 @@ Manager.controller('ManagerMainController', [
     $scope.isHostProblem = false;
 
     $scope.isShowAddHostForm = false;
-    $scope.appContext = {
-      name:'',
-      version: ''
-    };
+
 
     $scope.isAddHostButtonDisabled = false;
     $scope.addHostTooltipText = '';
@@ -106,23 +103,6 @@ Manager.controller('ManagerMainController', [
 
 
 
-    /*
-    *
-    *
-    * Status Problem
-    *
-    * */
-    var setAppContext = function() {
-      for (var i = 0;i < $scope.hosts.length;i++) {
-        if ($scope.hosts[i].app && $scope.hosts[i].app.name) {
-          $scope.appContext = {
-            name: $scope.hosts[i].app.name,
-            version: $scope.hosts[i].app.version
-          };
-          break;
-        }
-      }
-    };
 
 
     $scope.isShowHostActionList = function(host) {
@@ -281,21 +261,7 @@ Manager.controller('ManagerMainController', [
                 port:host.port
               });
 
-              /*
-              *
-              * App Context
-              * - set the first app name and version
-              * - as long as it isn't already set
-              *
-              * */
-              if (host.app && host.app.name) {
-                if (!$scope.appContext.name) {
-                  $scope.appContext = {
-                    name: host.app.name,
-                    version: host.app.version
-                  };
-                }
-              }
+
 
 
               /*
@@ -311,18 +277,12 @@ Manager.controller('ManagerMainController', [
 
               // display status
               // add 'status' property
-              host = ManagerServices.processHostStatus(host, $scope.appContext);
+              host = ManagerServices.processHostStatus(host);
               host = $scope.processPids(host);
 
-              // processes
-              if ((host.app && host.app.name) && (host.app.name !== $scope.appContext.name)) {
-                host.actions = [];
-                host.processes = {pids:[]};
-              }
             });
 
             $scope.hosts = hosts;
-            setAppContext();
             $scope.loading = false;
           }
           else {
@@ -482,15 +442,15 @@ Manager.controller('ManagerMainController', [
       if (!host.exceptionType) {
         // we have an app
         if (host.app) {
-          if (host.app.name === $scope.appContext.name) {
-            if (host.app.version === $scope.appContext.version) {
+          //if (host.app.name === $scope.appContext.name) {
+          //  if (host.app.version === $scope.appContext.version) {
               /*
                *
                * Ding ding ding
                *
                * */
-            }
-          }
+           // }
+         // }
         }
       }
       return false;

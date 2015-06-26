@@ -32,28 +32,29 @@
               valid: ( deploygit.hostname.$valid || deploygit.port.$valid || deploygit.processes.$valid ) && deploy.git.submitted,
               invalid: ( deploygit.deploy.$invalid || deploygit.port.$invalid || deploygit.processes.$invalid ) && deploy.git.submitted
             }">
-
-        <label>
-          <span class="ui-label-txt">Hostname:</span>
+        <!-- host selector -->
+        <div class="pm-host-selector-container">
+          <label>
+            <span class="ui-label-txt">Hostname:</span>
+          </label>
+          <br  />
+          <div class="btn-group pm-host-select dropdown" dropdown ng-show="managerHosts"  is-open="status.isopen">
+            <button type="button"
+                    class="btn btn-default dropdown-toggle" dropdown-toggle>
+              {{selectedPMHost.host}} : {{selectedPMHost.port}}<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" dropdown-menu>
+              <li ng-repeat="host in managerHosts">
+                <button class="link-cmd" ng-click="changePMHost(host)">{{host.host}}:{{host.port}}</button>
+              </li>
+            </ul>
+          </div>
           <input
-            type="text"
-            class="ui-input"
-            placeholder="host1.example.com"
+            type="hidden"
             ng-model="deploy.host.hostname"
             name="hostname"
             required>
-        </label>
-        <label>
-          <span class="ui-label-txt">Port:</span>
-          <input
-            type="text"
-            class="ui-input"
-            placeholder="8000"
-            ng-model="deploy.host.port"
-            name="port"
-            required
-            >
-        </label>
+        </div>
         <label>
           <span id="ui-label-txt">Processes:</span>
           <input
@@ -116,26 +117,29 @@
               valid: ( deployuniversal.hostname.$valid || deployuniversal.port.$valid || deployuniversal.processes.$valid ) && deploy.universal.submitted,
               invalid: ( deployuniversal.deploy.$invalid || deployuniversal.port.$invalid || deployuniversal.processes.$invalid ) && deploy.universal.submitted
              }">
-        <label>
-          <span class="ui-label-txt">Hostname:</span>
+        <!-- host selector -->
+        <div class="pm-host-selector-container">
+          <label>
+            <span class="ui-label-txt">Hostname:</span>
+          </label>
+          <br  />
+          <div class="btn-group pm-host-select dropdown" dropdown ng-show="managerHosts"  is-open="status.isopen">
+            <button type="button"
+                    class="btn btn-default dropdown-toggle" dropdown-toggle>
+              {{selectedPMHost.host}} : {{selectedPMHost.port}}<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" dropdown-menu>
+              <li ng-repeat="host in managerHosts">
+                <button class="link-cmd" ng-click="changePMHost(host)">{{host.host}}:{{host.port}}</button>
+              </li>
+            </ul>
+          </div>
           <input
-            type="text"
-            class="ui-input"
-            placeholder="host1.example.com"
+            type="hidden"
             ng-model="deploy.host.hostname"
             name="hostname"
             required>
-        </label>
-        <label>
-          <span class="ui-label-txt">Port:</span>
-          <input
-            type="text"
-            class="ui-input"
-            placeholder="8000"
-            ng-model="deploy.host.port"
-            name="port"
-            required>
-        </label>
+        </div>
         <label>
           <span class="ui-label-txt">Processes:</span>
           <input
