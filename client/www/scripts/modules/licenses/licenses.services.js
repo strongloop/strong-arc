@@ -226,9 +226,10 @@ Licenses.service('LicensesService', [
 
     svc.alertProductFeatureInvalid = function(product, feature){
       var license = feature.license;
+      var name = product.description === feature.description ? product.description : product.description + ' ' + feature.description;
 
       $rootScope.$emit('message', {
-        body: product.description + ' ' + feature.description + ' licensing missing or invalid.  If you have questions about your licenses or licensing please contact sales',
+        body: name + ' licensing missing or invalid.  If you have questions about your licenses or licensing please contact sales',
         email: 'sales@strongloop.com?subject=Licensing',
         emailText: 'Contact sales@strongloop.com'
       });
