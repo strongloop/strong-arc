@@ -7,12 +7,6 @@
         <div class="licensing">
           <h1>Licenses</h1>
 
-          <div class="ui-msg-error" ng-show="hasErrors">
-            <p ng-repeat="err in errors.generic">
-              {{err.message}}
-            </p>
-          </div>
-
           <table class="licenses ui-table">
             <thead>
               <tr>
@@ -26,54 +20,79 @@
             <tbody>
               <tr ng-repeat="(id, product) in allProducts">
                 <td><div class="product">
-                  <img src="/images/checkbox_on_out.svg" ng-if="product.license && !errors.renewal[id]">
-                  <img src="/images/checkbox_off.svg" ng-if="!product.license">
-                  <img src="/images/checkbox_partial_red_out.svg" ng-if="product.license && errors.renewal[id]">
+                  <span class="txt">
+                    <span class="description">{{product.description || id}}</span>
+                  </span>
 
-                  <span class="description" ng-class="{ error: errors.renewal[id] }">{{product.info.description}}</span>
-
-                  <sl-popover-info
-                    icon="sl-icon sl-icon-question-mark"
-                    hideonpageclick="true"
-                    ng-if="errors.renewal[id]">
-                    <h4>{{errors.renewal[id].title}}</h4>
-                    <div class="body">
-                      <p>
-                        {{errors.renewal[id].message}}
-                      </p>
-                    </div>
-                  </sl-popover-info>
+                  <!--<sl-popover-info-->
+                    <!--icon="sl-icon sl-icon-question-mark"-->
+                    <!--hideonpageclick="true"-->
+                    <!--ng-if="errors.renewal[id]">-->
+                    <!--<h4>{{errors.renewal[id].title}}</h4>-->
+                    <!--<div class="body">-->
+                      <!--<p>-->
+                        <!--{{errors.renewal[id].message}}-->
+                      <!--</p>-->
+                    <!--</div>-->
+                  <!--</sl-popover-info>-->
                 </div></td>
                 <td><div class="features">
                   <ul>
-                    <li ng-repeat="feature in product.features">
-                      <img src="/images/checkbox_on_out.svg" ng-if="product.license.access[feature]">
-                      <img src="/images/checkbox_off.svg" ng-if="!product.license.access[feature]">
-                      <span
-                        class="name"
-                        ng-class="{ error: errors && !product.license.access[feature] }">
-                        {{product.info.features[feature] || feature}}
-                      </span>
+                    <li ng-repeat="feature in product.features" class="clearfix">
+                      <div class="txt">
+                        <img src="/images/checkbox_on_out.svg" ng-if="feature.access">
+                        <img src="/images/checkbox_off.svg" ng-if="!feature.access">
+                        <span
+                          class="name"
+                          ng-class="{ error: !feature.access }">
+                          {{feature.description}}
+                        </span>
+                      </div>
+                      <button
+                        class="ui-btn accessory small"
+                        ng-show="feature.license.isExpired"
+                        ng-click="renewProductFeature(product, feature)">Renew</button>
                     </li>
                   </ul>
                 </div></td>
-                <td><div class="date activation-date" ng-if="product.license">{{product.license.activationDate | amDateFormat:'MMMM Do YYYY'}}</div></td>
-                <td><div class="date expiration-date" ng-class="{ expired: product.license.isExpired }" ng-if="product.license">{{product.license.expirationDate | amDateFormat:'MMMM Do YYYY'}}</div></td>
+                <td>
+                  <div class="date activation-date">
+                    <ul>
+                      <li ng-repeat="feature in product.features">
+                        {{feature.license.activationDate | amDateFormat:'MMMM Do YYYY'}}
+                      </li>
+                    </ul>
+                  </div>
+                </td>
+                <td>
+                  <div class="date expiration-date">
+                    <ul>
+                      <li ng-repeat="feature in product.features">
+                        {{feature.license.expirationDate | amDateFormat:'MMMM Do YYYY'}}
+                      </li>
+                    </ul>
+                  </div>
+                </td>
                 <td><div class="license-key">
-                  <sl-popover-info
-                    classes="medium"
-                    icon="sl-icon sl-icon-key_out"
-                    hideonpageclick="true"
-                    onshow="selectLicenseText('#id-'+product.license.id)"
-                    secondarybuttontext="Copy"
-                    secondarybuttonaction="copyToClipboard('#id-'+product.license.id)">
-                    <h4>License Key</h4>
-                    <div class="body">
-                      <form class="ui-form sans-style">
-                        <textarea class="ui-textarea key" id="id-{{product.license.id}}">{{product.license.licenseKey}}</textarea>
-                      </form>
-                    </div>
-                  </sl-popover-info>
+                  <ul>
+                    <li ng-repeat="feature in product.features">
+                      <sl-popover-info
+                        ng-if="feature.license"
+                        classes="medium"
+                        icon="sl-icon sl-icon-key_out"
+                        hideonpageclick="true"
+                        onshow="selectLicenseText('#id-'+feature.license.id)"
+                        secondarybuttontext="Copy"
+                        secondarybuttonaction="copyToClipboard('#id-'+feature.license.id)">
+                        <h4>License Key</h4>
+                        <div class="body">
+                          <form class="ui-form sans-style">
+                            <textarea class="ui-textarea key" id="id-{{feature.license.id}}">{{feature.license.licenseKey}}</textarea>
+                          </form>
+                        </div>
+                      </sl-popover-info>
+                    </li>
+                  </ul>
                 </div></td>
               </tr>
             </tbody>
