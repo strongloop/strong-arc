@@ -114,8 +114,10 @@ Profiler.controller('ProfilerMainController', [
 
               detectChanges($scope.profiles, profiles.filter(isValidTarget))
                 .exit(function(profile) {
-                  growl.addInfoMessage('Profile ' + profile.targetId + ' removed.');
-                  removeFromSet($scope.profiles, profile);
+                  if (profile.status !== 'profiling') {
+                    growl.addInfoMessage('Profile ' + profile.targetId + ' removed.');
+                    removeFromSet($scope.profiles, profile);
+                  }
                 })
                 .enter(function(profile) {
                   growl.addInfoMessage('Profile ' + profile.targetId + ' added.');
@@ -155,7 +157,7 @@ Profiler.controller('ProfilerMainController', [
               if (oldVal.isProfiling !== newVal.isProfiling) {
                 growl.addInfoMessage('PID ' + newVal.pid + ' changed status.');
                 angular.extend(oldVal, newVal);
-                oldVal.status = getProfileStatus(oldVal);
+                oldVal.status = oldVal.isProfiling ? 'Profiling' : 'Running';
               }
             });
 
