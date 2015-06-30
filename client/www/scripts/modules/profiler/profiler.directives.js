@@ -73,7 +73,7 @@ Profiler.directive('slProfilerNavbar', [
                   id: data.data.result.profileId,
                   targetId: pid,
                   startTime: new Date(),
-                  status: 'ready',
+                  status: 'profiling',
                   type: 'heapsnapshot',
                   downloadUrl: fileUrl
                 };
