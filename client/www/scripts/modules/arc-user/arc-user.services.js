@@ -74,10 +74,6 @@ ArcUser.service('ArcUserService', [
       return false;
     };
     svc.logCurrentUserOut = function (cb) {
-      $cookieStore.remove('currentUserId');
-      $cookieStore.remove('accessToken');
-      $cookieStore.remove('currentUserEmail');
-      $cookieStore.remove('currentUsername');
       var logoutObj = User.logout();
       logoutObj.$promise.
         then(function(result) {
@@ -87,6 +83,12 @@ ArcUser.service('ArcUserService', [
         }).catch(function(err){
           $log.log(err);
           cb();
+        })
+        .finally(function(){
+          $cookieStore.remove('currentUserId');
+          $cookieStore.remove('accessToken');
+          $cookieStore.remove('currentUserEmail');
+          $cookieStore.remove('currentUsername');
         });
     };
     svc.getCurrentUser = function() {
