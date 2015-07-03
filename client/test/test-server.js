@@ -93,6 +93,9 @@ var server = arc.listen(port, function(err) {
   }
 
   console.log('Arc running at http://localhost:%s', server.address().port);
+  if (process.send) {
+    process.send(server.address());
+  }
   if (process.argv.length > 2)
     runAndExit(process.argv[2], process.argv.slice(3));
 });
