@@ -37,8 +37,8 @@ Licenses.service('LicensesService', [
       if ( !isArcLicense ) return false;
 
       //check features allowed
-      var features = license.features.split(', ');
-      var isFeatureAllowed = features && _.contains(features, page.substr(1)); //remove '/' in page
+      var feature = license.feature;
+      var isFeatureAllowed = feature && feature === page.substr(1); //remove '/' in page
 
       return isExpired || !isFeatureAllowed
     }
