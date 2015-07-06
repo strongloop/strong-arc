@@ -9,7 +9,8 @@ Tracing.controller('TracingMainController', [
   'TracingServices',
   'ManagerServices',
   'TraceEnhance',
-  function($scope, $log, $timeout, $interval, $location, growl, msFormat, TracingServices, ManagerServices, TraceEnhance) {
+  '$state',
+  function($scope, $log, $timeout, $interval, $location, growl, msFormat, TracingServices, ManagerServices, TraceEnhance, $state) {
     $scope.pm = {};
     $scope.killProcessPoll = true;
     $scope.pidCycleCheckCollection = [];
@@ -21,9 +22,9 @@ Tracing.controller('TracingMainController', [
     $scope.managerHosts = [];    // $location.host()
     $scope.selectedPMHost = {};
     $scope.processes = [];
-    $scope.showTimelineLoading = true;
     $scope.selectedProcess = {};
     $scope.tracingCtx = {};
+    $scope.showTimelineLoading = true;
     $scope.showTransactionHistoryLoading = true;
     $scope.isShowTraceSequenceLoader = false;
     $scope.transactionHistoryRenderToggle = false;
@@ -87,6 +88,9 @@ Tracing.controller('TracingMainController', [
         .then(function(isValid) {
           if (!isValid) {
             $log.warn('invalid tracing license');
+            $scope.showTimelineLoading = false;
+            $scope.showTransactionHistoryLoading = false;
+            $scope.isShowTraceSequenceLoader = false;
             return;
           }
 
@@ -331,7 +335,11 @@ Tracing.controller('TracingMainController', [
           $scope.showTimelineLoading = false;
           return;
         }
-        $scope.showTraceToggle = true;
+        if ($scope.selectedPMHost.isHostProblem) {
+          $scope.showTraceToggle = false;
+          $scope.showTimelineLoading = false;
+
+        }
         $scope.tracingCtx.currentPMInstance = instance;
         $scope.targetProcessCount = $scope.tracingCtx.currentPMInstance.setSize;
 
@@ -503,7 +511,9 @@ Tracing.controller('TracingMainController', [
         $scope.main();
       }
     };
-
+    $scope.goToAddPM = function() {
+      $state.go('process-manager');
+    };
     /*
     *
     * SET ACTIVE PID

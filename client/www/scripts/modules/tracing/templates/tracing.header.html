@@ -5,7 +5,7 @@
         <td>
           <table class="tracing-controls-table">
             <tr>
-              <td >
+              <td class="host-col">
                 <!-- host selector -->
                 <div ng-show="managerHosts.length > 0" class="pm-host-selector-container">
                   <div class="btn-group pm-host-select dropdown" dropdown ng-show="managerHosts"  is-open="status.isopen">
@@ -18,18 +18,22 @@
                       <li ng-repeat="host in managerHosts">
                         <button class="link-cmd" ng-click="changePMHost(host)">{{host.host}}:{{host.port}}</button>
                       </li>
+                      <li class="divider"></li>
+                      <li>
+                        <button class="link-cmd" ng-click="goToAddPM()">add PM Host</button>
+                      </li>
                     </ul>
                   </div>
                 </div>
               </td>
-              <td>
+              <td class="pids-col">
                 <!-- Processes list -->
                 <div class="sl-pid-selector" ng-show="processes.length > 0">
                   <sl-tracing-processes></sl-tracing-processes>
                 </div>
                 <span class="loading" sl-common-loading-indicator size="small" ng-show="tracingProcessCycleActive"></span>
               </td>
-              <td>
+              <td class="controls-col">
                 <!-- toggle control -->
                 <sl-tracing-host-status></sl-tracing-host-status>
                 <div class="pm-tracing-toggle-container" ng-show="showTraceToggle">

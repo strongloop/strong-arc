@@ -26,7 +26,26 @@
     }
   }
 }
+.pm-host-select {
+  .dropdown-menu {
+    min-width:17rem;
 
+    .link-cmd {
+      white-space: nowrap;
+      width:100%;
+      margin:0;
+      text-align: left;
+
+      &:hover {
+        background-color:#f2f2f2;
+      }
+      &:active {
+        background-color:@action-primary;
+        color:#ffffff;
+      }
+    }
+  }
+}
 .sl-app-controller {
   text-align: center;
   padding: 0;

@@ -336,7 +336,7 @@ PM.service('PMPidService', [
     // need to add logic for local pm instance
      svc.getDefaultPidData = function(serverConfig, id) {
 
-       return PMServerService.find(serverConfig, {id:id})
+       return PMServerService.findById(serverConfig, id)
          .then(function(response) {
            if (!response.data.length) {
              $log.warn('no services found for id: ' + id);
@@ -346,7 +346,7 @@ PM.service('PMPidService', [
              // assume first found for now
              var firstService = response.data[0];
 
-             return PMServiceInstance.find(serverConfig, {serverServiceId: firstService.id})
+             return PMServiceInstance.findById(serverConfig, firstService.id)
                .then(function(instances) {
                  // first child
                  var firstInstance = instances[0];
@@ -414,6 +414,29 @@ PM.service('PMServerService', ['$http', '$log',
             $log.error(error.message + ':' + error);
             return error;
           });
+      },
+      findById: function(serverConfig, id) {
+        var baseUrl = 'http://' + serverConfig.host + ':' + serverConfig.port;
+        if (serverConfig.host === PM_CONST.LOCAL_PM_HOST_NAME) {
+          baseUrl = '/process-manager'
+        }
+        else if (serverConfig.port === PM_CONST.LOCAL_PM_PORT_MASK){
+          $log.warn('invalid port - may be corruped request: ' + JSON.stringify(serverConfig));
+          return [];
+        }
+        var apiRequestPath = baseUrl + '/api/Services';
+        return $http({
+          url: apiRequestPath,
+          method: "GET",
+          params: id
+        })
+          .then(function(response) {
+            return response;
+          })
+          .catch(function(error) {
+            $log.error(error.message + ':' + error);
+            return error;
+          });
       }
     }
   }
@@ -431,6 +454,25 @@ PM.service('PMServiceInstance', ['$http', '$log',
           url: apiRequestPath,
           method: "GET",
           params: {where:filter}
+        })
+          .then(function(response) {
+            return response.data;
+          })
+          .catch(function(error) {
+            $log.error(error.message + ':' + error);
+            return error;
+          });
+      },
+      findById: function(serverConfig, id) {
+        var baseUrl = 'http://' + serverConfig.host + ':' + serverConfig.port;
+        if (serverConfig.host ===  PM_CONST.LOCAL_PM_HOST_NAME) {
+          baseUrl = '/process-manager'
+        }
+        var apiRequestPath = baseUrl + '/api/ServiceInstances';
+        return $http({
+          url: apiRequestPath,
+          method: "GET",
+          params: id
         })
           .then(function(response) {
             return response.data;

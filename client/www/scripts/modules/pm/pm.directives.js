@@ -27,7 +27,8 @@ PM.directive('slPmAppControllerMenu', [
 PM.directive('slPmHostForm', [
   'PMHostService',
   'PMPidService',
-  function(PMHostService, PMPidService) {
+  '$state',
+  function(PMHostService, PMPidService, $state) {
     return {
       scope: {
         onLoadHost: '&',
@@ -42,8 +43,9 @@ PM.directive('slPmHostForm', [
         '$timeout',
         'PMAppService',
         'PMServerService',
+        'ManagerServices',
         '$parse',
-        function($scope, $log, growl, $timeout, PMAppService, PMServerService, $parse) {
+        function($scope, $log, growl, $timeout, PMAppService, PMServerService, ManagerServices, $parse) {
 
           var isLocal = false;
           var isInit = true;
@@ -56,6 +58,25 @@ PM.directive('slPmHostForm', [
           $scope.pmServers.unshift({}); //placeholder for user input
 
           $scope.candidateServerConfig = {};
+
+
+          $scope.managerHosts = ManagerServices.getManagerHosts(function(hosts) {
+            $scope.$apply(function () {
+              $scope.managerHosts = hosts;
+              if ($scope.managerHosts.length) {
+                $scope.selectedPMHost = $scope.managerHosts[0];
+              }
+            });
+          });
+
+
+          $scope.goToAddPM = function() {
+            $state.go('process-manager');
+          };
+          $scope.changePMHost = function(host) {
+            $scope.candidateServerConfig = host;
+
+          };
 
           // set value to last referenced server if available
           if (PMHostService.getPMServers().length) {

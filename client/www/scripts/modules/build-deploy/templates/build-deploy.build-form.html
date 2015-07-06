@@ -77,7 +77,9 @@
 
         <div>
           <label><span class="ui-label-txt">Archive filename:</span></label>
+          <button class="link-cmd" ng-click="populateDeployArchive(pkg)">
           <span class="filename">../{{pkg.name}}-{{pkg.version}}.tgz</span>
+          </button>
           <input
             ng-show="false"
             class="ui-input"

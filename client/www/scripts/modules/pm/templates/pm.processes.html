@@ -15,8 +15,7 @@
        size="small"
        ng-show="isShowPidDisplaySpinner()"></div>
   <ul>
-    <li
-            ng-repeat="process in processes | filter:processHidden | limitTo:8"
+    <li ng-repeat="process in processes | filter:processHidden | limitTo:8"
             class="process"
             ng-class="{ active: isActive(process) }"
             ng-click="toggleSelect(process)">
