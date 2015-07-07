@@ -1,0 +1,9 @@
+<div ng-controller="PipelineMainController">
+  <h3>Pipelines</h3>
+  <sl-pipeline-list ng-show="!gatewayCtx.currentInstanceId"></sl-pipeline-list>
+  <button ng-click="showAddNewPipelineForm()" class="link-cmd" >
+    <i class="sl-icon sl-icon-plus-sign"></i>Add New
+  </button>
+  <!--<button class="ui-btn small" ng-click="showModal()">Show Modal</button>-->
+  <sl-pipeline-form ng-show="gatewayCtx.currentInstanceId"></sl-pipeline-form>
+</div>

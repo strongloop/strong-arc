@@ -25,6 +25,9 @@ var meshProxy = require('strong-mesh-client/proxy/server')(
   path.join(process.cwd(), process.env.MANAGER_CONFIG || 'arc-manager.json')
 );
 app.meshProxy = meshProxy;
+var gatewayApi = require('../gateway-api/server/server');
+
+app.gatewayApi = gatewayApi;
 
 var arcApi = require('../arc-api/server/server');
 
@@ -37,6 +40,7 @@ app.use('/devtools', devtools);
 app.use('/build-deploy', buildDeploy);
 app.use('/process-manager', pm);
 app.use('/api', arcApi);
+app.use('/gateway', gatewayApi);
 app.use('/manager', meshProxy);
 
 // expose features list via REST so they can be checked by frontend
@@ -57,6 +61,7 @@ try {
   app.use('/explorer/workspace', explorer(workspace,
     { basePath: '/workspace/api' }));
   app.use('/explorer/arc-api', explorer(arcApi, { basePath: '/api' }));
+  app.use('/explorer/gateway-api', explorer(gatewwayApi, { basePath: '/gateway/api' }));
 } catch(err) {
   // silently ignore the error, the explorer is not available in "production"
 }

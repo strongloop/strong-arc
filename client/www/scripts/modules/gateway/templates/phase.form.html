@@ -1,0 +1,20 @@
+<div data-id="PhaseFormContainer">
+  <form class="ui-form">
+    <div class="form-field">
+      <label>Name</label>
+      <input ng-model="gatewayCtx.currentPhase.name" />
+    </div>
+    <div class="form-field">
+      <label>Host</label>
+      <input ng-model="gatewayCtx.currentPhase.host" />
+    </div>
+    <div class="form-field">
+      <label>Port</label>
+      <input ng-model="gatewayCtx.currentPhase.port" />
+    </div>
+    <div>
+      <button class="ui-btn secondary small" ng-click="clearPhaseForm()">cancel</button>
+      <button class="ui-btn primary small" ng-click="saveCurrentPhase()">Add Phase</button>
+    </div>
+  </form>
+</div>

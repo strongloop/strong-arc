@@ -1,0 +1,24 @@
+<div data-id="ExternalEndpointFormContainer">
+  <form class="ui-form">
+    <div class="form-field">
+      <label>URL</label>
+      <input ng-model="gatewayCtx.currentExternalEndpoint.url" />
+    </div>
+    <div class="form-field">
+      <label>Pattern</label>
+      <input ng-model="gatewayCtx.currentExternalEndpoint.pattern" />
+    </div>
+    <div class="form-field">
+      <label>Port</label>
+      <input ng-model="gatewayCtx.currentExternalEndpoint.verb" />
+    </div>
+    <div class="form-field">
+      <label>Port</label>
+      <input ng-model="gatewayCtx.currentExternalEndpoint.scope" />
+    </div>
+    <div>
+      <button class="ui-btn secondary small" ng-click="clearExternalEndpointForm()">cancel</button>
+      <button class="ui-btn primary small" ng-click="saveCurrentExternalEndpoint()">Add External Endpoint</button>
+    </div>
+  </form>
+</div>

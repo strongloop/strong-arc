@@ -1,0 +1,25 @@
+<div data-id="PolicyScopeFormContainer">
+  <form class="ui-form">
+    <table>
+      <tbody>
+      <tr>
+        <td>
+          <div class="form-field">
+            <label>Scope</label>
+            <input type="text" typeahead="scope.name as scope.name for scope in policyScopeCtx.policyScopes | filter:$viewValue | limitTo:8"  ng-model="policyCtx.currentPolicyScope.name">
+
+          </div>
+        </td>
+        <td>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+
+    <div>
+      <button class="ui-btn secondary small" ng-click="clearScopeForm()">cancel</button>
+      <button class="ui-btn primary small" ng-click="saveCurrentPolicyScope()">Add Scope</button>
+    </div>
+  </form>
+</div>

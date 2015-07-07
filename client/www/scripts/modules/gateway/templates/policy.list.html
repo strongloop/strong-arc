@@ -1,0 +1,88 @@
+<div data-id="PolicyListContainer" class="entity-list-container">
+  <table class="ui-table">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Details</th>
+      <th class="blank-th"></th>
+    </tr>
+    </thead>
+    <tbody ng-repeat="policy in policyCtx.policies">
+    <tr>
+      <td class="gateway-name-col">
+        <a href="/#/gateway/' +  policy.type + '/' + policy.id + '">
+          <span ng-show="!policy.editMode">{{policy.name}}</span>
+        </a>
+        <input type="text" ng-model="policy.name" ng-show="policy.editMode" />
+      </td>
+      <td>
+        <span ng-show="!policy.editMode" >{{policy.type}}</span>
+        <select ng-model="policy.type" ng-show="policy.editMode"  ng-options="policyType.id as policyType.name for policyType in gatewayCtx.policyTypes">
+        </select>
+      </td>
+      <td>
+        <ul ng-show="!policy.editMode">
+          <li ng-repeat="datum in policy.data">{{datum.name}} = {{datum.value}}</li>
+        </ul>
+        <sl-policy-auth-form ng-show="policy.editMode && isPolicyType('auth', policy)"></sl-policy-auth-form>
+        <sl-policy-rate-limit-form  ng-show="policy.editMode && isPolicyType('ratelimit', policy)"></sl-policy-rate-limit-form>
+        <sl-policy-proxy-form ng-show="policy.editMode && isPolicyType('proxy', policy)"> </sl-policy-proxy-form>
+
+      </td>
+      <!--<td>-->
+        <!--<button ng-show="!policy.editMode" class="link-cmd" ng-click="editPolicy(policy)">edit</button>-->
+        <!--<button ng-show="policy.editMode" class="ui-btn secondary small" ng-click="cancelEditPolicy(policy)">cancel</button>-->
+        <!--<button ng-show="policy.editMode" class="ui-btn primary small" ng-click="savePolicy(policy)">save</button>-->
+
+      <!--</td>-->
+      <td class="gateway-delete-col">
+        <button class="link-cmd" ng-click="deletePolicy(policy)">
+          <i class="sl-icon sl-icon-close"></i>
+        </button>
+      </td>
+
+    </tr>
+    </tbody>
+  </table>
+  <form ng-model="policyCtx.currentPolicy">
+  <table ng-show="isShowAddPolicyRow" class="ui-table master-ui-table">
+    <tbody>
+    <tr>
+      <td class="edit">
+        <i class="sl-icon sl-icon-plus-sign"></i>
+      </td>
+      <td class="edit">
+        <label>Name</label>
+        <input ng-model="policyCtx.currentPolicy.name" type="text" />
+      </td>
+      <td class="edit">
+        <label>Type</label>
+        <select ng-model="policyCtx.currentPolicy.type"  ng-options="policyType.id as policyType.name for policyType in gatewayCtx.policyTypes">
+        </select>
+      </td>
+      <td>
+        <sl-policy-auth-form ng-show="isPolicyType('auth', policyCtx.currentPolicy)"></sl-policy-auth-form>
+        <sl-policy-rate-limit-form  ng-show="isPolicyType('ratelimit', policyCtx.currentPolicy)"></sl-policy-rate-limit-form>
+        <sl-policy-proxy-form ng-show="isPolicyType('proxy', policyCtx.currentPolicy)"> </sl-policy-proxy-form>
+
+        <!--<sl-policy-auth-form ng-show="isCurrentPolicyType('auth')"></sl-policy-auth-form>-->
+        <!--<sl-policy-rate-limit-form  ng-show="isCurrentPolicyType('ratelimit')"></sl-policy-rate-limit-form>-->
+        <!--<sl-policy-proxy-form ng-show="isCurrentPolicyType('proxy')"> </sl-policy-proxy-form>-->
+
+      </td>
+      <td class="master-action-col">
+        <button class="ui-btn secondary small" ng-click="clearAddPolicyRow()">cancel</button>
+        <button class="ui-btn primary small" ng-click="savePolicy()">Save</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  </form>
+  <button class="link-cmd" ng-click="showAddPolicyRow()">
+    <i class="sl-icon sl-icon-plus-sign"></i>Add Policy
+  </button>
+
+  <!--<button class="link-cmd" ng-click="showScopesCrud()">show scopes</button>-->
+  <sl-policy-scope-main-view ng-show="isShowScopesCrud"></sl-policy-scope-main-view>
+</div>

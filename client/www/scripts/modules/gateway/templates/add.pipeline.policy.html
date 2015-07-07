@@ -1,0 +1,19 @@
+<div class="dialog-content medium">
+  <div class="dialog-header">
+    <h4 class="header">Add Pipeline Policy</h4>
+  </div>
+  <div class="dialog-body">
+    <div class="form-field">
+      <label>Choose Policy</label>
+      <select ng-model="pipelineCtx.newPolicy" ng-options="policy as policy.type + ' - ' + policy.name for policy in policyCtx.policies"></select>
+      <!--<input type="text" ng-model="pipelineCtx.newPolicyName" />-->
+    </div>
+
+  </div>
+  <div class="dialog-footer">
+    <div class="dialog-footer-group">
+      <button class="ui-btn small"  ng-click="addPipelinePolicy()">Add Policy</button>
+
+    </div>
+  </div>
+</div>

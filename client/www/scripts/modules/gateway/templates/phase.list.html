@@ -1,0 +1,54 @@
+<div data-id="PhaseListContainer">
+  <table class="ui-table">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Host</th>
+      <th>Port</th>
+      <th>App</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody ng-repeat="phase in gatewayCtx.phases">
+    <tr>
+      <td>
+        <button ng-show="!phase.editMode" class="link-cmd">{{phase.name}}</button>
+        <input ng-show="phase.editMode" ng-model="phase.name" />
+      </td>
+      <td>
+        <span ng-show="!phase.editMode">{{phase.host}}</span>
+        <input  ng-show="phase.editMode" ng-model="phase.host" />
+      </td>
+      <td>
+        <span ng-show="!phase.editMode">{{phase.port}}</span>
+        <input  ng-show="phase.editMode" ng-model="phase.port" />
+      </td>
+      <td>
+        <span ng-show="!phase.editMode">{{phase.serviceName}}</span>
+        <select ng-show="phase.editMode" ng-model="phase.serviceName"
+                ng-select="{{app.service.name === phase.serviceName}}"
+                ng-options="app.service.name as app.service.name for app in gatewayCtx.deployedApps | unique:'service.name'"></select>
+      </td>
+      <td>
+        <button ng-show="phase.editMode" class="ui-btn secondary small" ng-click="cancelEditPhase(phase)">cancel</button>
+        <button ng-show="phase.editMode" class="ui-btn primary small" ng-click="savePhase(phase)">save</button>
+        <div ng-show="!phase.editMode" class="dropdown" dropdown>
+          <button class="dropdown-toggle link-cmd" dropdown-toggle>Actions<span class="caret"></span></button>
+          <ul class="dropdown-menu" dropdown-menu>
+            <li>
+              <button ng-click="editPhase(phase)" class="link-cmd">edit</button>
+            </li>
+            <li>
+              <button class="link-cmd" ng-click="savePhase(phase)">save</button>
+            </li>
+            <li>
+              <button ng-click="deletePhase(phase)" class="link-cmd">delete</button>
+            </li>
+          </ul>
+        </div>
+
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
