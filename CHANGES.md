@@ -1,11 +1,83 @@
-2015-06-11, Version 1.4.2
+2015-07-07, Version 1.6.0
 =========================
+
+ * Disable the smart profiler option (Joseph Tary)
+
+ * simplify logic for testing for invalid module license (seanbrookes)
+
+ * fix licensing message when not renewable (Anthony Ettinger)
+
+ * fix license validity check for tracing (Anthony Ettinger)
+
+ * remove user info after logout attempt (Anthony Ettinger)
+
+ * Fix heap snapshot flicker (Joseph Tary)
+
+ * add check for duplicate product and feature name (Anthony Ettinger)
+
+ * licenses page using v2 api (Anthony Ettinger)
+
+ * update oracle query path string (seanbrookes)
+
+ * Fix incorrect status for PIDs (Joseph Tary)
+
+ * tactical pm updates (seanbrookes)
+
+ * build-deploy: use exit status for success/fail (Sam Roberts)
+
+ * build-tasks: fix options to writeJsonFile (Sam Roberts)
+
+ * fix broken integration test for property types (Anthony Ettinger)
+
+ * Add delete button for profiles (Joseph Tary)
+
+ * devtools: fix issues in the debugger UI (Miroslav Bajtoš)
+
+ * make host actions menu more usable (seanbrookes)
+
+ * Fix controls being locked after profiling (Joseph Tary)
+
+ * Fix updating the status or PIDs and filter out broken profiles that will never complete. (Joseph Tary)
+
+ * fix button state on trace navigation (seanbrookes)
+
+ * adjust the alignment of the header controls (seanbrookes)
+
+ * align with styleguide (seanbrookes)
+
+ * use global jQuery and d3 in tracing modules (Ryan Graham)
+
+ * remove tracing feature flag (seanbrookes)
+
+ * Fix colour and working in profiler settings summary (Joseph Tary)
+
+ * reset file load order after cleaning up deps (seanbrookes)
+
+ * add favicon.ico to Arc's root static path (Ryan Graham)
+
+ * process-manager: pass --base explicitly (Sam Roberts)
+
+ * add nicer graphic to tracing init view (seanbrookes)
+
+ * revert path to older version of contextMenu (seanbrookes)
+
+ * Revert "Feature/licensing renewal" (Anthony Ettinger)
+
+ * change default icon to use hover icon (Anthony Ettinger)
+
+ * add growl messages for pid updates in tracing (seanbrookes)
+
+ * fix initial timeseries chart rendering regression (seanbrookes)
+
+ * fix control alignment issue (seanbrookes)
 
  * fix broken injection (seanbrookes)
 
  * package: prevent strong-arc from bundling itself (Ryan Graham)
 
  * deps: remove dependency on slug (Ryan Graham)
+
+ * Add support to Arc for smart-profiling feature (Joseph Tary)
 
 
 2015-06-10, Version 1.4.1
