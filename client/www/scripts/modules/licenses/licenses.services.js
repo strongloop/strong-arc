@@ -26,9 +26,9 @@ Licenses.service('LicensesService', [
     };
 
 
-    function isLicenseInvalid(license, page, slProduct){
+    function isLicenseInvalid(license, feature, product){
       var now = moment().unix();
-      var isArcLicense = license.product === slProduct;
+      var isArcLicense = ((license.product === product) && (license.feature === feature));
 
       var expirationDate = moment(license.expirationDate).unix();
       var isExpired = expirationDate < now; //if expired
@@ -36,11 +36,7 @@ Licenses.service('LicensesService', [
       //skip feature check on non-arc licenses as they don't apply here
       if ( !isArcLicense ) return false;
 
-      //check features allowed
-      var feature = license.feature;
-      var isFeatureAllowed = feature && feature === page.substr(1); //remove '/' in page
-
-      return isExpired || !isFeatureAllowed
+      return isExpired
     }
 
     //check arc licenses on accessing route
@@ -163,16 +159,17 @@ Licenses.service('LicensesService', [
     svc.validateModuleLicense = function(moduleName, product) {
       // query license service for users current license data
       return svc.getLicenses()
-        .then(function(response) {
-          /*
-           * check the license data returned for metrics license
-           * - if this method returns a payload it means the license is invalid
-           * */
-          var invalidLicenses = svc.getInvalidLicenses(response, '/' + moduleName.toLowerCase(), product);
-          if (invalidLicenses.length) {
-            svc.alertLicenseInvalid({name:moduleName});
+        .then(function(licenses) {
+
+          var moduleToCheck = moduleName.toLowerCase();
+          var license = _.where(licenses, {'feature': moduleToCheck, product: product});
+          if (license.length) {
+            license = license[0];
+          }
+          if (isLicenseInvalid(license, moduleToCheck, product)) {
             return false;
           }
+
           return true;
         });
     };
