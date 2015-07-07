@@ -18,33 +18,52 @@ var MainTreeNavView = (function () {
     this.openNewModelView = function() {
       this.addModelButton.click();
     };
+    this.openFirstModel = function() {
+      var self = this;
+      browser.driver.wait(function() {
+        return self.addDataSourceButton.isPresent();
+      }, 10000);
+      element(by.css('.model-branch-container .tree-item-row button')).click();
+    };
     this.openFirstDataSource = function() {
-      this.dataSourceNavItems.get(0).click();
+      var self = this;
+      browser.driver.wait(function() {
+        return self.dataSourceNavItems.count(function(c) {
+          return c > 0;
+        });
+      }, 10000);
+      self.dataSourceNavItems.first().click();
     };
     this.openNewDataSourceView = function() {
-      this.addDataSourceButton.click();
+      var self = this;
+      browser.driver.wait(function() {
+        return self.addDataSourceButton.isPresent();
+      }, 10000);
+      self.addDataSourceButton.click();
     };
     this.deleteDataSourceByIndex = function(index) {
-
-      var dataSourceNavCtx = this.dataSourceCtxBtns.get(1);
+      var self = this;
+      browser.driver.wait(function() {
+        return self.addDataSourceButton.isPresent();
+      }, 10000);
+      var dataSourceNavCtx = self.dataSourceCtxBtns.get(index);
       browser.driver.actions().click(dataSourceNavCtx).perform();
-      var deleteButton = this.ctxMenuTriggers.get(2);
+      var deleteButton = self.ctxMenuTriggers.get(2);
       browser.driver.actions().click(deleteButton).perform();
       var alertDialog = browser.switchTo().alert();
-
       alertDialog.accept();
     };
     this.deleteFirstModel = function() {
+      var self = this;
+      browser.driver.wait(function() {
+        return self.addDataSourceButton.isPresent();
+      }, 10000);
       // Main Tree Context Menu
-      var modelNavCtx = this.modelCtxBtns.get(0);
-
+      var modelNavCtx = self.modelCtxBtns.get(0);
       browser.driver.actions().click(modelNavCtx).perform();
-
-      var deleteButton = this.ctxMenuTriggers.get(0);
+      var deleteButton = self.ctxMenuTriggers.get(0);
       browser.driver.actions().click(deleteButton).perform();
-
       var alertDialog = browser.switchTo().alert();
-
       alertDialog.accept();
     };
   }

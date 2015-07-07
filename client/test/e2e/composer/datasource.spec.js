@@ -1,5 +1,6 @@
 var ArcViews = require('../arc/views/');
 var ComposerViews = require('../composer/views/');
+var EC = protractor.ExpectedConditions;
 
 describe('datasource-definition-interactions', function() {
   it('should login, open default db, logout',
@@ -11,12 +12,11 @@ describe('datasource-definition-interactions', function() {
       var headerView = new ArcViews.HeaderView();
 
       loginView.loginToLandingView();
-
       landingView.openComposerView();
-
       mainTreeNavView.openFirstDataSource();
-
-      expect(dataSourceEditorView.getCurrentDSName() === 'db');
+      browser.driver.wait(
+        EC.visibilityOf(dataSourceEditorView.saveDataSourceButton), 10000);
+      expect(dataSourceEditorView.getCurrentDSName()).toEqual('db');
 
       headerView.logout();
     }
@@ -37,26 +37,33 @@ describe('datasource-definition-interactions', function() {
 
       landingView.openComposerView();
 
-      expect(mainTreeNavView.dataSourceNavItems.count === 1);
+      // TODO: these sleeps are really bad...
+
+      browser.sleep(500).then(function() {
+        return expect(mainTreeNavView.dataSourceNavItems.count()).toEqual(1);
+      });
 
       mainTreeNavView.openNewDataSourceView();
-
-      expect(dataSourceEditorView.getCurrentDSName() === 'newDatasource');
+      expect(dataSourceEditorView.getCurrentDSName()).toEqual('newDatasource');
 
       dataSourceEditorView.createNewDataSource('testDb');
+      browser.sleep(500).then(function() {
+        expect(dataSourceEditorView.getCurrentDSName()).toEqual('testDb');
+        expect(mainTreeNavView.dataSourceNavItems.count()).toEqual(2);
+      });
 
-      browser.waitForAngular();
+      dataSourceEditorView.createNewDataSource('testDb2');
+      browser.sleep(500).then(function() {
+        expect(dataSourceEditorView.getCurrentDSName()).toEqual('testDb2');
+        expect(mainTreeNavView.dataSourceNavItems.count()).toEqual(2);
+      });
 
-      expect(dataSourceEditorView.getCurrentDSName() === 'testDb');
-
-      expect(mainTreeNavView.dataSourceNavItems.count === 2);
-
-      mainTreeNavView.deleteDataSourceByIndex(1);
-
-      expect(mainTreeNavView.dataSourceNavItems.count === 1);
+      mainTreeNavView.deleteDataSourceByIndex(0);
+      browser.sleep(500).then(function() {
+        expect(mainTreeNavView.dataSourceNavItems.count()).toEqual(1);
+      });
 
       headerView.logout();
-
     }
   );
 

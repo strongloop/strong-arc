@@ -3,6 +3,7 @@ var fs = require('fs-extra');
 var path = require('path');
 var url = require('url');
 var exec = require('child_process').exec;
+var fork = require('child_process').fork;
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var watch = require('gulp-watch');
@@ -153,6 +154,7 @@ gulp.task('test', ['build'], function(callback) {
     'test-pm',
     'setup-mysql',
     'test-client-integration',
+    'test-e2e',
     callback);
 });
 
@@ -183,8 +185,15 @@ gulp.task('test-pm', function() {
     .pipe(mocha());
 });
 // WIP
-gulp.task('test-e2e', function() {
+gulp.task('test-e2e', function(callback) {
   var pmContainerID;
+  var webdriver;
+
+  // only run on CI if Xvfb is running
+  if (process.env.CI && !process.env.DISPLAY) {
+    return callback();
+  }
+
   /*
   Components of Tracing focused e2e testing
   * webdriver
@@ -193,61 +202,88 @@ gulp.task('test-e2e', function() {
   * pm instance
   * protractor
   * */
-  //var webdriver = spawn(
-  //  'webdriver-manager',
-  //  ['start'],
-  //  {
-  //    cwd: __dirname,
-  //    stdio: 'inherit'
-  //  });
-  //var testServer = spawn(
-  //  process.execPath,
-  //  [
-  //    'client/test/test-server'
-  //  ],
-  //  {
-  //    cwd: __dirname,
-  //    stdio: 'inherit'
-  //  });
-  //
-  //// set up pm instance (variables [host/port])
-  //exec(
-  //  'docker run -P -d strongloop/strong-pm',
-  //  function(err, stdout, stderr) {
-  //    // establish strong pm instance host and port variables
-  //    pmContainerID = stdout.trim();
-  //    exec(
-  //      'docker port ' + pmContainerID + ' 8701/tcp',
-  //      function(err, stdout, stderr) {
-  //        process.env.TEST_PM_PORT = stdout.trim().split(':')[1];
-  //        process.env.TEST_PM_HOST = url.parse(process.env.DOCKER_HOST || 'tcp://127.0.0.1').host;
-  //
-  //
-  //        /*
-  //        TODO:
-  //
-  //        - scaffold a test app
-  //        - spawn test server cwd of scaffolded test app
-  //
-  //        * */
-  //
-  //        /*
-  //        * teardown (pm)
-  //        *
-  //        *
-  //        * exec('docker rm -v -f ' + pmContainerID);
-  //        * */
-  //       }
-  //    );
-  //  }
-  //);
+  var testAppPath = path.resolve(__dirname, 'test/bare-bones-app');
+  var testServerPath = require.resolve('./client/test/test-server');
+  var testServerOpts = {cwd: __dirname};
+  var testServer = fork(testServerPath, testServerOpts);
 
+  testServer.on('message', function(msg) {
+    // async.series([
+    //   // for future tests that require a PM instance
+    //   //startTestPM,
+    //   // startWebDriver,
+    // ], function(err) {
+    //   if (err) {
+    //     return callback(err);
+    //   }
+    //   runProtractorTests();
+    // });
+    runProtractorTests();
+  });
 
+  function startTestPM(cb) {
+    // set up pm instance using official strongloop/strong-pm docker image
+    exec('docker run -P -d strongloop/strong-pm:latest', function(err, stdout, stderr) {
+      // need this container id so we can remove the container after we're done
+      pmContainerID = stdout.trim();
+      var dockerPortCmd = 'docker port ' + pmContainerID + ' 8701/tcp';
+      // establish strong pm instance host and port variables
+      exec(dockerPortCmd, function(err, stdout, stderr) {
+        var pmPort = stdout.trim().split(':')[1];
+        // use the IP of the docker API or localhost if using local docker
+        var pmHost = url.parse(process.env.DOCKER_HOST || 'tcp://127.0.0.1').host;
+        process.env.TEST_PM_PORT = pmPort;
+        process.env.TEST_PM_HOST = pmHost;
+        cb(err);
+      });
+    });
+  }
 
+  function startWebDriver(cb) {
+    exec('webdriver-manager update', function(err, stdout, stderr) {
+      var webdriverOpts = {cwd: __dirname, stdio: 'inherit'};
+      if (err) {
+        return cb(err);
+      }
+      webdriver = spawn('webdriver-manager', ['start'], webdriverOpts);
+      setTimeout(cb, 2000);
+      // cb(null);
+    });
+  }
 
+  function runProtractorTests() {
+    spawn('protractor', ['client/test/protractor.conf.js'], {stdio: 'inherit'})
+      .on('error', protractorResults)
+      .on('exit', function(code, signal) {
+        var status = signal || code;
+        var err = null;
+        if (status) {
+          err = Error('exit code ' + status);
+        }
+        protractorResults(err);
+      });
+  }
 
-
- });
+  function protractorResults(err, stdout, stderr) {
+    if (pmContainerID) {
+      exec('docker rm -vf ' + pmContainerID, function(err, stdout, stderr) {
+        if (err) {
+          console.error('error cleaning up PM container:', err, stdout, stderr);
+        }
+      });
+    }
+    if (webdriver) {
+      webdriver.kill();
+    }
+    if (testServer) {
+      testServer.kill();
+    }
+    if (err) {
+      console.error('protractor failed:', err);
+    }
+    callback(err);
+  }
+});
 
 gulp.task('test-client-integration', function(callback) {
   var child = spawn(

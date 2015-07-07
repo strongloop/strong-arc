@@ -63,7 +63,7 @@ ArcUser.directive('slUserLogoutNavItem', [
   'ArcNavigationService',
   function (ArcUserService, $location, ArcNavigationService) {
     return{
-      template: '<li ng-show="isUserAuth()"><a data-id="StudioLogoutLink" href="#" ng-click="logout()">logout</a></li>',
+      template: '<li ng-show="isUserAuth()"><a id="arc-user-logout-btn" data-id="StudioLogoutLink" href="#" ng-click="logout()">logout</a></li>',
       link: function(scope,element, attribs) {
         scope.logout = function () {
           ArcUserService.logCurrentUserOut(function() {
@@ -126,4 +126,3 @@ ArcUser.directive('lbGreetingNavItem', [
     };
   }
 ]);
-

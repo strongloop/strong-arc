@@ -13,13 +13,10 @@ describe('composer-navigation', function() {
       var headerView = new ArcViews.HeaderView();
 
       loginView.loginToLandingView();
-
       landingView.openComposerView();
-
       expect(composerHomeView.projectTitleContainer.getText()).toEqual('EMPTY');
 
       headerView.logout();
-
     }
   );
 

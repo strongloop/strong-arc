@@ -7,7 +7,9 @@
   },
   "scripts": {
     "prepublish": "bower install && gulp build",
+    "pretest": "webdriver-manager update",
     "test": "gulp mocha-and-karma",
+    "protractor": "gulp test-e2e",
     "start": "node server/server.js"
   },
   "dependencies": {
@@ -74,6 +76,7 @@
     "gulp-util": "^3.0.4",
     "gulp-watch": "^4.1.1",
     "jasmine-given": "^2.6.2",
+    "jasmine-reporters": "^2.0.7",
     "jshint-stylish": "^1.0.1",
     "karma": "^0.12.31",
     "karma-chai": "^0.1.0",
@@ -87,7 +90,7 @@
     "loopback-explorer": "^1.7.1",
     "mocha": "^2.2.1",
     "mysql": "^2.5.5",
-    "protractor": "^1.8.0",
+    "protractor": "^2.1.0",
     "run-sequence": "^1.0.2",
     "supertest": "^0.15.0",
     "svn-interface": "^0.4.4"
