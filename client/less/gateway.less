@@ -1,0 +1,70 @@
+table.ui-table {
+  td.service-status-col {
+    table.service-status-table {
+      width:30rem;
+      border: 0;
+      padding: 0;
+      margin: 0;
+      tbody tr:hover td {
+        border: 0;
+        box-shadow: none;
+      }
+      tr {
+        border: 0;
+        padding: 0;
+        margin: 0;
+
+        td.label-col {
+          vertical-align: middle;
+        }
+        td {
+          border: 0;
+          padding: 0;
+          margin: 0;
+        }
+      }
+
+    }
+
+  }
+}
+[data-id="PipelinePolicyDetailPopver"] {
+  min-height: 10rem;
+  min-width:50rem;
+  padding:1rem 2.5rem 2.5rem 2.5rem;
+}
+.pipeline-policy-sequence-list {
+
+  border:1px solid grey;
+
+  li {
+    border:1px solid red;
+    display:inline-block;
+    width:6rem;
+    margin:1rem;
+
+    .pipeline-policy-button {
+      height:6rem;
+      width:6rem;
+      text-align:left;
+      font-size:75%;
+      background-color:#eeeeee;
+      &:focus {
+        background-color:#a6b779;
+      }
+    }
+
+  }
+}
+.scope-endpoint-selector {
+  min-height:20rem;
+}
+.gateway-map-scope-selector {
+  min-width:26rem;
+}
+
+.policy-col {
+  .pipeline-add-policy-button {
+    float:right;
+  }
+}

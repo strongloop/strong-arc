@@ -1,0 +1,10 @@
+<div ng-controller="PolicyMainController">
+  <h3>Policies</h3>
+  <sl-policy-list ng-show="!gatewayCtx.currentInstanceId"></sl-policy-list>
+
+  <!--<button ng-click="showAddNewPolicyForm()" class="link-cmd" >-->
+    <!--<i class="sl-icon sl-icon-plus-sign"></i>Add New-->
+  <!--</button>-->
+  <sl-policy-form ng-show="gatewayCtx.currentInstanceId"></sl-policy-form>
+
+</div>

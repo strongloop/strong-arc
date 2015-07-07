@@ -1,0 +1,30 @@
+<div data-id="PolicyScopeListContainer">
+  <table class="ui-table">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th></th>
+      <th class="gateway-delete-col"></th>
+    </tr>
+    </thead>
+    <tbody ng-repeat="scope in policyScopeCtx.policyScopes">
+    <tr>
+      <td class="gateway-name-col">
+        <span ng-show="!scope.editMode">{{scope.name}}</span>
+        <input type="text" ng-model="scope.name" ng-show="scope.editMode" />
+      </td>
+      <td>
+        <button ng-show="!scope.editMode" class="link-cmd" ng-click="editPolicyScope(scope)">edit</button>
+        <button ng-show="scope.editMode" class="ui-btn secondary small" ng-click="cancelEditPolicyScope(scope)">cancel</button>
+        <button ng-show="scope.editMode" class="ui-btn primary small" ng-click="savePolicyScope(scope)">save</button>
+
+      </td>
+      <td class="gateway-delete-col">
+        <button class="link-cmd" ng-click="deletePolicyScope(scope)">
+          <i class="sl-icon sl-icon-close"></i>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

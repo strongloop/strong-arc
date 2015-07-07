@@ -1,0 +1,11 @@
+<div ng-controller="GatewayMapMainController">
+  <h3>Maps</h3>
+  <sl-gateway-map-list ng-show="!gatewayCtx.currentInstanceId"></sl-gateway-map-list>
+  <button ng-click="showAddNewGatewayMapForm()" class="link-cmd" >
+    <i class="sl-icon sl-icon-plus-sign"></i>Add New
+  </button>
+
+
+  <sl-gateway-map-form ng-show="gatewayCtx.currentInstanceId"></sl-gateway-map-form>
+
+</div>
