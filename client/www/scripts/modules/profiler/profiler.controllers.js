@@ -210,16 +210,11 @@ Profiler.controller('ProfilerMainController', [
     $scope.$watch('processes', function(newVal) {
       if (newVal && newVal.length > 0) {
         $scope.checkOptionsSupport(function(supported, reasons) {
-          //$scope.smartProfilingSupport = supported;
-
-          // temporarly disable smart profiling
-          $scope.smartProfilingSupport = false;
+          $scope.smartProfilingSupport = supported;
 
           if (!supported) {
             $scope.profilerSettings.mode = 'full';
-
-            // don't show the warning
-            //growl.addWarnMessage('Smart profiling is not available: ' + reasons[0]);
+            growl.addWarnMessage('Smart profiling is not available: ' + reasons[0]);
           }
         });
       }
