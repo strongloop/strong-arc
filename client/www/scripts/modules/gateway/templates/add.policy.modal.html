@@ -1,0 +1,34 @@
+<div class="manager-main-layout">
+  <form class="ui-form">
+    <div class="modal-header">
+      <h4>New Policy</h4>
+    </div>
+    <div class="modal-body">
+      <div data-id="PolicyFormContainer">
+        <form class="ui-form">
+          <div class="form-field">
+            <label>type</label>
+            <select ng-model="policyCtx.currentPolicy.type" ng-options="policyType as policyType.name for policyType in gatewayCtx.policyTypes">
+            </select>
+          </div>
+          <div class="form-field">
+            <label>name</label>
+            <input ng-model="policyCtx.currentPolicy.name" />
+          </div>
+          <sl-policy-proxy-form ng-show="isShowPolicyProxyForm"> </sl-policy-proxy-form>
+          <sl-policy-rate-limit-form ng-show="isShowPolicyRateLimitForm"></sl-policy-rate-limit-form>
+          <div>
+            <button class="ui-btn secondary small" ng-click="clearPolicyForm()">cancel</button>
+            <button class="ui-btn primary small" ng-click="saveCurrentPolicy()">Add Policy</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="ui-btn secondary small pull-left" ng-click="close()">
+        Cancel
+      </button>
+
+    </div>
+  </form>
+</div>

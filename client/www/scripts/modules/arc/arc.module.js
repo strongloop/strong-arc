@@ -30,6 +30,7 @@ var Arc = angular.module('Arc', [
   'angular-growl',
   'lbServices',
   'ArcServices',
+  'ArcGatewayServices',
   'BuildDeployAPI',
   'ArcUserAuthFactory',
   'Composer',
@@ -51,6 +52,7 @@ var Arc = angular.module('Arc', [
   'Metrics',
   'ApiAnalytics',
   'Manager',
+  'Gateway',
   'UI',
   'Datasource',
   'ui.bootstrap',
@@ -98,6 +100,26 @@ Arc.config([
         url: '/process-manager',
         templateUrl: './scripts/modules/manager/templates/manager.main.html',
         controller: 'ManagerMainController'
+      })
+      .state('gateway', {
+        url: '/gateway',
+        templateUrl: './scripts/modules/gateway/templates/gateway.main.html',
+        controller: 'GatewayMainController'
+      })
+      .state('gatewaymap', {
+        url: '/gateway/gatewaymap/:id',
+        templateUrl: './scripts/modules/gateway/templates/gateway.main.html',
+        controller: 'GatewayMainController'
+      })
+      .state('pipeline', {
+        url: '/gateway/pipeline/:id',
+        templateUrl: './scripts/modules/gateway/templates/gateway.main.html',
+        controller: 'GatewayMainController'
+      })
+      .state('policy', {
+        url: '/gateway/policy/:id',
+        templateUrl: './scripts/modules/gateway/templates/gateway.main.html',
+        controller: 'GatewayMainController'
       })
       .state('tracing', {
         url: '/tracing',

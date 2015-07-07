@@ -1,0 +1,29 @@
+<table class="ui-table">
+<caption>pipeline policies</caption>
+  <thead>
+
+  <tr>
+    <th>type</th>
+    <th>name</th>
+    <th>details</th>
+  </tr>
+  </thead>
+  <tbody ng-repeat="policy in gatewayMap.pipeline.policies">
+  <tr>
+    <td>
+      {{policy.type}}
+    </td>
+    <td>
+      {{policy.name}}
+    </td>
+    <td>
+      <button class="link-cmd"
+              popover-template="policyDetailModal.templateUrl"
+              popover-placement="{{policyDetailModal.position}}"
+              ng-click="setupHidePopover($event, policy)">details</button>
+    </td>
+  </tr>
+  </tbody>
+
+
+</table>

@@ -1,0 +1,69 @@
+<div class="manager-main-layout">
+  <form class="ui-form">
+    <div class="modal-header">
+      <h4>New Gateway Map</h4>
+    </div>
+    <div class="modal-body">
+      <div data-id="GatewayMapFormContainer">
+        <!--<div >-->
+        <!--<h3>pipeline map builder</h3>-->
+        <!--<div>Endpoint(s): </div>-->
+        <!--<div>Pipeline: </div>-->
+        <!--</div>-->
+        <form class="ui-form">
+          <table>
+            <tbody>
+            <tr>
+              <td>
+                <div>
+                  <label>Map Name</label>
+                  <input ng-model="gatewayMapCtx.currentGatewayMap.name" type="text" placeholder="name" />
+                </div>
+              </td>
+              <td>
+                <div class="form-field">
+                  <!--<label>Scope</label>-->
+                  <!--<select class="gateway-map-scope-selector" ng-model="gatewayMapCtx.currentMap.policyScope" ng-options="policyScope as policyScope.name for policyScope in gatewayMapCtx.currentPolicyScopes">-->
+                  <!--</select>-->
+                  <!--<button class="link-cmd">-->
+                  <!--<i class="sl-icon sl-icon-plus-sign"></i>-->
+                  <!--New Scope-->
+                  <!--</button>-->
+                  <!--<br />-->
+                  <!--<label>End Point(s) (use ctrl / shift to multi-select)</label>-->
+                  <!--<select multiple ng-model="gatewayMapCtx.currentMap.pipeline" ng-options="endpoint as endpoint.method + ':' + endpoint.pattern for endpoint in gatewayMapCtx.currentRawEndpoints">-->
+                  <!--</select>-->
+                  <!--<br />-->
+                  <label>Url Pattern</label>
+                  <input ng-model="gatewayMapCtx.currentGatewayMap.endpoint"
+                         type="text"
+                         placeholder="endpoint" />
+                </div>
+              </td>
+              <td>
+                <div class="form-field" ng-show="gatewayMapCtx.currentGatewayMap.endpoint">
+                  <label>Pipeline</label>
+                  <select ng-model="gatewayMapCtx.currentGatewayMap.pipeline" ng-options="pipeline as pipeline.name for pipeline in pipelineCtx.pipelines">
+                  </select>
+                  <!--<button class="link-cmd"><i class="sl-icon sl-icon-plus-sign"></i>New Pipeline</button>-->
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+          <div>
+            <button class="ui-btn secondary small" ng-click="clearGatewayMapForm()" ng-show="gatewayMapCtx.currentGatewayMap.endpoint">cancel</button>
+            <button class="ui-btn primary small" ng-click="saveCurrentGatewayMap()" ng-show="gatewayMapCtx.currentGatewayMap.endpoint">Add Map</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="ui-btn secondary small pull-left" ng-click="close()">
+        Cancel
+      </button>
+
+    </div>
+  </form>
+</div>

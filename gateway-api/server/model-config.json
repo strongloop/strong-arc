@@ -1,0 +1,36 @@
+{
+  "_meta": {
+    "sources": [
+      "../common/models",
+      "./models"
+    ]
+  },
+  "ExternalEndpoint": {
+    "dataSource": "db",
+    "public": true
+  },
+  "PolicyScope": {
+    "dataSource": "meshmongo",
+    "public": true
+  },
+  "Policy": {
+    "dataSource": "meshmongo",
+    "public": true
+  },
+  "InternalEndpoint": {
+    "dataSource": "meshmongo",
+    "public": true
+  },
+  "Phase": {
+    "dataSource": "meshmongo",
+    "public": true
+  },
+  "Pipeline": {
+    "dataSource": "meshmongo",
+    "public": true
+  },
+  "GatewayMap": {
+    "dataSource": "meshmongo",
+    "public": true
+  }
+}

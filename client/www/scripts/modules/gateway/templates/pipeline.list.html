@@ -1,0 +1,59 @@
+<div data-id="PipelineListContainer">
+
+  <table class="ui-table">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Policies</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody ng-repeat="pipeline in pipelineCtx.pipelines">
+      <tr>
+        <td>
+          <button class="link-cmd">{{pipeline.name}}</button>
+        </td>
+        <td class="policy-col">
+          <table class="ui-table">
+            <tbody ng-repeat="policy in pipeline.policies">
+              <tr>
+                <td>
+                  {{policy.type}}
+                </td>
+                <td>
+                  {{policy.name}}
+                </td>
+                <td>
+                  <button class="link-cmd"
+                          popover-template="policyDetailModal.templateUrl"
+                          popover-placement="{{policyDetailModal.position}}"
+                          ng-click="setupHidePopover($event, policy)">details</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <button class="pipeline-add-policy-button ui-btn accessory text-left" style="width:40rem"
+                  popover-template="contextModal.templateUrl"
+                  popover-placement="{{contextModal.position}}"
+                  ng-click="setupHidePopover($event, pipeline)">
+            <i class="sl-icon sl-icon-plus-sign"></i>
+            add policy
+          </button>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-xs-3">
+
+              </div>
+            </div>
+          </div>
+
+        </td>
+        <td class="gateway-delete-col">
+          <button class="link-cmd" ng-click="deletePipeline(pipeline)">
+            <i class="sl-icon sl-icon-close"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

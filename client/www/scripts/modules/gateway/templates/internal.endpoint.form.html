@@ -1,0 +1,20 @@
+<div data-id="InternalEndpointFormContainer">
+  <form class="ui-form">
+    <div class="form-field">
+      <label>Name</label>
+      <input ng-model="gatewayCtx.currentInternalEndpoint.name" />
+    </div>
+    <div class="form-field">
+      <label>Host</label>
+      <input ng-model="gatewayCtx.currentInternalEndpoint.host" />
+    </div>
+    <div class="form-field">
+      <label>Port</label>
+      <input ng-model="gatewayCtx.currentInternalEndpoint.port" />
+    </div>
+    <div>
+      <button class="ui-btn secondary small" ng-click="clearInternalEndpointForm()">cancel</button>
+      <button class="ui-btn primary small" ng-click="saveCurrentInternalEndpoint()">Add Internal Endpoint</button>
+    </div>
+  </form>
+</div>

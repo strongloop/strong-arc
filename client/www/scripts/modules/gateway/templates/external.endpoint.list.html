@@ -1,0 +1,50 @@
+<div data-id="ExternalEndpointListContainer">
+  <table class="ui-table">
+    <thead>
+    <tr>
+      <th>
+        Path
+        <div class="dropdown" dropdown auto-close="outsideClick">
+          <button class="link-cmd dropdown-toggle" dropdown-toggle>filter</button>
+          <ul class="dropdown-menu">
+            <li ng-repeat="model in externalEndpointCtx.externalModels">
+              <label><input type="checkbox" ng-model="model.isIncluded" ng-click="endpointModelFilter(model)">{{ model.resourcePath }}</label>
+            </li>
+          </ul>
+
+        </div>
+      </th>
+      <th>
+        Method
+        <div class="dropdown" dropdown auto-close="outsideClick">
+          <button class="link-cmd dropdown-toggle" dropdown-toggle>filter</button>
+          <ul class="dropdown-menu">
+            <li ng-repeat="method in endpointMethods">
+              <label><input ng-model="method.isIncluded" type="checkbox" ng-click="endpointMethodFilter(method)">{{ method.name }}</label>
+            </li>
+          </ul>
+        </div>
+      </th>
+      <th>Pattern</th>
+      <th>Nickname</th>
+    </tr>
+    </thead>
+    <tbody ng-repeat="externalEndpoint in externalEndpointCtx.externalEndpoints | filter:endpointFilter">
+    <tr>
+      <td>
+        <button title="{{externalEndpoint}}" class="link-cmd">{{externalEndpoint.path}}</button>
+      </td>
+      <td>
+        <span>{{externalEndpoint.method}}</span>
+      </td>
+      <td>
+        <span>{{externalEndpoint.pattern}}</span>
+      </td>
+      <td>
+        <span>{{externalEndpoint.nickname}}</span>
+      </td>
+    </tr>
+
+    </tbody>
+  </table>
+</div>
