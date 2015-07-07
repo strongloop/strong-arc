@@ -229,7 +229,7 @@ Licenses.service('LicensesService', [
       var name = product.description === feature.description ? product.description : product.description + ' ' + feature.description;
 
       $rootScope.$emit('message', {
-        body: name + ' licensing missing or invalid.  If you have questions about your licenses or licensing please contact sales',
+        body: name + ' licensing cannot be renewed.  If you have questions about your licenses or licensing please contact sales',
         email: 'sales@strongloop.com?subject=Licensing',
         emailText: 'Contact sales@strongloop.com'
       });
