@@ -1,37 +1,33 @@
-<form class="ui-form" name="form" ng-submit="loadProcesses(form)" novalidate>
-  <div class="ui-form-group inline">
-    <label>
-      <span class="ui-label-txt">Hostname</span>
-    </label>
-    <input type="text"
-           name="host"
-           class="ui-input"
-           placeholder="host1.example.com"
-           ng-focus="pmHostFocus()"
-           ng-blur="pmHostBlur($event)"
-           typeahead-focus-first="false"
-           typeahead-wait-ms="60"
-           ng-model="candidateServerConfig.host"
-           typeahead-on-select="onPMServerSelect($item)"
-           typeahead="server as server.host + ' : ' + server.port for server in pmServers"
-           sl-common-select-on-click
-           required>
-  </div>
-  <div class="ui-form-group inline">
-    <label>
-      <span class="ui-label-txt">Port</span>
-    </label>
-    <input type="text"
-           min="1"
-           name="port"
-           ng-show="showPortInput()"
-           placeholder="8701"
-           sl-common-select-on-click
-           class="ui-input"
-           ng-model="candidateServerConfig.port" required>
-    <div ng-show="!showPortInput()" class="pm-readonly-port">----</div>
-  </div>
-  <div class="ui-actions inline">
-    <button class="ui-btn primary small" ng-disabled="form.$invalid">Load</button>
-  </div>
-</form>
+<div>
+  <form class="ui-form" name="form" ng-submit="loadProcesses(form)" novalidate>
+    <div class="ui-form-group inline">
+      <!-- host selector -->
+        <label>
+          <span class="ui-label-txt">Hostname:</span>
+        </label>
+        <div class="btn-group pm-host-select dropdown" dropdown ng-show="managerHosts"  is-open="status.isopen">
+          <button type="button"
+                  class="btn btn-default dropdown-toggle" dropdown-toggle>
+            {{selectedPMHost.host}} : {{selectedPMHost.port}}<span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu" dropdown-menu>
+            <li ng-repeat="host in managerHosts">
+              <button class="link-cmd" ng-click="changePMHost(host)">{{host.host}}:{{host.port}}</button>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <button class="link-cmd" ng-click="goToAddPM()">add PM Host</button>
+            </li>
+          </ul>
+        </div>
+        <input
+          type="hidden"
+          ng-model="candidateServerConfig"
+          name="hostname"
+          required />
+    </div>
+    <div class="ui-actions inline">
+      <button class="ui-btn primary small" ng-disabled="form.$invalid">Load</button>
+    </div>
+  </form>
+</div>

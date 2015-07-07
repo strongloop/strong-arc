@@ -6,11 +6,12 @@ BuildDeploy.controller('BuildDeployController', [
   'PackageDefinition',
   function ($scope, BuildDeployService, $log, PackageDefinition) {
 
-    PackageDefinition.findOne().$promise
+    $scope.pkg = PackageDefinition.findOne().$promise
       .then(function(pkg){
         $scope.pkg = pkg;
       }).catch(function(err) {
         $log.warn('Cannot get project\'s package definition.', err);
+        $scope.pkg = {};
       });
 
     $scope.buildId = 'universal';
@@ -68,6 +69,14 @@ BuildDeploy.controller('BuildDeployController', [
     var defaultActiveToggler = $scope.buildTogglers[0];
     $scope.activeId = defaultActiveToggler.id;
     defaultActiveToggler.isActive = true;
+
+    $scope.populateDeployArchive = function(pkg) {
+      if (pkg) {
+        var localPath = '../' + $scope.pkg.name + '-' + $scope.pkg.version + '.tgz';
+        $scope.deploy.universal.archive = localPath;
+
+      }
+    };
 
     setUI();
   }
