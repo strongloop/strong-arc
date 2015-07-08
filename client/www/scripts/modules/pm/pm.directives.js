@@ -528,10 +528,18 @@ PM.directive('slPmPidSelector', [
         onUpdateHost: '&',
         onUpdateProcesses: '&',
         onUpdateSelection: '&',
+        showPidSelector: '=',
         multiple: '='
       },
       controller: function($scope) {
         $scope.processes = [];
+        $scope._showPidSelector = true;
+
+        $scope.$watch('showPidSelector', function(newVal) {
+          if (angular.isDefined(newVal)) {
+            $scope._showPidSelector = !!newVal;
+          }
+        });
 
         $scope.updateProcesses = function(processes, refresh) {
           $scope.processes = processes;
