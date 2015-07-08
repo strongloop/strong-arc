@@ -167,14 +167,23 @@ Discovery.controller('DiscoveryMainController', [
           $scope.isAllSchemaTablesSelected = ($scope.schemaSrcTables.length === $scope.tableSelections.length);
         }
 
-        //add class to checkbox if row is selected
-        var $input = rowItem.elm.find('.ui-checkbox [type=checkbox]');
-
-        if ( rowItem.selected ) {
-          $input.addClass('checked');
-        } else {
-          $input.removeClass('checked');
+        //coerce single row to an array
+        if (!_.isArray(rowItem) ) {
+          rowItem = [rowItem];
         }
+
+        //select the rows if need be
+        rowItem.map(function(row){
+          var $elm = row.elm || row.clone.elm;
+          //add class to checkbox if row is selected
+          var $input = $elm.find('.ui-checkbox [type=checkbox]');
+
+          if ( row.selected ) {
+            $input.addClass('checked');
+          } else {
+            $input.removeClass('checked');
+          }
+        });
       },
       rowHeight: 40,
       selectedItems:  $scope.tableSelections,
