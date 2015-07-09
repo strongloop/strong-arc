@@ -4,7 +4,7 @@
 *   Main Nav Container
 *
 * */
-window.GatewayMainNav = (GatewayMainNav = React).createClass({
+var GatewayMainNav = (GatewayMainNav = React).createClass({
 
 
   render: function() {
@@ -46,23 +46,26 @@ var GatewayNav = (GatewayNav = React).createClass({
   getInitialState: function() {
     return {isModelNavContainerOpen:true};
   },
-  deleteSelectedModel: function(key, opt) {
+  deleteSelectedInstance: function(key, opt) {
     var scope = this.props.scope;
     try{
       var targetAttributes = opt.sourceEvent.currentTarget.attributes;
       if (targetAttributes['data-id']) {
-        var definitionId = targetAttributes['data-id'].value;
-        var configId = targetAttributes['data-config-id'] && targetAttributes['data-config-id'].value;
-        var instanceId = {
-          definitionId: definitionId,
-          configId: configId
-        };
+        var instanceId = targetAttributes['data-id'].value;
+        var type = targetAttributes['data-type'].value;
+        //var instanceId = {
+        //  definitionId: definitionId,
+        //  configId: configId
+        //};
 
-        scope.$apply(function(){
-          scope.deleteInstanceRequest(instanceId, CONST.MODEL_TYPE);
-        });
+        if (type && instanceId) {
+          scope.$apply(function(){
+            scope.deleteInstanceRequest(instanceId, type);
+          });
+
+        }
       } else {
-        console.warn('Missing some of the required model attributes.');
+        console.warn('Missing some of the required attributes.');
       }
     }
     catch(error) {
@@ -94,11 +97,35 @@ var GatewayNav = (GatewayNav = React).createClass({
     }
 
   },
-  componentDidMount: function() {
-    var component = this;
+  componentDidMount:function(){
     var menuItems = {};
-    menuItems.deleteSelectedModel = {name: "delete", callback: component.deleteSelectedModel};
+    var component = this;
+    var isDiscoverable = false;
 
+    menuItems.cloneSelectedInstance = {name: "clone", callback: component.cloneSelectedInstance};
+    menuItems.deleteSelectedInstance = {name: "delete", callback: component.deleteSelectedInstance};
+
+    $.contextMenu({
+      // define which elements trigger this menu
+      selector: '.btn-nav-context',
+      trigger: 'left',
+      // define the elements of the menu
+      items: menuItems,
+      events: {
+        show: function(opt) {
+          if (opt.sourceEvent.target.attributes['data-is-discoverable']) {
+            var isDiscoverable = JSON.parse(opt.sourceEvent.target.attributes['data-is-discoverable'].value);
+            // note the order of menu items to target not showing discover item on
+            // ds types that don't support it.
+            // show by default (in case it was turned off by another item as it is shared
+            $('.context-menu-list li:first-child').show();
+            if (!isDiscoverable) {
+              $('.context-menu-list li:first-child').hide();
+            }
+          }
+        }
+      }
+    });
   },
   gatewayMainNav: function(key, opt) {
     var scope = this.props.scope;
@@ -154,6 +181,11 @@ var GatewayNav = (GatewayNav = React).createClass({
     rowItems = [];
     if (collection.map) {
       var rowItems = collection.map(function(item) {
+
+        if (scope.gatewayCtx.currentInstanceId === item.id) {
+          item.isActive = true;
+        }
+
         var classNameVar = 'tree-item-row ';
         if (item.isActive) {
           classNameVar += ' is-active';
@@ -182,13 +214,20 @@ var GatewayNav = (GatewayNav = React).createClass({
             {dsConnectEl}
             </div>
             <div data-ui-type="cell" className="ia-nav-item-contextmenu-icon-container-col">
-              <button className="btn-command btn-nav-context" data-id={item.id} data-config-id={item.configId}>
-                <span data-name={item.name} data-id={item.id} data-config-id={item.configId} className="sl-icon sl-icon-box-arrow-down"></span>
+              <button className="btn-command btn-nav-context" data-id={item.id} data-type={type}>
+                <span data-name={item.name} data-id={item.id} data-type={type} className="sl-icon sl-icon-box-arrow-down"></span>
               </button>
             </div>
           </div>
         );
       });
+    }
+
+    var rowClass = 'btn btn-default btn-block nav-tree-item tree-branch';
+    if (!scope.gatewayCtx.currentInstanceId) {
+      if (type === scope.gatewayCtx.currentView) {
+        rowClass = rowClass + ' is-active';
+      }
     }
 
     function navTitle() {
@@ -209,7 +248,7 @@ var GatewayNav = (GatewayNav = React).createClass({
     }
     return (
       <div>
-        <button onClick={component.gatewayMainNav} data-type={type} data-name="model_root" className="btn btn-default btn-block nav-tree-item tree-branch"  title="Models" >
+        <button onClick={component.gatewayMainNav} data-type={type} data-name="model_root" className={rowClass}  title={navTitle()} >
           <span className={navItemOpenCloseIconClasses}></span>
           <span className="nav-branch-folder-icon sl-icon sl-icon-folder"></span>
           <span className="nav-branch-title">{navTitle()}</span>
