@@ -1,7 +1,10 @@
 var MainTreeNavView = (function () {
   function MainTreeNavView() {
+    var EC = protractor.ExpectedConditions;
     this.modelNavRows = element.all(
       by.css('.model-branch-container .tree-item-row'));
+    this.modelNavButtons = element.all(
+      by.css('.model-branch-container .tree-item-row button'));
     this.modelCtxBtns = element.all(
       by.css('.model-branch-container button.btn-nav-context'));
     this.dataSourceCtxBtns = element.all(
@@ -14,16 +17,17 @@ var MainTreeNavView = (function () {
     this.contextMenuTrigger = element(by.css('button.btn-nav-context'));
     this.addDataSourceButton = element(
       by.css('button[data-type="datasource"].nav-tree-item-addnew'));
+    this.currentMessage = element(
+      by.repeater('message in messages'));
 
     this.openNewModelView = function() {
+      browser.driver.wait(EC.presenceOf(this.addModelButton), 10000);
       this.addModelButton.click();
     };
     this.openFirstModel = function() {
       var self = this;
-      browser.driver.wait(function() {
-        return self.addDataSourceButton.isPresent();
-      }, 10000);
-      element(by.css('.model-branch-container .tree-item-row button')).click();
+      browser.driver.wait(EC.presenceOf(this.addModelButton), 10000);
+      this.modelNavButtons.first().click();
     };
     this.openFirstDataSource = function() {
       var self = this;
@@ -34,6 +38,16 @@ var MainTreeNavView = (function () {
       }, 10000);
       self.dataSourceNavItems.first().click();
     };
+    this.openDataSourceDiscoveryByIndex = function (index) {
+      var self = this;
+      browser.driver.wait(function() {
+        return self.addDataSourceButton.isPresent();
+      }, 10000);
+      var dataSourceNavCtx = self.dataSourceCtxBtns.get(index);
+      browser.driver.actions().click(dataSourceNavCtx).perform();
+      var discoverButton = self.ctxMenuTriggers.get(1);
+      browser.driver.actions().click(discoverButton).perform();
+    }
     this.openNewDataSourceView = function() {
       var self = this;
       browser.driver.wait(function() {
@@ -66,6 +80,12 @@ var MainTreeNavView = (function () {
       var alertDialog = browser.switchTo().alert();
       alertDialog.accept();
     };
+    this.waitForMessages = function () {
+      var self = this;
+
+      browser.driver.wait(EC.visibilityOf(self.currentMessage),5000);
+      browser.driver.wait(EC.invisibilityOf(self.currentMessage),5000);
+    }
   }
   return MainTreeNavView;
 })();

@@ -4,10 +4,17 @@ var ModelEditorView = (function () {
     this.modelNameInput  = element(by.id('ModelName'));
     this.saveModelButton = element(
       by.css('.model-save-button-col .instance-save-button'));
+    this.migrateModelButton = element(
+      by.css('.model-migrate-button-col .model-migrate-button'));
+    this.migrateLoadingIndicator = element(
+      by.css('strong[classname="model-migrate-loading"]'));
     this.addNewPropertyButton = element(
       by.css('.btn-new-model-property'));
     this.propertyNameInputCollection = element.all(
-      by.css('.model-instance-property-list input[ng-model="property.name"]'));
+      by.css('.model-instance-property-list' +
+             ' input[ng-model="property.name"]'));
+    this.newModelTab = element(
+      by.css('button[data-id="sl.temp.new-model"]'))
     this.propertyCommentInputCollection = element.all(
       by.css('.model-instance-property-list' +
              ' input[ng-model="property.comments"]'));
@@ -15,6 +22,8 @@ var ModelEditorView = (function () {
       by.css('[data-id="CommonInstanceContainer"]'));
     this.addModelButton = element(
       by.css('button[data-type="datasource"].nav-tree-item-addnew'));
+    this.dataSourceSelect = element(
+      by.css('select[name="dataSource"]'));
 
     var scrollIntoView = 'arguments[0].scrollIntoView();';
 
@@ -24,25 +33,15 @@ var ModelEditorView = (function () {
       browser.executeScript(scrollIntoView, btn);
       self.parentContainer.click();
       self.addNewPropertyButton.click();
-      browser.driver.wait(function() {
-        return self.propertyNameInputCollection.count(function(c) {
-          return c > 0;
-        });
-      }, 10000);
+      browser.sleep(500);
       var input = self.propertyNameInputCollection.first();
       input.clear();
       input.sendKeys(propertyName);
       self.saveModelButton.click();
     };
     this.addCommentToProperty = function(index, comment) {
-      var self = this;
-      browser.driver.wait(function() {
-        return self.propertyCommentInputCollection.count().then(function(c) {
-          return c > 0;
-        });
-      }, 10000);
-      var target = self.propertyCommentInputCollection.get(index);
-      browser.executeScript(scrollIntoView, target);
+      browser.sleep(1000);
+      var target = this.propertyCommentInputCollection.get(index);
       target.click();
       target.clear();
       target.sendKeys(comment);
@@ -56,21 +55,42 @@ var ModelEditorView = (function () {
     this.getCurrentModelName = function() {
       return this.modelNameInput.getAttribute('value');
     };
+    this.getCurrentDataSourceIndex = function() {
+      return this.dataSourceSelect.getAttribute('value');
+    };
     this.createNewModel = function(modelName) {
       // TODO: these sleeps shouldn't be necessary..
-      browser.sleep(500);
-      browser.executeScript('window.scroll(0, 0);');
-      browser.sleep(500);
-      browser.wait(EC.visibilityOf(this.modelNameInput), 10000);
-      this.modelNameInput.click();
+      //browser.sleep(500);
+      //browser.executeScript('window.scroll(0, 0);');
+      //this.modelNameInput.click();
       this.modelNameInput.clear();
       this.modelNameInput.sendKeys(modelName);
       browser.sleep(500);
       this.parentContainer.click();
       browser.sleep(500);
       this.saveModelButton.click();
-      browser.sleep(500);
     };
+    this.selectDatasource = function(name) {
+      var el = this.dataSourceSelect;
+
+      //browser.driver.wait(EC.elementToBeClickable(el), 10000);
+      browser.sleep(250).then(function () {el.element(by.cssContainingText('option', name)).click();})
+      //el.element(by.cssContainingText('option', name)).click();
+    };
+    this.migrateCurrentModel = function() {
+      var self = this;
+      var indicator = this.migrateLoadingIndicator;
+
+      browser.driver.wait(EC.elementToBeClickable(self.migrateModelButton), 10000);
+      this.migrateModelButton.click();
+
+      browser.driver.wait(protractor.until.elementIsVisible(indicator), 10000);
+      browser.driver.wait(protractor.until.elementIsNotVisible(indicator), 10000);
+    }
+    this.saveModel = function() {
+      this.saveModelButton.click();
+    }
+
   }
   return ModelEditorView;
 })();
