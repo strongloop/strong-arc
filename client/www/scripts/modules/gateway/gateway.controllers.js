@@ -40,6 +40,47 @@ Gateway.controller('GatewayMainController', [
         }
       });
     };
+    $scope.deleteInstanceRequest = function(id, type) {
+      if (id && type) {
+        switch (type) {
+          case 'policy':
+            if (confirm('delete policy?')) {
+              GatewayServices.deletePolicy(id)
+                .then(function(response) {
+                  $scope.refreshDataSets();
+                });
+
+            }
+
+            break;
+
+          case 'gatewaymap':
+            if (confirm('delete gateway map?')) {
+              GatewayServices.deleteGatewayMap(id)
+                .then(function(response) {
+                  $scope.refreshDataSets();
+                });
+
+            }
+            break;
+
+          case 'pipleline':
+            if (confirm('delete pipeline?')) {
+              GatewayServices.deletePipeline(id)
+              .then(function(response) {
+                  $scope.refreshDataSets();
+                });
+
+            }
+
+            break;
+
+          default:
+
+        }
+
+      }
+    };
     $scope.showAddNewGatewayMapForm = function() {
       var modalDlg = $modal.open({
         templateUrl: './scripts/modules/gateway/templates/add.map.modal.html',
@@ -92,6 +133,7 @@ Gateway.controller('GatewayMainController', [
       $scope.policyCtx.policies = GatewayServices.getPolicies()
         .then(function(policies) {
           $scope.policyCtx.policies = policies;
+          window.triggerResizeUpdate();
         });
       $scope.policyScopeCtx.policyScopes = GatewayServices.getPolicyScopes()
         .then(function(scopes) {
@@ -592,6 +634,7 @@ Gateway.controller('PhaseMainController', [
           });
       }
     };
+
     $scope.showModal = function() {
       var modalDlg = $modal.open({
         templateUrl: './scripts/modules/loadbalancer/templates/add.loadbalancer.modal.html',
