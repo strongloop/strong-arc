@@ -164,13 +164,7 @@ Gateway.directive('slPolicyList', [
   function() {
     return {
       restrict: 'E',
-      templateUrl: './scripts/modules/gateway/templates/policy.list.html',
-      controller: [
-        '$scope',
-        function($scope) {
-
-        }
-      ]
+      templateUrl: './scripts/modules/gateway/templates/policy.list.html'
     }
   }
 ]);
@@ -186,6 +180,41 @@ Gateway.directive('slPolicyMainView', [
     }
   }
 ]);
+Gateway.directive('tagInput', [ '$log', function($log) {
+  return {
+    restrict: 'A',
+    link: function(scope, el, attrs) {
+      scope.inputWidth = 20;
+
+      // watch for changes in text field
+      scope.$watch(attrs.ngModel, function(value) {
+        if (value != undefined) {
+          var tempEl = $('<span>' + value + '</span>').appendTo('body');
+          scope.inputWidth = tempEl.width() + 5;
+          tempEl.remove();
+
+        }
+      });
+
+      el.bind('keydown', function(e) {
+        if (e.which === 9) {
+          e.preventDefault();
+        }
+        if (e.which === 8) {
+          scope.$apply(attrs.deleteTag);
+        }
+      });
+      el.bind('keyup', function(e) {
+        var key = e.which;
+
+        if ((key === 9) || (key == 13)) {
+          e.preventDefault();
+          scope.$apply(attrs.newTag);
+        }
+      });
+    }
+  }
+}]);
 /*
 *
 *   POLICY SCOPE

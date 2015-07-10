@@ -33,6 +33,7 @@ var setScrollView = function(selector) {
   }
 };
 window.onresize = function(event) {
+  console.log('resize ||');
   this.triggerResizeUpdate(event);
 };
 // localStorage support test

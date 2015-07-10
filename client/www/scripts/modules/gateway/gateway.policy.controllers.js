@@ -7,8 +7,35 @@ Gateway.controller('PolicyMainController', [
   '$scope',
   '$log',
   'GatewayServices',
-  function($scope, $log, GatewayServices) {
+  '$timeout',
+  '$state',
+  function($scope, $log, GatewayServices, $timeout, $state) {
     $log.debug('Policy Controller');
+
+    $scope.policyCtx.currentPolicy = {};
+
+    $scope.inputTags = [];
+
+    $scope.inputTags.push({name: 'test tag'});
+
+    $scope.addTag = function() {
+      if ($scope.tagText.length === 0) {
+        return;
+      }
+      $scope.inputTags.push({name: $scope.tagText});
+      $scope.tagText = '';
+    };
+    $scope.deleteTag = function(key) {
+      if (($scope.inputTags.length > 0) &&
+        ($scope.tagText.length === 0) &&
+        (key === undefined)) {
+          $scope.inputTags.pop();
+
+      }
+      else if (key !== undefined) {
+        $scope.inputTags.splice(key, 1);
+      }
+    };
 
     $scope.isShowAddPolicyRow = false;
     $scope.showAddPolicyRow = function() {
@@ -28,6 +55,7 @@ Gateway.controller('PolicyMainController', [
         .then(function(policies) {
           $scope.policyCtx.policies = policies;
         });
+
     };
     function resetCurrentPolicy() {
       $scope.policyCtx.currentPolicy = {};
@@ -48,6 +76,7 @@ Gateway.controller('PolicyMainController', [
           });
       }
     };
+
 
 
     function inflateProperties(policy) {
@@ -78,40 +107,90 @@ Gateway.controller('PolicyMainController', [
       $scope.policyCtx.currentPolicy = {};
       policy.editMode = false;
     };
-    $scope.isPolicyType = function(type, policy) {
 
-      if (policy){
-        if (policy.type && (policy.type === type)) {
-          return true;
+
+    $scope.saveNewPolicy = function() {
+      $scope.close();
+      if ($scope.policyCtx.currentPolicy.name && $scope.policyCtx.currentPolicy.type) {
+        $log.debug('save this new policy: '  + $scope.policyCtx.currentPolicy.name);
+
+        // validate by type
+        switch($scope.policyCtx.currentPolicy.type.id) {
+
+          case 'auth':
+
+            // do nothing (future check for provider)
+
+            break;
+
+          case 'proxy':
+            // make sure there is an endpoint
+
+            break;
+
+          case 'ratelimit':
+
+            // make sure there is a limit and an interval
+            break;
+
+          default:
+
         }
-        return false;
-      }
 
-      return false;
+        GatewayServices.savePolicy($scope.policyCtx.currentPolicy)
+          .$promise
+          .then(function(policy) {
+           // $timeout(function() {
+              $state.go('policy');
+
+            //},25);
+          });
+
+      }
     };
-
     $scope.$watch('policyCtx.currentPolicy.type', function(newVal, oldVal) {
-      $log.debug('it changed');
-      switch (newVal) {
-        case 'ratelimit' :
+      if (newVal) {
+        $log.debug('it changed: ' + newVal);
 
-          $scope.isShow
+        switch (newVal) {
+          case 'ratelimit' :
 
-          break;
+              $scope.policyCtx.isShowAuthPolicyForm = false;
+              $scope.policyCtx.isShowRateLimitPolicyForm = true;
+              $scope.policyCtx.isShowProxyPolicyForm = false;
 
-        case 'auth' :
+            break;
 
-          break;
+          case 'auth' :
 
-        case 'proxy' :
-
-          break;
-
-        default :
+              $scope.policyCtx.isShowAuthPolicyForm = true;
+              $scope.policyCtx.isShowRateLimitPolicyForm = false;
+              $scope.policyCtx.isShowProxyPolicyForm = false;
 
 
+            break;
+
+          case 'proxy' :
+
+
+            $scope.policyCtx.isShowAuthPolicyForm = false;
+            $scope.policyCtx.isShowRateLimitPolicyForm = false;
+            $scope.policyCtx.isShowProxyPolicyForm = true;
+
+
+            break;
+
+          default :
+            $scope.policyCtx.isShowAuthPolicyForm = false;
+            $scope.policyCtx.isShowRateLimitPolicyForm = false;
+            $scope.policyCtx.isShowProxyPolicyForm = false;
+
+
+
+        }
       }
-    });
+
+    }, true);
     $scope.isCurrentPolicyType = function(type) {
 
       if ($scope.policyCtx.currentPolicy.type && ($scope.policyCtx.currentPolicy.type.id === type)) {
@@ -176,9 +255,6 @@ Gateway.controller('PolicyMainController', [
     $scope.addPolicyScope = function(item) {
 
       if (item && item.name) {
-
-
-
 
         // check to see if item is already there
 
