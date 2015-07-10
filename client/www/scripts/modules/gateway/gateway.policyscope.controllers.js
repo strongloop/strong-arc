@@ -12,14 +12,14 @@ Gateway.controller('PolicyScopeMainController', [
 
     $scope.init = function() {
 
-      GatewayServices.getRawEndpointList()
-        .then(function(endpoints) {
-          $scope.policyScopeCtx.currentRawEndpoints = endpoints;
-        });
-      GatewayServices.getPolicyScopes()
-        .then(function(scopes) {
-          $scope.policyScopeCtx.currentPolicyScopes = scopes;
-        });
+      //GatewayServices.getRawEndpointList()
+      //  .then(function(endpoints) {
+      //    $scope.policyScopeCtx.currentRawEndpoints = endpoints;
+      //  });
+      //GatewayServices.getPolicyScopes()
+      //  .then(function(scopes) {
+      //    $scope.policyScopeCtx.currentPolicyScopes = scopes;
+      //  });
     }();
     function resetCurrentPolicyScope() {
       $scope.policyScopeCtx.currentPolicyScope = {};

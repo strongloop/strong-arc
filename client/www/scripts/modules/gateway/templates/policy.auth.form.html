@@ -1,19 +1,23 @@
 <div>
-  <select  ng-model="policyCtx.currentPolicy.provider">
-    <option value="oath">OAuth </option>
-    <option value="acl-media">ACL Media</option>
-    <option value="secure-line">SecureLine</option>
-    <option value="facebook">facebook</option>
-  </select>
   <label>
-    scope
+    scope(s)
   </label>
+  <div class="tag-input-ctn">
+    <div ng-repeat="(key, tag) in inputTags" class="input-tag">
+
+      {{tag.name}}
+      <div class="delete-tag" ng-click="deleteTag(key)">&times;</div>
+    </div>
+    <input type="text" data-tag-input=""
+           new-tag="addTag()"
+           delete-tag="deleteTag()"
+           ng-model="tagText" ng-style="{width: inputWidth}"   />
+  </div>
   <input type="text"
          typeahead-on-select="addPolicyScope($item)"
          ng-blur="addPolicyScope(policyCtx.currentPolicy.currentPolicyScope)"
          typeahead="scope.name as scope.name for scope in policyScopeCtx.policyScopes | filter:$viewValue | limitTo:8"
          ng-model="policyCtx.currentPolicy.currentPolicyScope.name">
-
   <ul>
     <li ng-repeat="scope in policyCtx.currentPolicy.policyScopes">{{scope.name}} <button class="link-cmd" ng-click="removePolicyScope(policyCtx.currentPolicy, scope)">(x)</button></li>
   </ul>
