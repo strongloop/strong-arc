@@ -122,24 +122,24 @@ Gateway.service('GatewayServices', [
     //  var swaggerUrl = 'http://localhost:4000/explorer/resources';
       var swaggerUrl = 'http://pool2015.herokuapp.com/explorer/resources';
 
-      return $http.get(swaggerUrl)
-        .then(function(resources) {
-          return $q.all(
-            resources.data.apis.map(function fetchSingleApi(api) {
-              return $http.get(swaggerUrl + api.path)
-                .then(function(response) {
-                  return response.data;
-                })
-                .catch(function(error) {
-                  $log.warn('bad get swagger resource item: ' + JSON.stringify(error))
-                });
-            })
-
-          );
-        }).
-        catch(function(error) {
-          $log.warn('bad get swagger resources: ' + JSON.stringify((error)));
-        });
+      //return $http.get(swaggerUrl)
+      //  .then(function(resources) {
+      //    return $q.all(
+      //      resources.data.apis.map(function fetchSingleApi(api) {
+      //        return $http.get(swaggerUrl + api.path)
+      //          .then(function(response) {
+      //            return response.data;
+      //          })
+      //          .catch(function(error) {
+      //            $log.warn('bad get swagger resource item: ' + JSON.stringify(error))
+      //          });
+      //      })
+      //
+      //    );
+      //  }).
+      //  catch(function(error) {
+      //    $log.warn('bad get swagger resources: ' + JSON.stringify((error)));
+      //  });
     };
     svc.getRawEndpointList = function() {
       return svc.getGatewayEndpoints()
