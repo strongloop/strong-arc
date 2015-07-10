@@ -3,7 +3,7 @@ ApiAnalytics.directive('slApiAnalyticsChart', [
   '$interpolate',
   function ($log, $interpolate) {
     function custom(scope, elem){
-      var margin = {top: 30, right: 120, bottom: 0, left: 200},
+      var margin = {top: 70, right: 120, bottom: 0, left: 270},
         width = 960 - margin.left - margin.right,
         height = 550 - margin.top - margin.bottom;
 
@@ -29,7 +29,7 @@ ApiAnalytics.directive('slApiAnalyticsChart', [
 
       var svgParent = d3.select(elem.find('.svg-chart')[0]).append("svg")
         .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom);
+        .attr("height", height + margin.top + margin.bottom + 40);
 
       var svg = svgParent
         .append("g")
@@ -59,6 +59,46 @@ ApiAnalytics.directive('slApiAnalyticsChart', [
         }
       }
 
+      function drawAxisLabels(){
+        var xLabel;
+        var yLabel;
+
+        switch(scope.chartDepth){
+          case 0:
+            xLabel = 'Number of requests';
+            yLabel = 'End point path';
+            break;
+          case 1:
+            xLabel = 'Number of requests';
+            yLabel = 'Hour of day';
+            break;
+          case 2:
+            xLabel = 'Number of requests';
+            yLabel = 'End point path';
+            break;
+        }
+
+        svg.select('.x.label').remove();
+        svg.select('.y.label').remove();
+
+        //x-axis label
+        svg.append("text")
+          .attr("class", "x label")
+          .attr("text-anchor", "middle")
+          .attr("x", width/2)
+          .attr("y", -40)
+          .text(xLabel);
+
+        //y-axis label
+        svg.append("text")
+          .attr("class", "y label")
+          .attr("text-anchor", "end")
+          .attr("y", 6)
+          .attr("dy", -90)
+          .attr("transform", "rotate(-90)")
+          .text(yLabel);
+      }
+
       function processData(d, i) {
         if ( !d.children ) return;
         var end = duration + d.children.length * delay;
@@ -71,6 +111,9 @@ ApiAnalytics.directive('slApiAnalyticsChart', [
             return aTime - bTime;
           })
         }
+
+
+        drawAxisLabels();
 
         // Mark any currently-displayed bars as exiting.
         var exit = svg.selectAll(".enter")
@@ -264,7 +307,11 @@ ApiAnalytics.directive('slApiAnalyticsChart', [
 
         //.on("click", down);
 
-        svgParent.attr('height', barHeight*d.children.length + margin.top - margin.bottom);
+        var calculatedHeight = barHeight*d.children.length;
+        var minHeight = 100;
+        var chartHeight = calculatedHeight < minHeight ? minHeight : calculatedHeight;
+
+        svgParent.attr('height', chartHeight + margin.top - margin.bottom);
 
         bar.append("text")
           .attr("x", -6)
