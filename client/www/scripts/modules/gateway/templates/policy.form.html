@@ -10,11 +10,12 @@
               ng-options="policyType.id as policyType.name for policyType in gatewayCtx.policyTypes">
       </select>
     </div>
-    <sl-policy-proxy-form ng-show="isShowPolicyProxyForm"> </sl-policy-proxy-form>
-    <sl-policy-rate-limit-form ng-show="isShowPolicyRateLimitForm"></sl-policy-rate-limit-form>
+    <sl-policy-auth-form ng-show="policyCtx.isShowAuthPolicyForm"></sl-policy-auth-form>
+    <sl-policy-rate-limit-form  ng-show="policyCtx.isShowRateLimitPolicyForm"></sl-policy-rate-limit-form>
+    <sl-policy-proxy-form ng-show="policyCtx.isShowProxyPolicyForm"> </sl-policy-proxy-form>
     <div>
-      <button class="ui-btn secondary small" ng-click="clearPolicyForm()">cancel</button>
-      <button class="ui-btn primary small" ng-click="saveCurrentPolicy()">Add Policy</button>
+      <button class="ui-btn secondary small" ng-click="clearPolicyForm()">Cancel</button>
+      <button class="ui-btn primary small pull-right" ng-click="saveCurrentPolicy()">Save</button>
     </div>
   </form>
 </div>
