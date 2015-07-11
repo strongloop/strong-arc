@@ -1,0 +1,12 @@
+<div class="tag-input-ctn policy-scope-input-container">
+  <div ng-repeat="(key, tag) in inputTags" class="input-tag">
+    {{tag.name}}
+    <div class="delete-tag" ng-click="deleteTag(key)">&times;</div>
+  </div>
+  <input class="policy-scope-input"
+         typeahead="scope.name as scope.name for scope in policyScopeCtx.policyScopes | filter:$viewValue | limitTo:8"
+         type="text" data-tag-input=""
+         new-tag="addTag()"
+         delete-tag="deleteTag()"
+         ng-model="tagText" ng-style="{width: inputWidth}"   />
+</div>

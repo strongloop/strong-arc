@@ -12,30 +12,6 @@ Gateway.controller('PolicyMainController', [
   function($scope, $log, GatewayServices, $timeout, $state) {
     $log.debug('Policy Controller');
 
-    $scope.policyCtx.currentPolicy = {};
-
-    $scope.inputTags = [];
-
-    $scope.inputTags.push({name: 'test tag'});
-
-    $scope.addTag = function() {
-      if ($scope.tagText.length === 0) {
-        return;
-      }
-      $scope.inputTags.push({name: $scope.tagText});
-      $scope.tagText = '';
-    };
-    $scope.deleteTag = function(key) {
-      if (($scope.inputTags.length > 0) &&
-        ($scope.tagText.length === 0) &&
-        (key === undefined)) {
-          $scope.inputTags.pop();
-
-      }
-      else if (key !== undefined) {
-        $scope.inputTags.splice(key, 1);
-      }
-    };
 
     $scope.isShowAddPolicyRow = false;
     $scope.showAddPolicyRow = function() {
