@@ -28,6 +28,7 @@ Gateway.controller('GatewayMainController', [
         templateUrl: './scripts/modules/gateway/templates/add.pipeline.modal.html',
         size: 'lg',
         controller: function($scope, $modalInstance, title) {
+          $scope.pipelineCtx.currentPipeline = {};
           $scope.title = title;
           $scope.close = function() {
             $modalInstance.dismiss();
@@ -86,6 +87,7 @@ Gateway.controller('GatewayMainController', [
         templateUrl: './scripts/modules/gateway/templates/add.map.modal.html',
         size: 'lg',
         controller: function($scope, $modalInstance, title) {
+          $scope.gatewayMapCtx.currentGatewayMap = {};
           $scope.title = title;
           $scope.close = function() {
             $modalInstance.dismiss();
@@ -104,6 +106,7 @@ Gateway.controller('GatewayMainController', [
         size: 'md',
         scope: $scope,
         controller: function($scope, $modalInstance, title, $log) {
+          $scope.policyCtx.currentPolicy = {};
           $scope.title = title;
           $scope.close = function() {
             $modalInstance.dismiss();
@@ -137,6 +140,28 @@ Gateway.controller('GatewayMainController', [
         .then(function(policies) {
           $log.debug('|  refresh policies: ' + policies.length);
           $scope.policyCtx.policies = policies;
+
+          if ($scope.policyCtx.policies.map) {
+
+            $scope.policyCtx.policies.map(function(policy) {
+              if ((policy.type === 'auth') && (policy.policyScopes)){
+                if (!policy.data) {
+                  policy.data = [];
+                }
+
+                if (policy.policyScopes.map) {
+                  var index = 1;
+                  policy.policyScopes.map(function(scope) {
+                    policy.data.push({name: 'scope-' + index, value: scope.name});
+                    index++;
+
+                  });
+
+                }
+              }
+
+            })
+          }
           window.triggerResizeUpdate();
         });
       $scope.policyScopeCtx.policyScopes = GatewayServices.getPolicyScopes()

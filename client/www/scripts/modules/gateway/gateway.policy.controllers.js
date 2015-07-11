@@ -9,7 +9,8 @@ Gateway.controller('PolicyMainController', [
   'GatewayServices',
   '$timeout',
   '$state',
-  function($scope, $log, GatewayServices, $timeout, $state) {
+  'growl',
+  function($scope, $log, GatewayServices, $timeout, $state, growl) {
     $log.debug('Policy Controller');
 
 
@@ -85,6 +86,44 @@ Gateway.controller('PolicyMainController', [
     };
 
 
+    $scope.saveCurrentPolicy = function() {
+      if ($scope.policyCtx.currentPolicy.name && $scope.policyCtx.currentPolicy.type) {
+        $log.debug('update this policy: '  + $scope.policyCtx.currentPolicy.name);
+
+        // validate by type
+        switch($scope.policyCtx.currentPolicy.type.id) {
+
+          case 'auth':
+
+            // do nothing (future check for provider)
+
+            break;
+
+          case 'proxy':
+            // make sure there is an endpoint
+
+            break;
+
+          case 'ratelimit':
+
+            // make sure there is a limit and an interval
+            break;
+
+          default:
+
+        }
+
+        GatewayServices.savePolicy($scope.policyCtx.currentPolicy)
+          .$promise
+          .then(function(policy) {
+            // $timeout(function() {
+            growl.addSuccessMessage('Policy Saved');
+            resetCurrentPolicy();
+            //},25);
+          });
+
+      }
+    };
     $scope.saveNewPolicy = function() {
       $scope.close();
       if ($scope.policyCtx.currentPolicy.name && $scope.policyCtx.currentPolicy.type) {
@@ -118,7 +157,7 @@ Gateway.controller('PolicyMainController', [
           .then(function(policy) {
            // $timeout(function() {
               $state.go('policy');
-
+            resetCurrentPolicy();
             //},25);
           });
 
