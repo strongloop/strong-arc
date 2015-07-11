@@ -180,39 +180,79 @@ Gateway.directive('slPolicyMainView', [
     }
   }
 ]);
-Gateway.directive('slPolicyScopeInput', [ '$log', function($log) {
+Gateway.directive('slPolicyScopeEditor', [ '$log', function($log) {
   return {
     restrict: 'E',
     templateUrl: './scripts/modules/gateway/templates/policy.scope.input.html',
     controller:['$scope', function($scope) {
-      $scope.policyCtx.currentPolicy = {};
 
-      $scope.inputTags = [];
+     // $scope.policyCtx.currentPolicy.policyScopes = [];
 
-      $scope.inputTags.push({name: 'test tag'});
+    //  $scope.inputTags.push({name: 'test tag'});
 
-      $scope.addTag = function() {
-        if (!$scope.tagText || $scope.tagText.length === 0) {
+      $scope.addPolicyScope = function() {
+        if (!$scope.policyCtx.newPolicyScope || $scope.policyCtx.newPolicyScope.length === 0) {
           return;
         }
-        $scope.inputTags.push({name: $scope.tagText});
-        $scope.tagText = '';
+        if (!$scope.policyCtx.currentPolicy.policyScopes) {
+          $scope.policyCtx.currentPolicy.policyScopes = [];
+        }
+        $scope.policyCtx.currentPolicy.policyScopes.push({name: $scope.policyCtx.newPolicyScope});
+        $scope.policyCtx.newPolicyScope = '';
       };
-      $scope.deleteTag = function(key) {
-        if (($scope.inputTags.length > 0) &&
-          ($scope.tagText.length === 0) &&
+      $scope.deletePolicyScope = function(key) {
+        if (!$scope.policyCtx.currentPolicy.policyScopes) {
+          $scope.policyCtx.currentPolicy.policyScopes = [];
+        }
+        if (($scope.policyCtx.currentPolicy.policyScopes.length > 0) &&
+          ($scope.policyCtx.newPolicyScope.length === 0) &&
           (key === undefined)) {
-          $scope.inputTags.pop();
+          $scope.policyCtx.currentPolicy.policyScopes.pop();
 
         }
         else if (key !== undefined) {
-          $scope.inputTags.splice(key, 1);
+          $scope.policyCtx.currentPolicy.policyScopes.splice(key, 1);
         }
       };
 
     }],
     link: function(scope, el, attrs) {
 
+    }
+  }
+}]);
+Gateway.directive('slPolicyScopeInput', [ '$log', function($log) {
+  return {
+    restrict: 'A',
+    link: function(scope, el, attrs) {
+      scope.inputWidth = 20;
+
+      // watch for changes in text field
+      scope.$watch(attrs.ngModel, function(value) {
+        if (value != undefined) {
+          var tempEl = $('<span>' + value + '</span>').appendTo('body');
+          scope.inputWidth = tempEl.width() + 5;
+          tempEl.remove();
+
+        }
+      });
+
+      el.bind('keydown', function(e) {
+        if (e.which === 9) {
+          e.preventDefault();
+        }
+        if (e.which === 8) {
+          scope.$apply(attrs.deletePolicyScope);
+        }
+      });
+      el.bind('keyup', function(e) {
+        var key = e.which;
+
+        if ((key === 9) || (key == 13)) {
+          e.preventDefault();
+          scope.$apply(attrs.newPolicyScope);
+        }
+      });
     }
   }
 }]);
