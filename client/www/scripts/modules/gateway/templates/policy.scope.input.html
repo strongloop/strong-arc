@@ -1,9 +1,9 @@
 <div class="policy-scope-input-container">
   <div ng-repeat="(key, scope) in policyCtx.currentPolicy.policyScopes" class="input-policy-scope">
     {{scope.name}}
-    <button class="delete-policy-scope" ng-click="deletePolicyScope(key)">
+    <div class="delete-policy-scope" ng-click="_deletePolicyScope(key)">
       <i class="sl-icon sl-icon-close"></i>
-    </button>
+    </div>
   </div>
   <input class="policy-scope-input"
          typeahead="scope.name as scope.name for scope in policyScopeCtx.policyScopes | filter:$viewValue | limitTo:8"
