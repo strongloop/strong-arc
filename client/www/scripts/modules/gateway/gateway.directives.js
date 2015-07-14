@@ -189,6 +189,7 @@ Gateway.directive('slPolicyScopeEditor', [ '$log', function($log) {
      // $scope.policyCtx.currentPolicy.policyScopes = [];
 
     //  $scope.inputTags.push({name: 'test tag'});
+      $scope.policyCtx.newPolicyScope = '';
 
       $scope.addPolicyScope = function() {
         if (!$scope.policyCtx.newPolicyScope || $scope.policyCtx.newPolicyScope.length === 0) {

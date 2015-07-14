@@ -34,14 +34,7 @@ Gateway.controller('PolicyScopeMainController', [
       .then(function(hosts) {
         $scope.policyScopeCtx.policyScopes = hosts;
       });
-    $scope.deletePolicyScope = function(policyScope) {
-      if (confirm('delete Scope?')) {
-        GatewayServices.deletePolicyScope(policyScope.id)
-          .then(function(response) {
-            refreshPolicyScopes();
-          });
-      }
-    };
+
 
     $scope.editPolicyScope = function(policyScope) {
       policyScope.editMode = true;
