@@ -126,6 +126,14 @@ Arc.config([
           ]
         }
       })
+      .state('visual-composer', {
+        url: '/visual-composer',
+        templateUrl: './scripts/modules/visual-composer/templates/visual-composer.main.html',
+        controller: 'VisualComposerMainController',
+        resolve: {
+
+        }
+      })
       .state('build-deploy', {
         url: '/build-deploy',
         templateUrl: './scripts/modules/build-deploy/templates/build-deploy.main.html',
@@ -302,4 +310,3 @@ Arc.factory('arcRequestInterceptor', [
     };
   }
 ]);
-

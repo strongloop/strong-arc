@@ -43,6 +43,13 @@ module.exports = function(ArcApp) {
       "supports": ['loopback']
     },
     {
+      "id": "visual-composer",
+      "name": "Visual Composer",
+      "description": "GUI tool for visually defining models and relations.",
+      "supports": ["loopback"],
+      "featureFlag": "feature:visual-composer",
+    },
+    {
       "id": "build-deploy",
       "name": "Build & Deploy",
       "description": "Build and deploy self-contained app package or Git branch.",
