@@ -1,5 +1,5 @@
 <div ng-controller="PolicyMainController">
-  <h3>Policies</h3>
+  <h3>{{policyCtx.viewTitle}}</h3>
   <sl-policy-list ng-show="!gatewayCtx.currentInstanceId"></sl-policy-list>
 
   <!--<button ng-click="showAddNewPolicyForm()" class="link-cmd" >-->

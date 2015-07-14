@@ -22,9 +22,24 @@
         </select>
       </td>
       <td>
-        <ul ng-show="!policy.editMode">
-          <li ng-repeat="datum in policy.data">{{datum.name}} = {{datum.value}}</li>
-        </ul>
+        <div ng-show="policy.type == 'ratelimit'">
+          <ul>
+            <li>limit: {{policy.limit}}</li>
+            <li>interval (ms): {{policy.interval}}</li>
+          </ul>
+        </div>
+        <div ng-show="policy.type == 'proxy'">
+          endpoint: <span>{{policy.endpoint}}</span>
+        </div>
+        <div ng-show="policy.type == 'auth'">
+          <span>scopes:</span>
+          <ul>
+          <li ng-repeat="scope in policy.policyScopes">
+            <div class="policy-scope-item">{{scope.name}}</div>
+          </li>
+          </ul>
+        </div>
+
         <sl-policy-auth-form ng-show="policy.editMode && isPolicyType('auth', policy)"></sl-policy-auth-form>
         <sl-policy-rate-limit-form  ng-show="policy.editMode && isPolicyType('ratelimit', policy)"></sl-policy-rate-limit-form>
         <sl-policy-proxy-form ng-show="policy.editMode && isPolicyType('proxy', policy)"> </sl-policy-proxy-form>
@@ -58,7 +73,7 @@
       </td>
       <td class="edit">
         <label>Type</label>
-        <select ng-model="policyCtx.currentPolicy.type"  ng-options="policyType.id as policyType.name for policyType in gatewayCtx.policyTypes">
+        <select class="form-control" ng-model="policyCtx.currentPolicy.type"  ng-options="policyType.id as policyType.name for policyType in gatewayCtx.policyTypes">
         </select>
       </td>
       <td>
