@@ -63,36 +63,30 @@
     }
   }
   .input-policy-scope {
-    padding: .3rem .4rem;
+    padding: 2px 4px;
     line-height: 2rem;
     background-color: @gray-light-2;
     color:@gray-dark;
     float:left;
     display:inline-block;
     border-radius: 1rem;
-    margin: .2rem .5rem .2rem 0;
+    margin: 2px 5px 2px 0px;
 
-    button.delete-policy-scope {
-      border:0;
+    .delete-policy-scope {
       display: inline-block;
-      color:@gray;
-      i {
-
-      }
+      border-radius:.7rem;
+      cursor: pointer;
+      padding: 0px 2px;
 
       &:hover {
-        color: @gray-dark;
-        i {
 
-        }
-
+        background-color: @gray-dark;
+        color:#eeeeee;
       }
       &:active {
-        color: @gray-darker;
-        i {
 
-        }
-
+        background-color: @gray-darker;
+        color:#ffffff;
       }
     }
   }
