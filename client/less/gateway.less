@@ -5,6 +5,13 @@
   }
 }
 [data-id="PolicyFormContainer"] {
+
+  display: inline-block;
+
+  form.ui-form {
+    border:0;
+  }
+
   .flex-container {
     display: flex;
     flex-direction: row;
@@ -23,8 +30,8 @@
   padding: 2px 4px;
   line-height: 2rem;
   font-size: 11px;
-  background-color: @brand-info;
-  color:#ffffff;
+  background-color: @gray-light-2;
+  color:@gray-dark;
   float:left;
   display:inline-block;
   border-radius: 2px;
@@ -56,25 +63,36 @@
     }
   }
   .input-policy-scope {
-    padding: 2px 4px;
+    padding: .3rem .4rem;
     line-height: 2rem;
-    font-size: 11px;
-    background-color: @brand-info;
-    color:#ffffff;
+    background-color: @gray-light-2;
+    color:@gray-dark;
     float:left;
     display:inline-block;
-    border-radius: 2px;
-    margin: 2px 5px 2px 0px;
+    border-radius: 1rem;
+    margin: .2rem .5rem .2rem 0;
 
-    .delete-policy-scope {
+    button.delete-policy-scope {
+      border:0;
       display: inline-block;
-      font-size: 12px;
-      cursor: pointer;
-      padding: 0px 2px;
+      color:@grey;
+      i {
+
+      }
 
       &:hover {
+        color: @gray-dark;
+        i {
 
-        background-color: #96b4d2;
+        }
+
+      }
+      &:active {
+        color: @gray-darker;
+        i {
+
+        }
+
       }
     }
   }
