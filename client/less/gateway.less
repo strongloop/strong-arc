@@ -4,12 +4,36 @@
     overflow-y: auto;
   }
 }
+[data-id="PolicyFormContainer"] {
+  .flex-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  select {
+    width:35rem;
+    height:30px;
+    color:#999999;
+  }
+}
 .tree-branch.is-active{
   background: #4a90e2;
 }
+.policy-scope-item {
+  padding: 2px 4px;
+  line-height: 2rem;
+  font-size: 11px;
+  background-color: @brand-info;
+  color:#ffffff;
+  float:left;
+  display:inline-block;
+  border-radius: 2px;
+  margin: 2px 5px 2px 0px;
+}
+
 .policy-scope-input-container {
   border: 1px solid #ccc;
-  padding: 2px 3px;
+  padding: 5px 3px;
   display: inline-block;
   width: 500px;
   border-radius: 3px;
@@ -33,9 +57,10 @@
   }
   .input-policy-scope {
     padding: 2px 4px;
-    line-height: 12px;
+    line-height: 2rem;
     font-size: 11px;
-    background-color: #e3eaf6;
+    background-color: @brand-info;
+    color:#ffffff;
     float:left;
     display:inline-block;
     border-radius: 2px;

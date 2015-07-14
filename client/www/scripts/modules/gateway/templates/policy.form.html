@@ -1,20 +1,22 @@
 <div data-id="PolicyFormContainer">
   <form class="ui-form">
-    <div class="form-field">
-      <label>name</label>
-      <input ng-model="policyCtx.currentPolicy.name" />
-    </div>
-    <div class="form-field">
-      <label>type</label>
-      <select ng-model="policyCtx.currentPolicy.type"
-              ng-options="policyType.id as policyType.name for policyType in gatewayCtx.policyTypes">
-      </select>
+    <div class="flex-container">
+      <div class="form-field">
+        <label>name</label>
+        <input type="text" ng-model="policyCtx.currentPolicy.name" />
+      </div>
+      <div class="form-field">
+        <label>type</label>
+        <select class="form-control" ng-model="policyCtx.currentPolicy.type"
+                ng-options="policyType.id as policyType.name for policyType in gatewayCtx.policyTypes">
+        </select>
+      </div>
     </div>
     <sl-policy-auth-form ng-show="policyCtx.isShowAuthPolicyForm"></sl-policy-auth-form>
     <sl-policy-rate-limit-form  ng-show="policyCtx.isShowRateLimitPolicyForm"></sl-policy-rate-limit-form>
     <sl-policy-proxy-form ng-show="policyCtx.isShowProxyPolicyForm"> </sl-policy-proxy-form>
     <div>
-      <button class="ui-btn secondary small" ng-click="clearPolicyForm()">Cancel</button>
+      <!--<button class="ui-btn secondary small" ng-click="clearPolicyForm()">Cancel</button>-->
       <button class="ui-btn primary small pull-right" ng-click="saveCurrentPolicy()">Save</button>
     </div>
   </form>

@@ -4,9 +4,10 @@ Gateway.controller('GatewayMainController', [
   'GatewayServices',
   '$timeout',
   '$state',
+  '$stateParams',
   '$location',
   '$modal',
-  function($scope, $log, GatewayServices, $timeout, $state, $location, $modal) {
+  function($scope, $log, GatewayServices, $timeout, $state, $stateParams, $location, $modal) {
 
 
     function getNavBasePath() {
@@ -103,7 +104,7 @@ Gateway.controller('GatewayMainController', [
     $scope.showAddNewPolicyForm = function() {
       var modalDlg = $modal.open({
         templateUrl: './scripts/modules/gateway/templates/add.policy.modal.html',
-        size: 'md',
+        size: 'lg',
         scope: $scope,
         controller: function($scope, $modalInstance, title, $log) {
           $scope.policyCtx.currentPolicy = {};
@@ -186,6 +187,13 @@ Gateway.controller('GatewayMainController', [
         currentPolicy: {},
         currentPolicyScope: {},
         currentPhase: {},
+        rateScales: [
+          {name:'millisecond', display: 'millisecond(s)'},
+          {name:'second', display: 'second(s)'},
+          {name:'minute', display: 'minute(s)'},
+          {name:'hour', display: 'hour(s)'},
+          {name:'day', display: 'day(s)'}
+        ],
         policyTypes: [
           {
             id: 'auth',
@@ -237,6 +245,7 @@ Gateway.controller('GatewayMainController', [
       };
       $scope.policyCtx = {
         currentPolicy: {},
+        defaultRateScale: {name:'second', display: 'second(s)'},
         policies: [],
         deployedApps: []
       };
@@ -261,6 +270,7 @@ Gateway.controller('GatewayMainController', [
             break;
 
           case 'policy':
+            $scope.policyCtx.viewTitle = 'Policy';
             $scope.policyCtx.currentPolicy = GatewayServices.getPolicyById($scope.gatewayCtx.currentInstanceId)
               .then(function(map) {
                 $scope.policyCtx.currentPolicy = map;
@@ -286,6 +296,12 @@ Gateway.controller('GatewayMainController', [
           //$scope.refreshDataSets();
           switch($scope.gatewayCtx.currentView) {
             case 'gatewaymap':
+              if (!$scope.gatewayCtx.currentInstanceId) {
+                $scope.policyCtx.viewTitle = 'Gateway Maps';
+              }
+              else {
+                $scope.policyCtx.viewTitle = 'Gateway Map';
+              }
               $scope.gatewayCtx.isShowGatewayMapView = true;
               $scope.gatewayCtx.isShowPipelineView = false;
               $scope.gatewayCtx.isShowPolicyView = false;
@@ -293,6 +309,12 @@ Gateway.controller('GatewayMainController', [
 
               break;
             case 'pipeline':
+              if (!$scope.gatewayCtx.currentInstanceId) {
+                $scope.policyCtx.viewTitle = 'Pipelines';
+              }
+              else {
+                $scope.policyCtx.viewTitle = 'Pipeline';
+              }
               $scope.gatewayCtx.isShowGatewayMapView = false;
               $scope.gatewayCtx.isShowPipelineView = true;
               $scope.gatewayCtx.isShowPolicyView = false;
@@ -301,6 +323,12 @@ Gateway.controller('GatewayMainController', [
 
               break;
             case 'policy':
+              if (!$scope.gatewayCtx.currentInstanceId) {
+                $scope.policyCtx.viewTitle = 'Policies';
+              }
+              else {
+                $scope.policyCtx.viewTitle = 'Policy';
+              }
               $scope.gatewayCtx.isShowGatewayMapView = false;
               $scope.gatewayCtx.isShowPipelineView = false;
               $scope.gatewayCtx.isShowPolicyView = true;
@@ -319,6 +347,9 @@ Gateway.controller('GatewayMainController', [
 
     }
     $scope.setMainNav = function(view, id) {
+      if (id) {
+        $state.go(view, {'id':id});
+      }
       $state.go(view);
     };
   }

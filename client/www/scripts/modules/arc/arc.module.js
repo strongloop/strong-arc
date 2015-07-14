@@ -122,6 +122,11 @@ Arc.config([
         templateUrl: './scripts/modules/gateway/templates/gateway.main.html',
         controller: 'GatewayMainController'
       })
+      //.state('policy.detail', {
+      //  url: '/:id',
+      //  templateUrl: './scripts/modules/gateway/templates/gateway.main.html',
+      //  controller: 'GatewayMainController'
+      //})
       .state('tracing', {
         url: '/tracing',
         templateUrl: './scripts/modules/tracing/templates/tracing.main.html',
