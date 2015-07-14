@@ -1,11 +1,17 @@
 <div class="policy-ratelimit-container">
   <div class="form-field">
-  <div class="form-field">
     <label>limit</label>
-    <input ng-model="policyCtx.currentPolicy.limit" />
+    <input type="text" ng-model="policyCtx.currentPolicy.limit" />
   </div>
   <div class="form-field">
-    <label>interval</label>
-    <input ng-model="policyCtx.currentPolicy.interval" />
+    <label>interval (milliseconds)</label>
+    <input type="text" ng-model="policyCtx.currentPolicy.interval" />
+    <!--<select ng-model="policyCtx.currentPolicy.rateScale" ng-options="rateScale.name as rateScale.display for rateScale in gatewayCtx.rateScales">-->
+      <!--&lt;!&ndash;<option>millisecond(s)</option>&ndash;&gt;-->
+      <!--&lt;!&ndash;<option>second(s)</option>&ndash;&gt;-->
+      <!--&lt;!&ndash;<option>minute(s)</option>&ndash;&gt;-->
+      <!--&lt;!&ndash;<option>hour(s)</option>&ndash;&gt;-->
+      <!--&lt;!&ndash;<option>day(s)</option>&ndash;&gt;-->
+    <!--</select>-->
   </div>
 </div>

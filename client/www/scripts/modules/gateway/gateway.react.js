@@ -129,8 +129,14 @@ var GatewayNav = (GatewayNav = React).createClass({
   },
   gatewayMainNav: function(key, opt) {
     var scope = this.props.scope;
+    var id = '';
+    var baseNav = key.currentTarget.attributes['data-type'].value;
+    if (key.currentTarget.attributes['data-id']) {
+      id = key.currentTarget.attributes['data-id'].value;
+      //baseNav = baseNav + '.detail';
+    }
     scope.$apply(function() {
-      scope.setMainNav(key.currentTarget.attributes['data-type'].value);
+      scope.setMainNav(baseNav, id);
     });
   },
   render: function() {

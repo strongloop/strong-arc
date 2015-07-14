@@ -13,7 +13,9 @@ Gateway.controller('PolicyMainController', [
   function($scope, $log, GatewayServices, $timeout, $state, growl) {
     $log.debug('Policy Controller');
 
-
+    $scope.policyCtx.isShowAuthPolicyForm = false;
+    $scope.policyCtx.isShowRateLimitPolicyForm = false;
+    $scope.policyCtx.isShowProxyPolicyForm = false;
     $scope.isShowAddPolicyRow = false;
     $scope.showAddPolicyRow = function() {
       turnOffOtherPolicyEdits();
@@ -166,6 +168,9 @@ Gateway.controller('PolicyMainController', [
     $scope.$watch('policyCtx.currentPolicy.type', function(newVal, oldVal) {
       if (newVal) {
         $log.debug('it changed: ' + newVal);
+        if (!$scope.policyCtx.currentPolicy.rateScale) {
+          $scope.policyCtx.currentPolicy.rateScale = 'second';
+        }
 
         switch (newVal) {
           case 'ratelimit' :
