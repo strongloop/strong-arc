@@ -96,41 +96,53 @@ Gateway.directive('slPolicyForm', [
   function($log) {
     return {
       restrict: 'E',
+      scope: {
+        policy: '=',
+        context: '='
+      },
       templateUrl: './scripts/modules/gateway/templates/policy.form.html',
+      controller: ['$scope',
+        function($scope) {
+
+        }
+      ],
       link: function(scope, el, attrs) {
-
-        scope.$watch('policyCtx.currentPolicyType', function(newVal, oldVal) {
-          if (newVal && newVal.name) {
-
-            switch(newVal.id) {
-
-              case 'auth': {
-                //show auth view
-                $log.debug('show policy view: ' + newVal.name);
-                break;
-
-              }
-              case 'log': {
-                //show log view
-                $log.debug('show policy view: ' + newVal.name);
-                break;
-              }
-              case 'ratelimit': {
-                //show ratelimit view
-                $log.debug('show policy view: ' + newVal.name);
-                break;
-              }
-              case 'proxy': {
-                //show proxy view
-                $log.debug('show policy view: ' + newVal.name);
-                break;
-              }
-              default:
-
-            }
-
-          }
+        $log.debug('||||name: ' + scope.policy.name);
+        scope.$watch('context.policyTypes', function(newVal, oldVal) {
+          $log.debug('| policy types')
         });
+        //scope.$watch('policyCtx.currentPolicyType', function(newVal, oldVal) {
+        //  if (newVal && newVal.name) {
+        //
+        //    switch(newVal.id) {
+        //
+        //      case 'auth': {
+        //        //show auth view
+        //        $log.debug('show policy view: ' + newVal.name);
+        //        break;
+        //
+        //      }
+        //      case 'log': {
+        //        //show log view
+        //        $log.debug('show policy view: ' + newVal.name);
+        //        break;
+        //      }
+        //      case 'ratelimit': {
+        //        //show ratelimit view
+        //        $log.debug('show policy view: ' + newVal.name);
+        //        break;
+        //      }
+        //      case 'proxy': {
+        //        //show proxy view
+        //        $log.debug('show policy view: ' + newVal.name);
+        //        break;
+        //      }
+        //      default:
+        //
+        //    }
+        //
+        //  }
+        //});
       }
     }
   }
@@ -183,13 +195,16 @@ Gateway.directive('slPolicyMainView', [
 Gateway.directive('slPolicyScopeEditor', [ '$log', function($log) {
   return {
     restrict: 'E',
-    templateUrl: './scripts/modules/gateway/templates/policy.scope.input.html',
+    templateUrl: './scripts/modules/gateway/templates/policy.scope.editor.html',
     controller:['$scope', function($scope) {
 
      // $scope.policyCtx.currentPolicy.policyScopes = [];
 
     //  $scope.inputTags.push({name: 'test tag'});
-      $scope.policyCtx.newPolicyScope = '';
+      if ($scope.policyCtx) {
+        $scope.policyCtx.newPolicyScope = '';
+
+      }
 
       $scope.addPolicyScope = function() {
         if (!$scope.policyCtx.newPolicyScope || $scope.policyCtx.newPolicyScope.length === 0) {
