@@ -18,7 +18,7 @@
       </td>
       <td>
         <span ng-show="!policy.editMode" >{{policy.type}}</span>
-        <select ng-model="policy.type" ng-show="policy.editMode"  ng-options="policyType.id as policyType.name for policyType in gatewayCtx.policyTypes">
+        <select ng-model="policy.type" ng-show="policy.editMode"  ng-options="policyType.id as policyType.name for policyType in policyCtx.policyTypes">
         </select>
       </td>
       <td>
@@ -73,7 +73,7 @@
       </td>
       <td class="edit">
         <label>Type</label>
-        <select class="form-control" ng-model="policyCtx.currentPolicy.type"  ng-options="policyType.id as policyType.name for policyType in gatewayCtx.policyTypes">
+        <select class="form-control" ng-model="policyCtx.currentPolicy.type"  ng-options="policyType.id as policyType.name for policyType in policyCtx.policyTypes">
         </select>
       </td>
       <td>
@@ -99,5 +99,5 @@
   </button>
 
   <!--<button class="link-cmd" ng-click="showScopesCrud()">show scopes</button>-->
-  <sl-policy-scope-main-view ng-show="isShowScopesCrud"></sl-policy-scope-main-view>
+  <!--<sl-policy-scope-main-view ng-show="isShowScopesCrud"></sl-policy-scope-main-view>-->
 </div>

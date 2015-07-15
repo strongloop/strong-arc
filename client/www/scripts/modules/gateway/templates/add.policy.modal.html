@@ -1,34 +1,47 @@
 <div class="manager-main-layout" ng-controller="PolicyMainController">
-  <form class="ui-form">
-    <div class="modal-header">
-      <h4>New Policy</h4>
-    </div>
-    <div class="modal-body">
-      <div data-id="PolicyFormContainer">
-        <form class="ui-form">
-          <div class="flex-container">
-            <div class="form-field">
-              <label>name</label>
-              <input type="text" class="form-control" ng-model="policyCtx.currentPolicy.name" />
-            </div>
-            <div class="form-field">
-              <label>type</label>
-              <select class="form-control" ng-model="policyCtx.currentPolicy.type" ng-options="policyType.id as policyType.name for policyType in gatewayCtx.policyTypes">
-              </select>
-            </div>
-          </div>
-          <sl-policy-auth-form ng-show="policyCtx.isShowAuthPolicyForm"></sl-policy-auth-form>
-          <sl-policy-rate-limit-form  ng-show="policyCtx.isShowRateLimitPolicyForm"></sl-policy-rate-limit-form>
-          <sl-policy-proxy-form ng-show="policyCtx.isShowProxyPolicyForm"> </sl-policy-proxy-form>
-        </form>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="ui-btn secondary small pull-left" ng-click="close()">
-        Cancel
-      </button>
-      <button class="ui-btn primary small" ng-click="saveNewPolicy()">Add Policy</button>
+  <div class="modal-header">
+  <h4>New Policy</h4>
+  </div>
+  <div class="modal-body">
+  <sl-policy-form policy="policyCtx.newPolicy" context="policyCtx"></sl-policy-form>
+  </div>
+  <div class="modal-footer">
+  <button type="button" class="ui-btn secondary small pull-left" ng-click="close()">
+  Cancel
+  </button>
+  <button class="ui-btn primary small" ng-click="saveNewPolicy()">Add Policy</button>
 
-    </div>
-  </form>
+  </div>
+  <!--<form class="ui-form">-->
+    <!--<div class="modal-header">-->
+      <!--<h4>New Policy</h4>-->
+    <!--</div>-->
+    <!--<div class="modal-body">-->
+      <!--<div data-id="PolicyFormContainer">-->
+        <!--<form class="ui-form">-->
+          <!--<div class="flex-container">-->
+            <!--<div class="form-field">-->
+              <!--<label>name</label>-->
+              <!--<input type="text" class="form-control" ng-model="policyCtx.currentPolicy.name" />-->
+            <!--</div>-->
+            <!--<div class="form-field">-->
+              <!--<label>type</label>-->
+              <!--<select class="form-control" ng-model="policyCtx.currentPolicy.type" ng-options="policyType.id as policyType.name for policyType in gatewayCtx.policyTypes">-->
+              <!--</select>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<sl-policy-auth-form ng-show="policyCtx.isShowAuthPolicyForm"></sl-policy-auth-form>-->
+          <!--<sl-policy-rate-limit-form  ng-show="policyCtx.isShowRateLimitPolicyForm"></sl-policy-rate-limit-form>-->
+          <!--<sl-policy-proxy-form ng-show="policyCtx.isShowProxyPolicyForm"> </sl-policy-proxy-form>-->
+        <!--</form>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="modal-footer">-->
+      <!--<button type="button" class="ui-btn secondary small pull-left" ng-click="close()">-->
+        <!--Cancel-->
+      <!--</button>-->
+      <!--<button class="ui-btn primary small" ng-click="saveNewPolicy()">Add Policy</button>-->
+
+    <!--</div>-->
+  <!--</form>-->
 </div>

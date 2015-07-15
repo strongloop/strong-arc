@@ -1,12 +1,12 @@
 <div class="policy-scope-input-container">
-  <div ng-repeat="(key, scope) in policyCtx.currentPolicy.policyScopes" class="input-policy-scope">
+  <div ng-repeat="(key, scope) in policy.policyScopes" class="input-policy-scope">
     {{scope.name}}
     <div class="delete-policy-scope" ng-click="deletePolicyScope(key)">&times;</div>
   </div>
   <input class="policy-scope-input"
-         typeahead="scope.name as scope.name for scope in policyScopeCtx.policyScopes | filter:$viewValue | limitTo:8"
+         typeahead="scope.name as scope.name for scope in context.policyScopes | filter:$viewValue | limitTo:8"
          type="text" sl-policy-scope-input=""
          new-policy-scope="addPolicyScope()"
          delete-policy-scope="deletePolicyScope()"
-         ng-model="policyCtx.newPolicyScope" ng-style="{width: inputWidth}"   />
+         ng-model="context.newPolicyScope" ng-style="{width: inputWidth}"   />
 </div>
