@@ -1,4 +1,9 @@
 <div class="chart">
   <ui-crumbs crumbs="crumbs" on-click="onClickCrumb(i, crumb, len)"></ui-crumbs>
   <div class="svg-chart"></div>
+  <div class="pagination">
+    <button class="ui-btn primary small" ng-click="onClickPrevPage()" ng-disabled="page == 1">Prev</button>
+    <button class="ui-btn primary small" ng-click="onClickNextPage()" ng-disabled="page == maxPages">Next</button>
+    <div class="status">Page {{page}} of {{maxPages}}</div>
+  </div>
 </div>
