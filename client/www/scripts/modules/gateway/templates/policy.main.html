@@ -5,6 +5,6 @@
   <!--<button ng-click="showAddNewPolicyForm()" class="link-cmd" >-->
     <!--<i class="sl-icon sl-icon-plus-sign"></i>Add New-->
   <!--</button>-->
-  <sl-policy-form ng-show="gatewayCtx.currentInstanceId"></sl-policy-form>
+  <sl-policy-form ng-show="gatewayCtx.currentInstanceId" context="policyCtx" policy="policyCtx.currentPolicy"></sl-policy-form>
 
 </div>

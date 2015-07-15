@@ -107,7 +107,7 @@ Gateway.controller('GatewayMainController', [
         size: 'lg',
         scope: $scope,
         controller: function($scope, $modalInstance, title, $log) {
-          $scope.policyCtx.currentPolicy = {};
+          $scope.policyCtx.newPolicy = {};
           $scope.title = title;
           $scope.close = function() {
             $modalInstance.dismiss();
@@ -193,29 +193,6 @@ Gateway.controller('GatewayMainController', [
           {name:'minute', display: 'minute(s)'},
           {name:'hour', display: 'hour(s)'},
           {name:'day', display: 'day(s)'}
-        ],
-        policyTypes: [
-          {
-            id: 'auth',
-            name: 'Authentication',
-            description: ''
-          },
-          {
-            id: 'log',
-            name: 'Logging',
-            description: ''
-          },
-          {
-            id: 'ratelimit',
-            name: 'Rate Limit',
-            description: ''
-          },
-          {
-            id: 'proxy',
-            name: 'Proxy',
-            description: ''
-
-          }
         ]
       };
       $scope.gatewayCtx.isShowGatewayMapView = true;
@@ -245,9 +222,33 @@ Gateway.controller('GatewayMainController', [
       };
       $scope.policyCtx = {
         currentPolicy: {},
+        newPolicy: {},
         defaultRateScale: {name:'second', display: 'second(s)'},
         policies: [],
-        deployedApps: []
+        deployedApps: [],
+        policyTypes: [
+          {
+            id: 'auth',
+            name: 'Authentication',
+            description: ''
+          },
+          {
+            id: 'log',
+            name: 'Logging',
+            description: ''
+          },
+          {
+            id: 'ratelimit',
+            name: 'Rate Limit',
+            description: ''
+          },
+          {
+            id: 'proxy',
+            name: 'Proxy',
+            description: ''
+
+          }
+        ]
       };
       $scope.refreshDataSets();
 
