@@ -5,21 +5,10 @@
 *
 * */
 var GatewayMainNav = (GatewayMainNav = React).createClass({
-
-
   render: function() {
-
     var component = this;
-
-    var scope = this.props.scope;
-    var singleClickItem = function(event) {
-      if (event.target.attributes['data-id']){
-        scope.$apply(function () {
-          scope.navTreeItemClicked('root', event.target.attributes['data-id'].value, event.metaKey);
-        });
-      }
-    };
     var projectName = 'Strong Gateway';
+
     return (
       <div>
         <div className="ia-project-title-header-container" >
@@ -39,7 +28,7 @@ var GatewayMainNav = (GatewayMainNav = React).createClass({
 });
 /*
 *
-*   Model Main Nav
+*   Gateway Entity Branch Nav
 *
 * */
 var GatewayNav = (GatewayNav = React).createClass({
@@ -53,16 +42,11 @@ var GatewayNav = (GatewayNav = React).createClass({
       if (targetAttributes['data-id']) {
         var instanceId = targetAttributes['data-id'].value;
         var type = targetAttributes['data-type'].value;
-        //var instanceId = {
-        //  definitionId: definitionId,
-        //  configId: configId
-        //};
 
         if (type && instanceId) {
           scope.$apply(function(){
             scope.deleteInstanceRequest(instanceId, type);
           });
-
         }
       } else {
         console.warn('Missing some of the required attributes.');
@@ -100,8 +84,10 @@ var GatewayNav = (GatewayNav = React).createClass({
   componentDidMount:function(){
     var menuItems = {};
     var component = this;
-    var isDiscoverable = false;
 
+    /*
+    * Context Menu
+    * */
     menuItems.cloneSelectedInstance = {name: "clone", callback: component.cloneSelectedInstance};
     menuItems.deleteSelectedInstance = {name: "delete", callback: component.deleteSelectedInstance};
 
@@ -133,7 +119,6 @@ var GatewayNav = (GatewayNav = React).createClass({
     var baseNav = key.currentTarget.attributes['data-type'].value;
     if (key.currentTarget.attributes['data-id']) {
       id = key.currentTarget.attributes['data-id'].value;
-      //baseNav = baseNav + '.detail';
     }
     scope.$apply(function() {
       scope.setMainNav(baseNav, id);
@@ -148,29 +133,6 @@ var GatewayNav = (GatewayNav = React).createClass({
 
     var cx = React.addons.classSet;
 
-
-    var clickBranch = function(event) {
-      scope.$apply(function () {
-        scope.navTreeBranchClicked('model');
-      });
-    };
-
-    var singleClickItem = function(event) {
-
-      if (event.target.attributes['data-id'] || event.target.parentElement.attributes['data-id']){
-        var val = '';
-        if (event.target.attributes['data-id']) {
-          val = event.target.attributes['data-id'].value;
-        }
-        else {
-          val = event.target.parentElement.attributes['data-id'].value;
-        }
-        scope.$apply(function () {
-          scope.navTreeItemClicked('model', val, event.metaKey);
-        });
-      }
-    };
-
     var navItemContainerClasses = cx({
       'ia-tree-node-table branch-leaf-list model-branch-container is-open': true,
       'ia-tree-node-table branch-leaf-list model-branch-container is-closed': false
@@ -179,12 +141,9 @@ var GatewayNav = (GatewayNav = React).createClass({
       'nav-branch-openclose-icon sl-icon sl-icon-arrow-down': true,
       'nav-branch-openclose-icon sl-icon sl-icon-arrow-right': !false
     });
-    var navItemsOpenCloseFolderIconClasses = cx({
-      'nav-branch-folder-icon sl-icon sl-icon-folder': true,
-      'nav-branch-folder-icon sl-icon sl-icon-folder': !false
-    });
 
     rowItems = [];
+    // Instances
     if (collection.map) {
       var rowItems = collection.map(function(item) {
 
@@ -252,6 +211,7 @@ var GatewayNav = (GatewayNav = React).createClass({
         return  '----';
       }
     }
+    // nav branch sections
     return (
       <div>
         <button onClick={component.gatewayMainNav} data-type={type} data-name="model_root" className={rowClass}  title={navTitle()} >
