@@ -1,6 +1,10 @@
+'use strict';
+
 var DataSourceEditorView = (function () {
   var SUCCESS = 0;
   var ERROR = 1;
+
+
 
   function DataSourceEditorView() {
     var EC = protractor.ExpectedConditions;
@@ -11,13 +15,16 @@ var DataSourceEditorView = (function () {
     this.port = element(by.id('port'));
     this.databaseName = element(by.id('database'));
     this.connector = element(by.id('connector'));
-    this.connectorOptions = element.all(by.css('select#connector option'));
-    this.saveDataSourceButton = element(by.css('[data-id="datasource-save-button"]'));
-    this.connectionSuccessIndicator = element(by.css('.ui-msg-inline-success'));
-    this.connectionFailureIndicator = element(by.css('.ui-msg-inline-error'));
-    this.testConnectionButton = element(by.buttonText('Test Connection'));
-
-    var scrollIntoView = 'arguments[0].scrollIntoView();';
+    this.connectorOptions = element.all(
+      by.css('select#connector option'));
+    this.saveDataSourceButton = element(
+      by.css('[data-id="datasource-save-button"]'));
+    this.connectionSuccessIndicator = element(
+      by.css('.ui-msg-inline-success'));
+    this.connectionFailureIndicator = element(
+      by.css('.ui-msg-inline-error'));
+    this.testConnectionButton = element(
+      by.buttonText('Test Connection'));
 
     this.createNewDataSource = function createNewDataSource(name) {
       this.dataSourceNameInput.clear();
@@ -29,7 +36,8 @@ var DataSourceEditorView = (function () {
       browser.waitForAngular();
     };
 
-    this.createNewExternalDataSource = function createNewExternalDataSource(name, dbname, user, pass, host, port, connectorindex) {
+    this.createNewExternalDataSource = function createNewExternalDataSource(
+    name, dbname, user, pass, host, port, connectorindex) {
       browser.driver.wait(EC.presenceOf(this.dataSourceNameInput), 10000);
       this.dataSourceNameInput.clear();
       this.dataSourceNameInput.sendKeys(name);
@@ -45,19 +53,22 @@ var DataSourceEditorView = (function () {
 
     this.saveDataSource = function saveDataSource() {
       this.saveDataSourceButton.click();
-    }
+    };
 
-    this.testDatabaseConnectionFor = function testDatabaseConnectionFor(outcome) {
+    this.testDatabaseConnectionFor =
+    function testDatabaseConnectionFor(outcome) {
       var self = this;
       
       self.testConnectionButton.click();
 
       if(outcome === SUCCESS) {
-        browser.driver.wait(EC.visibilityOf(self.connectionSuccessIndicator), 10000)
+        browser.driver.wait(EC.visibilityOf(
+          self.connectionSuccessIndicator), 10000);
       } else if (outcome === ERROR) {
-        browser.driver.wait(EC.visibilityOf(self.connectionFailureIndicator), 10000);
+        browser.driver.wait(EC.visibilityOf(
+          self.connectionFailureIndicator), 10000);
       }
-    }
+    };
 
     this.getCurrentDSName = function getCurrentDSName() {
       return this.dataSourceNameInput.getAttribute('value');

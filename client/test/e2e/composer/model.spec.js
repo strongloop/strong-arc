@@ -1,3 +1,5 @@
+'use strict';
+
 var ArcViews = require('../arc/views/');
 var ComposerViews = require('../composer/views/');
 var EC = protractor.ExpectedConditions;
@@ -9,7 +11,9 @@ describe('model-definition-interactions', function() {
         var modelEditorView = new ComposerViews.ModelEditorView();
         loginView.loginToLandingView();
         landingView.openComposerView();
-        browser.driver.wait(EC.visibilityOf(modelEditorView.addModelButton), 5000);
+        browser.driver.wait(
+            EC.visibilityOf(modelEditorView.addModelButton),
+        5000);
     });
     afterEach(function() {
         var headerView = new ArcViews.HeaderView();
@@ -22,7 +26,6 @@ describe('model-definition-interactions', function() {
         ' logout',
         function() {
             var mainTreeNavView = new ComposerViews.MainTreeNavView();
-            var dataSourceEditorView = new ComposerViews.DataSourceEditorView();
             var modelEditorView = new ComposerViews.ModelEditorView();
 
             mainTreeNavView.openNewModelView();
@@ -36,8 +39,10 @@ describe('model-definition-interactions', function() {
             });
 
             modelEditorView.addNewProperty('mynewproperty');
-            expect(modelEditorView.getFirstPropertyName()).toEqual('mynewproperty');
 
+            expect(
+                modelEditorView.getFirstPropertyName()
+            ).toEqual('mynewproperty');
         }
     );
 

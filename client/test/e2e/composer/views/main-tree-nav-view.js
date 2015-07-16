@@ -1,3 +1,5 @@
+'use strict';
+
 var MainTreeNavView = (function () {
   function MainTreeNavView() {
     var EC = protractor.ExpectedConditions;
@@ -25,7 +27,6 @@ var MainTreeNavView = (function () {
       this.addModelButton.click();
     };
     this.openFirstModel = function() {
-      var self = this;
       browser.driver.wait(EC.presenceOf(this.addModelButton), 10000);
       this.modelNavButtons.first().click();
     };
@@ -47,7 +48,7 @@ var MainTreeNavView = (function () {
       browser.driver.actions().click(dataSourceNavCtx).perform();
       var discoverButton = self.ctxMenuTriggers.get(1);
       browser.driver.actions().click(discoverButton).perform();
-    }
+    };
     this.openNewDataSourceView = function() {
       var self = this;
       browser.driver.wait(EC.visibilityOf(self.addDataSourceButton), 10000);
@@ -83,7 +84,7 @@ var MainTreeNavView = (function () {
 
       browser.driver.wait(EC.visibilityOf(self.currentMessage),5000);
       browser.driver.wait(EC.invisibilityOf(self.currentMessage),5000);
-    }
+    };
   }
   return MainTreeNavView;
 })();

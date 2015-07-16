@@ -1,3 +1,5 @@
+'use strict';
+
 var ModelEditorView = (function () {
   function ModelEditorView() {
     var EC = protractor.ExpectedConditions;
@@ -16,7 +18,7 @@ var ModelEditorView = (function () {
     this.propertyCollection = element.all(
       by.css('.model-instance-property-list'));
     this.newModelTab = element(
-      by.css('button[data-id="sl.temp.new-model"]'))
+      by.css('button[data-id="sl.temp.new-model"]'));
     this.propertyCommentInputCollection = element.all(
       by.css('.model-instance-property-list' +
              ' input[ng-model="property.comments"]'));
@@ -85,44 +87,54 @@ var ModelEditorView = (function () {
     this.selectDatasource = function selectDatasource(name) {
       var el = this.dataSourceSelect;
 
-      //browser.driver.wait(EC.elementToBeClickable(el), 10000);
-      browser.sleep(250).then(function () {el.element(by.cssContainingText('option', name)).click();})
-      //el.element(by.cssContainingText('option', name)).click();
+
+      browser.sleep(250).then(function () {
+        el.element(by.cssContainingText('option', name)).click();
+      });
     };
     this.migrateCurrentModel = function migrateCurrentModel() {
       var self = this;
       var indicator = this.migrateLoadingIndicator;
 
-      browser.driver.wait(EC.elementToBeClickable(self.migrateModelButton), 10000);
+      browser.driver.wait(
+        EC.elementToBeClickable(self.migrateModelButton),
+      10000);
+
       this.migrateModelButton.click();
 
-      browser.driver.wait(protractor.until.elementIsVisible(indicator), 10000);
-      browser.driver.wait(protractor.until.elementIsNotVisible(indicator), 10000);
-    }
+      browser.driver.wait(
+        protractor.until.elementIsVisible(indicator),
+      10000);
+
+      browser.driver.wait(
+        protractor.until.elementIsNotVisible(indicator),
+      10000);
+    };
 
     this.saveModel = function saveModel() {
       this.saveModelButton.click();
-    }
+    };
 
     this.toggleFirstModelId = function toggleFirstModelId() {
-      this.propertyIDCheckbox.click()
-    }
+      this.propertyIDCheckbox.click();
+    };
 
     this.toggleFirstModelRequired = function toggleFirstModelId() {
-      this.propertyRequiredCheckbox.click()
-    }
+      this.propertyRequiredCheckbox.click();
+    };
 
     this.toggleFirstModelIndex = function toggleFirstModelId() {
-      this.propertyIndexCheckbox.click()
-    }
+      this.propertyIndexCheckbox.click();
+    };
 
     this.getCheckedElements = function getCheckedElements () {
       return this.propertyCheckboxCollection;
-    }
+    };
 
-    this.validationErrorMessagePresent = function validationErrorMessagePresent () {
+    this.validationErrorMessagePresent = 
+    function validationErrorMessagePresent () {
       return this.validationErrorMessage.isPresent();
-    }
+    };
   }
   return ModelEditorView;
 })();
