@@ -92,125 +92,32 @@ Gateway.controller('PolicyMainController', [
       if ($scope.policyCtx.currentPolicy.name && $scope.policyCtx.currentPolicy.type) {
         $log.debug('update this policy: '  + $scope.policyCtx.currentPolicy.name);
 
-        // validate by type
-        switch($scope.policyCtx.currentPolicy.type.id) {
 
-          case 'auth':
-
-            // do nothing (future check for provider)
-
-            break;
-
-          case 'proxy':
-            // make sure there is an endpoint
-
-            break;
-
-          case 'ratelimit':
-
-            // make sure there is a limit and an interval
-            break;
-
-          default:
-
-        }
 
         GatewayServices.savePolicy($scope.policyCtx.currentPolicy)
           .$promise
           .then(function(policy) {
-            // $timeout(function() {
             growl.addSuccessMessage('Policy Saved');
             resetCurrentPolicy();
-            //},25);
+
           });
 
       }
     };
     $scope.saveNewPolicy = function() {
       $scope.close();
-      if ($scope.policyCtx.currentPolicy.name && $scope.policyCtx.currentPolicy.type) {
-        $log.debug('save this new policy: '  + $scope.policyCtx.currentPolicy.name);
+      if ($scope.policyCtx.newPolicy.name && $scope.policyCtx.newPolicy.type) {
 
-        // validate by type
-        switch($scope.policyCtx.currentPolicy.type.id) {
-
-          case 'auth':
-
-            // do nothing (future check for provider)
-
-            break;
-
-          case 'proxy':
-            // make sure there is an endpoint
-
-            break;
-
-          case 'ratelimit':
-
-            // make sure there is a limit and an interval
-            break;
-
-          default:
-
-        }
-
-        GatewayServices.savePolicy($scope.policyCtx.currentPolicy)
+        GatewayServices.savePolicy($scope.policyCtx.newPolicy)
           .$promise
           .then(function(policy) {
-           // $timeout(function() {
               $state.go('policy');
             resetCurrentPolicy();
-            //},25);
           });
 
       }
     };
-    $scope.$watch('policyCtx.currentPolicy.type', function(newVal, oldVal) {
-      if (newVal) {
-        $log.debug('it changed: ' + newVal);
-        if (!$scope.policyCtx.currentPolicy.rateScale) {
-          $scope.policyCtx.currentPolicy.rateScale = 'second';
-        }
 
-        switch (newVal) {
-          case 'ratelimit' :
-
-              $scope.policyCtx.isShowAuthPolicyForm = false;
-              $scope.policyCtx.isShowRateLimitPolicyForm = true;
-              $scope.policyCtx.isShowProxyPolicyForm = false;
-
-            break;
-
-          case 'auth' :
-
-              $scope.policyCtx.isShowAuthPolicyForm = true;
-              $scope.policyCtx.isShowRateLimitPolicyForm = false;
-              $scope.policyCtx.isShowProxyPolicyForm = false;
-
-
-            break;
-
-          case 'proxy' :
-
-
-            $scope.policyCtx.isShowAuthPolicyForm = false;
-            $scope.policyCtx.isShowRateLimitPolicyForm = false;
-            $scope.policyCtx.isShowProxyPolicyForm = true;
-
-
-            break;
-
-          default :
-            $scope.policyCtx.isShowAuthPolicyForm = false;
-            $scope.policyCtx.isShowRateLimitPolicyForm = false;
-            $scope.policyCtx.isShowProxyPolicyForm = false;
-
-
-
-        }
-      }
-
-    }, true);
     $scope.isCurrentPolicyType = function(type) {
 
       if ($scope.policyCtx.currentPolicy.type && ($scope.policyCtx.currentPolicy.type.id === type)) {
@@ -226,11 +133,11 @@ Gateway.controller('PolicyMainController', [
             name:'provider',
             value:policy.provider
           }];
-          if (policy.policyScopes && policy.policyScopes.map) {
-            for (var i = 0;i < policy.policyScopes.length;i++) {
+          if (policy.scopes && policy.scopes.map) {
+            for (var i = 0;i < policy.scopes.length;i++) {
               policy.data.push({
                 name: 'scope: ' + (i + 1).toString(),
-                value: policy.policyScopes[i].name
+                value: policy.scopes[i].name
               });
             }
           }
@@ -262,54 +169,7 @@ Gateway.controller('PolicyMainController', [
       delete policy.endpoint;
       return policy;
     }
-    $scope.removePolicyScope = function(policy, scope) {
-      if (policy.policyScopes && policy.policyScopes.map) {
-        for (var i = 0;i < policy.policyScopes.length; i++) {
-          if (policy.policyScopes[i].name === scope.name) {
-            policy.policyScopes.splice(i, 1);
-          }
-        }
-      }
-      $scope.savePolicy(policy);
-    };
-    $scope.addPolicyScope = function(item) {
 
-      if (item && item.name) {
-
-        // check to see if item is already there
-
-        if ($scope.policyCtx.currentPolicy) {
-          var isUnique = true;
-          if ($scope.policyCtx.currentPolicy.policyScopes && $scope.policyCtx.currentPolicy.policyScopes.map) {
-
-            $scope.policyCtx.currentPolicy.policyScopes.map(function(scope) {
-              if (scope.name === item.name) {
-                isUnique = false;
-              }
-            });
-            if (isUnique) {
-              $scope.policyCtx.currentPolicy.policyScopes.push(item);
-            }
-          }
-          else {
-            $scope.policyCtx.currentPolicy.policyScopes = [item];
-          }
-
-          if (isUnique) {
-            // save new policy scope
-            $scope.policyScopeCtx.savePolicyScope(item);
-
-          }
-          // reset value
-          $scope.policyCtx.currentPolicy.currentPolicyScope = null;
-        }
-
-
-      }
-
-
-
-    };
     /*
      *
      * Save New (isolated form)
@@ -343,33 +203,6 @@ Gateway.controller('PolicyMainController', [
         $log.debug('invalid Policy attempt save');
       }
     };
-    /*
-     *
-     * Save Edit (inline)
-     *
-     * */
-    //$scope.savePolicy = function(policy) {
-    //  if (policy.type) {
-    //
-    //    if (!policy.name) {
-    //      policy.name = policy.type + '-' + Math.floor((Math.random() * 10000) + 1);
-    //    }
-    //
-    //    GatewayServices.savePolicy(policy)
-    //      .$promise
-    //      .then(function(response) {
-    //        policy = response;
-    //        policy.editMode = false;
-    //      });
-    //
-    //
-    //
-    //  }
-    //  else {
-    //    $log.debug('invalid Policy attempt save - no type');
-    //  }
-    //};
-
 
 
   }

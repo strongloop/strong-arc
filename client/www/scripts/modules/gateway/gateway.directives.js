@@ -111,38 +111,52 @@ Gateway.directive('slPolicyForm', [
         scope.$watch('context.policyTypes', function(newVal, oldVal) {
           $log.debug('| policy types')
         });
-        //scope.$watch('policyCtx.currentPolicyType', function(newVal, oldVal) {
-        //  if (newVal && newVal.name) {
-        //
-        //    switch(newVal.id) {
-        //
-        //      case 'auth': {
-        //        //show auth view
-        //        $log.debug('show policy view: ' + newVal.name);
-        //        break;
-        //
-        //      }
-        //      case 'log': {
-        //        //show log view
-        //        $log.debug('show policy view: ' + newVal.name);
-        //        break;
-        //      }
-        //      case 'ratelimit': {
-        //        //show ratelimit view
-        //        $log.debug('show policy view: ' + newVal.name);
-        //        break;
-        //      }
-        //      case 'proxy': {
-        //        //show proxy view
-        //        $log.debug('show policy view: ' + newVal.name);
-        //        break;
-        //      }
-        //      default:
-        //
-        //    }
-        //
-        //  }
-        //});
+        scope.$watch('policy.type', function(newVal, oldVal) {
+          if (newVal) {
+            $log.debug('it changed: ' + newVal);
+            if (!scope.policy.rateScale) {
+              scope.policy.rateScale = 'second';
+            }
+
+            switch (newVal) {
+              case 'ratelimit' :
+
+                scope.context.isShowAuthPolicyForm = false;
+                scope.context.isShowRateLimitPolicyForm = true;
+                scope.context.isShowProxyPolicyForm = false;
+
+                break;
+
+              case 'auth' :
+
+                scope.context.isShowAuthPolicyForm = true;
+                scope.context.isShowRateLimitPolicyForm = false;
+                scope.context.isShowProxyPolicyForm = false;
+
+
+                break;
+
+              case 'proxy' :
+
+
+                scope.context.isShowAuthPolicyForm = false;
+                scope.context.isShowRateLimitPolicyForm = false;
+                scope.context.isShowProxyPolicyForm = true;
+
+
+                break;
+
+              default :
+                scope.context.isShowAuthPolicyForm = false;
+                scope.context.isShowRateLimitPolicyForm = false;
+                scope.context.isShowProxyPolicyForm = false;
+
+
+
+            }
+          }
+
+        }, true);
       }
     }
   }
@@ -198,36 +212,33 @@ Gateway.directive('slPolicyScopeEditor', [ '$log', function($log) {
     templateUrl: './scripts/modules/gateway/templates/policy.scope.editor.html',
     controller:['$scope', function($scope) {
 
-     // $scope.policyCtx.currentPolicy.policyScopes = [];
-
-    //  $scope.inputTags.push({name: 'test tag'});
-      if ($scope.policyCtx) {
-        $scope.policyCtx.newPolicyScope = '';
+      if ($scope.context) {
+        $scope.context.newPolicyScope = '';
 
       }
 
       $scope.addPolicyScope = function() {
-        if (!$scope.policyCtx.newPolicyScope || $scope.policyCtx.newPolicyScope.length === 0) {
+        if (!$scope.context.newPolicyScope || $scope.context.newPolicyScope.length === 0) {
           return;
         }
-        if (!$scope.policyCtx.currentPolicy.policyScopes) {
-          $scope.policyCtx.currentPolicy.policyScopes = [];
+        if (!$scope.policy.scopes) {
+          $scope.policy.scopes = [];
         }
-        $scope.policyCtx.currentPolicy.policyScopes.push({name: $scope.policyCtx.newPolicyScope});
-        $scope.policyCtx.newPolicyScope = '';
+        $scope.policy.scopes.push($scope.context.newPolicyScope);
+        $scope.context.newPolicyScope = '';
       };
       $scope.deletePolicyScope = function(key) {
-        if (!$scope.policyCtx.currentPolicy.policyScopes) {
-          $scope.policyCtx.currentPolicy.policyScopes = [];
+        if (!$scope.policy.scopes) {
+          $scope.policy.scopes = [];
         }
-        if (($scope.policyCtx.currentPolicy.policyScopes.length > 0) &&
-          ($scope.policyCtx.newPolicyScope.length === 0) &&
+        if (($scope.policy.scopes.length > 0) &&
+          ($scope.context.newPolicyScope.length === 0) &&
           (key === undefined)) {
-          $scope.policyCtx.currentPolicy.policyScopes.pop();
+          $scope.policy.scopes.pop();
 
         }
         else if (key !== undefined) {
-          $scope.policyCtx.currentPolicy.policyScopes.splice(key, 1);
+          $scope.policy.scopes.splice(key, 1);
         }
       };
 
