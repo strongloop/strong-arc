@@ -1,17 +1,12 @@
 Gateway.service('GatewayServices', [
   '$log',
-  'InternalEndpoint',
-  'ExternalEndpoint',
-  'PolicyScope',
   'Policy',
-  'Phase',
   'GatewayMap',
   'Pipeline',
-  '$http',
-  '$q',
-  function($log, InternalEndpoint, ExternalEndpoint, PolicyScope, Policy, Phase, GatewayMap, Pipeline, $http, $q) {
+  function($log, Policy, GatewayMap, Pipeline) {
     var svc = this;
 
+    // AuthScopes
 
 
     /*

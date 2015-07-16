@@ -30,7 +30,7 @@ var Arc = angular.module('Arc', [
   'angular-growl',
   'lbServices',
   'ArcServices',
-  'ArcGatewayServices',
+  //'ArcGatewayServices',
   'BuildDeployAPI',
   'ArcUserAuthFactory',
   'Composer',
