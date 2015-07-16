@@ -1,5 +1,6 @@
 VisualComposer.controller('VisualComposerMainController', [
-  function($scope) {
+  '$scope',
+  function VisualComposerMainController($scope) {
     return;
   }
 ]);

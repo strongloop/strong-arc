@@ -33,6 +33,7 @@ var Arc = angular.module('Arc', [
   'BuildDeployAPI',
   'ArcUserAuthFactory',
   'Composer',
+  'VisualComposer',
   'Profiler',
   'Tracing',
   'TracingViz',
