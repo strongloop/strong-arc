@@ -33,7 +33,6 @@ gulp.task('build', [
     'build-devtools-autoprefixer',
     'build-version',
     'build-workspace-services',
-    'build-gateway-services',
     'build-build-and-deploy-services',
     'build-help-assets',
     'build-arc-services',
@@ -106,16 +105,6 @@ gulp.task('build-arc-services', function() {
       ngModuleName: 'ArcServices'
     }))
     .pipe(rename('arc-services.js'))
-    .pipe(gulp.dest('./client/www/scripts/modules/common'));
-});
-gulp.task('build-gateway-services', function() {
-  process.env.GULP_ANGULAR_CODEGEN = 'YES';
-  return gulp.src('./gateway-api/server/server.js')
-    .pipe(loopbackAngular({
-      apiUrl: '/gateway',
-      ngModuleName: 'ArcGatewayServices'
-    }))
-    .pipe(rename('gateway-services.js'))
     .pipe(gulp.dest('./client/www/scripts/modules/common'));
 });
 
