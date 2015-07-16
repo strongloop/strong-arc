@@ -45,32 +45,7 @@ Gateway.controller('PipelineMainController', [
       name: 'pipelinePolicyDetail',
       value: 100
     };
-    $scope.items = [{
-      name: 'item 1'
-    }, {
-      name: 'item 2'
-    }, {
-      name: 'item 3'
-    }, {
-      name: 'item 4'
-    }, {
-      name: 'item 5'
-    }, {
-      name: 'item 6'
-    }, {
-      name: 'item 7'
-    }, {
-      name: 'item 8'
-    }]
 
-    $scope.sortableOptions = {
-      containment: '#sortable-container'
-    };
-    $scope.dragControlListeners = {
-      accept: function (sourceItemHandleScope, destSortableScope) {return true},//override to determine drag is allowed or not. default is true.
-      itemMoved: function (event) {},//Do what you want
-      orderChanged: function(event) {},//Do what you want
-    };
     $scope.setupHidePopover = function($event, pipeline) {
       var element = angular.element($event.target);
       $scope.pipelineCtx.currentPipeline = pipeline;
