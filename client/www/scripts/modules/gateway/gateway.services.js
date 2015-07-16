@@ -192,41 +192,8 @@ Gateway.service('GatewayServices', [
         });
     };
 
-    svc.savePolicyScope = function(policyScope) {
-      if (policyScope) {
-        if (!policyScope.name) {
-          policyScope.name = 'lb-' + policyScope.host + ':' + policyScope.port;
-        }
-        // update
-        if (policyScope.id) {
-          delete policyScope._id;
-          return PolicyScope.upsert(policyScope,
-            function(response){
-              console.log('updated PolicyScope');
-              return response;
-            },
-            function(error){
-              console.log('error adding PolicyScope: ' + JSON.stringify(error));
-
-            }
-          );
-        }
-        // create
-        else {
-          return PolicyScope.create( policyScope,
-            function(response){
-              console.log('added PolicyScope');
-              return response;
-            },
-            function(error){
-              console.log('error adding PolicyScope: ' + JSON.stringify(error));
-            }
-          );
-        }
-      }
-    };
     svc.getPolicyScopes = function() {
-      return PolicyScope.find({})
+      return GatewayMap.getAuthScopes()
         .$promise
         .then(function(response) {
           return response;

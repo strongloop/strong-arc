@@ -139,30 +139,8 @@ Gateway.controller('GatewayMainController', [
         });
       $scope.policyCtx.policies = GatewayServices.getPolicies()
         .then(function(policies) {
-          $log.debug('|  refresh policies: ' + policies.length);
           $scope.policyCtx.policies = policies;
 
-          if ($scope.policyCtx.policies.map) {
-
-            $scope.policyCtx.policies.map(function(policy) {
-              if ((policy.type === 'auth') && (policy.policyScopes)){
-                if (!policy.data) {
-                  policy.data = [];
-                }
-
-                if (policy.policyScopes.map) {
-                  var index = 1;
-                  policy.policyScopes.map(function(scope) {
-                    policy.data.push({name: 'scope-' + index, value: scope.name});
-                    index++;
-
-                  });
-
-                }
-              }
-
-            })
-          }
           window.triggerResizeUpdate();
         });
       $scope.policyScopeCtx.policyScopes = GatewayServices.getPolicyScopes()
