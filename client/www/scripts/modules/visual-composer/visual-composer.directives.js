@@ -5,7 +5,7 @@ VisualComposer.directive('slComposerCanvas', [
       replace: true,
       template: '<div style="width:100%;height:100%"></div>',
       scope: {
-
+        models: '='
       },
       link: function($scope, elem) {
         var height = elem.height();
@@ -28,17 +28,30 @@ VisualComposer.directive('slComposerCanvas', [
 
         var container = svg.append('g');
 
-        container.append('rect')
-          .attr('height', 50)
-          .attr('width', 200)
-          .call(drag);
+        $scope.$watch('models', function(newVal) {
+          container.selectAll('.model')
+            .data(newVal, function(d) {
+              return d.name;
+            })
+            .enter()
+              .append('g')
+              .call(buildInstance);
+        });
 
-        container.append('rect')
-          .attr('x', 100)
-          .attr('y', 100)
-          .attr('height', 50)
-          .attr('width', 200)
-          .call(drag);
+        function buildInstance(g) {
+          g.append('rect')
+            .attr('class', 'model')
+            .attr('height', 50)
+            .attr('width', 200);
+
+          g.append('text')
+            .attr('y', 25)
+            .text(function(d) {
+              return d.name;
+            });
+
+          g.call(drag);
+        }
 
         function zoomed() {
           container
@@ -59,8 +72,12 @@ VisualComposer.directive('slComposerCanvas', [
 
         function dragMove(d) {
           d3.select(this)
-            .attr('x', d3.event.x - eventOffset[0])
-            .attr('y', d3.event.y - eventOffset[1]);
+            .attr('transform', function(d) {
+              var x = d3.event.x - eventOffset[0];
+              var y = d3.event.y - eventOffset[1];
+
+              return 'translate(' + x + ', ' + y + ')';
+            });
         }
 
         function dragEnd() {
