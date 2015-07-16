@@ -34,8 +34,8 @@
         <div ng-show="policy.type == 'auth'">
           <span>scopes:</span>
           <ul>
-          <li ng-repeat="scope in policy.policyScopes">
-            <div class="policy-scope-item">{{scope.name}}</div>
+          <li ng-repeat="scope in policy.scopes">
+            <div class="policy-scope-item">{{scope}}</div>
           </li>
           </ul>
         </div>
