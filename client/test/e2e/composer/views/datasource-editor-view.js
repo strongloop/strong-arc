@@ -1,4 +1,7 @@
 var DataSourceEditorView = (function () {
+  var SUCCESS = 0;
+  var ERROR = 1;
+
   function DataSourceEditorView() {
     var EC = protractor.ExpectedConditions;
     this.dataSourceNameInput  = element(by.id('name'));
@@ -11,11 +14,12 @@ var DataSourceEditorView = (function () {
     this.connectorOptions = element.all(by.css('select#connector option'));
     this.saveDataSourceButton = element(by.css('[data-id="datasource-save-button"]'));
     this.connectionSuccessIndicator = element(by.css('.ui-msg-inline-success'));
+    this.connectionFailureIndicator = element(by.css('.ui-msg-inline-error'));
     this.testConnectionButton = element(by.buttonText('Test Connection'));
 
     var scrollIntoView = 'arguments[0].scrollIntoView();';
 
-    this.createNewDataSource = function(name) {
+    this.createNewDataSource = function createNewDataSource(name) {
       this.dataSourceNameInput.clear();
       this.dataSourceNameInput.sendKeys(name);
       this.connectorOptions.get(1).click();
@@ -25,7 +29,8 @@ var DataSourceEditorView = (function () {
       browser.waitForAngular();
     };
 
-    this.createNewExternalDataSource = function(name, dbname, user, pass, host, port, connectorindex) {
+    this.createNewExternalDataSource = function createNewExternalDataSource(name, dbname, user, pass, host, port, connectorindex) {
+      browser.driver.wait(EC.presenceOf(this.dataSourceNameInput), 10000);
       this.dataSourceNameInput.clear();
       this.dataSourceNameInput.sendKeys(name);
       this.userNameInput.sendKeys(user || '');
@@ -38,21 +43,23 @@ var DataSourceEditorView = (function () {
       browser.waitForAngular();
     };
 
-    this.saveDataSource = function () {
+    this.saveDataSource = function saveDataSource() {
       this.saveDataSourceButton.click();
     }
 
-    this.testDatabaseConnection = function() {
+    this.testDatabaseConnectionFor = function testDatabaseConnectionFor(outcome) {
       var self = this;
-
-      //browser.driver.executeScript(scrollIntoView, self.testConnectionButton);
       
       self.testConnectionButton.click();
 
-      browser.driver.wait(EC.visibilityOf(self.connectionSuccessIndicator), 10000);
+      if(outcome === SUCCESS) {
+        browser.driver.wait(EC.visibilityOf(self.connectionSuccessIndicator), 10000)
+      } else if (outcome === ERROR) {
+        browser.driver.wait(EC.visibilityOf(self.connectionFailureIndicator), 10000);
+      }
     }
 
-    this.getCurrentDSName = function() {
+    this.getCurrentDSName = function getCurrentDSName() {
       return this.dataSourceNameInput.getAttribute('value');
     };
 

@@ -4,6 +4,9 @@ var EC = protractor.ExpectedConditions;
 
 var randomPropertyName = Math.floor(Math.random() * Date.now()).toString();
 
+var SUCCESS = 0;
+var ERROR = 1;
+
 var mysqlCreds = {
     user: 'studio',
     pass: 'zh59jeol',
@@ -49,7 +52,7 @@ describe('datasource-definition-interactions', function() {
 
             // TODO: these sleeps are really bad...
 
-            browser.sleep(500).then(function() {
+            browser.sleep(750).then(function() {
                 return expect(mainTreeNavView.dataSourceNavItems.count()).toEqual(1);
             });
 
@@ -99,14 +102,13 @@ describe('datasource-definition-interactions', function() {
 
             dataSourceEditorView.createNewExternalDataSource('myotherdb', mysqlCreds.dbname, mysqlCreds.user, mysqlCreds.pass, '127.0.0.1', '3306');
             expect(dataSourceEditorView.getCurrentDSName()).toEqual('myotherdb');
-            //browser.pause()
 
             browser.sleep(750).then(function() {
                 expect(mainTreeNavView.dataSourceNavItems.count()).toEqual(2);
             });
 
 
-            dataSourceEditorView.testDatabaseConnection();
+            dataSourceEditorView.testDatabaseConnectionFor(SUCCESS);
             expect(EC.textToBePresentInElement(dataSourceEditorView.connectionSuccessIndicator, 'Success'));
         }
     );
@@ -169,7 +171,6 @@ describe('datasource-definition-interactions', function() {
 
     it('should login,' +
         ' discover from datasource' +
-        ' delete datasource' +
         ' logout',
         function() {
             var mainTreeNavView = new ComposerViews.MainTreeNavView();
@@ -209,7 +210,46 @@ describe('datasource-definition-interactions', function() {
         mainTreeNavView.deleteFirstModel();
 
         mainTreeNavView.deleteDataSourceByIndex(1);
+        }
+    );
 
-    });
+    it('should login,' +
+        ' open new datasource view,' +
+        ' create new mysql datasource with false connection info,' +
+        ' fail to connect,' +
+        ' logout',
+        function() {
+            var mainTreeNavView = new ComposerViews.MainTreeNavView();
+            var dataSourceEditorView = new ComposerViews.DataSourceEditorView();
+            var modelEditorView = new ComposerViews.ModelEditorView();
+
+
+            // TODO: these sleeps are really bad...
+
+
+            browser.sleep(500).then(function() {
+                return expect(mainTreeNavView.dataSourceNavItems.count()).toEqual(1);
+            });
+
+
+            mainTreeNavView.openNewDataSourceView();
+            expect(dataSourceEditorView.getCurrentDSName()).toEqual('newDatasource');
+
+            dataSourceEditorView.createNewExternalDataSource('mywrongdb', 'wrong-database', mysqlCreds.user, mysqlCreds.pass, '127.0.0.1', '3306');
+            expect(dataSourceEditorView.getCurrentDSName()).toEqual('mywrongdb');
+
+            browser.sleep(750).then(function() {
+                expect(mainTreeNavView.dataSourceNavItems.count()).toEqual(2);
+            });
+
+            dataSourceEditorView.testDatabaseConnectionFor(ERROR);
+            expect(EC.textToBePresentInElement(dataSourceEditorView.connectionFailureIndicator, 'Failed:'));
+
+            mainTreeNavView.deleteDataSourceByIndex(1);
+            browser.sleep(750).then(function() {
+                expect(mainTreeNavView.dataSourceNavItems.count()).toEqual(1);
+            });
+        }
+    );
 
 });

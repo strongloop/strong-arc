@@ -50,9 +50,7 @@ var MainTreeNavView = (function () {
     }
     this.openNewDataSourceView = function() {
       var self = this;
-      browser.driver.wait(function() {
-        return self.addDataSourceButton.isPresent();
-      }, 10000);
+      browser.driver.wait(EC.visibilityOf(self.addDataSourceButton), 10000);
       self.addDataSourceButton.click();
     };
     this.deleteDataSourceByIndex = function(index) {
