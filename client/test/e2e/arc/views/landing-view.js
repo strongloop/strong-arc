@@ -16,7 +16,6 @@ var LandingView = (function () {
 
     this.openComposerView = function() {
       var self = this;
-      browser.pause();
       browser.driver.wait(function() {
         return self.composerAppCommand.isPresent();
       }, 10000);
@@ -30,7 +29,6 @@ var LandingView = (function () {
 
     this.openProcessManagerView = function() {
       var self = this;
-      browser.pause();
       browser.driver.wait(function() {
         return self.processManagerAppCommand.isPresent();
       }, 10000);
