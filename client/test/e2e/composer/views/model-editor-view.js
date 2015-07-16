@@ -73,10 +73,6 @@ var ModelEditorView = (function () {
       return this.dataSourceSelect.getAttribute('value');
     };
     this.createNewModel = function(modelName) {
-      // TODO: these sleeps shouldn't be necessary..
-      //browser.sleep(500);
-      //browser.executeScript('window.scroll(0, 0);');
-      //this.modelNameInput.click();
       this.modelNameInput.clear();
       this.modelNameInput.sendKeys(modelName);
       browser.sleep(500);

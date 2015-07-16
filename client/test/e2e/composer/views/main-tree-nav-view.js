@@ -1,8 +1,7 @@
-'use strict';
-
 var MainTreeNavView = (function () {
+  var EC = protractor.ExpectedConditions;
+
   function MainTreeNavView() {
-    var EC = protractor.ExpectedConditions;
     this.modelNavRows = element.all(
       by.css('.model-branch-container .tree-item-row'));
     this.modelNavButtons = element.all(
@@ -40,13 +39,12 @@ var MainTreeNavView = (function () {
       self.dataSourceNavItems.first().click();
     };
     this.openDataSourceDiscoveryByIndex = function (index) {
-      var self = this;
-      browser.driver.wait(function() {
-        return self.addDataSourceButton.isPresent();
-      }, 10000);
-      var dataSourceNavCtx = self.dataSourceCtxBtns.get(index);
+      browser.driver.wait(
+        EC.presenceOf(this.addDataSourceButton),
+      10000);
+      var dataSourceNavCtx = this.dataSourceCtxBtns.get(index);
       browser.driver.actions().click(dataSourceNavCtx).perform();
-      var discoverButton = self.ctxMenuTriggers.get(1);
+      var discoverButton = this.ctxMenuTriggers.get(1);
       browser.driver.actions().click(discoverButton).perform();
     };
     this.openNewDataSourceView = function() {
@@ -56,9 +54,9 @@ var MainTreeNavView = (function () {
     };
     this.deleteDataSourceByIndex = function(index) {
       var self = this;
-      browser.driver.wait(function() {
-        return self.addDataSourceButton.isPresent();
-      }, 10000);
+      browser.driver.wait(
+        EC.presenceOf(this.addDataSourceButton),
+      10000);
       var dataSourceNavCtx = self.dataSourceCtxBtns.get(index);
       browser.driver.actions().click(dataSourceNavCtx).perform();
       var deleteButton = self.ctxMenuTriggers.get(2);
@@ -68,9 +66,9 @@ var MainTreeNavView = (function () {
     };
     this.deleteFirstModel = function() {
       var self = this;
-      browser.driver.wait(function() {
-        return self.addDataSourceButton.isPresent();
-      }, 10000);
+      browser.driver.wait(
+        EC.presenceOf(this.addDataSourceButton),
+      10000);
       // Main Tree Context Menu
       var modelNavCtx = self.modelCtxBtns.get(0);
       browser.driver.actions().click(modelNavCtx).perform();
@@ -80,10 +78,8 @@ var MainTreeNavView = (function () {
       alertDialog.accept();
     };
     this.waitForMessages = function () {
-      var self = this;
-
-      browser.driver.wait(EC.visibilityOf(self.currentMessage),5000);
-      browser.driver.wait(EC.invisibilityOf(self.currentMessage),5000);
+      browser.driver.wait(EC.visibilityOf(this.currentMessage),5000);
+      browser.driver.wait(EC.invisibilityOf(this.currentMessage),5000);
     };
   }
   return MainTreeNavView;

@@ -1,5 +1,3 @@
-'use strict';
-
 var DiscoveryMenuView = (function () {
   function DiscoveryMenuView() {
     var EC = protractor.ExpectedConditions;
@@ -11,9 +9,8 @@ var DiscoveryMenuView = (function () {
       by.css('button[ng-click="discoveryNexBtnClicked()"]'));
     this.indicatorOfModelsBeingDiscovered = element(
       by.cssContainingText('.discovery-schema-grid-label',
-       'Models to be generated'));
+      'Models to be generated'));
 
-    
     this.filterDiscoveredModels = function (value) {
       var el = this.filterInput;
 

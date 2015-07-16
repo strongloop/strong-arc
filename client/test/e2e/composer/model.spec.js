@@ -1,183 +1,182 @@
-'use strict';
-
 var ArcViews = require('../arc/views/');
 var ComposerViews = require('../composer/views/');
 var EC = protractor.ExpectedConditions;
 
 describe('model-definition-interactions', function() {
-    beforeEach(function() {
-        var loginView = new ArcViews.LoginView();
-        var landingView = new ArcViews.LandingView();
-        var modelEditorView = new ComposerViews.ModelEditorView();
-        loginView.loginToLandingView();
-        landingView.openComposerView();
-        browser.driver.wait(
-            EC.visibilityOf(modelEditorView.addModelButton),
-        5000);
-    });
-    afterEach(function() {
-        var headerView = new ArcViews.HeaderView();
-        headerView.logout();
-    });
+  beforeEach(function() {
+    var loginView = new ArcViews.LoginView();
+    var landingView = new ArcViews.LandingView();
+    var modelEditorView = new ComposerViews.ModelEditorView();
+    loginView.loginToLandingView();
+    landingView.openComposerView();
+    browser.driver.wait(
+      EC.visibilityOf(modelEditorView.addModelButton),
+      5000);
+  });
 
-    it('should login navigate to api composer,' +
-        ' create a model,' +
-        ' add a property,' +
-        ' logout',
-        function() {
-            var mainTreeNavView = new ComposerViews.MainTreeNavView();
-            var modelEditorView = new ComposerViews.ModelEditorView();
+  afterEach(function() {
+    var headerView = new ArcViews.HeaderView();
+    headerView.logout();
+  });
 
-            mainTreeNavView.openNewModelView();
+  it('should login navigate to api composer,' +
+    ' create a model,' +
+    ' add a property,' +
+    ' logout',
+    function() {
+      var mainTreeNavView = new ComposerViews.MainTreeNavView();
+      var modelEditorView = new ComposerViews.ModelEditorView();
 
-            modelEditorView.createNewModel('mynewmodel');
+      mainTreeNavView.openNewModelView();
 
-            expect(modelEditorView.getCurrentModelName()).toEqual('mynewmodel');
+      modelEditorView.createNewModel('mynewmodel');
 
-            browser.sleep(1000).then(function() {
-                expect(mainTreeNavView.modelNavRows.count()).toEqual(1);
-            });
+      expect(modelEditorView.getCurrentModelName()).toEqual('mynewmodel');
 
-            modelEditorView.addNewProperty('mynewproperty');
+      browser.sleep(1000).then(function() {
+        expect(mainTreeNavView.modelNavRows.count()).toEqual(1);
+      });
 
-            expect(
-                modelEditorView.getFirstPropertyName()
-            ).toEqual('mynewproperty');
-        }
-    );
+      modelEditorView.addNewProperty('mynewproperty');
 
-    it(' should login navigate to api composer,' +
-        ' open a model,' +
-        ' open a property,' +
-        ' add a comment, ' +
-        ' edit the comment, ' +
-        ' modify settings of the model' +
-        ' logout',
-        function() {
-            var mainTreeNavView = new ComposerViews.MainTreeNavView();
-            var modelEditorView = new ComposerViews.ModelEditorView();
+      expect(
+        modelEditorView.getFirstPropertyName()
+      ).toEqual('mynewproperty');
+    }
+  );
 
-            browser.sleep(750);
-            expect(mainTreeNavView.modelNavRows.count()).toEqual(1);
+  it(' should login navigate to api composer,' +
+    ' open a model,' +
+    ' open a property,' +
+    ' add a comment, ' +
+    ' edit the comment, ' +
+    ' modify settings of the model' +
+    ' logout',
+    function() {
+      var mainTreeNavView = new ComposerViews.MainTreeNavView();
+      var modelEditorView = new ComposerViews.ModelEditorView();
 
-            mainTreeNavView.openFirstModel();
-            expect(modelEditorView.getCurrentModelName()).toEqual('mynewmodel');
+      browser.sleep(750);
+      expect(mainTreeNavView.modelNavRows.count()).toEqual(1);
 
-            modelEditorView.addCommentToProperty(0, 'comment1\n');
-            browser.sleep(250);
-            expect(modelEditorView.getFirstComment()).toEqual('comment1');
+      mainTreeNavView.openFirstModel();
+      expect(modelEditorView.getCurrentModelName()).toEqual('mynewmodel');
 
-            browser.sleep(500);
+      modelEditorView.addCommentToProperty(0, 'comment1\n');
+      browser.sleep(250);
+      expect(modelEditorView.getFirstComment()).toEqual('comment1');
 
-            modelEditorView.addCommentToProperty(0, 'comment2\n');
+      browser.sleep(500);
 
-            browser.sleep(250);
+      modelEditorView.addCommentToProperty(0, 'comment2\n');
 
-            expect(modelEditorView.getFirstComment()).toEqual('comment2');
+      browser.sleep(250);
 
-            browser.sleep(500);
+      expect(modelEditorView.getFirstComment()).toEqual('comment2');
 
-            modelEditorView.toggleFirstModelId();
+      browser.sleep(500);
 
-            browser.sleep(750);
+      modelEditorView.toggleFirstModelId();
 
-            modelEditorView.toggleFirstModelRequired();
+      browser.sleep(750);
 
-            browser.sleep(750);
+      modelEditorView.toggleFirstModelRequired();
 
-            modelEditorView.toggleFirstModelIndex();
+      browser.sleep(750);
+
+      modelEditorView.toggleFirstModelIndex();
 
 
-            expect(mainTreeNavView.modelNavRows.count()).toEqual(1);
-        }
+      expect(mainTreeNavView.modelNavRows.count()).toEqual(1);
+    }
 
-    );
+  );
 
-    it(' should login navigate to api composer,' +
-        ' open a model,' +
-        ' attempt to create a property with an invalid name' +
-        ' logout',
-        function() {
-            var mainTreeNavView = new ComposerViews.MainTreeNavView();
-            var modelEditorView = new ComposerViews.ModelEditorView();
+  it(' should login navigate to api composer,' +
+    ' open a model,' +
+    ' attempt to create a property with an invalid name' +
+    ' logout',
+    function() {
+      var mainTreeNavView = new ComposerViews.MainTreeNavView();
+      var modelEditorView = new ComposerViews.ModelEditorView();
 
-            browser.sleep(750);
-            expect(mainTreeNavView.modelNavRows.count()).toEqual(1);
+      browser.sleep(750);
+      expect(mainTreeNavView.modelNavRows.count()).toEqual(1);
 
-            mainTreeNavView.openFirstModel();
-            expect(modelEditorView.getCurrentModelName()).toEqual('mynewmodel');
+      mainTreeNavView.openFirstModel();
+      expect(modelEditorView.getCurrentModelName()).toEqual('mynewmodel');
 
-            modelEditorView.addNewProperty('invalid property name');
+      modelEditorView.addNewProperty('invalid property name');
 
-            expect(modelEditorView.validationErrorMessagePresent());
+      expect(modelEditorView.validationErrorMessagePresent());
 
-            expect(mainTreeNavView.modelNavRows.count()).toEqual(1);
-        }
+      expect(mainTreeNavView.modelNavRows.count()).toEqual(1);
+    }
 
-    );
+  );
 
-    it('should open a model' +
-        ' open a property,' +
-        ' verify settings were persisted,' +
-        ' delete the model,' +
-        ' logout',
-        function() {
-            var mainTreeNavView = new ComposerViews.MainTreeNavView();
-            var dataSourceEditorView = new ComposerViews.DataSourceEditorView();
-            var modelEditorView = new ComposerViews.ModelEditorView();
+  it('should open a model' +
+    ' open a property,' +
+    ' verify settings were persisted,' +
+    ' delete the model,' +
+    ' logout',
+    function() {
+      var mainTreeNavView = new ComposerViews.MainTreeNavView();
+      var dataSourceEditorView = new ComposerViews.DataSourceEditorView();
+      var modelEditorView = new ComposerViews.ModelEditorView();
 
-            browser.sleep(750);
-            expect(mainTreeNavView.modelNavRows.count()).toEqual(1);
+      browser.sleep(750);
+      expect(mainTreeNavView.modelNavRows.count()).toEqual(1);
 
-            mainTreeNavView.openFirstModel();
-            expect(modelEditorView.getCurrentModelName()).toEqual('mynewmodel');
+      mainTreeNavView.openFirstModel();
+      expect(modelEditorView.getCurrentModelName()).toEqual('mynewmodel');
 
-            browser.sleep(750);
+      browser.sleep(750);
 
-            expect(modelEditorView.getCheckedElements().count()).toEqual(3);
-            expect(modelEditorView.getFirstComment()).toEqual('comment2');
+      expect(modelEditorView.getCheckedElements().count()).toEqual(3);
+      expect(modelEditorView.getFirstComment()).toEqual('comment2');
 
-            mainTreeNavView.deleteFirstModel();
-            browser.sleep(500);
-            expect(mainTreeNavView.modelNavRows.count()).toEqual(0);
-        }
+      mainTreeNavView.deleteFirstModel();
+      browser.sleep(500);
+      expect(mainTreeNavView.modelNavRows.count()).toEqual(0);
+    }
 
-    );
+  );
 
-    it('should attempt to create a model with a false name,' +
-        ' logout',
-        function() {
-            var mainTreeNavView = new ComposerViews.MainTreeNavView();
-            var dataSourceEditorView = new ComposerViews.DataSourceEditorView();
-            var modelEditorView = new ComposerViews.ModelEditorView();
+  it('should attempt to create a model with a false name,' +
+    ' logout',
+    function() {
+      var mainTreeNavView = new ComposerViews.MainTreeNavView();
+      var dataSourceEditorView = new ComposerViews.DataSourceEditorView();
+      var modelEditorView = new ComposerViews.ModelEditorView();
 
-            mainTreeNavView.openNewModelView();
+      mainTreeNavView.openNewModelView();
 
-            modelEditorView.createNewModel('my wrong model');
+      modelEditorView.createNewModel('my wrong model');
 
-            expect(modelEditorView.validationErrorMessagePresent());
+      expect(modelEditorView.validationErrorMessagePresent());
 
-            expect(mainTreeNavView.modelNavRows.count()).toEqual(0);
-        }
+      expect(mainTreeNavView.modelNavRows.count()).toEqual(0);
+    }
 
-    );
+  );
 
-    it('should attempt to create a model with no name,' +
-        ' logout',
-        function() {
-            var mainTreeNavView = new ComposerViews.MainTreeNavView();
-            var dataSourceEditorView = new ComposerViews.DataSourceEditorView();
-            var modelEditorView = new ComposerViews.ModelEditorView();
+  it('should attempt to create a model with no name,' +
+    ' logout',
+    function() {
+      var mainTreeNavView = new ComposerViews.MainTreeNavView();
+      var dataSourceEditorView = new ComposerViews.DataSourceEditorView();
+      var modelEditorView = new ComposerViews.ModelEditorView();
 
-            mainTreeNavView.openNewModelView();
+      mainTreeNavView.openNewModelView();
 
-            modelEditorView.createNewModel('');
+      modelEditorView.createNewModel('');
 
-            expect(modelEditorView.validationErrorMessagePresent());
+      expect(modelEditorView.validationErrorMessagePresent());
 
-            expect(mainTreeNavView.modelNavRows.count()).toEqual(0);
-        }
+      expect(mainTreeNavView.modelNavRows.count()).toEqual(0);
+    }
 
-    );
+  );
 
 });

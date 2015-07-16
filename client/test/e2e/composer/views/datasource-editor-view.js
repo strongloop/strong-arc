@@ -1,11 +1,6 @@
-'use strict';
-
 var DataSourceEditorView = (function () {
   var SUCCESS = 0;
   var ERROR = 1;
-
-
-
   function DataSourceEditorView() {
     var EC = protractor.ExpectedConditions;
     this.dataSourceNameInput  = element(by.id('name'));
@@ -73,7 +68,6 @@ var DataSourceEditorView = (function () {
     this.getCurrentDSName = function getCurrentDSName() {
       return this.dataSourceNameInput.getAttribute('value');
     };
-
 
   }
   return DataSourceEditorView;
