@@ -51,6 +51,10 @@ VisualComposer.directive('slComposerCanvas', [
             });
 
           g.call(drag);
+
+          g.each(function(d) {
+            debugger;
+          });
         }
 
         function zoomed() {
