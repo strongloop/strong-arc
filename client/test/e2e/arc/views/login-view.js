@@ -1,4 +1,6 @@
 var LoginView = (function () {
+  var EC = protractor.ExpectedConditions;
+
   function LoginView() {
     this.userNameInput = element(by.id('InputUserName'));
     this.passwordInput = element(by.id('InputPassword'));
@@ -33,9 +35,9 @@ var LoginView = (function () {
             return url === 'http://127.0.0.1:9800/#/';
           });
         }, 10000);
-        return browser.driver.wait(function() {
-          return browser.driver.findElement(by.css('.sl-landing-page'));
-        }, 10000);
+        browser.driver.wait(
+          EC.presenceOf(element(by.css('.sl-landing-page'))),
+        10000);
       });
     };
   }

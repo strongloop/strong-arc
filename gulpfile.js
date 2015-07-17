@@ -315,6 +315,7 @@ gulp.task('test-client-integration', function(callback) {
 
 gulp.task('setup-mysql', function(callback) {
   var ROOT_PASSWORD = process.env.MYSQL_ROOT_PWD || '';
+  
   setupMysql(ROOT_PASSWORD, function(err) {
     if (err) logMysqlErrorDescription(err);
     // Don't fail the build so that more tests will be run
