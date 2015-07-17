@@ -1,91 +1,4 @@
-Gateway.directive('slExternalEndpointForm', [
-  function() {
-    return {
-      restrict: 'E',
-      templateUrl: './scripts/modules/gateway/templates/external.endpoint.form.html'
-    }
-  }
-]);
-Gateway.directive('slExternalEndpointList', [
-  'GatewayServices',
-  function(GatewayServices) {
-    return {
-      restrict: 'E',
-      templateUrl: './scripts/modules/gateway/templates/external.endpoint.list.html',
-      controller: [
-        '$scope',
-        function($scope) {
 
-        }
-      ]
-    }
-  }
-]);
-Gateway.directive('slExternalEndpointMain', [
-  'GatewayServices',
-  function(GatewayServices) {
-    return {
-      restrict: 'E',
-      templateUrl: './scripts/modules/gateway/templates/external.endpoint.main.html',
-      controller: [
-        '$scope',
-        function($scope) {
-
-        }
-      ]
-    }
-  }
-]);
-Gateway.directive('slInternalEndpointForm', [
-  function() {
-    return {
-      restrict: 'E',
-      templateUrl: './scripts/modules/gateway/templates/internal.endpoint.form.html'
-    }
-  }
-]);
-Gateway.directive('slInternalEndpointList', [
-  function() {
-    return {
-      restrict: 'E',
-      templateUrl: './scripts/modules/gateway/templates/internal.endpoint.list.html',
-      controller: [
-        '$scope',
-        function($scope) {
-          $scope.saveInternalEndpoint = function(internalEndpoint) {
-            $scope.internalEndpointCtx.currentInternalEndpoint = internalEndpoint;
-            $scope.saveCurrentInternalEndpoint();
-          }
-        }
-      ]
-    }
-  }
-]);
-Gateway.directive('slPhaseForm', [
-  function() {
-    return {
-      restrict: 'E',
-      templateUrl: './scripts/modules/gateway/templates/phase.form.html'
-    }
-  }
-]);
-Gateway.directive('slPhaseList', [
-  function() {
-    return {
-      restrict: 'E',
-      templateUrl: './scripts/modules/gateway/templates/phase.list.html',
-      controller: [
-        '$scope',
-        function($scope) {
-          $scope.savePhase = function(phase) {
-            $scope.phaseCtx.currentPhase = phase;
-            $scope.saveCurrentPhase();
-          }
-        }
-      ]
-    }
-  }
-]);
 /*
 *
 *   POLICY
@@ -114,12 +27,9 @@ Gateway.directive('slPolicyForm', [
         scope.$watch('policy.type', function(newVal, oldVal) {
           if (newVal) {
             $log.debug('it changed: ' + newVal);
-            if (!scope.policy.rateScale) {
-              scope.policy.rateScale = 'second';
-            }
 
             switch (newVal) {
-              case 'ratelimit' :
+              case 'ratelimiting' :
 
                 scope.context.isShowAuthPolicyForm = false;
                 scope.context.isShowRateLimitPolicyForm = true;
@@ -136,7 +46,7 @@ Gateway.directive('slPolicyForm', [
 
                 break;
 
-              case 'proxy' :
+              case 'reverseproxy' :
 
 
                 scope.context.isShowAuthPolicyForm = false;
@@ -283,49 +193,6 @@ Gateway.directive('slPolicyScopeInput', [ '$log', function($log) {
     }
   }
 }]);
-
-/*
-*
-*   POLICY SCOPE
-*
-*   - should really be called endpoint groups(scope)
-*
-* */
-Gateway.directive('slPolicyScopeForm', [
-  function() {
-    return {
-      restrict: 'E',
-      templateUrl: './scripts/modules/gateway/templates/policy.scope.form.html'
-    }
-  }
-]);
-
-Gateway.directive('slPolicyScopeList', [
-  function() {
-    return {
-      restrict: 'E',
-      templateUrl: './scripts/modules/gateway/templates/policy.scope.list.html',
-      controller: [
-        '$scope',
-        function($scope) {
-
-        }
-      ]
-    }
-  }
-]);
-Gateway.directive('slPolicyScopeMainView', [
-  '$log',
-  function($log) {
-    return {
-      restrict: 'E',
-      templateUrl: './scripts/modules/gateway/templates/policy.scope.main.html',
-      link: function(scope, el, attrs) {
-
-      }
-    }
-  }
-]);
 
 /*
 *

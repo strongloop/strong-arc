@@ -129,44 +129,17 @@ Gateway.controller('PolicyMainController', [
       switch (policy.type) {
         case 'auth':
           //erase proxy and ratelimit data
-          policy.data = [{
-            name:'provider',
-            value:policy.provider
-          }];
-          if (policy.scopes && policy.scopes.map) {
-            for (var i = 0;i < policy.scopes.length;i++) {
-              policy.data.push({
-                name: 'scope: ' + (i + 1).toString(),
-                value: policy.scopes[i].name
-              });
-            }
-          }
+
           break;
-        case 'ratelimit':
-          policy.data = [
-            {
-              name: 'limit',
-              value:policy.limit
-            },
-            {
-              name: 'interval',
-              value: policy.interval
-            }
-          ];
+        case 'ratelimiting':
+
           break;
-        case 'proxy' :
-          policy.data = [{
-            name:'endpoint',
-            value:policy.endpoint
-          }];
+        case 'reverseproxy' :
+
           break;
 
         default:
       }
-      delete policy.provider;
-      delete policy.limit;
-      delete policy.interval;
-      delete policy.endpoint;
       return policy;
     }
 

@@ -10,9 +10,7 @@ Gateway.controller('PipelineMainController', [
   '$timeout',
   '$modal',
   function($scope, $log, GatewayServices, $timeout) {
-    $log.debug('Pipeline Controller');
 
-    //$scope.isShowMapPipelineInput = false;
     function resetCurrentPipeline() {
       $scope.pipelineCtx.currentPipeline = {};
     }
@@ -147,7 +145,7 @@ Gateway.controller('PipelineMainController', [
             endpoint:$scope.pipelineCtx.currentInternalEndpoint,
             data:[{name:'endpoint',value:$scope.pipelineCtx.currentInternalEndpoint}]
           };
-          $scope.pipelineCtx.currentPipeline.defaultEndpoint = newPolicy.endpoint;
+          $scope.pipelineCtx.currentPipeline.defaultEndpoint = newPolicy.targetURL;
           // create policy instance (save to db)
           newPolicy = GatewayServices.savePolicy(newPolicy)
             .$promise
