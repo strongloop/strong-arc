@@ -143,12 +143,7 @@ Gateway.controller('GatewayMainController', [
 
           window.triggerResizeUpdate();
         });
-      $scope.policyScopeCtx.policyScopes = GatewayServices.getPolicyScopes()
-        .then(function(scopes) {
-          $log.debug('|  refresh scopes: ' + scopes.length);
-          $scope.policyScopeCtx.policyScopes = scopes;
-        });
-      $scope.isShowScopesCrud = false;
+
     };
 
 
@@ -211,17 +206,17 @@ Gateway.controller('GatewayMainController', [
             description: ''
           },
           {
-            id: 'log',
-            name: 'Logging',
+            id: 'metrics',
+            name: 'Metrics',
             description: ''
           },
           {
-            id: 'ratelimit',
+            id: 'ratelimiting',
             name: 'Rate Limit',
             description: ''
           },
           {
-            id: 'proxy',
+            id: 'reverseproxy',
             name: 'Proxy',
             description: ''
 

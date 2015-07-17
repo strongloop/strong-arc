@@ -151,6 +151,34 @@ var GatewayNav = (GatewayNav = React).createClass({
           item.isActive = true;
         }
 
+        var cssClassIcon = 'sl-icon sl-icon-file';
+        if (type === 'policy') {
+          switch(item.type) {
+            case 'auth' :
+              cssClassIcon = 'sl-icon sl-icon-lightning';
+              break;
+
+            case 'ratelimiting' :
+              cssClassIcon = 'sl-icon sl-icon-logo';
+              break;
+
+            case 'metrics' :
+              cssClassIcon = 'sl-icon sl-icon-link';
+              break;
+
+            case 'reverseproxy' :
+              cssClassIcon = 'sl-icon sl-icon-file';
+              break;
+
+            default:
+
+
+          }
+
+        }
+
+
+
         var classNameVar = 'tree-item-row ';
         if (item.isActive) {
           classNameVar += ' is-active';
@@ -169,7 +197,7 @@ var GatewayNav = (GatewayNav = React).createClass({
         return (
           <div data-ui-type="row" className={classNameVar} data-id={item.id}>
             <div data-ui-type="cell" className="ia-nav-item-icon-container-col">
-              <span data-name={item.name}  data-id={item.id} className="sl-icon sl-icon-file"></span>
+              <span data-name={item.name} title={item.type}  data-id={item.id} className={cssClassIcon}></span>
             </div>
             <div data-ui-type="cell" className="ia-nav-item-name-container-col">
               <a className="nav-tree-item tree-node" href={urlString}>{item.name}</a>

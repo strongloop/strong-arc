@@ -6,202 +6,34 @@ Gateway.service('GatewayServices', [
   function($log, Policy, GatewayMap, Pipeline) {
     var svc = this;
 
-    // AuthScopes
 
 
-    /*
-    *
-    * InternalEndpoint
-    *
-    * */
-    svc.deleteInternalEndpoint = function(internalEndpointId) {
-      return InternalEndpoint.deleteById({id:internalEndpointId})
-        .$promise
-        .then(function(response) {
-          return response;
-        })
-        .catch(function(error) {
-          $log.warn('bad delete InternalEndpoint' + JSON.stringify(error));
-        });
-    };
-    svc.saveInternalEndpoint = function(internalEndpoint) {
-      if (internalEndpoint.host && internalEndpoint.port) {
-        if (!internalEndpoint.name) {
-          internalEndpoint.name = 'lb-' + internalEndpoint.host + ':' + internalEndpoint.port;
-        }
-        // update
-        if (internalEndpoint.id) {
-          delete internalEndpoint._id;
-          return InternalEndpoint.upsert(internalEndpoint,
-            function(response){
-              console.log('updated InternalEndpoint');
-              return response;
-            },
-            function(error){
-              console.log('error adding InternalEndpoint: ' + JSON.stringify(error));
-
-            }
-          );
-        }
-        // create
-        else {
-          return InternalEndpoint.create( internalEndpoint,
-            function(response){
-              console.log('added InternalEndpoint');
-              return response;
-            },
-            function(error){
-              console.log('error adding InternalEndpoint: ' + JSON.stringify(error));
-            }
-          );
-        }
-      }
-    };
-    svc.getInternalEndpoints = function() {
-      return InternalEndpoint.find({})
-        .$promise
-        .then(function(response) {
-          return response;
-        })
-        .catch(function(error) {
-          $log.warn('bad get all InternalEndpoint: ' + JSON.stringify(error));
-        })
-    };
-
-    /*
-    *
-    * ExternalEndpoint
-    *
-    * */
-    svc.deleteExternalEndpoint = function(externalEndpointId) {
-      return ExternalEndpoint.deleteById({id:externalEndpointId})
-        .$promise
-        .then(function(response) {
-          return response;
-        })
-        .catch(function(error) {
-          $log.warn('bad delete ExternalEndpoint' + JSON.stringify(error));
-        });
-    };
-    svc.saveExternalEndpoint = function(externalEndpoint) {
-      if (externalEndpoint) {
-        // update
-        if (externalEndpoint.id) {
-          delete externalEndpoint._id;
-          return ExternalEndpoint.upsert(externalEndpoint,
-            function(response){
-              console.log('updated ExternalEndpoint');
-              return response;
-            },
-            function(error){
-              console.log('error adding ExternalEndpoint: ' + JSON.stringify(error));
-
-            }
-          );
-        }
-        // create
-        else {
-          return ExternalEndpoint.create( externalEndpoint,
-            function(response){
-              console.log('added ExternalEndpoint');
-              return response;
-            },
-            function(error){
-              console.log('error adding ExternalEndpoint: ' + JSON.stringify(error));
-            }
-          );
-        }
-      }
-    };
-    svc.getGatewayEndpoints = function() {
-    //  var swaggerUrl = 'http://localhost:4000/explorer/resources';
-      var swaggerUrl = 'http://pool2015.herokuapp.com/explorer/resources';
-
-      //return $http.get(swaggerUrl)
-      //  .then(function(resources) {
-      //    return $q.all(
-      //      resources.data.apis.map(function fetchSingleApi(api) {
-      //        return $http.get(swaggerUrl + api.path)
-      //          .then(function(response) {
-      //            return response.data;
-      //          })
-      //          .catch(function(error) {
-      //            $log.warn('bad get swagger resource item: ' + JSON.stringify(error))
-      //          });
-      //      })
-      //
-      //    );
-      //  }).
-      //  catch(function(error) {
-      //    $log.warn('bad get swagger resources: ' + JSON.stringify((error)));
-      //  });
-    };
-    svc.getRawEndpointList = function() {
-      return svc.getGatewayEndpoints()
-        .then(function(endPoints) {
-
-          var  returnArray = [];
-
-          endPoints.map(function(path) {
-            var currentPath = path.resourcePath;
-            path.apis.map(function(api) {
-              var currentPattern = api.path;
-              api.operations.map(function(operation) {
-                var newItem = {
-                  path:currentPath,
-                  pattern:currentPattern,
-                  method: operation.method,
-                  nickname: operation.nickname
-
-                }
-                returnArray.push(newItem);
-              });
-            });
-
-          });
-
-          //endPoints.tmp = returnArray;
-
-          return returnArray;
-        });
-    };
-    svc.getExternalEndpoints = function() {
-      return ExternalEndpoint.find({})
-        .$promise
-        .then(function(response) {
-          return response;
-        })
-        .catch(function(error) {
-          $log.warn('bad get all ExternalEndpoints: ' + JSON.stringify(error));
-        })
-    };
-
-    /*
-    *
-    * PolicyScope
-    *
-    * */
-    svc.deletePolicyScope = function(policyScopeId) {
-      return PolicyScope.deleteById({id:policyScopeId})
-        .$promise
-        .then(function(response) {
-          return response;
-        })
-        .catch(function(error) {
-          $log.warn('bad delete PolicyScope' + JSON.stringify(error));
-        });
-    };
-
-    svc.getPolicyScopes = function() {
-      return GatewayMap.getAuthScopes()
-        .$promise
-        .then(function(response) {
-          return response;
-        })
-        .catch(function(error) {
-          $log.warn('bad get all PolicyScopes: ' + JSON.stringify(error));
-        })
-    };
+    ///*
+    //*
+    //* PolicyScope
+    //*
+    //* */
+    //svc.deletePolicyScope = function(policyScopeId) {
+    //  return PolicyScope.deleteById({id:policyScopeId})
+    //    .$promise
+    //    .then(function(response) {
+    //      return response;
+    //    })
+    //    .catch(function(error) {
+    //      $log.warn('bad delete PolicyScope' + JSON.stringify(error));
+    //    });
+    //};
+    //
+    //svc.getPolicyScopes = function() {
+    //  return GatewayMap.getAuthScopes()
+    //    .$promise
+    //    .then(function(response) {
+    //      return response;
+    //    })
+    //    .catch(function(error) {
+    //      $log.warn('bad get all PolicyScopes: ' + JSON.stringify(error));
+    //    })
+    //};
 
     /*
     *
@@ -270,61 +102,7 @@ Gateway.service('GatewayServices', [
     }
 
 
-    /*
-    *
-    * Phase
-    *
-    * */
-    svc.deletePhase = function(phaseId) {
-      return Phase.deleteById({id:phaseId})
-        .$promise
-        .then(function(response) {
-          return response;
-        })
-        .catch(function(error) {
-          $log.warn('bad delete Phase' + JSON.stringify(error));
-        });
-    };
-    svc.savePhase = function(phase) {
-      if (phase) {
-        // update
-        if (phase.id) {
-          delete phase._id;
-          return Phase.upsert(phase,
-            function(response){
-              console.log('updated Phase');
-              return response;
-            },
-            function(error){
-              console.log('error adding Phase: ' + JSON.stringify(error));
 
-            }
-          );
-        }
-        // create
-        else {
-          return Phase.create( phase,
-            function(response){
-              console.log('added Phase');
-              return response;
-            },
-            function(error){
-              console.log('error adding Phase: ' + JSON.stringify(error));
-            }
-          );
-        }
-      }
-    };
-    svc.getPhases = function() {
-      return Phase.find({})
-        .$promise
-        .then(function(response) {
-          return response;
-        })
-        .catch(function(error) {
-          $log.warn('bad get all Phases: ' + JSON.stringify(error));
-        })
-    };
     svc.deletePipeline = function(pipelineId) {
       return Pipeline.deleteById({id:pipelineId})
         .$promise
@@ -451,6 +229,11 @@ Gateway.service('GatewayServices', [
         })
     };
 
+    svc.getGatewayEndpoints = function() {
+      //  var swaggerUrl = 'http://localhost:4000/explorer/resources';
+      var swaggerUrl = 'http://pool2015.herokuapp.com/explorer/resources';
+
+    };
      return svc;
   }
 ]);
