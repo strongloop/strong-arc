@@ -232,3 +232,129 @@
     }
   }
 }
+
+.ui-menu-container {
+  max-width: 40rem;
+  font-size: 1.4rem;
+  color: @ui-dropdown-menu-color;
+  margin: 0 !important;
+  position: relative;
+  padding: 0 !important;
+
+  .toggler {
+
+    &.ui-input {
+      width: 100% !important;
+      padding-right: 3.5rem;
+    }
+
+    margin: 0 !important;
+  }
+
+  .ui-input-search {
+    position: relative;
+
+    .clear {
+      display: block;
+      position: absolute;
+      top: -.3rem;
+      right: .6rem;
+      left: auto;
+      text-decoration: none;
+      cursor: default;
+
+      .ui-icon {
+        display: none;
+        width: 2rem;
+        height: 2rem;
+      }
+
+      &.focused {
+        cursor: pointer;
+        .ui-icon {
+          display: inline-block;
+        }
+      }
+    }
+
+    .ui-icon[name=carot] {
+      position: absolute;
+      right: -3.5rem;
+      height: 2.25rem;
+      top: -.5rem;
+      transform: rotate(90deg);
+
+      &:hover {
+        path {
+          fill: @blue-1;
+        }
+      }
+    }
+  }
+}
+
+.ui-menu-dropdown {
+  @radius: .4rem;
+  @radius-inside: .3rem;
+
+  cursor: default;
+  display: block;
+  width: 100%;
+  position: absolute;
+  top: 4rem;
+  left: 0;
+  right: 0;
+  padding: 0;
+  z-index: 11;
+  background-color: @ui-dropdown-menu-background-color;
+  border-radius: 0 @radius @radius @radius;
+  border: 1px solid @ui-dropdown-menu-border-color;
+
+  .drop-shadow(0, 1px, 3px, 0, 0.35);
+
+  header {
+    padding: 1rem;
+    border-bottom: 1px solid @ui-dropdown-menu-border-color;
+  }
+
+  footer {
+    padding: 1rem;
+    border-top: 1px solid @ui-dropdown-menu-border-color;
+  }
+
+  section.menu {
+    ul {
+      padding: 1rem 0 0;
+    }
+
+    li {
+      display: block;
+      padding: 0 1rem;
+      margin-bottom: 1rem !important;
+
+      &.selected {
+        a {
+          background-color: @ui-dropdown-menu-selected-bg-color;
+          color: @ui-dropdown-menu-link-hover-color;
+        }
+      }
+    }
+
+    a {
+      display: block;
+      padding: .5rem 1em;
+      text-decoration: none;
+      border-radius: @radius-inside;
+      color: @ui-gray-light;
+
+      &:hover {
+        background-color: @ui-dropdown-menu-bg-color;
+        color: @ui-dropdown-menu-link-hover-color;
+      }
+
+      &:active {
+        background-color: @ui-dropdown-menu-link-active-bg-color;
+      }
+    }
+  }
+}

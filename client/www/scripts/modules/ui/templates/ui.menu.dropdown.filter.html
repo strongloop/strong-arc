@@ -1,0 +1,14 @@
+<span class="ui-input-search">
+  <input class="ui-input toggler"
+         type="text"
+         ng-mousedown="showMenu()"
+         name="search"
+         ng-model="filterText"
+         ng-focus="setFocused(true)"
+         ng-blur="setFocused(false)"
+         autocomplete="off">
+  <a href ng-show="isFiltering" ng-click="clearFilter()" class="clear icon" ng-class="{ focused: isFocused }">
+    <ui-icon name="circle-x"></ui-icon>
+  </a>
+  <ui-icon name="carot" ng-click="toggleMenu()"></ui-icon>
+</span>
