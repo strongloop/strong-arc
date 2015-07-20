@@ -1,4 +1,5 @@
 <div ng-controller="PolicyMainController">
+  <sl-popover-help name="gateway-policies" position="left"></sl-popover-help>
   <h3>{{policyCtx.viewTitle}}</h3>
   <sl-policy-list ng-show="!gatewayCtx.currentInstanceId"></sl-policy-list>
   <sl-policy-form ng-show="gatewayCtx.currentInstanceId"
