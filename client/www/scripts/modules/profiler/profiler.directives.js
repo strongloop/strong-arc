@@ -212,7 +212,7 @@ Profiler.directive('slProfilerDevtools', [
   function($log) {
     return {
       template: '<iframe id="DevToolsIFrame" src="/devtools" name="devtools"' +
-        'ng-class="{ disabled: profilerId == \'remote\' && !isRemoteValid }"' +
+        'ng-class="{ disabled: (profilerId == \'remote\' && !isRemoteValid) || !activeProcess }"' +
         'sl-iframe-onload="initProfiler()"></iframe>',
       link: function(scope, el, attrs) {
         window.onresize = function(event) {

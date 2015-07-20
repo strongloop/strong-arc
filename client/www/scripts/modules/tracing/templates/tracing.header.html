@@ -35,7 +35,7 @@
               </td>
               <td class="controls-col">
                 <!-- toggle control -->
-                <sl-tracing-host-status></sl-tracing-host-status>
+                <sl-tracing-host-status ng-show="!showTraceToggle"></sl-tracing-host-status>
                 <div class="pm-tracing-toggle-container" ng-show="showTraceToggle">
                   <span class="title">Tracing</span>
                   <sl-ui-switch switches="tracingOnOff"  ng-show="!tracingProcessCycleActive" classes="power"></sl-ui-switch>
