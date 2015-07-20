@@ -20,6 +20,10 @@ Gateway.directive('slPolicyForm', [
       templateUrl: './scripts/modules/gateway/templates/policy.form.html',
       controller: ['$scope',
         function($scope) {
+
+          $scope.isPolicyDirty = false;
+          $scope.originalPolicy = {};
+
           function refreshPolicies() {
             $scope.policyCtx.policies = GatewayServices.getPolicies()
               .then(function(policies) {
@@ -28,6 +32,11 @@ Gateway.directive('slPolicyForm', [
 
               });
           }
+
+          $scope.init = function() {
+            $scope.originalPolicy = angular.copy($scope.policy);
+          };
+          $scope.init();
 
           $scope.saveNewPolicy = function(policy) {
             $scope.close();
@@ -46,17 +55,31 @@ Gateway.directive('slPolicyForm', [
 
           $scope.saveCurrentPolicy = function(policy) {
             if (policy.name && policy.type) {
-              $log.debug('update this policy: '  + policy.name);
+
+              if ($scope.isPolicyDirty) {
+                if (confirm('do you want to make this change')) {
+                  GatewayServices.savePolicy(policy)
+                    .$promise
+                    .then(function(policy) {
+                      growl.addSuccessMessage('Policy Saved');
+                      //resetCurrentPolicy();
+
+                    });
+                }
+              }
+              else {
+                GatewayServices.savePolicy(policy)
+                  .$promise
+                  .then(function(policy) {
+                    growl.addSuccessMessage('Policy Saved');
+                    //resetCurrentPolicy();
+
+                  });
+              }
 
 
 
-              GatewayServices.savePolicy(policy)
-                .$promise
-                .then(function(policy) {
-                  growl.addSuccessMessage('Policy Saved');
-                  //resetCurrentPolicy();
 
-                });
 
             }
           };
@@ -64,6 +87,25 @@ Gateway.directive('slPolicyForm', [
       ],
       link: function(scope, el, attrs) {
 
+
+        /*
+        *
+        * Dirty check
+        *
+        * */
+        scope.$watch('policy', function(newVal, oldVal) {
+          scope.isPolicyDirty = false;
+          if (newVal.id && oldVal.id) {
+
+            if (newVal !== oldVal) {
+              if (!angular.equals(scope.originalPolicy, newVal)) {
+                scope.isPolicyDirty = true;
+
+              }
+            }
+          }
+
+        }, true);
         scope.$watch('context.policyTypes', function(newVal, oldVal) {
           $log.debug('| policy types')
         });
