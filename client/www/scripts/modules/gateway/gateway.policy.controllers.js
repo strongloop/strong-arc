@@ -42,7 +42,9 @@ Gateway.controller('PolicyMainController', [
     function refreshPolicies() {
       $scope.policyCtx.policies = GatewayServices.getPolicies()
         .then(function(policies) {
-          $scope.policyCtx.policies = policies;
+
+            $scope.policyCtx.policies = policies;
+
         });
     }
 
@@ -88,35 +90,6 @@ Gateway.controller('PolicyMainController', [
     };
 
 
-    $scope.saveCurrentPolicy = function() {
-      if ($scope.policyCtx.currentPolicy.name && $scope.policyCtx.currentPolicy.type) {
-        $log.debug('update this policy: '  + $scope.policyCtx.currentPolicy.name);
-
-
-
-        GatewayServices.savePolicy($scope.policyCtx.currentPolicy)
-          .$promise
-          .then(function(policy) {
-            growl.addSuccessMessage('Policy Saved');
-            resetCurrentPolicy();
-
-          });
-
-      }
-    };
-    $scope.saveNewPolicy = function() {
-      $scope.close();
-      if ($scope.policyCtx.newPolicy.name && $scope.policyCtx.newPolicy.type) {
-
-        GatewayServices.savePolicy($scope.policyCtx.newPolicy)
-          .$promise
-          .then(function(policy) {
-              $state.go('policy');
-            resetCurrentPolicy();
-          });
-
-      }
-    };
 
     $scope.isCurrentPolicyType = function(type) {
 
@@ -149,27 +122,24 @@ Gateway.controller('PolicyMainController', [
      *
      * */
     $scope.savePolicy = function(policy) {
-      if (policy) {
-        $scope.policyCtx.currentPolicy = policy;
-      }
-      if ($scope.policyCtx.currentPolicy.type) {
+      //if (policy) {
+      //  $scope.policyCtx.currentPolicy = policy;
+      //}
+      if (policy.type) {
 
-        $scope.policyCtx.currentPolicy = scrubNonTypeData($scope.policyCtx.currentPolicy);
+        policy = scrubNonTypeData(policy);
 
-        if (!$scope.policyCtx.currentPolicy.name) {
-          $scope.policyCtx.currentPolicy.name = $scope.policyCtx.currentPolicy.type + '-' + Math.floor((Math.random() * 10000) + 1);
+        if (!policy.name) {
+          policy = policy.type + '-' + Math.floor((Math.random() * 10000) + 1);
         }
-        $scope.policyCtx.currentPolicy.editMode = false;
-        $scope.policyCtx.currentPolicy.currentPolicyScope = null;
-        $scope.policyCtx.currentPolicy = GatewayServices.savePolicy($scope.policyCtx.currentPolicy)
+
+        policy = GatewayServices.savePolicy(policy)
           .$promise
           .then(function(response) {
             resetCurrentPolicy();
             refreshPolicies();
             turnOffOtherPolicyEdits();
           });
-
-
 
       }
       else {
