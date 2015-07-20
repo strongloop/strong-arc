@@ -1,0 +1,16 @@
+<div class="ui-form no-border ui-menu-container">
+  <sl-ui-menu-dropdown-filter toggler="toggler"
+                              filter="filterText"
+                              selected="selected" filtering="isFiltering"></sl-ui-menu-dropdown-filter>
+
+  <sl-ui-menu-dropdown toggler="toggler">
+    <section class="menu">
+      <ul>
+        <li ng-repeat="item in items | filter:(isFiltering || '') && filterText"
+            ng-class="{ selected: selected == item }">
+          <a href ng-click="selectItem(item)">{{item.name}}</a>
+        </li>
+      </ul>
+    </section>
+  </sl-ui-menu-dropdown>
+</div>
