@@ -99,7 +99,7 @@ Gateway.service('GatewayServices', [
         .catch(function(error) {
           $log.warn('bad get  Policy: ' + JSON.stringify(error));
         });
-    }
+    };
 
 
 

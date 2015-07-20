@@ -5,22 +5,65 @@
 *
 * */
 Gateway.directive('slPolicyForm', [
+  'GatewayServices',
   '$log',
-  function($log) {
+  'growl',
+  '$state',
+  function(GatewayServices, $log, growl, $state) {
     return {
       restrict: 'E',
       scope: {
         policy: '=',
-        context: '='
+        context: '=',
+        hidebuttons: '='
       },
       templateUrl: './scripts/modules/gateway/templates/policy.form.html',
       controller: ['$scope',
         function($scope) {
+          function refreshPolicies() {
+            $scope.policyCtx.policies = GatewayServices.getPolicies()
+              .then(function(policies) {
 
+                $scope.policyCtx.policies = policies;
+
+              });
+          }
+
+          $scope.saveNewPolicy = function(policy) {
+            $scope.close();
+            if (policy.name && policy.type) {
+
+              GatewayServices.savePolicy(policy)
+                .$promise
+                .then(function(policy) {
+                  $state.go('policy');
+                  //resetCurrentPolicy();
+                  refreshPolicies();
+                });
+
+            }
+          };
+
+          $scope.saveCurrentPolicy = function(policy) {
+            if (policy.name && policy.type) {
+              $log.debug('update this policy: '  + policy.name);
+
+
+
+              GatewayServices.savePolicy(policy)
+                .$promise
+                .then(function(policy) {
+                  growl.addSuccessMessage('Policy Saved');
+                  //resetCurrentPolicy();
+
+                });
+
+            }
+          };
         }
       ],
       link: function(scope, el, attrs) {
-        $log.debug('||||name: ' + scope.policy.name);
+
         scope.$watch('context.policyTypes', function(newVal, oldVal) {
           $log.debug('| policy types')
         });
@@ -375,7 +418,7 @@ Gateway.directive('slGatewayMainNav', [
             }, 140);
           }
         }, true);
-        scope.$watch('gatewayMapCtx.pipelines', function(newVal, oldVal) {
+        scope.$watch('pipelineCtx.pipelines', function(newVal, oldVal) {
           if (newVal && newVal.map) {
             $timeout(function() {
               React.renderComponent(GatewayMainNav({scope:scope}), el[0]);
@@ -383,7 +426,7 @@ Gateway.directive('slGatewayMainNav', [
           }
         }, true);
 
-        scope.$watch('gatewayMapCtx.policies', function(newVal, oldVal) {
+        scope.$watch('policyCtx.policies', function(newVal, oldVal) {
           if (newVal && newVal.map) {
             $timeout(function() {
               React.renderComponent(GatewayMainNav({scope:scope}), el[0]);
