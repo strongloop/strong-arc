@@ -1,18 +1,12 @@
-<div data-ui-type="table" data-id="GatewayMainBody">
-  <div data-ui-type="row">
-    <div data-ui-type="cell" data-id="MainSidebarContainer">
-      <div sl-gateway-main-nav data-id="MainNavContainer"></div>
-    </div>
-    <div data-ui-type="cell"
-         data-id="MainContentContainer"
-         class="top-level-container">
-
-      <div data-id="GatewayMainContainer">
-        <sl-gateway-map-main-view ng-show="gatewayCtx.isShowGatewayMapView"></sl-gateway-map-main-view>
-        <sl-pipeline-main-view ng-show="gatewayCtx.isShowPipelineView"></sl-pipeline-main-view>
-        <sl-policy-main-view ng-show="gatewayCtx.isShowPolicyView"></sl-policy-main-view>
-
-      </div>
+<div class="sidebar-layout-container">
+  <div class="sidebar-layout-sidebar-container">
+    <div sl-gateway-main-nav data-id="MainNavContainer"></div>
+  </div>
+  <div class="sidebar-layout-main-container">
+    <div data-id="GatewayMainContainer">
+      <sl-gateway-map-main-view ng-show="gatewayCtx.isShowGatewayMapView"></sl-gateway-map-main-view>
+      <sl-pipeline-main-view ng-show="gatewayCtx.isShowPipelineView"></sl-pipeline-main-view>
+      <sl-policy-main-view ng-show="gatewayCtx.isShowPolicyView"></sl-policy-main-view>
     </div>
   </div>
 </div>
