@@ -1,9 +1,9 @@
-var ComposerHomeView = (function () {
+var TracingHomeView = (function () {
   var EC = protractor.ExpectedConditions;
 
-  function ComposerHomeView() {
+  function TracingHomeView() {
     this.componentIdentifier = element(
-      by.css('section .sl-composer'));
+      by.css('section .sl-tracing'));
 
     this.waitUntilLoaded = function() {
       browser.driver.wait(
@@ -11,7 +11,7 @@ var ComposerHomeView = (function () {
       10000);
     };
   }
-  return ComposerHomeView;
+  return TracingHomeView;
 })();
 
-module.exports = ComposerHomeView;
+module.exports = TracingHomeView;

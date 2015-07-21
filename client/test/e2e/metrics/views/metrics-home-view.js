@@ -1,9 +1,9 @@
-var ComposerHomeView = (function () {
+var MetricsHomeView = (function () {
   var EC = protractor.ExpectedConditions;
 
-  function ComposerHomeView() {
+  function MetricsHomeView() {
     this.componentIdentifier = element(
-      by.css('section .sl-composer'));
+      by.css('section .sl-metrics'));
 
     this.waitUntilLoaded = function() {
       browser.driver.wait(
@@ -11,7 +11,7 @@ var ComposerHomeView = (function () {
       10000);
     };
   }
-  return ComposerHomeView;
+  return MetricsHomeView;
 })();
 
-module.exports = ComposerHomeView;
+module.exports = MetricsHomeView;
