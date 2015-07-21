@@ -83,6 +83,7 @@ Gateway.controller('GatewayMainController', [
 
       }
     };
+
     $scope.showAddNewGatewayMapForm = function() {
       var modalDlg = $modal.open({
         templateUrl: './scripts/modules/gateway/templates/add.map.modal.html',
@@ -111,6 +112,20 @@ Gateway.controller('GatewayMainController', [
           $scope.title = title;
           $scope.close = function() {
             $modalInstance.dismiss();
+          };
+          $scope.saveNewPolicy = function(policy) {
+            $scope.close();
+            if (policy.name && policy.type) {
+
+              GatewayServices.savePolicy(policy)
+                .$promise
+                .then(function(policy) {
+                  $state.go('policy');
+                  //resetCurrentPolicy();
+                  //refreshPolicies();
+                });
+
+            }
           };
         },
         resolve: {
