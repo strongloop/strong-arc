@@ -38,21 +38,24 @@ Gateway.directive('slPolicyForm', [
           };
           $scope.init();
 
-          $scope.saveNewPolicy = function(policy) {
-            $scope.close();
-            if (policy.name && policy.type) {
-
-              GatewayServices.savePolicy(policy)
-                .$promise
-                .then(function(policy) {
-                  $state.go('policy');
-                  //resetCurrentPolicy();
-                  refreshPolicies();
-                });
-
-            }
+          $scope._saveNewPolicy = function(policy){
+            $scope.saveNewPolicy({ policy: policy });
           };
 
+          //$scope.saveNewPolicy = function(policy) {
+          //  $scope.close();
+          //  if (policy.name && policy.type) {
+          //
+          //    GatewayServices.savePolicy(policy)
+          //      .$promise
+          //      .then(function(policy) {
+          //        $state.go('policy');
+          //        //resetCurrentPolicy();
+          //        refreshPolicies();
+          //      });
+          //
+          //  }
+          //};
           $scope.saveCurrentPolicy = function(policy) {
             if (policy.name && policy.type) {
 
