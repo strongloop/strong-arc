@@ -7,7 +7,7 @@
   </div>
   <div class="extensions-container" ng-transclude ng-show="processes.length > 0">
   </div>
-  <div class="selector-containers">
+  <div class="selector-containers" ng-show="_showPidSelector">
     <div sl-pm-processes processes="processes" multiple="multiple"
       show-supervisor="false" on-update-selection="updateSelection(selection)"></div>
   </div>

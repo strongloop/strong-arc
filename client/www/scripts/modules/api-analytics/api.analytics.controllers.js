@@ -26,18 +26,6 @@ ApiAnalytics.controller('ApiAnalyticsController', [
         $scope.getData(null, 0, 0);
       };
 
-      $scope.updateProcesses = function(processes) {
-        $scope.processes = processes;
-        $scope.updateProcessSelection([processes[0]]);
-      };
-
-      $scope.updateProcessSelection = function(selection) {
-        if (selection.length) {
-          selection[0].isActive = true;
-          $scope.activeProcess = selection[0];
-        }
-      };
-
       $scope.getData = function(d, i, depth, initialModel){
         var def = $q.defer();
 
