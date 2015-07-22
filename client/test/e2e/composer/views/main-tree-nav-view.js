@@ -61,6 +61,7 @@ var MainTreeNavView = (function () {
       browser.driver.actions().click(dataSourceNavCtx).perform();
       var deleteButton = self.ctxMenuTriggers.get(2);
       browser.driver.actions().click(deleteButton).perform();
+      browser.sleep(500);
       var alertDialog = browser.switchTo().alert();
       alertDialog.accept();
     };
@@ -74,6 +75,7 @@ var MainTreeNavView = (function () {
       browser.driver.actions().click(modelNavCtx).perform();
       var deleteButton = self.ctxMenuTriggers.get(0);
       browser.driver.actions().click(deleteButton).perform();
+      browser.sleep(500);
       var alertDialog = browser.switchTo().alert();
       alertDialog.accept();
     };

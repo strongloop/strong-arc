@@ -26,6 +26,17 @@ var LoginView = (function () {
       loginBtn.click();
     };
 
+    this.loginAsFalseUser = function() {
+      var loginBtn = this.submitButton;
+      browser.driver.wait(function() {
+        return loginBtn.isPresent();
+      }, 10000);
+      this.userNameInput.sendKeys('strongloop-test@grr.la');
+      this.passwordInput.sendKeys('WrongPassword1234');
+      browser.ignoreSynchronization = true;
+      loginBtn.click();
+    };
+
     this.loginToLandingView = function() {
       var loginAsTestUser = this.loginAsTestUser.bind(this);
       browser.get('http://127.0.0.1:9800/#/login').then(function() {

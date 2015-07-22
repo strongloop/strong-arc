@@ -13,12 +13,12 @@ var mysqlCreds = {
   dbname: 'strong_studio_test'
 };
 
-describe('datasource-definition-interactions', function() {
+xdescribe('datasource-definition-interactions', function() {
   beforeEach(function() {
     var loginView = new ArcViews.LoginView();
     var landingView = new ArcViews.LandingView();
 
-    loginView.loginToLandingView(false);
+    loginView.loginToLandingView();
     landingView.openComposerView();
   });
 

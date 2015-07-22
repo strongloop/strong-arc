@@ -27,6 +27,66 @@ var LandingView = (function () {
       10000);
     };
 
+    this.openBuildDeployView = function() {
+      browser.driver.wait(
+        EC.presenceOf(this.buildDeployAppCommand),
+      10000);
+      this.buildDeployAppCommand.click();
+      browser.driver.wait(
+        EC.presenceOf(
+          element(by.css('button[ng-disabled="deployId == \'existing\'"]'))
+        ),
+      10000);
+    };
+
+    this.openProcessManagerView = function() {
+      browser.driver.wait(
+        EC.presenceOf(this.processManagerAppCommand),
+      10000);
+      this.processManagerAppCommand.click();
+      browser.driver.wait(
+        EC.presenceOf(
+          element(by.css('button[ng-click="initAddNewPMHost()"]'))
+        ),
+      10000);
+    };    
+
+    this.openMetricsView = function() {
+      browser.driver.wait(
+        EC.presenceOf(this.metricsAppCommand),
+      10000);
+      this.metricsAppCommand.click();
+      browser.driver.wait(
+        EC.presenceOf(
+          element(by.css('div .metrics-main-container'))
+        ),
+      10000);
+    }; 
+
+    this.openTracingView = function() {
+      browser.driver.wait(
+        EC.presenceOf(this.tracingAppCommand),
+      10000);
+      this.tracingAppCommand.click();
+      browser.driver.wait(
+        EC.presenceOf(
+          element(by.css('sl-tracing-header'))
+        ),
+      10000);
+    }; 
+    
+    this.openProfilerView = function() {
+      browser.driver.wait(
+        EC.presenceOf(this.profilerAppCommand),
+      10000);
+      this.profilerAppCommand.click();
+      browser.driver.wait(
+        EC.presenceOf(
+          element(by.css('div[ng-controller="ProfilerMainController"]'))
+        ),
+      10000);
+    };
+
     this.waitUntilLoaded = function() {
       browser.get('http://127.0.0.1:9800/#/');
       browser.driver.wait(function() {

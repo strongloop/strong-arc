@@ -1,5 +1,3 @@
-'use strict';
-
 var ModelEditorView = (function () {
   function ModelEditorView() {
     var EC = protractor.ExpectedConditions;
@@ -82,7 +80,6 @@ var ModelEditorView = (function () {
     };
     this.selectDatasource = function selectDatasource(name) {
       var el = this.dataSourceSelect;
-
 
       browser.sleep(250).then(function () {
         el.element(by.cssContainingText('option', name)).click();

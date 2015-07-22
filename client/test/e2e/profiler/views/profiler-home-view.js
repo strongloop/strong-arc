@@ -1,9 +1,9 @@
-var ComposerHomeView = (function () {
+var ProfilerHomeView = (function () {
   var EC = protractor.ExpectedConditions;
 
-  function ComposerHomeView() {
+  function ProfilerHomeView() {
     this.componentIdentifier = element(
-      by.css('section .sl-composer'));
+      by.css('section .sl-profiler'));
 
     this.waitUntilLoaded = function() {
       browser.driver.wait(
@@ -11,7 +11,7 @@ var ComposerHomeView = (function () {
       10000);
     };
   }
-  return ComposerHomeView;
+  return ProfilerHomeView;
 })();
 
-module.exports = ComposerHomeView;
+module.exports = ProfilerHomeView;
