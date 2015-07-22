@@ -65,6 +65,30 @@ VisualComposer.directive('slComposerCanvas', [
             .attr('width', width)
             .call(zoom);
 
+        var defs = svg.append('defs');
+
+        var shadow = defs.append('filter')
+          .attr('id', 'drop-shadow')
+          .attr('height', '130%');
+
+        shadow.append('feGaussianBlur')
+          .attr('in', 'SourceAlpha')
+          .attr('stdDeviation', 5)
+          .attr('result', 'blur');
+
+        shadow.append('feOffset')
+          .attr('in', 'blur')
+          .attr('stdDeviation', 5)
+          .attr('result', 'offsetBlur');
+
+        var merge = shadow.append('feMerge');
+
+        merge.append('feMergeNode')
+          .attr('in', 'offsetBlur');
+
+        merge.append('feMergeNode')
+          .attr('in', 'SourceGraphic');
+
         var container = svg.append('g');
 
         $scope.$watch('models', function(newVal) {
@@ -75,6 +99,7 @@ VisualComposer.directive('slComposerCanvas', [
             .enter()
               .append('g')
               .attr('class', 'model')
+              .attr('filter', 'url(#drop-shadow)')
               .call(buildInstance);
 
           if (newVal.length) {
@@ -106,8 +131,8 @@ VisualComposer.directive('slComposerCanvas', [
               });
 
             var circle = g.append('circle')
-              .attr('cx', 200)
-              .attr('r', 10);
+              .attr('cx', 180)
+              .attr('r', 8);
 
             idMapping[d.id] = circle[0][0];
           });
@@ -123,6 +148,11 @@ VisualComposer.directive('slComposerCanvas', [
               })
               .attr('width', 200);
 
+            g.append('rect')
+              .attr('height', 35)
+              .attr('width', 200)
+              .attr('class', 'title-bg');
+
             g.append('text')
               .attr('class', 'title')
               .attr('text-anchor', 'middle')
@@ -133,9 +163,9 @@ VisualComposer.directive('slComposerCanvas', [
               });
 
             var circle = g.append('circle')
-              .attr('cx', 0)
-              .attr('cy', 15)
-              .attr('r', 10);
+              .attr('cx', 15)
+              .attr('cy', 20)
+              .attr('r', 8);
 
             idMapping[d.id] = circle[0][0];
 

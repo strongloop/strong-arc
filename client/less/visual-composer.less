@@ -1,7 +1,7 @@
 .visual-composer {
   .model {
     fill: white;
-    stroke: steelblue;
+    stroke: @grey-4;
     stroke-width: 1.5px;
 
     text {
@@ -13,6 +13,10 @@
 
     .title {
       font-size: 75;
+    }
+
+    .title-bg {
+      fill: @grey-4;
     }
 
     circle:hover {
@@ -31,5 +35,9 @@
     width: auto;
     height: 50rem;
     border: 1px solid @grey-1;
+
+    div {
+      background-image: url('/images/checkerboard.png');
+    }
   }
 }

@@ -14,6 +14,10 @@ VisualComposer.controller('VisualComposerMainController', [
       {
         source: 'common.TriggerRequest.timeout',
         target: 'common.RedBox'
+      },
+      {
+        source: 'common.TriggerRequest.count',
+        target: 'common.FooModel'
       }
     ];
 
