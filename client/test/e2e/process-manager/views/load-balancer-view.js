@@ -24,7 +24,7 @@ var LoadBalancerView = (function () {
       this.loadBalancerSaveButton.click();
 
       browser.sleep(1500);
-    }
+    };
   }
   return LoadBalancerView;
 })();

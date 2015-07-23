@@ -13,7 +13,7 @@ var mysqlCreds = {
   dbname: 'strong_studio_test'
 };
 
-xdescribe('datasource-definition-interactions', function() {
+describe('datasource-definition-interactions', function() {
   beforeEach(function() {
     var loginView = new ArcViews.LoginView();
     var landingView = new ArcViews.LandingView();
@@ -288,7 +288,7 @@ xdescribe('datasource-definition-interactions', function() {
       );
 
       mainTreeNavView.deleteDataSourceByIndex(1);
-      browser.sleep(750).then(function() {
+      browser.sleep(1000).then(function() {
         expect(mainTreeNavView.dataSourceNavItems.count()).toEqual(1);
       });
     }

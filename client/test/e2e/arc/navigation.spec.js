@@ -9,7 +9,7 @@ var ProfilerViews = require('../profiler/views/');
 var EC = protractor.ExpectedConditions;
 
 
-xdescribe('navigation smoke test', function() {
+describe('navigation smoke test', function() {
   describe('composer-navigation', function() {
     it('should login,' +
       ' navigation to API Composer view,' +
@@ -126,4 +126,4 @@ xdescribe('navigation smoke test', function() {
         headerView.logout();
       });
   });
-})
+});

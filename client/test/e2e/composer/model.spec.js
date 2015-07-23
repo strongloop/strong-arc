@@ -2,7 +2,7 @@ var ArcViews = require('../arc/views/');
 var ComposerViews = require('../composer/views/');
 var EC = protractor.ExpectedConditions;
 
-xdescribe('model-definition-interactions', function() {
+describe('model-definition-interactions', function() {
   beforeEach(function() {
     var loginView = new ArcViews.LoginView();
     var landingView = new ArcViews.LandingView();
