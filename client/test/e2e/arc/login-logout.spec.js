@@ -2,7 +2,7 @@ var ArcViews = require('../arc/views/');
 
 var EC = protractor.ExpectedConditions;
 
-xdescribe('arc-login-logout', function() {
+describe('arc-login-logout', function() {
   it('should log into Arc, ' +
     ' confirm landing page,' +
     ' logout',

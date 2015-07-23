@@ -2,7 +2,7 @@ var ArcViews = require('../arc/views/');
 var ProcessManagerViews = require('../process-manager/views/');
 var EC = protractor.ExpectedConditions;
 
-describe('load-balancer-interactions', function () {
+describe('process-manager-host-interactions', function () {
   beforeEach(function() {
 		var loginView = new ArcViews.LoginView();
 		var landingView = new ArcViews.LandingView();
@@ -11,16 +11,17 @@ describe('load-balancer-interactions', function () {
 		landingView.openProcessManagerView();
   });
 
+  afterEach(function() {
+    var headerView = new ArcViews.HeaderView();
+
+    headerView.logout();
+  });
+
 	xit('should login and navigate to process manager,' +
-		'add a load balancer,' +
-		'delete the load balancer', function () {
+		'add a valid pm host,', function () {
 	  var processManagerHomeView = 
 	  	new ProcessManagerViews.ProcessManagerHomeView();
 	  var loadBalancerView = 
 	  	new ProcessManagerViews.LoadBalancerView();
-
-	  processManagerHomeView.openLoadBalancerForm();
-
-	  loadBalancerView.addLoadBalancer('127.0.0.1', '3333');
 	});
 });
