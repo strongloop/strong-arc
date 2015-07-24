@@ -149,15 +149,10 @@ Tracing.directive('slTracingHeader', [
             $log.warn('no processes');
             scope.tracingProcessCycleActive = false;
             scope.showTimelineLoading = false;
-            scope.showTraceToggle = false;
           }
-
-          // check for 'problem' text
-
 
         }, true);
         scope.getStatusText = function(instance) {
-         // var xp = instance;
           if (instance.status) {
 
             if (instance.status.isProblem) {
