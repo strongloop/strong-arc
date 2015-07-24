@@ -10,31 +10,31 @@ var LoginView = (function () {
       browser.get('http://127.0.0.1:9800/#/login');
       browser.ignoreSynchronization = true;
       var loginBtn = this.submitButton;
-      browser.driver.wait(function() {
-        return loginBtn.isPresent();
-      }, 10000);
+      browser.driver.wait(
+        EC.visibilityOf(loginBtn),
+      10000);
     };
 
     this.loginAsTestUser = function() {
+      var self = this;
       var loginBtn = this.submitButton;
-      browser.driver.wait(function() {
-        return loginBtn.isPresent();
-      }, 10000);
-      this.userNameInput.sendKeys('strongloop-test@grr.la');
-      this.passwordInput.sendKeys('Str0ngL00p');
-      browser.ignoreSynchronization = true;
-      loginBtn.click();
+      browser.waitForAngular().then(function () {
+        self.userNameInput.sendKeys('strongloop-test@grr.la');
+        self.passwordInput.sendKeys('Str0ngL00p');
+        browser.ignoreSynchronization = true;
+        loginBtn.click();
+      });
     };
 
     this.loginAsFalseUser = function() {
+      var self = this;
       var loginBtn = this.submitButton;
-      browser.driver.wait(function() {
-        return loginBtn.isPresent();
-      }, 10000);
-      this.userNameInput.sendKeys('strongloop-test@grr.la');
-      this.passwordInput.sendKeys('WrongPassword1234');
-      browser.ignoreSynchronization = true;
-      loginBtn.click();
+      browser.waitForAngular().then(function () {
+        self.userNameInput.sendKeys('strongloop-test@grr.la');
+        self.passwordInput.sendKeys('WrongPassword1234');
+        browser.ignoreSynchronization = true;
+        loginBtn.click();
+      });
     };
 
     this.loginToLandingView = function() {

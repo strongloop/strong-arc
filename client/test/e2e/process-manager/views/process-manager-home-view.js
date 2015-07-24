@@ -24,6 +24,15 @@ var ProcessManagerHomeView = (function () {
         EC.visibilityOf(self.loadBalancerForm),
       10000);
     };
+
+    this.closeLoadBalancerForm = function () {
+      var self = this;
+      this.loadBalancerButton.click();
+
+      browser.driver.wait(
+        EC.invisibilityOf(self.loadBalancerForm),
+      10000);
+    };
   }
   return ProcessManagerHomeView;
 })();

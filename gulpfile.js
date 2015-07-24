@@ -261,6 +261,8 @@ gulp.task('test-e2e', function(callback) {
           err = Error('exit code ' + status);
         }
         protractorResults(err);
+
+        fs.unlink('arc-manager.json'); //fix for this file being created in the root
       });
   }
 

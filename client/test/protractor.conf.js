@@ -39,4 +39,7 @@ exports.config = {
       return browser.sleep(500);
     }
   }
+  // capabilities: {
+  // 'browserName': 'firefox'
+  // }
 };
