@@ -122,11 +122,6 @@ Manager.controller('ManagerMainController', [
 
     };
 
-    //remove default host from list
-    $scope.pmServers = PMHostService.getPMServers().filter(function(item){
-      return item.port !== '----';
-    });
-
     //used by 'add new host' row
     $scope.onPMServerSelectAutoCompleted = function(item, model){
       $scope[model].host = item.host;

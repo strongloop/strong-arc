@@ -56,24 +56,6 @@ Tracing.service('TracingServices', [
 
       });
     };
-    svc.getFirstPMInstance = function(pmHost, cb) {
-      var PMClient = require('strong-mesh-models').Client;
-      var pm = new PMClient('http://' + pmHost.host + ':' + pmHost.port );
-
-      pm.instanceFind('1', function(err, instance) {
-        if (err) {
-          $log.warn('trace: error finding pm instance: ' + err.message);
-          return cb(err, null);
-        }
-        if (!instance){
-          $log.warn('trace: no instance returned: ');
-          return cb({message:'no instance returned'}, null);
-        }
-
-        return cb(null, instance);
-
-      });
-    };
     svc.convertTimeseries = function(t){
       var ret = {};
       // note: item values are displayed in chart legend

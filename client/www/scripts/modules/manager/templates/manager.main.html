@@ -99,7 +99,7 @@
                        typeahead-focus-first="false"
                        sl-common-select-on-click
                        typeahead-on-select="onPMServerSelectAutoCompleted($item, 'currentPM')"
-                       typeahead="server as server.host + ' : ' + server.port for server in pmServers"
+                       typeahead="server as server.host + ' : ' + server.port for server in hosts"
                        ng-minlength="8"
                        ng-focus="itemFocus($event)"
                        ng-blur="itemBlur($event)"

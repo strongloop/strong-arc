@@ -13,8 +13,22 @@ Metrics.controller('MetricsMainController', [
   function($scope, $state, $log, growl, $interval, $timeout, MetricsService,
       PMPidService, PMHostService, ChartConfigService, ArcNavigationService) {
 
+    $scope.selectedPMHost = {};
+
+    $scope.isToggleHostChange = false;
+    $scope.updateHost = function(host) {
+      $scope.selectedPMHost = host;
+      $scope.currentServerConfig = host;
+      $scope.isToggleHostChange = !$scope.isToggleHostChange;
+    };
+
     $scope.isDisplayChartValid = false; // control display of charts (transition between data sets)
-    $scope.currentServerConfig = PMHostService.getLastPMServer();
+    $log.debug('get latest pm 1');
+    $scope.currentServerConfig = PMHostService.getLatestPMServer(function(host) {
+      $scope.currentServerConfig = host;
+      $scope.selectedPMHost = host;
+    });
+
     $scope.isCollapsed = true;  // settings
     $scope.maxInitDataPointThreshold = MetricsService.getMaxInitDataPointThreshold();  // limit on the initial data load
     $scope.maxDataPointThrottle = MetricsService.getMaxDataPointThrottle();  // max number of current data points
@@ -43,11 +57,16 @@ Metrics.controller('MetricsMainController', [
 
     $scope.updateHost = function(host) {
       $scope.host = host;
+      $scope.selectedPMHost = host;
+      $scope.currentServerConfig = host;
+      $scope.isToggleHostChange = !$scope.isToggleHostChange;
     };
 
     $scope.updateProcesses = function(processes) {
       $scope.processes = processes;
-      $scope.updateProcessSelection([processes[0]]);
+      if (processes.map && processes.length > 0) {
+        $scope.updateProcessSelection([processes[0]]);
+      }
     };
 
     $scope.updateProcessSelection = function(selection) {
@@ -272,8 +291,6 @@ Metrics.controller('MetricsMainController', [
           * data.metrics []
           *
           * */
-          //$log.debug('data name: ' + data.displayName);
-
           // each metric collection ex chart
           if (!$scope.currentStub[chart.name]) {
             $scope.currentStub[chart.name] = {};
@@ -349,8 +366,7 @@ Metrics.controller('MetricsMainController', [
      * */
     function getChartData(filter) {
       if ($scope.isValidProcess()) {
-        $scope.currentServerConfig = PMHostService.getLastPMServer();
-        // fetch promise
+
         MetricsService.getMetricsSnapShot($scope.currentServerConfig, filter)
           .then(function(rawMetrics) {
 
@@ -370,9 +386,9 @@ Metrics.controller('MetricsMainController', [
               }
 
               processMetricsTick(metricsToRender);
-            } else {
+            }
+            else {
               $log.warn('getMetricsSnapShot returned no metrics ');
-
               var pmTimestamp = $scope.lastTimeStamp[$scope.currentPMServerName];
 
               if (pmTimestamp === undefined) {
@@ -390,6 +406,7 @@ Metrics.controller('MetricsMainController', [
               return;
             }
           });
+
       } else {
         $log.warn('no metrics');
       }
@@ -523,9 +540,8 @@ Metrics.controller('MetricsMainController', [
       $scope.loopChartModel = [];
       $scope.heapChartModel = [];
 
-      $scope.currentServerConfig = PMHostService.getLastPMServer();
+
       if (newVal && newVal.id) {
-        $log.info('arc metric: active process changed');
         $scope.currentWorkerId = newVal.workerId;
         $scope.currentProcessId = newVal.id;
         $scope.currentPMServerName = $scope.currentServerConfig.host + ':' + $scope.currentServerConfig.port;
@@ -555,6 +571,15 @@ Metrics.controller('MetricsMainController', [
         $scope.metricsUpdateInterval = MetricsService.setMetricsUpdateInterval(parseInt(newVal));
       }
     });
+    $scope.$watch('currentServerConfig', function(newVal, oldVal) {
+
+      // do a quick metrics request and clear the data
+      $scope.currentWorkerId = '';
+      $scope.currentProcessId = '';
+      $scope.init();
+
+    }, true);
+
     $scope.init = function() {
 
       // check if user has a valid metrics license
@@ -573,6 +598,9 @@ Metrics.controller('MetricsMainController', [
               $scope.currentMetrics = [];
               getMetrics();
               $scope.startTicker();
+            }
+            else {
+              $scope.stopTimer();
             }
           }
         })

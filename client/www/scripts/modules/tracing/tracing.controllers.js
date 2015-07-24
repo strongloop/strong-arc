@@ -8,14 +8,15 @@ Tracing.controller('TracingMainController', [
   'MSFormat',
   'TracingServices',
   'ManagerServices',
+  'PMHostService',
   'TraceEnhance',
   '$state',
-  function($scope, $log, $timeout, $interval, $location, growl, msFormat, TracingServices, ManagerServices, TraceEnhance, $state) {
+  function($scope, $log, $timeout, $interval, $location, growl, msFormat, TracingServices, ManagerServices, PMHostService, TraceEnhance, $state) {
     $scope.pm = {};
     $scope.killProcessPoll = true;
     $scope.pidCycleCheckCollection = [];
     $scope.tracingProcessCycleActive = false;
-    $scope.showTraceToggle = false;
+    $scope.showTraceToggle = true;
     $scope.targetProcessCount = 0;
     $scope.tracingOnOffCycleMessage = 'starting';
     $scope.systemFeedback = [];  // FEEDBACK
@@ -324,7 +325,7 @@ Tracing.controller('TracingMainController', [
       $scope.selectedPMHost = ManagerServices.processHostStatus($scope.selectedPMHost, appContext);
 
       // make sure selected host is working
-      TracingServices.getFirstPMInstance($scope.selectedPMHost, function(err, instance) {
+      PMHostService.getFirstPMInstance($scope.selectedPMHost, function(err, instance) {
         if (err) {
           $log.warn('error getting first pm instance: ' + err.message);
           $scope.$apply(function() {
@@ -336,10 +337,15 @@ Tracing.controller('TracingMainController', [
           return;
         }
         if ($scope.selectedPMHost.isHostProblem) {
+          $scope.setTracingOnOffToggle('off');
           $scope.showTraceToggle = false;
           $scope.showTimelineLoading = false;
+          $scope.resetTracingCtx();
+          return;
 
         }
+        $scope.showTraceToggle = true;
+
         $scope.tracingCtx.currentPMInstance = instance;
         $scope.targetProcessCount = $scope.tracingCtx.currentPMInstance.setSize;
 
@@ -507,7 +513,7 @@ Tracing.controller('TracingMainController', [
       if (host.host && host.port) {
         $scope.resetTracingCtx();
         $scope.selectedPMHost = host;
-        $scope.tracingCtx.currentManagerHost
+        $scope.tracingCtx.currentManagerHost = $scope.selectedPMHost;
         $scope.main();
       }
     };

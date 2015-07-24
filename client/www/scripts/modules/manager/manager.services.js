@@ -173,7 +173,9 @@ Manager.service('ManagerServices', [
           return;
         }
         if (hosts && hosts.map) {
-          cb(hosts);
+          if (cb) {
+            cb(hosts);
+          }
         }
       });
     };

@@ -201,6 +201,7 @@ Profiler.controller('ProfilerMainController', [
     $scope.updateHost = function(host) {
       $scope.host = host;
       $scope.isRemoteValid = false;
+      $scope.activeProcess = null;
       $scope.startAutomaticUpdates();
     };
 

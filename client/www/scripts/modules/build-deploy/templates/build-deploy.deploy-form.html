@@ -46,7 +46,11 @@
             </button>
             <ul class="dropdown-menu" role="menu" dropdown-menu>
               <li ng-repeat="host in managerHosts">
-                <button class="link-cmd" ng-click="changePMHost(host)">{{host.host}}:{{host.port}}</button>
+                <button type='button' class="link-cmd" ng-click="changePMHost(host)">{{host.host}}:{{host.port}}</button>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <button type="button" class="link-cmd" ng-click="goToAddPM()">add PM Host</button>
               </li>
             </ul>
           </div>
@@ -130,6 +134,10 @@
             <ul class="dropdown-menu" role="menu" dropdown-menu>
               <li ng-repeat="host in managerHosts">
                 <button class="link-cmd" ng-click="changePMHost(host)">{{host.host}}:{{host.port}}</button>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <button type="button" class="link-cmd" ng-click="goToAddPM()">add PM Host</button>
               </li>
             </ul>
           </div>
