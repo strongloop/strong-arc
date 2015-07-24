@@ -26,8 +26,16 @@
 
   .link {
     stroke: @grey-1;
-    stroke-width: 2px;
+    stroke-width: 3px;
     fill: none;
+
+    &.loose {
+      stroke: @grey-3;
+    }
+
+    &.valid {
+      stroke: @green-6;
+    }
   }
 
   .canvas-container {

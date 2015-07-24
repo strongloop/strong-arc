@@ -6,20 +6,7 @@ VisualComposer.controller('VisualComposerMainController', [
     var models = $q.defer();
 
     $scope.models = [];
-    $scope.connections = [
-      {
-        source: 'common.FooModel.Carrot',
-        target: 'common.TriggerRequest'
-      },
-      {
-        source: 'common.TriggerRequest.timeout',
-        target: 'common.RedBox'
-      },
-      {
-        source: 'common.TriggerRequest.count',
-        target: 'common.FooModel'
-      }
-    ];
+    $scope.connections = [];
 
     ModelService.getAllModelInstances()
       .then(function(result) {

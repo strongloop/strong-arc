@@ -22,31 +22,43 @@ VisualComposer.directive('slComposerCanvas', [
           .on('drag', dragMove)
           .on('dragend', dragEnd);
 
-        var getDiagonalCoords = function(id) {
-            var obj = idMapping[id];
-            var base = [0, 0];
-
-            var parentNode = obj;
-            var lv = id.split('.').length - 1;
-            var translate;
-
-            while (lv > 0 && parentNode.parentNode) {
-              parentNode = parentNode.parentNode;
-              translate = d3.transform(
-                d3.select(parentNode).attr('transform')
-              ).translate;
-
-              base[0] += translate[0];
-              base[1] += translate[1];
-
-              lv--;
-            }
-
+        var drag2 = d3.behavior.drag()
+          .on('dragstart', connectStart)
+          .on('drag', connectMove)
+          .on('dragend', connectEnd)
+          .origin(function(d) {
+            var pos = getDiagonalCoords(d.id);
             return {
-              y: base[0] + obj.cx.baseVal.value,
-              x: base[1] + obj.cy.baseVal.value
+              x: pos.y,
+              y: pos.x
             };
-        };
+          });
+
+        function getDiagonalCoords(id) {
+          var obj = idMapping[id];
+          var base = [0, 0];
+
+          var parentNode = obj;
+          var lv = id.split('.').length - 1;
+          var translate;
+
+          while (lv > 0 && parentNode.parentNode) {
+            parentNode = parentNode.parentNode;
+            translate = d3.transform(
+              d3.select(parentNode).attr('transform')
+            ).translate;
+
+            base[0] += translate[0];
+            base[1] += translate[1];
+
+            lv--;
+          }
+
+          return {
+            y: base[0] + obj.cx.baseVal.value,
+            x: base[1] + obj.cy.baseVal.value
+          };
+        }
 
         var diagonal = d3.svg.diagonal()
           .source(function(d) {
@@ -109,14 +121,30 @@ VisualComposer.directive('slComposerCanvas', [
 
         function buildLinks(selection) {
           var links = selection.selectAll('.link')
-            .data($scope.connections);
+            .data($scope.connections.filter(
+              function(x) {
+                return x.target !== 'connector' || tempConnections == null;
+              }
+            ));
 
           links.enter()
-              .append('path')
-              .attr('class', 'link');
+            .append('path')
+            .attr('class', 'link');
 
           links
-              .attr('d', diagonal);
+            .attr('d', diagonal)
+            .attr('class', function(d) {
+              if (d.target == 'connector') {
+                return 'link loose';
+              } else if (d === tempConnections) {
+                return 'link valid';
+              }
+
+              return 'link';
+            });
+
+          links.exit()
+            .remove();
         }
 
         function buildProperty(selection) {
@@ -132,7 +160,8 @@ VisualComposer.directive('slComposerCanvas', [
 
             var circle = g.append('circle')
               .attr('cx', 180)
-              .attr('r', 8);
+              .attr('r', 8)
+              .call(drag2);
 
             idMapping[d.id] = circle[0][0];
           });
@@ -165,7 +194,30 @@ VisualComposer.directive('slComposerCanvas', [
             var circle = g.append('circle')
               .attr('cx', 15)
               .attr('cy', 20)
-              .attr('r', 8);
+              .attr('r', 8)
+              .on('mouseover', function(d) {
+                if (connectSource) {
+                  if (tempConnections == null) {
+                    tempConnections = {
+                      source: connectSource.id,
+                      target: d.id
+                    }
+
+                    $scope.connections.push(tempConnections);
+                  }
+                }
+              })
+              .on('mouseout', function(d) {
+                if (tempConnections) {
+                  $scope.connections = $scope.connections.filter(
+                    function(x) {
+                      return x != tempConnections;
+                    }
+                  );
+
+                  tempConnections = null;
+                }
+              });
 
             idMapping[d.id] = circle[0][0];
 
@@ -192,6 +244,60 @@ VisualComposer.directive('slComposerCanvas', [
         }
 
         var eventOffset = [0, 0];
+        var connector = null;
+        var connectSource = null;
+        var tempConnections = null;
+
+        function connectStart(d) {
+          var dragEvent = d3.event;
+
+          connector = container.append('circle')
+            .attr('r', 5)
+            .attr('cx', dragEvent.x)
+            .attr('cy', dragEvent.y);
+
+          connectSource = d;
+          idMapping.connector = connector[0][0];
+
+          $scope.connections.push({
+            source: d.id,
+            target: 'connector'
+          });
+
+          d3.event.sourceEvent.stopPropagation();
+        }
+
+        function connectMove(d) {
+          var pos = {x: 0, y: 0};
+
+          if (tempConnections) {
+            pos = getDiagonalCoords(tempConnections.target);
+          } else {
+            pos.x = d3.event.x - 10;
+            pos.y = d3.event.y;
+          }
+
+          connector
+            .attr('cx', pos.x)
+            .attr('cy', pos.y);
+
+          container.call(buildLinks);
+        }
+
+        function connectEnd() {
+          connector.remove();
+          connector = null;
+          connectSource = null;
+          tempConnections = null;
+
+          $scope.connections = $scope.connections.filter(
+            function(d) {
+              return d.target !== 'connector';
+            }
+          );
+
+          container.call(buildLinks);
+        }
 
         function dragStart() {
           var dragEvent = d3.event.sourceEvent;
