@@ -2,6 +2,9 @@ ApiAnalytics.directive('slApiAnalyticsChart', [
   '$log',
   '$interpolate',
   function ($log, $interpolate) {
+    var pageSize = 10;
+
+
     function custom(scope, elem){
       var margin = {top: 70, right: 120, bottom: 0, left: 270},
         width = 960 - margin.left - margin.right,
@@ -57,6 +60,13 @@ ApiAnalytics.directive('slApiAnalyticsChart', [
         } else {
           tip.hide(e);
         }
+      }
+
+      function sortByTime(a, b){
+        var aTime = new Date(a.orig.timeStamp).getTime();
+        var bTime = new Date(b.orig.timeStamp).getTime();
+
+        return aTime - bTime;
       }
 
       function drawAxisLabels(){
@@ -230,6 +240,22 @@ ApiAnalytics.directive('slApiAnalyticsChart', [
         d.index = i;
       }
 
+      scope.$watch('page', function(newVal, oldVal){
+        if ( !scope.chart.allData || newVal < 0 ) return; //at first page
+
+        var root = scope.chart.data;
+        var allData = scope.chart.allData;
+        var nodeIdx = scope.chart.nodeIdx;
+        var start = (newVal-1)*pageSize;
+        var end = start+pageSize;
+
+        //check if we are on last page or not
+        if ( allData.children && allData.children.length > start ) {
+          root.children = allData.children.slice(start, end);
+          processData(root, nodeIdx);
+        }
+      });
+
       scope.$watch('chart', function(newVal, oldVal){
         if ( !newVal || !newVal.data ) {
           //reset everything if load button is clicked
@@ -238,9 +264,15 @@ ApiAnalytics.directive('slApiAnalyticsChart', [
           scope.chartDepth = 0;
           return;
         }
+
         var root = newVal.data;
+        var allData = newVal.allData;
         var node = newVal.node;
         var nodeIdx = newVal.nodeIdx;
+
+        scope.page = 1; //reset pagination on new charts
+        scope.maxPages = Math.ceil(allData.children.length/pageSize); //used by view
+
         partition.nodes(root);
         x.domain([0, root.value]).nice();
 
@@ -248,10 +280,23 @@ ApiAnalytics.directive('slApiAnalyticsChart', [
          if ( Object.keys(oldVal).length ){
            //scope.prevChart = oldVal;
            scope.chartStack.push(oldVal);
-           var crumbNode = oldVal.data.children[newVal.nodeIdx];
+           var crumbNode = oldVal.allData.children[newVal.nodeIdx];
            scope.crumbs.push({ name: crumbNode.name, orig: crumbNode.orig });
            $log.log('stack', scope.chartStack);
          }
+        }
+
+        var start = (scope.page-1)*pageSize;
+        var end = start+pageSize;
+
+        //sort by time for chart 2
+        if ( scope.chartDepth === 1 ) {
+          root.children = root.children.sort(sortByTime);
+          allData.children = allData.children.sort(sortByTime);
+        }
+
+        if ( allData.children.length > start ) {
+          root.children = allData.children.slice(start, end);
         }
 
         processData(root, nodeIdx);
@@ -354,6 +399,7 @@ ApiAnalytics.directive('slApiAnalyticsChart', [
         scope.crumbs = [];
         scope.navDirection = 'down';
         scope.showToolTip = false;
+        scope.page = 1;
 
         //example(scope, elem);
         custom(scope, elem);
@@ -363,6 +409,14 @@ ApiAnalytics.directive('slApiAnalyticsChart', [
           scope.chartDepth = i;
           scope.chartStack.splice(i+1, len);
           scope.chart = scope.chartStack.pop();
+        };
+
+        scope.onClickPrevPage = function(){
+          scope.page--;
+        };
+
+        scope.onClickNextPage = function(){
+          scope.page++;
         };
       }
     };

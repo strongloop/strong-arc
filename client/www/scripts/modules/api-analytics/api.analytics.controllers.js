@@ -31,10 +31,15 @@ ApiAnalytics.controller('ApiAnalyticsController', [
 
         ApiAnalyticsService.getApiAnalyticsChartDataByNode(d, i, depth, $scope.server, initialModel)
           .then(function(data){
+            var allData = {};
+
+            angular.extend(allData, data);
+
             var chart = {
               data: data,
               node: d,
-              nodeIdx: i
+              nodeIdx: i,
+              allData: allData
             };
 
             $scope.apiChart = chart;
