@@ -211,7 +211,7 @@ Tracing.controller('TracingMainController', [
         }
         /*
         * safety valve in case a tracing enabled pm never returns
-        * pids with tracing tunred on
+        * pids with tracing turned on
         * - may be licensing
         * */
         $scope.killProcessPoll = false;
