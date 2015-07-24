@@ -1,3 +1,51 @@
+2015-07-24, Version 1.7.0
+=========================
+
+ * fix using wrong property status test for host problems (seanbrookes)
+
+ * add axis labels to api-analytics (Anthony Ettinger)
+
+ * fix errant 'off' state for toggle control in the directive (seanbrookes)
+
+ * updates to fix references to incorrect pm host (seanbrookes)
+
+ * Removed arcmanager.json (Matttt)
+
+ * replaced undefined `xdescribe`s and other jshint errors (Matttt)
+
+ * Completed navigation coverage (Matttt)
+
+ * Remove PID selector from API Analytics (Joseph Tary)
+
+ * fix border on action cell in PM (Anthony Ettinger)
+
+ * add dropdown select menu to styleguide (Anthony Ettinger)
+
+ * add change stream to lb-build (seanbrookes)
+
+ * Fixed whitespace, utilized Expected Conditions, and deleted misc file (Matttt)
+
+ * Removed browser.pause() (Matttt)
+
+ * Cleaned up to pass JSHint (Matttt)
+
+ * Completed composer view coverage (Matttt)
+
+ * Add additional e2e composer tests (Matttt)
+
+ * add namespace to tracing rules (Anthony Ettinger)
+
+ * fix select all in composer (Anthony Ettinger)
+
+ * test: get protractor tests working again (Ryan Graham)
+
+ * test: add protractor tests to npm test (Ryan Graham)
+
+ * Re-enable smart profiling (Joseph Tary)
+
+ * consistency updates to how Arc presents strong-pm (seanbrookes)
+
+
 2015-07-07, Version 1.6.0
 =========================
 
