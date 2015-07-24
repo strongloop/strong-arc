@@ -216,7 +216,7 @@ PM.directive('slPmHostForm', [
                 growl.addWarnMessage('invalid PM server values');
                 return;
               }
-              if (instance && !$scope.selectedPMHost.isHostProblem) {
+              if (instance && !$scope.selectedPMHost.status.isProblem) {
                 var refresh = function() {
                   return PMPidService.getDefaultPidData(serverConfig, ServiceId)
                     .then(function(pidCollection) {
