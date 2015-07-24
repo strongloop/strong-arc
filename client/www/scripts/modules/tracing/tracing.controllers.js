@@ -336,7 +336,7 @@ Tracing.controller('TracingMainController', [
           $scope.showTimelineLoading = false;
           return;
         }
-        if ($scope.selectedPMHost.isHostProblem) {
+        if ($scope.selectedPMHost.status.isProblem) {
           $scope.setTracingOnOffToggle('off');
           $scope.showTraceToggle = false;
           $scope.showTimelineLoading = false;
