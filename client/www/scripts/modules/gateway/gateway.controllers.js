@@ -28,11 +28,35 @@ Gateway.controller('GatewayMainController', [
       var modalDlg = $modal.open({
         templateUrl: './scripts/modules/gateway/templates/add.pipeline.modal.html',
         size: 'lg',
+        scope: $scope,
         controller: function($scope, $modalInstance, title) {
           $scope.pipelineCtx.currentPipeline = {};
           $scope.title = title;
           $scope.close = function() {
             $modalInstance.dismiss();
+          };
+
+          /**
+           * save new pipeline
+           * @param pipeline
+           */
+          $scope.saveNewPipeline = function(pipeline){
+            GatewayServices.savePipeline(pipeline)
+              .$promise
+              .then(function(data) {
+                $scope.pipelineCtx.currentPipeline = {};
+                refreshPipelines();
+              });
+
+            /**
+             * refresh the user's pipelines list in nav
+             */
+            function refreshPipelines() {
+              $scope.pipelineCtx.pipelines = GatewayServices.getPipelines()
+                .then(function(data) {
+                  $scope.pipelineCtx.pipelines = data;
+                });
+            }
           };
         },
         resolve: {
@@ -66,7 +90,7 @@ Gateway.controller('GatewayMainController', [
             }
             break;
 
-          case 'pipleline':
+          case 'pipeline':
             if (confirm('delete pipeline?')) {
               GatewayServices.deletePipeline(id)
               .then(function(response) {
