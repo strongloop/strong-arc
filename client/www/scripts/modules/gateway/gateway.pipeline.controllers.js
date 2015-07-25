@@ -10,7 +10,6 @@ Gateway.controller('PipelineMainController', [
   '$timeout',
   '$modal',
   function($scope, $log, GatewayServices, $timeout) {
-
     function resetCurrentPipeline() {
       $scope.pipelineCtx.currentPipeline = {};
     }
@@ -31,18 +30,19 @@ Gateway.controller('PipelineMainController', [
       $scope.pipelineCtx.isShowNewPipelineForm = false;
     };
 
-    $scope.contextModal = {
-      templateUrl: './scripts/modules/gateway/templates/add.pipeline.policy.html',
-      position: 'bottom',
-      name: 'testValue',
-      value: 100
-    };
-    $scope.policyDetailModal = {
-      templateUrl: './scripts/modules/gateway/templates/pipeline.policy.detail.html',
-      position: 'bottom',
-      name: 'pipelinePolicyDetail',
-      value: 100
-    };
+    //
+    //$scope.contextModal = {
+    //  templateUrl: './scripts/modules/gateway/templates/add.pipeline.policy.html',
+    //  position: 'bottom',
+    //  name: 'testValue',
+    //  value: 100
+    //};
+    //$scope.policyDetailModal = {
+    //  templateUrl: './scripts/modules/gateway/templates/pipeline.policy.detail.html',
+    //  position: 'bottom',
+    //  name: 'pipelinePolicyDetail',
+    //  value: 100
+    //};
 
     $scope.setupHidePopover = function($event, pipeline) {
       var element = angular.element($event.target);
@@ -68,25 +68,28 @@ Gateway.controller('PipelineMainController', [
 
       }
     };
-    $scope.addPipelinePolicy = function() {
-      //var newPolicy = {
-      //  name:$scope.pipelineCtx.newPolicyName,
-      //  type:type
-      //};
-      if ($scope.pipelineCtx.newPolicy) {
-        if (!$scope.pipelineCtx.currentPipeline.policies) {
-          $scope.pipelineCtx.currentPipeline.policies = [];
-        }
-        $scope.pipelineCtx.currentPipeline.policies.push($scope.pipelineCtx.newPolicy);
-        GatewayServices.savePipeline($scope.pipelineCtx.currentPipeline)
-          .$promise
-          .then(function(pipeline) {
-            $scope.pipelineCtx.newPolicy = {};
-            refreshPipelines();
-          });
-      }
 
-    };
+
+    //
+    //$scope.addPipelinePolicy = function() {
+    //  //var newPolicy = {
+    //  //  name:$scope.pipelineCtx.newPolicyName,
+    //  //  type:type
+    //  //};
+    //  if ($scope.pipelineCtx.newPolicy) {
+    //    if (!$scope.pipelineCtx.currentPipeline.policies) {
+    //      $scope.pipelineCtx.currentPipeline.policies = [];
+    //    }
+    //    $scope.pipelineCtx.currentPipeline.policies.push($scope.pipelineCtx.newPolicy);
+    //    GatewayServices.savePipeline($scope.pipelineCtx.currentPipeline)
+    //      .$promise
+    //      .then(function(pipeline) {
+    //        $scope.pipelineCtx.newPolicy = {};
+    //        refreshPipelines();
+    //      });
+    //  }
+    //
+    //};
 
     $scope.pipelineCtx.init = function() {
       $scope.pipelineCtx.currentPipeline = {};
@@ -136,48 +139,16 @@ Gateway.controller('PipelineMainController', [
       return retVal;
     };
     $scope.saveCurrentPipeline = function() {
-
       if ($scope.pipelineCtx.currentPipeline.name) {
-        if ($scope.pipelineCtx.isProxyPipeline && $scope.pipelineCtx.currentInternalEndpoint) {
-          // add a new proxy policy to this pipeline
-          var newPolicy = {
-            type:'proxy',
-            endpoint:$scope.pipelineCtx.currentInternalEndpoint,
-            data:[{name:'endpoint',value:$scope.pipelineCtx.currentInternalEndpoint}]
-          };
-          $scope.pipelineCtx.currentPipeline.defaultEndpoint = newPolicy.targetURL;
-          // create policy instance (save to db)
-          newPolicy = GatewayServices.savePolicy(newPolicy)
-            .$promise
-            .then(function(response) {
-              newPolicy = response;
-              // need to take into account ordering
-              if (!$scope.pipelineCtx.currentPipeline.policies) {
-                $scope.pipelineCtx.currentPipeline.policies = [];
-              }
-              $scope.pipelineCtx.currentPipeline.policies.push(newPolicy);
-              $scope.pipelineCtx.currentPipeline = GatewayServices.savePipeline($scope.pipelineCtx.currentPipeline)
-                .$promise
-                .then(function(response) {
-                  $scope.pipelineCtx.currentPipeline = {};
-                  resetCurrentPipeline();
-                  refreshPipelines();
-                });
-            });
-          // then add to pipeline
-          // then create pipeline
-          //$scope.pipelineCtx.currentPipeline
-        }
-        else {
-          $scope.pipelineCtx.currentPipeline = GatewayServices.savePipeline($scope.pipelineCtx.currentPipeline)
-            .$promise
-            .then(function(response) {
-              $scope.pipelineCtx.currentPipeline = {};
-              resetCurrentPipeline();
-              refreshPipelines();
-            });
-        }
 
+
+        $scope.pipelineCtx.currentPipeline = GatewayServices.savePipeline($scope.pipelineCtx.currentPipeline)
+          .$promise
+          .then(function(response) {
+            $scope.pipelineCtx.currentPipeline = {};
+            resetCurrentPipeline();
+            refreshPipelines();
+          });
       }
       else {
         $log.debug('invalid Pipeline attempt save');

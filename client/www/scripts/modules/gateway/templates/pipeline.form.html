@@ -1,24 +1,52 @@
 <div data-id="PipelineFormContainer">
-  <form class="ui-form">
+  <form class="ui-form" name="form2" novalidate>
     <div class="form-field">
       <label>Name</label>
-      <input type="text" ng-model="pipelineCtx.currentPipeline.name" />
-      <div class="form-field">
-        <label>
-          <input type="checkbox" ng-model="pipelineCtx.isProxyPipeline" />
-          has proxy (internal endpoint)?
-        </label>
-        <input  ng-show="pipelineCtx.isProxyPipeline" type="text" placeholder="endpoint" ng-model="pipelineCtx.currentInternalEndpoint" />
-      </div>
+      <input type="text" name="name" ng-model="pipeline.name" required />
+      foo
+      form: {{form2}}
+      <p class="error" ng-show="form.name.$error.required">
+        Name is required
+      </p>
     </div>
-    <ul>
-      <li ng-repeat="policy in pipelineCtx.currentPipeline.policies">{{policy.name}} : {{policy.type}}</li>
-    </ul>
-    <button class="ui-btn primary small" ng-show="pipelineCtx.currentPipeline.id" ng-click="showAddPipelinePolicy()">Add Policy</button>
+    <table class="ui-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th></th>
+          <th class="actions"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="policy in pipeline.policies">
+          <td>{{policy.name}}</td>
+          <td>{{policy.type}}</td>
+          <td>{{policy}}</td>
+          <td class="actions">
+            <a href class="ui-close" ng-click="deletePolicy(policy)">x</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="ui-menu-container">
+      <button class="ui-btn accessory toggler" ng-click="toggleShowAddPolicyMenu()">
+        Add Policy
+        <span class="sl-icon sl-icon-plus-sign"></span>
+      </button>
+      <sl-ui-menu-dropdown toggler="showAddPolicyMenu">
+        <section class="menu">
+          <ul>
+            <li ng-repeat="policy in availablePolicies">
+              <a href ng-click="addNewPolicyToPipeline(policy)">{{policy.name}} - {{policy.type}}</a></li>
+          </ul>
+        </section>
+      </sl-ui-menu-dropdown>
+    </div>
     <hr />
-    <div>
-      <button class="ui-btn secondary small" ng-click="clearPipelineForm()">cancel</button>
-      <button class="ui-btn primary small" ng-click="saveCurrentPipeline()">Create Pipeline</button>
-    </div>
+    <!--<div>-->
+      <!--<button class="ui-btn secondary small" ng-click="clearPipelineForm()">cancel</button>-->
+      <!--<button class="ui-btn primary small" ng-click="saveCurrentPipeline()">Create Pipeline</button>-->
+    <!--</div>-->
   </form>
 </div>

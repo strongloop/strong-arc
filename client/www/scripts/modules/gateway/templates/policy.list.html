@@ -22,13 +22,13 @@
         </select>
       </td>
       <td>
-        <div ng-show="policy.type == 'ratelimit'">
+        <div ng-show="policy.type == 'ratelimiting'">
           <ul>
             <li>limit: {{policy.limit}}</li>
             <li>interval (ms): {{policy.interval}}</li>
           </ul>
         </div>
-        <div ng-show="policy.type == 'proxy'">
+        <div ng-show="policy.type == 'reverseproxy'">
           targetURL: <span>{{policy.targetURL}}</span>
         </div>
         <div ng-show="policy.type == 'auth'">
