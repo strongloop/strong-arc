@@ -17,11 +17,23 @@ describe('process-manager-host-interactions', function () {
     headerView.logout();
   });
 
-	xit('should login and navigate to process manager,' +
+	it('should login and navigate to process manager,' +
 		'add a valid pm host,', function () {
-	  var processManagerHomeView = 
-	  	new ProcessManagerViews.ProcessManagerHomeView();
-	  var loadBalancerView = 
-	  	new ProcessManagerViews.LoadBalancerView();
+	  var processManagerHostView = 
+	  	new ProcessManagerViews.ProcessManagerHostView();
+
+	  browser.sleep(500);
+
+	  processManagerHostView.addNewPMHost('localhost', '1234');
+
+	  processManagerHostView.checkForPMHostErrors();
+
+	  expect(
+	  	EC.visibilityOf(
+	  		processManagerHostView.processManagerNoServerMessage
+	  	)
+	  );
+
+	  processManagerHostView.deleteProcessManagerHost();
 	});
 });
