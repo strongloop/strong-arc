@@ -1,38 +1,22 @@
-<div class="manager-main-layout">
+<div class="manager-main-layout pipeline-modal">
   <form class="ui-form">
   <div class="modal-header">
     <h4>New Pipeline</h4>
   </div>
   <div class="modal-body">
-    <div data-id="PipelineFormContainer">
-      <form class="ui-form">
-        <div class="form-field">
-          <label>Name</label>
-          <input type="text" ng-model="pipelineCtx.currentPipeline.name" />
-          <div class="form-field">
-            <label>
-              <input type="checkbox" ng-model="pipelineCtx.isProxyPipeline" />
-              has proxy (internal endpoint)?
-            </label>
-            <input  ng-show="pipelineCtx.isProxyPipeline" type="text" placeholder="endpoint" ng-model="pipelineCtx.currentInternalEndpoint" />
-          </div>
-        </div>
-        <button class="ui-btn primary small" ng-show="pipelineCtx.currentPipeline.id" ng-click="showAddPipelinePolicy()">Add Policy</button>
-        <hr />
-        <div>
-          <button class="ui-btn secondary small" ng-click="clearPipelineForm()">cancel</button>
-          <button class="ui-btn primary small" ng-click="saveCurrentPipeline()">Create Pipeline</button>
-        </div>
-      </form>
-    </div>
-
+    <sl-pipeline-form
+      pipeline="pipelineCtx.currentPipeline"
+      context="pipelineCtx"
+      hidebuttons="true">
+    </sl-pipeline-form>
   </div>
   <div class="modal-footer">
     <button type="button" class="ui-btn secondary small pull-left" ng-click="close()">
       Cancel
     </button>
-
-
+    <button type="button" class="ui-btn primary small pull-right" ng-click="saveNewPipeline(pipelineCtx.currentPipeline)">
+      Save
+    </button>
   </div>
   </form>
 </div>
