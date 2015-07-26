@@ -9,7 +9,7 @@ Gateway.controller('PipelineMainController', [
   'GatewayServices',
   '$timeout',
   '$modal',
-  function($scope, $log, GatewayServices, $timeout) {
+  function($scope, $log, GatewayServices, $timeout, $modal) {
     function resetCurrentPipeline() {
       $scope.pipelineCtx.currentPipeline = {};
     }
@@ -156,6 +156,47 @@ Gateway.controller('PipelineMainController', [
     };
 
 
+    $scope.showEditPipelineForm = function(pipeline) {
+      var modalDlg = $modal.open({
+        templateUrl: './scripts/modules/gateway/templates/add.pipeline.modal.html',
+        size: 'lg',
+        scope: $scope,
+        controller: function($scope, $modalInstance, title) {
+          $scope.pipelineCtx.currentPipeline = pipeline;
+          $scope.title = title;
+          $scope.close = function() {
+            $modalInstance.dismiss();
+          };
 
+          /**
+           * save new pipeline
+           * @param pipeline
+           */
+          $scope.saveNewPipeline = function(pipeline){
+            GatewayServices.savePipeline(pipeline)
+              .$promise
+              .then(function(data) {
+                $scope.pipelineCtx.currentPipeline = {};
+                refreshPipelines();
+              });
+
+            /**
+             * refresh the user's pipelines list in nav
+             */
+            function refreshPipelines() {
+              $scope.pipelineCtx.pipelines = GatewayServices.getPipelines()
+                .then(function(data) {
+                  $scope.pipelineCtx.pipelines = data;
+                });
+            }
+          };
+        },
+        resolve: {
+          title: function() {
+            return 'Example Modal Dialog';
+          }
+        }
+      });
+    };
   }
 ]);

@@ -6,12 +6,19 @@
  * */
 Gateway.directive('slPipelineMainView', [
   '$log',
-  function($log) {
+  'GatewayServices',
+  function($log, GatewayServices) {
     return {
       restrict: 'E',
       templateUrl: './scripts/modules/gateway/templates/pipeline.main.html',
       link: function(scope, el, attrs) {
+        var pipelineId = scope.pipelineCtx.currentInstanceId;
+        $log.log(pipelineId);
 
+        GatewayServices.getPipelineById(pipelineId)
+          .then(function(data){
+            scope.pipelineCtx.currentPipeline = data;
+          })
       }
     }
   }
@@ -24,7 +31,8 @@ Gateway.directive('slPipelineForm', [
       scope: {
         pipeline: '=',
         context: '=',
-        hidebuttons: '='
+        hidebuttons: '=',
+        isModal: '='
       },
       controller: function($scope, GatewayServices) {
         $scope.availablePolicies = [];
