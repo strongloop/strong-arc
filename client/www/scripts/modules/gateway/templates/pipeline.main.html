@@ -5,5 +5,9 @@
     <i class="sl-icon sl-icon-plus-sign"></i>Add New
   </button>
   <!--<button class="ui-btn small" ng-click="showModal()">Show Modal</button>-->
-  <sl-pipeline-form ng-show="gatewayCtx.currentInstanceId"></sl-pipeline-form>
+  <sl-pipeline-form
+    ng-show="pipelineCtx.currentInstanceId"
+    pipeline="pipelineCtx.currentPipeline"
+    context="pipelineCtx"
+    is-modal="false"></sl-pipeline-form>
 </div>

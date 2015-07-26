@@ -3,8 +3,6 @@
     <div class="form-field">
       <label>Name</label>
       <input type="text" name="name" ng-model="pipeline.name" required />
-      foo
-      form: {{form2}}
       <p class="error" ng-show="form.name.$error.required">
         Name is required
       </p>
@@ -44,9 +42,9 @@
       </sl-ui-menu-dropdown>
     </div>
     <hr />
-    <!--<div>-->
-      <!--<button class="ui-btn secondary small" ng-click="clearPipelineForm()">cancel</button>-->
-      <!--<button class="ui-btn primary small" ng-click="saveCurrentPipeline()">Create Pipeline</button>-->
-    <!--</div>-->
+    <div ng-show="!isModal">
+      <!--<button class="ui-btn secondary small" ng-click="clearPipelineForm()">Cancel</button>-->
+      <button class="ui-btn primary small" ng-click="savePipeline(pipeline)">Save Pipeline</button>
+    </div>
   </form>
 </div>
