@@ -30,6 +30,7 @@ Gateway.controller('GatewayMainController', [
         size: 'lg',
         scope: $scope,
         controller: function($scope, $modalInstance, title) {
+          $scope.isModal = true;
           $scope.pipelineCtx.currentPipeline = {};
           $scope.title = title;
           $scope.close = function() {
@@ -223,6 +224,7 @@ Gateway.controller('GatewayMainController', [
       };
       $scope.pipelineCtx = {
         currentPipeline: {},
+        currentInstanceId: $state.params.id,
         newPolicyName: '',
         newPolicy: {},
         pipelines: [],
