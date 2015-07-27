@@ -14,9 +14,11 @@
     <tbody ng-repeat="gatewayMap in gatewayMapCtx.gatewayMaps">
     <tr>
       <td>
-        <button class="link-cmd">{{gatewayMap.name}}</button>
+        <a href="/#/gateway/gatewaymap/{{gatewayMap.id}}">
+          <span ng-show="!policy.editMode">{{gatewayMap.name}}</span>
+        </a>
       </td>
-      <td>GET</td>
+      <td>{{gatewayMap.verb}}</td>
       <td>
         <button class="link-cmd">{{gatewayMap.endpoint}}</button>
       </td>
