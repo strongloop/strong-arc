@@ -35,7 +35,7 @@
             <label>Pipeline</label>
             <select  class="form-control"
                      ng-model="map.pipelineId"
-                     ng-options="pipeline as pipeline.name for pipeline in context.currentPipelines track by pipeline.id">
+                     ng-options="pipe.id as pipe.id for pipe in context.currentPipelines">
             </select>
             <!--<button class="link-cmd"><i class="sl-icon sl-icon-plus-sign"></i>New Pipeline</button>-->
           </div>
@@ -45,8 +45,12 @@
     </table>
 
     <div>
-      <button class="ui-btn secondary small" ng-click="clearGatewayMapForm()" ng-show="gatewayMapCtx.currentGatewayMap.endpoint">cancel</button>
-      <button class="ui-btn primary small" ng-click="saveCurrentGatewayMap()" ng-show="gatewayMapCtx.currentGatewayMap.endpoint">Add Map</button>
+      <button class="ui-btn secondary small"
+              ng-click="clearGatewayMapForm()"
+              ng-show="!hidebuttons">cancel</button>
+      <button class="ui-btn primary small"
+              ng-click="saveCurrentGatewayMap(map)"
+              ng-show="!hidebuttons">Add Map</button>
     </div>
   </form>
 </div>

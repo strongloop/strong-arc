@@ -112,7 +112,7 @@ Gateway.controller('GatewayMainController', [
 
     $scope.showAddNewGatewayMapForm = function() {
       var modalDlg = $modal.open({
-        templateUrl: './scripts/modules/gateway/templates/add.map.modal.html',
+        templateUrl: './scripts/modules/gateway/templates/add.gateway.map.modal.html',
         size: 'lg',
         scope: $scope,
         controller: function($scope, $modalInstance, title) {
@@ -338,6 +338,9 @@ Gateway.controller('GatewayMainController', [
           case 'gatewaymap':
             $scope.gatewayMapCtx.currentGatewayMap = GatewayServices.getGatewayMapById($scope.gatewayCtx.currentInstanceId)
             .then(function(map) {
+                if (map.pipelineId) {
+                  map.pipelineId = String(map.pipelineId);
+                }
                 $scope.gatewayMapCtx.currentGatewayMap = map;
               });
             break;
