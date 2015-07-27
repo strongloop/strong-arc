@@ -42,6 +42,7 @@ Gateway.controller('GatewayMainController', [
            * @param pipeline
            */
           $scope.saveNewPipeline = function(pipeline){
+            delete pipeline.renderPolicies;
             GatewayServices.savePipeline(pipeline)
               .$promise
               .then(function(data) {
@@ -180,6 +181,7 @@ Gateway.controller('GatewayMainController', [
       $scope.policyCtx.policies = GatewayServices.getPolicies()
         .then(function(policies) {
           $scope.policyCtx.policies = policies;
+          $scope.pipelineCtx.policies = policies;
 
           window.triggerResizeUpdate();
         });
