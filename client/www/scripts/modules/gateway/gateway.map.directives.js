@@ -25,7 +25,7 @@ Gateway.directive('slGatewayMapForm', [
           $scope.originalMap = {};
 
           function refreshMaps() {
-            context.gatewayMaps = GatewayServices.getGatewayMaps()
+            $scope.context.gatewayMaps = GatewayServices.getGatewayMaps()
               .then(function(maps) {
 
                 $scope.context.gatewayMaps = maps;
@@ -34,12 +34,16 @@ Gateway.directive('slGatewayMapForm', [
           }
 
           $scope.init = function() {
+            var xps = $scope.context.currentPipelines;
             $scope.originalMap = angular.copy($scope.map);
           };
           $scope.init();
 
           $scope.saveCurrentGatewayMap = function(map) {
             if (map.name && map.endpoint) {
+              if (map.pipelineId && map.pipelineId.id) {
+                map.pipelineId = map.pipelineId.id;
+              }
 
               if ($scope.isMapDirty) {
                 if (confirm('do you want to make this change')) {

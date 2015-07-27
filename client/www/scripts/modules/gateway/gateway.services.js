@@ -180,6 +180,9 @@ Gateway.service('GatewayServices', [
     };
     svc.saveGatewayMap = function(gatewayMap) {
       if (gatewayMap) {
+        if (gatewayMap.pipelineId && gatewayMap.pipelineId.id) {
+          gatewayMap.pipelineId = gatewayMap.pipelineId.id;
+        }
         // update
         if (gatewayMap.id) {
           delete gatewayMap._id;

@@ -15,7 +15,7 @@ Gateway.directive('slPipelineMainView', [
         var pipelineId = scope.pipelineCtx.currentInstanceId;
         $log.log(pipelineId);
 
-        if (pipelineId) {
+        if (pipelineId && scope.gatewayCtx.isShowPipelineView) {
           GatewayServices.getPipelineById(pipelineId)
             .then(function(data){
               scope.pipelineCtx.currentPipeline = data;
