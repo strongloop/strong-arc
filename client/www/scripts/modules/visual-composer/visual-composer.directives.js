@@ -315,6 +315,8 @@ VisualComposer.directive('slComposerCanvas', [
               var x = d3.event.x - eventOffset[0];
               var y = d3.event.y - eventOffset[1];
 
+              y += 250;
+
               return 'translate(' + x + ', ' + y + ')';
             });
 

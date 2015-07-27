@@ -1,4 +1,21 @@
+.app-module-container {
+  position: absolute;
+  top: 7.5rem;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
 .visual-composer {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  top: 0rem;
+  height: 100%;
+  display: flex;
+  align-items: stretch;
+  background: #595959;
+
   .model {
     fill: white;
     stroke: @grey-4;
@@ -24,6 +41,19 @@
     }
   }
 
+  .component-panel {
+    width: 25rem;
+
+    .instance-selector {
+
+    }
+
+    .creation-panel {
+
+    }
+
+  }
+
   .link {
     stroke: @grey-1;
     stroke-width: 3px;
@@ -34,18 +64,23 @@
     }
 
     &.valid {
-      stroke: @green-6;
+      stroke: @green-4;
     }
   }
 
   .canvas-container {
-    margin: 2rem;
-    width: auto;
-    height: 50rem;
-    border: 1px solid @grey-1;
+    margin: 0;
+    flex-grow: 1;
+    border: none;
+    position: relative;
 
     div {
       background-image: url('/images/checkerboard.png');
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
     }
   }
 }
