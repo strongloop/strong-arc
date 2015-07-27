@@ -48,7 +48,7 @@
         </button>
 
         <ul ng-show="gatewayMap.showPipelineDetails" class="pipeline-policy-sequence-list">
-          <li ng-repeat="policy in gatewayMap.pipeline.policies">
+          <li ng-repeat="policy in gatewayMap.pipeline.policies track by $index">
             <button class="pipeline-policy-button">
               <div class="pipeline-policy-container">
                 {{policy.type}}

@@ -6,6 +6,11 @@
   </button>
 
 
-  <sl-gateway-map-form ng-show="gatewayCtx.currentInstanceId"></sl-gateway-map-form>
+  <sl-gateway-map-form map="gatewayMapCtx.currentGatewayMap"
+     context="gatewayMapCtx"
+     hidebuttons="false"
+     is-modal="false"
+     ng-show="gatewayCtx.currentInstanceId">
+  </sl-gateway-map-form>
 
 </div>
