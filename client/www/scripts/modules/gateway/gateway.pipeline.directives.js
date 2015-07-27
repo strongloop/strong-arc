@@ -15,10 +15,12 @@ Gateway.directive('slPipelineMainView', [
         var pipelineId = scope.pipelineCtx.currentInstanceId;
         $log.log(pipelineId);
 
-        GatewayServices.getPipelineById(pipelineId)
-          .then(function(data){
-            scope.pipelineCtx.currentPipeline = data;
-          })
+        if (pipelineId) {
+          GatewayServices.getPipelineById(pipelineId)
+            .then(function(data){
+              scope.pipelineCtx.currentPipeline = data;
+            });
+        }
       }
     }
   }
@@ -40,11 +42,28 @@ Gateway.directive('slPipelineForm', [
 
         getPolicies();
 
+        function getPipelineRenderPolicy(policyId) {
+          for (var i = 0;i  < $scope.context.policies.length;i++) {
+            var item = $scope.context.policies[i];
+            if (item.id === policyId) {
+              return item;
+              break;
+            }
+          }
+        }
         $scope.addNewPolicyToPipeline = function(policy, toggler){
-          $scope.pipeline.policies = $scope.pipeline.policies || [];
-          $scope.pipeline.policies.push(policy);
+          $scope.pipeline.policyIds = $scope.pipeline.policyIds || [];
+          $scope.pipeline.policyIds.push(policy.id);
+          $scope.pipeline.renderPolicies = [];
+          $scope.pipeline.policyIds.map(function(policyId) {
+            var xxx = getPipelineRenderPolicy(policyId);
+            $scope.pipeline.renderPolicies.push(xxx)
+
+          });
+
           $scope.showAddPolicyMenu = false;
         };
+
 
         $scope.toggleShowAddPolicyMenu = function(){
           $scope.showAddPolicyMenu = !$scope.showAddPolicyMenu;
