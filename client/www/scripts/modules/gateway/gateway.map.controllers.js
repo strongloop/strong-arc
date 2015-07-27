@@ -73,21 +73,21 @@ Gateway.controller('GatewayMapMainController', [
     $scope.cancelEditGatewayMap = function(gatewayMap) {
       gatewayMap.editMode = false;
     };
-    $scope.saveCurrentGatewayMap = function() {
-      if ($scope.gatewayMapCtx.currentGatewayMap.name && $scope.gatewayMapCtx.currentGatewayMap.endpoint) {
-        $scope.gatewayMapCtx.currentGatewayMap.showPipelineDetails = false;
-        $scope.gatewayMapCtx.currentGatewayMap = GatewayServices.saveGatewayMap($scope.gatewayMapCtx.currentGatewayMap)
-          .$promise
-          .then(function(response) {
-            $scope.gatewayMapCtx.currentGatewayMap = {};
-            resetCurrentGatewayMap();
-            refreshGatewayMaps();
-          });
-      }
-      else {
-        $log.debug('invalid GatewayMap attempt save');
-      }
-    };
+    //$scope.saveCurrentGatewayMap = function() {
+    //  if ($scope.gatewayMapCtx.currentGatewayMap.name && $scope.gatewayMapCtx.currentGatewayMap.endpoint) {
+    //    $scope.gatewayMapCtx.currentGatewayMap.showPipelineDetails = false;
+    //    $scope.gatewayMapCtx.currentGatewayMap = GatewayServices.saveGatewayMap($scope.gatewayMapCtx.currentGatewayMap)
+    //      .$promise
+    //      .then(function(response) {
+    //        $scope.gatewayMapCtx.currentGatewayMap = {};
+    //        resetCurrentGatewayMap();
+    //        refreshGatewayMaps();
+    //      });
+    //  }
+    //  else {
+    //    $log.debug('invalid GatewayMap attempt save');
+    //  }
+    //};
 
 
 
