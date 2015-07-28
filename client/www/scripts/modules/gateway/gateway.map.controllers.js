@@ -5,16 +5,78 @@ Gateway.controller('GatewayMapMainController', [
   'GatewayServices',
   function($scope, $log, GatewayServices) {
     $log.debug('GatewayMap Controller');
+    function getPipelineRenderPolicy(policyId) {
+      for (var i = 0;i  < $scope.policyCtx.policies.length;i++) {
+        var item = $scope.policyCtx.policies[i];
+        if (item.id === policyId) {
+          return item;
+          break;
+        }
+      }
+    }
+    function inflatePipelinePolicies(pipeline) {
+      pipeline.policies = [];
+      pipeline.policyIds.map(function(policyId) {
+        var inflatedPolicy = getPipelineRenderPolicy(policyId);
+        pipeline.policies.push(inflatedPolicy);
+      });
+      return pipeline;
+    }
 
+
+    function getPipelineDetail(argId) {
+      for (var i = 0;i < $scope.gatewayMapCtx.currentPipelines.length;i++) {
+        var cPipeline = $scope.gatewayMapCtx.currentPipelines[i];
+        if (cPipeline.id === argId) {
+          var retVal = inflatePipelinePolicies(cPipeline);
+          return retVal;
+        }
+      }
+    }
     $scope.gatewayMapCtx.init = function() {
-      //$scope.gatewayMapCtx = {
-      //  currentGatewayMap: {},
-      //  gatewayMaps: [],
-      //  currentPipelines: [],
-      //  currentPolicyScopes: [],
-      //  currentRawEndpoints: []
-      //
-      //};
+
+
+      $scope.policyCtx.policies = GatewayServices.getPolicies()
+        .then(function(policies) {
+          $scope.policyCtx.policies = policies;
+          $scope.pipelineCtx.pipelines = GatewayServices.getPipelines()
+            .then(function(pipelines) {
+              $scope.pipelineCtx.pipelines = pipelines;
+              $scope.gatewayMapCtx.gatewayMaps = GatewayServices.getGatewayMaps()
+                .then(function(maps) {
+                  $log.debug('|  refresh maps: ' + maps.length);
+                  maps.map(function(map) {
+                    var detail = getPipelineDetail(map.pipelineId);
+                    if (detail && detail.policies) {
+                      detail.policies.map(function(policy) {
+                        if (policy && (policy.type === 'reverseproxy') && policy.targetURL) {
+                          map.targetURL = policy.targetURL;
+                        }
+                        if (policy && (policy.type === 'auth') && policy.scopes) {
+                          map.scope = policy.scopes[0] +'...' || '';
+                        }
+
+                      });
+                    }
+                    map.pipeline = detail;
+                  });
+                  $scope.gatewayMapCtx.gatewayMaps = maps;
+
+
+                  $scope.latestPolicies = GatewayServices.getPolicies()
+                    .then(function(policies) {
+                      $scope.latestPolicies = policies;
+                    });
+
+
+
+
+
+
+                });
+
+            });
+        });
 
     };
     $scope.mapPipelineDetailModal = {
@@ -37,16 +99,12 @@ Gateway.controller('GatewayMapMainController', [
       $log.debug('tree item clicked');
       // $scope.openSelectedInstance(targetId, type);
     };
-    //$scope.showAddNewGatewayMapForm = function() {
-    //  $scope.gatewayMapCtx.isShowNewGatewayMapForm = !$scope.gatewayMapCtx.isShowNewGatewayMapForm;
-    //};
+
     $scope.clearGatewayMapForm = function() {
       resetCurrentGatewayMap();
       $scope.gatewayMapCtx.isShowNewGatewayMapForm = false;
     };
-    //$scope.showAddPipelinePolicy = function() {
-    //  $log.debug('show pipeline policy component');
-    //};
+
     function resetCurrentGatewayMap() {
       $scope.gatewayMapCtx.currentGatewayMap = {};
     }
@@ -73,23 +131,10 @@ Gateway.controller('GatewayMapMainController', [
     $scope.cancelEditGatewayMap = function(gatewayMap) {
       gatewayMap.editMode = false;
     };
-    //$scope.saveCurrentGatewayMap = function() {
-    //  if ($scope.gatewayMapCtx.currentGatewayMap.name && $scope.gatewayMapCtx.currentGatewayMap.endpoint) {
-    //    $scope.gatewayMapCtx.currentGatewayMap.showPipelineDetails = false;
-    //    $scope.gatewayMapCtx.currentGatewayMap = GatewayServices.saveGatewayMap($scope.gatewayMapCtx.currentGatewayMap)
-    //      .$promise
-    //      .then(function(response) {
-    //        $scope.gatewayMapCtx.currentGatewayMap = {};
-    //        resetCurrentGatewayMap();
-    //        refreshGatewayMaps();
-    //      });
-    //  }
-    //  else {
-    //    $log.debug('invalid GatewayMap attempt save');
-    //  }
-    //};
 
 
 
+
+    $scope.gatewayMapCtx.init();
   }
 ]);

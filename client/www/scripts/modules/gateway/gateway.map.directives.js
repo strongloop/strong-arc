@@ -84,11 +84,11 @@ Gateway.directive('slGatewayMapList', [
       templateUrl: './scripts/modules/gateway/templates/gateway.map.list.html',
       controller: [
         '$scope',
-        function($scope) {
-          $scope.saveGatewayMap = function(gatewayMap) {
-            $scope.gatewayMapCtx.currentGatewayMap = gatewayMap;
-            $scope.saveCurrentGatewayMap();
-          }
+        'GatewayServices',
+        function($scope, GatewayServices) {
+
+
+
         }
       ]
     }
