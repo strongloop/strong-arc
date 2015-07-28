@@ -39,9 +39,9 @@ Gateway.controller('GatewayMapMainController', [
       $scope.policyCtx.policies = GatewayServices.getPolicies()
         .then(function(policies) {
           $scope.policyCtx.policies = policies;
-          $scope.pipelineCtx.pipelines = GatewayServices.getPipelines()
+          GatewayServices.getPipelines()
             .then(function(pipelines) {
-              $scope.pipelineCtx.pipelines = pipelines;
+              //$scope.pipelineCtx.pipelines = pipelines;
               $scope.gatewayMapCtx.gatewayMaps = GatewayServices.getGatewayMaps()
                 .then(function(maps) {
                   $log.debug('|  refresh maps: ' + maps.length);

@@ -5,7 +5,7 @@
   </div>
   <div class="modal-body">
     <sl-pipeline-form
-      pipeline="pipelineCtx.currentPipeline"
+      pipeline="pipelineCtx.newPipeline"
       context="pipelineCtx"
       hidebuttons="true"
       is-modal="true">
@@ -15,7 +15,7 @@
     <button type="button" class="ui-btn secondary small pull-left" ng-click="close()">
       Cancel
     </button>
-    <button type="button" class="ui-btn primary small pull-right" ng-click="saveNewPipeline(pipelineCtx.currentPipeline)">
+    <button type="button" class="ui-btn primary small pull-right" ng-click="saveNewPipeline(pipelineCtx.newPipeline)">
       Save
     </button>
   </div>
