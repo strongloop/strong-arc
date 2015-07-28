@@ -1,4 +1,5 @@
 <div data-id="PipelineListContainer">
+  <div>pipelines {{pipelineCtx}}</div>
   <table class="ui-table">
     <thead>
       <tr>
@@ -13,9 +14,11 @@
           <a href="/#/gateway/pipeline/{{pipeline.name}}">{{pipeline.name}}</a>
         </td>
         <td>
+          <div>bar: {{pipeline}}</div>
           <ul class="policies">
-            <li ng-repeat="policy in pipeline.policyIds">
-              {{policy}}
+
+            <li ng-repeat="policy in pipeline.renderPolicies">
+              policy.id: {{policy.id}}
             </li>
           </ul>
           <!--<button class="pipeline-add-policy-button ui-btn accessory text-left" style="width:40rem"-->
