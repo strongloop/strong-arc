@@ -17,10 +17,23 @@
       {{policy.name}}
     </td>
     <td>
-      <button class="link-cmd"
-              popover-template="policyDetailModal.templateUrl"
-              popover-placement="{{policyDetailModal.position}}"
-              ng-click="setupHidePopover($event, policy)">details</button>
+      <div ng-show="policy.type == 'ratelimiting'">
+        <ul>
+          <li>limit: {{policy.limit}}</li>
+          <li>interval (ms): {{policy.interval}}</li>
+        </ul>
+      </div>
+      <div ng-show="policy.type == 'reverseproxy'">
+        targetURL: <span>{{policy.targetURL}}</span>
+      </div>
+      <div ng-show="policy.type == 'auth'">
+        <span>scopes:</span>
+        <ul>
+          <li ng-repeat="scope in policy.scopes">
+            <div class="policy-scope-item">{{scope}}</div>
+          </li>
+        </ul>
+      </div>
     </td>
   </tr>
   </tbody>

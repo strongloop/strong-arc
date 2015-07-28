@@ -3,7 +3,6 @@
     <thead>
     <tr>
       <th>Name</th>
-      <th>Method</th>
       <th>Endpoint(s)</th>
       <th>Scopes</th>
       <th>Pipeline</th>
@@ -15,17 +14,16 @@
     <tr>
       <td>
         <a href="/#/gateway/gatewaymap/{{gatewayMap.id}}">
-          <span ng-show="!policy.editMode">{{gatewayMap.name}}</span>
+          <span>{{gatewayMap.name}}</span>
         </a>
       </td>
       <td>
         <span>{{gatewayMap.verb}}</span>
-      </td>
-      <td>
         <span>{{gatewayMap.endpoint}}</span>
       </td>
       <td>
-        <span><button class="link-cmd">{{gatewayMap.scope}}</button></span>
+        <sl-gateway-map-list-scope-display scopes="gatewayMap.scopes"></sl-gateway-map-list-scope-display>
+        <!--<span><button class="link-cmd">{{gatewayMap.scope}}</button></span>-->
       </td>
       <td>
         <button class="link-cmd"
@@ -36,7 +34,7 @@
         </button>
 
         <ul ng-show="gatewayMap.showPipelineDetails" class="pipeline-policy-sequence-list">
-          <li ng-repeat="policy in  latestPolicies">
+          <li ng-repeat="policy in latestPolicies">
             <button class="pipeline-policy-button">
               <div class="pipeline-policy-container">
                 {{policy.type}}
