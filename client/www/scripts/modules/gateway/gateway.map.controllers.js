@@ -33,11 +33,11 @@ Gateway.controller('GatewayMapMainController', [
         }
       }
     }
-    $scope.$watch('gatewayMapCtx.currentGatewayMap', function(newVal) {
-      if (newVal && newVal.pipelineId) {
-        $scope.gatewayMapCtx.currentGatewayMap.pipeline = getPipelineDetail(newVal.pipelineId);
-      }
-    }, true);
+    //$scope.$watch('gatewayMapCtx.currentGatewayMap', function(newVal) {
+    //  if (newVal && newVal.pipelineId) {
+    //    $scope.gatewayMapCtx.currentGatewayMap.pipeline = getPipelineDetail(newVal.pipelineId);
+    //  }
+    //}, true);
     $scope.gatewayMapCtx.init = function() {
 
 

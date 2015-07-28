@@ -237,7 +237,11 @@ Gateway.controller('GatewayMainController', [
           $scope.gatewayMapCtx.currentPolicies = policies;
 
         }).then(getPipelines)
-          .then(getGatewayMaps);
+          .then(getGatewayMaps)
+        .then(function() {
+
+          $scope.main();
+        });
 
 
       function getPipelines(){
@@ -362,17 +366,20 @@ Gateway.controller('GatewayMainController', [
 
       $scope.refreshDataSets();
 
+
+    }();
+    $scope.main = function() {
       /*
-      * Retrieve instance data if context id is present
-      * */
+       * Retrieve instance data if context id is present
+       * */
       if ($scope.gatewayCtx.currentInstanceId) {
         switch($scope.gatewayCtx.currentView) {
 
           case 'gatewaymap':
             $scope.gatewayMapCtx.currentGatewayMap = GatewayServices.getGatewayMapById($scope.gatewayCtx.currentInstanceId)
-            .then(function(map) {
+              .then(function(map) {
                 if (map.pipelineId) {
-                  map.pipelineId = String(map.pipelineId);
+                  map.pipeline = getPipelineDetail(map.pipelineId);
                 }
                 $scope.gatewayMapCtx.currentGatewayMap = map;
               });
@@ -403,7 +410,7 @@ Gateway.controller('GatewayMainController', [
         }
       }
       setView();
-    }();
+    }
     function setView() {
      // $timeout(function() {
         if ($scope.gatewayCtx.currentView) {
