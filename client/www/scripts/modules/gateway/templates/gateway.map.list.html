@@ -18,39 +18,25 @@
           <span ng-show="!policy.editMode">{{gatewayMap.name}}</span>
         </a>
       </td>
-      <td>{{gatewayMap.verb}}</td>
       <td>
-        <button class="link-cmd">{{gatewayMap.endpoint}}</button>
+        <span>{{gatewayMap.verb}}</span>
       </td>
       <td>
-        <ul class="gateway-map-scopes">
-          <li>
-            <span>facebook</span>
-          </li>
-          <li>
-            <span>Shopping</span>
-          </li>
-          <li>
-            <span>Admin</span>
-          </li>
-        </ul>
+        <span>{{gatewayMap.endpoint}}</span>
       </td>
       <td>
-
-
-        <!--<button class="link-cmd"-->
-                <!--ng-click="toggleShowPipelineDetails(gatewayMap)">-->
-          <!--{{gatewayMap.pipeline.name}}-->
-        <!--</button>-->
+        <span><button class="link-cmd">{{gatewayMap.scope}}</button></span>
+      </td>
+      <td>
         <button class="link-cmd"
                 popover-template="mapPipelineDetailModal.templateUrl"
                 popover-placement="{{mapPipelineDetailModal.position}}"
-                ng-click="setupHidePopover($event, pipeline)">
+                ng-click="setupHidePopover($event, gatewayMap.pipeline)">
           {{gatewayMap.pipeline.name}}
         </button>
 
         <ul ng-show="gatewayMap.showPipelineDetails" class="pipeline-policy-sequence-list">
-          <li ng-repeat="policy in gatewayMap.pipeline.policies track by $index">
+          <li ng-repeat="policy in  latestPolicies">
             <button class="pipeline-policy-button">
               <div class="pipeline-policy-container">
                 {{policy.type}}
@@ -68,8 +54,7 @@
         </ul>
       </td>
       <td>
-        <button class="link-cmd">https://ec2.secure.api.io/api/*</button>
-        {{ gatewayMap.pipeline.defaultEndpoint }}
+        {{ gatewayMap.targetURL }}
       </td>
       <td class="gateway-delete-col">
         <button class="link-cmd" ng-click="deleteGatewayMap(gatewayMap)">
