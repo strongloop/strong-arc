@@ -43,6 +43,46 @@
       </tr>
       </tbody>
     </table>
+    <table class="ui-table">
+      <thead>
+      <tr>
+        <th>
+          type
+        </th>
+        <th>
+          name
+        </th>
+        <th>
+          details
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="policy in map.pipeline.policies">
+        <td>{{policy.type}}</td>
+        <td>{{policy.name}}</td>
+        <td>
+          <div ng-show="policy.type == 'ratelimiting'">
+            <ul>
+              <li>limit: {{policy.limit}}</li>
+              <li>interval (ms): {{policy.interval}}</li>
+            </ul>
+          </div>
+          <div ng-show="policy.type == 'reverseproxy'">
+            targetURL: <span>{{policy.targetURL}}</span>
+          </div>
+          <div ng-show="policy.type == 'auth'">
+            <span>scopes:</span>
+            <ul>
+              <li ng-repeat="scope in policy.scopes">
+                <div class="policy-scope-item">{{scope}}</div>
+              </li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
 
     <div>
       <button class="ui-btn secondary small"

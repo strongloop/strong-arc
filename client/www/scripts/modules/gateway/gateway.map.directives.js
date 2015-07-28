@@ -65,13 +65,28 @@ Gateway.directive('slGatewayMapForm', [
 
                   });
               }
-
-
-
-
-
             }
           };
+        }
+      ]
+    }
+  }
+]);
+Gateway.directive('slGatewayMapListScopeDisplay', [
+  function() {
+    return {
+      restrict: 'E',
+      scope: {
+        scopes: '='
+      },
+      templateUrl: './scripts/modules/gateway/templates/gateway.map.list.scopes.html',
+      controller: [
+        '$scope',
+        'GatewayServices',
+        function($scope, GatewayServices) {
+
+
+
         }
       ]
     }
