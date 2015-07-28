@@ -91,17 +91,17 @@ Gateway.controller('PipelineMainController', [
     //
     //};
 
-    $scope.pipelineCtx.init = function() {
-      $scope.pipelineCtx.currentPipeline = {};
-      $scope.pipelineCtx.pipelines = GatewayServices.getPipelines()
-        .then(function(hosts) {
-          $scope.pipelineCtx.pipelines = hosts;
-        });
-    };
-    $scope.pipelineCtx.pipelines = GatewayServices.getPipelines()
-      .then(function(hosts) {
-        $scope.pipelineCtx.pipelines = hosts;
-      });
+    //$scope.pipelineCtx.init = function() {
+    //  $scope.pipelineCtx.currentPipeline = {};
+    //  $scope.pipelineCtx.pipelines = GatewayServices.getPipelines()
+    //    .then(function(hosts) {
+    //      $scope.pipelineCtx.pipelines = hosts;
+    //    });
+    //};
+    //$scope.pipelineCtx.pipelines = GatewayServices.getPipelines()
+    //  .then(function(hosts) {
+    //    $scope.pipelineCtx.pipelines = hosts;
+    //  });
     $scope.deletePipeline = function(pipeline) {
       if (confirm('delete Pipeline?')) {
         GatewayServices.deletePipeline(pipeline.id)
@@ -142,7 +142,7 @@ Gateway.controller('PipelineMainController', [
       if ($scope.pipelineCtx.currentPipeline.name) {
 
 
-        $scope.pipelineCtx.currentPipeline = GatewayServices.savePipeline($scope.pipelineCtx.currentPipeline)
+        GatewayServices.savePipeline($scope.pipelineCtx.currentPipeline)
           .$promise
           .then(function(response) {
             $scope.pipelineCtx.currentPipeline = {};
@@ -176,7 +176,7 @@ Gateway.controller('PipelineMainController', [
             GatewayServices.savePipeline(pipeline)
               .$promise
               .then(function(data) {
-                $scope.pipelineCtx.currentPipeline = {};
+                $scope.pipelineCtx.newPipeline = {};
                 refreshPipelines();
               });
 

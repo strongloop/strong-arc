@@ -18,6 +18,13 @@ Gateway.directive('slPipelineMainView', [
         if (pipelineId && scope.gatewayCtx.isShowPipelineView) {
           GatewayServices.getPipelineById(pipelineId)
             .then(function(data){
+              //add rendered policies
+              data.renderPolicies = [];
+              data.policyIds.map(function(policyId){
+                var policy = scope.getPipelineRenderPolicy(policyId);
+                data.renderPolicies.push(policy);
+              });
+
               scope.pipelineCtx.currentPipeline = data;
             });
         }
@@ -43,22 +50,14 @@ Gateway.directive('slPipelineForm', [
         getPolicies();
 
         function getPipelineRenderPolicy(policyId) {
-          for (var i = 0;i  < $scope.context.policies.length;i++) {
-            var item = $scope.context.policies[i];
-            if (item.id === policyId) {
-              return item;
-              break;
-            }
-          }
+          return _.findWhere($scope.context.policies, { id: policyId });
         }
+
         $scope.addNewPolicyToPipeline = function(policy, toggler){
           $scope.pipeline.policyIds = $scope.pipeline.policyIds || [];
           $scope.pipeline.policyIds.push(policy.id);
-          $scope.pipeline.renderPolicies = [];
-          $scope.pipeline.policyIds.map(function(policyId) {
-            var xxx = getPipelineRenderPolicy(policyId);
-            $scope.pipeline.renderPolicies.push(xxx)
-
+          $scope.pipeline.renderPolicies = $scope.pipeline.policyIds.map(function(policyId){
+            return getPipelineRenderPolicy(policyId);
           });
 
           $scope.showAddPolicyMenu = false;
