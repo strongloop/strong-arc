@@ -1,49 +1,47 @@
 <div data-id="GatewayMapFormContainer">
   <form class="ui-form">
-    <table>
-      <tbody>
-      <tr>
-        <td>
-          <div>
-            <label>Map Name</label>
-            <input ng-model="map.name" type="text" placeholder="name" />
-          </div>
-        </td>
-        <td>
-          <label>Verb</label>
-          <select  class="form-control" ng-model="map.verb">
-            <option>ALL</option>
-            <option>GET</option>
-            <option>PUT</option>
-            <option>POST</option>
-            <option>DELETE</option>
-            <option>HEAD</option>
-          </select>
-        </td>
-        </tr>
-        <tr>
-        <td>
-          <div class="form-field">
-            <label>Url Pattern</label>
-            <input ng-model="map.endpoint"
-                   type="text"
-                   placeholder="endpoint" />
-          </div>
-        </td>
-        <td>
-          <div class="form-field">
-            <label>Pipeline</label>
-            <select  class="form-control"
-                     ng-model="map.pipelineId"
-                     ng-options="pipe.id as pipe.id for pipe in context.currentPipelines">
-            </select>
-            <!--<button class="link-cmd"><i class="sl-icon sl-icon-plus-sign"></i>New Pipeline</button>-->
-          </div>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-    <table class="ui-table">
+    <div data-id="GatewayMapFormTopRow">
+      <div>
+        <label>Map Name</label>
+        <input class="gateway-map-main-input" ng-model="map.name" type="text" placeholder="name" />
+      </div>
+      <div>
+        <label>Verb</label>
+        <select  class="form-control" ng-model="map.verb">
+          <option>ALL</option>
+          <option>GET</option>
+          <option>PUT</option>
+          <option>POST</option>
+          <option>DELETE</option>
+          <option>HEAD</option>
+        </select>
+      </div>
+      <div>
+        <label>Url Pattern</label>
+        <input ng-model="map.endpoint"
+               type="text"
+               class="gateway-map-main-input"
+               placeholder="endpoint" />
+      </div>
+    </div>
+    <div class="form-field">
+      <label>Pipeline</label>
+
+      <div dropdown class="dropdown-container">
+        <button  id="simple-dropdown" dropdown-toggle>
+          {{map.pipelineId}}
+        </button>
+        <ul class="dropdown-menu">
+          <li ng-repeat="pipe in context.currentPipelines" ng-click="setMapPipelineId(map, pipe.id)">{{pipe.name}}</li>
+        </ul>
+      </div>
+      <!--<select  class="form-control gateway-map-main-input"-->
+               <!--ng-model="map.pipelineId"-->
+               <!--ng-options="pipe.id as pipe.id for pipe in context.currentPipelines">-->
+      <!--</select>-->
+      <!--<button class="link-cmd"><i class="sl-icon sl-icon-plus-sign"></i>New Pipeline</button>-->
+    </div>
+    <table class="ui-table" ng-show="map.pipelineId">
       <thead>
       <tr>
         <th>

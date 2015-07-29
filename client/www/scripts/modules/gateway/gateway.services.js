@@ -50,6 +50,25 @@ Gateway.service('GatewayServices', [
           $log.warn('bad delete Policy' + JSON.stringify(error));
         });
     };
+    svc.clonePolicy = function(data) {
+      return svc.getPolicyById(data.id)
+        .then(function(srcInstance) {
+          var targetInstance = angular.copy(srcInstance);
+          targetInstance.name = data.name;
+          delete targetInstance.id;
+          return svc.savePolicy(targetInstance)
+            .$promise
+            .then(function(clonedObj) {
+              return clonedObj;
+            })
+            .catch(function(error) {
+              $log.warn('bad save cloned object: ' + JSON.stringify(error));
+            });
+        })
+        .catch(function(error) {
+          $log.warn('bad get  instance for cloning: ' + JSON.stringify(error));
+        });
+    };
     svc.savePolicy = function(policy) {
       if (policy) {
         // update
@@ -111,6 +130,25 @@ Gateway.service('GatewayServices', [
         })
         .catch(function(error) {
           $log.warn('bad delete Pipeline' + JSON.stringify(error));
+        });
+    };
+    svc.clonePipeline = function(data) {
+      return svc.getPipelineById(data.id)
+        .then(function(srcInstance) {
+          var targetInstance = angular.copy(srcInstance);
+          targetInstance.name = data.name;
+          delete targetInstance.id;
+          return svc.savePipeline(targetInstance)
+            .$promise
+            .then(function(clonedObj) {
+              return clonedObj;
+            })
+            .catch(function(error) {
+              $log.warn('bad save cloned object: ' + JSON.stringify(error));
+            });
+        })
+        .catch(function(error) {
+          $log.warn('bad get  instance for cloning: ' + JSON.stringify(error));
         });
     };
     svc.savePipeline = function(pipeline) {
@@ -177,6 +215,49 @@ Gateway.service('GatewayServices', [
         .catch(function(error) {
           $log.warn('bad delete GatewayMap' + JSON.stringify(error));
         });
+    };
+    svc.cloneGatewayMap = function(data) {
+      return svc.getGatewayMapById(data.id)
+          .then(function(srcInstance) {
+            var targetInstance = angular.copy(srcInstance);
+            targetInstance.name = data.name;
+            delete targetInstance.id;
+
+            return svc.saveGatewayMap(targetInstance)
+              .$promise
+              .then(function(clonedInstance) {
+                return clonedInstance;
+              })
+              .catch(function(error) {
+                $log.warn('bad save cloned object: ' + JSON.stringify(error));
+              });
+          })
+          .catch(function(error) {
+            $log.warn('bad get  GatewayMap: ' + JSON.stringify(error));
+          });
+    };
+    svc.cloneInstance = function(data) {
+      switch(data.type) {
+        case 'policy':
+          return svc.clonePolicy(data)
+            .then(function(instance) {
+              return instance;
+            });
+          break;
+        case 'pipeline':
+          return svc.clonePipeline(data)
+            .then(function(instance) {
+              return instance;
+            });
+          break;
+        case 'gatewaymap':
+          return svc.cloneGatewayMap(data)
+            .then(function(instance) {
+              return instance;
+            });
+          break;
+        default:
+      }
     };
     svc.saveGatewayMap = function(gatewayMap) {
       if (gatewayMap) {

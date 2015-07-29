@@ -36,25 +36,57 @@ var GatewayNav = (GatewayNav = React).createClass({
     return {isModelNavContainerOpen:true};
   },
   deleteSelectedInstance: function(key, opt) {
-    var scope = this.props.scope;
-    try{
-      var targetAttributes = opt.sourceEvent.currentTarget.attributes;
-      if (targetAttributes['data-id']) {
-        var instanceId = targetAttributes['data-id'].value;
-        var type = targetAttributes['data-type'].value;
+    if (confirm('delete instance?')) {
+      var scope = this.props.scope;
+      try{
+        var targetAttributes = opt.sourceEvent.currentTarget.attributes;
+        if (targetAttributes['data-id']) {
+          var instanceId = targetAttributes['data-id'].value;
+          var type = targetAttributes['data-type'].value;
 
-        if (type && instanceId) {
-          scope.$apply(function(){
-            scope.deleteInstanceRequest(instanceId, type);
-          });
+          if (type && instanceId) {
+            scope.$apply(function(){
+              scope.deleteInstanceRequest(instanceId, type);
+            });
+          }
+        } else {
+          console.warn('Missing some of the required attributes.');
         }
-      } else {
-        console.warn('Missing some of the required attributes.');
+      }
+      catch(error) {
+        console.warn('error deleting model definition: ' + error);
       }
     }
-    catch(error) {
-      console.warn('error deleting model definition: ' + error);
+  },
+  cloneSelectedInstance: function(key, opt) {
+    if (confirm('clone instance?')) {
+      var scope = this.props.scope;
+      try{
+        var targetAttributes = opt.sourceEvent.currentTarget.attributes;
+        if (targetAttributes['data-id']) {
+          var instanceId = targetAttributes['data-id'].value;
+          var type = targetAttributes['data-type'].value;
+          var name = targetAttributes['data-name'].value;
+
+          if (type && instanceId) {
+            var cloneConfig = {
+              id: instanceId,
+              type: type,
+              name: name
+            };
+            scope.$apply(function(){
+              scope.cloneInstanceRequest(cloneConfig);
+            });
+          }
+        } else {
+          console.warn('Missing some of the required attributes.');
+        }
+      }
+      catch(error) {
+        console.warn('error cloning instancw definition: ' + error);
+      }
     }
+
   },
   addNewInstanceRequest: function(event) {
     var scope = this.props.scope;
@@ -207,7 +239,7 @@ var GatewayNav = (GatewayNav = React).createClass({
             {dsConnectEl}
             </div>
             <div data-ui-type="cell" className="ia-nav-item-contextmenu-icon-container-col">
-              <button className="btn-command btn-nav-context" data-id={item.id} data-type={type}>
+              <button className="btn-command btn-nav-context" data-name={item.name} data-id={item.id} data-type={type}>
                 <span data-name={item.name} data-id={item.id} data-type={type} className="sl-icon sl-icon-box-arrow-down"></span>
               </button>
             </div>
