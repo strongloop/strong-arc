@@ -114,7 +114,20 @@ Gateway.controller('GatewayMainController', [
 
       }
     };
+    $scope.cloneInstanceRequest  = function(data) {
+      if (data.id && data.type && data.name) {
+        var originalData = angular.copy(data);
+        data.name = prompt('new ' + data.type + ' name:',data.name + '-' + (Math.floor(Math.random() * (11 - 1)) + 1) );
 
+        if (data.name && (data.name !== originalData.name)) {
+          GatewayServices.cloneInstance(data)
+            .then(function(response) {
+              $scope.refreshDataSets();
+            });
+        }
+
+      }
+    };
     $scope.showAddNewGatewayMapForm = function() {
       var modalDlg = $modal.open({
         templateUrl: './scripts/modules/gateway/templates/add.gateway.map.modal.html',

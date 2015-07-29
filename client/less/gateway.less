@@ -12,178 +12,197 @@
     flex-grow:1;
   }
 }
+[data-id="GatewayMainContainer"] {
+  .dropdown-container {
+    position:relative;
+  }
+  [data-id="GatewayMapFormTopRow"] {
+    display:flex;
+    flex-direction:row;
+    flex-wrap: nowrap;
 
-.gateway-map-list-scopes-container {
-  position:relative;
-}
-
-[data-id="PolicyFormContainer"] {
-
-  display: inline-block;
-
-  form.ui-form {
-    border:0;
+  }
+  .gateway-map-main-input {
+    max-width:35rem;
   }
 
-  .flex-container {
-    display: flex;
-    flex-direction: row;
+  .gateway-map-list-scopes-container {
+    position:relative;
   }
 
-  select {
-    width:35rem;
-    height:30px;
-    color:#999999;
-  }
-}
-.tree-branch.is-active{
-  background: #4a90e2;
-}
-.policy-scope-item {
-  padding: 2px 4px;
-  line-height: 2rem;
-  font-size: 11px;
-  background-color: @gray-light-2;
-  color:@gray-dark;
-  float:left;
-  display:inline-block;
-  border-radius: 2px;
-  margin: 2px 5px 2px 0px;
-}
 
-.policy-scope-input-container {
-  border: 1px solid #ccc;
-  padding: 5px 3px;
-  display: inline-block;
-  width: 500px;
-  border-radius: 3px;
-  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.075);
+  [data-id="PolicyFormContainer"] {
 
-  input[type=text].policy-scope-input{
-    display:inline-block;
-    float:left;
-    height: 18px;
-    padding: 0px;
-    font-size: 13px;
-    line-height: 18px;
-    color: #444444;
-    border: 0;
-    margin: 2px;
+    display: inline-block;
 
-    &:focus {
-      outline:0;
-      box-shadow:0;
+    form.ui-form {
+      border:0;
+    }
+
+    .flex-container {
+      display: flex;
+      flex-direction: row;
+    }
+
+    select {
+      width:35rem;
+      height:30px;
+      color:#999999;
     }
   }
-  .input-policy-scope {
+  .tree-branch.is-active{
+    background: #4a90e2;
+  }
+  .policy-scope-item {
     padding: 2px 4px;
     line-height: 2rem;
+    font-size: 11px;
     background-color: @gray-light-2;
     color:@gray-dark;
     float:left;
     display:inline-block;
-    border-radius: 1rem;
+    border-radius: 2px;
     margin: 2px 5px 2px 0px;
+  }
 
-    .delete-policy-scope {
-      display: inline-block;
-      border-radius:.7rem;
-      cursor: pointer;
-      padding: 0px 2px;
+  .policy-scope-input-container {
+    border: 1px solid #ccc;
+    padding: 5px 3px;
+    display: inline-block;
+    width: 500px;
+    border-radius: 3px;
+    box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.075);
 
-      &:hover {
+    input[type=text].policy-scope-input{
+      display:inline-block;
+      float:left;
+      height: 18px;
+      padding: 0px;
+      font-size: 13px;
+      line-height: 18px;
+      color: #444444;
+      border: 0;
+      margin: 2px;
 
-        background-color: @gray-dark;
-        color:#eeeeee;
+      &:focus {
+        outline:0;
+        box-shadow:0;
       }
-      &:active {
+    }
+    .input-policy-scope {
+      padding: 2px 4px;
+      line-height: 2rem;
+      background-color: @gray-light-2;
+      color:@gray-dark;
+      float:left;
+      display:inline-block;
+      border-radius: 1rem;
+      margin: 2px 5px 2px 0px;
 
-        background-color: @gray-darker;
-        color:#ffffff;
+      .delete-policy-scope {
+        display: inline-block;
+        border-radius:.7rem;
+        cursor: pointer;
+        padding: 0px 2px;
+
+        &:hover {
+
+          background-color: @gray-dark;
+          color:#eeeeee;
+        }
+        &:active {
+
+          background-color: @gray-darker;
+          color:#ffffff;
+        }
       }
     }
   }
-}
 
-table.ui-table {
-  td.service-status-col {
-    table.service-status-table {
-      width:30rem;
-      border: 0;
-      padding: 0;
-      margin: 0;
-      tbody tr:hover td {
-        border: 0;
-        box-shadow: none;
-      }
-      tr {
+  table.ui-table {
+    td.service-status-col {
+      table.service-status-table {
+        width:30rem;
         border: 0;
         padding: 0;
         margin: 0;
-
-        td.label-col {
-          vertical-align: middle;
+        tbody tr:hover td {
+          border: 0;
+          box-shadow: none;
         }
-        td {
+        tr {
           border: 0;
           padding: 0;
           margin: 0;
+
+          td.label-col {
+            vertical-align: middle;
+          }
+          td {
+            border: 0;
+            padding: 0;
+            margin: 0;
+          }
+        }
+
+      }
+
+    }
+  }
+  [data-id="PipelinePolicyDetailPopver"] {
+    min-height: 10rem;
+    min-width:50rem;
+    padding:1rem 2.5rem 2.5rem 2.5rem;
+  }
+  .pipeline-policy-sequence-list {
+
+    border:1px solid grey;
+
+    li {
+      border:1px solid red;
+      display:inline-block;
+      width:6rem;
+      margin:1rem;
+
+      .pipeline-policy-button {
+        height:6rem;
+        width:6rem;
+        text-align:left;
+        font-size:75%;
+        background-color:#eeeeee;
+        &:focus {
+          background-color:#a6b779;
         }
       }
 
     }
-
   }
-}
-[data-id="PipelinePolicyDetailPopver"] {
-  min-height: 10rem;
-  min-width:50rem;
-  padding:1rem 2.5rem 2.5rem 2.5rem;
-}
-.pipeline-policy-sequence-list {
+  .scope-endpoint-selector {
+    min-height:20rem;
+  }
+  .gateway-map-scope-selector {
+    min-width:26rem;
+  }
 
-  border:1px solid grey;
+  .policy-col {
+    .pipeline-add-policy-button {
+      float:right;
+    }
+  }
 
-  li {
-    border:1px solid red;
-    display:inline-block;
-    width:6rem;
-    margin:1rem;
+  //add pipeline modal form
 
-    .pipeline-policy-button {
-      height:6rem;
-      width:6rem;
-      text-align:left;
-      font-size:75%;
-      background-color:#eeeeee;
-      &:focus {
-        background-color:#a6b779;
+  .pipeline-modal {
+    .modal-body {
+      overflow: visible !important;
+
+      .ui-menu-dropdown {
+        z-index: 12;
       }
     }
-
   }
-}
-.scope-endpoint-selector {
-  min-height:20rem;
-}
-.gateway-map-scope-selector {
-  min-width:26rem;
+
+
+
 }
 
-.policy-col {
-  .pipeline-add-policy-button {
-    float:right;
-  }
-}
-
-//add pipeline modal form
-
-.pipeline-modal {
-  .modal-body {
-    overflow: visible !important;
-
-    .ui-menu-dropdown {
-      z-index: 12;
-    }
-  }
-}

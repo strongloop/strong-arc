@@ -24,6 +24,16 @@ Gateway.directive('slGatewayMapForm', [
           $scope.isMapDirty = false;
           $scope.originalMap = {};
 
+          $scope.setMapPipelineId = function(map, pipeId) {
+            if (map && pipeId) {
+              map.pipelineId = pipeId;
+            }
+          };
+
+          $scope.$watch('map.pipelineId', function(newVal, oldVal) {
+            $log.debug('the pipeline id has changed');
+          });
+
           function refreshMaps() {
             $scope.context.gatewayMaps = GatewayServices.getGatewayMaps()
               .then(function(maps) {

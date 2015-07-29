@@ -4,8 +4,8 @@
     <tr>
       <th>Name</th>
       <th>Endpoint(s)</th>
-      <th>Scopes</th>
       <th>Pipeline</th>
+      <th>Scopes</th>
       <th>Endpoint</th>
       <th  class="gateway-delete-col"></th>
     </tr>
@@ -20,10 +20,6 @@
       <td>
         <span>{{gatewayMap.verb}}</span>
         <span>{{gatewayMap.endpoint}}</span>
-      </td>
-      <td>
-        <sl-gateway-map-list-scope-display scopes="gatewayMap.scopes"></sl-gateway-map-list-scope-display>
-        <!--<span><button class="link-cmd">{{gatewayMap.scope}}</button></span>-->
       </td>
       <td>
         <button class="link-cmd"
@@ -50,6 +46,9 @@
                     ng-click="setupHidePopover($event, policy)">details</button>
           </li>
         </ul>
+      </td>
+      <td>
+        <sl-gateway-map-list-scope-display scopes="gatewayMap.scopes"></sl-gateway-map-list-scope-display>
       </td>
       <td>
         {{ gatewayMap.targetURL }}
