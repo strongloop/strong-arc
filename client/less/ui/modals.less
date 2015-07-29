@@ -1,0 +1,17 @@
+//allow expandable height
+.expandable-modal {
+  height: auto !important;
+
+  &.manager-main-layout {
+    overflow-y: visible !important;
+  }
+
+  .modal-body {
+    max-height: auto !important;
+    overflow: visible !important;
+
+    .ui-menu-dropdown {
+      z-index: 12;
+    }
+  }
+}
