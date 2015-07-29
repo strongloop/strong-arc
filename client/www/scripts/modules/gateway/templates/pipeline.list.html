@@ -14,9 +14,9 @@
         </td>
         <td>
           <ul class="policies">
-
             <li ng-repeat="policy in pipeline.renderPolicies">
-              policy.id: {{policy.id}}
+              <ui-icon name="policy-{{policy.type}}"></ui-icon>
+              <span class="policy-name">{{policy.name}}</span>
             </li>
           </ul>
           <!--<button class="pipeline-add-policy-button ui-btn accessory text-left" style="width:40rem"-->
