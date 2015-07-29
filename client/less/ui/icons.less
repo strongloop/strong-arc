@@ -156,6 +156,21 @@
         fill: @grey-5;
       }
     }
+
+    //policy icons
+    &.policy-ratelimiting, &.policy-reverseproxy, &.policy-metrics, &.policy-auth {
+      path.st0 {
+        fill: @green-1;
+      }
+
+      path.st1 {
+        fill: @white;
+      }
+    }
+
+    &.policy-reverseproxy, &.policy-metrics, &.policy-auth {
+      transform: scaleY(-1);
+    }
   }
 }
 
