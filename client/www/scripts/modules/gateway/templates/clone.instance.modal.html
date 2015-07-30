@@ -1,0 +1,20 @@
+<div class="manager-main-layout">
+
+  <div class="modal-header">
+    <h4>Clone Dialog</h4>
+  </div>
+  <div class="modal-body ui-form">
+    <div data-id="CloneInstanceNameContainer" class="form-field">
+      <label>new instance name</label>
+      <input type="text" ng-model="instanceObj.name" />
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="ui-btn secondary small pull-left" ng-click="close()">
+      Cancel
+    </button>
+    <button class="ui-btn primary small" ng-click="saveTheClone(instanceObj)">Clone</button>
+
+  </div>
+
+</div>
