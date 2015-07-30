@@ -34,7 +34,7 @@ PM.service('PMAppService', [
           return response;
         })
         .catch(function(error) {
-          $log.error('bad deploy local app: ' + JSON.stringify(error));
+          $log.error('bad deploy local app: ' + error.data.message);
         });
     };
     svc.stopLocalApp = function() {
@@ -44,7 +44,7 @@ PM.service('PMAppService', [
           return response.data;
         })
         .catch(function(error) {
-          $log.error('stop app fail: ' + error.message + ':' + error);
+          $log.error('bad stop local app: ' + error.data.message);
           return error;
         });
     };
@@ -55,7 +55,7 @@ PM.service('PMAppService', [
           return response.data;
         })
         .catch(function(error) {
-          $log.error('bad restart: ' + error.message + ':' + error);
+          $log.error('bad restart local app: ' + error.data.message);
           return error;
         });
     };
@@ -71,7 +71,7 @@ PM.service('PMAppService', [
           return response.data;
         })
         .catch(function(error) {
-          $log.error('bad get service instances: ' + error.message);
+          $log.error('bad get service instances: ' + error.data.message);
           return error;
         });
     };
@@ -108,7 +108,7 @@ PM.service('PMAppService', [
               }
             })
             .catch(function(error) {
-              $log.warn('bad get app url: ' + error.message);
+              $log.warn('bad get app url: ' + error.data.message);
             });
         });
     };
@@ -163,7 +163,7 @@ PM.service('PMAppService', [
           return returnUrl;
         })
         .catch(function(error) {
-          $log.warn('bad get app url: ' + error.message);
+          $log.warn('bad get app url: ' + error.data.message);
         });
     };
 
