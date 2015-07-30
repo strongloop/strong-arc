@@ -19,9 +19,9 @@ var GatewayMainNav = (GatewayMainNav = React).createClass({
           </div>
           <span className="ia-project-title-container">{projectName}</span>
         </div>
-        <GatewayNav className="ia-model-nav-container" scope={component.props.scope} collection={component.props.scope.gatewayMapCtx.gatewayMaps} type="gatewaymap" />
-        <GatewayNav className="ia-model-nav-container" scope={component.props.scope} collection={component.props.scope.pipelineCtx.pipelines} type="pipeline" />
-        <GatewayNav className="ia-model-nav-container" scope={component.props.scope} collection={component.props.scope.policyCtx.policies} type="policy" />
+        <GatewayNav className="ia-model-nav-container" rscope={component.props.rootScope} scope={component.props.scope} collection={component.props.scope.gatewayMapCtx.gatewayMaps} type="gatewaymap" />
+        <GatewayNav className="ia-model-nav-container" rscope={component.props.rootScope} scope={component.props.scope} collection={component.props.scope.pipelineCtx.pipelines} type="pipeline" />
+        <GatewayNav className="ia-model-nav-container" rscope={component.props.rootScope} scope={component.props.scope} collection={component.props.scope.policyCtx.policies} type="policy" />
       </div>
       );
   }
@@ -32,12 +32,10 @@ var GatewayMainNav = (GatewayMainNav = React).createClass({
 *
 * */
 var GatewayNav = (GatewayNav = React).createClass({
-  getInitialState: function() {
-    return {isModelNavContainerOpen:true};
-  },
   deleteSelectedInstance: function(key, opt) {
     if (confirm('delete instance?')) {
       var scope = this.props.scope;
+      var rootScope = this.props.rscope;
       try{
         var targetAttributes = opt.sourceEvent.currentTarget.attributes;
         if (targetAttributes['data-id']) {
@@ -45,7 +43,7 @@ var GatewayNav = (GatewayNav = React).createClass({
           var type = targetAttributes['data-type'].value;
 
           if (type && instanceId) {
-            scope.$apply(function(){
+            rootScope.$apply(function(){
               scope.deleteInstanceRequest(instanceId, type);
             });
           }
@@ -59,8 +57,11 @@ var GatewayNav = (GatewayNav = React).createClass({
     }
   },
   cloneSelectedInstance: function(key, opt) {
-    if (confirm('clone instance?')) {
-      var scope = this.props.scope;
+    var scope = this.props.scope;
+    var rootScope = this.props.rscope;
+
+   // if (confirm('clone instance?')) {
+
       try{
         var targetAttributes = opt.sourceEvent.currentTarget.attributes;
         if (targetAttributes['data-id']) {
@@ -74,7 +75,9 @@ var GatewayNav = (GatewayNav = React).createClass({
               type: type,
               name: name
             };
-            scope.$apply(function(){
+          //  var scope = component.props.scope;
+            rootScope.$apply(function(){
+              console.log('DEBUG - clone react');
               scope.cloneInstanceRequest(cloneConfig);
             });
           }
@@ -85,16 +88,17 @@ var GatewayNav = (GatewayNav = React).createClass({
       catch(error) {
         console.warn('error cloning instancw definition: ' + error);
       }
-    }
+//    }
 
   },
   addNewInstanceRequest: function(event) {
     var scope = this.props.scope;
+    var rootScope = this.props.rscope;
 
     if (event.currentTarget.attributes['data-type']){
       var tVal = event.currentTarget.attributes['data-type'].value;
       if (tVal === 'pipeline') {
-        scope.$apply(function() {
+        rootScope.$apply(function() {
           scope.showAddNewPipelineForm();
         });
       }
@@ -104,7 +108,7 @@ var GatewayNav = (GatewayNav = React).createClass({
         });
       }
       if (tVal === 'gatewaymap') {
-        scope.$apply(function() {
+        rootScope.$apply(function() {
           scope.showAddNewGatewayMapForm();
         });
       }
@@ -114,8 +118,12 @@ var GatewayNav = (GatewayNav = React).createClass({
 
   },
   componentDidMount:function(){
+    var tscope = this.props.scope;
+    var rootScope = this.props.rscope;
+
     var menuItems = {};
     var component = this;
+
 
     /*
     * Context Menu
@@ -131,28 +139,19 @@ var GatewayNav = (GatewayNav = React).createClass({
       items: menuItems,
       events: {
         show: function(opt) {
-          if (opt.sourceEvent.target.attributes['data-is-discoverable']) {
-            var isDiscoverable = JSON.parse(opt.sourceEvent.target.attributes['data-is-discoverable'].value);
-            // note the order of menu items to target not showing discover item on
-            // ds types that don't support it.
-            // show by default (in case it was turned off by another item as it is shared
-            $('.context-menu-list li:first-child').show();
-            if (!isDiscoverable) {
-              $('.context-menu-list li:first-child').hide();
-            }
-          }
         }
       }
     });
   },
   gatewayMainNav: function(key, opt) {
     var scope = this.props.scope;
+    var rootScope = this.props.scope;
     var id = '';
     var baseNav = key.currentTarget.attributes['data-type'].value;
     if (key.currentTarget.attributes['data-id']) {
       id = key.currentTarget.attributes['data-id'].value;
     }
-    scope.$apply(function() {
+    rootScope.$apply(function() {
       scope.setMainNav(baseNav, id);
     });
   },
@@ -160,6 +159,7 @@ var GatewayNav = (GatewayNav = React).createClass({
 
     var component = this;
     var scope = component.props.scope;
+    var rootScope = this.props.rscope;
     var collection = component.props.collection;
     var type = component.props.type;
 
@@ -232,8 +232,7 @@ var GatewayNav = (GatewayNav = React).createClass({
               <span data-name={item.name} title={item.type}  data-id={item.id} className={cssClassIcon}></span>
             </div>
             <div data-ui-type="cell" className="ia-nav-item-name-container-col">
-              <a className="nav-tree-item tree-node" href={urlString}>{item.name}</a>
-
+              <button data-name={item.name} data-id={item.id} data-type={type} className="nav-tree-item tree-node" onClick={component.gatewayMainNav}>{item.name}</button>
             </div>
             <div data-ui-type="cell" className="ia-nav-item-dsconnect-icon-container-col">
             {dsConnectEl}
