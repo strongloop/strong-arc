@@ -42,6 +42,9 @@ PM.controller('PMAppController', [
               startAttemptCount = 0;
             }
           }
+          else {
+            startAttemptCount++;
+          }
           // starting / stopping / restarting etc
           if (PM_CONST.STOPPED_STATE !== $scope.pm.localAppState){
             // in case the app goes down or won't start and is spitting 500 or 404 errors

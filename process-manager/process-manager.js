@@ -102,7 +102,7 @@ ProcessManager.prototype.proxyRequest = function(req, res) {
       });
     break;
     case 'crashed':
-      res.setStatus(500).send({error: 'process manager unavailable'});
+      res.status(500).send({error: 'process manager unavailable'});
     break;
     case 'starting':
       this.queueRequest(req, res);

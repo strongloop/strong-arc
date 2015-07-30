@@ -34,7 +34,7 @@ PM.service('PMAppService', [
           return response;
         })
         .catch(function(error) {
-          $log.error('bad deploy local app: ' + error.message);
+          $log.error('bad deploy local app: ' + JSON.stringify(error));
         });
     };
     svc.stopLocalApp = function() {
