@@ -17,7 +17,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="policy in pipeline.renderPolicies">
+        <tr ng-repeat="policy in pipeline.renderPolicies track by $index">
           <td>{{policy.name}}</td>
           <td>{{policy.type}}</td>
           <td>{{policy}}</td>
@@ -35,7 +35,7 @@
       <sl-ui-menu-dropdown toggler="showAddPolicyMenu">
         <section class="menu">
           <ul>
-            <li ng-repeat="policy in availablePolicies">
+            <li ng-repeat="policy in availablePolicies track by $index">
               <a href ng-click="addNewPolicyToPipeline(policy)">{{policy.name}} - {{policy.type}}</a></li>
           </ul>
         </section>
