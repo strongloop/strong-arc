@@ -117,16 +117,41 @@ Gateway.controller('GatewayMainController', [
     $scope.cloneInstanceRequest  = function(data) {
       if (data.id && data.type && data.name) {
         var originalData = angular.copy(data);
-        data.name = prompt('new ' + data.type + ' name:',data.name + '-' + (Math.floor(Math.random() * (11 - 1)) + 1) );
+        $scope.cloneInstance = data;
+        $scope.cloneInstance.name = originalData.name + '-' + (Math.floor(Math.random() * (11 - 1)) + 1);
+        $scope.showCloneInstanceDialog(data, originalData.name);
 
-        if (data.name && (data.name !== originalData.name)) {
-          GatewayServices.cloneInstance(data)
-            .then(function(response) {
-              $scope.refreshDataSets();
-            });
-        }
+
 
       }
+    };
+    $scope.showCloneInstanceDialog = function(data, originalName) {
+      var modalDlg = $modal.open({
+        templateUrl: './scripts/modules/gateway/templates/clone.instance.modal.html',
+        size: 'md',
+        scope: $scope,
+        controller: function($scope, $modalInstance, title) {
+          $scope.instanceObj = $scope.$parent.cloneInstance;
+          $scope.saveTheClone = function(clone) {
+            if (clone.name && (clone.name !== originalName)) {
+              GatewayServices.cloneInstance(clone)
+                .then(function(response) {
+                  $scope.close();
+                  $scope.refreshDataSets();
+                });
+            }
+          };
+          $scope.close = function() {
+            $modalInstance.dismiss();
+          };
+
+        },
+        resolve: {
+          title: function() {
+            return '';
+          }
+        }
+      });
     };
     $scope.showAddNewGatewayMapForm = function() {
       var modalDlg = $modal.open({
@@ -481,10 +506,17 @@ Gateway.controller('GatewayMainController', [
 
     }
     $scope.setMainNav = function(view, id) {
+      $scope.gatewayCtx.currentView = view;
       if (id) {
-        $state.go(view, {'id':id});
+        $scope.gatewayCtx.currentInstanceId = id;
       }
-      $state.go(view);
+      else {
+        $scope.gatewayCtx.currentInstanceId = null;
+      }
+      $scope.refreshDataSets()
+      .then(function() {
+          setView();
+        });
     };
   }
 ]);
