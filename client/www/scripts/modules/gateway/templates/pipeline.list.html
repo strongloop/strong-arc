@@ -13,12 +13,14 @@
           <a href="/#/gateway/pipeline/{{pipeline.name}}">{{pipeline.name}}</a>
         </td>
         <td>
-          <ul class="policies">
-            <li ng-repeat="policy in pipeline.renderPolicies">
-              <ui-icon name="policy-{{policy.type}}"></ui-icon>
-              <span class="policy-name">{{policy.name}}</span>
-            </li>
-          </ul>
+          <div class="viewport">
+            <ul class="policies">
+              <li ng-repeat="policy in pipeline.renderPolicies track by $index">
+                <ui-icon name="policy-{{policy.type}}"></ui-icon>
+                <span class="policy-name">{{policy.name}}</span>
+              </li>
+            </ul>
+          </div>
           <!--<button class="pipeline-add-policy-button ui-btn accessory text-left" style="width:40rem"-->
                   <!--popover-template="contextModal.templateUrl"-->
                   <!--popover-placement="{{contextModal.position}}"-->

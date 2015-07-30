@@ -193,9 +193,43 @@
 
 //pipeline list
 [data-id=PipelineListContainer] {
-  .policies {
-      li {
 
+  //constrain table so its width is dynamic
+  //but can be used to force the .viewport overflow scrollbar
+  .ui-table {
+    width: calc(~"100% - 1rem");
+    table-layout: fixed;
+
+    th:nth-child(1) {
+      width: 25rem;
+    }
+
+    td:nth-child(2) {
+      padding-bottom: 0;
+    }
+  }
+
+  .viewport {
+    overflow-x: auto;
+  }
+
+  .policies {
+    display: block;
+    white-space: nowrap;
+    margin: 0 0 1rem 0;
+    padding: 0;
+
+    li {
+      display: inline-block;
+      width: 12rem;
+      margin-right: 1rem;
+
+      .policy-name {
+        width: 8rem;
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
+    }
   }
 }
