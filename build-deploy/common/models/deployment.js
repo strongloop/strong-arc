@@ -21,42 +21,34 @@ module.exports = function(Deployment) {
 
     debug('deploy to %s: %j', baseURL, deployment);
 
-    deploy();
+    resize();
 
-    function deploy(){
+    function deploy(err){
+      if (err) return cb(err);
+
       if(deployment.type === 'local') {
-        performLocalDeployment(
-          {
-            baseURL: baseURL,
-            serviceName: cwd,
-            branchOrPack: 'process-manager',
-            clusterSize: deployment.processes,
-          },
-          done);
+        // args are: baseUrl, localdir, config, callback
+        performLocalDeployment(baseURL, cwd, 'process-manager', done);
       } else if(deployment.type === 'git') {
-        performGitDeployment(
-          {
-            workingDir: cwd,
-            baseURL: baseURL,
-            serviceName: DEFAULT,
-            branchOrPack: deployment.branch,
-            clusterSize: deployment.processes,
-          },
-          done);
+        // args are: workingDir, baseUrl, config, branch, callback
+        performGitDeployment(cwd, baseURL, DEFAULT, deployment.branch, done);
       } else {
-        performHttpPutDeployment(
-          {
-            baseURL: baseURL,
-            serviceName: DEFAULT,
-            branchOrPack: deployment.archive,
-            clusterSize: deployment.processes,
-          },
-          done);
+        // args are: baseURL, config, npmPkg, callback
+        performHttpPutDeployment(baseURL, DEFAULT, deployment.archive, done);
       }
     }
 
     function done(err) {
       cb(err, deployment);
+    }
+
+    function resize() {
+      request.put(baseURL + '/api/ServiceInstances/1', {
+        json: true,
+        body: {
+          cpus: deployment.processes
+        }
+      }, deploy);
     }
   };
 
