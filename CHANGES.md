@@ -1,3 +1,23 @@
+2015-07-31, Version 1.7.1
+=========================
+
+ * update log message object reference in catch conditions (seanbrookes)
+
+ * Revert "pass cluster size to the new perform deployment API" (Krishna Raman)
+
+ * fix Arc polling on unexpected error state (seanbrookes)
+
+ * Pass cluster size to the new perform deployment API strong-deploy 3.x. (Tetsuo Seto)
+
+ * Update pm-host.spec.js (Matthew Martori)
+
+ * Update pm-host-error-view.spec.js (Matthew Martori)
+
+ * Added basic coverage for process manager (Matttt)
+
+ * add pagination to api-analytics graphs (Anthony Ettinger)
+
+
 2015-07-24, Version 1.7.0
 =========================
 
