@@ -10,12 +10,14 @@ var ProcessManagerHostView = (function () {
       by.css('button[ng-click="initAddNewPMHost()"]'));
     this.processManagerActivateButton = element(
       by.css('button[ng-click="savePM()"]'));
-    this.processManagerHostErrorIndicator = element(
+    this.processManagerHostMessageIndicator = element(
       by.css('.sl-icon-question-mark'));
     this.processManagerDeleteButton = element(
       by.css('a[ng-click="deleteHost(host)"]'));
     this.processManagerNoServerMessage = element(
       by.cssContainingText('h4', 'No Server'));
+    this.processManagerNoApplicationFoundMessage = element(
+      by.cssContainingText('h4', 'No Application Found'));
     this.processManagerErrorMessageCloseButton = element(
       by.css('button[ng-click="showPopover = false"]'));
 
@@ -40,15 +42,15 @@ var ProcessManagerHostView = (function () {
       this.processManagerActivateButton.click();
     };
 
-    this.checkForPMHostErrors = function () {
+    this.checkForPMHostMessage = function () {
       var self = this;
 
       browser.driver.wait(
-        EC.elementToBeClickable(self.processManagerHostErrorIndicator),
+        EC.elementToBeClickable(self.processManagerHostMessageIndicator),
       10000);
 
-      self.processManagerHostErrorIndicator.click();
-      self.processManagerHostErrorIndicator.click();
+      self.processManagerHostMessageIndicator.click();
+      self.processManagerHostMessageIndicator.click();
     };
 
     this.closeErrorDialog = function () {

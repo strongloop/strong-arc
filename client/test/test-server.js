@@ -5,7 +5,7 @@ process.env.SL_ARC_FEATURE_FLAGS = 'tracing';
 
 var given = require('loopback-workspace/test/helpers/given');
 
-var SANDBOX = path.resolve(__dirname, 'sandbox');
+var SANDBOX = path.resolve(__dirname, 'client/test/sandbox');
 var ARC_ROOT = path.resolve(__dirname, '..',  '..');
 var EMPTY_PROJECT = path.resolve(ARC_ROOT, 'examples', 'empty');
 
@@ -21,6 +21,7 @@ var sandboxNeedsFullReset = false;
 
 var arc = require('../../server/server');
 var workspace = arc.workspace;
+
 
 // Inject `POST /reset` to reset the sandbox to initial state
 arc.post('/reset', function(req, res, next) {

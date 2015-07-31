@@ -1,6 +1,5 @@
 var ArcViews = require('../arc/views/');
 var ProcessManagerViews = require('../process-manager/views/');
-var EC = protractor.ExpectedConditions;
 
 describe('load-balancer-interactions', function () {
   beforeEach(function() {

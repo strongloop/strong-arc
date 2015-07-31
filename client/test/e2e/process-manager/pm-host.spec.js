@@ -17,7 +17,7 @@ describe('process-manager-host-interactions', function () {
     headerView.logout();
   });
 
-	it('should login and navigate to process manager,' +
+	xit('should login and navigate to process manager,' +
 		'add a valid pm host,', function () {
 	  var processManagerHostView = 
 	  	new ProcessManagerViews.ProcessManagerHostView();
@@ -35,5 +35,33 @@ describe('process-manager-host-interactions', function () {
 	  );
 
 	  processManagerHostView.deleteProcessManagerHost();
+	});
+
+	it('should login and navigate to process manager,' +
+		'should add a pm host and activate it', function () {
+	  var processManagerHostView = 
+	  	new ProcessManagerViews.ProcessManagerHostView();
+    var headerView = new ArcViews.HeaderView();
+
+    headerView.navigateToLandingPage();
+
+
+	  browser.sleep(500);
+
+	  processManagerHostView.addNewPMHost(
+	  	'ec2-52-8-216-111.us-west-1.compute.amazonaws.com', '8701'
+	  );
+
+	  processManagerHostView.checkForPMHostMessage();
+
+	  expect(
+	  	EC.visibilityOf(
+	  		processManagerHostView.processManagerNoApplicationFoundMessage
+	  	)
+	  );
+
+	  processManagerHostView.deleteProcessManagerHost();
+
+
 	});
 });

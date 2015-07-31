@@ -185,7 +185,8 @@ gulp.task('test-pm', function() {
     .pipe(mocha());
 });
 // WIP
-gulp.task('test-e2e', function(callback) {
+
+function testE2E (callback, testSuite) {
   var pmContainerID;
   var webdriver;
 
@@ -204,13 +205,13 @@ gulp.task('test-e2e', function(callback) {
   * */
   var testAppPath = path.resolve(__dirname, 'test/bare-bones-app');
   var testServerPath = require.resolve('./client/test/test-server');
-  var testServerOpts = {cwd: __dirname};
+  var testServerOpts = {cwd: path.join(__dirname, '/client/test/sandbox')};
   var testServer = fork(testServerPath, testServerOpts);
 
   testServer.on('message', function(msg) {
     // async.series([
     //   // for future tests that require a PM instance
-    //   //startTestPM,
+    //   startTestPM,
     //   // startWebDriver,
     // ], function(err) {
     //   if (err) {
@@ -252,7 +253,7 @@ gulp.task('test-e2e', function(callback) {
   }
 
   function runProtractorTests() {
-    spawn('protractor', ['client/test/protractor.conf.js'], {stdio: 'inherit'})
+    spawn('protractor', [testSuite, 'client/test/protractor.conf.js'], {stdio: 'inherit'})
       .on('error', protractorResults)
       .on('exit', function(code, signal) {
         var status = signal || code;
@@ -262,7 +263,7 @@ gulp.task('test-e2e', function(callback) {
         }
         protractorResults(err);
 
-        fs.unlink('arc-manager.json'); //fix for this file being created in the root
+        fs.unlink(path.join(__dirname, 'client/test/sandbox/arc-manager.json')); 
       });
   }
 
@@ -285,7 +286,17 @@ gulp.task('test-e2e', function(callback) {
     }
     callback(err);
   }
+}
+
+gulp.task('test-e2e-short', function(callback) {
+  testE2E(callback, '--suite=short');
 });
+
+gulp.task('test-e2e-long', function(callback) {
+  testE2E(callback, '--suite=long');
+});
+
+gulp.task('test-e2e', ['test-e2e-short']);
 
 gulp.task('test-client-integration', function(callback) {
   var child = spawn(

@@ -5,6 +5,7 @@ var ArcHeaderView = (function () {
     this.accountDropdown = element(
       by.css('span[data-id="ArcAccountDropdown"] a.dropdown-toggle'));
     this.logoutLink = element(by.id('arc-user-logout-btn'));
+    this.homeLink = element(by.css('a[ui-sref="home"]'));
 
     this.logout = function() {
       browser.driver.wait(
@@ -17,6 +18,18 @@ var ArcHeaderView = (function () {
       this.logoutLink.click();
       browser.driver.sleep(500);
       browser.waitForAngular();
+    };
+
+    this.navigateToLandingPage = function () {
+      browser.driver.wait(
+        EC.presenceOf(this.homeLink),
+      10000);
+
+      this.homeLink.click();
+
+      browser.driver.wait(
+        EC.presenceOf(element(by.css('.sl-app-icon-composer'))),
+      10000);
     };
   }
   return ArcHeaderView;
