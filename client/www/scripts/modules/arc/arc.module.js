@@ -268,11 +268,17 @@ Arc.run([
 Arc.config([
   '$httpProvider',
   'ngClipProvider',
-  function ($httpProvider, ngClipProvider) {
+  '$tooltipProvider',
+  function ($httpProvider, ngClipProvider, $tooltipProvider) {
     $httpProvider.interceptors.push('arcRequestInterceptor');
     ngClipProvider.setPath("/scripts/vendor/zeroclipboard/ZeroClipboard.swf");
     ngClipProvider.setConfig({
       zIndex: 1000
+    });
+
+    //tooltip show/hide triggers
+    $tooltipProvider.setTriggers({
+      'show': 'hide'
     });
   }
 ]);

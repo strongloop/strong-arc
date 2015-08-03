@@ -13,11 +13,17 @@
           <a href="/#/gateway/pipeline/{{pipeline.name}}">{{pipeline.name}}</a>
         </td>
         <td>
-          <div class="viewport">
+          <div class="viewport" ng-scroll="scrollViewport($event)">
             <ul class="policies">
               <li ng-repeat="policy in pipeline.renderPolicies track by $index">
-                <ui-icon name="policy-{{policy.type}}"></ui-icon>
-                <span class="policy-name">{{policy.name}}</span>
+                <a href
+                   ng-click="setupHidePopover($event)"
+                   popover-template="policyDetails.templateUrl"
+                   popover-trigger="show"
+                   popover-placement="{{policyDetails.placement}}">
+                  <ui-icon name="policy-{{policy.type}}"></ui-icon>
+                  <span class="policy-name">{{policy.name}}</span>
+                </a>
               </li>
             </ul>
           </div>
