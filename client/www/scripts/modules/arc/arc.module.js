@@ -268,6 +268,11 @@ Arc.config([
   '$httpProvider',
   function ($httpProvider) {
     $httpProvider.interceptors.push('arcRequestInterceptor');
+
+    //tooltip show/hide triggers
+    $tooltipProvider.setTriggers({
+      'show': 'hide'
+    });
   }
 ]);
 

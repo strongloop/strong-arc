@@ -98,7 +98,57 @@ Gateway.directive('slPipelineList', [
   function() {
     return {
       restrict: 'E',
-      templateUrl: './scripts/modules/gateway/templates/pipeline.list.html'
+      templateUrl: './scripts/modules/gateway/templates/pipeline.list.html',
+      controller: function($scope, $timeout, $log, slPopoverService){
+        $scope.policyDetails = {};
+        $scope.policyDetails.templateUrl = './scripts/modules/gateway/templates/policy.details.html';
+        $scope.policyDetails.placement = 'bottom';
+
+        $scope.setupHidePopover = function($event){
+          slPopoverService.setupPopover($scope, $event);
+        };
+
+        //setup handler to hide when viewport is scrolled
+        //$scope.setupHidePopover = function($event) {
+        //  var $trigger = angular.element($event.target).closest('a');
+        //  var $viewport = angular.element($event.target).closest('.viewport');
+        //
+        //  $timeout(function(){
+        //    $trigger.trigger('show');
+        //  });
+        //
+        //  //close previous popover if open
+        //  if ( $('.popover').hasClass('in') ){
+        //    $timeout(function() {
+        //      $scope.hideCurrentPopover();
+        //    });
+        //  }
+        //
+        //  $scope.hideCurrentPopover = function(){
+        //    //look for any open popover on page
+        //    var hasOpenPopover = !!$('.popover').siblings('a').not($trigger).length;
+        //
+        //    if ( hasOpenPopover ) {
+        //      //hide previously opened popover(s)
+        //      $('.popover').siblings('a').not($trigger).trigger('hide');
+        //    } else {
+        //      //hide the current popover
+        //      $trigger.trigger('hide');
+        //    }
+        //  };
+        //
+        //  //hide on viewport scroll
+        //  $viewport.on('scroll', function(e){
+        //    $scope.hideCurrentPopover();
+        //  });
+        //
+        //  $scope.onClickHidePopover = function(e){
+        //    $timeout(function(){
+        //      $scope.hideCurrentPopover();
+        //    });
+        //  };
+        //};
+      }
     }
   }
 ]);
