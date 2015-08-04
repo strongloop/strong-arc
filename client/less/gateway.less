@@ -233,3 +233,67 @@
     }
   }
 }
+
+.popover {
+  .policy-details {
+    h4 {
+      text-align: center;
+    }
+
+    .title {
+      width: 84%;
+    }
+
+    .title, a {
+      display: inline-block;
+      position: relative;
+      top: -6px;
+    }
+
+    .content, .dialog-buttons {
+      padding: 2rem;
+    }
+
+    .dialog-buttons {
+      text-align: right;
+    }
+
+    .content {
+      .ui-row {
+        display: block;
+        margin-bottom: 1rem;
+      }
+
+      .ui-col {
+        width: 49%;
+        display: inline-block;
+
+        &.full {
+          width: 100%;
+        }
+      }
+
+      .txt {
+        color: @grey-2;
+      }
+
+      .val {
+        color: @grey-1;
+        font-weight: 600;
+      }
+
+      .scopes {
+        padding: 1rem 0;
+      }
+
+      .scope {
+        display: inline-block;
+        background-color: @grey-5;
+        border-radius: 50rem;
+        margin: 1rem 1rem 0 0;
+        padding: .5rem 2rem;
+        font-weight: normal;
+      }
+    }
+  }
+}
