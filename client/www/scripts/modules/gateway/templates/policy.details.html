@@ -1,17 +1,47 @@
-<form class="dialog-content ui-dialog-form medium">
+<form class="dialog-content ui-dialog-form medium policy-details">
   <div class="dialog-header">
-    <h4 class="header">Policy Details</h4>
+    <h4 class="header">
+      <ui-icon name="policy-{{policy.type}}"></ui-icon>
+      <span class="title">Policy Details</span>
+      <a href="/#/gateway/policy/{{policy.id}}">Edit</a>
+    </h4>
   </div>
   <div class="dialog-body">
-    <div class="dialog-input">
-    </div>
-    <div class="dialog-input">
-    </div>
+    <section class="content">
+      <div class="ui-row">
+        <div class="ui-col">
+          <div class="txt">Name:</div>
+          <div class="val">{{policy.name}}</div>
+        </div>
+        <div class="ui-col">
+          <div class="txt">Type:</div>
+          <div class="val">{{policy.type}}</div>
+        </div>
+      </div>
+      <div class="ui-row">
+        <div class="scopes" ng-show="policy.type == 'auth'">
+          <div class="txt">Scopes:</div>
+          <div class="val">
+            <span class="scope" ng-repeat="scope in policy.scopes">{{scope}}</span>
+          </div>
+        </div>
+        <div class="ui-col" ng-show="policy.type == 'ratelimiting'">
+          <div class="txt">Limit:</div>
+          <div class="val">{{policy.limit}}</div>
+        </div>
+        <div class="ui-col" ng-show="policy.type == 'ratelimiting'">
+          <div class="txt">Interval:</div>
+          <div class="val">{{policy.interval}}</div>
+        </div>
+        <div class="ui-col full" ng-show="policy.type == 'reverseproxy'">
+          <div class="txt">Target URL:</div>
+          <div class="val">{{policy.targetURL}}</div>
+        </div>
+      </div>
+    </section>
   </div>
   <div class="dialog-footer">
     <div class="dialog-footer-group">
-      <span class="dialog-summary">
-      </span>
       <div class="dialog-buttons">
         <button class="ui-btn small" ng-click="onClickHidePopover()">OK</button>
       </div>
