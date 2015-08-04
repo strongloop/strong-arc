@@ -7,20 +7,42 @@
         Name is required
       </p>
     </div>
-    <table class="ui-table">
+    <table class="ui-table pipelines">
       <thead>
         <tr>
-          <th>Name</th>
           <th>Type</th>
+          <th>Name</th>
           <th></th>
           <th class="actions"></th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="policy in pipeline.renderPolicies track by $index">
+          <td><ui-icon name="policy-{{policy.type}}"></ui-icon></td>
           <td>{{policy.name}}</td>
-          <td>{{policy.type}}</td>
-          <td>{{policy}}</td>
+          <td>
+            <div class="policy-details">
+              <div class="scopes" ng-show="policy.type == 'auth'">
+                <span class="txt">Scopes:</span>
+                <span class="val">
+                  <span class="scope" ng-repeat="scope in policy.scopes">{{scope}}</span>
+                </span>
+              </div>
+              <div ng-show="policy.type == 'ratelimiting'">
+                <span class="txt">Limit:</span>
+                <span class="val">{{policy.limit}}</span>
+                <span class="txt">Interval:</span>
+                <span class="val">{{policy.interval}}</span>
+              </div>
+              <div ng-show="policy.type == 'reverseproxy'">
+                <span class="txt">Target URL:</span>
+                <span class="val">{{policy.targetURL}}</span>
+              </div>
+              <div ng-show="policy.type == 'metrics'">
+                <span class="txt">Metrics</span>
+              </div>
+            </div>
+          </td>
           <td class="actions">
             <a href class="ui-close" ng-click="deletePolicy(policy)">x</a>
           </td>
