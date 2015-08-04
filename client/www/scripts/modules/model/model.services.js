@@ -2,17 +2,20 @@
 Model.service('ModelService', [
   'Modeldef',
   'ModelDefinition',
+  'ModelRelation',
   'ModelConfig',
   '$q',
   'AppStorageService',
   'ModelProperty',
   'DataSourceDefinition',
   'connectorMetadata',
-  function(Modeldef, ModelDefinition, ModelConfig, $q,
+  function(Modeldef, ModelDefinition, ModelRelation, ModelConfig, $q,
            AppStorageService, ModelProperty, DataSourceDefinition, connectorMetadata) {
     var svc = {};
 
-
+    svc.getAllModelRelations = function() {
+      return ModelRelation.find({}).$promise;
+    };
 
     svc.createModelInstance = function(targetInstance) {
         if (targetInstance.definition.name) {
@@ -563,4 +566,3 @@ Model.service('ModelService', [
     return svc;
   }
 ]);
-

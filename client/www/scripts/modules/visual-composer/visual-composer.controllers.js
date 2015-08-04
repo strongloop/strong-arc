@@ -24,6 +24,11 @@ VisualComposer.controller('VisualComposerMainController', [
         });
       });
 
+    ModelService.getAllModelRelations()
+      .then(function(results) {
+        // TODO: setup relations
+      });
+      
     models.promise.then(function(models) {
       $scope.models = models;
     });

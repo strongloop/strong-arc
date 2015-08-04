@@ -1,3 +1,22 @@
+VisualComposer.directive('slInstanceEditor', [
+  function slInstanceEditor() {
+    return {
+      restrict: 'E',
+      replace: true,
+      templateUrl: '/scripts/modules/visual-composer/templates/visual-composer.instance-editor.html',
+      scope: {
+        models: '=',
+      },
+      link: function($scope, elem) {
+
+      },
+      controller: function($scope) {
+
+      }
+    }
+  }
+]);
+
 VisualComposer.directive('slComposerCanvas', [
   function slComposerCanvas() {
     return {

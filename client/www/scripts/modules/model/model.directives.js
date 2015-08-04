@@ -790,4 +790,3 @@ Model.directive('propertyNameEditor', [
     }
   }
 ]);
-
