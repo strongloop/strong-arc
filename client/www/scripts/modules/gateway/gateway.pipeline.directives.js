@@ -101,7 +101,7 @@ Gateway.directive('slPipelineList', [
       templateUrl: './scripts/modules/gateway/templates/pipeline.list.html',
       controller: function($scope, $timeout, $log, slPopoverService){
         $scope.policyDetails = {};
-        $scope.policyDetails.templateUrl = './scripts/modules/gateway/templates/policy.details.html';
+        $scope.policyDetails.templateUrl = './scripts/modules/gateway/templates/pipeline.policy.detail.html';
         $scope.policyDetails.placement = 'bottom';
 
         $scope.setupHidePopover = function($event){
