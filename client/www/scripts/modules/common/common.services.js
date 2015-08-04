@@ -449,7 +449,6 @@ Common.service('WorkspaceService', [
 Common.service('slPopoverService', ['$timeout', '$log', function($timeout, $log){
   function setupScrollingPopover($scope, $event) {
     var $trigger = angular.element($event.target).closest('a');
-    var $viewport = angular.element($event.target).closest('.viewport');
 
     $timeout(function() {
       $trigger.trigger('show');
@@ -475,8 +474,11 @@ Common.service('slPopoverService', ['$timeout', '$log', function($timeout, $log)
       }
     };
 
+    //remove previously attached event handler
+    $('.viewport').off('.popover');
+
     //hide on viewport scroll
-    $viewport.on('scroll', function(e) {
+    $('.viewport').on('scroll.popover', function(e) {
       $scope.hideCurrentPopover();
     });
 
