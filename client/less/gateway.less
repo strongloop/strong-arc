@@ -19,20 +19,134 @@
   }
 }
 
-[data-id="GatewayMainContainer"] {
-  padding: 0 2rem;
-
+[data-id="GatewayMapFormContainer"] {
+  .gateway-map-pipeline-input-container {
+    position: relative;
+  }
   .dropdown-container {
-    position:relative;
+    position: relative;
   }
   [data-id="GatewayMapFormTopRow"] {
-    display:flex;
-    flex-direction:row;
+    display: flex;
+    flex-direction: row;
     flex-wrap: nowrap;
 
   }
   .gateway-map-main-input {
-    max-width:35rem;
+    max-width: 35rem;
+  }
+
+  .gateway-map-list-scopes-container {
+    position: relative;
+  }
+}
+[data-id="PolicyFormContainer"] {
+
+  margin: 0 auto;
+  width: 99%;
+
+  form.ui-form {
+    border:0;
+  }
+
+  .flex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    .form-field {
+      padding-right:1rem;
+    }
+
+    &.policy-sub-form {
+      justify-content: flex-start;
+      padding-left:3.4rem;
+    }
+  }
+
+  select {
+    width:35rem;
+    height:30px;
+    color:#999999;
+  }
+}
+.policy-scope-item {
+  padding: 2px 4px;
+  line-height: 2rem;
+  font-size: 11px;
+  background-color: @gray-light-2;
+  color:@gray-dark;
+  float:left;
+  display:inline-block;
+  border-radius: 2px;
+  margin: 2px 5px 2px 0px;
+}
+
+.policy-scope-input-container {
+  border: 1px solid #ccc;
+  padding: 5px 3px;
+  display: inline-block;
+  width: 500px;
+  border-radius: 3px;
+  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.075);
+
+  input[type=text].policy-scope-input{
+    display:inline-block;
+    float:left;
+    height: 18px;
+    padding: 0px;
+    font-size: 13px;
+    line-height: 18px;
+    color: #444444;
+    border: 0;
+    margin: 2px;
+
+    &:focus {
+      outline:0;
+      box-shadow:0;
+    }
+  }
+  .input-policy-scope {
+    padding: 2px 4px;
+    line-height: 2rem;
+    background-color: @gray-light-2;
+    color:@gray-dark;
+    float:left;
+    display:inline-block;
+    border-radius: 1rem;
+    margin: 2px 5px 2px 0px;
+
+    .delete-policy-scope {
+      display: inline-block;
+      border-radius:.7rem;
+      cursor: pointer;
+      padding: 0px 2px;
+
+      &:hover {
+
+        background-color: @gray-dark;
+        color:#eeeeee;
+      }
+      &:active {
+
+        background-color: @gray-darker;
+        color:#ffffff;
+      }
+    }
+  }
+}
+
+[data-id="GatewayMainContainer"] {
+  padding: 0 2rem;
+
+  [data-id="PolicyFormContainer"] {
+    .flex-container {
+      justify-content: flex-start;
+
+      &.policy-sub-form {
+        padding-left:0;
+      }
+    }
   }
 
   .gateway-map-list-scopes-container {
@@ -40,92 +154,8 @@
   }
 
 
-  [data-id="PolicyFormContainer"] {
-
-    display: inline-block;
-
-    form.ui-form {
-      border:0;
-    }
-
-    .flex-container {
-      display: flex;
-      flex-direction: row;
-    }
-
-    select {
-      width:35rem;
-      height:30px;
-      color:#999999;
-    }
-  }
   .tree-branch.is-active{
     background: #4a90e2;
-  }
-  .policy-scope-item {
-    padding: 2px 4px;
-    line-height: 2rem;
-    font-size: 11px;
-    background-color: @gray-light-2;
-    color:@gray-dark;
-    float:left;
-    display:inline-block;
-    border-radius: 2px;
-    margin: 2px 5px 2px 0px;
-  }
-
-  .policy-scope-input-container {
-    border: 1px solid #ccc;
-    padding: 5px 3px;
-    display: inline-block;
-    width: 500px;
-    border-radius: 3px;
-    box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.075);
-
-    input[type=text].policy-scope-input{
-      display:inline-block;
-      float:left;
-      height: 18px;
-      padding: 0px;
-      font-size: 13px;
-      line-height: 18px;
-      color: #444444;
-      border: 0;
-      margin: 2px;
-
-      &:focus {
-        outline:0;
-        box-shadow:0;
-      }
-    }
-    .input-policy-scope {
-      padding: 2px 4px;
-      line-height: 2rem;
-      background-color: @gray-light-2;
-      color:@gray-dark;
-      float:left;
-      display:inline-block;
-      border-radius: 1rem;
-      margin: 2px 5px 2px 0px;
-
-      .delete-policy-scope {
-        display: inline-block;
-        border-radius:.7rem;
-        cursor: pointer;
-        padding: 0px 2px;
-
-        &:hover {
-
-          background-color: @gray-dark;
-          color:#eeeeee;
-        }
-        &:active {
-
-          background-color: @gray-darker;
-          color:#ffffff;
-        }
-      }
-    }
   }
 
   table.ui-table {

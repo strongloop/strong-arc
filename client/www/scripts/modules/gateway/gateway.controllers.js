@@ -154,6 +154,16 @@ Gateway.controller('GatewayMainController', [
       });
     };
     $scope.showAddNewGatewayMapForm = function() {
+      // if there is more than one pipeline
+      if (!$scope.gatewayMapCtx.currentPipelines || !$scope.gatewayMapCtx.currentPipelines.length || ($scope.gatewayMapCtx.currentPipelines.length === 0)) {
+        $log.warn('no pipelines available');
+        if (confirm('would you like to create a pipeline now?')) {
+          $log.debug('you should open the new pipeline form now');
+        }
+        else {
+          return;
+        }
+      }
       var modalDlg = $modal.open({
         templateUrl: './scripts/modules/gateway/templates/add.gateway.map.modal.html',
         size: 'lg',
