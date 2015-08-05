@@ -200,6 +200,9 @@ Gateway.directive('slPolicyMainView', [
       templateUrl: './scripts/modules/gateway/templates/policy.main.html',
       link: function(scope, el, attrs) {
 
+        scope.$watch('policyCtx.currentPolicy', function(newVal, oldVal) {
+          $log.debug('Change current policy: ' + JSON.stringify(newVal) + ' oldVal:' + JSON.stringify(oldVal));
+        });
       }
     }
   }

@@ -69,20 +69,11 @@ Gateway.controller('PolicyMainController', [
       }
       return policy;
     }
-    function turnOffOtherPolicyEdits() {
-      if ($scope.policyCtx.policies.map) {
-        $scope.policyCtx.policies.map(function(policy) {
-          policy.editMode = false;
-        });
-        resetCurrentPolicy();
 
-      }
-    }
     $scope.editPolicy = function(policy) {
-      turnOffOtherPolicyEdits();
       policy = inflateProperties(policy);
       $scope.policyCtx.currentPolicy = policy;
-      policy.editMode = true;
+
     };
     $scope.cancelEditPolicy = function(policy) {
       $scope.policyCtx.currentPolicy = {};

@@ -2,24 +2,21 @@
   <table class="ui-table">
     <thead>
     <tr>
-      <th>Name</th>
       <th>Type</th>
+      <th>Name</th>
       <th>Details</th>
       <th class="blank-th"></th>
     </tr>
     </thead>
     <tbody ng-repeat="policy in policyCtx.policies">
     <tr>
-      <td class="gateway-name-col">
-        <a href="/#/gateway/policy/{{policy.id}}">
-          <span ng-show="!policy.editMode">{{policy.name}}</span>
-        </a>
-        <input type="text" ng-model="policy.name" ng-show="policy.editMode" />
-      </td>
       <td>
-        <span ng-show="!policy.editMode" >{{policy.type}}</span>
-        <select ng-model="policy.type" ng-show="policy.editMode"  ng-options="policyType.id as policyType.name for policyType in policyCtx.policyTypes">
-        </select>
+        <ui-icon name="policy-{{policy.type}}"></ui-icon>
+      </td>
+      <td class="gateway-name-col">
+        <button class="link-cmd" ng-click="editPolicy(policy)">
+          {{policy.name}}
+        </button>
       </td>
       <td>
         <div ng-show="policy.type == 'ratelimiting'">
@@ -97,7 +94,4 @@
   <button class="link-cmd" ng-click="showAddNewPolicyForm()">
     <i class="sl-icon sl-icon-plus-sign"></i>Add Policy
   </button>
-
-  <!--<button class="link-cmd" ng-click="showScopesCrud()">show scopes</button>-->
-  <!--<sl-policy-scope-main-view ng-show="isShowScopesCrud"></sl-policy-scope-main-view>-->
 </div>
