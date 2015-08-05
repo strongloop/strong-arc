@@ -200,8 +200,25 @@ Gateway.directive('slPolicyMainView', [
       templateUrl: './scripts/modules/gateway/templates/policy.main.html',
       link: function(scope, el, attrs) {
 
-        scope.$watch('policyCtx.currentPolicy', function(newVal, oldVal) {
-          $log.debug('Change current policy: ' + JSON.stringify(newVal) + ' oldVal:' + JSON.stringify(oldVal));
+        scope.$watch('gatewayCtx.currentView', function(newVal, oldVal) {
+          //$scope.gatewayCtx.currentInstanceId
+          if (newVal === 'policy' && (oldVal !== 'policy')) {
+            if (!scope.gatewayCtx.currentInstanceId) {
+              $log.debug('Change current view to policy: ');
+             scope.setMainNav('policy');
+             return;
+            }
+            $log.debug('Change current policy: ');
+            scope.setMainNav('policy', scope.gatewayCtx.currentInstanceId);
+
+          }
+        });
+        scope.$watch('gatewayCtx.currentInstanceId', function(newVal, oldVal) {
+          if (scope.gatewayCtx.currentView === 'policy') {
+            if (newVal !== oldVal) {
+              scope.setMainNav('policy', newVal);
+            }
+          }
         });
       }
     }
