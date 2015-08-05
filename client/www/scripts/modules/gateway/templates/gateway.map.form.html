@@ -24,9 +24,8 @@
                placeholder="endpoint" />
       </div>
     </div>
-    <div class="form-field">
+    <div class="form-field gateway-map-pipeline-input-container">
       <label>Pipeline</label>
-
       <div dropdown class="dropdown-container">
         <button  id="simple-dropdown" dropdown-toggle>
           {{map.pipelineId}}
@@ -35,11 +34,6 @@
           <li ng-repeat="pipe in context.currentPipelines" ng-click="setMapPipelineId(map, pipe.id)">{{pipe.name}}</li>
         </ul>
       </div>
-      <!--<select  class="form-control gateway-map-main-input"-->
-               <!--ng-model="map.pipelineId"-->
-               <!--ng-options="pipe.id as pipe.id for pipe in context.currentPipelines">-->
-      <!--</select>-->
-      <!--<button class="link-cmd"><i class="sl-icon sl-icon-plus-sign"></i>New Pipeline</button>-->
     </div>
     <table class="ui-table" ng-show="map.pipelineId">
       <thead>
@@ -57,7 +51,7 @@
       </thead>
       <tbody>
       <tr ng-repeat="policy in map.pipeline.policies">
-        <td>{{policy.type}}</td>
+        <td><ui-icon name="policy-{{policy.type}}"></ui-icon></td>
         <td>{{policy.name}}</td>
         <td>
           <div ng-show="policy.type == 'ratelimiting'">

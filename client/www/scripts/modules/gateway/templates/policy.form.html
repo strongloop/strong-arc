@@ -11,10 +11,20 @@
                 ng-options="policyType.id as policyType.name for policyType in context.policyTypes">
         </select>
       </div>
+
+
+
+
+
     </div>
-    <sl-policy-auth-form ng-show="context.isShowAuthPolicyForm"></sl-policy-auth-form>
-    <sl-policy-rate-limit-form  ng-show="context.isShowRateLimitPolicyForm"></sl-policy-rate-limit-form>
-    <sl-policy-proxy-form ng-show="context.isShowProxyPolicyForm"> </sl-policy-proxy-form>
+    <div class="flex-container policy-sub-form">
+
+      <sl-policy-auth-form ng-show="context.isShowAuthPolicyForm"></sl-policy-auth-form>
+      <sl-policy-rate-limit-form  ng-show="context.isShowRateLimitPolicyForm"></sl-policy-rate-limit-form>
+      <sl-policy-proxy-form ng-show="context.isShowProxyPolicyForm"> </sl-policy-proxy-form>
+
+    </div>
+
     <div>
       <button ng-hide="hidebuttons" ng-disabled="!isPolicyDirty" class="ui-btn primary small pull-right" ng-click="saveCurrentPolicy(policy)">Save</button>
     </div>
