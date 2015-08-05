@@ -1,0 +1,26 @@
+<div>
+  <button data-type="policy" data-name="model_root" class="btn btn-default btn-block nav-tree-item tree-branch"  title="temp" >
+    <span class="nav-branch-openclose-icon sl-icon sl-icon-arrow-right"></span>
+    <span class="nav-branch-folder-icon sl-icon sl-icon-folder"></span>
+    <span class="nav-branch-title">TITLE</span>
+  </button>
+  <div data-ui-type="table" class="ia-tree-node-table branch-leaf-list model-branch-container is-open">
+    <div ng-repeat="item in menu" data-ui-type="row" class="tree-item-row" data-id="item.id">
+      <div data-ui-type="cell" class="ia-nav-item-icon-container-col">
+        <span data-name="item.name" title="item.type"  data-id="item.id" class="cssClassIcon"></span>
+      </div>
+      <div data-ui-type="cell" class="ia-nav-item-name-container-col">
+        <button data-name="item.name" data-id="item.id" data-type="type" class="nav-tree-item tree-node" onClick="">{{item.name}}</button>
+      </div>
+      <div data-ui-type="cell" class="ia-nav-item-dsconnect-icon-container-col">
+        dsConnectEl
+      </div>
+      <div data-ui-type="cell" class="ia-nav-item-contextmenu-icon-container-col">
+        <button class="btn-command btn-nav-context" data-type="item.type">
+          <span data-type="item.type" class="sl-icon sl-icon-box-arrow-down"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <button onClick="" data-type="policy" class="nav-tree-item-addnew"><span class="plus">+</span>Add New Policy</button>
+</div>
