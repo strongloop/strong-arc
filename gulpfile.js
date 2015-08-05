@@ -264,6 +264,7 @@ function testE2E (callback, testSuite) {
         protractorResults(err);
 
         fs.unlink(path.join(__dirname, 'client/test/sandbox/arc-manager.json')); 
+        fs.unlink(path.join(__dirname, 'client/test/empty-0.0.0.tgz')); 
       });
   }
 

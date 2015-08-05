@@ -9,7 +9,7 @@ var TracingHomeView = (function () {
 
     this.waitUntilLoaded = function() {
       browser.driver.wait(
-        EC.presenceOf(this.componentIdentifier),
+        EC.visibilityOf(this.componentIdentifier),
       10000);
     };
 
@@ -19,8 +19,8 @@ var TracingHomeView = (function () {
       browser.driver.wait(
         EC.elementToBeClickable(
           self.dismissErrorButton
-        )
-      );
+        ),
+      10000);
 
       self.dismissErrorButton.click();
     };
