@@ -1,6 +1,30 @@
 /**
  * GATEWAY GLOBAL DIRECTIVES
  */
+Gateway.directive('slGatewayNav', [
+  'GatewayServices',
+  '$rootScope',
+  '$http',
+  '$log',
+  function(GatewayServices, $rootScope, $http, $log) {
+    return {
+      replace: true,
+      templateUrl: './scripts/modules/gateway/templates/gateway.nav.html'
+    }
+  }
+]);
+Gateway.directive('slGatewayNavMenu', [
+  'GatewayServices',
+  '$rootScope',
+  '$http',
+  '$log',
+  function(GatewayServices, $rootScope, $http, $log) {
+    return {
+      replace: true,
+      templateUrl: './scripts/modules/gateway/templates/gateway.nav.menu.html'
+    }
+  }
+]);
 Gateway.directive('slGatewayMainNav', [
   'GatewayServices',
   '$rootScope',

@@ -265,6 +265,25 @@ Gateway.controller('GatewayMainController', [
         }
       }
     }
+    $scope.showAddNewModal = function(type) {
+      switch(type) {
+        case 'gatewaymap':
+          $scope.showAddNewGatewayMapForm();
+          break;
+
+        case 'pipeline' :
+          $scope.showAddNewPipelineForm();
+          break;
+
+        case 'policy':
+          $scope.showAddNewPolicyForm();
+          break;
+
+        default:
+
+
+      }
+    };
     /*
     *
     * Refresh collections
@@ -277,12 +296,19 @@ Gateway.controller('GatewayMainController', [
 
     $scope.refreshDataSets = function() {
       $log.log('refreshDataSets');
+      $scope.gatewayCtx.navMenus = [];
 
       return GatewayServices.getPolicies()
         .then(function(policies) {
           $scope.policyCtx.policies = policies;
           $scope.pipelineCtx.policies = policies;
           $scope.gatewayMapCtx.currentPolicies = policies;
+          $scope.gatewayCtx.navMenus.push({
+            type:'policy',
+            title:'Policies',
+            items: policies,
+            addNew: 'Policy'
+          });
 
         }).then(getPipelines)
           .then(getGatewayMaps)
@@ -311,12 +337,21 @@ Gateway.controller('GatewayMainController', [
             $log.log('official pipelines 1', angular.extend({}, pipelines));
 
             //$timeout(function(){
-              $log.log('official pipelines 2', angular.extend({}, pipelines));
-              $scope.pipelineCtx.pipelines = pipelines;
-              $scope.gatewayMapCtx.currentPipelines = pipelines;
+            $log.log('official pipelines 2', angular.extend({}, pipelines));
+            $scope.pipelineCtx.pipelines = pipelines;
+            $scope.gatewayMapCtx.currentPipelines = pipelines;
+            $scope.gatewayCtx.navMenus.push({
+              type:'pipeline',
+              title:'Pipelines',
+              items: pipelines,
+              addNew: 'Pipeline'
+            });
             //}, 100);
           });
       }
+
+
+
 
       function getGatewayMaps(){
         return GatewayServices.getGatewayMaps()
@@ -326,6 +361,12 @@ Gateway.controller('GatewayMainController', [
               map.pipeline = getPipelineDetail(map.pipelineId);
             });
             $scope.gatewayMapCtx.gatewayMaps = maps;
+            $scope.gatewayCtx.navMenus.push({
+              type:'gatewaymap',
+              title:'Mappings',
+              items: maps,
+              addNew: 'Mapping'
+            });
 
             window.triggerResizeUpdate();
           });
@@ -341,6 +382,7 @@ Gateway.controller('GatewayMainController', [
       $scope.gatewayCtx = {
         currentView: getNavBasePath(),
         currentInstanceId: $state.params.id,
+        navMenus: [],
         currentExternalEndpoint: {},
         currentInternalEndpoint: {},
         currentPolicy: {},
