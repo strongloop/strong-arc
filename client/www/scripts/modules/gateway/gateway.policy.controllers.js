@@ -73,6 +73,8 @@ Gateway.controller('PolicyMainController', [
     $scope.editPolicy = function(policy) {
       policy = inflateProperties(policy);
       $scope.policyCtx.currentPolicy = policy;
+      $scope.gatewayCtx.currentView = 'policy';
+      $scope.gatewayCtx.currentInstanceId = policy.id;
 
     };
     $scope.cancelEditPolicy = function(policy) {

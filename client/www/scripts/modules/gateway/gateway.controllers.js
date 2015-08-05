@@ -288,7 +288,7 @@ Gateway.controller('GatewayMainController', [
           .then(getGatewayMaps)
         .then(function() {
 
-          $scope.main();
+        //  $scope.main();
         });
 
 
@@ -524,7 +524,7 @@ Gateway.controller('GatewayMainController', [
         $scope.gatewayCtx.currentInstanceId = null;
       }
       $scope.refreshDataSets()
-      .then(function() {
+        .then(function() {
           setView();
         });
     };
