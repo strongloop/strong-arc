@@ -2,17 +2,16 @@ Licenses.controller('LicensesMainController', [
   '$scope',
   '$q',
   '$log',
+  '$timeout',
   '$rootScope',
   'LicensesService',
-  function ($scope, $q, $log, $rootScope, LicensesService) {
+  function ($scope, $q, $log, $timeout, $rootScope, LicensesService) {
     window.setScrollView('.common-instance-view-container');
 
     $scope.selectLicenseText = function(id){
-      $(id).select();
-    };
-
-    $scope.copyToClipboard = function(id){
-      return $(id).val();
+      $timeout(function(){
+        $(id).select();
+      });
     };
 
     $scope.renewProductFeature = function(product, feature){
