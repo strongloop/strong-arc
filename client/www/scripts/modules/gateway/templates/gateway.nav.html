@@ -7,6 +7,7 @@
     </div>
     <span className="ia-project-title-container">Gateway</span>
   </div>
+  <!-- Mappings -->
   <sl-gateway-nav-menu menu="gatewayCtx.navMenus['gatewaymap']"
                        show-modal="showAddNewModal(type)"
                        clone-method="cloneInstanceRequest(data)"
@@ -14,6 +15,7 @@
                        set-nav="setMainNav(type, id)"
                        context="gatewayCtx">
   </sl-gateway-nav-menu>
+  <!-- Pipelines -->
   <sl-gateway-nav-menu menu="gatewayCtx.navMenus['pipeline']"
                        show-modal="showAddNewModal(type)"
                        clone-method="cloneInstanceRequest(data)"
@@ -21,6 +23,7 @@
                        set-nav="setMainNav(type, id)"
                        context="gatewayCtx">
   </sl-gateway-nav-menu>
+  <!-- Policy -->
   <sl-gateway-nav-menu menu="gatewayCtx.navMenus['policy']"
                        show-modal="showAddNewModal(type)"
                        clone-method="cloneInstanceRequest(data)"

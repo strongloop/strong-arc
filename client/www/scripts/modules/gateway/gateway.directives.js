@@ -30,18 +30,24 @@ Gateway.directive('slGatewayNavMenu', [
         context: '='
       },
       templateUrl: './scripts/modules/gateway/templates/gateway.nav.menu.html',
-      controller: [ '$scope', function($scope) {
-        //$scope.setMainNav = function(view, id) {
-        //  $log.debug('set main nav in directive controller');
-        //}
-      }],
       link: function(scope, el, attrs) {
 
-        scope.$watch('gatewayCtx.currentView', function(newVal, oldVal) {
-          $log.debug('View Change');
-        });
-        scope.$watch('gatewayCtx.currentInstanceId', function(newVal, oldVal) {
-          $log.debug('View Change');
+        scope.$watch('menu', function(newMenu, oldVal) {
+          if (newMenu && newMenu.type === scope.context.currentView) {
+            if (newMenu.items && newMenu.items.map) {
+              // check if any children are active
+              newMenu.items.map(function(item) {
+                if (item.id === scope.context.currentInstanceId) {
+                  // bingo its active
+                  item.isActive = true;
+                }
+                else {
+                  item.isActive = false;
+                }
+              });
+
+            }
+          }
         });
 
       }
