@@ -5,7 +5,10 @@
     <span class="nav-branch-title">{{menu.title}}</span>
   </button>
   <div data-ui-type="table" class="ia-tree-node-table branch-leaf-list model-branch-container is-open">
-    <div ng-repeat="item in menu.items" data-ui-type="row" class="tree-item-row">
+    <div ng-repeat="item in menu.items"
+         data-ui-type="row"
+         ng-class="{ 'is-active' : item.isActive}"
+         class="tree-item-row">
       <div data-ui-type="cell" class="ia-nav-item-icon-container-col">
         <span class="cssClassIcon"></span>
       </div>
