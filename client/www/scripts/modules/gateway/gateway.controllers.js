@@ -47,23 +47,9 @@ Gateway.controller('GatewayMainController', [
               .$promise
               .then(function(data) {
                 $scope.setMainNav('pipeline', pipeline.id);
-
+                $scope.refreshPipelines();
               });
 
-            /**
-             * refresh the user's pipelines list in nav
-             */
-            function refreshPipelines() {
-              $scope.pipelineCtx.pipelines = GatewayServices.getPipelines()
-                .then(function(data) {
-                  $scope.pipelineCtx.pipelines = data;
-                  $scope.pipelineCtx.pipelines.map(function(pipeline){
-                    pipeline.renderPolicies = pipeline.policyIds.map(function(policyId){
-                      return getPipelineRenderPolicy(policyId);
-                    });
-                  })
-                });
-            }
           };
         },
         resolve: {
@@ -80,7 +66,7 @@ Gateway.controller('GatewayMainController', [
             if (confirm('delete policy?')) {
               GatewayServices.deletePolicy(id)
                 .then(function(response) {
-                  $scope.refreshDataSets();
+                  $scope.refreshPolicies();
                 });
 
             }
@@ -91,7 +77,7 @@ Gateway.controller('GatewayMainController', [
             if (confirm('delete gateway map?')) {
               GatewayServices.deleteGatewayMap(id)
                 .then(function(response) {
-                  $scope.refreshDataSets();
+                  $scope.refreshMappings();
                 });
 
             }
@@ -101,7 +87,7 @@ Gateway.controller('GatewayMainController', [
             if (confirm('delete pipeline?')) {
               GatewayServices.deletePipeline(id)
               .then(function(response) {
-                  $scope.refreshDataSets();
+                  $scope.refreshPipelines();
                 });
 
             }
@@ -137,7 +123,22 @@ Gateway.controller('GatewayMainController', [
               GatewayServices.cloneInstance(clone)
                 .then(function(response) {
                   $scope.close();
-                  $scope.refreshDataSets();
+                  switch($scope.instanceObj.type) {
+                    case 'gatewaymap':
+                      $scope.refreshMappings();
+                      break;
+                    case 'pipeline':
+                      $scope.refreshPipelines();
+                      break;
+
+                    case 'policy':
+                      $scope.refreshPolicies();
+                      break;
+
+                    default:
+
+                  }
+                  //$scope.refreshDataSets();
                 });
             }
           };
@@ -186,7 +187,8 @@ Gateway.controller('GatewayMainController', [
                 GatewayServices.saveGatewayMap(map)
                   .$promise
                   .then(function(map) {
-                    $scope.setMainNav('gateway', map.id);
+                    $scope.refreshMappings();
+                    $scope.setMainNav('gatewaymap', map.id);
 
                   });
 
@@ -222,6 +224,7 @@ Gateway.controller('GatewayMainController', [
               GatewayServices.savePolicy(policy)
                 .$promise
                 .then(function(policy) {
+                  $scope.refreshPolicies();
                   $scope.setMainNav('policy', policy.id);
                  });
             }
@@ -295,7 +298,78 @@ Gateway.controller('GatewayMainController', [
       $log.log('watcher pipelines', newVal);
     }, true);
 
-    $scope.refreshDataSets = function() {
+
+
+    $scope.refreshMappings = function() {
+      $log.log('refreshMappings');
+      return GatewayServices.getGatewayMaps()
+        .then(function(maps) {
+          $log.debug('|  refresh maps: ' + maps.length);
+          maps.map(function(map) {
+            map.pipeline = getPipelineDetail(map.pipelineId);
+          });
+          $scope.gatewayMapCtx.gatewayMaps = maps;
+          $scope.gatewayCtx.navMenus['gatewaymap'] = {
+            type:'gatewaymap',
+            title:'Mappings',
+            items: maps,
+            addNew: 'Mapping'
+          };
+
+          window.triggerResizeUpdate();
+        });
+    };
+    $scope.refreshPipelines = function() {
+      $log.log('refreshPipelines');
+      return GatewayServices.getPipelines()
+        .then(function(pipelines) {
+          $log.debug('|  refresh pipelines: ' + pipelines.length);
+          $scope.pipelineCtx.pipelines = [];
+
+          pipelines.map(function(pipeline){
+            pipeline.renderPolicies = [];
+
+            pipeline.policyIds.map(function(policyId){
+              var policy = getPipelineRenderPolicy(policyId);
+
+              pipeline.renderPolicies.push(policy);
+            });
+          });
+
+          $log.log('official pipelines 1', angular.extend({}, pipelines));
+
+          //$timeout(function(){
+          $log.log('official pipelines 2', angular.extend({}, pipelines));
+          $scope.pipelineCtx.pipelines = pipelines;
+          $scope.gatewayMapCtx.currentPipelines = pipelines;
+          $scope.gatewayCtx.navMenus['pipeline'] = {
+            type:'pipeline',
+            title:'Pipelines',
+            items: pipelines,
+            addNew: 'Pipeline'
+          };
+          //}, 100);
+        });
+    };
+
+    $scope.refreshPolicies = function() {
+      $log.log('refreshPolicies');
+      return GatewayServices.getPolicies()
+        .then(function(policies) {
+          $scope.policyCtx.policies = policies;
+          $scope.pipelineCtx.policies = policies;
+          $scope.gatewayMapCtx.currentPolicies = policies;
+          $scope.gatewayCtx.navMenus['policy'] = {
+            type:'policy',
+            title:'Policies',
+            items: policies,
+            addNew: 'Policy'
+          };
+
+        });
+    };
+
+    $scope._refreshDataSets = function() {
       $log.log('refreshDataSets');
       $scope.gatewayCtx.navMenus = [];
 
@@ -455,7 +529,7 @@ Gateway.controller('GatewayMainController', [
         ]
       };
 
-      $scope.refreshDataSets();
+      $scope._refreshDataSets();
 
 
     }();
@@ -559,6 +633,9 @@ Gateway.controller('GatewayMainController', [
 
     }
     $scope.setMainNav = function(view, id) {
+
+
+
       $scope.gatewayCtx.currentView = view;
       if (id) {
         $scope.gatewayCtx.currentInstanceId = id;
@@ -566,10 +643,7 @@ Gateway.controller('GatewayMainController', [
       else {
         $scope.gatewayCtx.currentInstanceId = null;
       }
-      $scope.refreshDataSets()
-        .then(function() {
-          $scope.main();
-        });
+      $scope.main();
     };
   }
 ]);

@@ -30,23 +30,25 @@ Gateway.directive('slGatewayNavMenu', [
         context: '='
       },
       templateUrl: './scripts/modules/gateway/templates/gateway.nav.menu.html',
+      controller: [ '$scope', function($scope) {
+        $scope.currentMenu = {};
+      }],
       link: function(scope, el, attrs) {
 
         scope.$watch('menu', function(newMenu, oldVal) {
-          if (newMenu && newMenu.type === scope.context.currentView) {
-            if (newMenu.items && newMenu.items.map) {
-              // check if any children are active
-              newMenu.items.map(function(item) {
-                if (item.id === scope.context.currentInstanceId) {
-                  // bingo its active
-                  item.isActive = true;
-                }
-                else {
-                  item.isActive = false;
-                }
-              });
-
-            }
+          scope.currentMenu = newMenu;
+        });
+        scope.$watch('context.currentInstanceId', function(newInstanceId, oldInstanceId) {
+          if (scope.currentMenu && scope.currentMenu.items) {
+            scope.currentMenu.items.map(function(item) {
+              if (item.id === scope.context.currentInstanceId) {
+                // bingo its active
+                item.isActive = true;
+              }
+              else {
+                item.isActive = false;
+              }
+            });
           }
         });
 
