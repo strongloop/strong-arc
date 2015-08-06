@@ -25,7 +25,8 @@ VisualComposer.directive('slComposerCanvas', [
       template: '<div style="width:100%;height:100%"></div>',
       scope: {
         models: '=',
-        connections: '='
+        connections: '=',
+        onSelect: '&'
       },
       link: function($scope, elem) {
         var idMapping = {};
@@ -52,6 +53,14 @@ VisualComposer.directive('slComposerCanvas', [
               y: pos.x
             };
           });
+
+        var select = function(selection) {
+          selection.on('click', function(d) {
+            $scope.onSelect({
+              model: d
+            });
+          });
+        };
 
         function getDiagonalCoords(id) {
           var obj = idMapping[id];
@@ -251,6 +260,7 @@ VisualComposer.directive('slComposerCanvas', [
                 .call(buildProperty);
           });
 
+          selection.call(select);
           selection.call(drag);
         }
 
@@ -320,6 +330,12 @@ VisualComposer.directive('slComposerCanvas', [
 
         function dragStart() {
           var dragEvent = d3.event.sourceEvent;
+
+          d3.select(dragEvent.currentTarget).each(function(d) {
+            $scope.onSelect({
+              model: d
+            });
+          });
 
           eventOffset = ['Y', 'X'].map(function(axis) {
             return dragEvent['client' + axis] - dragEvent['offset' + axis];

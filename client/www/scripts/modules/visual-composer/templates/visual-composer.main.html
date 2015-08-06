@@ -1,10 +1,15 @@
-<div class="visual-composer">
-  <div class="component-panel">
-      <sl-instance-editor models="selectedModels">
-      </sl-instance-editor>
+<div class="visual-composer sl-container hbox">
+  <div class="component-panel sl-container vbox noexpand">
+      <div class="model-list sl-container">
+      </div>
+      <div class="create-panel sl-container noexpand">
+      </div>
   </div>
-  <div class="canvas-container">
-    <sl-composer-canvas models="models" connections="connections">
+  <div class="properties-panel sl-container noexpand">
+    <div sl-ia-main-content></div>
+  </div>
+  <div class="canvas-container sl-container">
+    <sl-composer-canvas models="models" connections="connections" on-select="selectModel(model)">
     </sl-composer-canvas>
   </div>
 </div>
