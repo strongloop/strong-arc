@@ -21,7 +21,30 @@ Gateway.directive('slGatewayNavMenu', [
   function(GatewayServices, $rootScope, $http, $log) {
     return {
       replace: true,
-      templateUrl: './scripts/modules/gateway/templates/gateway.nav.menu.html'
+      scope: {
+        menu: '=',
+        setNav: '&',
+        showModal: '&',
+        cloneMethod: '&',
+        deleteMethod: '&',
+        context: '='
+      },
+      templateUrl: './scripts/modules/gateway/templates/gateway.nav.menu.html',
+      controller: [ '$scope', function($scope) {
+        //$scope.setMainNav = function(view, id) {
+        //  $log.debug('set main nav in directive controller');
+        //}
+      }],
+      link: function(scope, el, attrs) {
+
+        scope.$watch('gatewayCtx.currentView', function(newVal, oldVal) {
+          $log.debug('View Change');
+        });
+        scope.$watch('gatewayCtx.currentInstanceId', function(newVal, oldVal) {
+          $log.debug('View Change');
+        });
+
+      }
     }
   }
 ]);
