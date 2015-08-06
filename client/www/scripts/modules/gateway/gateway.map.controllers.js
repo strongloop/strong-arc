@@ -129,13 +129,13 @@ Gateway.controller('GatewayMapMainController', [
       }
     };
 
+    $scope.editGatewayMap = function(map) {
+      $scope.gatewayMapCtx.currentGatewayMap = map;
+      $scope.gatewayCtx.currentView = 'gatewaymap';
+      $scope.gatewayCtx.currentInstanceId = map.id;
 
-    $scope.editGatewayMap = function(gatewayMap) {
-      gatewayMap.editMode = true;
     };
-    $scope.cancelEditGatewayMap = function(gatewayMap) {
-      gatewayMap.editMode = false;
-    };
+
 
 
 
