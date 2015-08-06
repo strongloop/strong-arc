@@ -1,5 +1,5 @@
 <div ng-controller="GatewayMapMainController">
-  <h3>Maps</h3>
+  <h3>{{gatewayCtx.viewTitle}}</h3>
   <sl-gateway-map-list ng-show="!gatewayCtx.currentInstanceId"></sl-gateway-map-list>
   <sl-gateway-map-form map="gatewayMapCtx.currentGatewayMap"
      context="gatewayMapCtx"
