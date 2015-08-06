@@ -12,16 +12,16 @@ Gateway.controller('GatewayMainController', [
 
     function getNavBasePath() {
       var path = $location.path();
-      if (path.indexOf("pipeline") > -1) {
-        return 'pipeline';
+      if (path.indexOf(GATEWAY_CONST.PIPELINE_TYPE) > -1) {
+        return GATEWAY_CONST.PIPELINE_TYPE;
       }
-      if (path.indexOf("gatewaymap") > -1) {
-        return 'gatewaymap';
+      if (path.indexOf(GATEWAY_CONST.MAPPING_TYPE) > -1) {
+        return GATEWAY_CONST.MAPPING_TYPE;
       }
-      if (path.indexOf("policy") > -1) {
-        return 'policy';
+      if (path.indexOf(GATEWAY_CONST.POLICY_TYPE) > -1) {
+        return GATEWAY_CONST.POLICY_TYPE;
       }
-      return 'gatewaymap';
+      return GATEWAY_CONST.MAPPING_TYPE;
     }
 
     $scope.showAddNewPipelineForm = function() {
@@ -46,7 +46,7 @@ Gateway.controller('GatewayMainController', [
             GatewayServices.savePipeline(pipeline)
               .$promise
               .then(function(data) {
-                $scope.setMainNav('pipeline', pipeline.id);
+                $scope.setMainNav(GATEWAY_CONST.PIPELINE_TYPE, pipeline.id);
                 $scope.refreshPipelines();
               });
 
@@ -62,7 +62,7 @@ Gateway.controller('GatewayMainController', [
     $scope.deleteInstanceRequest = function(type, id) {
       if (id && type) {
         switch (type) {
-          case 'policy':
+          case GATEWAY_CONST.POLICY_TYPE:
             if (confirm('delete policy?')) {
               GatewayServices.deletePolicy(id)
                 .then(function(response) {
@@ -73,7 +73,7 @@ Gateway.controller('GatewayMainController', [
 
             break;
 
-          case 'gatewaymap':
+          case GATEWAY_CONST.MAPPING_TYPE:
             if (confirm('delete gateway map?')) {
               GatewayServices.deleteGatewayMap(id)
                 .then(function(response) {
@@ -83,7 +83,7 @@ Gateway.controller('GatewayMainController', [
             }
             break;
 
-          case 'pipeline':
+          case GATEWAY_CONST.PIPELINE_TYPE:
             if (confirm('delete pipeline?')) {
               GatewayServices.deletePipeline(id)
               .then(function(response) {
@@ -121,17 +121,18 @@ Gateway.controller('GatewayMainController', [
           $scope.saveTheClone = function(clone) {
             if (clone.name && (clone.name !== originalName)) {
               GatewayServices.cloneInstance(clone)
-                .then(function(response) {
+                .then(function(newInstance) {
                   $scope.close();
+                  $scope.setMainNav($scope.instanceObj.type, newInstance.id);
                   switch($scope.instanceObj.type) {
-                    case 'gatewaymap':
+                    case GATEWAY_CONST.MAPPING_TYPE:
                       $scope.refreshMappings();
                       break;
-                    case 'pipeline':
+                    case GATEWAY_CONST.PIPELINE_TYPE:
                       $scope.refreshPipelines();
                       break;
 
-                    case 'policy':
+                    case GATEWAY_CONST.POLICY_TYPE:
                       $scope.refreshPolicies();
                       break;
 
@@ -188,7 +189,7 @@ Gateway.controller('GatewayMainController', [
                   .$promise
                   .then(function(map) {
                     $scope.refreshMappings();
-                    $scope.setMainNav('gatewaymap', map.id);
+                    $scope.setMainNav(GATEWAY_CONST.MAPPING_TYPE, map.id);
 
                   });
 
@@ -225,7 +226,7 @@ Gateway.controller('GatewayMainController', [
                 .$promise
                 .then(function(policy) {
                   $scope.refreshPolicies();
-                  $scope.setMainNav('policy', policy.id);
+                  $scope.setMainNav(GATEWAY_CONST.POLICY_TYPE, policy.id);
                  });
             }
           };
@@ -271,15 +272,15 @@ Gateway.controller('GatewayMainController', [
     }
     $scope.showAddNewModal = function(type) {
       switch(type) {
-        case 'gatewaymap':
+        case GATEWAY_CONST.MAPPING_TYPE:
           $scope.showAddNewGatewayMapForm();
           break;
 
-        case 'pipeline' :
+        case GATEWAY_CONST.PIPELINE_TYPE :
           $scope.showAddNewPipelineForm();
           break;
 
-        case 'policy':
+        case GATEWAY_CONST.POLICY_TYPE:
           $scope.showAddNewPolicyForm();
           break;
 
@@ -309,8 +310,8 @@ Gateway.controller('GatewayMainController', [
             map.pipeline = getPipelineDetail(map.pipelineId);
           });
           $scope.gatewayMapCtx.gatewayMaps = maps;
-          $scope.gatewayCtx.navMenus['gatewaymap'] = {
-            type:'gatewaymap',
+          $scope.gatewayCtx.navMenus[GATEWAY_CONST.MAPPING_TYPE] = {
+            type:GATEWAY_CONST.MAPPING_TYPE,
             title:'Mappings',
             items: maps,
             addNew: 'Mapping'
@@ -342,8 +343,8 @@ Gateway.controller('GatewayMainController', [
           $log.log('official pipelines 2', angular.extend({}, pipelines));
           $scope.pipelineCtx.pipelines = pipelines;
           $scope.gatewayMapCtx.currentPipelines = pipelines;
-          $scope.gatewayCtx.navMenus['pipeline'] = {
-            type:'pipeline',
+          $scope.gatewayCtx.navMenus[GATEWAY_CONST.PIPELINE_TYPE] = {
+            type:GATEWAY_CONST.PIPELINE_TYPE,
             title:'Pipelines',
             items: pipelines,
             addNew: 'Pipeline'
@@ -359,8 +360,8 @@ Gateway.controller('GatewayMainController', [
           $scope.policyCtx.policies = policies;
           $scope.pipelineCtx.policies = policies;
           $scope.gatewayMapCtx.currentPolicies = policies;
-          $scope.gatewayCtx.navMenus['policy'] = {
-            type:'policy',
+          $scope.gatewayCtx.navMenus[GATEWAY_CONST.POLICY_TYPE] = {
+            type:GATEWAY_CONST.POLICY_TYPE,
             title:'Policies',
             items: policies,
             addNew: 'Policy'
@@ -378,8 +379,8 @@ Gateway.controller('GatewayMainController', [
           $scope.policyCtx.policies = policies;
           $scope.pipelineCtx.policies = policies;
           $scope.gatewayMapCtx.currentPolicies = policies;
-          $scope.gatewayCtx.navMenus['policy'] = {
-            type:'policy',
+          $scope.gatewayCtx.navMenus[GATEWAY_CONST.POLICY_TYPE] = {
+            type:GATEWAY_CONST.POLICY_TYPE,
             title:'Policies',
             items: policies,
             addNew: 'Policy'
@@ -415,8 +416,8 @@ Gateway.controller('GatewayMainController', [
             $log.log('official pipelines 2', angular.extend({}, pipelines));
             $scope.pipelineCtx.pipelines = pipelines;
             $scope.gatewayMapCtx.currentPipelines = pipelines;
-            $scope.gatewayCtx.navMenus['pipeline'] = {
-              type:'pipeline',
+            $scope.gatewayCtx.navMenus[GATEWAY_CONST.PIPELINE_TYPE] = {
+              type:GATEWAY_CONST.PIPELINE_TYPE,
               title:'Pipelines',
               items: pipelines,
               addNew: 'Pipeline'
@@ -436,8 +437,8 @@ Gateway.controller('GatewayMainController', [
               map.pipeline = getPipelineDetail(map.pipelineId);
             });
             $scope.gatewayMapCtx.gatewayMaps = maps;
-            $scope.gatewayCtx.navMenus['gatewaymap'] = {
-              type:'gatewaymap',
+            $scope.gatewayCtx.navMenus[GATEWAY_CONST.MAPPING_TYPE] = {
+              type:GATEWAY_CONST.MAPPING_TYPE,
               title:'Mappings',
               items: maps,
               addNew: 'Mapping'
@@ -457,7 +458,7 @@ Gateway.controller('GatewayMainController', [
       $scope.gatewayCtx = {
         currentView: getNavBasePath(),
         currentInstanceId: $state.params.id,
-        navMenus: [],
+        navMenus: {},
         currentExternalEndpoint: {},
         currentInternalEndpoint: {},
         currentPolicy: {},
@@ -540,7 +541,7 @@ Gateway.controller('GatewayMainController', [
       if ($scope.gatewayCtx.currentInstanceId) {
         switch($scope.gatewayCtx.currentView) {
 
-          case 'gatewaymap':
+          case GATEWAY_CONST.MAPPING_TYPE:
             $scope.gatewayMapCtx.currentGatewayMap = GatewayServices.getGatewayMapById($scope.gatewayCtx.currentInstanceId)
               .then(function(map) {
                 if (map.pipelineId) {
@@ -550,7 +551,7 @@ Gateway.controller('GatewayMainController', [
               });
             break;
 
-          case 'pipeline':
+          case GATEWAY_CONST.PIPELINE_TYPE:
             $scope.pipelineCtx.currentPipeline = GatewayServices.getPipelineById($scope.gatewayCtx.currentInstanceId)
               .then(function(pipe) {
                 $scope.pipelineCtx.currentPipeline = pipe;
@@ -561,7 +562,7 @@ Gateway.controller('GatewayMainController', [
 
             break;
 
-          case 'policy':
+          case GATEWAY_CONST.POLICY_TYPE:
             $scope.policyCtx.viewTitle = 'Policy';
             $scope.policyCtx.currentPolicy = GatewayServices.getPolicyById($scope.gatewayCtx.currentInstanceId)
               .then(function(policy) {
@@ -581,7 +582,7 @@ Gateway.controller('GatewayMainController', [
         if ($scope.gatewayCtx.currentView) {
           //$scope.refreshDataSets();
           switch($scope.gatewayCtx.currentView) {
-            case 'gatewaymap':
+            case GATEWAY_CONST.MAPPING_TYPE:
               if (!$scope.gatewayCtx.currentInstanceId) {
                 $scope.gatewayCtx.viewTitle = 'Mappings';
               }
@@ -594,7 +595,7 @@ Gateway.controller('GatewayMainController', [
 
 
               break;
-            case 'pipeline':
+            case GATEWAY_CONST.PIPELINE_TYPE:
               if (!$scope.gatewayCtx.currentInstanceId) {
                 $scope.gatewayCtx.viewTitle = 'Pipelines';
               }
