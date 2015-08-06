@@ -46,8 +46,8 @@ Gateway.controller('GatewayMainController', [
             GatewayServices.savePipeline(pipeline)
               .$promise
               .then(function(data) {
-                $scope.pipelineCtx.newPipeline = {};
-                refreshPipelines();
+                $scope.setMainNav('pipeline', pipeline.id);
+
               });
 
             /**
@@ -186,7 +186,8 @@ Gateway.controller('GatewayMainController', [
                 GatewayServices.saveGatewayMap(map)
                   .$promise
                   .then(function(map) {
-                    $state.go('gateway');
+                    $scope.setMainNav('gateway', map.id);
+
                   });
 
               }
@@ -221,7 +222,7 @@ Gateway.controller('GatewayMainController', [
               GatewayServices.savePolicy(policy)
                 .$promise
                 .then(function(policy) {
-                  $state.go('policy');
+                  $scope.setMainNav('policy', policy.id);
                  });
             }
           };
