@@ -39,21 +39,21 @@ Gateway.controller('PolicyMainController', [
     function resetCurrentPolicy() {
       $scope.policyCtx.currentPolicy = {};
     }
-    function refreshPolicies() {
-      $scope.policyCtx.policies = GatewayServices.getPolicies()
-        .then(function(policies) {
-
-            $scope.policyCtx.policies = policies;
-
-        });
-    }
+    //function refreshPolicies() {
+    //  $scope.policyCtx.policies = GatewayServices.getPolicies()
+    //    .then(function(policies) {
+    //
+    //        $scope.policyCtx.policies = policies;
+    //
+    //    });
+    //}
 
 
     $scope.deletePolicy = function(policy) {
       if (confirm('delete Policy?')) {
         GatewayServices.deletePolicy(policy.id)
           .then(function(response) {
-            refreshPolicies();
+            $scope.refreshPolicies();
           });
       }
     };

@@ -24,14 +24,14 @@ Gateway.directive('slPolicyForm', [
           $scope.isPolicyDirty = false;
           $scope.originalPolicy = {};
 
-          function refreshPolicies() {
-            $scope.policyCtx.policies = GatewayServices.getPolicies()
-              .then(function(policies) {
-
-                $scope.policyCtx.policies = policies;
-
-              });
-          }
+          //function refreshPolicies() {
+          //  $scope.policyCtx.policies = GatewayServices.getPolicies()
+          //    .then(function(policies) {
+          //
+          //      $scope.policyCtx.policies = policies;
+          //
+          //    });
+          //}
 
           $scope.init = function() {
             $scope.originalPolicy = angular.copy($scope.policy);
