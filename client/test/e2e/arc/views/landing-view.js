@@ -15,6 +15,8 @@ var LandingView = (function () {
       by.css('.sl-app a[ui-sref="tracing"]'));
     this.profilerAppCommand = element(
       by.css('.sl-app a[ui-sref="profiler"]'));
+    this.gatewayAppCommand = element(
+      by.css('.sl-app a[ui-sref="gateway"]'));
 
     this.openComposerView = function() {
       browser.driver.wait(
@@ -86,6 +88,18 @@ var LandingView = (function () {
           element(by.css('div[ng-controller="ProfilerMainController"]'))
         ),
       10000);
+    };
+
+    this.openGatewayView = function() {
+      browser.driver.wait(
+        EC.presenceOf(this.gatewayAppCommand),
+        10000);
+      this.gatewayAppCommand.click();
+      browser.driver.wait(
+        EC.presenceOf(
+          element(by.css('div[ng-controller="GatewayMainController"]'))
+        ),
+        10000);
     };
 
     this.waitUntilLoaded = function() {

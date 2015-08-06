@@ -5,6 +5,7 @@ var ProcessManagerViews = require('../process-manager/views/');
 var MetricsViews = require('../metrics/views/');
 var TracingViews = require('../tracing/views/');
 var ProfilerViews = require('../profiler/views/');
+var GatewayViews = require('../gateway/views/');
 
 var EC = protractor.ExpectedConditions;
 
@@ -123,6 +124,24 @@ describe('navigation smoke test', function() {
 
         landingView.openProfilerView();
         expect(EC.visibilityOf(profilerHomeView.componentIdentifier));
+        headerView.logout();
+      });
+  });
+  describe('gateway-navigation', function() {
+    it('should login,' +
+      ' navigation to Gateway view,' +
+      ' and log out',
+      function() {
+
+        var loginView = new ArcViews.LoginView();
+        var landingView = new ArcViews.LandingView();
+        var gatewayHomeView = new GatewayViews.GatewayHomeView();
+        var headerView = new ArcViews.HeaderView();
+
+        loginView.loginToLandingView();
+
+        landingView.openGatewayView();
+        expect(EC.visibilityOf(gatewayHomeView.componentIdentifier));
         headerView.logout();
       });
   });
