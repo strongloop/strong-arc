@@ -262,7 +262,7 @@ gulp.task('test-e2e', function(callback) {
         }
         protractorResults(err);
 
-        fs.unlink('arc-manager.json'); //fix for this file being created in the root
+       // fs.unlink('arc-manager.json'); //fix for this file being created in the root
       });
   }
 
@@ -317,7 +317,7 @@ gulp.task('test-client-integration', function(callback) {
 
 gulp.task('setup-mysql', function(callback) {
   var ROOT_PASSWORD = process.env.MYSQL_ROOT_PWD || '';
-  
+
   setupMysql(ROOT_PASSWORD, function(err) {
     if (err) logMysqlErrorDescription(err);
     // Don't fail the build so that more tests will be run
