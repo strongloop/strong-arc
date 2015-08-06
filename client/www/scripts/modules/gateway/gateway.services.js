@@ -173,6 +173,48 @@ Gateway.service('GatewayServices', [
           $log.warn('bad get Pipeline: ' + JSON.stringify(error));
         })
     };
+
+    svc.getPipelineDetail = function(id) {
+      var returnObj = {};
+      var tPolicies = [];
+      var tPipelines = [];
+      function getPipelineRenderPolicy(policyId) {
+        return _.findWhere(tPolicies, { id: policyId });
+      }
+      function inflatePipelinePolicies(pipeline) {
+        pipeline.policies = [];
+        pipeline.policyIds.map(function(policyId) {
+          var inflatedPolicy = getPipelineRenderPolicy(policyId);
+          pipeline.policies.push(inflatedPolicy);
+        });
+        return pipeline;
+      }
+      function getPipelineDetail(argId) {
+        for (var i = 0;i < tPipelines.length;i++) {
+          var cPipeline = tPipelines[i];
+          if (cPipeline.id === argId) {
+            var retVal = inflatePipelinePolicies(cPipeline);
+            return retVal;
+          }
+        }
+      };
+
+
+      // get policies
+      return svc.getPolicies()
+      .then(function(policies) {
+          tPolicies = policies;
+
+          return svc.getPipelines()
+            .then(function(pipelines) {
+              tPipelines = pipelines;
+              returnObj = getPipelineDetail(id);
+              return returnObj;
+
+            });
+        });
+
+    };
     /*
     *
     * GATEWAY MAPS
