@@ -131,7 +131,7 @@ Gateway.controller('GatewayMapMainController', [
 
     $scope.editGatewayMap = function(map) {
       $scope.gatewayMapCtx.currentGatewayMap = map;
-      $scope.gatewayCtx.currentView = 'gatewaymap';
+      $scope.gatewayCtx.currentView = GATEWAY_CONST.MAPPING_TYPE;
       $scope.gatewayCtx.currentInstanceId = map.id;
 
     };

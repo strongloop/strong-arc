@@ -7,34 +7,6 @@ Gateway.service('GatewayServices', [
     var svc = this;
 
 
-
-    ///*
-    //*
-    //* PolicyScope
-    //*
-    //* */
-    //svc.deletePolicyScope = function(policyScopeId) {
-    //  return PolicyScope.deleteById({id:policyScopeId})
-    //    .$promise
-    //    .then(function(response) {
-    //      return response;
-    //    })
-    //    .catch(function(error) {
-    //      $log.warn('bad delete PolicyScope' + JSON.stringify(error));
-    //    });
-    //};
-    //
-    //svc.getPolicyScopes = function() {
-    //  return GatewayMap.getAuthScopes()
-    //    .$promise
-    //    .then(function(response) {
-    //      return response;
-    //    })
-    //    .catch(function(error) {
-    //      $log.warn('bad get all PolicyScopes: ' + JSON.stringify(error));
-    //    })
-    //};
-
     /*
     *
     * Policy
@@ -238,19 +210,19 @@ Gateway.service('GatewayServices', [
     };
     svc.cloneInstance = function(data) {
       switch(data.type) {
-        case 'policy':
+        case GATEWAY_CONST.POLICY_TYPE:
           return svc.clonePolicy(data)
             .then(function(instance) {
               return instance;
             });
           break;
-        case 'pipeline':
+        case GATEWAY_CONST.PIPELINE_TYPE:
           return svc.clonePipeline(data)
             .then(function(instance) {
               return instance;
             });
           break;
-        case 'gatewaymap':
+        case GATEWAY_CONST.MAPPING_TYPE:
           return svc.cloneGatewayMap(data)
             .then(function(instance) {
               return instance;
