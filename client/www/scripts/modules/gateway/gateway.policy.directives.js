@@ -202,21 +202,21 @@ Gateway.directive('slPolicyMainView', [
 
         scope.$watch('gatewayCtx.currentView', function(newVal, oldVal) {
           //$scope.gatewayCtx.currentInstanceId
-          if (newVal === 'policy' && (oldVal !== 'policy')) {
+          if (newVal === GATEWAY_CONST.POLICY_TYPE && (oldVal !== GATEWAY_CONST.POLICY_TYPE)) {
             if (!scope.gatewayCtx.currentInstanceId) {
               $log.debug('Change current view to policy: ');
-             scope.setMainNav('policy');
+             scope.setMainNav(GATEWAY_CONST.POLICY_TYPE);
              return;
             }
             $log.debug('Change current policy: ');
-            scope.setMainNav('policy', scope.gatewayCtx.currentInstanceId);
+            scope.setMainNav(GATEWAY_CONST.POLICY_TYPE, scope.gatewayCtx.currentInstanceId);
 
           }
         });
         scope.$watch('gatewayCtx.currentInstanceId', function(newVal, oldVal) {
-          if (scope.gatewayCtx.currentView === 'policy') {
+          if (scope.gatewayCtx.currentView === GATEWAY_CONST.POLICY_TYPE) {
             if (newVal !== oldVal) {
-              scope.setMainNav('policy', newVal);
+              scope.setMainNav(GATEWAY_CONST.POLICY_TYPE, newVal);
             }
           }
         });
