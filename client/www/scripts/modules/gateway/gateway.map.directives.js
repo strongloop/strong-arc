@@ -30,9 +30,7 @@ Gateway.directive('slGatewayMapForm', [
             }
           };
 
-          $scope.$watch('map.pipelineId', function(newVal, oldVal) {
-            $log.debug('the pipeline id has changed');
-          });
+
 
           function refreshMaps() {
             $scope.context.gatewayMaps = GatewayServices.getGatewayMaps()
@@ -78,7 +76,20 @@ Gateway.directive('slGatewayMapForm', [
             }
           };
         }
-      ]
+      ],
+      link: function(scope, el, attrs) {
+        scope.$watch('map.pipelineId', function(newVal, oldVal) {
+          if (newVal) {
+            $log.debug('the pipeline id has changed');
+            scope.map.pipeline = GatewayServices.getPipelineDetail(newVal)
+            .then(function(pipe) {
+                scope.map.pipeline = pipe;
+              });
+
+          }
+
+        }, true);
+      }
     }
   }
 ]);

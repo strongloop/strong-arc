@@ -251,25 +251,7 @@ Gateway.controller('GatewayMainController', [
     $scope.getPipelineRenderPolicy = getPipelineRenderPolicy;
 
 
-    function inflatePipelinePolicies(pipeline) {
-      pipeline.policies = [];
-      pipeline.policyIds.map(function(policyId) {
-        var inflatedPolicy = getPipelineRenderPolicy(policyId);
-        pipeline.policies.push(inflatedPolicy);
-      });
-      return pipeline;
-    }
 
-
-    function getPipelineDetail(argId) {
-      for (var i = 0;i < $scope.gatewayMapCtx.currentPipelines.length;i++) {
-        var cPipeline = $scope.gatewayMapCtx.currentPipelines[i];
-        if (cPipeline.id === argId) {
-          var retVal = inflatePipelinePolicies(cPipeline);
-          return retVal;
-        }
-      }
-    }
     $scope.showAddNewModal = function(type) {
       switch(type) {
         case GATEWAY_CONST.MAPPING_TYPE:
@@ -307,7 +289,7 @@ Gateway.controller('GatewayMainController', [
         .then(function(maps) {
           $log.debug('|  refresh maps: ' + maps.length);
           maps.map(function(map) {
-            map.pipeline = getPipelineDetail(map.pipelineId);
+            map.pipeline = GatewayServices.getPipelineDetail(map.pipelineId);
           });
           $scope.gatewayMapCtx.gatewayMaps = maps;
           $scope.gatewayCtx.navMenus[GATEWAY_CONST.MAPPING_TYPE] = {
@@ -434,7 +416,7 @@ Gateway.controller('GatewayMainController', [
           .then(function(maps) {
             $log.debug('|  refresh maps: ' + maps.length);
             maps.map(function(map) {
-              map.pipeline = getPipelineDetail(map.pipelineId);
+              map.pipeline = GatewayServices.getPipelineDetail(map.pipelineId);
             });
             $scope.gatewayMapCtx.gatewayMaps = maps;
             $scope.gatewayCtx.navMenus[GATEWAY_CONST.MAPPING_TYPE] = {
@@ -545,7 +527,7 @@ Gateway.controller('GatewayMainController', [
             $scope.gatewayMapCtx.currentGatewayMap = GatewayServices.getGatewayMapById($scope.gatewayCtx.currentInstanceId)
               .then(function(map) {
                 if (map.pipelineId) {
-                  map.pipeline = getPipelineDetail(map.pipelineId);
+                  map.pipeline = GatewayServices.getPipelineDetail(map.pipelineId);
                 }
                 $scope.gatewayMapCtx.currentGatewayMap = map;
               });

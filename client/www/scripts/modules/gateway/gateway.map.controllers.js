@@ -5,39 +5,7 @@ Gateway.controller('GatewayMapMainController', [
   'GatewayServices',
   function($scope, $log, GatewayServices) {
     $log.debug('GatewayMap Controller');
-    function getPipelineRenderPolicy(policyId) {
-      for (var i = 0;i  < $scope.policyCtx.policies.length;i++) {
-        var item = $scope.policyCtx.policies[i];
-        if (item.id === policyId) {
-          return item;
-          break;
-        }
-      }
-    }
-    function inflatePipelinePolicies(pipeline) {
-      pipeline.policies = [];
-      pipeline.policyIds.map(function(policyId) {
-        var inflatedPolicy = getPipelineRenderPolicy(policyId);
-        pipeline.policies.push(inflatedPolicy);
-      });
-      return pipeline;
-    }
 
-
-    function getPipelineDetail(argId) {
-      for (var i = 0;i < $scope.gatewayMapCtx.currentPipelines.length;i++) {
-        var cPipeline = $scope.gatewayMapCtx.currentPipelines[i];
-        if (cPipeline.id === argId) {
-          var retVal = inflatePipelinePolicies(cPipeline);
-          return retVal;
-        }
-      }
-    }
-    //$scope.$watch('gatewayMapCtx.currentGatewayMap', function(newVal) {
-    //  if (newVal && newVal.pipelineId) {
-    //    $scope.gatewayMapCtx.currentGatewayMap.pipeline = getPipelineDetail(newVal.pipelineId);
-    //  }
-    //}, true);
     $scope.gatewayMapCtx.init = function() {
 
 
@@ -51,7 +19,7 @@ Gateway.controller('GatewayMapMainController', [
                 .then(function(maps) {
                   $log.debug('|  refresh maps: ' + maps.length);
                   maps.map(function(map) {
-                    var detail = getPipelineDetail(map.pipelineId);
+                    var detail = GatewayServices.getPipelineDetail(map.pipelineId);
                     if (detail && detail.policies) {
                       detail.policies.map(function(policy) {
                         if (policy && (policy.type === 'reverseproxy') && policy.targetURL) {
