@@ -9,4 +9,4 @@ var GATEWAY_CONST = {
   POLICY_RATELIMIT_TYPE: 'ratelimiting',
 
 };
-Tracing.value('GATEWAY_CONST', GATEWAY_CONST);
+Gateway.value('GATEWAY_CONST', GATEWAY_CONST);

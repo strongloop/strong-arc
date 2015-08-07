@@ -63,6 +63,7 @@
     "del": "^1.2.0",
     "es5-shim": "^4.1.0",
     "gulp": "^3.8.11",
+    "gulp-angular-protractor": "0.0.2",
     "gulp-changed": "^1.2.1",
     "gulp-install": "^0.2.0",
     "gulp-jshint": "^1.9.2",
