@@ -1,3 +1,37 @@
+VisualComposer.directive('slSliderBar', function() {
+  return {
+    restrict: 'E',
+    replace: true,
+    template: '<div class="sl-resize-bar"></div>',
+    link: function($scope, $elem, attrs) {
+      var left = $elem.prev();
+      var right = $elem.next();
+
+      $elem.on('dblclick', function() {
+        $(left).width(0);
+      });
+
+      $elem.draggable({
+        axis: 'x',
+        cursor: 'move',
+        revert: true,
+        helper: 'clone',
+        drag: function(dragEvent, ui) {
+          var offset = (ui.position.left - $(left).offset().left);
+
+          $(left).width(function() {
+            return Math.max(0, offset);
+          });
+
+          $(right).scrollLeft(function() {
+            return Math.min(0, 0 - offset);
+          });
+        }
+      });
+    }
+  }
+})
+
 VisualComposer.directive('slInstanceEditor', [
   function slInstanceEditor() {
     return {
@@ -40,7 +74,14 @@ VisualComposer.directive('slComposerCanvas', [
         var drag = d3.behavior.drag()
           .on('dragstart', dragStart)
           .on('drag', dragMove)
-          .on('dragend', dragEnd);
+          .on('dragend', dragEnd)
+          .origin(function(d) {
+            var pos = getDiagonalCoords(d.id);
+            return {
+              x: pos.y,
+              y: pos.x
+            };
+          });
 
         var drag2 = d3.behavior.drag()
           .on('dragstart', connectStart)
@@ -347,10 +388,8 @@ VisualComposer.directive('slComposerCanvas', [
         function dragMove(d) {
           d3.select(this)
             .attr('transform', function(d) {
-              var x = d3.event.x - eventOffset[0];
-              var y = d3.event.y - eventOffset[1];
-
-              y += 250;
+              var x = d3.event.x;
+              var y = d3.event.y;
 
               return 'translate(' + x + ', ' + y + ')';
             });

@@ -8,6 +8,7 @@ VisualComposer.controller('VisualComposerMainController', [
 
     $scope.models = [];
     $scope.connections = [];
+    $scope.mainNavModels = [];
 
     $scope.selectModel = function(model) {
       $scope.activeInstance = IAService.setActiveInstance(model);
