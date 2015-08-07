@@ -4,7 +4,8 @@ Arc.controller('ArcMainController', [
   'ArcUserService',
   '$log',
   '$rootScope',
-  function($scope, ArcUserService, $log, $rootScope){
+  'LandingService',
+  function($scope, ArcUserService, $log, $rootScope, LandingService){
 
     $scope.suiteIA = {
       apps: []
@@ -23,6 +24,19 @@ Arc.controller('ArcMainController', [
     $scope.pageClick = function($event){
       $rootScope.$broadcast('pageClick', $event);
     };
+
+    $scope.supportAppController = false;
+
+    LandingService.getApps().$promise
+      .then(function(response) {
+        var buildApp = response.results.filter(function(d) {
+          return d.id === 'build-deploy';
+        });
+
+        if (buildApp.length) {
+          $scope.supportAppController = buildApp[0].supportsCurrentProject;
+        }
+      });
 }]);
 
 
@@ -50,6 +64,3 @@ Arc.controller('GlobalNavController',[
     };
   }
 ]);
-
-
-
