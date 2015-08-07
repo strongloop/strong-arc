@@ -59,7 +59,7 @@ module.exports = function(config) {
 
       'client/www/scripts/vendor/nvd3/build/nv.d3.js',
 
-      '/manager/client.js',
+      'manager/client.js',
 
       // NOTE(bajtos) the main app script is intentionally omitted:
       //  - it contains UI-specific code depending on jQuery

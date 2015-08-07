@@ -417,7 +417,10 @@ Gateway.controller('GatewayMainController', [
           .then(function(maps) {
             $log.debug('|  refresh maps: ' + maps.length);
             maps.map(function(map) {
-              map.pipeline = GatewayServices.getPipelineDetail(map.pipelineId);
+              map.pipeline = GatewayServices.getPipelineDetail(map.pipelineId)
+              .then(function(detail) {
+                  map.pipeline = detail;
+                });
             });
             $scope.gatewayMapCtx.gatewayMaps = maps;
             $scope.gatewayCtx.navMenus[GATEWAY_CONST.MAPPING_TYPE] = {
