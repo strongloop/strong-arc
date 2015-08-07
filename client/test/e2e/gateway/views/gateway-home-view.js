@@ -2,12 +2,13 @@ var GatewayHomeView = (function () {
   var EC = protractor.ExpectedConditions;
 
   function GatewayHomeView() {
-    this.componentIdentifier = element(
-      by.css('[data-id="GatewayMainContainer"]'));
+    var self = this;
+    self.componentIdentifier = element(
+      by.css('span.ia-project-title-container'));
 
-    this.waitUntilLoaded = function() {
+    self.waitUntilLoaded = function() {
       browser.driver.wait(
-        EC.presenceOf(this.componentIdentifier),
+        EC.presenceOf(self.componentIdentifier),
         10000);
     };
   }
