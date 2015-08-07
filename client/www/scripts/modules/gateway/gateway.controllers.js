@@ -48,6 +48,7 @@ Gateway.controller('GatewayMainController', [
               .then(function(data) {
                 $scope.setMainNav(GATEWAY_CONST.PIPELINE_TYPE, pipeline.id);
                 $scope.refreshPipelines();
+                $scope.close();
               });
 
           };
