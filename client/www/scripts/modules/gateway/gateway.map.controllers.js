@@ -9,47 +9,7 @@ Gateway.controller('GatewayMapMainController', [
     $scope.gatewayMapCtx.init = function() {
 
 
-      $scope.policyCtx.policies = GatewayServices.getPolicies()
-        .then(function(policies) {
-          $scope.policyCtx.policies = policies;
-          GatewayServices.getPipelines()
-            .then(function(pipelines) {
-              //$scope.pipelineCtx.pipelines = pipelines;
-              $scope.gatewayMapCtx.gatewayMaps = GatewayServices.getGatewayMaps()
-                .then(function(maps) {
-                  $log.debug('|  refresh maps: ' + maps.length);
-                  maps.map(function(map) {
-                    var detail = GatewayServices.getPipelineDetail(map.pipelineId);
-                    if (detail && detail.policies) {
-                      detail.policies.map(function(policy) {
-                        if (policy && (policy.type === 'reverseproxy') && policy.targetURL) {
-                          map.targetURL = policy.targetURL;
-                        }
-                        if (policy && (policy.type === 'auth') && policy.scopes) {
-                          map.scopes = policy.scopes || [];
-                        }
 
-                      });
-                    }
-                    map.pipeline = detail;
-                  });
-                  $scope.gatewayMapCtx.gatewayMaps = maps;
-
-
-                  $scope.latestPolicies = GatewayServices.getPolicies()
-                    .then(function(policies) {
-                      $scope.latestPolicies = policies;
-                    });
-
-
-
-
-
-
-                });
-
-            });
-        });
 
     };
     $scope.mapPipelineDetailModal = {
@@ -78,15 +38,6 @@ Gateway.controller('GatewayMapMainController', [
       $scope.gatewayMapCtx.isShowNewGatewayMapForm = false;
     };
 
-    function resetCurrentGatewayMap() {
-      $scope.gatewayMapCtx.currentGatewayMap = {};
-    }
-    function refreshGatewayMaps() {
-      $scope.gatewayMapCtx.gatewayMaps = GatewayServices.getGatewayMaps()
-        .then(function(maps) {
-          $scope.gatewayMapCtx.gatewayMaps = maps;
-        });
-    }
 
     $scope.deleteGatewayMap = function(gatewayMap) {
       if (confirm('delete Gateway Map?')) {
