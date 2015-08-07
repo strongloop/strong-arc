@@ -12,6 +12,7 @@ var jshint = require('gulp-jshint');
 var less = require('gulp-less');
 var mocha = require('gulp-spawn-mocha');
 var runSequence = require('run-sequence');
+var angularProtractor = require('gulp-angular-protractor');
 var rename = require('gulp-rename');
 var loopbackAngular = require('gulp-loopback-sdk-angular');
 var postcss      = require('gulp-postcss');
@@ -42,7 +43,19 @@ gulp.task('build', [
   // Remove the env var
   process.env.GULP_ANGULAR_CODEGEN = undefined;
 });
-
+gulp.task('e2e', function() {
+  gulp.src(['client/test/e2e/arc/tmp.gateway.spec.js'])
+    .pipe(angularProtractor({
+      'configFile': 'client/test/protractor.conf.js',
+      'args': [ '--baseUrl', 'http://127.0.0.1:9800'],
+      'autoStartStopServer': true,
+      'debug': true
+    }))
+    .on('error', function(e) {
+      console.log(e.message);
+      throw e
+    })
+});
 gulp.task('build-less', function(done) {
   return gulp.src('client/less/style.less')
     .pipe(less()).on('error', function(err){
