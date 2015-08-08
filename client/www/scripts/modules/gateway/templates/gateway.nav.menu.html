@@ -1,5 +1,5 @@
 <div>
-  <button data-type="policy" ng-click="setNav({type:menu.type})" class="btn btn-default btn-block nav-tree-item tree-branch"  title="{{menu.title}}" >
+  <button data-type="{{menu.type}}" ng-click="setNav({type:menu.type})" class="btn btn-default btn-block nav-tree-item tree-branch"  title="{{menu.title}}" >
     <span class="nav-branch-openclose-icon sl-icon sl-icon-arrow-right"></span>
     <span class="nav-branch-folder-icon sl-icon sl-icon-folder"></span>
     <span class="nav-branch-title">{{menu.title}}</span>
@@ -32,5 +32,5 @@
       </div>
     </div>
   </div>
-  <button ng-click="showModal({type: menu.type})" data-type="policy" class="nav-tree-item-addnew"><span class="plus">+</span>Add New {{menu.addNew}}</button>
+  <button ng-click="showModal({type: menu.type})" data-type="{{menu.type}}" class="nav-tree-item-addnew"><span class="plus">+</span>Add New {{menu.addNew}}</button>
 </div>

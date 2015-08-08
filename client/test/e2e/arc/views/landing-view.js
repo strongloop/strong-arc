@@ -97,7 +97,7 @@ var LandingView = (function () {
       this.gatewayAppCommand.click();
       browser.driver.wait(
         EC.presenceOf(
-          element(by.css('div[ng-controller="GatewayMainController"]'))
+          element(by.css('.ia-project-title-header-container'))
         ),
         10000);
     };
