@@ -43,18 +43,24 @@ gulp.task('build', [
   // Remove the env var
   process.env.GULP_ANGULAR_CODEGEN = undefined;
 });
-gulp.task('e2e', function() {
-  gulp.src(['client/test/e2e/arc/tmp.gateway.spec.js'])
-    .pipe(angularProtractor({
-      'configFile': 'client/test/protractor.conf.js',
-      'args': [ '--baseUrl', 'http://127.0.0.1:9800'],
-      'autoStartStopServer': true,
-      'debug': true
-    }))
-    .on('error', function(e) {
-      console.log(e.message);
-      throw e
-    })
+
+gulp.task('e2e', function(callback) {
+
+    gulp.src(['client/test/e2e/arc/tmp.gateway.spec.js'])
+      .pipe(angularProtractor({
+        'configFile': 'client/test/protractor.conf.js',
+        'args': [ '--baseUrl', 'http://127.0.0.1:9800'],
+        'autoStartStopServer': true,
+        'debug': true
+      }))
+      .on('error', function(e) {
+        console.log(e.message);
+        throw e
+      });
+
+
+
+
 });
 gulp.task('build-less', function(done) {
   return gulp.src('client/less/style.less')

@@ -7,15 +7,18 @@
       </div>
       <div class="form-field">
         <label>type</label>
-        <select class="form-control" ng-model="policy.type"
-                ng-options="policyType.id as policyType.name for policyType in context.policyTypes">
-        </select>
+        <div dropdown style="position:relative" class="policy-type-select-container">
+          <button class="link-cmd toggle-btn" dropdown-toggle data-value="{{policy.id}}">
+            {{policy.type}}
+            <span data-type="policy.type" class="sl-icon sl-icon-box-arrow-down"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li ng-repeat="policyType in context.policyTypes">
+              <button ng-click="changePolicyType(policyType.id)" class="link-cmd" value="{{policyType.id}}">{{policyType.name}}</button>
+            </li>
+          </ul>
+        </div>
       </div>
-
-
-
-
-
     </div>
     <div class="flex-container policy-sub-form">
 
