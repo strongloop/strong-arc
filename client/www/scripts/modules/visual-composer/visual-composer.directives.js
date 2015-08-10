@@ -4,11 +4,32 @@ VisualComposer.directive('slSliderBar', function() {
     replace: true,
     template: '<div class="sl-resize-bar"></div>',
     link: function($scope, $elem, attrs) {
-      var left = $elem.prev();
-      var right = $elem.next();
+      var $left = $($elem.prev());
+      var $right = $($elem.next());
 
       $elem.on('dblclick', function() {
-        $(left).width(0);
+        var collapsed = ($left.width() < 1);
+        if (collapsed) {
+          $right.css({
+            flexGrow: 0,
+            width: 0
+          });
+
+          $left.css({
+            flexGrow: 1,
+            width: ''
+          });
+        } else {
+          $left.css({
+            flexGrow: 0,
+            width: 0
+          });
+
+          $right.css({
+            flexGrow: 1,
+            width: ''
+          });
+        }
       });
 
       $elem.draggable({
@@ -17,13 +38,13 @@ VisualComposer.directive('slSliderBar', function() {
         revert: true,
         helper: 'clone',
         drag: function(dragEvent, ui) {
-          var offset = (ui.position.left - $(left).offset().left);
+          var offset = ui.position.left - $left.offset().left;
 
-          $(left).width(function() {
+          $left.width(function() {
             return Math.max(0, offset);
           });
 
-          $(right).scrollLeft(function() {
+          $right.scrollLeft(function() {
             return Math.min(0, 0 - offset);
           });
         }
@@ -56,10 +77,11 @@ VisualComposer.directive('slComposerCanvas', [
     return {
       restrict: 'E',
       replace: true,
-      template: '<div style="width:100%;height:100%"></div>',
+      template: '<div style="height:100%"></div>',
       scope: {
         models: '=',
         connections: '=',
+        activeInstace: '=',
         onSelect: '&'
       },
       link: function($scope, elem) {
@@ -172,16 +194,38 @@ VisualComposer.directive('slComposerCanvas', [
 
         var container = svg.append('g');
 
-        $scope.$watch('models', function(newVal) {
-          container.selectAll('.model')
-            .data(newVal, function(d) {
+        $scope.$on('refreshModels', function() {
+          var models = container.selectAll('.model')
+            .data($scope.models, function(d) {
               return d.name;
-            })
-            .enter()
+            });
+
+          models.enter()
               .append('g')
               .attr('class', 'model')
               .attr('filter', 'url(#drop-shadow)')
               .call(buildInstance);
+
+          models.call(updateInstance);
+
+          if ($scope.models.length) {
+            container.call(buildLinks);
+          }
+        });
+
+        $scope.$watch('models', function(newVal) {
+          var models = container.selectAll('.model')
+            .data(newVal, function(d) {
+              return d.name;
+            });
+
+          models.enter()
+              .append('g')
+              .attr('class', 'model')
+              .attr('filter', 'url(#drop-shadow)')
+              .call(buildInstance);
+
+          models.call(updateInstance);
 
           if (newVal.length) {
             container.call(buildLinks);
@@ -221,11 +265,9 @@ VisualComposer.directive('slComposerCanvas', [
             var g = d3.select(this);
 
             g.append('text')
+              .attr('class', 'prop-name')
               .attr('x', 10)
-              .attr('y', 5)
-              .text(function(d) {
-                return d.name;
-              });
+              .attr('y', 5);
 
             var circle = g.append('circle')
               .attr('cx', 180)
@@ -236,15 +278,54 @@ VisualComposer.directive('slComposerCanvas', [
           });
         }
 
-        function buildInstance(selection) {
+        function updateInstance(selection) {
           selection.each(function(d) {
             var g = d3.select(this);
 
-            g.append('rect')
+            g.selectAll('.main-body')
               .attr('height', function(d) {
                 return 75 + (25 * d.properties.length);
               })
               .attr('width', 200);
+
+            g.selectAll('.title')
+              .text(function(d) {
+                return d.name;
+              });
+
+            var properties = g.selectAll('.property')
+              .data(d.properties);
+
+            properties.enter()
+              .append('g')
+              .attr('class', 'property')
+              .attr('transform', function(d, i) {
+                return 'translate(0, ' + (75 + (i * 25)) + ')';
+              })
+              .call(buildProperty);
+
+            properties.selectAll('.prop-name')
+              .text(function(d) {
+                return d.name;
+              });
+          });
+        }
+
+        function buildInstance(selection) {
+          var createIndex = 1;
+
+          selection.each(function(d) {
+            var g = d3.select(this);
+
+            g.attr('transform', function(d, i) {
+              var x = createIndex * 225;
+              createIndex += 1;
+
+              return 'translate(' + x + ', 0)';
+            });
+
+            g.append('rect')
+              .attr('class', 'main-body');
 
             g.append('rect')
               .attr('height', 35)
@@ -255,10 +336,7 @@ VisualComposer.directive('slComposerCanvas', [
               .attr('class', 'title')
               .attr('text-anchor', 'middle')
               .attr('y', 25)
-              .attr('x', 100)
-              .text(function(d) {
-                return d.name;
-              });
+              .attr('x', 100);
 
             var circle = g.append('circle')
               .attr('cx', 15)
@@ -289,16 +367,6 @@ VisualComposer.directive('slComposerCanvas', [
               });
 
             idMapping[d.id] = circle[0][0];
-
-            g.selectAll('.property')
-              .data(d.properties)
-              .enter()
-                .append('g')
-                .attr('class', 'property')
-                .attr('transform', function(d, i) {
-                  return 'translate(0, ' + (75 + (i * 25)) + ')';
-                })
-                .call(buildProperty);
           });
 
           selection.call(select);

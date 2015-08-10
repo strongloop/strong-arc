@@ -21,6 +21,7 @@
     width: 2rem;
     background: @grey-2;
     cursor: col-resize;
+    z-index: 100;
   }
 }
 
@@ -99,14 +100,15 @@
     flex-grow: 1;
     border: none;
     position: relative;
+    overflow: hidden;
 
     div {
       background-image: url('/images/checkerboard.png');
       position: absolute;
-      left: 0;
       right: 0;
       top: 0;
       bottom: 0;
+      width: 125rem;
     }
   }
 
@@ -118,5 +120,9 @@
   .properties-panel {
     width: 25rem;
     background: white;
+
+    & > div {
+      width: 100rem;
+    }
   }
 }

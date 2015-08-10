@@ -747,7 +747,3 @@ Composer.controller('ComposerMainController', [
 
   }
 ]);
-
-
-
-
