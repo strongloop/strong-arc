@@ -8,58 +8,57 @@
       <th>Pipeline</th>
       <th>Scopes</th>
       <th>Endpoint</th>
-      <th  class="gateway-delete-col"></th>
+      <th class="actions"></th>
     </tr>
     </thead>
-    <tbody ng-repeat="gatewayMap in gatewayMapCtx.gatewayMaps">
-    <tr>
-      <td>
-        <button class="link-cmd" ng-click="editGatewayMap(gatewayMap)">
-          {{gatewayMap.name}}
-        </button>
-      </td>
-      <td>
-        <span>{{gatewayMap.verb}}</span>
-        <span>{{gatewayMap.endpoint}}</span>
-      </td>
-      <td>
-        <button class="link-cmd"
-                popover-template="mapPipelineDetailModal.templateUrl"
-                popover-placement="{{mapPipelineDetailModal.position}}"
-                ng-click="setupHidePopover($event, gatewayMap.pipeline)">
-          {{gatewayMap.pipeline.name}}
-        </button>
+    <tbody>
+      <tr ng-repeat="gatewayMap in gatewayMapCtx.gatewayMaps">
+        <td>
+          <button class="link-cmd" ng-click="editGatewayMap(gatewayMap)">
+            {{gatewayMap.name}}
+          </button>
+        </td>
+        <td>
+          <span>{{gatewayMap.verb}}</span>
+          <span>{{gatewayMap.endpoint}}</span>
+        </td>
+        <td>
+          <button class="link-cmd"
+                  popover-template="mapPipelineDetailModal.templateUrl"
+                  popover-placement="{{mapPipelineDetailModal.position}}"
+                  ng-click="setupHidePopover($event, gatewayMap.pipeline)">
+            {{gatewayMap.pipeline.name}}
+          </button>
 
-        <ul ng-show="gatewayMap.showPipelineDetails" class="pipeline-policy-sequence-list">
-          <li ng-repeat="policy in latestPolicies">
-            <button class="pipeline-policy-button">
-              <div class="pipeline-policy-container">
-                {{policy.type}}
-                <br />
-                {{policy.name}}
-
-              </div>
-            </button>
-            <br />
-            <button class="link-cmd"
-                    popover-template="policyDetailModal.templateUrl"
-                    popover-placement="{{policyDetailModal.position}}"
-                    ng-click="setupHidePopover($event, policy)">details</button>
-          </li>
-        </ul>
-      </td>
-      <td>
-        <sl-gateway-map-list-scope-display scopes="gatewayMap.scopes"></sl-gateway-map-list-scope-display>
-      </td>
-      <td>
-        {{ gatewayMap.targetURL }}
-      </td>
-      <td class="gateway-delete-col">
-        <button class="link-cmd" ng-click="deleteGatewayMap(gatewayMap)">
-          <i class="sl-icon sl-icon-close"></i>
-        </button>
-      </td>
-    </tr>
+          <ul ng-show="gatewayMap.showPipelineDetails" class="pipeline-policy-sequence-list">
+            <li ng-repeat="policy in latestPolicies">
+              <button class="pipeline-policy-button">
+                <div class="pipeline-policy-container">
+                  {{policy.type}}
+                  <br />
+                  {{policy.name}}
+                </div>
+              </button>
+              <br />
+              <button class="link-cmd"
+                      popover-template="policyDetailModal.templateUrl"
+                      popover-placement="{{policyDetailModal.position}}"
+                      ng-click="setupHidePopover($event, policy)">details</button>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <sl-gateway-map-list-scope-display scopes="gatewayMap.scopes"></sl-gateway-map-list-scope-display>
+        </td>
+        <td>
+          {{ gatewayMap.targetURL }}
+        </td>
+        <td class="actions">
+          <a href class="ui-close" ng-click="deleteGatewayMap(gatewayMap)">
+            <i class="sl-icon sl-icon-close"></i>
+          </a>
+        </td>
+      </tr>
     </tbody>
   </table>
   <button data-type="gatewaymap" ng-click="showAddNewGatewayMapForm()" class="link-cmd add-new" >
