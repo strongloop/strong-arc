@@ -116,6 +116,16 @@ gulp.task('build-workspace-services', function() {
     .pipe(gulp.dest('./client/www/scripts/modules/common'));
 });
 
+gulp.task('build-gateway-services', function() {
+  return gulp.src('./node_modules/gateway-workspace/server/server.js')
+    .pipe(loopbackAngular({
+      apiUrl: '/gateway/api',
+      ngModuleName: 'GatewayServices'
+    }))
+    .pipe(rename('gateway.services.js'))
+    .pipe(gulp.dest('./client/www/scripts/modules/common'));
+});
+
 gulp.task('build-arc-services', function() {
   process.env.GULP_ANGULAR_CODEGEN = 'YES';
   return gulp.src('./arc-api/server/server.js')
