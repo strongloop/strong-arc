@@ -106,7 +106,8 @@ Gateway.controller('PipelineMainController', [
       if (confirm('delete Pipeline?')) {
         GatewayServices.deletePipeline(pipeline.id)
           .then(function(response) {
-            refreshPipelines();
+           // refreshPipelines();
+            $scope.refreshPipelines();
           });
       }
     };
