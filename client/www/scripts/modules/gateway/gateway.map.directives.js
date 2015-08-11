@@ -31,6 +31,9 @@ Gateway.directive('slGatewayMapForm', [
           };
 
 
+          $scope.changeMapVerb = function(map, verb) {
+            map.verb = verb;
+          };
 
           function refreshMaps() {
             $scope.context.gatewayMaps = GatewayServices.getGatewayMaps()
