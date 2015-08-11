@@ -7,14 +7,36 @@
       </div>
       <div>
         <label>Verb</label>
-        <select  class="form-control" ng-model="map.verb">
-          <option>ALL</option>
-          <option>GET</option>
-          <option>PUT</option>
-          <option>POST</option>
-          <option>DELETE</option>
-          <option>HEAD</option>
-        </select>
+        <!--<select  class="form-control" ng-model="map.verb">-->
+          <!--<option value="ALL">ALL</option>-->
+          <!--<option value="GET">GET</option>-->
+          <!--<option value="PUT">PUT</option>-->
+          <!--<option value="POST">POST</option>-->
+          <!--<option value="DELETE">DELETE</option>-->
+          <!--<option value="HEAD">HEAD</option>-->
+        <!--</select>-->
+        <div dropdown class="dropdown-container">
+          <button  dropdown-toggle  data-value="{{map.verb}}"  data-id="MappingVerbSelect">
+            {{map.verb}}
+          </button>
+          <ul class="dropdown-menu">
+            <li>
+              <button class="link-cmd" ng-click="changeMapVerb(map, 'ALL')" data-id="ALL">ALL</button>
+            </li>
+            <li>
+              <button class="link-cmd" ng-click="changeMapVerb(map, 'GET')" data-id="GET">GET</button>
+            </li>
+            <li>
+              <button class="link-cmd" ng-click="changeMapVerb(map, 'PUT')" data-id="PUT">PUT</button>
+            </li>
+            <li>
+              <button class="link-cmd" ng-click="changeMapVerb(map, 'POST')" data-id="POST">POST</button>
+            </li>
+            <li>
+              <button class="link-cmd" ng-click="changeMapVerb(map, 'DELETE')" data-id="DELETE">DELETE</button>
+            </li>
+          </ul>
+        </div>
       </div>
       <div>
         <label>Url Pattern</label>
@@ -27,11 +49,13 @@
     <div class="form-field gateway-map-pipeline-input-container">
       <label>Pipeline</label>
       <div dropdown class="dropdown-container">
-        <button  id="simple-dropdown" dropdown-toggle>
+        <button  id="simple-dropdown" dropdown-toggle data-id="MappingPipelineSelect">
           {{map.pipelineId}}
         </button>
         <ul class="dropdown-menu">
-          <li ng-repeat="pipe in context.currentPipelines" ng-click="setMapPipelineId(map, pipe.id)">{{pipe.name}}</li>
+          <li ng-repeat="pipe in context.currentPipelines">
+            <button class="link-cmd" data-id="{{pipe.id}}" ng-click="setMapPipelineId(map, pipe.id)">{{pipe.name}}</button>
+          </li>
         </ul>
       </div>
     </div>

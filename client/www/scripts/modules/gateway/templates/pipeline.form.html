@@ -19,7 +19,7 @@
       <tbody>
         <tr ng-repeat="policy in pipeline.renderPolicies track by $index">
           <td><ui-icon name="policy-{{policy.type}}"></ui-icon></td>
-          <td>{{policy.name}}</td>
+          <td title="{{policy.name}}">{{policy.name}}</td>
           <td>
             <div class="policy-details">
               <div class="scopes" ng-show="policy.type == 'auth'">
@@ -58,7 +58,7 @@
         <section class="menu">
           <ul>
             <li ng-repeat="policy in availablePolicies track by $index">
-              <a href ng-click="addNewPolicyToPipeline(policy)">{{policy.name}} - {{policy.type}}</a></li>
+              <a href ng-click="addNewPolicyToPipeline(policy)" data-id="{{policy.id}}">{{policy.name}} - {{policy.type}}</a></li>
           </ul>
         </section>
       </sl-ui-menu-dropdown>

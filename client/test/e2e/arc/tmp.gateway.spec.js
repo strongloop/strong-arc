@@ -28,107 +28,194 @@ describe('gateway smoke test', function() {
         expect(EC.visibilityOf(gatewayHomeView.policyContainer));
         // Policy
         expect(EC.visibilityOf(gatewayHomeView.sideNewPolicyButton));
-        gatewayHomeView.sideNewPolicyButton.click();
-        browser.sleep(500);
-        expect(EC.visibilityOf(gatewayHomeView.closeModalButton));
-        gatewayHomeView.closeModalButton.click();
-        browser.sleep(1000);
-        expect(EC.visibilityOf(gatewayHomeView.mainNewPolicyButton));
-        gatewayHomeView.mainNewPolicyButton.click();
-        browser.sleep(500);
-        expect(EC.visibilityOf(gatewayHomeView.closeModalButton));
-        gatewayHomeView.closeModalButton.click();
-        browser.sleep(1000);
+
 
 
 
         // ok now create a policy
-        gatewayHomeView.sideNewPolicyButton.click();
-        browser.sleep(500);
-        expect(EC.visibilityOf(gatewayHomeView.newPolicyNameInput));
-        expect(EC.visibilityOf(gatewayHomeView.newPolicyTypeSelect));
-        browser.sleep(2000);
-        gatewayHomeView.newPolicyNameInput.sendKeys('new policy name');
-        browser.sleep(2000);
-        gatewayHomeView.newPolicyTypeSelect.click();
-        browser.sleep(1000);
-        //gatewayHomeView.newPolicyTypeSelect.click();
-        //browser.sleep(1000);
-       // browser.sleep(1000);
-        expect(EC.visibilityOf(gatewayHomeView.policyTypeMetricsSelect));
+        gatewayHomeView.addMetricsPolicy();
 
-        gatewayHomeView.policyTypeMetricsSelect.click();
-        browser.sleep(1000);
 
-        expect(gatewayHomeView.newPolicyTypeSelect.getText()).toEqual('metrics');
-
-        browser.sleep(1000);
-        expect(EC.visibilityOf(gatewayHomeView.saveNewInstanceButton));
-
-        gatewayHomeView.saveNewInstanceButton.click();
-
+        /*
+        *
+        * add auth proxy
+        * add ratelimiting policy
+        * add reverseproxy policy
+        *
+        * */
 
         //gatewayHomeView.closeModalButton.click();
-        browser.sleep(700);
-
-
+        browser.sleep(500);
         expect(EC.visibilityOf(gatewayHomeView.editPolicyNameInput));
-        expect(gatewayHomeView.editPolicyNameInput.getAttribute('value')).toEqual('new policy name');
-
+        expect(gatewayHomeView.editPolicyNameInput.getAttribute('value')).toEqual('new Metrics policy name');
         browser.sleep(700);
+
         gatewayHomeView.policyListViewButton.click();
         browser.sleep(700);
-        //
-        //expect(EC.visibilityOf(gatewayHomeView.deletePolicyButton));
-        //gatewayHomeView.deletePolicyButton.click();
 
 
-        // deal with dialog
+        // add auth proxy
+        gatewayHomeView.addAuthPolicy();
 
+
+        browser.sleep(500);
+        expect(EC.visibilityOf(gatewayHomeView.editPolicyNameInput));
+        expect(gatewayHomeView.editPolicyNameInput.getAttribute('value')).toEqual('new Auth policy name');
+        browser.sleep(700);
+
+
+        // add ratelimiting policy
+        gatewayHomeView.policyListViewButton.click();
+        browser.sleep(700);
+
+
+        // add ratelimiting proxy
+        gatewayHomeView.addRateLimitingPolicy();
+
+
+        browser.sleep(500);
+        expect(EC.visibilityOf(gatewayHomeView.editPolicyNameInput));
+        expect(gatewayHomeView.editPolicyNameInput.getAttribute('value')).toEqual('new Rate Limiting policy name');
+        browser.sleep(700);
+
+
+        gatewayHomeView.policyListViewButton.click();
+        browser.sleep(700);
+
+        // add reverseproxy policy
+        gatewayHomeView.addReverseProxyPolicy();
+
+
+        browser.sleep(500);
+        expect(EC.visibilityOf(gatewayHomeView.editPolicyNameInput));
+        expect(gatewayHomeView.editPolicyNameInput.getAttribute('value')).toEqual('new Reverse Proxy policy name');
+        browser.sleep(700);
+
+
+        gatewayHomeView.policyListViewButton.click();
+        browser.sleep(1000);
+
+        //  DELETE POLICY
+        expect(EC.visibilityOf(gatewayHomeView.deletePolicyButton));
+        // gatewayHomeView.deleteFirstPolicy();
+
+
+
+
+
+        /*
+        *
+        * PIPELINES
+        *
+        * */
+
+        expect(EC.visibilityOf(gatewayHomeView.pipelineListViewButton));
 
         // pipeline
         gatewayHomeView.pipelineListViewButton.click();
         browser.sleep(700);
         expect(EC.visibilityOf(gatewayHomeView.pipelineContainer));
         expect(EC.visibilityOf(gatewayHomeView.sideNewPipelineButton));
+
+        browser.sleep(500);
         gatewayHomeView.sideNewPipelineButton.click();
         browser.sleep(500);
-        expect(EC.visibilityOf(gatewayHomeView.closeModalButton));
-        gatewayHomeView.closeModalButton.click();
-        browser.sleep(1000);
-        expect(EC.visibilityOf(gatewayHomeView.mainNewPipelineButton));
-        gatewayHomeView.mainNewPipelineButton.click();
         browser.sleep(500);
         expect(EC.visibilityOf(gatewayHomeView.closeModalButton));
-        gatewayHomeView.closeModalButton.click();
-        browser.sleep(1000);
+
+
+        gatewayHomeView.addNewPipeline();
+        browser.sleep(500);
+
+        // TODO fix post add new pipeline navigation
+        // currently sits on the pipeline list view
+        //expect(EC.visibilityOf(gatewayHomeView.editPipelineNameInput));
+        //
+        //expect(gatewayHomeView.editPipelineNameInput.getAttribute('value')).toEqual('new pipeline');
+
+
+        browser.driver.wait(
+          EC.presenceOf(gatewayHomeView.pipelineListViewButton),
+          4000);
+        gatewayHomeView.pipelineListViewButton.click();
+        //browser.sleep(300);
 
 
 
 
         // mapping
+        browser.driver.wait(
+          EC.presenceOf(gatewayHomeView.gatewaymapListViewButton),
+          4000);
         gatewayHomeView.gatewaymapListViewButton.click();
-        browser.sleep(700);
-        expect(EC.visibilityOf(gatewayHomeView.mappingContainer));
-        expect(EC.visibilityOf(gatewayHomeView.sideNewMappingButton));
-        //gatewayHomeView.sideNewMappingButton.click();
-        //browser.sleep(500);
-        //expect(EC.visibilityOf(gatewayHomeView.closeModalButton));
-        //gatewayHomeView.closeModalButton.click();
-        //browser.sleep(1000);
-        //expect(EC.visibilityOf(gatewayHomeView.mainNewMappingButton));
-        //gatewayHomeView.mainNewMappingButton.click();
-        //browser.sleep(500);
-        //expect(EC.visibilityOf(gatewayHomeView.closeModalButton));
-        //gatewayHomeView.closeModalButton.click();
-        //browser.sleep(1000);
+
+        browser.driver.wait(
+          EC.presenceOf(gatewayHomeView.mappingContainer),
+          4000);
+        browser.driver.wait(
+          EC.presenceOf(gatewayHomeView.sideNewMappingButton),
+          4000);
+
+        gatewayHomeView.sideNewMappingButton.click();
+
+        browser.driver.wait(
+          EC.presenceOf(gatewayHomeView.closeModalButton),
+          4000);
+
+        gatewayHomeView.addNewMapping();
+
+        browser.sleep(200);
 
 
 
+        gatewayHomeView.gatewaymapListViewButton.click();
+        //browser.sleep(5000);
 
 
-        //browser.pause();
-        headerView.logout();
+        browser.driver.wait(
+          EC.presenceOf(gatewayHomeView.deleteMappingButton),
+          4000);
+        gatewayHomeView.deleteFirstMapping();;
+        browser.driver.wait(
+          EC.presenceOf(gatewayHomeView.pipelineListViewButton),
+          4000);
+        gatewayHomeView.pipelineListViewButton.click();
+       // browser.sleep(300);
+        gatewayHomeView.deleteFirstPipeline();;
+
+
+        gatewayHomeView.policyListViewButton.click();
+
+        gatewayHomeView.deleteFirstPolicy();
+        browser.driver.wait(
+          EC.presenceOf(gatewayHomeView.deletePolicyButton),
+          4000);
+        gatewayHomeView.deleteFirstPolicy();
+        browser.driver.wait(
+          EC.presenceOf(gatewayHomeView.deletePolicyButton),
+          4000);
+        gatewayHomeView.deleteFirstPolicy();
+        browser.driver.wait(
+          EC.presenceOf(gatewayHomeView.deletePolicyButton),
+          4000);
+        gatewayHomeView.deleteFirstPolicy();
+
+        browser.driver.wait(
+          EC.presenceOf(gatewayHomeView.pipelineListViewButton),
+          4000);
+        gatewayHomeView.pipelineListViewButton.click();
+        browser.driver.wait(
+          EC.presenceOf(gatewayHomeView.gatewaymapListViewButton),
+          4000);
+        gatewayHomeView.gatewaymapListViewButton.click();
+        browser.sleep(100);
+
+
+        browser.driver.wait(
+         EC.presenceOf(gatewayHomeView.homeNav),
+         4000);
+        gatewayHomeView.homeNav.click();
+
       });
   });
 

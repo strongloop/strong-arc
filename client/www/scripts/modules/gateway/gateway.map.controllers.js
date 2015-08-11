@@ -34,7 +34,7 @@ Gateway.controller('GatewayMapMainController', [
     };
 
     $scope.clearGatewayMapForm = function() {
-      resetCurrentGatewayMap();
+      //resetCurrentGatewayMap();
       $scope.gatewayMapCtx.isShowNewGatewayMapForm = false;
     };
 
@@ -43,7 +43,7 @@ Gateway.controller('GatewayMapMainController', [
       if (confirm('delete Gateway Map?')) {
         GatewayServices.deleteGatewayMap(gatewayMap.id)
           .then(function(response) {
-            refreshGatewayMaps();
+            $scope.refreshMappings();
           });
       }
     };
