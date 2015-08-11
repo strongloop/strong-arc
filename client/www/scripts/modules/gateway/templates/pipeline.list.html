@@ -10,7 +10,7 @@
     <tbody>
       <tr ng-repeat="pipeline in pipelineCtx.pipelines">
         <td>
-          <a href="/#/gateway/pipeline/{{pipeline.id}}">{{pipeline.id}}</a>
+          <a href ng-click="editPipeline(pipeline)">{{pipeline.id}}</a>
         </td>
         <td>
           <div class="viewport" ng-scroll="scrollViewport($event)">

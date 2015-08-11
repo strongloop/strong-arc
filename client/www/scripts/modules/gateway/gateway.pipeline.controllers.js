@@ -22,6 +22,7 @@ Gateway.controller('PipelineMainController', [
     $scope.showPolicyDetails = function(policy) {
 
     };
+
     //$scope.showAddNewPipelineForm = function() {
     //  $scope.pipelineCtx.isShowNewPipelineForm = true;
     //};
@@ -113,11 +114,15 @@ Gateway.controller('PipelineMainController', [
     };
 
     $scope.editPipeline = function(pipeline) {
-      pipeline.editMode = true;
+      $scope.gatewayCtx.currentView = GATEWAY_CONST.PIPELINE_TYPE;
+      $scope.gatewayCtx.currentInstanceId = pipeline.id;
+      $scope.pipelineCtx.currentPipeline = pipeline;
     };
+
     $scope.cancelEditPipeline = function(pipeline) {
       pipeline.editMode = false;
     };
+
     $scope.isProxyPipeline = function() {
       var retVal = true;
 
