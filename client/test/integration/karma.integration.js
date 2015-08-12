@@ -48,8 +48,6 @@ module.exports = function(config) {
       'client/www/scripts/vendor/angular-file-upload/angular-file-upload.js',
       'client/www/scripts/vendor/angular-moment/angular-moment.js',
       'client/www/scripts/vendor/stringjs/dist/string.js',
-      'client/www/scripts/vendor/ng-clip/dest/ng-clip.min.js',
-      'client/www/scripts/vendor/zeroclipboard/dist/ZeroClipboard.js',
 
       'client/www/scripts/vendor/inflection/lib/inflection.js',
       'client/www/scripts/vendor/chance/chance.js',
