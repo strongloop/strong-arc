@@ -4,3 +4,5 @@ node_modules
 client/test/integration/sandbox
 *-xunit.xml
 strong-arc-*.tgz
+empty-*.tgz
+arc-manager.json
