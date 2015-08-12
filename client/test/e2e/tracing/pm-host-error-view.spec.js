@@ -25,7 +25,8 @@ describe('tracing-interactions', function () {
 		var processManagerHomeView = 
 			new ProcessManagerViews.ProcessManagerHomeView();
 
-		tracingHomeView.acceptErrorNotice();
+		// TODO: there is no error notice to accept, should there be?
+		// tracingHomeView.acceptErrorNotice();
 
 		expect(EC.visibilityOf(processManagerHomeView.componentIdentifier));
 	});
