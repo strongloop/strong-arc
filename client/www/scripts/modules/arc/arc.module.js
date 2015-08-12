@@ -266,7 +266,8 @@ Arc.run([
 
 Arc.config([
   '$httpProvider',
-  function ($httpProvider) {
+  '$tooltipProvider',
+  function ($httpProvider, $tooltipProvider) {
     $httpProvider.interceptors.push('arcRequestInterceptor');
 
     //tooltip show/hide triggers
