@@ -19,7 +19,7 @@ describe('process-manager-host-interactions', function () {
 
 	xit('should login and navigate to process manager,' +
 		'add a valid pm host,', function () {
-	  var processManagerHostView = 
+	  var processManagerHostView =
 	  	new ProcessManagerViews.ProcessManagerHostView();
 
 	  browser.sleep(500);
@@ -38,16 +38,23 @@ describe('process-manager-host-interactions', function () {
 	});
 
 	it('should login and navigate to process manager,' +
-		'should add a pm host and activate it', function () {
-	  var processManagerHostView = 
+		'should add a pm host and activate it (test)', function () {
+    var landingView = new ArcViews.LandingView();
+	  var processManagerHostView =
 	  	new ProcessManagerViews.ProcessManagerHostView();
+    var processManagerHomeView = new ProcessManagerViews.ProcessManagerHomeView();
+
     var headerView = new ArcViews.HeaderView();
 
     headerView.navigateToLandingPage();
+    browser.driver.wait(
+      EC.presenceOf(this.processManagerAppCommand),
+      10000);
+    landingView.openProcessManagerView();
 
-
-	  browser.sleep(500);
-
+    browser.driver.wait(
+      EC.visibilityOf(processManagerHomeView.componentIdentifier),
+      10000);
 	  processManagerHostView.addNewPMHost(
 	  	'ec2-52-8-216-111.us-west-1.compute.amazonaws.com', '8701'
 	  );

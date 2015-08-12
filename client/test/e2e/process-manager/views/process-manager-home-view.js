@@ -20,9 +20,7 @@ var ProcessManagerHomeView = (function () {
       var self = this;
       this.loadBalancerButton.click();
 
-      browser.driver.wait(
-        EC.visibilityOf(self.loadBalancerForm),
-      10000);
+      componentIdentifier
     };
 
     this.closeLoadBalancerForm = function () {

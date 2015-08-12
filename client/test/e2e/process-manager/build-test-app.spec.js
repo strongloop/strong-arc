@@ -19,10 +19,10 @@ describe('process-manager-and-build-deploy-interactions', function () {
   });
 
 	it('should login and navigate to process manager,' +
-		'should add a pm host and activate it', function () {
-	  var processManagerHostView = 
+		'should add a pm host and activate it (build)', function () {
+	  var processManagerHostView =
 	  	new ProcessManagerViews.ProcessManagerHostView();
-	  var buildDeployHomeView = 
+	  var buildDeployHomeView =
 	  	new BuildDeployViews.BuildDeployHomeView();
     var headerView = new ArcViews.HeaderView();
     var landingView = new ArcViews.LandingView();

@@ -8,7 +8,10 @@ exports.config = {
     long: './e2e/**/*.spec.js'
   },
   framework: 'jasmine2',
-  jasmineNodeOpts: {isVerbose: true},
+  jasmineNodeOpts: {
+    defaultTimeoutInterval: 60000,
+    isVerbose: true
+  },
   params: {
     pm: {
       host: process.env.TEST_PM_HOST,

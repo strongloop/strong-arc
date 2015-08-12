@@ -14,6 +14,7 @@ var ProcessManagerHostView = (function () {
       by.css('.sl-icon-question-mark'));
     this.processManagerDeleteButton = element(
       by.css('a[ng-click="deleteHost(host)"]'));
+    this.processManagerStatusActive = element(by.css('div.status-field span.status.active'));
     this.processManagerNoServerMessage = element(
       by.cssContainingText('h4', 'No Server'));
     this.processManagerNoApplicationFoundMessage = element(
