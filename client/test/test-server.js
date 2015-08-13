@@ -35,7 +35,12 @@ arc.post('/reset', function(req, res, next) {
   }
 
   var modelsToReset = workspace.models().filter(function(m) {
-    return m !== 'PackageDefinition' && m !== 'Facet' && m !== 'ConfigFile';
+    return [
+      'PackageDefinition',
+      'Facet',
+      'ConfigFile',
+      'Workspace'
+    ].indexOf(m.modelName) === -1;
   });
 
   async.eachSeries(
