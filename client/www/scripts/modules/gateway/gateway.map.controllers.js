@@ -4,7 +4,7 @@ Gateway.controller('GatewayMapMainController', [
   '$log',
   'GatewayServices',
   function($scope, $log, GatewayServices) {
-    $log.debug('GatewayMap Controller');
+    $log.debug('GatewayMapping Controller');
 
     $scope.gatewayMapCtx.init = function() {
 

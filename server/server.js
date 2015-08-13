@@ -15,6 +15,11 @@ features.forEach(function(f) {
 });
 
 var workspace = require('loopback-workspace');
+var gateway = require('gateway-workspace');
+gateway(workspace, {});
+
+
+
 // export the workspace object, useful e.g. in tests
 app.workspace = workspace;
 
@@ -32,6 +37,7 @@ var arcApi = require('../arc-api/server/server');
 app.workspace = workspace;
 
 // REST APIs
+//app.use('/gateway', gateway);
 app.use('/workspace', workspace);
 app.use('/devtools', devtools);
 app.use('/build-deploy', buildDeploy);
