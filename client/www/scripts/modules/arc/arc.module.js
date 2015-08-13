@@ -29,6 +29,7 @@ var Arc = angular.module('Arc', [
   'ngCookies',
   'angular-growl',
   'lbServices',
+  'lbGatewayServices',
   'ArcServices',
   'BuildDeployAPI',
   'ArcUserAuthFactory',

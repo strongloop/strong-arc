@@ -29,6 +29,7 @@
     "express": "^4.12.2",
     "express-jsxtransform": "^4.0.2",
     "fs-extra": "^0.16.5",
+    "gateway-workspace": "^1.0.5",
     "http-proxy": "^1.8.1",
     "less": "^2.5.3",
     "lodash": "^3.5.0",

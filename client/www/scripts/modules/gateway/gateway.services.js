@@ -1,9 +1,9 @@
 Gateway.service('GatewayServices', [
   '$log',
   'Policy',
-  'GatewayMap',
+  'GatewayMapping',
   'Pipeline',
-  function($log, Policy, GatewayMap, Pipeline) {
+  function($log, Policy, GatewayMapping, Pipeline) {
     var svc = this;
 
 
@@ -221,13 +221,13 @@ Gateway.service('GatewayServices', [
     *
     * */
     svc.deleteGatewayMap = function(gatewayMapId) {
-      return GatewayMap.deleteById({id:gatewayMapId})
+      return GatewayMapping.deleteById({id:gatewayMapId})
         .$promise
         .then(function(response) {
           return response;
         })
         .catch(function(error) {
-          $log.warn('bad delete GatewayMap' + JSON.stringify(error));
+          $log.warn('bad delete GatewayMapping' + JSON.stringify(error));
         });
     };
     svc.cloneGatewayMap = function(data) {
@@ -247,7 +247,7 @@ Gateway.service('GatewayServices', [
               });
           })
           .catch(function(error) {
-            $log.warn('bad get  GatewayMap: ' + JSON.stringify(error));
+            $log.warn('bad get  GatewayMapping: ' + JSON.stringify(error));
           });
     };
     svc.cloneInstance = function(data) {
@@ -281,33 +281,33 @@ Gateway.service('GatewayServices', [
         // update
         if (gatewayMap.id) {
           delete gatewayMap._id;
-          return GatewayMap.upsert(gatewayMap,
+          return GatewayMapping.upsert(gatewayMap,
             function(response){
-              console.log('updated GatewayMap');
+              console.log('updated GatewayMapping');
               return response;
             },
             function(error){
-              console.log('error adding GatewayMap: ' + JSON.stringify(error));
+              console.log('error adding GatewayMapping: ' + JSON.stringify(error));
 
             }
           );
         }
         // create
         else {
-          return GatewayMap.create( gatewayMap,
+          return GatewayMapping.create( gatewayMap,
             function(response){
-              console.log('added GatewayMap');
+              console.log('added GatewayMapping');
               return response;
             },
             function(error){
-              console.log('error adding GatewayMap: ' + JSON.stringify(error));
+              console.log('error adding GatewayMapping: ' + JSON.stringify(error));
             }
           );
         }
       }
     };
     svc.getGatewayMaps = function() {
-      return GatewayMap.find({})
+      return GatewayMapping.find({})
         .$promise
         .then(function(response) {
           return response;
@@ -317,13 +317,13 @@ Gateway.service('GatewayServices', [
         })
     };
     svc.getGatewayMapById = function(id) {
-      return GatewayMap.findById({id:id})
+      return GatewayMapping.findById({id:id})
         .$promise
         .then(function(response) {
           return response;
         })
         .catch(function(error) {
-          $log.warn('bad get  GatewayMap: ' + JSON.stringify(error));
+          $log.warn('bad get  GatewayMapping: ' + JSON.stringify(error));
         })
     };
 
