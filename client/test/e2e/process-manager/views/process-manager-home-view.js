@@ -2,30 +2,33 @@ var ProcessManagerHomeView = (function () {
   var EC = protractor.ExpectedConditions;
 
   function ProcessManagerHomeView() {
-    this.loadBalancerButton = element(
+    var self = this;
+    self.loadBalancerButton = element(
       by.css('button[ng-click="toggleManagerLoadBalancer()"]'));
-    this.loadBalancerForm = element(
+    self.loadBalancerForm = element(
       by.css('div .load-balancer-content'));
-    this.componentIdentifier = element(
+    self.componentIdentifier = element(
       by.css('.manager-pm-host-grid')
     );
 
-    this.waitUntilLoaded = function() {
+    self.waitUntilLoaded = function() {
       browser.driver.wait(
-        EC.presenceOf(this.componentIdentifier),
+        EC.presenceOf(self.componentIdentifier),
       10000);
     };
 
-    this.openLoadBalancerForm = function () {
-      var self = this;
-      this.loadBalancerButton.click();
+    self.openLoadBalancerForm = function () {
+      self.loadBalancerButton.click();
 
-      componentIdentifier
+      browser.driver.wait(
+        EC.visibilityOf(self.loadBalancerForm),
+      10000);
+
     };
 
     this.closeLoadBalancerForm = function () {
-      var self = this;
-      this.loadBalancerButton.click();
+
+      self.loadBalancerButton.click();
 
       browser.driver.wait(
         EC.invisibilityOf(self.loadBalancerForm),
