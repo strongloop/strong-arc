@@ -205,7 +205,7 @@ function testE2E (callback, testSuite) {
   * */
   var testAppPath = path.resolve(__dirname, 'test/bare-bones-app');
   var testServerPath = require.resolve('./client/test/test-server');
-  var testServerOpts = {cwd: path.join(__dirname, '/client/test/sandbox')};
+  var testServerOpts = {cwd: __dirname};
   var testServer = fork(testServerPath, testServerOpts);
 
   testServer.on('message', function(msg) {
