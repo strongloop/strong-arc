@@ -13,6 +13,7 @@ VisualComposer.controller('VisualComposerMainController', [
     $scope.models = [];
     $scope.connections = [];
     $scope.mainNavModels = [];
+    $scope.mainNavDatasources = [];
 
     function getPropertyNameSnapshot(propArray) {
       return propArray.map(function(item) {
