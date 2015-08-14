@@ -64,7 +64,7 @@ var GatewayHomeView = (function () {
     self.newMappingPipelineInstanceSelect = element(by.css('.modal-body button[data-id="new pipeline"]'));
     //self.newMappingFirstPipeline = element(by.css('.modal-body td[title="new pipeline"]'));
     //
-    self.deleteMappingButton = element(by.css('table.mappings td button[ng-click="deleteGatewayMap(gatewayMap)'));
+    self.deleteMappingButton = element(by.css('table.mappings td.actions a[ng-click="deleteGatewayMap(gatewayMap)'));
 
     self.openNewPolicyFromNav = function() {
       self.sideNewPolicyButton.click();
@@ -224,12 +224,14 @@ var GatewayHomeView = (function () {
     };
     self.deleteFirstMapping = function() {
       var component = this;
+      browser.actions().mouseMove(element(by.css('table.mappings tbody tr'))).perform();
+
       browser.driver.wait(
-        EC.presenceOf(this.deleteMappingButton),
-        10000);
+        EC.presenceOf(self.deleteMappingButton),
+        5000);
+
       // Main Tree Context Menu
       self.deleteMappingButton.click();
-      // browser.pause();
       browser.sleep(500);
       var alertDialog = browser.switchTo().alert();
       browser.sleep(500);
