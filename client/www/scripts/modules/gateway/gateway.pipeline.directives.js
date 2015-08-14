@@ -69,9 +69,11 @@ Gateway.directive('slPipelineForm', [
         };
 
         $scope.deletePolicy = function(policy){
-          var idx = _.findIndex($scope.pipeline.policies, { id: policy.id });
+          var idx = $scope.pipeline.policyIds.indexOf(policy.id);
+          var renderIdx = _.findWhere($scope.pipeline.renderPolicies, { id: policy.id });
 
-          $scope.pipeline.policies.splice(idx, 1);
+          $scope.pipeline.policyIds.splice(idx, 1);
+          $scope.pipeline.renderPolicies.splice(renderIdx, 1);
         };
 
         $scope.savePipeline = function(pipeline){
