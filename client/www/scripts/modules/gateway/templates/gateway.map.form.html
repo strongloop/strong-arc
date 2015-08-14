@@ -61,42 +61,36 @@
     </div>
     <table class="ui-table" ng-show="map.pipelineId">
       <thead>
-      <tr>
-        <th>
-          type
-        </th>
-        <th>
-          name
-        </th>
-        <th>
-          details
-        </th>
-      </tr>
+        <tr>
+          <th>Type</th>
+          <th>Name</th>
+          <th>Details</th>
+        </tr>
       </thead>
       <tbody>
-      <tr ng-repeat="policy in map.pipeline.policies">
-        <td><ui-icon name="policy-{{policy.type}}"></ui-icon></td>
-        <td>{{policy.name}}</td>
-        <td>
-          <div ng-show="policy.type == 'ratelimiting'">
-            <ul>
-              <li>limit: {{policy.limit}}</li>
-              <li>interval (ms): {{policy.interval}}</li>
-            </ul>
-          </div>
-          <div ng-show="policy.type == 'reverseproxy'">
-            targetURL: <span>{{policy.targetURL}}</span>
-          </div>
-          <div ng-show="policy.type == 'auth'">
-            <span>scopes:</span>
-            <ul>
-              <li ng-repeat="scope in policy.scopes">
-                <div class="policy-scope-item">{{scope}}</div>
-              </li>
-            </ul>
-          </div>
-        </td>
-      </tr>
+        <tr ng-repeat="policy in map.pipeline.policies track by $index">
+          <td><ui-icon name="policy-{{policy.type}}"></ui-icon></td>
+          <td>{{policy.name}}</td>
+          <td>
+            <div ng-show="policy.type == 'ratelimiting'">
+              <ul>
+                <li>limit: {{policy.limit}}</li>
+                <li>interval (ms): {{policy.interval}}</li>
+              </ul>
+            </div>
+            <div ng-show="policy.type == 'reverseproxy'">
+              targetURL: <span>{{policy.targetURL}}</span>
+            </div>
+            <div ng-show="policy.type == 'auth'">
+              <span>scopes:</span>
+              <ul>
+                <li ng-repeat="scope in policy.scopes">
+                  <div class="policy-scope-item">{{scope}}</div>
+                </li>
+              </ul>
+            </div>
+          </td>
+        </tr>
       </tbody>
     </table>
 

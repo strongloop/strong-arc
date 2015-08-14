@@ -12,7 +12,7 @@
     </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="gatewayMap in gatewayMapCtx.gatewayMaps">
+      <tr ng-repeat="gatewayMap in gatewayMapCtx.gatewayMaps track by $index">
         <td>
           <button class="link-cmd" ng-click="editGatewayMap(gatewayMap)">
             {{gatewayMap.name}}
@@ -31,7 +31,7 @@
           </button>
 
           <ul ng-show="gatewayMap.showPipelineDetails" class="pipeline-policy-sequence-list">
-            <li ng-repeat="policy in latestPolicies">
+            <li ng-repeat="policy in latestPolicies track by $index">
               <button class="pipeline-policy-button">
                 <div class="pipeline-policy-container">
                   {{policy.type}}
