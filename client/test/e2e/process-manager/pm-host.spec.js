@@ -42,7 +42,8 @@ describe('process-manager-host-interactions', function () {
     var landingView = new ArcViews.LandingView();
 	  var processManagerHostView =
 	  	new ProcessManagerViews.ProcessManagerHostView();
-    var processManagerHomeView = new ProcessManagerViews.ProcessManagerHomeView();
+    var processManagerHomeView =
+      new ProcessManagerViews.ProcessManagerHomeView();
 
     var headerView = new ArcViews.HeaderView();
 
