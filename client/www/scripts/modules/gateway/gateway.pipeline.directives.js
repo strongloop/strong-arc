@@ -32,8 +32,8 @@ Gateway.directive('slPipelineMainView', [
     }
   }
 ]);
-Gateway.directive('slPipelineForm', [
-  function() {
+Gateway.directive('slPipelineForm', ['$modal',
+  function($modal) {
     return {
       restrict: 'E',
       templateUrl: './scripts/modules/gateway/templates/pipeline.form.html',
@@ -76,12 +76,37 @@ Gateway.directive('slPipelineForm', [
           $scope.pipeline.renderPolicies.splice(renderIdx, 1);
         };
 
+        $scope.confirmSavePipeline = function(pipeline){
+          var modalDlg = $modal.open({
+            templateUrl: './scripts/modules/gateway/templates/confirm.pipeline.save.html',
+            size: 'md',
+            scope: $scope,
+            controller: function($scope, $modalInstance, title) {
+              $scope.isModal = true;
+              $scope.title = title;
+              $scope.close = function() {
+                $modalInstance.dismiss();
+              };
+
+              $scope._savePipeline = function(pipeline){
+                $scope.savePipeline(pipeline);
+                $scope.close();
+              }
+            },
+            resolve: {
+              title: function() {
+                return 'Confirm Pipeline Edit';
+              }
+            }
+          });
+        };
+
         $scope.savePipeline = function(pipeline){
           GatewayServices.savePipeline($scope.pipeline)
             .$promise
             .then(function(data) {
-              $scope.pipeline = {};
-              //refreshPipelines();
+              $scope.pipeline = data;
+              $scope.$parent.refreshPipelines();
             });
         };
 
