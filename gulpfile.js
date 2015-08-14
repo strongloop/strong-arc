@@ -264,28 +264,14 @@ function testE2E (callback, testSuite) {
         protractorResults(err);
 
         // ensure test artifacts are removed
-        var arcManagerFile,
-          tgzFile;
-        try {
-          arcManagerFile = require('client/test/sandbox/arc-manager.json');
-        } catch (error) {}
-        if (arcManagerFile) {
-          fs.unlink(path.join(__dirname, arcManagerFile), function (err) {
-            if (err) throw err;
-            console.log('successfully deleted arc-manager.json');
-          });
-        }
-        try {
-          tgzFile = require('client/test/empty-0.0.0.tgz');
-        } catch (error) {}
-        if (arcManagerFile) {
-          fs.unlink(path.join(__dirname, tgzFile), function (err) {
-            if (err) throw err;
-            console.log('successfully deleted client/test/empty-0.0.0.tgz');
-          });
-        }
-
-
+        fs.unlink(path.join(__dirname, 'client/test/sandbox/arc-manager.json'), function (err) {
+          if (err) throw err;
+          console.log('successfully deleted arc-manager.json');
+        });
+        fs.unlink(path.join(__dirname, 'client/test/empty-0.0.0.tgz'), function (err) {
+          if (err) throw err;
+          console.log('successfully deleted client/test/empty-0.0.0.tgz');
+        });
       });
   }
 
