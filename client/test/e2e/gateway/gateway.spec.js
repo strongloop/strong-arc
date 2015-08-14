@@ -7,7 +7,7 @@ var gatewayHomeView = require('./views/gateway-home-view');
 var EC = protractor.ExpectedConditions;
 
 
-describe('gateway cloning', function() {
+describe('gateway', function() {
   beforeEach(function(){
     var loginView = new ArcViews.LoginView();
     var landingView = new ArcViews.LandingView();
@@ -125,16 +125,26 @@ describe('gateway cloning', function() {
   });
 
   it('should clone a gateway policy',function() {
-      expect(true).toEqual(false);
+    expect(true).toEqual(false);
   });
 
-  it('should clone a gateway pipeline',
-    function() {
-      expect(true).toEqual(false);
-    });
+  it('should clone a gateway pipeline', function() {
+    expect(true).toEqual(false);
+  });
 
-  it('should clone a gateway mapping',
-    function() {
-      expect(true).toEqual(false);
-    });
+  it('should clone a gateway mapping', function() {
+    expect(true).toEqual(false);
+  });
+
+  it('should edit a gateway policy',function() {
+    expect(true).toEqual(false);
+  });
+
+  it('should edit a gateway pipeline', function() {
+    expect(true).toEqual(false);
+  });
+
+  it('should edit a gateway mapping', function() {
+    expect(true).toEqual(false);
+  });
 });
