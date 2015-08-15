@@ -18,8 +18,8 @@ Gateway.directive('slPolicyForm', [
         hidebuttons: '='
       },
       templateUrl: './scripts/modules/gateway/templates/policy.form.html',
-      controller: ['$scope',
-        function($scope) {
+      controller: ['$scope', '$modal',
+        function($scope, $modal) {
 
           $scope.isPolicyDirty = false;
           $scope.originalPolicy = {};
@@ -38,36 +38,39 @@ Gateway.directive('slPolicyForm', [
             $scope.policy.type = type;
           };
 
+          $scope.confirmSaveCurrentPolicy = function(policy){
+            var modalDlg = $modal.open({
+              templateUrl: './scripts/modules/gateway/templates/confirm.policy.save.html',
+              size: 'md',
+              scope: $scope,
+              controller: function($scope, $modalInstance, title) {
+                $scope.isModal = true;
+                $scope.title = title;
+                $scope.close = function() {
+                  $modalInstance.dismiss();
+                };
 
-          $scope.saveCurrentPolicy = function(policy) {
-            if (policy.name && policy.type) {
-
-              if ($scope.isPolicyDirty) {
-                if (confirm('do you want to make this change')) {
-                  GatewayServices.savePolicy(policy)
-                    .$promise
-                    .then(function(policy) {
-                      growl.addSuccessMessage('Policy Saved');
-                      //resetCurrentPolicy();
-
-                    });
+                $scope._savePolicy = function(pipeline){
+                  $scope.saveCurrentPolicy(policy);
+                  $scope.close();
+                }
+              },
+              resolve: {
+                title: function() {
+                  return 'Confirm Policy Edit';
                 }
               }
-              else {
-                GatewayServices.savePolicy(policy)
-                  .$promise
-                  .then(function(policy) {
-                    growl.addSuccessMessage('Policy Saved');
-                    //resetCurrentPolicy();
+            });
 
-                  });
-              }
+          };
 
-
-
-
-
-            }
+          $scope.saveCurrentPolicy = function(policy) {
+              GatewayServices.savePolicy(policy)
+                .$promise
+                .then(function(policy) {
+                  growl.addSuccessMessage('Policy Saved');
+                  $scope.$parent.refreshPolicies();
+                });
           };
         }
       ],
