@@ -264,14 +264,14 @@ function testE2E (callback, testSuite) {
         protractorResults(err);
 
         // ensure test artifacts are removed
-        fs.unlink(path.join(__dirname, 'client/test/sandbox/arc-manager.json'), function (err) {
-          if (err) throw err;
-          console.log('successfully deleted arc-manager.json');
-        });
-        fs.unlink(path.join(__dirname, 'client/test/empty-0.0.0.tgz'), function (err) {
-          if (err) throw err;
-          console.log('successfully deleted client/test/empty-0.0.0.tgz');
-        });
+        //fs.unlink(path.join(__dirname, 'client/test/sandbox/arc-manager.json'), function (err) {
+        //  if (err) throw err;
+        //  console.log('successfully deleted arc-manager.json');
+        //});
+        //fs.unlink(path.join(__dirname, 'client/test/empty-0.0.0.tgz'), function (err) {
+        //  if (err) throw err;
+        //  console.log('successfully deleted client/test/empty-0.0.0.tgz');
+        //});
       });
   }
 
