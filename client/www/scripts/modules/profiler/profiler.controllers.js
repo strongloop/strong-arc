@@ -198,6 +198,7 @@ Profiler.controller('ProfilerMainController', [
         });
     };
 
+
     $scope.updateHost = function(host) {
       $scope.host = host;
       $scope.isRemoteValid = false;
@@ -218,7 +219,18 @@ Profiler.controller('ProfilerMainController', [
             growl.addWarnMessage('Smart profiling is not available: ' + reasons[0]);
           }
         });
+        $scope.isRemoteValid = true;
+        $scope.activeProcess = newVal[0];
+        $scope.processes.map(function(process) {
+          if (process.id === $scope.activeProcess.id) {
+            process.isActive = true;
+          }
+        });
+        $scope.updateProcesses($scope.processes);
+        return;
       }
+      $scope.activeProcess = null;
+
     });
 
     $scope.$watch('profilerSettings.mode', function(newValue) {

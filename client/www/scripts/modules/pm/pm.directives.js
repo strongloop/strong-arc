@@ -54,6 +54,7 @@ PM.directive('slPmHostForm', [
             port: PM_CONST.LOCAL_PM_PORT_MASK
           };
           $scope.selectedPMHost = {};
+          $scope.currentInstanceId = 1;
 
           $scope.candidateServerConfig = {};
 
@@ -164,11 +165,11 @@ PM.directive('slPmHostForm', [
                       .then(function(response) {
                         // check to make sure the app comes up
                         // then load processes
-                        fireWhenReady($scope.currentServerConfig, 1);
+                        fireWhenReady($scope.currentServerConfig, $scope.currentInstanceId);
                       })
                   }
                   else {
-                    $scope.initServerProcesses($scope.currentServerConfig, 1);
+                    $scope.initServerProcesses($scope.currentServerConfig, $scope.currentInstanceId);
                   }
                 });
             }
@@ -178,7 +179,7 @@ PM.directive('slPmHostForm', [
 
                 $scope.currentServerConfig = $scope.candidateServerConfig;
                 isLocal = false;
-                $scope.initServerProcesses($scope.currentServerConfig, 1);
+                $scope.initServerProcesses($scope.currentServerConfig, $scope.currentInstanceId);
               }
               else {
                 $log.warn('invalid server host config form loadProcess request: ' + JSON.stringify($scope.candidateServerConfig));
@@ -252,7 +253,19 @@ PM.directive('slPmHostForm', [
             $scope.isProcessFromMore = isMoreClick;
             $scope.isRemoteValid = true;
           };
-        }]
+        }],
+      link: function(scope, el, attrs) {
+        scope.$watch('selectedPMHost', function(newHost) {
+          if (newHost.host) {
+
+            if (newHost.host !== scope.candidateServerConfig.host || newHost.port !== scope.candidateServerConfig.port) {
+              scope.candidateServerConfig = newHost;
+            }
+            scope.onLoadHost({host:newHost});
+            scope.initServerProcesses(newHost, scope.currentInstanceId);
+          }
+        }, true);
+      }
     }
   }
 ]);

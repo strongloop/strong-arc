@@ -23,7 +23,6 @@ Metrics.controller('MetricsMainController', [
     };
 
     $scope.isDisplayChartValid = false; // control display of charts (transition between data sets)
-    $log.debug('get latest pm 1');
     $scope.currentServerConfig = PMHostService.getLatestPMServer(function(host) {
       $scope.currentServerConfig = host;
       $scope.selectedPMHost = host;
