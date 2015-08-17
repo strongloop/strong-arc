@@ -3,6 +3,9 @@
   // Create a queue, but don't obliterate an existing one!
   var analytics = window.analytics = window.analytics || [];
 
+  // If the real analytics.js is already on the page return.
+  if (analytics.initialize) return;
+
   // If the snippet was invoked already show an error.
   if (analytics.invoked) {
     if (window.console && console.error) {
@@ -60,7 +63,7 @@
     script.type = 'text/javascript';
     script.async = true;
     script.src = ('https:' === document.location.protocol
-      ? 'https://' : 'http://')
+        ? 'https://' : 'http://')
       + 'cdn.segment.com/analytics.js/v1/'
       + key + '/analytics.min.js';
 
@@ -70,12 +73,11 @@
   };
 
   // Add a version to keep track of what's in the wild.
-  analytics.SNIPPET_VERSION = '3.0.0';
+  analytics.SNIPPET_VERSION = '3.0.1';
 
   // Load Analytics.js with your key, which will automatically
   // load the tools you've enabled for your account. Boosh!
-  analytics.load("8ImiW2DX0W")
-
+  analytics.load("8ImiW2DX0W");
   // Make the first page call to load the integrations. If
   // you'd like to manually name or tag the page, edit or
   // move this call however you'd like.
