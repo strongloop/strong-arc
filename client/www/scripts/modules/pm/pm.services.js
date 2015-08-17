@@ -523,19 +523,22 @@ PM.service('PMServiceProcess', ['$http', '$log',
           });
       },
       capabilities: function(serverConfig, processId) {
-        var baseUrl = 'http://' + serverConfig.host + ':' + serverConfig.port;
-        if (serverConfig.host ===  PM_CONST.LOCAL_PM_HOST_NAME) {
-          baseUrl = '/process-manager'
+        if (serverConfig && serverConfig.host && serverConfig.port) {
+          var baseUrl = 'http://' + serverConfig.host + ':' + serverConfig.port;
+          if (serverConfig.host ===  PM_CONST.LOCAL_PM_HOST_NAME) {
+            baseUrl = '/process-manager'
+          }
+          var apiRequestPath = baseUrl + '/api/ServiceProcesses/' + processId + '/queryCapabilities/';
+          return $http({url: apiRequestPath, method: 'GET'})
+            .then(function(response) {
+              return response.data;
+            })
+            .catch(function(error) {
+              $log.error(error.message + ':' + error);
+              return error;
+            });
         }
-        var apiRequestPath = baseUrl + '/api/ServiceProcesses/' + processId + '/queryCapabilities/';
-        return $http({url: apiRequestPath, method: 'GET'})
-          .then(function(response) {
-            return response.data;
-          })
-          .catch(function(error) {
-            $log.error(error.message + ':' + error);
-            return error;
-          });
+
       }
     };
   }
