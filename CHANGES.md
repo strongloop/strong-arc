@@ -1,3 +1,25 @@
+2015-08-17, Version 1.8.0
+=========================
+
+ * remove reset to null on default datasource (seanbrookes)
+
+ * add intercom widget (Anthony Ettinger)
+
+ * remove clipboard dependency in tests (Anthony Ettinger)
+
+ * remove ng-clipboard and zeroclipboard libraries (Anthony Ettinger)
+
+ * Exclude Workspace model from test server reset (Ritchie Martori)
+
+ * Hide app-controller when not supported (Joseph Tary)
+
+ * test: remove assumption about error message (Ryan Graham)
+
+ * deps: pin loopback-workspace to 3.15.x (Ryan Graham)
+
+ * Fix missing ability to select models for property types (Joseph Tary)
+
+
 2015-07-31, Version 1.7.1
 =========================
 
@@ -141,11 +163,19 @@
 
  * fix broken injection (seanbrookes)
 
- * package: prevent strong-arc from bundling itself (Ryan Graham)
-
  * deps: remove dependency on slug (Ryan Graham)
 
  * Add support to Arc for smart-profiling feature (Joseph Tary)
+
+
+2015-06-11, Version 1.4.2
+=========================
+
+ * fix broken injection (seanbrookes)
+
+ * package: prevent strong-arc from bundling itself (Ryan Graham)
+
+ * deps: remove dependency on slug (Ryan Graham)
 
 
 2015-06-10, Version 1.4.1
