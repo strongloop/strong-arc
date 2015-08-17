@@ -3,9 +3,15 @@ exports.config = {
   //      but I'm not sure what side effects that has, if any
   directConnect: true,
   // seleniumAddress: 'http://127.0.0.1:4444/wd/hub',
-  specs: ['./e2e/**/*.spec.js'],
+  suites: {
+    short: './e2e/**/*.short.spec.js',
+    long: './e2e/**/*.spec.js'
+  },
   framework: 'jasmine2',
-  jasmineNodeOpts: {isVerbose: true},
+  jasmineNodeOpts: {
+    defaultTimeoutInterval: 60000,
+    isVerbose: true
+  },
   params: {
     pm: {
       host: process.env.TEST_PM_HOST,
@@ -39,7 +45,10 @@ exports.config = {
       return browser.sleep(500);
     }
   }
-  // capabilities: {
-  // 'browserName': 'firefox'
-  // }
+  // multipleCapabilities: [{
+  //     'browserName': 'firefox'
+  //   },
+  //   {
+  //     'browserName': 'chrome'
+  // }];
 };

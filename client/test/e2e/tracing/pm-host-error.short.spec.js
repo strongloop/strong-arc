@@ -19,11 +19,12 @@ describe('tracing-interactions', function () {
 	});
 
 	it('should login and navigate to process manager,' +
-		'add a valid pm host,', function () {
-		var tracingHomeView = 
+		'validate error notice', function () {
+		var tracingHomeView =
 			new TracingViews.TracingHomeView();
-		var processManagerHomeView = 
+		var processManagerHomeView =
 			new ProcessManagerViews.ProcessManagerHomeView();
+
 
 		// TODO: there is no error notice to accept, should there be?
 		// tracingHomeView.acceptErrorNotice();

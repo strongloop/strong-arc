@@ -185,7 +185,8 @@ gulp.task('test-pm', function() {
     .pipe(mocha());
 });
 // WIP
-gulp.task('test-e2e', function(callback) {
+
+function testE2E (callback, testSuite) {
   var pmContainerID;
   var webdriver;
 
@@ -210,7 +211,7 @@ gulp.task('test-e2e', function(callback) {
   testServer.on('message', function(msg) {
     // async.series([
     //   // for future tests that require a PM instance
-    //   //startTestPM,
+    //   startTestPM,
     //   // startWebDriver,
     // ], function(err) {
     //   if (err) {
@@ -252,7 +253,7 @@ gulp.task('test-e2e', function(callback) {
   }
 
   function runProtractorTests() {
-    spawn('protractor', ['client/test/protractor.conf.js'], {stdio: 'inherit'})
+    spawn('protractor', [testSuite, 'client/test/protractor.conf.js'], {stdio: 'inherit'})
       .on('error', protractorResults)
       .on('exit', function(code, signal) {
         var status = signal || code;
@@ -262,7 +263,15 @@ gulp.task('test-e2e', function(callback) {
         }
         protractorResults(err);
 
-        fs.unlink('arc-manager.json'); //fix for this file being created in the root
+        // ensure test artifacts are removed
+        //fs.unlink(path.join(__dirname, 'client/test/sandbox/arc-manager.json'), function (err) {
+        //  if (err) throw err;
+        //  console.log('successfully deleted arc-manager.json');
+        //});
+        //fs.unlink(path.join(__dirname, 'client/test/empty-0.0.0.tgz'), function (err) {
+        //  if (err) throw err;
+        //  console.log('successfully deleted client/test/empty-0.0.0.tgz');
+        //});
       });
   }
 
@@ -285,7 +294,17 @@ gulp.task('test-e2e', function(callback) {
     }
     callback(err);
   }
+}
+
+gulp.task('test-e2e-short', function(callback) {
+  testE2E(callback, '--suite=short');
 });
+
+gulp.task('test-e2e-long', function(callback) {
+  testE2E(callback, '--suite=long');
+});
+
+gulp.task('test-e2e', ['test-e2e-short']);
 
 gulp.task('test-client-integration', function(callback) {
   var child = spawn(
@@ -317,7 +336,7 @@ gulp.task('test-client-integration', function(callback) {
 
 gulp.task('setup-mysql', function(callback) {
   var ROOT_PASSWORD = process.env.MYSQL_ROOT_PWD || '';
-  
+
   setupMysql(ROOT_PASSWORD, function(err) {
     if (err) logMysqlErrorDescription(err);
     // Don't fail the build so that more tests will be run

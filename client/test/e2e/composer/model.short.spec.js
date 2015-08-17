@@ -63,14 +63,14 @@ describe('model-definition-interactions', function() {
       expect(modelEditorView.getCurrentModelName()).toEqual('mynewmodel');
 
       modelEditorView.addCommentToProperty(0, 'comment1\n');
-      browser.sleep(250);
+      browser.sleep(1000);
       expect(modelEditorView.getFirstComment()).toEqual('comment1');
 
       browser.sleep(500);
 
       modelEditorView.addCommentToProperty(0, 'comment2\n');
 
-      browser.sleep(250);
+      browser.sleep(1000);
 
       expect(modelEditorView.getFirstComment()).toEqual('comment2');
 
@@ -131,7 +131,7 @@ describe('model-definition-interactions', function() {
       mainTreeNavView.openFirstModel();
       expect(modelEditorView.getCurrentModelName()).toEqual('mynewmodel');
 
-      browser.sleep(750);
+      browser.sleep(1500);
 
       expect(modelEditorView.getCheckedElements().count()).toEqual(3);
       expect(modelEditorView.getFirstComment()).toEqual('comment2');

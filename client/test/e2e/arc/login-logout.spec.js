@@ -13,6 +13,8 @@ describe('arc-login-logout', function() {
 
       loginView.openLoginView();
 
+      browser.sleep(500);
+
       expect(loginView.userNameInput.getText()).toEqual('');
 
       loginView.loginToLandingView();

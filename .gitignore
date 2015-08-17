@@ -16,3 +16,5 @@ client/test/integration/sandbox/
 npm-debug.log
 client/www/scripts/modules/tracing/tracing.viz.module.js
 client/www/scripts/vendor
+empty-*.tgz
+arc-manager.json
