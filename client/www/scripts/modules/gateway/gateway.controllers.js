@@ -62,54 +62,72 @@ Gateway.controller('GatewayMainController', [
     };
     $scope.deleteInstanceRequest = function(type, id) {
       if (id && type) {
-        switch (type) {
-          case GATEWAY_CONST.POLICY_TYPE:
-            if (confirm('delete policy?')) {
-              GatewayServices.deletePolicy(id)
-                .then(function(response) {
-                  $scope.refreshPolicies();
-                });
-
-            }
-
-            break;
-
-          case GATEWAY_CONST.MAPPING_TYPE:
-            if (confirm('delete gateway map?')) {
-              GatewayServices.deleteGatewayMap(id)
-                .then(function(response) {
-                  $scope.refreshMappings();
-                });
-
-            }
-            break;
-
-          case GATEWAY_CONST.PIPELINE_TYPE:
-            if (confirm('delete pipeline?')) {
-              GatewayServices.deletePipeline(id)
-              .then(function(response) {
-                  $scope.refreshPipelines();
-                });
-
-            }
-
-            break;
-
-          default:
-
-        }
-
+        $scope.confirmDeleteInstance(id, type);
       }
     };
+
+    $scope.confirmDeleteInstance = function(id, type){
+      var modalDlg = $modal.open({
+        templateUrl: './scripts/modules/gateway/templates/confirm.instance.delete.html',
+        size: 'md',
+        scope: $scope,
+        controller: function($scope, $modalInstance, title) {
+          $scope.isModal = true;
+          $scope.title = title;
+          $scope.id = id;
+          $scope.type = type;
+          $scope.close = function() {
+            $modalInstance.dismiss();
+          };
+
+          $scope._deleteInstance = function(id, type){
+            $scope.deleteInstance(id, type);
+            $scope.close();
+          }
+        },
+        resolve: {
+          title: function() {
+            return 'Confirm Delete Instance';
+          }
+        }
+      });
+    };
+
+    $scope.deleteInstance = function(id, type){
+
+      switch(type){
+        case GATEWAY_CONST.POLICY_TYPE:
+          GatewayServices.deletePolicy(id)
+            .then(function(response) {
+              $scope.refreshPolicies();
+            });
+
+          break;
+
+        case GATEWAY_CONST.PIPELINE_TYPE:
+            GatewayServices.deletePipeline(id)
+              .then(function(response) {
+                $scope.refreshPipelines();
+              });
+
+          break;
+
+        case GATEWAY_CONST.MAPPING_TYPE:
+          GatewayServices.deleteGatewayMap(id)
+              .then(function(response) {
+                $scope.refreshMappings();
+              });
+
+          break;
+      }
+    };
+
     $scope.cloneInstanceRequest  = function(data) {
       if (data.id && data.type && data.name) {
         var originalData = angular.copy(data);
         $scope.cloneInstance = data;
         $scope.cloneInstance.name = originalData.name + '-' + (Math.floor(Math.random() * (11 - 1)) + 1);
         $scope.showCloneInstanceDialog(data, originalData.name);
-
-
-
       }
     };
     $scope.showCloneInstanceDialog = function(data, originalName) {

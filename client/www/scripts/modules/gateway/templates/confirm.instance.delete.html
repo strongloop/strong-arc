@@ -1,0 +1,24 @@
+<div class="manager-main-layout confirm">
+  <form class="ui-form">
+    <div class="modal-header">
+      <h4>Are you sure?</h4>
+    </div>
+    <div class="modal-body">
+      <p>Deleting a {{type}} instance cannot be undone.</p>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="ui-btn secondary small pull-left"
+        ng-click="close()">
+        Cancel
+      </button>
+      <button
+        type="button"
+        class="ui-btn primary small pull-right"
+        ng-click="_deleteInstance(id, type)">
+        Delete
+      </button>
+    </div>
+  </form>
+</div>
