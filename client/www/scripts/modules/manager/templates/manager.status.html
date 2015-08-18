@@ -1,9 +1,9 @@
 <div class="status-field">
   <span class="status ui-sans-btn host-status-display"
-          ng-class="{ problem: host.status.isProblem, inactive: host.status.isInactive, active: host.status.isActive }">
+          ng-class="{ problem: host.status.isProblem, inactive: host.status.isNoApp, inactive: host.status.isInactive, active: host.status.isActive }">
     <span class="status-txt">{{ host.status.display }}</span>
 
-    <span ng-show="host.status.isProblem">
+    <span ng-show="host.status.isProblem || host.status.isNoApp">
       <sl-popover-info icon="sl-icon sl-icon-question-mark"
                        hideonpageclick="true" showontrue="clickedButton">
         <h4>{{ host.status.problem.title }}</h4>
