@@ -2,7 +2,8 @@ VisualComposer.directive('slSliderBar', function() {
   return {
     restrict: 'E',
     replace: true,
-    template: '<div class="sl-resize-bar"></div>',
+    template: '<div class="sl-resize-bar"><div class="sl-resize-label" ng-transclude></div></div>',
+    transclude: true,
     link: function($scope, $elem, attrs) {
       var $left = $($elem.prev());
       var $right = $($elem.next());
@@ -36,7 +37,7 @@ VisualComposer.directive('slSliderBar', function() {
         axis: 'x',
         cursor: 'move',
         revert: true,
-        helper: 'clone',
+        helper: 'none',
         drag: function(dragEvent, ui) {
           var offset = ui.position.left - $left.offset().left;
 

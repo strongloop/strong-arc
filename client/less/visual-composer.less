@@ -22,6 +22,18 @@
     background: @grey-2;
     cursor: col-resize;
     z-index: 100;
+    display: flex;
+    align-items: center;
+
+    .sl-resize-label {
+      text-align: center;
+      flex-shrink: 0;
+      width: 20rem;
+      margin-left: -9rem;
+      transform: rotate(-90deg);
+      font-size: 9pt;
+      color: white;
+    }
   }
 }
 
