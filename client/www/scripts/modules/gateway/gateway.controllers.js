@@ -175,6 +175,9 @@ Gateway.controller('GatewayMainController', [
       });
     };
     $scope.showAddNewGatewayMapForm = function() {
+
+      // ensure new gateway object is reset;
+      $scope.gatewayMapCtx.newGatewayMap = {verb:'ALL'};
       // if there is more than one pipeline
       if (!$scope.gatewayMapCtx.currentPipelines || !$scope.gatewayMapCtx.currentPipelines.length || ($scope.gatewayMapCtx.currentPipelines.length === 0)) {
         $log.warn('no pipelines available');
@@ -190,8 +193,13 @@ Gateway.controller('GatewayMainController', [
         size: 'lg',
         scope: $scope,
         controller: function($scope, $modalInstance, title) {
-          $scope.gatewayMapCtx.currentGatewayMap = {};
           $scope.title = title;
+          $scope.getMappingPipelineLabel = function(map) {
+            if (map.pipelineId) {
+              return map.pipelineId;
+            }
+            return 'choose a pipeline';
+          };
           $scope.close = function() {
             $modalInstance.dismiss();
           };
@@ -208,6 +216,7 @@ Gateway.controller('GatewayMainController', [
                   .$promise
                   .then(function(map) {
                     $scope.refreshMappings();
+                    // reset 'new mapping'
                     $scope.setMainNav(GATEWAY_CONST.MAPPING_TYPE, map.id);
 
                   });
@@ -428,17 +437,44 @@ Gateway.controller('GatewayMainController', [
       }
 
 
+      function inflatePipelinePolicies(pipeline) {
+        pipeline.policies = [];
+        pipeline.policyIds.map(function(policyId) {
+          var inflatedPolicy = getPipelineRenderPolicy(policyId);
+          pipeline.policies.push(inflatedPolicy);
+          if (inflatedPolicy.type === GATEWAY_CONST.POLICY_PROXY_TYPE) {
+            pipeline.targetURL = inflatedPolicy.targetURL;
+          }
+          if (inflatedPolicy.type === GATEWAY_CONST.POLICY_AUTH_TYPE) {
+            pipeline.scopes = inflatedPolicy.scopes;
+          }
+        });
+        return pipeline;
+      }
 
+
+      function getPipelineDetail(argId) {
+        for (var i = 0;i < $scope.gatewayMapCtx.currentPipelines.length;i++) {
+          var cPipeline = $scope.gatewayMapCtx.currentPipelines[i];
+          if (cPipeline.id === argId) {
+            var retVal = inflatePipelinePolicies(cPipeline);
+            return retVal;
+          }
+        }
+      }
 
       function getGatewayMaps(){
         return GatewayServices.getGatewayMaps()
           .then(function(maps) {
             $log.debug('|  refresh maps: ' + maps.length);
             maps.map(function(map) {
-              map.pipeline = GatewayServices.getPipelineDetail(map.pipelineId)
-              .then(function(detail) {
-                  map.pipeline = detail;
-                });
+              map.pipeline =getPipelineDetail(map.pipelineId);
+
+              //map.pipeline = GatewayServices.getPipelineDetail(map.pipelineId)
+              //  .then(function(detail) {
+              //    map.pipeline = detail;
+              //
+              //  });
             });
             $scope.gatewayMapCtx.gatewayMaps = maps;
             $scope.gatewayCtx.navMenus[GATEWAY_CONST.MAPPING_TYPE] = {
@@ -447,6 +483,7 @@ Gateway.controller('GatewayMainController', [
               items: maps,
               addNew: 'Mapping'
             };
+
 
             window.triggerResizeUpdate();
           });
@@ -482,7 +519,7 @@ Gateway.controller('GatewayMainController', [
 
       $scope.gatewayMapCtx = {
         currentGatewayMap: {},
-        newGatewayMap: {},
+        newGatewayMap: {verb:'ALL'},
         gatewayMaps: [],
         currentPolicies: [],
         currentPipelines: []

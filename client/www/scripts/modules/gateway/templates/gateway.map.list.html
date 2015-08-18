@@ -48,10 +48,10 @@
           </ul>
         </td>
         <td>
-          <sl-gateway-map-list-scope-display scopes="gatewayMap.scopes"></sl-gateway-map-list-scope-display>
+          <sl-gateway-map-list-scope-display scopes="gatewayMap.pipeline.scopes"></sl-gateway-map-list-scope-display>
         </td>
         <td>
-          {{ gatewayMap.targetURL }}
+          {{ gatewayMap.pipeline.targetURL }}
         </td>
         <td class="actions">
           <a href class="ui-close" ng-click="confirmDeleteGatewayMap(gatewayMap)">

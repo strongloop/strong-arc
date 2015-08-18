@@ -25,6 +25,7 @@ Gateway.controller('GatewayMapMainController', [
       $log.debug('tree branch clicked');
       // $scope.clearSelectedInstances();
     };
+
     // nav tree item clicked
     $scope.navTreeItemClicked = function(type, targetId, multiSelect) {
       $log.debug('tree item clicked');

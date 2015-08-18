@@ -16,7 +16,10 @@
           <!--<option value="HEAD">HEAD</option>-->
         <!--</select>-->
         <div dropdown class="dropdown-container">
-          <button  dropdown-toggle  data-value="{{map.verb}}"  data-id="MappingVerbSelect">
+          <button  dropdown-toggle
+                   data-value="{{map.verb}}"
+                   class="ui-btn accessory"
+                   data-id="MappingVerbSelect">
             {{map.verb}}
           </button>
           <ul class="dropdown-menu">
@@ -49,8 +52,11 @@
     <div class="form-field gateway-map-pipeline-input-container">
       <label>Pipeline</label>
       <div dropdown class="dropdown-container">
-        <button  id="simple-dropdown" dropdown-toggle data-id="MappingPipelineSelect">
-          {{map.pipelineId}}
+        <button  id="simple-dropdown"
+                 dropdown-toggle
+                 class="ui-btn accessory"
+                 data-id="MappingPipelineSelect">
+          {{map.pipelineId || 'choose a pipeline'}}
         </button>
         <ul class="dropdown-menu">
           <li ng-repeat="pipe in context.currentPipelines">

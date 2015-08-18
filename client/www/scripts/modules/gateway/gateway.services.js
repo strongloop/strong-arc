@@ -306,8 +306,16 @@ Gateway.service('GatewayServices', [
         }
       }
     };
+    /*
+    *
+    * map.pipeline = GatewayServices.getPipelineDetail(map.pipelineId)
+    *
+    *
+    *
+    * */
+
     svc.getGatewayMaps = function() {
-      return GatewayMapping.find({})
+      return GatewayMapping.find({include: 'pipelines'})
         .$promise
         .then(function(response) {
           return response;
@@ -316,6 +324,16 @@ Gateway.service('GatewayServices', [
           $log.warn('bad get all GatewayMaps: ' + JSON.stringify(error));
         })
     };
+    //svc.getGatewayMappings = function() {
+    //  return GatewayMapping.find({})
+    //    .$promise
+    //    .then(function(response) {
+    //      return response;
+    //    })
+    //    .catch(function(error) {
+    //      $log.warn('bad get all GatewayMaps: ' + JSON.stringify(error));
+    //    })
+    //};
     svc.getGatewayMapById = function(id) {
       return GatewayMapping.findById({id:id})
         .$promise
