@@ -9,8 +9,9 @@ Gateway.controller('PolicyMainController', [
   'GatewayServices',
   '$timeout',
   '$state',
+  '$modal',
   'growl',
-  function($scope, $log, GatewayServices, $timeout, $state, growl) {
+  function($scope, $log, GatewayServices, $timeout, $state, $modal, growl) {
     $log.debug('Policy Controller');
 
     $scope.policyCtx.isShowAuthPolicyForm = false;
@@ -49,16 +50,38 @@ Gateway.controller('PolicyMainController', [
     //}
 
 
-    $scope.deletePolicy = function(policy) {
-      if (confirm('delete Policy?')) {
-        GatewayServices.deletePolicy(policy.id)
-          .then(function(response) {
-            $scope.refreshPolicies();
-          });
-      }
+    $scope.confirmDeletePolicy = function(policy) {
+      var modalDlg = $modal.open({
+        templateUrl: './scripts/modules/gateway/templates/confirm.policy.delete.html',
+        size: 'md',
+        scope: $scope,
+        controller: function($scope, $modalInstance, title) {
+          $scope.isModal = true;
+          $scope.title = title;
+          $scope.policy = policy;
+          $scope.close = function() {
+            $modalInstance.dismiss();
+          };
+
+          $scope._deletePolicy = function(policy){
+            $scope.deletePolicy(policy);
+            $scope.close();
+          }
+        },
+        resolve: {
+          title: function() {
+            return 'Confirm Delete Policy';
+          }
+        }
+      });
     };
 
-
+    $scope.deletePolicy = function(policy){
+      GatewayServices.deletePolicy(policy.id)
+        .then(function(response) {
+          $scope.refreshPolicies();
+        });
+    };
 
     function inflateProperties(policy) {
 

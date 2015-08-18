@@ -2,16 +2,14 @@
 Gateway.controller('GatewayMapMainController', [
   '$scope',
   '$log',
+  '$modal',
   'GatewayServices',
-  function($scope, $log, GatewayServices) {
+  function($scope, $log, $modal, GatewayServices) {
     $log.debug('GatewayMapping Controller');
 
     $scope.gatewayMapCtx.init = function() {
-
-
-
-
     };
+
     $scope.mapPipelineDetailModal = {
       templateUrl: './scripts/modules/gateway/templates/map.pipeline.detail.html',
       position: 'bottom',
@@ -38,14 +36,37 @@ Gateway.controller('GatewayMapMainController', [
       $scope.gatewayMapCtx.isShowNewGatewayMapForm = false;
     };
 
+    $scope.confirmDeleteGatewayMap = function(gatewayMap) {
+      var modalDlg = $modal.open({
+        templateUrl: './scripts/modules/gateway/templates/confirm.map.delete.html',
+        size: 'md',
+        scope: $scope,
+        controller: function($scope, $modalInstance, title) {
+          $scope.isModal = true;
+          $scope.title = title;
+          $scope.gatewayMap = gatewayMap;
+          $scope.close = function() {
+            $modalInstance.dismiss();
+          };
 
-    $scope.deleteGatewayMap = function(gatewayMap) {
-      if (confirm('delete Gateway Map?')) {
-        GatewayServices.deleteGatewayMap(gatewayMap.id)
-          .then(function(response) {
-            $scope.refreshMappings();
-          });
-      }
+          $scope._deleteGatewayMap = function(gatewayMap){
+            $scope.deleteGatewayMap(gatewayMap);
+            $scope.close();
+          }
+        },
+        resolve: {
+          title: function() {
+            return 'Confirm Delete Gateway Map';
+          }
+        }
+      });
+    };
+
+    $scope.deleteGatewayMap = function(gatewayMap){
+      GatewayServices.deleteGatewayMap(gatewayMap.id)
+        .then(function(response) {
+          $scope.refreshMappings();
+        });
     };
 
     $scope.editGatewayMap = function(map) {

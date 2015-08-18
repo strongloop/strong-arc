@@ -103,14 +103,37 @@ Gateway.controller('PipelineMainController', [
     //  .then(function(hosts) {
     //    $scope.pipelineCtx.pipelines = hosts;
     //  });
-    $scope.deletePipeline = function(pipeline) {
-      if (confirm('delete Pipeline?')) {
-        GatewayServices.deletePipeline(pipeline.id)
-          .then(function(response) {
-           // refreshPipelines();
-            $scope.refreshPipelines();
-          });
-      }
+    $scope.confirmDeletePipeline = function(pipeline) {
+      var modalDlg = $modal.open({
+        templateUrl: './scripts/modules/gateway/templates/confirm.pipeline.delete.html',
+        size: 'md',
+        scope: $scope,
+        controller: function($scope, $modalInstance, title) {
+          $scope.isModal = true;
+          $scope.title = title;
+          $scope.pipeline = pipeline;
+          $scope.close = function() {
+            $modalInstance.dismiss();
+          };
+
+          $scope._deletePipeline = function(pipeline){
+            $scope.deletePipeline(pipeline);
+            $scope.close();
+          }
+        },
+        resolve: {
+          title: function() {
+            return 'Confirm Delete Pipeline';
+          }
+        }
+      });
+    };
+
+    $scope.deletePipeline = function(pipeline){
+      GatewayServices.deletePipeline(pipeline.id)
+        .then(function(response) {
+          $scope.refreshPipelines();
+        });
     };
 
     $scope.editPipeline = function(pipeline) {
