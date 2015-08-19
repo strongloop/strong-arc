@@ -26,10 +26,6 @@ Gateway.controller('PipelineMainController', [
     //$scope.showAddNewPipelineForm = function() {
     //  $scope.pipelineCtx.isShowNewPipelineForm = true;
     //};
-    $scope.clearPipelineForm = function() {
-      resetCurrentPipeline();
-      $scope.pipelineCtx.isShowNewPipelineForm = false;
-    };
 
     //
     //$scope.contextModal = {

@@ -277,6 +277,7 @@ Gateway.controller('GatewayMainController', [
     }
 
     $scope.getPipelineRenderPolicy = getPipelineRenderPolicy;
+
     function inflatePipelinePolicies(pipeline) {
       pipeline.policies = [];
       pipeline.policyIds.map(function(policyId) {

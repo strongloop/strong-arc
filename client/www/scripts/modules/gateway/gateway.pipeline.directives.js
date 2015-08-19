@@ -105,8 +105,7 @@ Gateway.directive('slPipelineForm', ['$modal',
           };
 
           $scope.saveCurrentPipeline = function(pipeline){
-
-
+            //handle rename
             if ($scope.context.originalInstance.name && ($scope.context.originalInstance.name !== pipeline.name)) {
               GatewayServices.renamePipeline(pipeline, pipeline.name, pipeline.oldName)
                 .$promise
@@ -120,6 +119,7 @@ Gateway.directive('slPipelineForm', ['$modal',
                 });
             }
             else {
+              //save new pipeline
               GatewayServices.savePipeline(pipeline)
                 .$promise
                 .then(function(data) {
@@ -128,27 +128,19 @@ Gateway.directive('slPipelineForm', ['$modal',
                 });
 
             }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
           };
+
+
+          $scope.clearPipelineForm = function() {
+            GatewayServices.getPipelineDetail($scope.pipeline.id)
+              .then(function(data){
+                $scope.pipeline = data;
+                $scope.pipeline.renderPolicies = $scope.pipeline.policyIds.map(function(policyId){
+                  return getPipelineRenderPolicy(policyId);
+                });
+              });
+          };
+
 
           //helper functions
           function getPolicies(){
