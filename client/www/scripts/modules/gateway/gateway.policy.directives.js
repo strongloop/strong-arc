@@ -45,7 +45,7 @@ Gateway.directive('slPolicyForm', [
                   $modalInstance.dismiss();
                 };
 
-                $scope._savePolicy = function(pipeline){
+                $scope._savePolicy = function(policy){
                   $scope.saveCurrentPolicy(policy);
                   $scope.close();
                 }
@@ -70,7 +70,7 @@ Gateway.directive('slPolicyForm', [
                       growl.addSuccessMessage('Policy Saved');
                       $scope.$parent.refreshPolicies();
                     });
-                })
+                });
             }
             else {
               GatewayServices.savePolicy(policy)

@@ -7,14 +7,6 @@
       </div>
       <div>
         <label>Verb</label>
-        <!--<select  class="form-control" ng-model="map.verb">-->
-          <!--<option value="ALL">ALL</option>-->
-          <!--<option value="GET">GET</option>-->
-          <!--<option value="PUT">PUT</option>-->
-          <!--<option value="POST">POST</option>-->
-          <!--<option value="DELETE">DELETE</option>-->
-          <!--<option value="HEAD">HEAD</option>-->
-        <!--</select>-->
         <div dropdown class="dropdown-container">
           <button  dropdown-toggle
                    data-value="{{map.verb}}"
@@ -101,12 +93,16 @@
     </table>
 
     <div>
-      <button class="ui-btn secondary small"
-              ng-click="clearGatewayMapForm()"
-              ng-show="!hidebuttons">cancel</button>
-      <button class="ui-btn primary small"
-              ng-click="saveCurrentGatewayMap(map)"
-              ng-show="!hidebuttons">Add Map</button>
+      <!--<button class="ui-btn secondary small"-->
+              <!--ng-click="clearGatewayMapForm()"-->
+              <!--ng-show="!hidebuttons">cancel</button>-->
+      <!--<button class="ui-btn primary small"-->
+              <!--ng-click="saveCurrentGatewayMap(map)"-->
+              <!--ng-show="!hidebuttons">Add Map</button>-->
+      <button ng-hide="hidebuttons"
+              ng-disabled="!isMappingDirty"
+              class="ui-btn primary small pull-right"
+              ng-click="confirmSaveCurrentMapping(map)">Save</button>
     </div>
   </form>
 </div>

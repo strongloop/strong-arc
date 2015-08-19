@@ -43,80 +43,146 @@ Gateway.directive('slPipelineForm', ['$modal',
         hidebuttons: '=',
         isModal: '='
       },
-      controller: function($scope, GatewayServices) {
-        $scope.availablePolicies = [];
-        $scope.showAddPolicyMenu = false;
-
-        getPolicies();
-
-        function getPipelineRenderPolicy(policyId) {
-          return _.findWhere($scope.context.policies, { id: policyId });
-        }
-
-        $scope.addNewPolicyToPipeline = function(policy, toggler){
-          $scope.pipeline.policyIds = $scope.pipeline.policyIds || [];
-          $scope.pipeline.policyIds.push(policy.id);
-          $scope.pipeline.renderPolicies = $scope.pipeline.policyIds.map(function(policyId){
-            return getPipelineRenderPolicy(policyId);
-          });
-
+      controller: [
+        '$scope',
+        'GatewayServices',
+        function($scope, GatewayServices) {
+          $scope.availablePolicies = [];
           $scope.showAddPolicyMenu = false;
-        };
+          $scope.isPipelineDirty = false;
+          $scope.isPipelineNameDirty = false;
+
+          function getPipelineRenderPolicy(policyId) {
+            return _.findWhere($scope.context.policies, { id: policyId });
+          }
+
+          $scope.addNewPolicyToPipeline = function(policy, toggler){
+            $scope.pipeline.policyIds = $scope.pipeline.policyIds || [];
+            $scope.pipeline.policyIds.push(policy.id);
+            $scope.pipeline.renderPolicies = $scope.pipeline.policyIds.map(function(policyId){
+              return getPipelineRenderPolicy(policyId);
+            });
+
+            $scope.showAddPolicyMenu = false;
+          };
 
 
-        $scope.toggleShowAddPolicyMenu = function(){
-          $scope.showAddPolicyMenu = !$scope.showAddPolicyMenu;
-        };
+          $scope.toggleShowAddPolicyMenu = function(){
+            $scope.showAddPolicyMenu = !$scope.showAddPolicyMenu;
+          };
 
-        $scope.deletePolicy = function(policy){
-          var idx = $scope.pipeline.policyIds.indexOf(policy.id);
-          var renderIdx = _.findWhere($scope.pipeline.renderPolicies, { id: policy.id });
+          $scope.deletePolicy = function(policy){
+            var idx = $scope.pipeline.policyIds.indexOf(policy.id);
+            var renderIdx = _.findWhere($scope.pipeline.renderPolicies, { id: policy.id });
 
-          $scope.pipeline.policyIds.splice(idx, 1);
-          $scope.pipeline.renderPolicies.splice(renderIdx, 1);
-        };
+            $scope.pipeline.policyIds.splice(idx, 1);
+            $scope.pipeline.renderPolicies.splice(renderIdx, 1);
+          };
 
-        $scope.confirmSavePipeline = function(pipeline){
-          var modalDlg = $modal.open({
-            templateUrl: './scripts/modules/gateway/templates/confirm.pipeline.save.html',
-            size: 'md',
-            scope: $scope,
-            controller: function($scope, $modalInstance, title) {
-              $scope.isModal = true;
-              $scope.title = title;
-              $scope.close = function() {
-                $modalInstance.dismiss();
-              };
+          $scope.confirmSavePipeline = function(pipeline){
+            var modalDlg = $modal.open({
+              templateUrl: './scripts/modules/gateway/templates/confirm.pipeline.save.html',
+              size: 'md',
+              scope: $scope,
+              controller: function($scope, $modalInstance, title) {
+                $scope.isModal = true;
+                $scope.title = title;
+                $scope.close = function() {
+                  $modalInstance.dismiss();
+                };
 
-              $scope._savePipeline = function(pipeline){
-                $scope.savePipeline(pipeline);
-                $scope.close();
+                $scope._savePipeline = function(pipeline){
+                  $scope.saveCurrentPipeline(pipeline);
+                  $scope.close();
+                }
+              },
+              resolve: {
+                title: function() {
+                  return 'Confirm Pipeline Edit';
+                }
               }
-            },
-            resolve: {
-              title: function() {
-                return 'Confirm Pipeline Edit';
+            });
+          };
+
+          $scope.saveCurrentPipeline = function(pipeline){
+
+
+            if ($scope.context.originalInstance.name && ($scope.context.originalInstance.name !== pipeline.name)) {
+              GatewayServices.renamePipeline(pipeline, pipeline.name, pipeline.oldName)
+                .$promise
+                .then(function(policy) {
+                  GatewayServices.savePipeline(pipeline)
+                    .$promise
+                    .then(function(data) {
+                      $scope.pipeline = data;
+                      $scope.$parent.refreshPipelines();
+                    });
+                });
+            }
+            else {
+              GatewayServices.savePipeline(pipeline)
+                .$promise
+                .then(function(data) {
+                  $scope.pipeline = data;
+                  $scope.$parent.refreshPipelines();
+                });
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          };
+
+          //helper functions
+          function getPolicies(){
+            GatewayServices.getPolicies()
+              .then(function(data){
+                $scope.availablePolicies = data;
+              });
+          }
+        }
+      ],
+      link: function(scope, el, attrs) {
+        /*
+         *
+         * Dirty check
+         *
+         * */
+        scope.$watch('pipeline', function(newVal, oldVal) {
+          scope.isPipelineDirty = false;
+          scope.isRename = false;
+          if (newVal.id && oldVal.id) {
+
+            if (newVal !== oldVal) {
+              if (!angular.equals(scope.context.originalInstance, newVal)) {
+                scope.isPipelineDirty = true;
+
               }
             }
-          });
-        };
+            if (newVal.name !== scope.context.originalInstance.name) {
+              newVal.oldName = scope.context.originalInstance.name;
+              scope.isPipelineNameDirty = true;
+            }
+          }
 
-        $scope.savePipeline = function(pipeline){
-          GatewayServices.savePipeline($scope.pipeline)
-            .$promise
-            .then(function(data) {
-              $scope.pipeline = data;
-              $scope.$parent.refreshPipelines();
-            });
-        };
-
-        //helper functions
-        function getPolicies(){
-          GatewayServices.getPolicies()
-            .then(function(data){
-              $scope.availablePolicies = data;
-            });
-        }
+        }, true);
       }
     }
   }

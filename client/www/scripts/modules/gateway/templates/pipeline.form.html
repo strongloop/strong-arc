@@ -57,7 +57,7 @@
       <sl-ui-menu-dropdown toggler="showAddPolicyMenu">
         <section class="menu">
           <ul>
-            <li ng-repeat="policy in availablePolicies track by $index">
+            <li ng-repeat="policy in context.policies track by $index">
               <a href ng-click="addNewPolicyToPipeline(policy)" data-id="{{policy.id}}">{{policy.name}} - {{policy.type}}</a></li>
           </ul>
         </section>

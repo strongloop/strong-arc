@@ -74,7 +74,6 @@ Gateway.controller('GatewayMapMainController', [
       $scope.gatewayMapCtx.currentGatewayMap = map;
       $scope.gatewayCtx.currentView = GATEWAY_CONST.MAPPING_TYPE;
       $scope.gatewayCtx.currentInstanceId = map.id;
-
     };
 
 

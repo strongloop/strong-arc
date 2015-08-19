@@ -311,6 +311,7 @@ Gateway.controller('GatewayMainController', [
           break;
 
         case GATEWAY_CONST.PIPELINE_TYPE :
+          $scope.refreshPolicies();
           $scope.showAddNewPipelineForm();
           break;
 
@@ -581,7 +582,7 @@ Gateway.controller('GatewayMainController', [
             $scope.gatewayMapCtx.currentGatewayMap = GatewayServices.getGatewayMapById($scope.gatewayCtx.currentInstanceId)
               .then(function(map) {
                 if (map.pipelineId) {
-                  map.pipeline = GatewayServices.getPipelineDetail(map.pipelineId);
+                  map.pipeline = getPipelineDetail(map.pipelineId);
                 }
                 $scope.gatewayMapCtx.originalInstance = angular.copy(map);
                 $scope.gatewayMapCtx.currentGatewayMap = map;

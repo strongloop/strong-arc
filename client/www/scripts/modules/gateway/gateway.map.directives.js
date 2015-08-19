@@ -8,8 +8,8 @@ Gateway.directive('slGatewayMapForm', [
   'GatewayServices',
   '$log',
   'growl',
-  '$state',
-  function(GatewayServices,$log,growl,$state) {
+  '$modal',
+  function(GatewayServices,$log,growl,$modal) {
     return {
       restrict: 'E',
       scope: {
@@ -21,7 +21,8 @@ Gateway.directive('slGatewayMapForm', [
       controller: ['$scope',
         function($scope) {
 
-          $scope.isMapDirty = false;
+          $scope.isMappingDirty = false;
+          $scope.isMappingNameDirty = false;
           $scope.originalMap = {};
 
           $scope.setMapPipelineId = function(map, pipeId) {
@@ -29,7 +30,6 @@ Gateway.directive('slGatewayMapForm', [
               map.pipelineId = pipeId;
             }
           };
-
 
           $scope.changeMapVerb = function(map, verb) {
             map.verb = verb;
@@ -44,38 +44,70 @@ Gateway.directive('slGatewayMapForm', [
               });
           }
 
-          $scope.init = function() {
-            var xps = $scope.context.currentPipelines;
-            $scope.originalMap = angular.copy($scope.map);
-          };
-          $scope.init();
+          $scope.confirmSaveCurrentMapping = function(map){
+            var x = map;
+            var modalDlg = $modal.open({
+              templateUrl: './scripts/modules/gateway/templates/confirm.mapping.save.html',
+              size: 'md',
+              scope: $scope,
+              controller: function($scope, $modalInstance, title) {
+                $scope.isModal = true;
+                $scope.title = title;
+                $scope.close = function() {
+                  $modalInstance.dismiss();
+                };
 
-          $scope.saveCurrentGatewayMap = function(map) {
+                $scope._saveMapping = function(xxx){
+                  $scope.saveCurrentMapping(map);
+                  $scope.close();
+                }
+              },
+              resolve: {
+                title: function() {
+                  return 'Confirm Mapping Edit';
+                }
+              }
+            });
+
+          };
+
+          $scope.saveCurrentMapping = function(map) {
             if (map.name && map.endpoint) {
               if (map.pipelineId && map.pipelineId.id) {
                 map.pipelineId = map.pipelineId.id;
               }
+              // check if name has changed
+              /*
+              *
+              *
 
-              if ($scope.isMapDirty) {
-                if (confirm('do you want to make this change')) {
-                  GatewayServices.saveGatewayMap(map)
-                    .$promise
-                    .then(function(map) {
-                      growl.addSuccessMessage('Gateway Map Saved');
-                      //resetCurrentPolicy();
-
-                    });
-                }
-              }
-              else {
+               *
+              * */
+              //if ($scope.context.originalInstance.name && ($scope.context.originalInstance.name !== map.name)) {
+              //  // rename in effect
+              //  GatewayServices.renameMapping(map, map.name, $scope.context.originalInstance.name)
+              //    .$promise
+              //    .then(function(map) {
+              //      GatewayServices.saveGatewayMap(map)
+              //        .$promise
+              //        .then(function(map) {
+              //          growl.addSuccessMessage('Mapping Saved');
+              //          $scope.$parent.refreshMappings();
+              //        });
+              //    });
+              //}
+              //else {
                 GatewayServices.saveGatewayMap(map)
                   .$promise
                   .then(function(map) {
                     growl.addSuccessMessage('Gateway Map Saved');
-                    //resetCurrentPolicy();
+                    $scope.$parent.refreshMappings();
 
                   });
-              }
+            //  }
+
+
+
             }
           };
         }
@@ -89,6 +121,35 @@ Gateway.directive('slGatewayMapForm', [
                 scope.map.pipeline = pipe;
               });
 
+          }
+
+        }, true);
+        /*
+         *
+         * Dirty check
+         *
+         * */
+        scope.$watch('map', function(newVal, oldVal) {
+          scope.isMappingDirty = false;
+          scope.isRename = false;
+          if (newVal && (newVal.id && oldVal.id)) {
+
+            if (newVal !== oldVal) {
+              if (newVal.pipeline.isActive) {
+                scope.context.originalInstance.pipeline.isActive = true;
+              }
+              if (!angular.equals(scope.context.originalInstance, newVal)) {
+                scope.isMappingDirty = true;
+
+              }
+              else {
+                $log.debug('|||||   IIm freeeasdf');
+              }
+            }
+            if (newVal.name !== scope.context.originalInstance.name) {
+              newVal.oldName = scope.context.originalInstance.name;
+              scope.isMappingNameDirty = true;
+            }
           }
 
         }, true);
@@ -140,7 +201,13 @@ Gateway.directive('slGatewayMapMainView', [
       restrict: 'E',
       templateUrl: './scripts/modules/gateway/templates/gateway.map.main.html',
       link: function(scope, el, attrs) {
-
+        scope.$watch('gatewayCtx.currentInstanceId', function(newVal, oldVal) {
+          if (scope.gatewayCtx.currentView === GATEWAY_CONST.MAPPING_TYPE) {
+            if (newVal !== oldVal) {
+              scope.setMainNav(GATEWAY_CONST.MAPPING_TYPE, newVal);
+            }
+          }
+        });
       }
     }
   }

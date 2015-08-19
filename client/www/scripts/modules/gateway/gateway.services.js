@@ -52,6 +52,7 @@ Gateway.service('GatewayServices', [
       });
 
     };
+
     svc.savePolicy = function(policy) {
       if (policy) {
         // update
@@ -137,6 +138,7 @@ Gateway.service('GatewayServices', [
     svc.savePipeline = function(pipeline) {
       if (pipeline) {
         // update
+        delete pipeline.isActive;
         if (pipeline.id) {
           delete pipeline._id;
           return Pipeline.upsert(pipeline,
@@ -283,6 +285,27 @@ Gateway.service('GatewayServices', [
           break;
         default:
       }
+    };
+
+    svc.renamePipeline = function(pipeline, newName, oldName) {
+
+      return Pipeline.rename({}, {newName:newName, currentName:oldName}, function(err, response) {
+        if (err) {
+          $log.warn('bad pipeline rename: ' + JSON.stringify(err));
+          return;
+        }
+        return response;
+      });
+    };
+    svc.renameMapping = function(mapping, newName, oldName) {
+
+      return GatewayMapping.rename({}, {newName:newName, currentName:oldName}, function(err, response) {
+        if (err) {
+          $log.warn('bad mapping rename: ' + JSON.stringify(err));
+          return;
+        }
+        return response;
+      });
     };
     svc.saveGatewayMap = function(gatewayMap) {
       if (gatewayMap) {
