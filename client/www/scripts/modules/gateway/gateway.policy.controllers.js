@@ -146,16 +146,31 @@ Gateway.controller('PolicyMainController', [
         policy = scrubNonTypeData(policy);
 
         if (!policy.name) {
-          policy = policy.type + '-' + Math.floor((Math.random() * 10000) + 1);
+          policy.name = policy.type + '-' + Math.floor((Math.random() * 10000) + 1);
         }
 
-        policy = GatewayServices.savePolicy(policy)
-          .$promise
-          .then(function(response) {
-            resetCurrentPolicy();
-            refreshPolicies();
-            turnOffOtherPolicyEdits();
-          });
+        if (policy.isPolicyNameDirty) {
+          GatewayServices.renamePolicy(policy, policy.name, policy.oldName)
+          .then(function(policy) {
+              policy = GatewayServices.savePolicy(policy)
+                .$promise
+                .then(function(response) {
+                  resetCurrentPolicy();
+                  refreshPolicies();
+                  turnOffOtherPolicyEdits();
+                });
+            })
+        }
+        else {
+          policy = GatewayServices.savePolicy(policy)
+            .$promise
+            .then(function(response) {
+              resetCurrentPolicy();
+              refreshPolicies();
+              turnOffOtherPolicyEdits();
+            });
+
+        }
 
       }
       else {

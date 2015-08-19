@@ -41,6 +41,17 @@ Gateway.service('GatewayServices', [
           $log.warn('bad get  instance for cloning: ' + JSON.stringify(error));
         });
     };
+    svc.renamePolicy = function(policy, newName, oldName) {
+
+      return Policy.rename({}, {newName:newName, currentName:oldName}, function(err, response) {
+        if (err) {
+          $log.warn('bad policy rename: ' + JSON.stringify(err));
+          return;
+        }
+        return response;
+      });
+
+    };
     svc.savePolicy = function(policy) {
       if (policy) {
         // update

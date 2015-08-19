@@ -22,12 +22,7 @@ Gateway.directive('slPolicyForm', [
         function($scope, $modal) {
 
           $scope.isPolicyDirty = false;
-          $scope.originalPolicy = {};
-
-          $scope.init = function() {
-            $scope.originalPolicy = angular.copy($scope.policy);
-          };
-          $scope.init();
+          $scope.isPolicyNameDirty = false;
 
           $scope._saveNewPolicy = function(policy){
             $scope.saveNewPolicy({ policy: policy });
@@ -65,12 +60,28 @@ Gateway.directive('slPolicyForm', [
           };
 
           $scope.saveCurrentPolicy = function(policy) {
+            if ($scope.context.originalInstance.name && ($scope.context.originalInstance.name !== policy.name)) {
+              GatewayServices.renamePolicy(policy, policy.name, policy.oldName)
+                .$promise
+                .then(function(policy) {
+                  GatewayServices.savePolicy(policy)
+                    .$promise
+                    .then(function(policy) {
+                      growl.addSuccessMessage('Policy Saved');
+                      $scope.$parent.refreshPolicies();
+                    });
+                })
+            }
+            else {
               GatewayServices.savePolicy(policy)
                 .$promise
                 .then(function(policy) {
                   growl.addSuccessMessage('Policy Saved');
                   $scope.$parent.refreshPolicies();
                 });
+
+            }
+
           };
         }
       ],
@@ -84,6 +95,7 @@ Gateway.directive('slPolicyForm', [
          * */
         scope.$watch('policy', function(newVal, oldVal) {
           scope.isPolicyDirty = false;
+          scope.isRename = false;
           if (newVal.id && oldVal.id) {
 
             if (newVal !== oldVal) {
@@ -91,6 +103,10 @@ Gateway.directive('slPolicyForm', [
                 scope.isPolicyDirty = true;
 
               }
+            }
+            if (newVal.name !== scope.context.originalInstance.name) {
+              newVal.oldName = scope.context.originalInstance.name;
+              scope.isPolicyNameDirty = true;
             }
           }
 

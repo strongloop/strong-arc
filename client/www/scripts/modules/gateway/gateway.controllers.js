@@ -443,8 +443,6 @@ Gateway.controller('GatewayMainController', [
               });
             });
 
-            $log.log('official pipelines 1', angular.extend({}, pipelines));
-
             //$timeout(function(){
             $log.log('official pipelines 2', angular.extend({}, pipelines));
             $scope.pipelineCtx.pipelines = pipelines;
@@ -467,13 +465,8 @@ Gateway.controller('GatewayMainController', [
           .then(function(maps) {
             $log.debug('|  refresh maps: ' + maps.length);
             maps.map(function(map) {
-              map.pipeline =getPipelineDetail(map.pipelineId);
+              map.pipeline = getPipelineDetail(map.pipelineId);
 
-              //map.pipeline = GatewayServices.getPipelineDetail(map.pipelineId)
-              //  .then(function(detail) {
-              //    map.pipeline = detail;
-              //
-              //  });
             });
             $scope.gatewayMapCtx.gatewayMaps = maps;
             $scope.gatewayCtx.navMenus[GATEWAY_CONST.MAPPING_TYPE] = {
@@ -520,6 +513,7 @@ Gateway.controller('GatewayMainController', [
         currentGatewayMap: {},
         newGatewayMap: {verb:'ALL'},
         gatewayMaps: [],
+        originalInstance: {},
         currentPolicies: [],
         currentPipelines: []
       };
@@ -530,6 +524,7 @@ Gateway.controller('GatewayMainController', [
       $scope.pipelineCtx = {
         currentPipeline: {},
         currentInstanceId: $state.params.id,
+        originalInstance: {},
         newPolicyName: '',
         newPolicy: {},
         pipelines: [],
@@ -542,6 +537,7 @@ Gateway.controller('GatewayMainController', [
       $scope.policyCtx = {
         currentPolicy: {}, //edit
         newPolicy: {}, //new
+        originalInstance: {},
         defaultRateScale: {name:'second', display: 'second(s)'},
         policies: [],
         deployedApps: [],
@@ -587,6 +583,7 @@ Gateway.controller('GatewayMainController', [
                 if (map.pipelineId) {
                   map.pipeline = GatewayServices.getPipelineDetail(map.pipelineId);
                 }
+                $scope.gatewayMapCtx.originalInstance = angular.copy(map);
                 $scope.gatewayMapCtx.currentGatewayMap = map;
               });
             break;
@@ -598,6 +595,7 @@ Gateway.controller('GatewayMainController', [
                 $scope.pipelineCtx.currentPipeline.renderPolicies = $scope.pipelineCtx.currentPipeline.policyIds.map(function(policyId){
                   return getPipelineRenderPolicy(policyId);
                 });
+                $scope.pipelineCtx.originalInstance = angular.copy($scope.pipelineCtx.currentPipeline);
               });
 
             break;
@@ -607,6 +605,7 @@ Gateway.controller('GatewayMainController', [
             $scope.policyCtx.currentPolicy = GatewayServices.getPolicyById($scope.gatewayCtx.currentInstanceId)
               .then(function(policy) {
                 $scope.policyCtx.currentPolicy = policy;
+                $scope.policyCtx.originalInstance = angular.copy(policy);
               });
 
             break;
@@ -683,6 +682,9 @@ Gateway.controller('GatewayMainController', [
       }
       else {
         $scope.gatewayCtx.currentInstanceId = null;
+        $scope.gatewayMapCtx.originalInstance = {};
+        $scope.policyCtx.originalInstance = {};
+        $scope.pipelineCtx.originalInstance = {};
         $scope._refreshDataSets();
       }
       $scope.main();
