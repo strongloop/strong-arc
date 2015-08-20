@@ -1,29 +1,32 @@
 <div data-id="GatewayMapFormContainer">
   <form class="ui-form">
     <div data-id="GatewayMapFormTopRow">
-      <div>
+      <div class="form-field">
         <label>Mapping Name</label>
         <input class="ui-input" ng-model="map.name" type="text" placeholder="name" />
       </div>
-      <div class="ui-form no-border ui-menu-container">
+
+      <div class="form-field">
         <label>Verb</label>
-        <input type="text"
-               class="ui-input toggler"
-               ng-mousedown="showDropdownVerb = true"
-               ng-value="map.verb || 'Select Verb'">
-        <sl-ui-menu-dropdown toggler="showDropdownVerb">
-          <section class="menu">
-            <ul>
-              <li ng-class="{ selected: map.verb == 'ALL' }"><a href ng-click="changeMapVerb(map, 'ALL')">ALL</a></li>
-              <li ng-class="{ selected: map.verb == 'GET' }"><a href ng-click="changeMapVerb(map, 'GET')">GET</a></li>
-              <li ng-class="{ selected: map.verb == 'PUT' }"><a href ng-click="changeMapVerb(map, 'PUT')">PUT</a></li>
-              <li ng-class="{ selected: map.verb == 'POST' }"><a href ng-click="changeMapVerb(map, 'POST')">POST</a></li>
-              <li ng-class="{ selected: map.verb == 'DELETE' }"><a href ng-click="changeMapVerb(map, 'DELETE')">DELETE</a></li>
-            </ul>
-          </section>
-        </sl-ui-menu-dropdown>
+        <div class="ui-menu-container">
+          <input type="text"
+                 class="ui-input toggler"
+                 ng-mousedown="showDropdownVerb = true"
+                 ng-value="map.verb || 'Select Verb'">
+          <sl-ui-menu-dropdown toggler="showDropdownVerb">
+            <section class="menu">
+              <ul>
+                <li ng-class="{ selected: map.verb == 'ALL' }"><a href ng-click="changeMapVerb(map, 'ALL')">ALL</a></li>
+                <li ng-class="{ selected: map.verb == 'GET' }"><a href ng-click="changeMapVerb(map, 'GET')">GET</a></li>
+                <li ng-class="{ selected: map.verb == 'PUT' }"><a href ng-click="changeMapVerb(map, 'PUT')">PUT</a></li>
+                <li ng-class="{ selected: map.verb == 'POST' }"><a href ng-click="changeMapVerb(map, 'POST')">POST</a></li>
+                <li ng-class="{ selected: map.verb == 'DELETE' }"><a href ng-click="changeMapVerb(map, 'DELETE')">DELETE</a></li>
+              </ul>
+            </section>
+          </sl-ui-menu-dropdown>
+        </div>
       </div>
-      <div>
+      <div class="form-field">
         <label>Url Pattern</label>
         <input ng-model="map.endpoint"
                type="text"
@@ -31,23 +34,25 @@
                placeholder="endpoint" />
       </div>
     </div>
-    <div class="ui-form no-border ui-menu-container">
+    <div class="form-field">
       <label>Pipeline</label>
-      <input type="text"
-             class="ui-input toggler"
-             ng-mousedown="showDropdownPipeline = true"
-             ng-value="map.pipelineId || 'Choose a pipeline'">
-      <sl-ui-menu-dropdown toggler="showDropdownPipeline">
-        <section class="menu">
-          <ul>
-            <li
-              ng-repeat="pipe in context.currentPipelines"
-              ng-class="{ selected: map.pipelineId == pipe.id }">
-              <a href ng-click="setMapPipelineId(map, pipe.id)">{{pipe.name}}</a>
-            </li>
-          </ul>
-        </section>
-      </sl-ui-menu-dropdown>
+      <div class="ui-menu-container">
+        <input type="text"
+               class="ui-input toggler"
+               ng-mousedown="showDropdownPipeline = true"
+               ng-value="map.pipelineId || 'Choose a pipeline'">
+        <sl-ui-menu-dropdown toggler="showDropdownPipeline">
+          <section class="menu">
+            <ul>
+              <li
+                ng-repeat="pipe in context.currentPipelines"
+                ng-class="{ selected: map.pipelineId == pipe.id }">
+                <a href ng-click="setMapPipelineId(map, pipe.id)">{{pipe.name}}</a>
+              </li>
+            </ul>
+          </section>
+        </sl-ui-menu-dropdown>
+      </div>
     </div>
 
     <!-- pipeline table -->
