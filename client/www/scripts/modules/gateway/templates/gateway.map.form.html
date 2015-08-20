@@ -3,60 +3,54 @@
     <div data-id="GatewayMapFormTopRow">
       <div>
         <label>Mapping Name</label>
-        <input class="gateway-map-main-input" ng-model="map.name" type="text" placeholder="name" />
+        <input class="ui-input" ng-model="map.name" type="text" placeholder="name" />
       </div>
-      <div>
+      <div class="ui-form no-border ui-menu-container">
         <label>Verb</label>
-        <div dropdown class="dropdown-container">
-          <button  dropdown-toggle
-                   data-value="{{map.verb}}"
-                   class="ui-btn accessory"
-                   data-id="MappingVerbSelect">
-            {{map.verb}}
-          </button>
-          <ul class="dropdown-menu">
-            <li>
-              <button class="link-cmd" ng-click="changeMapVerb(map, 'ALL')" data-id="ALL">ALL</button>
-            </li>
-            <li>
-              <button class="link-cmd" ng-click="changeMapVerb(map, 'GET')" data-id="GET">GET</button>
-            </li>
-            <li>
-              <button class="link-cmd" ng-click="changeMapVerb(map, 'PUT')" data-id="PUT">PUT</button>
-            </li>
-            <li>
-              <button class="link-cmd" ng-click="changeMapVerb(map, 'POST')" data-id="POST">POST</button>
-            </li>
-            <li>
-              <button class="link-cmd" ng-click="changeMapVerb(map, 'DELETE')" data-id="DELETE">DELETE</button>
-            </li>
-          </ul>
-        </div>
+        <input type="text"
+               class="ui-input toggler"
+               ng-mousedown="showDropdownVerb = true"
+               ng-value="map.verb || 'Select Verb'">
+        <sl-ui-menu-dropdown toggler="showDropdownVerb">
+          <section class="menu">
+            <ul>
+              <li ng-class="{ selected: map.verb == 'ALL' }"><a href ng-click="changeMapVerb(map, 'ALL')">ALL</a></li>
+              <li ng-class="{ selected: map.verb == 'GET' }"><a href ng-click="changeMapVerb(map, 'GET')">GET</a></li>
+              <li ng-class="{ selected: map.verb == 'PUT' }"><a href ng-click="changeMapVerb(map, 'PUT')">PUT</a></li>
+              <li ng-class="{ selected: map.verb == 'POST' }"><a href ng-click="changeMapVerb(map, 'POST')">POST</a></li>
+              <li ng-class="{ selected: map.verb == 'DELETE' }"><a href ng-click="changeMapVerb(map, 'DELETE')">DELETE</a></li>
+            </ul>
+          </section>
+        </sl-ui-menu-dropdown>
       </div>
       <div>
         <label>Url Pattern</label>
         <input ng-model="map.endpoint"
                type="text"
-               class="gateway-map-main-input"
+               class="ui-input"
                placeholder="endpoint" />
       </div>
     </div>
-    <div class="form-field gateway-map-pipeline-input-container">
+    <div class="ui-form no-border ui-menu-container">
       <label>Pipeline</label>
-      <div dropdown class="dropdown-container">
-        <button  id="simple-dropdown"
-                 dropdown-toggle
-                 class="ui-btn accessory"
-                 data-id="MappingPipelineSelect">
-          {{map.pipelineId || 'choose a pipeline'}}
-        </button>
-        <ul class="dropdown-menu">
-          <li ng-repeat="pipe in context.currentPipelines">
-            <button class="link-cmd" data-id="{{pipe.id}}" ng-click="setMapPipelineId(map, pipe.id)">{{pipe.name}}</button>
-          </li>
-        </ul>
-      </div>
+      <input type="text"
+             class="ui-input toggler"
+             ng-mousedown="showDropdownPipeline = true"
+             ng-value="map.pipelineId || 'Choose a pipeline'">
+      <sl-ui-menu-dropdown toggler="showDropdownPipeline">
+        <section class="menu">
+          <ul>
+            <li
+              ng-repeat="pipe in context.currentPipelines"
+              ng-class="{ selected: map.pipelineId == pipe.id }">
+              <a href ng-click="setMapPipelineId(map, pipe.id)">{{pipe.name}}</a>
+            </li>
+          </ul>
+        </section>
+      </sl-ui-menu-dropdown>
     </div>
+
+    <!-- pipeline table -->
     <table class="ui-table" ng-show="map.pipelineId">
       <thead>
         <tr>

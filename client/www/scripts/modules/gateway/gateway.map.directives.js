@@ -21,18 +21,24 @@ Gateway.directive('slGatewayMapForm', [
       controller: ['$scope',
         function($scope) {
 
+          $scope.showDropdownPipeline = false;
+          $scope.searchTextVerb = '';
+          $scope.showDropdownVerb = false;
           $scope.isMappingDirty = false;
           $scope.isMappingNameDirty = false;
           $scope.originalMap = {};
 
           $scope.setMapPipelineId = function(map, pipeId) {
+            $scope.showDropdownPipeline = false;
             if (map && pipeId) {
               map.pipelineId = pipeId;
+
             }
           };
 
           $scope.changeMapVerb = function(map, verb) {
             map.verb = verb;
+            $scope.showDropdownVerb = false;
           };
 
           function refreshMaps() {
