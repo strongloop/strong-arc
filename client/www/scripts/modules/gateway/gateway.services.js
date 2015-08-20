@@ -13,7 +13,7 @@ Gateway.service('GatewayServices', [
     *
     * */
     svc.deletePolicy = function(policyId) {
-      return Policy.deleteById({id:policyId})
+      return Policy.deleteByName({name:policyId})
         .$promise
         .then(function(response) {
           return response;
@@ -107,7 +107,7 @@ Gateway.service('GatewayServices', [
 
 
     svc.deletePipeline = function(pipelineId) {
-      return Pipeline.deleteById({id:pipelineId})
+      return Pipeline.deleteByName({name:pipelineId})
         .$promise
         .then(function(response) {
           return response;
@@ -289,9 +289,9 @@ Gateway.service('GatewayServices', [
 
     svc.renamePipeline = function(pipeline, newName, oldName) {
 
-      return Pipeline.rename({}, {newName:newName, currentName:oldName}, function(err, response) {
+      return GatewayMapping.rename({}, {newName:newName, currentName:oldName}, function(err, response) {
         if (err) {
-          $log.warn('bad pipeline rename: ' + JSON.stringify(err));
+          $log.warn('bad mapping rename: ' + JSON.stringify(err));
           return;
         }
         return response;
