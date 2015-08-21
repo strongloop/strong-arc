@@ -105,7 +105,7 @@ describe('model-definition-interactions', function() {
       var mainTreeNavView = new ComposerViews.MainTreeNavView();
       var modelEditorView = new ComposerViews.ModelEditorView();
 
-      browser.sleep(750);
+      browser.driver.sleep(750);
       expect(mainTreeNavView.modelNavRows.count()).toEqual(1);
 
       mainTreeNavView.openFirstModel();

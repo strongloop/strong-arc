@@ -3,12 +3,12 @@
     <div data-id="GatewayMapFormTopRow">
       <div class="form-field">
         <label>Mapping Name</label>
-        <input class="ui-input" ng-model="map.name" type="text" placeholder="name" />
+        <input class="ui-input map-name" ng-model="map.name" type="text" placeholder="name">
       </div>
 
       <div class="form-field">
         <label>Verb</label>
-        <div class="ui-menu-container">
+        <div class="ui-menu-container verb-menu">
           <input type="text"
                  class="ui-input toggler"
                  ng-mousedown="showDropdownVerb = true"
@@ -30,13 +30,13 @@
         <label>Url Pattern</label>
         <input ng-model="map.endpoint"
                type="text"
-               class="ui-input"
+               class="ui-input map-endpoint"
                placeholder="endpoint" />
       </div>
     </div>
     <div class="form-field">
       <label>Pipeline</label>
-      <div class="ui-menu-container">
+      <div class="ui-menu-container pipeline-menu">
         <input type="text"
                class="ui-input toggler"
                ng-mousedown="showDropdownPipeline = true"

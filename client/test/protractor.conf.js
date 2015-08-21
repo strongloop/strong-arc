@@ -6,7 +6,7 @@ exports.config = {
   specs: ['./e2e/**/*.spec.js'],
   //specs: ['./e2e/**/tmp.gateway.spec.js'],
   framework: 'jasmine2',
-  jasmineNodeOpts: {isVerbose: true},
+  jasmineNodeOpts: {isVerbose: true },
   params: {
     pm: {
       host: process.env.TEST_PM_HOST,

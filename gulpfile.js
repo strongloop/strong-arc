@@ -293,7 +293,9 @@ gulp.task('test-e2e', function(callback) {
   function runProtractorTests(server) {
     process.env.TEST_SERVER_PORT = server.port;
 
-    spawn('protractor', ['client/test/protractor.conf.js'], {stdio: 'inherit'})
+    var protractorBin = path.join(__dirname, 'node_modules', 'protractor', 'bin', 'protractor');
+
+    spawn(protractorBin, ['client/test/protractor.conf.js'], {stdio: 'inherit'})
       .on('error', protractorResults)
       .on('exit', function(code, signal) {
         var status = signal || code;
