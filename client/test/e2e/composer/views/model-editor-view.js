@@ -96,10 +96,6 @@ var ModelEditorView = (function () {
       this.migrateModelButton.click();
 
       browser.driver.wait(
-        protractor.until.elementIsVisible(indicator),
-      10000);
-
-      browser.driver.wait(
         protractor.until.elementIsNotVisible(indicator),
       10000);
     };
