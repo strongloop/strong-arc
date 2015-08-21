@@ -3,18 +3,22 @@ var ComposerViews = require('../composer/views/');
 var EC = protractor.ExpectedConditions;
 
 describe('model-definition-interactions', function() {
-  beforeEach(function() {
+  beforeAll(function() {
     var loginView = new ArcViews.LoginView();
     var landingView = new ArcViews.LandingView();
-    var modelEditorView = new ComposerViews.ModelEditorView();
     loginView.loginToLandingView();
     landingView.openComposerView();
+  });
+
+  beforeEach(function() {
+    var modelEditorView = new ComposerViews.ModelEditorView();
+    browser.get('http://127.0.0.1:9800/#/composer');
     browser.driver.wait(
       EC.visibilityOf(modelEditorView.addModelButton),
       5000);
   });
 
-  afterEach(function() {
+  afterAll(function() {
     var headerView = new ArcViews.HeaderView();
     headerView.logout();
   });

@@ -14,7 +14,7 @@ var mysqlCreds = {
 };
 
 describe('datasource-definition-interactions', function() {
-  beforeEach(function() {
+  beforeAll(function() {
     var loginView = new ArcViews.LoginView();
     var landingView = new ArcViews.LandingView();
 
@@ -22,7 +22,11 @@ describe('datasource-definition-interactions', function() {
     landingView.openComposerView();
   });
 
-  afterEach(function() {
+  beforeEach(function() {
+    browser.get('http://127.0.0.1:9800/#/composer');
+  });
+
+  afterAll(function() {
     var headerView = new ArcViews.HeaderView();
 
     headerView.logout();
