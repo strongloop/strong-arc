@@ -4,3 +4,4 @@ node_modules
 client/test/integration/sandbox
 *-xunit.xml
 strong-arc-*.tgz
+coverage

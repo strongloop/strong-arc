@@ -8,7 +8,6 @@ var LoginView = (function () {
 
     this.openLoginView = function() {
       browser.get('http://127.0.0.1:9800/#/login');
-      browser.ignoreSynchronization = true;
       var loginBtn = this.submitButton;
       browser.driver.wait(
         EC.visibilityOf(loginBtn),
@@ -21,7 +20,6 @@ var LoginView = (function () {
       browser.waitForAngular().then(function () {
         self.userNameInput.sendKeys('strongloop-test@grr.la');
         self.passwordInput.sendKeys('Str0ngL00p');
-        browser.ignoreSynchronization = true;
         loginBtn.click();
       });
     };
@@ -32,7 +30,6 @@ var LoginView = (function () {
       browser.waitForAngular().then(function () {
         self.userNameInput.sendKeys('strongloop-test@grr.la');
         self.passwordInput.sendKeys('WrongPassword1234');
-        browser.ignoreSynchronization = true;
         loginBtn.click();
       });
     };

@@ -90,7 +90,21 @@ module.exports = function(config) {
 
     // test results reporter to use
     // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-    reporters: ['mocha', 'junit'],
+    reporters: ['mocha', 'junit', 'coverage'],
+
+    preprocessors: {
+      // source files, that you wanna generate coverage for
+      // do not include tests or libraries
+      // (these files will be instrumented by Istanbul)
+      // 'client/www/scripts/modules/**/*.module.js': ['coverage'],
+      'client/www/scripts/modules/**/*.js': ['coverage'],
+    },
+
+    coverageReporter: {
+      type : 'cobertura',
+      subdir: '.',
+      dir : 'coverage/',
+    },
 
     // CI friendly test output
     junitReporter: {
@@ -138,7 +152,8 @@ module.exports = function(config) {
       'karma-mocha',
       'karma-chai',
       'karma-mocha-reporter',
-      'karma-junit-reporter'
+      'karma-junit-reporter',
+      'karma-coverage',
     ],
 
     // If browser does not capture in given timeout [ms], kill it

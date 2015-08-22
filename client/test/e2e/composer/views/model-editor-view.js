@@ -7,7 +7,7 @@ var ModelEditorView = (function () {
     this.migrateModelButton = element(
       by.css('.model-migrate-button-col .model-migrate-button'));
     this.migrateLoadingIndicator = element(
-      by.css('strong[classname="model-migrate-loading"]'));
+      by.css('strong.model-migrate-loading'));
     this.addNewPropertyButton = element(
       by.css('.btn-new-model-property'));
     this.propertyNameInputCollection = element.all(
@@ -94,10 +94,6 @@ var ModelEditorView = (function () {
       10000);
 
       this.migrateModelButton.click();
-
-      browser.driver.wait(
-        protractor.until.elementIsVisible(indicator),
-      10000);
 
       browser.driver.wait(
         protractor.until.elementIsNotVisible(indicator),
