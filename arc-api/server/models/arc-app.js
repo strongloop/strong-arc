@@ -35,6 +35,7 @@ module.exports = function(ArcApp) {
     return false;
   }
 
+  var overrides = {};
   var ArcApps = [
     {
       "id": "composer",
@@ -44,10 +45,11 @@ module.exports = function(ArcApp) {
     },
     {
       "id": "visual-composer",
-      "name": "Visual Composer",
+      "name": "Composer",
       "description": "GUI tool for visually defining models and relations.",
       "supports": ["loopback"],
       "featureFlag": "feature:visual-composer",
+      "overrides": "composer"
     },
     {
       "id": "build-deploy",
@@ -103,11 +105,19 @@ module.exports = function(ArcApp) {
       "supports": "*"
     }
   ].filter(function(app) {
+    var result = true;
+
     if (app.featureFlag) {
-      return appServer.enabled(app.featureFlag);
-    } else {
-      return true;
+      result = appServer.enabled(app.featureFlag);
     }
+
+    if (result && app.overrides) {
+      overrides[app.overrides] = app;
+    }
+
+    return result;
+  }).filter(function(app) {
+    return !overrides[app.id];
   }).map(function(app) {
     var arcApp = new ArcApp(app);
     return arcApp;
