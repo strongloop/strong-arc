@@ -45,34 +45,21 @@ gulp.task('build', [
   process.env.GULP_ANGULAR_CODEGEN = undefined;
 });
 
-gulp.task('e2e', function(callback) {
-
-    gulp.src(['client/test/e2e/arc/tmp.gateway.spec.js'])
-      .pipe(angularProtractor({
-        'configFile': 'client/test/protractor.conf.js',
-        'args': [ '--baseUrl', 'http://127.0.0.1:9800'],
-        'autoStartStopServer': true,
-        'debug': true
-      }))
-      .on('error', function(e) {
-        console.log(e.message);
-        throw e
-      });
-});
-
-gulp.task('e2e-gateway', function(cb){
-  gulp.src(['client/test/e2e/gateway/*.spec.js'])
-    .pipe(angularProtractor({
-      'configFile': 'client/test/protractor.conf.js',
-      'args': [ '--baseUrl', 'http://127.0.0.1:9800'],
-      'autoStartStopServer': true,
-      'debug': true
-    }))
-    .on('error', function(e) {
-      console.log(e.message);
-      throw e
-    });
-});
+//@deprecated use `fdescribe()` or `fit()` to run a test in isolcation with `gulp test-e2e`
+//gulp.task('e2e', function(callback) {
+//
+//    gulp.src(['client/test/e2e/arc/tmp.gateway.spec.js'])
+//      .pipe(angularProtractor({
+//        'configFile': 'client/test/protractor.conf.js',
+//        'args': [ '--baseUrl', 'http://127.0.0.1:9800'],
+//        'autoStartStopServer': true,
+//        'debug': true
+//      }))
+//      .on('error', function(e) {
+//        console.log(e.message);
+//        throw e
+//      });
+//});
 
 gulp.task('build-less', function(done) {
   return gulp.src('client/less/style.less')

@@ -1,4 +1,4 @@
-<div>
+<div data-menutype="{{menu.type}}">
   <button data-type="{{menu.type}}" ng-click="setNav({type:menu.type})" class="btn btn-default btn-block nav-tree-item tree-branch"  title="{{menu.title}}" >
     <span class="nav-branch-openclose-icon sl-icon sl-icon-arrow-right"></span>
     <span class="nav-branch-folder-icon sl-icon sl-icon-folder"></span>
@@ -20,12 +20,12 @@
       </div>
       <div data-ui-type="cell" class="ia-nav-item-contextmenu-icon-container-col">
         <div  dropdown>
-          <button class="btn-command btn-nav-context" data-type="item.type" dropdown-toggle>
+          <button class="btn-command btn-nav-context" data-type="{{item.type}}" dropdown-toggle>
             <span data-type="item.type" class="sl-icon sl-icon-box-arrow-down"></span>
           </button>
           <ul class="dropdown-menu">
-            <li><button ng-click="cloneMethod({data: {type:menu.type, name:item.name, id:item.id}})" class="link-cmd">clone</button></li>
-            <li><button ng-click="deleteMethod({type:menu.type, id:item.id})" class="link-cmd">delete</button></li>
+            <li><button ng-click="cloneMethod({data: {type:menu.type, name:item.name, id:item.id}})" class="link-cmd clone-instance">clone</button></li>
+            <li><button ng-click="deleteMethod({type:menu.type, id:item.id})" class="link-cmd delete-instance">delete</button></li>
           </ul>
 
         </div>

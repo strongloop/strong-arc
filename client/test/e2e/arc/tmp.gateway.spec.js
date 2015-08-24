@@ -22,7 +22,7 @@ describe('gateway smoke test', function() {
         expect(EC.visibilityOf(gatewayHomeView.componentIdentifier));
         expect(EC.visibilityOf(gatewayHomeView.policyListViewButton));
         gatewayHomeView.policyListViewButton.click();
-        browser.driver.sleep(700);
+        //browser.driver.sleep(700);
         expect(EC.visibilityOf(gatewayHomeView.policyContainer));
         // Policy
         expect(EC.visibilityOf(gatewayHomeView.sideNewPolicyButton));
@@ -43,55 +43,55 @@ describe('gateway smoke test', function() {
         * */
 
         //gatewayHomeView.closeModalButton.click();
-        browser.driver.sleep(500);
+        //browser.driver.sleep(500);
         expect(EC.visibilityOf(gatewayHomeView.editPolicyNameInput));
         expect(gatewayHomeView.editPolicyNameInput.getAttribute('value')).toEqual('new Metrics policy name');
-        browser.driver.sleep(700);
+        //browser.driver.sleep(700);
 
         gatewayHomeView.policyListViewButton.click();
-        browser.driver.sleep(700);
+        //browser.driver.sleep(700);
 
 
         // add auth proxy
         gatewayHomeView.addAuthPolicy();
 
 
-        browser.driver.sleep(500);
+        //browser.driver.sleep(500);
         expect(EC.visibilityOf(gatewayHomeView.editPolicyNameInput));
         expect(gatewayHomeView.editPolicyNameInput.getAttribute('value')).toEqual('new Auth policy name');
-        browser.driver.sleep(700);
+        //browser.driver.sleep(700);
 
 
         // add ratelimiting policy
         gatewayHomeView.policyListViewButton.click();
-        browser.driver.sleep(700);
+        //browser.driver.sleep(700);
 
 
         // add ratelimiting proxy
         gatewayHomeView.addRateLimitingPolicy();
 
 
-        browser.driver.sleep(500);
+        //browser.driver.sleep(500);
         expect(EC.visibilityOf(gatewayHomeView.editPolicyNameInput));
         expect(gatewayHomeView.editPolicyNameInput.getAttribute('value')).toEqual('new Rate Limiting policy name');
-        browser.driver.sleep(700);
+        //browser.driver.sleep(700);
 
 
         gatewayHomeView.policyListViewButton.click();
-        browser.driver.sleep(700);
+        //browser.driver.sleep(700);
 
         // add reverseproxy policy
         gatewayHomeView.addReverseProxyPolicy();
 
 
-        browser.driver.sleep(500);
+        //browser.driver.sleep(500);
         expect(EC.visibilityOf(gatewayHomeView.editPolicyNameInput));
         expect(gatewayHomeView.editPolicyNameInput.getAttribute('value')).toEqual('new Reverse Proxy policy name');
-        browser.driver.sleep(700);
+        //browser.driver.sleep(700);
 
 
         gatewayHomeView.policyListViewButton.click();
-        browser.driver.sleep(1000);
+        //browser.driver.sleep(1000);
 
         //  DELETE POLICY
         expect(EC.visibilityOf(gatewayHomeView.deletePolicyButton));
@@ -111,19 +111,19 @@ describe('gateway smoke test', function() {
 
         // pipeline
         gatewayHomeView.pipelineListViewButton.click();
-        browser.driver.sleep(700);
+        //browser.driver.sleep(700);
         expect(EC.visibilityOf(gatewayHomeView.pipelineContainer));
         expect(EC.visibilityOf(gatewayHomeView.sideNewPipelineButton));
 
-        browser.driver.sleep(500);
+        //browser.driver.sleep(500);
         gatewayHomeView.sideNewPipelineButton.click();
-        browser.driver.sleep(500);
-        browser.driver.sleep(500);
+        //browser.driver.sleep(500);
+        //browser.driver.sleep(500);
         expect(EC.visibilityOf(gatewayHomeView.closeModalButton));
 
 
         gatewayHomeView.addNewPipeline();
-        browser.driver.sleep(500);
+        //browser.driver.sleep(500);
 
         // TODO fix post add new pipeline navigation
         // currently sits on the pipeline list view
@@ -136,7 +136,7 @@ describe('gateway smoke test', function() {
           EC.presenceOf(gatewayHomeView.pipelineListViewButton),
           4000);
         gatewayHomeView.pipelineListViewButton.click();
-        //browser.driver.sleep(300);
+        ////browser.driver.sleep(300);
 
 
 
@@ -162,12 +162,12 @@ describe('gateway smoke test', function() {
 
         gatewayHomeView.addNewMapping();
 
-        browser.driver.sleep(200);
+        //browser.driver.sleep(200);
 
 
 
         //gatewayHomeView.gatewaymapListViewButton.click();
-        ////browser.driver.sleep(5000);
+        //////browser.driver.sleep(5000);
         //
         //
         //browser.driver.wait(
@@ -178,7 +178,7 @@ describe('gateway smoke test', function() {
         //  EC.presenceOf(gatewayHomeView.pipelineListViewButton),
         //  4000);
         //gatewayHomeView.pipelineListViewButton.click();
-       // browser.driver.sleep(300);
+       // //browser.driver.sleep(300);
         gatewayHomeView.deleteFirstPipeline();
 
 
@@ -206,7 +206,7 @@ describe('gateway smoke test', function() {
           EC.presenceOf(gatewayHomeView.gatewaymapListViewButton),
           4000);
         gatewayHomeView.gatewaymapListViewButton.click();
-        browser.driver.sleep(100);
+        //browser.driver.sleep(100);
 
 
         browser.driver.wait(
