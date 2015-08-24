@@ -16,7 +16,12 @@ Profiler.directive('slProfilerNavbar', [
 
           $scope.updateProcesses = function(processes, refresh) {
             $scope.processes = processes;
-            $scope.refreshProcessesCallback = refresh;
+
+            if (refresh) {
+              $scope.refreshProcessesCallback = refresh;
+            } else {
+              $log.warn('updateProcesses called without update function');
+            }
 
             $scope.processes.forEach(function(process) {
               if (process.isProfiling) {
