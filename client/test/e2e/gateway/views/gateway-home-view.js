@@ -72,8 +72,10 @@ var GatewayHomeView = (function () {
     //clone policy
     self.contextMenuPolicy = element(by.css('[data-menutype="policy"] .tree-item-row:nth-child(1) .btn-nav-context'));
     self.clonePolicyButton = element(by.css('[data-menutype="policy"] .tree-item-row:nth-child(1) .clone-instance'));
+    self.clonedContextMenuPolicy = element(by.css('[data-menutype="policy"] .tree-item-row:nth-child(2) .btn-nav-context'));
     self.deleteClonedPolicyButton = element(by.css('[data-menutype="policy"] .tree-item-row:nth-child(2) .delete-instance'));
     self.confirmCloneButton = element(by.css('.clone-modal button.primary'));
+    self.confirmDeleteCloneButton = element(by.css('.confirm-delete button.primary'));
 
     self.openNewPolicyFromNav = function() {
       self.sideNewPolicyButton.click();
@@ -333,23 +335,21 @@ var GatewayHomeView = (function () {
       self.policyListViewButton.click();
       browser.waitForAngular();
 
-      var isContextMenuClickable = EC.elementToBeClickable(self.contextMenuPolicy);
+      var isContextMenuClickable = EC.elementToBeClickable(self.clonedContextMenuPolicy);
       browser.driver.wait(isContextMenuClickable, 10000);
-      self.contextMenuPolicy.click();
+      self.clonedContextMenuPolicy.click();
       browser.waitForAngular();
 
       var isDeleteButtonClickable = EC.elementToBeClickable(self.deleteClonedPolicyButton);
-      browser.driver.wait(EC.elementToBeClickable(self.deleteClonedPolicyButton), 10000);
+      browser.driver.wait(isDeleteButtonClickable, 10000);
       self.deleteClonedPolicyButton.click();
       browser.waitForAngular();
 
-      var isConfirmButtonClickable = EC.elementToBeClickable(self.confirmCloneButton);
+      var isConfirmButtonClickable = EC.elementToBeClickable(self.confirmDeleteCloneButton);
 
       browser.driver.wait(isConfirmButtonClickable, 10000);
-      self.confirmCloneButton.click();
+      self.confirmDeleteCloneButton.click();
       browser.waitForAngular();
-
-      //browser.driver.sleep(1000);
     };
 
 

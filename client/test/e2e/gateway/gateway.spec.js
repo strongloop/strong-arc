@@ -85,7 +85,6 @@ describe('gateway', function() {
     var headerView = new ArcViews.HeaderView();
 
     gatewayHomeView.cloneFirstPolicy();
-
     expect(element.all(by.css('[data-menutype=policy] .tree-item-row')).count()).toEqual(2);
 
     gatewayHomeView.deleteFirstPolicyClone();
