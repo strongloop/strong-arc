@@ -6,6 +6,12 @@ var GatewayHomeView = (function () {
     var wait = 5*1000;
     var sleep = 500;
 
+
+    //menu item lists
+    self.policyMenuItemList = element.all(by.css('[data-menutype=policy] .tree-item-row'));
+    self.pipelineMenuItemList = element.all(by.css('[data-menutype=pipeline] .tree-item-row'));
+    self.gatewayMapMenuItemList = element.all(by.css('[data-menutype=gatewaymap] .tree-item-row'));
+
     self.componentIdentifier = element(
       by.css('span.ia-project-title-container'));
 
@@ -88,6 +94,13 @@ var GatewayHomeView = (function () {
     self.clonedContextMenuPipeline = element(by.css('[data-menutype="pipeline"] .tree-item-row:nth-child(2) .btn-nav-context'));
     self.deleteClonedPipelineButton = element(by.css('[data-menutype="pipeline"] .tree-item-row:nth-child(2) .delete-instance'));
 
+    //clone mapping
+    self.contextMenuMapping = element(by.css('[data-menutype="gatewaymap"] .tree-item-row:nth-child(1) .btn-nav-context'));
+    self.cloneMappingButton = element(by.css('[data-menutype="gatewaymap"] .tree-item-row:nth-child(1) .clone-instance'));
+    self.clonedContextMenuMapping = element(by.css('[data-menutype="gatewaymap"] .tree-item-row:nth-child(2) .btn-nav-context'));
+    self.deleteClonedMappingButton = element(by.css('[data-menutype="gatewaymap"] .tree-item-row:nth-child(2) .delete-instance'));
+
+    //page object methods
     self.openNewPolicyFromNav = function() {
       self.sideNewPolicyButton.click();
       browser.driver.sleep(sleep);
@@ -349,6 +362,51 @@ var GatewayHomeView = (function () {
       var isDeleteButtonClickable = EC.elementToBeClickable(self.deleteClonedPipelineButton);
       browser.driver.wait(isDeleteButtonClickable, wait);
       self.deleteClonedPipelineButton.click();
+      browser.waitForAngular();
+
+      var isConfirmButtonClickable = EC.elementToBeClickable(self.confirmDeleteCloneButton);
+
+      browser.driver.wait(isConfirmButtonClickable, wait);
+      self.confirmDeleteCloneButton.click();
+      browser.waitForAngular();
+    };
+
+    self.cloneFirstMapping = function(){
+      var isListClickable = EC.elementToBeClickable(self.gatewaymapListViewButton);
+      browser.driver.wait(isListClickable, wait);
+      self.gatewaymapListViewButton.click();
+      browser.waitForAngular();
+
+      var isContextMenuClickable = EC.elementToBeClickable(self.contextMenuMapping);
+      browser.driver.wait(isContextMenuClickable, wait);
+      self.contextMenuMapping.click();
+      browser.waitForAngular();
+
+      var isCloneButtonClickable = EC.elementToBeClickable(self.cloneMappingButton);
+      browser.driver.wait(isCloneButtonClickable, wait);
+      self.cloneMappingButton.click();
+      browser.waitForAngular();
+
+      var isConfirmButtonClickable = EC.elementToBeClickable(self.confirmCloneButton);
+      browser.driver.wait(isConfirmButtonClickable, wait);
+      self.confirmCloneButton.click();
+      browser.waitForAngular();
+    };
+
+    self.deleteFirstMappingClone = function(){
+      var isListClickable = EC.elementToBeClickable(self.gatewaymapListViewButton);
+      browser.driver.wait(isListClickable, wait);
+      self.gatewaymapListViewButton.click();
+      browser.waitForAngular();
+
+      var isContextMenuClickable = EC.elementToBeClickable(self.clonedContextMenuMapping);
+      browser.driver.wait(isContextMenuClickable, wait);
+      self.clonedContextMenuMapping.click();
+      browser.waitForAngular();
+
+      var isDeleteButtonClickable = EC.elementToBeClickable(self.deleteClonedMappingButton);
+      browser.driver.wait(isDeleteButtonClickable, wait);
+      self.deleteClonedMappingButton.click();
       browser.waitForAngular();
 
       var isConfirmButtonClickable = EC.elementToBeClickable(self.confirmDeleteCloneButton);

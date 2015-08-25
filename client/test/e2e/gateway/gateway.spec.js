@@ -7,7 +7,9 @@ var gatewayHomeView = require('./views/gateway-home-view');
 var EC = protractor.ExpectedConditions;
 
 
-describe('gateway', function() {
+fdescribe('gateway', function() {
+  var wait = 5*1000;
+  var sleep = 500;
 
   beforeEach(function(){
     var loginView = new ArcViews.LoginView();
@@ -19,53 +21,48 @@ describe('gateway', function() {
 
     landingView.openGatewayView();
     gatewayHomeView.policyListViewButton.click();
-    //browser.driver.sleep(700);
+
     // ok now create a policy
     gatewayHomeView.addMetricsPolicy();
 
-    //browser.driver.sleep(700);
-
     gatewayHomeView.policyListViewButton.click();
     browser.waitForAngular();
-    //browser.driver.sleep(1000);
 
     // pipeline
     gatewayHomeView.pipelineListViewButton.click();
     browser.waitForAngular();
-    //browser.driver.sleep(700);
+
     gatewayHomeView.sideNewPipelineButton.click();
     browser.waitForAngular();
-    //browser.driver.sleep(500);
+
     gatewayHomeView.addNewPipeline();
     browser.waitForAngular();
-    //browser.driver.sleep(500);
 
-    browser.driver.wait(EC.presenceOf(gatewayHomeView.pipelineListViewButton), 4000);
+    browser.driver.wait(EC.presenceOf(gatewayHomeView.pipelineListViewButton), wait);
 
     gatewayHomeView.pipelineListViewButton.click();
     browser.waitForAngular();
+
     // mapping
-    browser.driver.wait(EC.presenceOf(gatewayHomeView.gatewaymapListViewButton), 4000);
+    browser.driver.wait(EC.presenceOf(gatewayHomeView.gatewaymapListViewButton), wait);
     gatewayHomeView.gatewaymapListViewButton.click();
     browser.waitForAngular();
 
-    browser.driver.wait(EC.presenceOf(gatewayHomeView.sideNewMappingButton), 4000);
+    browser.driver.wait(EC.presenceOf(gatewayHomeView.sideNewMappingButton), wait);
 
     gatewayHomeView.sideNewMappingButton.click();
     browser.waitForAngular();
-    browser.driver.wait(EC.presenceOf(gatewayHomeView.closeModalButton), 4000);
+    browser.driver.wait(EC.presenceOf(gatewayHomeView.closeModalButton), wait);
 
     gatewayHomeView.addNewMapping();
     browser.waitForAngular();
-    browser.driver.wait(EC.presenceOf(gatewayHomeView.gatewaymapListViewButton), 4000);
-    browser.driver.wait(EC.presenceOf(gatewayHomeView.pipelineListViewButton), 4000);
-    //browser.driver.sleep(500);
+    browser.driver.wait(EC.presenceOf(gatewayHomeView.gatewaymapListViewButton), wait);
+    browser.driver.wait(EC.presenceOf(gatewayHomeView.pipelineListViewButton), wait);
   });
 
 
   afterEach(function(){
     var loginView = new ArcViews.LoginView();
-    var landingView = new ArcViews.LandingView();
     var gatewayHomeView = new GatewayViews.GatewayHomeView();
     var headerView = new ArcViews.HeaderView();
 
@@ -75,36 +72,41 @@ describe('gateway', function() {
 
     gatewayHomeView.homeNav.click();
     headerView.logout();
-    browser.driver.wait(EC.presenceOf(loginView.userNameInput), 4000);
+    browser.driver.wait(EC.presenceOf(loginView.userNameInput), wait);
   });
 
   it('should clone a gateway policy',function() {
-    var loginView = new ArcViews.LoginView();
-    var landingView = new ArcViews.LandingView();
     var gatewayHomeView = new GatewayViews.GatewayHomeView();
-    var headerView = new ArcViews.HeaderView();
+    var policyMenuItemList = gatewayHomeView.policyMenuItemList;
 
     gatewayHomeView.cloneFirstPolicy();
-    expect(element.all(by.css('[data-menutype=policy] .tree-item-row')).count()).toEqual(2);
+    expect(policyMenuItemList.count()).toEqual(2);
 
     gatewayHomeView.deleteFirstPolicyClone();
-    expect(element.all(by.css('[data-menutype=policy] .tree-item-row')).count()).toEqual(1);
+    expect(policyMenuItemList.count()).toEqual(1);
   });
 
   it('should clone a gateway pipeline', function() {
     var gatewayHomeView = new GatewayViews.GatewayHomeView();
+    var pipelineMenuItemList = gatewayHomeView.pipelineMenuItemList;
 
     gatewayHomeView.cloneFirstPipeline();
-    expect(element.all(by.css('[data-menutype=pipeline] .tree-item-row')).count()).toEqual(2);
+    expect(pipelineMenuItemList.count()).toEqual(2);
 
     gatewayHomeView.deleteFirstPipelineClone();
-    expect(element.all(by.css('[data-menutype=pipeline] .tree-item-row')).count()).toEqual(1);
+    expect(pipelineMenuItemList.count()).toEqual(1);
   });
 
-  //
-  //it('should clone a gateway mapping', function() {
-  //  expect(true).toEqual(true);
-  //});
+  it('should clone a gateway mapping', function() {
+    var gatewayHomeView = new GatewayViews.GatewayHomeView();
+    var gatewayMapMenuItemList = gatewayHomeView.gatewayMapMenuItemList;
+
+    gatewayHomeView.cloneFirstMapping();
+    expect(gatewayMapMenuItemList.count()).toEqual(2);
+
+    gatewayHomeView.deleteFirstMappingClone();
+    expect(gatewayMapMenuItemList.count()).toEqual(1);
+  });
 
   //
   //it('should edit a gateway policy',function() {
