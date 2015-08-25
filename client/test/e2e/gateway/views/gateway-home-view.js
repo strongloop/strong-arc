@@ -3,6 +3,9 @@ var GatewayHomeView = (function () {
 
   function GatewayHomeView() {
     var self = this;
+    var wait = 5*1000;
+    var sleep = 500;
+
     self.componentIdentifier = element(
       by.css('span.ia-project-title-container'));
 
@@ -69,24 +72,32 @@ var GatewayHomeView = (function () {
     self.confirmDeletePipelineButton = element(by.css('.modal button.delete-pipeline'));
     self.confirmDeletePolicyButton = element(by.css('.modal button.delete-policy'));
 
+    //shared clone
+    self.confirmCloneButton = element(by.css('.clone-modal button.primary'));
+    self.confirmDeleteCloneButton = element(by.css('.confirm-delete button.primary'));
+
     //clone policy
     self.contextMenuPolicy = element(by.css('[data-menutype="policy"] .tree-item-row:nth-child(1) .btn-nav-context'));
     self.clonePolicyButton = element(by.css('[data-menutype="policy"] .tree-item-row:nth-child(1) .clone-instance'));
     self.clonedContextMenuPolicy = element(by.css('[data-menutype="policy"] .tree-item-row:nth-child(2) .btn-nav-context'));
     self.deleteClonedPolicyButton = element(by.css('[data-menutype="policy"] .tree-item-row:nth-child(2) .delete-instance'));
-    self.confirmCloneButton = element(by.css('.clone-modal button.primary'));
-    self.confirmDeleteCloneButton = element(by.css('.confirm-delete button.primary'));
+
+    //clone pipeline
+    self.contextMenuPipeline = element(by.css('[data-menutype="pipeline"] .tree-item-row:nth-child(1) .btn-nav-context'));
+    self.clonePipelineButton = element(by.css('[data-menutype="pipeline"] .tree-item-row:nth-child(1) .clone-instance'));
+    self.clonedContextMenuPipeline = element(by.css('[data-menutype="pipeline"] .tree-item-row:nth-child(2) .btn-nav-context'));
+    self.deleteClonedPipelineButton = element(by.css('[data-menutype="pipeline"] .tree-item-row:nth-child(2) .delete-instance'));
 
     self.openNewPolicyFromNav = function() {
       self.sideNewPolicyButton.click();
-      browser.sleep(500);
+      browser.driver.sleep(sleep);
       expect(EC.visibilityOf(self.closeModalButton));
       self.closeModalButton.click();
     };
     self.openNewPolicyFromView = function() {
       expect(EC.visibilityOf(self.mainNewPolicyButton));
       self.mainNewPolicyButton.click();
-      browser.sleep(500);
+      browser.driver.sleep(sleep);
       expect(EC.visibilityOf(self.closeModalButton));
       self.closeModalButton.click();
     };
@@ -94,27 +105,20 @@ var GatewayHomeView = (function () {
     self.addMetricsPolicy = function() {
       self.sideNewPolicyButton.click();
       browser.waitForAngular();
-      browser.driver.wait(
-        EC.presenceOf(self.newPolicyNameInput),
-        4000);
-
+      browser.driver.wait(EC.presenceOf(self.newPolicyNameInput), wait);
 
       self.newPolicyNameInput.sendKeys('new Metrics policy name');
 
       self.newPolicyTypeSelect.click();
       browser.waitForAngular();
 
-      browser.driver.wait(
-        EC.presenceOf(self.policyTypeMetricsSelect),
-        4000);
+      browser.driver.wait(EC.presenceOf(self.policyTypeMetricsSelect), wait);
 
       self.policyTypeMetricsSelect.click();
       browser.waitForAngular();
       expect(self.newPolicyTypeSelect.getText()).toEqual('metrics');
 
-      browser.driver.wait(
-        EC.presenceOf(self.saveNewInstanceButton),
-        4000);
+      browser.driver.wait(EC.presenceOf(self.saveNewInstanceButton), wait);
 
       self.saveNewInstanceButton.click();
       browser.waitForAngular();
@@ -122,28 +126,20 @@ var GatewayHomeView = (function () {
 
     self.addAuthPolicy = function() {
       self.sideNewPolicyButton.click();
-     // browser.sleep(500);
+
       browser.waitForAngular();
-      browser.driver.wait(
-        EC.presenceOf(self.newPolicyNameInput),
-        4000);
+      browser.driver.wait(EC.presenceOf(self.newPolicyNameInput), wait);
+
       self.newPolicyNameInput.sendKeys('new Auth policy name');
-     // browser.sleep(300);
       self.newPolicyTypeSelect.click();
       browser.waitForAngular();
-     // browser.sleep(300);
+
       self.policyTypeAuthSelect.click();
       browser.waitForAngular();
-    //  browser.sleep(300);
 
       expect(self.newPolicyTypeSelect.getText()).toEqual('auth');
 
-     // browser.sleep(300);
-      browser.driver.wait(
-        EC.presenceOf(self.saveNewInstanceButton),
-        4000);
-
-    //  expect(EC.visibilityOf(self.saveNewInstanceButton));
+      browser.driver.wait(EC.presenceOf(self.saveNewInstanceButton), wait);
 
       self.saveNewInstanceButton.click();
       browser.waitForAngular();
@@ -152,32 +148,26 @@ var GatewayHomeView = (function () {
     self.addRateLimitingPolicy = function() {
       self.sideNewPolicyButton.click();
       browser.waitForAngular();
-     // browser.sleep(500);
-      browser.driver.wait(
-        EC.presenceOf(self.newPolicyNameInput),
-        4000);
+
+      browser.driver.wait(EC.presenceOf(self.newPolicyNameInput), wait);
 
       self.newPolicyNameInput.sendKeys('new Rate Limiting policy name');
-     // browser.sleep(300);
+
       self.newPolicyTypeSelect.click();
       browser.waitForAngular();
-     // browser.sleep(300);
+
       self.policyTypeRateLimitingSelect.click();
       browser.waitForAngular();
-     // browser.sleep(300);
+
 
       expect(self.newPolicyTypeSelect.getText()).toEqual('ratelimiting');
-
       expect(EC.visibilityOf(self.policyRateLimitingLimitInput));
       expect(EC.visibilityOf(self.policyRateLimitingIntervalInput));
 
       self.policyRateLimitingLimitInput.sendKeys('5000');
       self.policyRateLimitingIntervalInput.sendKeys('500000');
 
-      browser.driver.wait(
-        EC.presenceOf(self.saveNewInstanceButton),
-        4000);
-    //  expect(EC.visibilityOf(self.saveNewInstanceButton));
+      browser.driver.wait(EC.presenceOf(self.saveNewInstanceButton), wait);
 
       self.saveNewInstanceButton.click();
       browser.waitForAngular();
@@ -186,206 +176,210 @@ var GatewayHomeView = (function () {
     self.addReverseProxyPolicy = function() {
       self.sideNewPolicyButton.click();
       browser.waitForAngular();
-      //browser.sleep(500);
-      browser.driver.wait(
-        EC.presenceOf(self.newPolicyNameInput),
-        4000);
+
+      browser.driver.wait(EC.presenceOf(self.newPolicyNameInput), wait);
 
       self.newPolicyNameInput.sendKeys('new Reverse Proxy policy name');
-      //browser.sleep(300);
+
       self.newPolicyTypeSelect.click();
       browser.waitForAngular();
-     // browser.sleep(300);
+
       self.policyTypeReversProxySelect.click();
       browser.waitForAngular();
-      //browser.sleep(300);
 
       expect(self.newPolicyTypeSelect.getText()).toEqual('reverseproxy');
-
       expect(EC.visibilityOf(self.policyReversProxyTargetUrlInput));
 
       self.policyReversProxyTargetUrlInput.sendKeys('https://www.url.com');
 
-     // browser.sleep(300);
-
-      //expect(EC.visibilityOf(self.saveNewInstanceButton));
-
-      browser.driver.wait(
-        EC.presenceOf(self.saveNewInstanceButton),
-        4000);
+      browser.driver.wait(EC.presenceOf(self.saveNewInstanceButton), wait);
 
       self.saveNewInstanceButton.click();
       browser.waitForAngular();
     };
 
     self.deleteFirstPolicy = function() {
-      //delete in list
-      //browser.driver.wait(EC.presenceOf(self.deletePolicyButton), 4000);
-      //self.deletePolicyButton.click();
-
-      //lost list view
       var isListClickable = EC.elementToBeClickable(self.policyListViewButton);
 
-      browser.driver.wait(isListClickable, 5000);
+      browser.driver.wait(isListClickable, wait);
       self.policyListViewButton.click();
       browser.waitForAngular();
 
       //hover to reveal delete icon
       browser.actions().mouseMove(element(by.css('table.policies tbody tr:nth-child(1)'))).perform();
       //browser.driver.sleep(500);
-      browser.driver.wait(EC.elementToBeClickable(self.deletePolicyButton), 5000);
+      browser.driver.wait(EC.elementToBeClickable(self.deletePolicyButton), wait);
 
       //delete from list
       self.deletePolicyButton.click();
       browser.waitForAngular();
 
       //confirm delete
-      browser.driver.wait(EC.elementToBeClickable(self.confirmDeletePolicyButton), 4000);
+      browser.driver.wait(EC.elementToBeClickable(self.confirmDeletePolicyButton), wait);
       self.confirmDeletePolicyButton.click();
-      browser.driver.wait(EC.elementToBeClickable(self.policyListViewButton), 4000);
-
-      //wait for modal to close
-      //browser.driver.sleep(1000);
+      browser.driver.wait(EC.elementToBeClickable(self.policyListViewButton), wait);
     };
 
     self.deleteFirstPipeline = function() {
-      //lost list view
       var isListClickable = EC.elementToBeClickable(self.pipelineListViewButton);
 
-      browser.driver.wait(isListClickable, 5000);
+      browser.driver.wait(isListClickable, wait);
       self.pipelineListViewButton.click();
       browser.waitForAngular();
 
       //hover to reveal delete icon
       browser.actions().mouseMove(element(by.css('table.pipelines tbody tr:nth-child(1)'))).perform();
-      browser.driver.wait(EC.elementToBeClickable(self.deletePipelineButton), 5000);
+      browser.driver.wait(EC.elementToBeClickable(self.deletePipelineButton), wait);
 
       //delete from list
       self.deletePipelineButton.click();
       browser.waitForAngular();
 
       //confirm delete
-      browser.driver.wait(EC.elementToBeClickable(self.confirmDeletePipelineButton), 4000);
+      browser.driver.wait(EC.elementToBeClickable(self.confirmDeletePipelineButton), wait);
       self.confirmDeletePipelineButton.click();
       browser.waitForAngular();
-      browser.driver.wait(EC.elementToBeClickable(self.pipelineListViewButton), 4000);
-
-      //wait for modal to close
-      //browser.driver.sleep(1000);
+      browser.driver.wait(EC.elementToBeClickable(self.pipelineListViewButton), wait);
     };
 
     self.deleteFirstMapping = function() {
-
       //load list view
       var isListClickable = EC.elementToBeClickable(self.gatewaymapListViewButton);
 
-      browser.driver.wait(isListClickable, 10000);
+      browser.driver.wait(isListClickable, wait);
       self.gatewaymapListViewButton.click();
       browser.waitForAngular();
-      //browser.driver.sleep(500);
 
       //wait for table to load
-      browser.driver.wait(EC.visibilityOf(element(by.css('table.mappings tbody tr'))), 5000);
-      //browser.driver.sleep(500);
+      browser.driver.wait(EC.visibilityOf(element(by.css('table.mappings tbody tr'))), wait);
 
       //hover to reveal delete icon
       browser.actions().mouseMove(element(by.css('table.mappings tbody tr:nth-child(1)'))).perform();
-      browser.driver.wait(EC.elementToBeClickable(self.deleteMappingButton), 5000);
+      browser.driver.wait(EC.elementToBeClickable(self.deleteMappingButton), wait);
 
-      //browser.driver.sleep(500);
       self.deleteMappingButton.click();
       browser.waitForAngular();
 
       //confirm delete
-      browser.driver.wait(EC.elementToBeClickable(self.confirmDeleteMappingButton), 4000);
+      browser.driver.wait(EC.elementToBeClickable(self.confirmDeleteMappingButton), wait);
       self.confirmDeleteMappingButton.click();
       browser.waitForAngular();
-
-      //wait for modal to close
-      //browser.driver.sleep(1000);
     };
 
     self.cloneFirstPolicy = function(){
+      //load list first
       var isListClickable = EC.elementToBeClickable(self.policyListViewButton);
-      browser.driver.wait(isListClickable, 5000);
+      browser.driver.wait(isListClickable, wait);
       self.policyListViewButton.click();
       browser.waitForAngular();
 
       var isContextMenuClickable = EC.elementToBeClickable(self.contextMenuPolicy);
-      browser.driver.wait(isContextMenuClickable, 10000);
+      browser.driver.wait(isContextMenuClickable, wait);
       self.contextMenuPolicy.click();
       browser.waitForAngular();
 
       var isCloneButtonClickable = EC.elementToBeClickable(self.clonePolicyButton);
-      browser.driver.wait(isCloneButtonClickable, 10000);
+      browser.driver.wait(isCloneButtonClickable, wait);
       self.clonePolicyButton.click();
       browser.waitForAngular();
 
       var isConfirmButtonClickable = EC.elementToBeClickable(self.confirmCloneButton);
-      browser.driver.wait(isConfirmButtonClickable, 10000);
+      browser.driver.wait(isConfirmButtonClickable, wait);
       self.confirmCloneButton.click();
       browser.waitForAngular();
-
-      //browser.driver.sleep(1000);
     };
 
     self.deleteFirstPolicyClone = function(){
+      //load list
       var isListClickable = EC.elementToBeClickable(self.policyListViewButton);
-      browser.driver.wait(isListClickable, 5000);
+      browser.driver.wait(isListClickable, wait);
       self.policyListViewButton.click();
       browser.waitForAngular();
 
       var isContextMenuClickable = EC.elementToBeClickable(self.clonedContextMenuPolicy);
-      browser.driver.wait(isContextMenuClickable, 10000);
+      browser.driver.wait(isContextMenuClickable, wait);
       self.clonedContextMenuPolicy.click();
       browser.waitForAngular();
 
       var isDeleteButtonClickable = EC.elementToBeClickable(self.deleteClonedPolicyButton);
-      browser.driver.wait(isDeleteButtonClickable, 10000);
+      browser.driver.wait(isDeleteButtonClickable, wait);
       self.deleteClonedPolicyButton.click();
       browser.waitForAngular();
 
       var isConfirmButtonClickable = EC.elementToBeClickable(self.confirmDeleteCloneButton);
 
-      browser.driver.wait(isConfirmButtonClickable, 10000);
+      browser.driver.wait(isConfirmButtonClickable, wait);
       self.confirmDeleteCloneButton.click();
       browser.waitForAngular();
     };
 
+    self.cloneFirstPipeline = function(){
+      var isListClickable = EC.elementToBeClickable(self.pipelineListViewButton);
+      browser.driver.wait(isListClickable, wait);
+      self.pipelineListViewButton.click();
+      browser.waitForAngular();
+
+      var isContextMenuClickable = EC.elementToBeClickable(self.contextMenuPipeline);
+      browser.driver.wait(isContextMenuClickable, wait);
+      self.contextMenuPipeline.click();
+      browser.waitForAngular();
+
+      var isCloneButtonClickable = EC.elementToBeClickable(self.clonePipelineButton);
+      browser.driver.wait(isCloneButtonClickable, wait);
+      self.clonePipelineButton.click();
+      browser.waitForAngular();
+
+      var isConfirmButtonClickable = EC.elementToBeClickable(self.confirmCloneButton);
+      browser.driver.wait(isConfirmButtonClickable, wait);
+      self.confirmCloneButton.click();
+      browser.waitForAngular();
+    };
+
+    self.deleteFirstPipelineClone = function(){
+      var isListClickable = EC.elementToBeClickable(self.pipelineListViewButton);
+      browser.driver.wait(isListClickable, wait);
+      self.pipelineListViewButton.click();
+      browser.waitForAngular();
+
+      var isContextMenuClickable = EC.elementToBeClickable(self.clonedContextMenuPipeline);
+      browser.driver.wait(isContextMenuClickable, wait);
+      self.clonedContextMenuPipeline.click();
+      browser.waitForAngular();
+
+      var isDeleteButtonClickable = EC.elementToBeClickable(self.deleteClonedPipelineButton);
+      browser.driver.wait(isDeleteButtonClickable, wait);
+      self.deleteClonedPipelineButton.click();
+      browser.waitForAngular();
+
+      var isConfirmButtonClickable = EC.elementToBeClickable(self.confirmDeleteCloneButton);
+
+      browser.driver.wait(isConfirmButtonClickable, wait);
+      self.confirmDeleteCloneButton.click();
+      browser.waitForAngular();
+    };
 
     self.addNewPipeline = function() {
       // get input field
-    // expect(EC.visibilityOf(self.newPipelineNameInput));
-      browser.driver.wait(
-        EC.presenceOf(self.newPipelineNameInput),
-        4000);
-      //expect(EC.visibilityOf(self.newPipelineAddPolicyButton));
-      browser.driver.wait(
-        EC.presenceOf(self.newPipelineAddPolicyButton),
-        4000);
+      browser.driver.wait(EC.presenceOf(self.newPipelineNameInput), wait);
+      browser.driver.wait(EC.presenceOf(self.newPipelineAddPolicyButton), wait);
 
       // send keys 'new pipeline'
       self.newPipelineNameInput.sendKeys('new pipeline');
-      browser.sleep(100);
+      browser.driver.sleep(sleep);
      // expect(EC.visibilityOf(self.newPipelineAddPolicyButton));
 
        // add policy
       self.newPipelineAddPolicyButton.click();
       browser.waitForAngular();
 
-      browser.driver.wait(
-        EC.presenceOf(self.newPipelineMetricsPolicySelect),
-        4000);
+      browser.driver.wait(EC.presenceOf(self.newPipelineMetricsPolicySelect), wait);
      // expect(EC.visibilityOf(self.newPipelineMetricsPolicySelect));
       self.newPipelineMetricsPolicySelect.click();
       browser.waitForAngular();
-      browser.sleep(100);
 
       // verify policy added
      // expect(EC.visibilityOf(self.newPipelineFirstPolicy));
-      browser.driver.wait(
-        EC.presenceOf(self.newPipelineFirstPolicy),
-        4000);
+      browser.driver.wait(EC.presenceOf(self.newPipelineFirstPolicy), wait);
 
       // save pipeline
     //
@@ -394,13 +388,10 @@ var GatewayHomeView = (function () {
     //self.newPipelineMetricsPolicySelect
     //self.newPipelineFirstPolicy
       //browser.sleep(7000);
-      browser.driver.wait(
-        EC.presenceOf(self.saveNewInstanceButton),
-        4000);
+      browser.driver.wait(EC.presenceOf(self.saveNewInstanceButton), wait);
 
       self.saveNewInstanceButton.click();
       browser.waitForAngular();
-
     };
 
     self.addNewMapping = function() {
@@ -472,9 +463,7 @@ var GatewayHomeView = (function () {
 
     //GatewayMapMainController
     self.waitUntilLoaded = function() {
-      browser.driver.wait(
-        EC.presenceOf(self.componentIdentifier),
-        10000);
+      browser.driver.wait(EC.presenceOf(self.componentIdentifier), wait);
     };
   }
   return GatewayHomeView;

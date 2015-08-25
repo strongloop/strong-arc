@@ -91,9 +91,16 @@ describe('gateway', function() {
     expect(element.all(by.css('[data-menutype=policy] .tree-item-row')).count()).toEqual(1);
   });
 
-  //it('should clone a gateway pipeline', function() {
-  //  expect(true).toEqual(true);
-  //});
+  it('should clone a gateway pipeline', function() {
+    var gatewayHomeView = new GatewayViews.GatewayHomeView();
+
+    gatewayHomeView.cloneFirstPipeline();
+    expect(element.all(by.css('[data-menutype=pipeline] .tree-item-row')).count()).toEqual(2);
+
+    gatewayHomeView.deleteFirstPipelineClone();
+    expect(element.all(by.css('[data-menutype=pipeline] .tree-item-row')).count()).toEqual(1);
+  });
+
   //
   //it('should clone a gateway mapping', function() {
   //  expect(true).toEqual(true);
