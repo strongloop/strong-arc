@@ -7,7 +7,7 @@ var gatewayHomeView = require('./views/gateway-home-view');
 var EC = protractor.ExpectedConditions;
 
 
-describe('gateway', function() {
+fdescribe('gateway', function() {
   var wait = 5*1000;
   var sleep = 500;
 
@@ -59,7 +59,6 @@ describe('gateway', function() {
     browser.driver.wait(EC.presenceOf(gatewayHomeView.gatewaymapListViewButton), wait);
     browser.driver.wait(EC.presenceOf(gatewayHomeView.pipelineListViewButton), wait);
   });
-
 
   afterEach(function(){
     var loginView = new ArcViews.LoginView();
@@ -113,9 +112,38 @@ describe('gateway', function() {
   //  expect(true).toEqual(false);
   //});
   //
-  //it('should edit a gateway pipeline', function() {
-  //  expect(true).toEqual(false);
-  //});
+  it('should edit a gateway pipeline', function() {
+    var gatewayHomeView = new GatewayViews.GatewayHomeView();
+
+    //clone policy
+    gatewayHomeView.cloneFirstPolicy();
+
+    //add new policy to pipeline
+    gatewayHomeView.addNewPolicyToPipeline();
+
+    //refresh pipeline page
+    gatewayHomeView.loadPipelineList();
+
+    //check for two policies in first pipeline
+    expect(gatewayHomeView.pipelinePolicyList.count()).toBe(2);
+
+    //edit first pipeline
+    var firstPipelineMenuItem = gatewayHomeView.firstPipelineMenuItem;
+    var isMenuVisible = EC.elementToBeClickable(firstPipelineMenuItem);
+
+    browser.driver.wait(isMenuVisible, wait);
+    firstPipelineMenuItem.click();
+    browser.waitForAngular();
+
+    gatewayHomeView.removePolicyInPipeline();
+
+    //check for only one pipeline
+    gatewayHomeView.loadPipelineList();
+    expect(gatewayHomeView.pipelinePolicyList.count()).toBe(1);
+
+    gatewayHomeView.deleteFirstPolicy();
+  });
+
   //
   //it('should edit a gateway mapping', function() {
   //  expect(true).toEqual(false);

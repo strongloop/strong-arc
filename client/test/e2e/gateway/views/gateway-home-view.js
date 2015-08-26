@@ -12,9 +12,7 @@ var GatewayHomeView = (function () {
     self.pipelineMenuItemList = element.all(by.css('[data-menutype=pipeline] .tree-item-row'));
     self.gatewayMapMenuItemList = element.all(by.css('[data-menutype=gatewaymap] .tree-item-row'));
 
-    self.componentIdentifier = element(
-      by.css('span.ia-project-title-container'));
-
+    self.componentIdentifier = element(by.css('span.ia-project-title-container'));
 
     self.homeNav = element(by.css('div.branding a'));
 
@@ -99,6 +97,23 @@ var GatewayHomeView = (function () {
     self.cloneMappingButton = element(by.css('[data-menutype="gatewaymap"] .tree-item-row:nth-child(1) .clone-instance'));
     self.clonedContextMenuMapping = element(by.css('[data-menutype="gatewaymap"] .tree-item-row:nth-child(2) .btn-nav-context'));
     self.deleteClonedMappingButton = element(by.css('[data-menutype="gatewaymap"] .tree-item-row:nth-child(2) .delete-instance'));
+
+    //pipeline policies
+    self.pipelinePolicyList = element.all(by.css('.viewport .policy-name'));
+    self.firstPipelineMenuItem = element(by.css('[data-menutype="pipeline"] .branch-leaf-list .tree-item-row:nth-child(1) .nav-tree-item'));
+    self.editFirstPipelineLink = element(by.css('table.pipelines tbody tr:first-child td:first-child a'));
+    self.saveEditPipelineButton = element(by.buttonText('Save Pipeline'));
+    self.confirmEditPipelineButton = element(by.buttonText('Replace'));
+    self.togglePipelinePolicyMenu = element(by.css('.ui-form .ui-menu-container button.toggler'));
+    self.addPipelinePolicyListItems = element.all(by.css('.ui-form .ui-menu-dropdown .menu li a'));
+    self.pipelineSummaryList = element.all(by.css('table.pipelines tbody tr'));
+    self.pipelinePolicyListDeleteLinks = element.all(by.css('table.pipelines tbody tr:nth-child(2) a.ui-close'));
+
+    //policies
+    self.policySummaryListItems = element.all(by.css('table.policies tbody tr'));
+
+    //mappings
+    self.mappingsSummaryListItems = element.all(by.css('table.mappings tbody tr'));
 
     //page object methods
     self.openNewPolicyFromNav = function() {
@@ -219,7 +234,7 @@ var GatewayHomeView = (function () {
       browser.waitForAngular();
 
       //hover to reveal delete icon
-      browser.actions().mouseMove(element(by.css('table.policies tbody tr:nth-child(1)'))).perform();
+      browser.actions().mouseMove(self.policySummaryListItems.first()).perform();
       //browser.driver.sleep(500);
       browser.driver.wait(EC.elementToBeClickable(self.deletePolicyButton), wait);
 
@@ -234,14 +249,10 @@ var GatewayHomeView = (function () {
     };
 
     self.deleteFirstPipeline = function() {
-      var isListClickable = EC.elementToBeClickable(self.pipelineListViewButton);
-
-      browser.driver.wait(isListClickable, wait);
-      self.pipelineListViewButton.click();
-      browser.waitForAngular();
+      self.loadPipelineList();
 
       //hover to reveal delete icon
-      browser.actions().mouseMove(element(by.css('table.pipelines tbody tr:nth-child(1)'))).perform();
+      browser.actions().mouseMove(self.pipelineSummaryList.first()).perform();
       browser.driver.wait(EC.elementToBeClickable(self.deletePipelineButton), wait);
 
       //delete from list
@@ -264,10 +275,10 @@ var GatewayHomeView = (function () {
       browser.waitForAngular();
 
       //wait for table to load
-      browser.driver.wait(EC.visibilityOf(element(by.css('table.mappings tbody tr'))), wait);
+      browser.driver.wait(EC.visibilityOf(self.mappingsSummaryListItems.first()), wait);
 
       //hover to reveal delete icon
-      browser.actions().mouseMove(element(by.css('table.mappings tbody tr:nth-child(1)'))).perform();
+      browser.actions().mouseMove(self.mappingsSummaryListItems.first()).perform();
       browser.driver.wait(EC.elementToBeClickable(self.deleteMappingButton), wait);
 
       self.deleteMappingButton.click();
@@ -327,10 +338,7 @@ var GatewayHomeView = (function () {
     };
 
     self.cloneFirstPipeline = function(){
-      var isListClickable = EC.elementToBeClickable(self.pipelineListViewButton);
-      browser.driver.wait(isListClickable, wait);
-      self.pipelineListViewButton.click();
-      browser.waitForAngular();
+      self.loadPipelineList();
 
       var isContextMenuClickable = EC.elementToBeClickable(self.contextMenuPipeline);
       browser.driver.wait(isContextMenuClickable, wait);
@@ -349,10 +357,7 @@ var GatewayHomeView = (function () {
     };
 
     self.deleteFirstPipelineClone = function(){
-      var isListClickable = EC.elementToBeClickable(self.pipelineListViewButton);
-      browser.driver.wait(isListClickable, wait);
-      self.pipelineListViewButton.click();
-      browser.waitForAngular();
+      self.loadPipelineList();
 
       var isContextMenuClickable = EC.elementToBeClickable(self.clonedContextMenuPipeline);
       browser.driver.wait(isContextMenuClickable, wait);
@@ -413,6 +418,81 @@ var GatewayHomeView = (function () {
 
       browser.driver.wait(isConfirmButtonClickable, wait);
       self.confirmDeleteCloneButton.click();
+      browser.waitForAngular();
+    };
+
+    self.loadPipelineList = function(){
+      var isListClickable = EC.elementToBeClickable(self.pipelineListViewButton);
+      browser.driver.wait(isListClickable, wait);
+      self.pipelineListViewButton.click();
+      browser.waitForAngular();
+    };
+
+
+    self.addNewPolicyToPipeline = function(){
+      self.loadPipelineList();
+
+      //navigate to edit first pipeline
+      var isEditLinkClickable = EC.elementToBeClickable(self.editFirstPipelineLink);
+
+      browser.driver.wait(isEditLinkClickable, wait);
+      self.editFirstPipelineLink.click();
+      browser.waitForAngular();
+
+      self.addExistingPolicyToPipeline();
+      self.saveCurrentPipeline();
+    };
+
+    self.removePolicyInPipeline = function(){
+      //delete first policy on current pipeline
+      browser.actions().mouseMove(self.pipelineSummaryList.last()).perform();
+
+      var deletePolicyLink = self.pipelinePolicyListDeleteLinks.last();
+      var isDeleteLinkClickable = EC.elementToBeClickable(deletePolicyLink);
+
+      browser.driver.wait(isDeleteLinkClickable, wait);
+      deletePolicyLink.click();
+      browser.waitForAngular();
+
+      self.saveCurrentPipeline();
+    };
+
+    self.saveCurrentPipeline = function(){
+      //click save button
+      var isSaveClickable = EC.elementToBeClickable(self.saveEditPipelineButton);
+
+      browser.driver.wait(isSaveClickable, wait);
+
+      self.saveEditPipelineButton.click();
+      browser.waitForAngular();
+
+      //click confirm replace
+      var isConfirmClickable = EC.elementToBeClickable(self.confirmEditPipelineButton, wait);
+
+      browser.driver.wait(isConfirmClickable, wait);
+
+      self.confirmEditPipelineButton.click();
+      browser.waitForAngular();
+    };
+
+    self.addExistingPolicyToPipeline = function(){
+      //select last item in policy dropdown and add to pipeline
+      var buttonToggler = self.togglePipelinePolicyMenu;
+      var isButtonClickable = EC.elementToBeClickable(buttonToggler);
+
+      browser.driver.wait(isButtonClickable, wait);
+
+      //trigger dropdown menu
+      buttonToggler.click();
+      browser.waitForAngular();
+
+      var lastMenuItem = self.addPipelinePolicyListItems.last();
+      var isMenuItemClickable = EC.elementToBeClickable(lastMenuItem);
+      browser.driver.wait(isMenuItemClickable, wait);
+
+      //click last item in menu
+      lastMenuItem.click();
+
       browser.waitForAngular();
     };
 
