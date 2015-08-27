@@ -10,6 +10,8 @@ ApiAnalytics.controller('ApiAnalyticsController', [
     function($scope, $state, $log, $q, $interval, $timeout, ApiAnalyticsService, LicensesService) {
       $scope.apiChart = {};
       $scope.server = {};
+      $scope.showChartDataLoading = true;
+      $scope.isLoading = false;
 
       window.setScrollView('.common-instance-view-container');
 
@@ -27,25 +29,40 @@ ApiAnalytics.controller('ApiAnalyticsController', [
       };
 
       $scope.getData = function(d, i, depth, initialModel){
+        $scope.showChartDataLoading = true;
         var def = $q.defer();
 
-        ApiAnalyticsService.getApiAnalyticsChartDataByNode(d, i, depth, $scope.server, initialModel)
-          .then(function(data){
-            var allData = {};
+        if (!$scope.isLoading) {
+          $scope.isLoading = true;
+          ApiAnalyticsService.getApiAnalyticsChartDataByNode(d, i, depth, $scope.server, initialModel)
+            .then(function(data){
+              var allData = {};
 
-            angular.extend(allData, data);
+              angular.extend(allData, data);
 
-            var chart = {
-              data: data,
-              node: d,
-              nodeIdx: i,
-              allData: allData
-            };
+              var chart = {
+                data: data,
+                node: d,
+                nodeIdx: i,
+                allData: allData
+              };
 
-            $scope.apiChart = chart;
+              $scope.apiChart = chart;
+              $scope.showChartDataLoading = false;
+              $scope.isLoading = false;
+              def.resolve($scope.apiChart);
+            })
+            .catch(function(error) {
+              $log.warn('bad get chart data: ', error);
+              $scope.showChartDataLoading = false;
+              $scope.isLoading = false;
+            })
+            .finally(function() {
+              $scope.showChartDataLoading = false;
+              $scope.isLoading = false;
+            });
 
-            def.resolve($scope.apiChart);
-          });
+        }
 
         return def.promise;
       };

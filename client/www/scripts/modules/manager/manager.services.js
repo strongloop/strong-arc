@@ -109,7 +109,23 @@ Manager.service('ManagerServices', [
             }
 
             break;
-           }
+          }
+          case 'unknown': {
+            if (host.error.message.indexOf('ETIMEDOUT') !== -1){
+              host.status.isProblem = true;
+              host.status.isNoApp = false;
+              host.status.isActive = false;
+              host.status.isInactive = false;
+              host.status.problem.title = 'Request Timeout';
+              host.status.problem.description = 'Check the status of the host to make sure it is up.';
+            }
+            else {
+              host.status.problem.title = 'exception: ' + host.errorType;
+              host.status.problem.description = host.error.message;
+            }
+
+            break;
+          }
           default:
             host.status.problem.title = 'exception: ' + host.errorType;
             host.status.problem.description = host.error.message;

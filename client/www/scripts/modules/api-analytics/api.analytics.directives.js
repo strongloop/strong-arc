@@ -83,7 +83,7 @@ ApiAnalytics.directive('slApiAnalyticsChart', [
             yLabel = 'Hour of day';
             break;
           case 2:
-            xLabel = 'Number of requests';
+            xLabel = 'Response time';
             yLabel = 'End point path';
             break;
         }
@@ -103,14 +103,17 @@ ApiAnalytics.directive('slApiAnalyticsChart', [
         svg.append("text")
           .attr("class", "y label")
           .attr("text-anchor", "end")
-          .attr("y", 6)
-          .attr("dy", -90)
-          .attr("transform", "rotate(-90)")
+          .attr("font-size", "36px")
+          .attr("x", -100)
+          .attr("y", 60)
+          .attr("dy", -60)
+          .attr("transform", "rotate(0)")
           .text(yLabel);
       }
 
       function processData(d, i) {
         if ( !d.children ) return;
+        scope.responseMax = d.rangeMax;
         var end = duration + d.children.length * delay;
 
         if ( scope.chartDepth === 1 ) {
@@ -145,7 +148,13 @@ ApiAnalytics.directive('slApiAnalyticsChart', [
         enter.select("rect").style("fill", color(true));
 
         // Update the x-scale domain.
-        x.domain([0, d3.max(d.children, function(d) { return d.value; })]).nice();
+        if (scope.chartDepth === 2 && scope.responseMax) {
+          x.domain([0, scope.responseMax]).nice();
+        }
+        else {
+          x.domain([0, d3.max(d.children, function(d) { return d.value; })]).nice();
+        }
+
 
         // Update the x-axis.
         svg.selectAll(".x.axis").transition()
@@ -200,10 +209,18 @@ ApiAnalytics.directive('slApiAnalyticsChart', [
 
           svg.call(tip);
 
-          svg.selectAll('g.enter text')
+          svg.selectAll('g.enter g text')
             .on('click', function(e){
               toggleTip(e, tip);
             });
+
+          if (scope.chartDepth === 2) {
+            svg.selectAll('g.enter g rect')
+              .on('click', function(e){
+                toggleTip(e, tip);
+              });
+
+          }
         }
 
         // Transition entering bars to their new position.
@@ -318,6 +335,10 @@ ApiAnalytics.directive('slApiAnalyticsChart', [
           scope.getData({ d: d, i: i, depth: scope.chartDepth, initialModel: scope.initialModel })
             .then(function(chart){
               scope.chart = chart;
+            })
+            .catch(function(error) {
+              $log.warn('bad getData for api analytics chart ', error);
+              throw error;
             });
         }
       }
@@ -348,7 +369,7 @@ ApiAnalytics.directive('slApiAnalyticsChart', [
           .selectAll("g")
           .data(d.children)
           .enter().append("g")
-          .style("cursor", function(d) { return "pointer"; });
+          .style("cursor", "pointer");
 
         //.on("click", down);
 
@@ -366,9 +387,12 @@ ApiAnalytics.directive('slApiAnalyticsChart', [
           .text(function(d) { return d.name; });
 
         bar.append("rect")
-          .attr("width", function(d) { return x(d.value); })
+          .attr("width", function(d) {
+            return x(d.value);
+          })
           .attr("height", barHeight)
           .on('click', down);
+
 
         return bar;
       }

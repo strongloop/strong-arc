@@ -295,6 +295,12 @@ PM.service('PMHostService', [
           });
       }
     };
+    svc.getPMClient = function(host, port){
+      var Client = require('strong-mesh-models').Client;
+      var client = new Client('http://' + host + ':' + port);
+
+      return client;
+    };
     svc.getFirstPMInstance = function(pmHost, cb) {
       var PMClient = require('strong-mesh-models').Client;
       var pm = new PMClient('http://' + pmHost.host + ':' + pmHost.port );
