@@ -144,8 +144,77 @@ describe('gateway', function() {
     gatewayHomeView.deleteFirstPolicy();
   });
 
-  //
-  //it('should edit a gateway mapping', function() {
-  //  expect(true).toEqual(false);
-  //});
+  it('should edit a gateway mapping', function() {
+    var gatewayHomeView = new GatewayViews.GatewayHomeView();
+
+    //create two pipelines
+    gatewayHomeView.cloneFirstPipeline();
+
+    //list maps
+    gatewayHomeView.loadMappingsList();
+
+    //edit first map
+    var editMapLink = gatewayHomeView.mappingsSummaryListEditLinks.first();
+    var isEditLinkClickable = EC.elementToBeClickable(editMapLink);
+
+    browser.driver.wait(isEditLinkClickable, wait);
+    editMapLink.click();
+
+    //change pipeline in dropdown
+    gatewayHomeView.editMapSelectPipeline(-1); //select last item in list
+
+    //change url endpoint
+    gatewayHomeView.newMappingEndpointInputNoModal.sendKeys('/api2');
+
+    //change verb
+    gatewayHomeView.newMappingVerbSelectNoModal.click();
+    browser.waitForAngular();
+
+    browser.driver.wait(EC.presenceOf(gatewayHomeView.newMappingVerbPostSelectNoModal), wait);
+    gatewayHomeView.newMappingVerbPostSelectNoModal.click();
+
+    //first save button (some are hidden)
+    gatewayHomeView.saveNewInstanceButtonNoModal.filter(function(el) {
+      return el.isDisplayed();
+    }).first().click();
+    browser.waitForAngular();
+
+    //confirm replace
+    gatewayHomeView.confirmReplaceMappingButton.click();
+    browser.waitForAngular();
+
+    //list maps
+    gatewayHomeView.loadMappingsList();
+
+    //check for pipeline name
+    var selectedPipelineName = gatewayHomeView.newMappingPipelineSelectNoModal.getAttribute('value');
+    var endpointUrl = gatewayHomeView.newMappingEndpointInputNoModal.getAttribute('value');
+    var selectedVerbName = gatewayHomeView.newMappingVerbSelectNoModal.getAttribute('value');
+
+    //verify results of edit operation
+    expect(selectedPipelineName).toMatch(/\d+/);
+    expect(endpointUrl).toMatch(/api2/);
+    expect(selectedVerbName).toEqual('POST');
+
+    //cleanup
+    //change mapping back to first pipeline so we can delete the cloned pipeline
+    gatewayHomeView.loadMappingsList();
+    var editMapLink = gatewayHomeView.mappingsSummaryListEditLinks.first();
+    var isEditLinkClickable = EC.elementToBeClickable(editMapLink);
+    browser.driver.wait(isEditLinkClickable, wait);
+    editMapLink.click();
+
+    //change pipeline in dropdown
+    gatewayHomeView.editMapSelectPipeline(1, false); //select first item in list (nomodal)
+    //first save button (some are hidden)
+    gatewayHomeView.saveNewInstanceButtonNoModal.filter(function(el) {
+      return el.isDisplayed();
+    }).first().click();
+    browser.waitForAngular();
+    //confirm replace
+    gatewayHomeView.confirmReplaceMappingButton.click();
+    browser.waitForAngular();
+
+    gatewayHomeView.deleteFirstPipelineClone();
+  });
 });

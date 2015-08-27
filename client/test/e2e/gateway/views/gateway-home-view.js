@@ -40,6 +40,7 @@ var GatewayHomeView = (function () {
 
     self.closeModalButton = element(by.css('button[ng-click="close()"]'));
     self.saveNewInstanceButton = element(by.css('div.modal-footer button.primary'));
+    self.saveNewInstanceButtonNoModal = element.all(by.css('.ui-form button.primary'));
 
     self.pipelineListViewButton = element(by.css('button[data-type="pipeline"].tree-branch'));
     self.pipelineContainer = element(by.css('div[ng-controller="PipelineMainController"]'));
@@ -50,7 +51,7 @@ var GatewayHomeView = (function () {
     self.newPipelineMetricsPolicySelect = element(by.css('.modal-body a[data-id="new Metrics policy name"]'));
     self.newPipelineFirstPolicy = element(by.css('.modal-body td[title="new Metrics policy name"]'));
 
-    self.deletePipelineButton = element(by.css('table.pipelines td.actions a.delete-pipeline'));
+    self.deletePipelineButton = element.all(by.css('table.pipelines td.actions a.delete-pipeline'));
 
     self.sideNewPipelineButton = element(by.css('button[data-type="pipeline"].nav-tree-item-addnew'));
     self.mainNewPipelineButton = element(by.css('div.entity-list-container button[data-type="pipeline"].add-new'));
@@ -63,18 +64,29 @@ var GatewayHomeView = (function () {
     self.mappingContainer = element(by.css('div[ng-controller="GatewayMapMainController"]'));
     self.newMappingNameInput = element(by.css('.modal-body div[data-id="GatewayMapFormContainer"] input.map-name'));
     self.newMappingEndpointInput = element(by.css('.modal-body div[data-id="GatewayMapFormContainer"] input.map-endpoint'));
-    //self.editMappingNameInput = element(by.css('div[data-id="GatewayMapFormContainer"] input[ng-model="map.name"]'));
-    //self.newMappingAddPipelineButton = element(by.css('.modal-body .modal-body .ui-menu-container.pipeline-menu .toggler'));
     self.newMappingVerbSelect = element(by.css('.modal-body .ui-menu-container.verb-menu .toggler'));
     self.newMappingVerbAllSelect = element(by.css('.modal-body .ui-menu-container.verb-menu .menu li:nth-child(1) a'));
     self.newMappingPipelineSelect = element(by.css('.modal-body .ui-menu-container.pipeline-menu .toggler'));
-    self.newMappingPipelineInstanceSelect = element(by.css('.modal-body .ui-menu-container.pipeline-menu .menu li:nth-child(1) a'));
+    self.newMappingPipelineInstanceSelect = element.all(by.css('.modal-body .ui-menu-container.pipeline-menu .menu li a'));
+
+
+    //sans-modal
+    self.newMappingNameInputNoModal = element(by.css('div[data-id="GatewayMapFormContainer"] input.map-name'));
+    self.newMappingEndpointInputNoModal = element(by.css('div[data-id="GatewayMapFormContainer"] input.map-endpoint'));
+    self.newMappingVerbSelectNoModal = element(by.css('.ui-menu-container.verb-menu .toggler'));
+    self.newMappingVerbAllSelectNoModal = element(by.css('.ui-menu-container.verb-menu .menu li:nth-child(1) a'));
+    self.newMappingVerbPostSelectNoModal = element(by.css('.ui-menu-container.verb-menu .menu li:nth-child(4) a'));
+    self.newMappingPipelineSelectNoModal = element(by.css('.ui-menu-container.pipeline-menu .toggler'));
+    self.newMappingPipelineInstanceSelectNoModal = element.all(by.css('.ui-menu-container.pipeline-menu .menu li a'));
+
+
     //self.newMappingFirstPipeline = element(by.css('.modal-body td[title="new pipeline"]'));
     //
     self.deleteMappingButton = element(by.css('table.mappings td.actions a.delete-map'));
     self.confirmDeleteMappingButton = element(by.css('.modal button.delete-map'));
     self.confirmDeletePipelineButton = element(by.css('.modal button.delete-pipeline'));
     self.confirmDeletePolicyButton = element(by.css('.modal button.delete-policy'));
+    self.confirmReplaceMappingButton = element(by.css('.modal button.primary'));
 
     //shared clone
     self.confirmCloneButton = element(by.css('.clone-modal button.primary'));
@@ -114,6 +126,7 @@ var GatewayHomeView = (function () {
 
     //mappings
     self.mappingsSummaryListItems = element.all(by.css('table.mappings tbody tr'));
+    self.mappingsSummaryListEditLinks = element.all(by.css('table.mappings tbody tr td:nth-child(1) button'));
 
     //page object methods
     self.openNewPolicyFromNav = function() {
@@ -246,17 +259,20 @@ var GatewayHomeView = (function () {
       browser.driver.wait(EC.elementToBeClickable(self.confirmDeletePolicyButton), wait);
       self.confirmDeletePolicyButton.click();
       browser.driver.wait(EC.elementToBeClickable(self.policyListViewButton), wait);
+      browser.waitForAngular();
     };
 
     self.deleteFirstPipeline = function() {
       self.loadPipelineList();
 
+      var deleteButton = self.deletePipelineButton.filter(filterByDisplayed).first();
+
       //hover to reveal delete icon
       browser.actions().mouseMove(self.pipelineSummaryList.first()).perform();
-      browser.driver.wait(EC.elementToBeClickable(self.deletePipelineButton), wait);
+      browser.driver.wait(EC.elementToBeClickable(deleteButton), wait);
 
       //delete from list
-      self.deletePipelineButton.click();
+      deleteButton.click();
       browser.waitForAngular();
 
       //confirm delete
@@ -428,6 +444,12 @@ var GatewayHomeView = (function () {
       browser.waitForAngular();
     };
 
+    self.loadMappingsList = function(){
+      var isListClickable = EC.elementToBeClickable(self.gatewaymapListViewButton);
+      browser.driver.wait(isListClickable, wait);
+      self.gatewaymapListViewButton.click();
+      browser.waitForAngular();
+    };
 
     self.addNewPolicyToPipeline = function(){
       self.loadPipelineList();
@@ -533,76 +555,67 @@ var GatewayHomeView = (function () {
     };
 
     self.addNewMapping = function() {
-      // get input field
-      //expect(EC.visibilityOf(self.newMappingNameInput));
-    //  expect(EC.visibilityOf(self.newMappingAddPipelineButton));
-      browser.driver.wait(
-        EC.presenceOf(self.newMappingNameInput),
-        4000);
-      //browser.driver.wait(
-      //  EC.presenceOf(self.newMappingAddPipelineButton),
-      //  4000);
-      // send keys 'new mapping'
+      browser.driver.wait(EC.presenceOf(self.newMappingNameInput), wait);
 
       self.newMappingNameInput.sendKeys('new mapping');
-     //
-     //
-     //// browser.pause();
-     // // add verb
       self.newMappingVerbSelect.click();
       browser.waitForAngular();
-      browser.sleep(300);
-      browser.driver.wait(
-        EC.presenceOf(self.newMappingVerbAllSelect),
-        4000);
+
+      browser.driver.wait(EC.presenceOf(self.newMappingVerbAllSelect), wait);
       self.newMappingVerbAllSelect.click();
 
-      browser.sleep(100);
       expect(EC.visibilityOf(self.newMappingVerbSelect));
 
       self.newMappingEndpointInput.sendKeys('http://www.url.com');
 
+      self.editMapSelectPipeline(1, true);
 
-      self.newMappingPipelineSelect.click();
-      browser.waitForAngular();
-      browser.driver.wait(
-        EC.presenceOf(self.newMappingPipelineInstanceSelect),
-        4000);
-      self.newMappingPipelineInstanceSelect.click();
-      browser.waitForAngular();
-      browser.sleep(100);
-
-
-      // expect(EC.visibilityOf(self.newMappingInstanceSelect));
-     // self.newMappingInstanceSelect.click();
-     // browser.sleep(300);
-     //
-     //
-     // // add endpoint
-     // // choose pipeline
-     // // save
-     //
-     //
-     // // add pipeline
-     // self.newMappingAddPipelineButton.click();
-     // browser.sleep(300);
-     //
-     // // verify policy added
-     // expect(EC.visibilityOf(self.newMappingFirstPipeline));
-     // // save pipeline
-     // //
-     // browser.sleep(300);
-     //
       self.saveNewInstanceButton.click();
       browser.waitForAngular();
     };
 
+    self.editMapSelectPipeline = function(position, isModal){
+      var pipelineInstanceToSelect;
+      var pipelineSelectToggler;
+
+      if ( isModal ) {
+        pipelineSelectToggler = self.newMappingPipelineSelect;
+      } else {
+        pipelineSelectToggler = self.newMappingPipelineSelectNoModal;
+      }
+
+      pipelineSelectToggler.click();
+      browser.waitForAngular();
+
+      //check which item in list we want
+      if ( !position || position === 1 ) {
+        if ( isModal ) {
+          pipelineInstanceToSelect = self.newMappingPipelineInstanceSelect.first();
+        } else {
+          pipelineInstanceToSelect = self.newMappingPipelineInstanceSelectNoModal.first();
+        }
+      } else if ( position === -1 ) {
+        if ( isModal ) {
+          pipelineInstanceToSelect = self.newMappingPipelineInstanceSelect.last();
+        } else {
+          pipelineInstanceToSelect = self.newMappingPipelineInstanceSelectNoModal.last();
+        }
+      }
+
+      browser.driver.wait(EC.elementToBeClickable(pipelineInstanceToSelect), wait);
+      pipelineInstanceToSelect.click();
+      browser.waitForAngular();
+    };
 
 
     //GatewayMapMainController
     self.waitUntilLoaded = function() {
       browser.driver.wait(EC.presenceOf(self.componentIdentifier), wait);
     };
+
+    function filterByDisplayed(el){
+      return el.isDisplayed();
+    }
   }
   return GatewayHomeView;
 })();
