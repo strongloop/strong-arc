@@ -107,47 +107,24 @@ IA.directive('slIaMainNav', [
 
 
         };
-        scope.$watch('currentSelectedCollection', function(newVal, oldVal) {
-          processActiveNavState();
-          renderComp();
-        }, true);
-        scope.$watch('apiModelsChanged', function() {
-          processActiveNavState();
-          renderComp();
-        });
-        scope.$watch('openInstanceRefs', function(newVal, oldVal) {
-          processActiveNavState();
-          renderComp();
-        }, true);
-        scope.$watch('activeInstance', function(newVal, oldVal) {
-          processActiveNavState();
-          renderComp();
-        }, true);
-        scope.$watch('modelNavIsVisible', function(newVal, oldVal) {
-          processActiveNavState();
-          renderComp();
-        }, true);
-        scope.$watch('dsNavIsVisible', function(newVal, oldVal) {
-          processActiveNavState();
-          renderComp();
-        }, true);
-        scope.$watch('currentOpenDatasourceNames', function(newVal, oldVal) {
-          processActiveNavState();
-          renderComp();
-        }, true);
-        scope.$watch('currentOpenModelNames', function(newVal, oldVal) {
-          processActiveNavState();
-          renderComp();
-        }, true);
-        scope.$watch('mainNavModels', function(mainNavModels) {
-          processActiveNavState();
-          renderComp();
-        }, true);
-        scope.$watch('mainNavDatasources', function(mainNavDatasources) {
-          processActiveNavState();
-          renderComp();
-        }, true);
 
+        var updateEvents = [
+          'currentSelectedCollection',
+          'apiModelsChanged',
+          'openInstanceRefs',
+          'activeInstance',
+          'modelNavIsVisible',
+          'dsNavIsVisible',
+          'currentOpenDatasourceNames',
+          'currentOpenModelNames',
+          'mainNavModels',
+          'mainNavDatasources'
+        ];
+
+        scope.$watchGroup(updateEvents, function(newVal, oldVal) {
+          processActiveNavState();
+          renderComp();
+        }, true);
       }
     }
   }
