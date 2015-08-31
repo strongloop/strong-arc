@@ -57,8 +57,16 @@
 
   .model {
     fill: white;
-    stroke: @grey-4;
-    stroke-width: 1.5px;
+    stroke: @grey-3;
+    stroke-width: 1px;
+
+    .main-body {
+      rx: 3px;
+    }
+
+    .connector {
+      stroke: @green-4;
+    }
 
     text {
       font-size: 55;
@@ -68,15 +76,18 @@
     }
 
     .title {
-      font-size: 75;
+      font-size: 12pt;
+      fill: white;
+      font-weight: normal;
     }
 
     .title-bg {
-      fill: @grey-4;
+      fill: @grey-1;
+      rx: 3px;
     }
 
     circle:hover {
-      fill: @grey-6;
+      fill: @green-1;
     }
   }
 
