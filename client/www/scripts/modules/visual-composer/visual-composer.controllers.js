@@ -1,19 +1,22 @@
 VisualComposer.controller('VisualComposerMainController', [
   '$scope',
+  '$rootScope',
   '$q',
   'ModelService',
   'IAService',
   'growl',
   '$log',
   'PropertyService',
-  function VisualComposerMainController($scope, $q, ModelService, IAService,
-    growl, $log, PropertyService) {
+  function VisualComposerMainController($scope, $rootScope, $q, ModelService,
+    IAService, growl, $log, PropertyService) {
     var models = $q.defer();
 
     $scope.models = [];
     $scope.connections = [];
     $scope.mainNavModels = [];
+    $scope.modelNavIsVisible = true;
     $scope.mainNavDatasources = [];
+    $scope.currentSelectedCollection = [];
 
     function getPropertyNameSnapshot(propArray) {
       return propArray.map(function(item) {
@@ -272,7 +275,9 @@ VisualComposer.controller('VisualComposerMainController', [
           });
 
           $q.all(ready).then(function() {
+            $scope.mainNavModels = result;
             models.resolve(result);
+            $rootScope.$broadcast('IANavEvent');
           });
         });
 
