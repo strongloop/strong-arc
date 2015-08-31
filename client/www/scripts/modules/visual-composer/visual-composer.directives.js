@@ -41,6 +41,16 @@ VisualComposer.directive('slSliderBar', function() {
         drag: function(dragEvent, ui) {
           var offset = ui.position.left - $left.offset().left;
 
+          // incase the bar is on the far-right
+          $right.css({
+            flexGrow: 1,
+            width: ''
+          });
+
+          $left.css({
+            flexGrow: 0
+          });
+
           $left.width(function() {
             return Math.max(0, offset);
           });
@@ -82,7 +92,7 @@ VisualComposer.directive('slComposerCanvas', [
       scope: {
         models: '=',
         connections: '=',
-        activeInstace: '=',
+        activeInstance: '=',
         onSelect: '&'
       },
       link: function($scope, elem) {
@@ -234,6 +244,7 @@ VisualComposer.directive('slComposerCanvas', [
         });
 
         function buildLinks(selection) {
+          return;
           var links = selection.selectAll('.link')
             .data($scope.connections.filter(
               function(x) {
@@ -270,8 +281,17 @@ VisualComposer.directive('slComposerCanvas', [
               .attr('x', 10)
               .attr('y', 5);
 
+            g.append('line')
+              .attr('class', 'separator')
+              .attr('x1', 10)
+              .attr('y1', 12)
+              .attr('x2', 175)
+              .attr('y2', 12);
+
+
             var circle = g.append('circle')
-              .attr('cx', 180)
+              .attr('class', 'connector')
+              .attr('cx', 200)
               .attr('r', 8)
               .call(drag2);
 
@@ -301,7 +321,7 @@ VisualComposer.directive('slComposerCanvas', [
               .append('g')
               .attr('class', 'property')
               .attr('transform', function(d, i) {
-                return 'translate(0, ' + (75 + (i * 25)) + ')';
+                return 'translate(0, ' + (65 + (i * 25)) + ')';
               })
               .call(buildProperty);
 
@@ -329,20 +349,23 @@ VisualComposer.directive('slComposerCanvas', [
               .attr('class', 'main-body');
 
             g.append('rect')
-              .attr('height', 35)
+              .attr('height', 45)
               .attr('width', 200)
               .attr('class', 'title-bg');
 
             g.append('text')
               .attr('class', 'title')
               .attr('text-anchor', 'middle')
-              .attr('y', 25)
+              .attr('y', 30)
               .attr('x', 100);
 
-            var circle = g.append('circle')
-              .attr('cx', 15)
-              .attr('cy', 20)
-              .attr('r', 8)
+            var circle = g.append('rect')
+              .attr('class', 'connector')
+              .attr('x', -6)
+              .attr('y', 8)
+              .attr('rx', 5)
+              .attr('height', 30)
+              .attr('width', 12)
               .on('mouseover', function(d) {
                 if (connectSource) {
                   if (tempConnections == null) {
