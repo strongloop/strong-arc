@@ -93,21 +93,16 @@
           <sl-policy-auth-form ng-show="isPolicyType('auth', policyCtx.currentPolicy)"></sl-policy-auth-form>
           <sl-policy-rate-limit-form  ng-show="isPolicyType('ratelimit', policyCtx.currentPolicy)"></sl-policy-rate-limit-form>
           <sl-policy-proxy-form ng-show="isPolicyType('proxy', policyCtx.currentPolicy)"> </sl-policy-proxy-form>
-
-          <!--<sl-policy-auth-form ng-show="isCurrentPolicyType('auth')"></sl-policy-auth-form>-->
-          <!--<sl-policy-rate-limit-form  ng-show="isCurrentPolicyType('ratelimit')"></sl-policy-rate-limit-form>-->
-          <!--<sl-policy-proxy-form ng-show="isCurrentPolicyType('proxy')"> </sl-policy-proxy-form>-->
-
         </td>
         <td class="master-action-col">
-          <button class="ui-btn secondary small" ng-click="clearAddPolicyRow()">cancel</button>
+          <button class="ui-btn secondary small" ng-click="clearAddPolicyRow()">Cancel</button>
           <button class="ui-btn primary small" ng-click="savePolicy()">Save</button>
         </td>
       </tr>
     </tbody>
   </table>
   </form>
-  <button data-type="policy" class="link-cmd add-new" ng-click="showAddNewPolicyForm()">
-    <i class="sl-icon sl-icon-plus-sign"></i> Add Policy
+  <button class="ui-btn accessory" ng-click="showAddNewPolicyForm()">
+    <i class="sl-icon sl-icon-plus-sign"></i> Add New
   </button>
 </div>
