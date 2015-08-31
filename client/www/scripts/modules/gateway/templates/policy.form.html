@@ -31,8 +31,9 @@
       <sl-policy-rate-limit-form  ng-show="context.isShowRateLimitPolicyForm"></sl-policy-rate-limit-form>
       <sl-policy-proxy-form ng-show="context.isShowProxyPolicyForm"> </sl-policy-proxy-form>
     </div>
-    <div>
-      <button ng-hide="hidebuttons" ng-disabled="!isPolicyDirty" class="ui-btn primary small pull-right" ng-click="confirmSaveCurrentPolicy(policy)">Save</button>
+    <div ng-hide="hidebuttons">
+      <button class="ui-btn secondary small" type="button" ng-click="clearPolicyForm()">Cancel</button>
+      <button class="ui-btn primary small" ng-disabled="!isPolicyDirty" ng-click="confirmSaveCurrentPolicy(policy)">Save Policy</button>
     </div>
   </form>
 </div>

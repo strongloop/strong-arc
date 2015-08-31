@@ -38,6 +38,13 @@ Gateway.directive('slPolicyForm', [
             $scope.showPolicyMenu = !$scope.showPolicyMenu;
           };
 
+          $scope.clearPolicyForm = function(){
+            GatewayServices.getPolicyById($scope.policy.id)
+              .then(function(data){
+                $scope.policy = data;
+              });
+          };
+
           $scope.confirmSaveCurrentPolicy = function(policy){
             var modalDlg = $modal.open({
               templateUrl: './scripts/modules/gateway/templates/confirm.policy.save.html',
