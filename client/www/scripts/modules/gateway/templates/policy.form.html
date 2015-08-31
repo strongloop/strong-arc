@@ -2,32 +2,35 @@
   <form class="ui-form">
     <div class="flex-container">
       <div class="form-field">
-        <label>name</label>
-        <input type="text" ng-model="policy.name" />
+        <label>Name</label>
+        <input type="text" ng-model="policy.name" required>
+        <p class="error" ng-show="form.name.$error.required">
+          Name is required
+        </p>
       </div>
       <div class="form-field">
-        <label>type</label>
-        <div dropdown style="position:relative" class="policy-type-select-container">
-          <button type="button" class="link-cmd toggle-btn" dropdown-toggle data-value="{{policy.id}}">
-            {{policy.type}}
-            <span data-type="policy.type" class="sl-icon sl-icon-box-arrow-down"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <li ng-repeat="policyType in context.policyTypes">
-              <button ng-click="changePolicyType(policyType.id)" class="link-cmd" value="{{policyType.id}}">{{policyType.name}}</button>
-            </li>
-          </ul>
+        <label>Type</label>
+        <div class="ui-menu-container verb-menu">
+          <input type="text"
+                 class="ui-input toggler"
+                 ng-mousedown="showPolicyMenu = true"
+                 ng-value="policy.type || 'Select Type'">
+          <sl-ui-menu-dropdown toggler="showPolicyMenu">
+            <section class="menu">
+              <ul>
+                <li ng-repeat="policyType in context.policyTypes track by $index">
+                  <a href ng-click="changePolicyType(policyType.id)"  value="{{policyType.id}}">{{policyType.name}}</a></li>
+              </ul>
+            </section>
+          </sl-ui-menu-dropdown>
         </div>
       </div>
     </div>
-    <div class="flex-container policy-sub-form">
-
+    <div class="flex-container">
       <sl-policy-auth-form ng-show="context.isShowAuthPolicyForm"></sl-policy-auth-form>
       <sl-policy-rate-limit-form  ng-show="context.isShowRateLimitPolicyForm"></sl-policy-rate-limit-form>
       <sl-policy-proxy-form ng-show="context.isShowProxyPolicyForm"> </sl-policy-proxy-form>
-
     </div>
-
     <div>
       <button ng-hide="hidebuttons" ng-disabled="!isPolicyDirty" class="ui-btn primary small pull-right" ng-click="confirmSaveCurrentPolicy(policy)">Save</button>
     </div>

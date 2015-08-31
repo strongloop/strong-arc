@@ -23,14 +23,19 @@ Gateway.directive('slPolicyForm', [
 
           $scope.isPolicyDirty = false;
           $scope.isPolicyNameDirty = false;
+          $scope.showPolicyMenu = false;
 
           $scope._saveNewPolicy = function(policy){
             $scope.saveNewPolicy({ policy: policy });
           };
 
           $scope.changePolicyType = function(type) {
-
             $scope.policy.type = type;
+            $scope.showPolicyMenu = false;
+          };
+
+          $scope.toggleShowPolicyMenu = function(){
+            $scope.showPolicyMenu = !$scope.showPolicyMenu;
           };
 
           $scope.confirmSaveCurrentPolicy = function(policy){
