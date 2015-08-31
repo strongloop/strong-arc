@@ -1,8 +1,9 @@
 ApiAnalytics.service('ApiAnalyticsService', [
   '$http',
   '$log',
+  '$rootScope',
   '$q',
-  function($http, $log, $q) {
+  function($http, $log, $rootScope, $q) {
     var svc = this;
     var Client = require('strong-mesh-models').Client;
     var client;
@@ -14,7 +15,17 @@ ApiAnalytics.service('ApiAnalyticsService', [
 
       return client;
     };
+    svc.alertNoProcesses = function(){
 
+      $rootScope.$emit('message', {
+        body: 'No processes found.  Check the status of the host or try another.',
+        links: [{
+          link: '/#process-manager',
+          linkText: 'go to Process Manager view'
+        }
+        ]
+      });
+    };
     svc.getDailySummary = function(d, i, depth, server, initialModel){
       var def = $q.defer();
       var client = svc.getClient(server.host, server.port);
@@ -22,11 +33,17 @@ ApiAnalytics.service('ApiAnalyticsService', [
       client.dailyExpressMetricsSummary(function(err, res){
         if ( err ) return def.reject(err);
 
+
+
         var chartData = {
           name: "flare",
           children: []
         };
-
+        if (!res) {
+          $log.warn('undefined response from api analytics server');
+          svc.alertNoProcesses();
+          return def.reject({message:'response undefined'});
+        }
         //convert data to d3 chart data
         Object.keys(res).map(function(item){
           chartData.children.push({
@@ -86,10 +103,15 @@ ApiAnalytics.service('ApiAnalyticsService', [
         var endpoints = res;
         var chartData = {
           name: "flare",
+          rangeMax: 0,
           children: []
         };
 
         endpoints.map(function(item){
+          // establish the longest response time for axis scale
+          if (chartData.rangeMax < item.responseDuration) {
+            chartData.rangeMax = item.responseDuration;
+          }
           var obj = {
             name: item.requestUrl,
             size: item.responseDuration,
