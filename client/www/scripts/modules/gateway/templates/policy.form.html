@@ -2,6 +2,10 @@
   <form class="ui-form">
     <div class="flex-container">
       <div class="form-field">
+        <label>Icon</label>
+        <ui-icon name="policy-{{policy.type}}" ng-if="policy.type"></ui-icon>
+      </div>
+      <div class="form-field">
         <label>Name</label>
         <input type="text" ng-model="policy.name" required>
         <p class="error" ng-show="form.name.$error.required">
@@ -32,6 +36,7 @@
       <sl-policy-proxy-form ng-show="context.isShowProxyPolicyForm"> </sl-policy-proxy-form>
     </div>
     <div ng-hide="hidebuttons">
+      <hr>
       <button class="ui-btn secondary small" type="button" ng-click="clearPolicyForm()">Cancel</button>
       <button class="ui-btn primary small" ng-disabled="!isPolicyDirty" ng-click="confirmSaveCurrentPolicy(policy)">Save Policy</button>
     </div>
