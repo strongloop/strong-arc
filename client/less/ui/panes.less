@@ -1,0 +1,38 @@
+.sl-container {
+  flex-grow: 1;
+
+  &.vbox {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  &.hbox {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  &.noexpand {
+    flex-grow: 0;
+  }
+
+  .sl-resize-bar {
+    width: 2rem;
+    background: @grey-2;
+    cursor: col-resize;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+
+    .sl-resize-label {
+      text-align: center;
+      flex-shrink: 0;
+      width: 20rem;
+      margin-left: -9rem;
+      transform: rotate(-90deg);
+      font-size: 9pt;
+      color: white;
+    }
+  }
+}

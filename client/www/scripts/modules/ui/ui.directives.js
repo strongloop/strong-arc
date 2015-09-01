@@ -262,3 +262,69 @@ UI.directive('uiCrumbs', function () {
     }
   };
 });
+
+UI.directive('uiSliderBar', function() {
+  return {
+    restrict: 'E',
+    replace: true,
+    template: '<div class="sl-resize-bar"><div class="sl-resize-label" ng-transclude></div></div>',
+    transclude: true,
+    link: function($scope, $elem, attrs) {
+      var $left = $($elem.prev());
+      var $right = $($elem.next());
+
+      $elem.on('dblclick', function() {
+        var collapsed = ($left.width() < 1);
+        if (collapsed) {
+          $right.css({
+            flexGrow: 0,
+            width: 0
+          });
+
+          $left.css({
+            flexGrow: 1,
+            width: ''
+          });
+        } else {
+          $left.css({
+            flexGrow: 0,
+            width: 0
+          });
+
+          $right.css({
+            flexGrow: 1,
+            width: ''
+          });
+        }
+      });
+
+      $elem.draggable({
+        axis: 'x',
+        cursor: 'move',
+        revert: true,
+        helper: 'none',
+        drag: function(dragEvent, ui) {
+          var offset = ui.position.left - $left.offset().left;
+
+          // incase the bar is on the far-right
+          $right.css({
+            flexGrow: 1,
+            width: ''
+          });
+
+          $left.css({
+            flexGrow: 0
+          });
+
+          $left.width(function() {
+            return Math.max(0, offset);
+          });
+
+          $right.scrollLeft(function() {
+            return Math.min(0, 0 - offset);
+          });
+        }
+      });
+    }
+  }
+});
