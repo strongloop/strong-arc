@@ -3,12 +3,13 @@ VisualComposer.controller('VisualComposerMainController', [
   '$rootScope',
   '$q',
   'ModelService',
+  'DataSourceService',
   'IAService',
   'growl',
   '$log',
   'PropertyService',
   function VisualComposerMainController($scope, $rootScope, $q, ModelService,
-    IAService, growl, $log, PropertyService) {
+    DataSourceService, IAService, growl, $log, PropertyService) {
     var models = $q.defer();
 
     $scope.models = [];
@@ -17,6 +18,8 @@ VisualComposer.controller('VisualComposerMainController', [
     $scope.modelNavIsVisible = true;
     $scope.mainNavDatasources = [];
     $scope.currentSelectedCollection = [];
+    $scope.currentOpenDatasourceNames = [];
+    $scope.instanceSelections = IAService.clearInstanceSelections();
 
     function getPropertyNameSnapshot(propArray) {
       return propArray.map(function(item) {
@@ -31,6 +34,125 @@ VisualComposer.controller('VisualComposerMainController', [
         }
       }
     }
+
+    function findModelById(id) {
+      for (var idx = 0; idx < $scope.models.length; ++idx) {
+        if ($scope.models[idx].id === id) {
+          return $scope.models[idx];
+        }
+      }
+
+      return null;
+    }
+
+    $scope.navTreeItemClicked = function(type, id) {
+      if (type === 'model') {
+        return $scope.selectModel(findModelById(id));
+      }
+    };
+
+    // delete instance
+    $scope.deleteInstanceRequest = function(instanceIdConfig, type) {
+      if (instanceIdConfig){
+        var confirmText = 'delete model?';
+
+        if (type === CONST.DATASOURCE_TYPE){
+          confirmText = 'delete data source?';
+        }
+
+        if (confirm(confirmText)) {
+          if (type === CONST.MODEL_TYPE) {
+            // delete the model
+            ModelService.deleteModelInstance(instanceIdConfig.definitionId, instanceIdConfig.configId).
+              then(function(response){
+                // remove from open instance refs
+                $scope.activeInstance = IAService.resetActiveToFirstOpenInstance(instanceIdConfig.definitionId);
+                loadModels();
+              }
+            );
+          } else if (type === CONST.DATASOURCE_TYPE) {
+            DataSourceService.deleteDataSourceInstance(instanceIdConfig.definitionId).
+              then(function(response){
+                $scope.activeInstance = IAService.resetActiveToFirstOpenInstance(instanceIdConfig.definitionId);
+
+                //reset data source for models using the deleted datasource
+                var models = $scope.mainNavModels.filter(function(model){
+                  var dataSourceId = instanceIdConfig.definitionId.split('.')[1];
+
+                  return model.config.dataSource === dataSourceId;
+                });
+
+                models.forEach(function(model){
+                  model.config.dataSource = null;
+
+                  //save the model
+                  ModelService.updateModelInstance(model);
+                });
+
+                loadModels();
+                loadDataSources();
+              }
+            );
+          }
+        }
+      }
+    };
+
+    // create new instance
+    $scope.createNewInstance = function(type, initialData) {
+      // start New Model
+      if (!type) {
+        $log.warn('createNewInstance called with no type argument');
+        return;
+      }
+
+      var newDefaultInstance = {};
+
+      if (type === CONST.MODEL_TYPE) {
+        // check if new model is already open
+        if (IAService.isNewModelOpen()) {
+          // easier to just close it an refresh than to activate existing instance ref
+          IAService.closeInstanceById(CONST.NEW_MODEL_PRE_ID);
+        }
+
+        newDefaultInstance = ModelService.createNewModelInstance(initialData);
+      } else if (type === CONST.DATASOURCE_TYPE) {
+        if (IAService.isNewDataSourceOpen()) {
+          IAService.closeInstanceById(CONST.NEW_DATASOURCE_PRE_ID);
+        }
+
+        newDefaultInstance = DataSourceService.createNewDataSourceInstance(initialData);
+      }
+
+      $scope.activeInstance = IAService.setActiveInstance(newDefaultInstance);
+      IAService.addInstanceRef($scope.activeInstance);
+      $scope.openInstanceRefs = IAService.getOpenInstanceRefs();
+      $scope.clearSelectedInstances();
+      loadModels();
+    };
+
+    $scope.createModelViewRequest = function() {
+      $scope.instanceType = CONST.MODEL_TYPE;
+      var isNewOpen = IAService.isNewModelOpen();
+
+      // check to see if new mode is already open
+      if (isNewOpen) {
+        // if it is check if it is active
+        // if new model is open but not active then just close it and
+        // start a fresh one
+        // the downside of this is that any unsaved data will be lost
+        // unfortunately the way the open tabs are handled the data isn't there anyway
+        // so will have to enhance in the future to preserve unsaved and inactive data
+        // TODO sean
+        if ($scope.activeInstance && ($scope.activeInstance.id !== CONST.NEW_MODEL_PRE_ID)) {
+          $scope.openInstanceRefs = IAService.closeInstanceById(CONST.NEW_MODEL_PRE_ID);
+          $scope.createNewInstance(CONST.MODEL_TYPE);
+        }
+      }
+      else {
+        $scope.createNewInstance(CONST.MODEL_TYPE);
+      }
+    };
 
     // update model property
     $scope.updateModelPropertyNameRequest = function(config) {
@@ -49,6 +171,7 @@ VisualComposer.controller('VisualComposerMainController', [
           });
       }
     };
+
     // delete model property
     $scope.deleteModelPropertyRequest = function(config) {
       if (config.id && config.modelId) {
@@ -78,7 +201,6 @@ VisualComposer.controller('VisualComposerMainController', [
 
         var propertyNameSnapshot = getPropertyNameSnapshot(config.currProperties);
         var currentIndex = getPropertyIndex(modelPropertyConfig.name, propertyNameSnapshot);
-
 
         PropertyService.updateModelProperty(modelPropertyConfig)
           .then(function(updatedProperty) {
@@ -127,9 +249,8 @@ VisualComposer.controller('VisualComposerMainController', [
       else {
         $log.warn('create model property called without valid modelId');
       }
-
-
     };
+
     function getRandomNumber() {
       return Math.floor((Math.random() * 100) + 1);
     }
@@ -261,6 +382,7 @@ VisualComposer.controller('VisualComposerMainController', [
     };
 
     loadModels();
+    loadDataSources();
 
     function loadModels() {
       ModelService.getAllModelInstances()
@@ -276,8 +398,10 @@ VisualComposer.controller('VisualComposerMainController', [
 
           $q.all(ready).then(function() {
             $scope.mainNavModels = result;
+            $scope.models = result;
             models.resolve(result);
             $rootScope.$broadcast('IANavEvent');
+            $scope.$broadcast('refreshModels');
           });
         });
 
@@ -291,5 +415,20 @@ VisualComposer.controller('VisualComposerMainController', [
         $scope.$broadcast('refreshModels');
       });
     }
+
+    function loadDataSources() {
+      $scope.mainNavDatasources = DataSourceService.getAllDataSourceInstances();
+      $scope.mainNavDatasources.
+        then(function(result) {
+          $scope.mainNavDatasources = result;
+          $scope.apiDataSourcesChanged = !$scope.apiDataSourcesChanged;
+          $rootScope.$broadcast('IANavEvent');
+        });
+    }
+
+    // Helper methods
+    $scope.clearSelectedInstances = function() {
+      $scope.instanceSelections = IAService.clearInstanceSelections();
+    };
   }
 ]);

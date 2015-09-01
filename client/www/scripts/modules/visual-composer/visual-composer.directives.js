@@ -5,7 +5,7 @@ VisualComposer.directive('slInstanceEditor', [
       replace: true,
       templateUrl: '/scripts/modules/visual-composer/templates/visual-composer.instance-editor.html',
       scope: {
-        models: '=',
+        models: '='
       },
       link: function($scope, elem) {
 
@@ -90,9 +90,15 @@ VisualComposer.directive('slComposerCanvas', [
             lv--;
           }
 
+          var cords = {y: 'y', x: 'x'};
+
+          if (typeof obj.cy !== 'undefined') {
+            cords = {y: 'cy', x: 'cx'};
+          }
+
           return {
-            y: base[0] + obj.cx.baseVal.value,
-            x: base[1] + obj.cy.baseVal.value
+            y: base[0] + obj[cords.x].baseVal.value,
+            x: base[1] + obj[cords.y].baseVal.value
           };
         }
 
@@ -171,6 +177,9 @@ VisualComposer.directive('slComposerCanvas', [
               .call(buildInstance);
 
           models.call(updateInstance);
+
+          models.exit()
+              .remove();
 
           if (newVal.length) {
             container.call(buildLinks);

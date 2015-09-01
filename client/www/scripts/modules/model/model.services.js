@@ -18,7 +18,7 @@ Model.service('ModelService', [
     };
 
     svc.createModelInstance = function(targetInstance) {
-        if (targetInstance.definition.name) {
+      if (targetInstance.definition.name) {
 
         delete targetInstance.id;
         delete targetInstance.definition.id;
@@ -172,24 +172,27 @@ Model.service('ModelService', [
                 instance.type = CONST.MODEL_TYPE;
                 instance.definition = value;
 
-
                 var lOptions = [];
                 if (value.options) {
                   angular.forEach(value.options, function(value, key) {
                     lOptions.push({name: key, props: value});
                   });
+
                   instance.options = lOptions;
                 }
 
                 instance.config = configMap[value.name];
-                if (instance.config.dataSource) {
-                  if (instance.config.dataSource === null) {
-                    instance.config.dataSource = CONST.DEFAULT_DATASOURCE;
-                  }
+
+                if (instance.config == null) {
+                  return;
                 }
-                else {
+
+                if (instance.config.dataSource === null) {
+                  instance.config.dataSource = CONST.DEFAULT_DATASOURCE;
+                } else {
                   instance.config.dataSource = CONST.DEFAULT_DATASOURCE;
                 }
+
                 modelInstances.push(instance);
               }, log);
 
