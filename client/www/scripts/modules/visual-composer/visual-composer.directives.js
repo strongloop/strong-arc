@@ -294,7 +294,7 @@ VisualComposer.directive('slComposerCanvas', [
               return 'translate(' + x + ', 0)';
             });
 
-            var body = g.append('rect')
+            g.append('rect')
               .attr('height', 50)
               .attr('width', 50)
               .attr('rx', 5)
@@ -313,7 +313,12 @@ VisualComposer.directive('slComposerCanvas', [
               .attr('y', 72)
               .attr('x', 25);
 
-            idMapping[d.id] = body[0][0];
+            var connector = g.append('circle')
+              .attr('cy', 85)
+              .attr('cx', 25)
+              .attr('r', 1);
+
+            idMapping[d.id] = connector[0][0];
           });
         }
 
