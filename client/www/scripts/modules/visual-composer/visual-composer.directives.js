@@ -16,6 +16,36 @@ VisualComposer.directive('slInstanceEditor', [
     }
   }
 ]);
+var vcConnector = function() {
+  var source = d3_source, target = d3_target, projection = d3_svg_diagonalProjection;
+  function diagonal(d, i) {
+    var p0 = source.call(this, d, i), p3 = target.call(this, d, i), m = (p0.y + p3.y) / 2, p = [ p0, {
+      x: p0.x,
+      y: m
+    }, {
+      x: p3.x,
+      y: m
+    }, p3 ];
+    p = p.map(projection);
+    return "M" + p[0] + "C" + p[1] + " " + p[2] + " " + p[3];
+  }
+  diagonal.source = function(x) {
+    if (!arguments.length) return source;
+    source = d3_functor(x);
+    return diagonal;
+  };
+  diagonal.target = function(x) {
+    if (!arguments.length) return target;
+    target = d3_functor(x);
+    return diagonal;
+  };
+  diagonal.projection = function(x) {
+    if (!arguments.length) return projection;
+    projection = x;
+    return diagonal;
+  };
+  return diagonal;
+};
 
 VisualComposer.directive('slComposerCanvas', [
   function slComposerCanvas() {
@@ -45,8 +75,8 @@ VisualComposer.directive('slComposerCanvas', [
           .origin(function(d) {
             var pos = getDiagonalCoords(d.id);
             return {
-              x: pos.y,
-              y: pos.x
+              x: pos.x,
+              y: pos.y
             };
           });
 
@@ -57,10 +87,12 @@ VisualComposer.directive('slComposerCanvas', [
           .origin(function(d) {
             var pos = getDiagonalCoords(d.id);
             return {
-              x: pos.y,
-              y: pos.x
+              x: pos.x,
+              y: pos.y
             };
           });
+
+        var navmesh = d3NavMesh();
 
         var select = function(selection) {
           selection.on('click', function(d) {
@@ -90,19 +122,63 @@ VisualComposer.directive('slComposerCanvas', [
             lv--;
           }
 
-          var cords = {y: 'y', x: 'x'};
+          var cords = {x: 'x', y: 'y'};
+          var offset = {x: 6, y: 15};
 
           if (typeof obj.cy !== 'undefined') {
-            cords = {y: 'cy', x: 'cx'};
+            cords = { x: 'cx', y: 'cy'};
+            offset = { x: 0, y: 0 };
           }
 
           return {
-            y: base[0] + obj[cords.x].baseVal.value,
-            x: base[1] + obj[cords.y].baseVal.value
+            x: base[0] + obj[cords.x].baseVal.value + offset.x,
+            y: base[1] + obj[cords.y].baseVal.value + offset.y
           };
         }
 
-        var diagonal = d3.svg.diagonal()
+        var vcConnector = function() {
+          var source = target = projection = function() {};
+          function diagonal(d, i) {
+            var p0 = source.call(this, d, i);
+            var p3 = target.call(this, d, i);
+            var m = (p3.y - 40);
+            var p = [
+              { x: p0.x, y: p0.y },
+              { x: p0.x + 25, y: p0.y },
+              { x: p0.x + 25, y: m },
+              { x: p3.x - 25, y: m },
+              { x: p3.x - 25, y: p3.y },
+              { x: p3.x, y: p3.y }
+            ];
+
+            p = p.map(projection);
+
+            return 'M ' + p[0] +
+              ' L ' + p.slice(0, 2).join(' ') +
+              ' L ' + p[1] + ' ' + p[2] +
+              ' L ' + p[2] + ' ' + p[3] +
+              ' L ' + p[3] + ' ' + p[4] +
+              ' L ' + p.slice(-2).join(' ');
+          }
+          diagonal.source = function(x) {
+            if (!arguments.length) return source;
+            source = d3.functor(x);
+            return diagonal;
+          };
+          diagonal.target = function(x) {
+            if (!arguments.length) return target;
+            target = d3.functor(x);
+            return diagonal;
+          };
+          diagonal.projection = function(x) {
+            if (!arguments.length) return projection;
+            projection = x;
+            return diagonal;
+          };
+          return diagonal;
+        };
+
+        var diagonal = vcConnector()
           .source(function(d) {
             return getDiagonalCoords(d.source);
           })
@@ -110,7 +186,7 @@ VisualComposer.directive('slComposerCanvas', [
             return getDiagonalCoords(d.target);
           })
           .projection(function(d) {
-            return [d.y, d.x];
+            return [d.x, d.y];
           });
 
         var svg = d3.select(elem[0])
@@ -187,7 +263,6 @@ VisualComposer.directive('slComposerCanvas', [
         });
 
         function buildLinks(selection) {
-          return;
           var links = selection.selectAll('.link')
             .data($scope.connections.filter(
               function(x) {
@@ -348,18 +423,18 @@ VisualComposer.directive('slComposerCanvas', [
             .attr('transform', 'translate(' + d3.event.translate + ')scale(' + d3.event.scale + ')');
         }
 
-        var eventOffset = [0, 0];
         var connector = null;
         var connectSource = null;
         var tempConnections = null;
 
         function connectStart(d) {
-          var dragEvent = d3.event;
+          var dragEvent = d3.event.sourceEvent;
+          var cords = getDiagonalCoords(dragEvent.srcElement.__data__.id);
 
           connector = container.append('circle')
             .attr('r', 5)
-            .attr('cx', dragEvent.x)
-            .attr('cy', dragEvent.y);
+            .attr('cx', cords.x)
+            .attr('cy', cords.y);
 
           connectSource = d;
           idMapping.connector = connector[0][0];
@@ -373,12 +448,13 @@ VisualComposer.directive('slComposerCanvas', [
         }
 
         function connectMove(d) {
+          var dragEvent = d3.event.sourceEvent;
           var pos = {x: 0, y: 0};
 
           if (tempConnections) {
             pos = getDiagonalCoords(tempConnections.target);
           } else {
-            pos.x = d3.event.x - 10;
+            pos.x = d3.event.x - 15; // padding to prevent cursor overlapping
             pos.y = d3.event.y;
           }
 
@@ -411,10 +487,6 @@ VisualComposer.directive('slComposerCanvas', [
             $scope.onSelect({
               model: d
             });
-          });
-
-          eventOffset = ['Y', 'X'].map(function(axis) {
-            return dragEvent['client' + axis] - dragEvent['offset' + axis];
           });
 
           dragEvent.stopPropagation();
