@@ -16,6 +16,7 @@ VisualComposer.controller('VisualComposerMainController', [
     $scope.connections = [];
     $scope.mainNavModels = [];
     $scope.modelNavIsVisible = true;
+    $scope.dsNavIsVisible = true;
     $scope.mainNavDatasources = [];
     $scope.currentSelectedCollection = [];
     $scope.currentOpenDatasourceNames = [];

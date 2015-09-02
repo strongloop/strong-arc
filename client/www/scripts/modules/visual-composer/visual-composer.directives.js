@@ -57,6 +57,7 @@ VisualComposer.directive('slComposerCanvas', [
         models: '=',
         connections: '=',
         activeInstance: '=',
+        datasources: '=',
         onSelect: '&'
       },
       link: function($scope, elem) {
@@ -240,6 +241,24 @@ VisualComposer.directive('slComposerCanvas', [
           }
         });
 
+        $scope.$watch('datasources', function(newVal) {
+          var ds = container.selectAll('.datasource')
+            .data(newVal, function(d) {
+              return d.name;
+            });
+
+          ds.enter()
+            .append('g')
+            .attr('class', 'datasource')
+            .attr('filter', 'url(#drop-shadow)')
+            .call(buildDatasource);
+
+          ds.call(updateDatasource);
+
+          ds.exit()
+            .remove();
+        });
+
         $scope.$watch('models', function(newVal) {
           var models = container.selectAll('.model')
             .data(newVal, function(d) {
@@ -261,6 +280,66 @@ VisualComposer.directive('slComposerCanvas', [
             container.call(buildLinks);
           }
         });
+
+        function buildDatasource(selection) {
+          var createIndex = 1;
+
+          selection.each(function(d) {
+            var g = d3.select(this);
+
+            g.attr('transform', function(d, i) {
+              var x = createIndex * 225;
+              createIndex += 1;
+
+              return 'translate(' + x + ', 0)';
+            });
+
+            var body = g.append('rect')
+              .attr('height', 50)
+              .attr('width', 50)
+              .attr('rx', 5)
+              .attr('class', 'ds-icon');
+
+            g.append('rect')
+              .attr('height', 18)
+              .attr('width', 10)
+              .attr('y', 58)
+              .attr('rx', 10)
+              .attr('class', 'title-bg');
+
+            g.append('text')
+              .attr('class', 'title')
+              .attr('text-anchor', 'middle')
+              .attr('y', 72)
+              .attr('x', 25);
+
+            idMapping[d.id] = body[0][0];
+          });
+        }
+
+        function updateDatasource(selection) {
+          selection.each(function(d) {
+            var g = d3.select(this);
+
+            var title = g.selectAll('.title')
+              .text(function(d) {
+                return d.name;
+              });
+
+            var textBox = title[0][0].getBBox();
+            var width = textBox.width + 20;
+
+            g.selectAll('.title-bg')
+              .attr('x', function() {
+                return 25 - (width / 2);
+              })
+              .attr('width', function() {
+                return width;
+              });
+          });
+
+          selection.call(drag);
+        }
 
         function buildLinks(selection) {
           var links = selection.selectAll('.link')
