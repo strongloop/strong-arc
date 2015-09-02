@@ -28,6 +28,7 @@ ApiAnalytics.directive('slApiAnalyticsChart', [
 
       var xAxis = d3.svg.axis()
         .scale(x)
+        .ticks(6)
         .orient("top");
 
       var svgParent = d3.select(elem.find('.svg-chart')[0]).append("svg")
