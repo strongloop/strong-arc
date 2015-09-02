@@ -16,36 +16,10 @@ VisualComposer.directive('slInstanceEditor', [
     }
   }
 ]);
-var vcConnector = function() {
-  var source = d3_source, target = d3_target, projection = d3_svg_diagonalProjection;
-  function diagonal(d, i) {
-    var p0 = source.call(this, d, i), p3 = target.call(this, d, i), m = (p0.y + p3.y) / 2, p = [ p0, {
-      x: p0.x,
-      y: m
-    }, {
-      x: p3.x,
-      y: m
-    }, p3 ];
-    p = p.map(projection);
-    return "M" + p[0] + "C" + p[1] + " " + p[2] + " " + p[3];
   }
-  diagonal.source = function(x) {
-    if (!arguments.length) return source;
-    source = d3_functor(x);
-    return diagonal;
-  };
-  diagonal.target = function(x) {
-    if (!arguments.length) return target;
-    target = d3_functor(x);
-    return diagonal;
-  };
-  diagonal.projection = function(x) {
-    if (!arguments.length) return projection;
-    projection = x;
-    return diagonal;
-  };
-  return diagonal;
-};
+
+  return NavMesh;
+})(d3);
 
 VisualComposer.directive('slComposerCanvas', [
   function slComposerCanvas() {
@@ -107,11 +81,15 @@ VisualComposer.directive('slComposerCanvas', [
           var obj = idMapping[id];
           var base = [0, 0];
 
+          if (obj == null) {
+            return { x: 0, y:0 };
+          }
+
           var parentNode = obj;
           var lv = id.split('.').length - 1;
           var translate;
 
-          while (lv > 0 && parentNode.parentNode) {
+          while (lv > 0 && parentNode && parentNode.parentNode) {
             parentNode = parentNode.parentNode;
             translate = d3.transform(
               d3.select(parentNode).attr('transform')
@@ -139,6 +117,7 @@ VisualComposer.directive('slComposerCanvas', [
 
         var vcConnector = function() {
           var source = target = projection = function() {};
+
           function diagonal(d, i) {
             var p0 = source.call(this, d, i);
             var p3 = target.call(this, d, i);

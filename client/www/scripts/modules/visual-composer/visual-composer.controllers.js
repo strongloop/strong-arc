@@ -398,6 +398,13 @@ VisualComposer.controller('VisualComposerMainController', [
           });
 
           $q.all(ready).then(function() {
+            result.map(function(model) {
+              $scope.connections.push({
+                source: 'server.' + model.config.dataSource,
+                target: model.id
+              });
+            });
+
             $scope.mainNavModels = result;
             $scope.models = result;
             models.resolve(result);
@@ -406,14 +413,31 @@ VisualComposer.controller('VisualComposerMainController', [
           });
         });
 
-      ModelService.getAllModelRelations()
-        .then(function(results) {
-          // TODO: setup relations
-        });
-
       models.promise.then(function(models) {
-        $scope.models = models;
-        $scope.$broadcast('refreshModels');
+        ModelService.getAllModelRelations()
+          .then(function(results) {
+            results.map(function(relation) {
+              var model = null;
+
+              for (var i = 0; i < models.length; ++i) {
+                if (models[i].id === relation.modelId) {
+                  model = models[i];
+                  break;
+                }
+              }
+
+              if (model) {
+                model.properties.push(relation);
+                $scope.connections.push({
+                  source: relation.id,
+                  target: relation.facetName + '.' + relation.model
+                });
+              }
+            });
+
+            $scope.models = models;
+            $scope.$broadcast('refreshModels');
+          });
       });
     }
 
