@@ -21,14 +21,16 @@ var GatewayHomeView = (function () {
     self.policyContainer = element(by.css('div[ng-controller="PolicyMainController"]'));
 
     self.editPolicyNameInput = element(by.css('input[type="text"][ng-model="policy.name"]'));
-    self.newPolicyNameInput = element(by.css('div.modal-body input[type="text"][ng-model="policy.name"]'));
-    self.newPolicyTypeSelect = element(by.css('div.modal-body div.policy-type-select-container button.toggle-btn'));
+    self.newPolicyNameInput = element(by.css('.modal-body [ng-model="policy.name"]'));
+    self.newPolicyTypeSelect = element(by.css('.modal-body [data-id="PolicyFormContainer"] .ui-menu-container input.toggler'));
+
     self.deletePolicyButton = element(by.css('table.policies tbody tr:nth-child(1) td.actions a.delete-policy'));
     //self.newPolicyTypeValueAttrib = element(by.css('div.modal-body div.policy-type-select-container button.toggle-btn'));
-    self.policyTypeAuthSelect = element(by.css('div.modal-body div.policy-type-select-container ul.dropdown-menu li button[value="auth"]'));
-    self.policyTypeMetricsSelect = element(by.css('div.modal-body div.policy-type-select-container ul.dropdown-menu li button[value="metrics"]'));
-    self.policyTypeRateLimitingSelect = element(by.css('div.modal-body div.policy-type-select-container ul.dropdown-menu li button[value="ratelimiting"]'));
-    self.policyTypeReversProxySelect = element(by.css('div.modal-body div.policy-type-select-container ul.dropdown-menu li button[value="reverseproxy"]'));
+    self.policyTypeListItems = element.all(by.css('.modal-body .ui-form .ui-menu-dropdown .menu li a'));
+    self.policyTypeAuthSelect = self.policyTypeListItems.get(0);
+    self.policyTypeMetricsSelect = self.policyTypeListItems.get(1);
+    self.policyTypeRateLimitingSelect = self.policyTypeListItems.get(2);
+    self.policyTypeReversProxySelect = self.policyTypeListItems.get(3);
 
     self.policyReversProxyTargetUrlInput = element(by.css('div.modal-body div.policy-proxy-container input[ng-model="policy.targetURL"]'));
     self.policyRateLimitingLimitInput = element(by.css('div.modal-body div.policy-ratelimit-container input[ng-model="policy.limit"]'));
@@ -114,10 +116,10 @@ var GatewayHomeView = (function () {
     self.pipelinePolicyList = element.all(by.css('.viewport .policy-name'));
     self.firstPipelineMenuItem = element(by.css('[data-menutype="pipeline"] .branch-leaf-list .tree-item-row:nth-child(1) .nav-tree-item'));
     self.editFirstPipelineLink = element(by.css('table.pipelines tbody tr:first-child td:first-child a'));
-    self.saveEditPipelineButton = element(by.buttonText('Save Pipeline'));
+    self.saveEditPipelineButton = element(by.css('[data-id="PipelineFormContainer"] button.primary'));
     self.confirmEditPipelineButton = element(by.buttonText('Replace'));
     self.togglePipelinePolicyMenu = element(by.css('.ui-form .ui-menu-container button.toggler'));
-    self.addPipelinePolicyListItems = element.all(by.css('.ui-form .ui-menu-dropdown .menu li a'));
+    self.addPipelinePolicyListItems = element.all(by.css('[data-id="PipelineFormContainer"] .ui-form .ui-menu-dropdown .menu li a'));
     self.pipelineSummaryList = element.all(by.css('table.pipelines tbody tr'));
     self.pipelinePolicyListDeleteLinks = element.all(by.css('table.pipelines tbody tr:nth-child(2) a.ui-close'));
 
@@ -149,7 +151,6 @@ var GatewayHomeView = (function () {
       browser.driver.wait(EC.presenceOf(self.newPolicyNameInput), wait);
 
       self.newPolicyNameInput.sendKeys('new Metrics policy name');
-
       self.newPolicyTypeSelect.click();
       browser.waitForAngular();
 
@@ -157,7 +158,7 @@ var GatewayHomeView = (function () {
 
       self.policyTypeMetricsSelect.click();
       browser.waitForAngular();
-      expect(self.newPolicyTypeSelect.getText()).toEqual('metrics');
+      expect(self.newPolicyTypeSelect.getAttribute('value')).toEqual('metrics');
 
       browser.driver.wait(EC.presenceOf(self.saveNewInstanceButton), wait);
 
@@ -178,7 +179,7 @@ var GatewayHomeView = (function () {
       self.policyTypeAuthSelect.click();
       browser.waitForAngular();
 
-      expect(self.newPolicyTypeSelect.getText()).toEqual('auth');
+      expect(self.newPolicyTypeSelect.getAttribute('value')).toEqual('auth');
 
       browser.driver.wait(EC.presenceOf(self.saveNewInstanceButton), wait);
 
@@ -201,7 +202,7 @@ var GatewayHomeView = (function () {
       browser.waitForAngular();
 
 
-      expect(self.newPolicyTypeSelect.getText()).toEqual('ratelimiting');
+      expect(self.newPolicyTypeSelect.getAttribute('value')).toEqual('ratelimiting');
       expect(EC.visibilityOf(self.policyRateLimitingLimitInput));
       expect(EC.visibilityOf(self.policyRateLimitingIntervalInput));
 
@@ -228,7 +229,7 @@ var GatewayHomeView = (function () {
       self.policyTypeReversProxySelect.click();
       browser.waitForAngular();
 
-      expect(self.newPolicyTypeSelect.getText()).toEqual('reverseproxy');
+      expect(self.newPolicyTypeSelect.getAttribute('value')).toEqual('reverseproxy');
       expect(EC.visibilityOf(self.policyReversProxyTargetUrlInput));
 
       self.policyReversProxyTargetUrlInput.sendKeys('https://www.url.com');
@@ -514,7 +515,6 @@ var GatewayHomeView = (function () {
 
       //click last item in menu
       lastMenuItem.click();
-
       browser.waitForAngular();
     };
 
