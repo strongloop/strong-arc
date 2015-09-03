@@ -177,19 +177,6 @@ Gateway.service('GatewayServices', [
         })
     };
     svc.getPipelineById = function(id) {
-      //return Pipeline.findById({id:id, include: ["policies"] })
-      /*
-      *
-      {
-       filter: {
-          where: { id: id },
-          include: ["policies"]
-        }
-       }
-      *
-      * */
-
-
       return Pipeline.find({
           filter: {
             where: { id: id },
@@ -205,47 +192,6 @@ Gateway.service('GatewayServices', [
         })
     };
 
-    svc.getPipelineDetail = function(id) {
-      var returnObj = {};
-      var tPolicies = [];
-      var tPipelines = [];
-      function getPipelineRenderPolicy(policyId) {
-        return _.findWhere(tPolicies, { id: policyId });
-      }
-      function inflatePipelinePolicies(pipeline) {
-        pipeline.policies = [];
-        pipeline.policyIds.map(function(policyId) {
-          var inflatedPolicy = getPipelineRenderPolicy(policyId);
-          pipeline.policies.push(inflatedPolicy);
-        });
-        return pipeline;
-      }
-      function getPipelineDetail(argId) {
-        for (var i = 0;i < tPipelines.length;i++) {
-          var cPipeline = tPipelines[i];
-          if (cPipeline.id === argId) {
-            var retVal = inflatePipelinePolicies(cPipeline);
-            return retVal;
-          }
-        }
-      };
-
-
-      // get policies
-      return svc.getPolicies()
-      .then(function(policies) {
-          tPolicies = policies;
-
-          return svc.getPipelines()
-            .then(function(pipelines) {
-              tPipelines = pipelines;
-              returnObj = getPipelineDetail(id);
-              return returnObj;
-
-            });
-        });
-
-    };
     /*
     *
     * GATEWAY MAPS
@@ -333,9 +279,16 @@ Gateway.service('GatewayServices', [
         // update
         if (gatewayMap.id) {
           delete gatewayMap._id;
+          if (gatewayMap.pipeline) {
+            var tmpPipeline = gatewayMap.pipeline;
+            delete gatewayMap.pipeline;
+          }
           return GatewayMapping.upsert(gatewayMap,
             function(response){
               console.log('updated GatewayMapping');
+              if (tmpPipeline) {
+                response.pipeline = tmpPipeline;
+              }
               return response;
             },
             function(error){
@@ -358,16 +311,10 @@ Gateway.service('GatewayServices', [
         }
       }
     };
-    /*
-    *
-    * map.pipeline = GatewayServices.getPipelineDetail(map.pipelineId)
-    *
-    *
-    *
-    * */
 
     svc.getGatewayMaps = function() {
-      return GatewayMapping.find({include: 'pipelines'})
+
+      return GatewayMapping.find({ filter:{"include":{"relation":"pipeline",scope:{"include":["policies"]}}} })
         .$promise
         .then(function(response) {
           return response;
@@ -376,21 +323,17 @@ Gateway.service('GatewayServices', [
           $log.warn('bad get all GatewayMaps: ' + JSON.stringify(error));
         })
     };
-    //svc.getGatewayMappings = function() {
-    //  return GatewayMapping.find({})
-    //    .$promise
-    //    .then(function(response) {
-    //      return response;
-    //    })
-    //    .catch(function(error) {
-    //      $log.warn('bad get all GatewayMaps: ' + JSON.stringify(error));
-    //    })
-    //};
+
     svc.getGatewayMapById = function(id) {
-      return GatewayMapping.findById({id:id})
+      return GatewayMapping.find({
+          filter: {
+            where: { id: id },
+            include: {"relation":"pipeline",scope:{"include":["policies"]}}
+          }
+        })
         .$promise
         .then(function(response) {
-          return response;
+          return response[0];
         })
         .catch(function(error) {
           $log.warn('bad get  GatewayMapping: ' + JSON.stringify(error));
@@ -398,8 +341,7 @@ Gateway.service('GatewayServices', [
     };
 
     svc.getGatewayEndpoints = function() {
-      //  var swaggerUrl = 'http://localhost:4000/explorer/resources';
-      var swaggerUrl = 'http://pool2015.herokuapp.com/explorer/resources';
+//      var swaggerUrl = 'http://pool2015.herokuapp.com/explorer/resources';
 
     };
      return svc;

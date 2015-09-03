@@ -272,39 +272,6 @@ Gateway.controller('GatewayMainController', [
     };
     $scope.gatewayCtx = {};
 
-    function getPipelineRenderPolicy(policyId) {
-      return _.findWhere($scope.policyCtx.policies, { id: policyId });
-    }
-
-    $scope.getPipelineRenderPolicy = getPipelineRenderPolicy;
-
-    function inflatePipelinePolicies(pipeline) {
-      pipeline.policies = [];
-      pipeline.policyIds.map(function(policyId) {
-        var inflatedPolicy = getPipelineRenderPolicy(policyId);
-        pipeline.policies.push(inflatedPolicy);
-        if (inflatedPolicy.type === GATEWAY_CONST.POLICY_PROXY_TYPE) {
-          pipeline.targetURL = inflatedPolicy.targetURL;
-        }
-        if (inflatedPolicy.type === GATEWAY_CONST.POLICY_AUTH_TYPE) {
-          pipeline.scopes = inflatedPolicy.scopes;
-        }
-      });
-      return pipeline;
-    }
-
-
-    function getPipelineDetail(argId) {
-      for (var i = 0;i < $scope.gatewayMapCtx.currentPipelines.length;i++) {
-        var cPipeline = $scope.gatewayMapCtx.currentPipelines[i];
-        if (cPipeline.id === argId) {
-          var retVal = inflatePipelinePolicies(cPipeline);
-          return retVal;
-        }
-      }
-    }
-
-
     $scope.showAddNewModal = function(type) {
       switch(type) {
         case GATEWAY_CONST.MAPPING_TYPE:
@@ -337,13 +304,8 @@ Gateway.controller('GatewayMainController', [
 
 
     $scope.refreshMappings = function() {
-      $log.log('refreshMappings');
       return GatewayServices.getGatewayMaps()
         .then(function(maps) {
-          $log.debug('|  refresh maps: ' + maps.length);
-          maps.map(function(map) {
-            map.pipeline = getPipelineDetail(map.pipelineId);
-          });
           $scope.gatewayMapCtx.gatewayMaps = maps;
           $scope.gatewayCtx.navMenus[GATEWAY_CONST.MAPPING_TYPE] = {
             type:GATEWAY_CONST.MAPPING_TYPE,
@@ -434,11 +396,6 @@ Gateway.controller('GatewayMainController', [
       function getGatewayMaps(){
         return GatewayServices.getGatewayMaps()
           .then(function(maps) {
-            $log.debug('|  refresh maps: ' + maps.length);
-            maps.map(function(map) {
-              map.pipeline = getPipelineDetail(map.pipelineId);
-
-            });
             $scope.gatewayMapCtx.gatewayMaps = maps;
             $scope.gatewayCtx.navMenus[GATEWAY_CONST.MAPPING_TYPE] = {
               type:GATEWAY_CONST.MAPPING_TYPE,
@@ -456,8 +413,6 @@ Gateway.controller('GatewayMainController', [
 
 
     $scope.init = function() {
-      $log.debug('Gateway Location : ' + getNavBasePath());
-      $log.debug('Gateway Params: ' + JSON.stringify($state.params));
 
       $scope.gatewayCtx = {
         currentView: getNavBasePath(),
@@ -551,9 +506,6 @@ Gateway.controller('GatewayMainController', [
           case GATEWAY_CONST.MAPPING_TYPE:
             $scope.gatewayMapCtx.currentGatewayMap = GatewayServices.getGatewayMapById($scope.gatewayCtx.currentInstanceId)
               .then(function(map) {
-                if (map.pipelineId) {
-                  map.pipeline = getPipelineDetail(map.pipelineId);
-                }
                 $scope.gatewayMapCtx.originalInstance = angular.copy(map);
                 $scope.gatewayMapCtx.currentGatewayMap = map;
               });
@@ -585,7 +537,6 @@ Gateway.controller('GatewayMainController', [
       setView();
     }
     function setView() {
-     // $timeout(function() {
         if ($scope.gatewayCtx.currentView) {
           //$scope.refreshDataSets();
           switch($scope.gatewayCtx.currentView) {
@@ -636,8 +587,6 @@ Gateway.controller('GatewayMainController', [
 
 
         }
-
-     // });
 
     }
     $scope.setMainNav = function(view, id) {

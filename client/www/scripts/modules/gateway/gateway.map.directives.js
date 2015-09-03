@@ -108,6 +108,7 @@ Gateway.directive('slGatewayMapForm', [
                   .then(function(map) {
                     growl.addSuccessMessage('Gateway Map Saved');
                     $scope.$parent.refreshMappings();
+                    $scope.$parent.main();
 
                   });
             //  }
@@ -119,17 +120,6 @@ Gateway.directive('slGatewayMapForm', [
         }
       ],
       link: function(scope, el, attrs) {
-        scope.$watch('map.pipelineId', function(newVal, oldVal) {
-          if (newVal) {
-            $log.debug('the pipeline id has changed');
-            scope.map.pipeline = GatewayServices.getPipelineDetail(newVal)
-            .then(function(pipe) {
-                scope.map.pipeline = pipe;
-              });
-
-          }
-
-        }, true);
         /*
          *
          * Dirty check
@@ -141,15 +131,12 @@ Gateway.directive('slGatewayMapForm', [
           if (newVal && (newVal.id && oldVal.id)) {
 
             if (newVal !== oldVal) {
-              if (newVal.pipeline.isActive) {
+              if (newVal.pipeline && newVal.pipeline.isActive) {
                 scope.context.originalInstance.pipeline.isActive = true;
               }
               if (!angular.equals(scope.context.originalInstance, newVal)) {
                 scope.isMappingDirty = true;
 
-              }
-              else {
-                $log.debug('|||||   IIm freeeasdf');
               }
             }
             if (newVal.name !== scope.context.originalInstance.name) {
