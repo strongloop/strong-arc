@@ -15,7 +15,7 @@
         <td>
           <div class="viewport" ng-scroll="scrollViewport($event)">
             <ul class="policies">
-              <li ng-repeat="policy in pipeline.renderPolicies track by $index">
+              <li ng-repeat="policy in pipeline.policies track by $index">
                 <a href
                    ng-click="setupHidePopover($event)"
                    popover-template="policyDetails.templateUrl"

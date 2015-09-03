@@ -167,7 +167,7 @@ Gateway.service('GatewayServices', [
       }
     };
     svc.getPipelines = function() {
-      return Pipeline.find({})
+      return Pipeline.find({ filter: { include: ["policies"] } })
         .$promise
         .then(function(response) {
           return response;
@@ -177,10 +177,28 @@ Gateway.service('GatewayServices', [
         })
     };
     svc.getPipelineById = function(id) {
-      return Pipeline.findById({id:id})
+      //return Pipeline.findById({id:id, include: ["policies"] })
+      /*
+      *
+      {
+       filter: {
+          where: { id: id },
+          include: ["policies"]
+        }
+       }
+      *
+      * */
+
+
+      return Pipeline.find({
+          filter: {
+            where: { id: id },
+            include: ["policies"]
+          }
+        })
         .$promise
         .then(function(response) {
-          return response;
+          return response[0];
         })
         .catch(function(error) {
           $log.warn('bad get Pipeline: ' + JSON.stringify(error));

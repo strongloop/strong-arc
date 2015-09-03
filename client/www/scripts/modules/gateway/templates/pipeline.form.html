@@ -17,7 +17,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="policy in pipeline.renderPolicies track by $index">
+        <tr ng-repeat="policy in pipeline.policies track by $index">
           <td><ui-icon name="policy-{{policy.type}}"></ui-icon></td>
           <td title="{{policy.name}}">{{policy.name}}</td>
           <td>

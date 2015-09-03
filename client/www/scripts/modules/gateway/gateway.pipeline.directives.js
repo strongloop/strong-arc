@@ -18,13 +18,6 @@ Gateway.directive('slPipelineMainView', [
         if (pipelineId && scope.gatewayCtx.isShowPipelineView) {
           GatewayServices.getPipelineById(pipelineId)
             .then(function(data){
-              //add rendered policies
-              data.renderPolicies = [];
-              data.policyIds.map(function(policyId){
-                var policy = scope.getPipelineRenderPolicy(policyId);
-                data.renderPolicies.push(policy);
-              });
-
               scope.pipelineCtx.currentPipeline = data;
             });
         }
@@ -59,10 +52,10 @@ Gateway.directive('slPipelineForm', ['$modal',
           $scope.addNewPolicyToPipeline = function(policy, toggler){
             $scope.pipeline.policyIds = $scope.pipeline.policyIds || [];
             $scope.pipeline.policyIds.push(policy.id);
-            $scope.pipeline.renderPolicies = $scope.pipeline.policyIds.map(function(policyId){
-              return getPipelineRenderPolicy(policyId);
-            });
-
+            if (!$scope.pipeline.policies) {
+              $scope.pipeline.policies = [];
+            }
+            $scope.pipeline.policies.push(policy);
             $scope.showAddPolicyMenu = false;
           };
 
@@ -73,10 +66,10 @@ Gateway.directive('slPipelineForm', ['$modal',
 
           $scope.deletePolicy = function(policy){
             var idx = $scope.pipeline.policyIds.indexOf(policy.id);
-            var renderIdx = _.findWhere($scope.pipeline.renderPolicies, { id: policy.id });
+            var renderIdx = _.findWhere($scope.pipeline.policies, { id: policy.id });
 
             $scope.pipeline.policyIds.splice(idx, 1);
-            $scope.pipeline.renderPolicies.splice(renderIdx, 1);
+            $scope.pipeline.policies.splice(renderIdx, 1);
           };
 
           $scope.confirmSavePipeline = function(pipeline){
@@ -135,9 +128,6 @@ Gateway.directive('slPipelineForm', ['$modal',
             GatewayServices.getPipelineDetail($scope.pipeline.id)
               .then(function(data){
                 $scope.pipeline = data;
-                $scope.pipeline.renderPolicies = $scope.pipeline.policyIds.map(function(policyId){
-                  return getPipelineRenderPolicy(policyId);
-                });
               });
           };
 
