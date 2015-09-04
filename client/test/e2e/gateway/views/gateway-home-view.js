@@ -25,7 +25,6 @@ var GatewayHomeView = (function () {
     self.newPolicyTypeSelect = element(by.css('.modal-body [data-id="PolicyFormContainer"] .ui-menu-container input.toggler'));
 
     self.deletePolicyButton = element(by.css('table.policies tbody tr:nth-child(1) td.actions a.delete-policy'));
-    //self.newPolicyTypeValueAttrib = element(by.css('div.modal-body div.policy-type-select-container button.toggle-btn'));
     self.policyTypeListItems = element.all(by.css('.modal-body .ui-form .ui-menu-dropdown .menu li a'));
     self.policyTypeAuthSelect = self.policyTypeListItems.get(0);
     self.policyTypeMetricsSelect = self.policyTypeListItems.get(1);
@@ -36,6 +35,19 @@ var GatewayHomeView = (function () {
     self.policyRateLimitingLimitInput = element(by.css('div.modal-body div.policy-ratelimit-container input[ng-model="policy.limit"]'));
     self.policyRateLimitingIntervalInput = element(by.css('div.modal-body div.policy-ratelimit-container input[ng-model="policy.interval"]'));
     self.policyAuthScopeInput = element(by.css('div.modal-body div.policy-scope-input-container input.policy-scope-input'));
+
+    //sans-modal
+    self.newPolicyNameInputNoModal = element(by.css('[ng-model="policy.name"]'));
+    self.newPolicyTypeSelectNoModal = element(by.css('[data-id="PolicyFormContainer"] .ui-menu-container input.toggler'));
+    self.policyTypeListItemsNoModal = element.all(by.css('[data-id="PolicyFormContainer"] .ui-form .ui-menu-dropdown .menu li a'));
+    self.policyTypeAuthSelectNoModal = self.policyTypeListItemsNoModal.get(0);
+    self.policyTypeMetricsSelectNoModal = self.policyTypeListItemsNoModal.get(1);
+    self.policyTypeRateLimitingSelectNoModal = self.policyTypeListItemsNoModal.get(2);
+    self.policyTypeReversProxySelectNoModal = self.policyTypeListItemsNoModal.get(3);
+    self.policyReversProxyTargetUrlInputNoModal = element(by.css('[data-id="PolicyFormContainer"] div.policy-proxy-container input[ng-model="policy.targetURL"]'));
+    self.policyRateLimitingLimitInputNoModal = element(by.css('[data-id="PolicyFormContainer"] div.policy-ratelimit-container input[ng-model="policy.limit"]'));
+    self.policyRateLimitingIntervalInputNoModal = element(by.css('[data-id="PolicyFormContainer"] div.policy-ratelimit-container input[ng-model="policy.interval"]'));
+    self.policyAuthScopeInputNoModal = element(by.css('[data-id="PolicyFormContainer"] div.policy-scope-input-container input.policy-scope-input'));
 
     self.sideNewPolicyButton = element(by.css('button[data-type="policy"].nav-tree-item-addnew'));
     self.mainNewPolicyButton = element(by.css('div.entity-list-container button[data-type="policy"].add-new'));
@@ -125,6 +137,9 @@ var GatewayHomeView = (function () {
 
     //policies
     self.policySummaryListItems = element.all(by.css('table.policies tbody tr'));
+    self.policySummaryListEditLinks = element.all(by.css('table.policies tbody tr td.gateway-name-col button'));
+    self.saveEditPolicyButton = element(by.css('[data-id="PolicyFormContainer"] button.primary'));
+    self.confirmEditPolicyButton = element(by.buttonText('Replace'));
 
     //mappings
     self.mappingsSummaryListItems = element.all(by.css('table.mappings tbody tr'));
@@ -452,6 +467,19 @@ var GatewayHomeView = (function () {
       browser.waitForAngular();
     };
 
+    self.loadFirstPolicy = function(){
+      var isListClickable = EC.elementToBeClickable(self.policyListViewButton);
+      browser.driver.wait(isListClickable, wait);
+      self.policyListViewButton.click();
+      browser.waitForAngular();
+
+      var firstItemLink = self.policySummaryListEditLinks.first();
+      var isFirstItemClickable = EC.elementToBeClickable(firstItemLink);
+      browser.driver.wait(isFirstItemClickable, wait);
+      firstItemLink.click();
+      browser.waitForAngular();
+    };
+
     self.addNewPolicyToPipeline = function(){
       self.loadPipelineList();
 
@@ -497,6 +525,26 @@ var GatewayHomeView = (function () {
       self.confirmEditPipelineButton.click();
       browser.waitForAngular();
     };
+
+
+    self.saveCurrentPolicy = function(){
+      //click save button
+      var isSaveClickable = EC.elementToBeClickable(self.saveEditPolicyButton);
+
+      browser.driver.wait(isSaveClickable, wait);
+
+      self.saveEditPolicyButton.click();
+      browser.waitForAngular();
+
+      //click confirm replace
+      var isConfirmClickable = EC.elementToBeClickable(self.confirmEditPolicyButton, wait);
+
+      browser.driver.wait(isConfirmClickable, wait);
+
+      self.confirmEditPolicyButton.click();
+      browser.waitForAngular();
+    };
+
 
     self.addExistingPolicyToPipeline = function(){
       //select last item in policy dropdown and add to pipeline

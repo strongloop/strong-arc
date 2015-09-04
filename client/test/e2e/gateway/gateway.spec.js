@@ -107,11 +107,47 @@ describe('gateway', function() {
     expect(gatewayMapMenuItemList.count()).toEqual(1);
   });
 
-  //
-  //it('should edit a gateway policy',function() {
-  //  expect(true).toEqual(false);
-  //});
-  //
+
+  it('should edit a gateway policy',function() {
+    var gatewayHomeView = new GatewayViews.GatewayHomeView();
+    //create first policy -- done by beforeEach()
+    //click on first policy
+    gatewayHomeView.loadFirstPolicy();
+
+    //edit first policy (change type)
+    //click dropdown toggler
+    gatewayHomeView.newPolicyTypeSelectNoModal.click();
+    browser.waitForAngular();
+
+    browser.driver.wait(EC.presenceOf(gatewayHomeView.policyTypeRateLimitingSelectNoModal), wait);
+
+    //change policy type
+    gatewayHomeView.policyTypeRateLimitingSelectNoModal.click();
+    browser.waitForAngular();
+
+    //fill in appropriate fields for rate limiting type
+    browser.wait(EC.elementToBeClickable(gatewayHomeView.policyRateLimitingLimitInputNoModal), wait);
+    gatewayHomeView.policyRateLimitingLimitInputNoModal.sendKeys('5000');
+    gatewayHomeView.policyRateLimitingIntervalInputNoModal.sendKeys('500000');
+
+    //save
+    gatewayHomeView.saveCurrentPolicy();
+
+    //refresh policy list
+    gatewayHomeView.pipelineListViewButton.click();
+    browser.waitForAngular();
+
+    //load first policy
+    gatewayHomeView.loadFirstPolicy();
+
+    //verify edits
+    expect(gatewayHomeView.newPolicyTypeSelectNoModal.getAttribute('value')).toEqual('ratelimiting');
+    //expect(true).toEqual(false);
+
+    //delete first policy
+    gatewayHomeView.deleteFirstPolicy();
+  });
+
   it('should edit a gateway pipeline', function() {
     var gatewayHomeView = new GatewayViews.GatewayHomeView();
 
