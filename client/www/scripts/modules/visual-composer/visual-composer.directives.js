@@ -16,10 +16,6 @@ VisualComposer.directive('slInstanceEditor', [
     }
   }
 ]);
-  }
-
-  return NavMesh;
-})(d3);
 
 VisualComposer.directive('slComposerCanvas', [
   function slComposerCanvas() {
@@ -67,8 +63,6 @@ VisualComposer.directive('slComposerCanvas', [
               y: pos.y
             };
           });
-
-        var navmesh = d3NavMesh();
 
         var select = function(selection) {
           selection.on('click', function(d) {
@@ -119,14 +113,7 @@ VisualComposer.directive('slComposerCanvas', [
         var vcConnector = function() {
           var source = target = projection = function() {};
 
-          function diagonal(d, i) {
-            var p0 = source.call(this, d, i);
-            var p3 = target.call(this, d, i);
-            var m = {
-              x: (p3.x + p0.x) / 2,
-              y: (p3.y + p0.y) / 2
-            };
-
+          function directPath(p0, p3, m) {
             var p = [
               { x: p0.x, y: p0.y },
               { x: p0.x + 25, y: p0.y },
@@ -144,6 +131,49 @@ VisualComposer.directive('slComposerCanvas', [
               ' C ' + p.slice(1, 4).join(' ') +
               ' C ' + p.slice(3, 6).join(' ') +
               ' L ' + p.slice(-2).join(' ');
+          }
+
+          function reflexPath(p0, p3, m0) {
+            var m1 = { x: p0.x + 50, y: p0.y + ((p3.y - p0.y) / 4)};
+            var m2 = { x: p3.x - 50, y: p0.y + 3 * ((p3.y - p0.y) / 4) };
+            var p = [
+              { x: p0.x, y: p0.y },
+              { x: p0.x + 25, y: p0.y },
+              { x: m1.x, y: p0.y },
+              { x: m1.x, y: m1.y },
+              { x: m1.x, y: m0.y },
+              { x: m0.x, y: m0.y },
+              { x: m2.x, y: m0.y },
+              { x: m2.x, y: m2.y },
+              { x: m2.x, y: p3.y },
+              { x: p3.x - 25, y: p3.y },
+              { x: p3.x, y: p3.y }
+            ];
+
+            p = p.map(projection);
+
+            return 'M ' + p[0] +
+              ' L ' + p.slice(0, 2).join(' ') +
+              ' Q ' + p.slice(2, 4).join(' ') +
+              ' Q ' + p.slice(4, 6).join(' ') +
+              ' Q ' + p.slice(6, 8).join(' ') +
+              ' Q ' + p.slice(8, 10).join(' ') +
+              ' L ' + p.slice(-2).join(' ');
+          }
+
+          function diagonal(d, i) {
+            var p0 = source.call(this, d, i);
+            var p3 = target.call(this, d, i);
+            var m = {
+              x: (p3.x + p0.x) / 2,
+              y: (p3.y + p0.y) / 2
+            };
+
+            if (p0.x > p3.x) {
+              return reflexPath(p0, p3, m);
+            }
+
+            return directPath(p0, p3, m);
           }
 
           diagonal.source = function(x) {
