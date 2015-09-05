@@ -99,6 +99,18 @@ VisualComposer.controller('VisualComposerMainController', [
       }
     };
 
+    $scope.createNewRelationship = function(sourceId, targetId) {
+      var sourceParts = sourceId.split('.');
+      var name = sourceParts.pop();
+      var baseModel = findModelById(sourceParts.join('.'));
+      var remoteModel = findModelById(targetId);
+      var type = 'hasOne';
+
+      if (baseModel && remoteModel) {
+        ModelService.createNewRelationship(type, baseModel, remoteModel, name);
+      }
+    }
+
     // create new instance
     $scope.createNewInstance = function(type, initialData) {
       // start New Model

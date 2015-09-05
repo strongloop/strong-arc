@@ -14,7 +14,9 @@
   <div class="canvas-container sl-container">
     <sl-composer-canvas
       models="models" connections="connections" datasources="mainNavDatasources"
-      on-select="selectModel(model)" activeInstance="activeInstance">
+      on-select="selectModel(model)"
+      on-new-connection="createNewRelationship(source, target)"
+      activeInstance="activeInstance">
     </sl-composer-canvas>
   </div>
 </div>

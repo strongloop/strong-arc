@@ -13,6 +13,19 @@ Model.service('ModelService', [
            AppStorageService, ModelProperty, DataSourceDefinition, connectorMetadata) {
     var svc = {};
 
+    svc.createNewRelationship = function(type, baseModel, remoteModel, name) {
+      var relation = {
+        facetName: CONST.NEW_MODEL_FACET_NAME,
+        foreignKey: '',
+        model: remoteModel.name,
+        modelId: baseModel.id,
+        name: name,
+        type: 'hasOne'
+      };
+
+      return ModelRelation.create(relation).$promise;
+    };
+
     svc.getAllModelRelations = function() {
       return ModelRelation.find({}).$promise;
     };

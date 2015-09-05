@@ -32,7 +32,8 @@ VisualComposer.directive('slComposerCanvas', [
         connections: '=',
         activeInstance: '=',
         datasources: '=',
-        onSelect: '&'
+        onSelect: '&',
+        onNewConnection: '&'
       },
       link: function($scope, elem) {
         var idMapping = {};
@@ -121,12 +122,17 @@ VisualComposer.directive('slComposerCanvas', [
           function diagonal(d, i) {
             var p0 = source.call(this, d, i);
             var p3 = target.call(this, d, i);
-            var m = (p3.y - 40);
+            var m = {
+              x: (p3.x + p0.x) / 2,
+              y: (p3.y + p0.y) / 2
+            };
+
             var p = [
               { x: p0.x, y: p0.y },
               { x: p0.x + 25, y: p0.y },
-              { x: p0.x + 25, y: m },
-              { x: p3.x - 25, y: m },
+              { x: m.x, y: p0.y },
+              { x: m.x, y: m.y },
+              { x: m.x, y: p3.y },
               { x: p3.x - 25, y: p3.y },
               { x: p3.x, y: p3.y }
             ];
@@ -135,26 +141,29 @@ VisualComposer.directive('slComposerCanvas', [
 
             return 'M ' + p[0] +
               ' L ' + p.slice(0, 2).join(' ') +
-              ' L ' + p[1] + ' ' + p[2] +
-              ' L ' + p[2] + ' ' + p[3] +
-              ' L ' + p[3] + ' ' + p[4] +
+              ' C ' + p.slice(1, 4).join(' ') +
+              ' C ' + p.slice(3, 6).join(' ') +
               ' L ' + p.slice(-2).join(' ');
           }
+
           diagonal.source = function(x) {
             if (!arguments.length) return source;
             source = d3.functor(x);
             return diagonal;
           };
+
           diagonal.target = function(x) {
             if (!arguments.length) return target;
             target = d3.functor(x);
             return diagonal;
           };
+
           diagonal.projection = function(x) {
             if (!arguments.length) return projection;
             projection = x;
             return diagonal;
           };
+
           return diagonal;
         };
 
@@ -325,19 +334,29 @@ VisualComposer.directive('slComposerCanvas', [
           selection.call(drag);
         }
 
+        function updateLinks(selection) {
+
+        }
+
         function buildLinks(selection) {
-          var links = selection.selectAll('.link')
+          var links = selection.selectAll('.link-group')
             .data($scope.connections.filter(
               function(x) {
                 return x.target !== 'connector' || tempConnections == null;
               }
             ));
 
-          links.enter()
-            .append('path')
-            .attr('class', 'link');
+          var enter = links.enter()
+            .append('g')
+            .attr('class', 'link-group');
+
+          enter.append('path');
+          enter.append('circle')
+            .attr('r', 10)
+            .attr('class', 'link-type');
 
           links
+            .selectAll('path')
             .attr('d', diagonal)
             .attr('class', function(d) {
               if (d.target == 'connector') {
@@ -347,6 +366,21 @@ VisualComposer.directive('slComposerCanvas', [
               }
 
               return 'link';
+            });
+
+          links
+            .selectAll('circle')
+            .attr('cx', function(d) {
+              var pos0 = getDiagonalCoords(d.source);
+              var pos1 = getDiagonalCoords(d.target);
+
+              return (pos1.x + pos0.x) / 2;
+            })
+            .attr('cy', function(d) {
+              var pos0 = getDiagonalCoords(d.source);
+              var pos1 = getDiagonalCoords(d.target);
+
+              return (pos1.y + pos0.y) / 2;
             });
 
           links.exit()
@@ -532,7 +566,11 @@ VisualComposer.directive('slComposerCanvas', [
           connector.remove();
           connector = null;
           connectSource = null;
-          tempConnections = null;
+
+          if (tempConnections) {
+            $scope.onNewConnection(tempConnections);
+            tempConnections = null;
+          }
 
           $scope.connections = $scope.connections.filter(
             function(d) {
