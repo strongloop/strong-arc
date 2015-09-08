@@ -413,7 +413,8 @@ VisualComposer.controller('VisualComposerMainController', [
             result.map(function(model) {
               $scope.connections.push({
                 source: 'server.' + model.config.dataSource,
-                target: model.id
+                target: model.id + '._ds',
+                type: 'db'
               });
             });
 
@@ -442,7 +443,8 @@ VisualComposer.controller('VisualComposerMainController', [
                 model.properties.push(relation);
                 $scope.connections.push({
                   source: relation.id,
-                  target: relation.facetName + '.' + relation.model
+                  target: relation.facetName + '.' + relation.model,
+                  type: 'model'
                 });
               }
             });

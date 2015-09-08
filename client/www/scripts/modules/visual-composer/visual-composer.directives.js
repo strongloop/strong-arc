@@ -1,22 +1,3 @@
-VisualComposer.directive('slInstanceEditor', [
-  function slInstanceEditor() {
-    return {
-      restrict: 'E',
-      replace: true,
-      templateUrl: '/scripts/modules/visual-composer/templates/visual-composer.instance-editor.html',
-      scope: {
-        models: '='
-      },
-      link: function($scope, elem) {
-
-      },
-      controller: function($scope) {
-
-      }
-    }
-  }
-]);
-
 VisualComposer.directive('slComposerCanvas', [
   function slComposerCanvas() {
     return {
@@ -81,8 +62,14 @@ VisualComposer.directive('slComposerCanvas', [
           }
 
           var parentNode = obj;
-          var lv = id.split('.').length - 1;
+          var parts = id.split('.');
+          var lv = parts.length - 1;
           var translate;
+
+          // this is to account for datasources not having a parent group
+          if (parts.pop() === '_ds') {
+            lv--;
+          }
 
           while (lv > 0 && parentNode && parentNode.parentNode) {
             parentNode = parentNode.parentNode;
@@ -92,7 +79,6 @@ VisualComposer.directive('slComposerCanvas', [
 
             base[0] += translate[0];
             base[1] += translate[1];
-
             lv--;
           }
 
@@ -110,8 +96,28 @@ VisualComposer.directive('slComposerCanvas', [
           };
         }
 
-        var vcConnector = function() {
+        var vcConnector = function(type) {
           var source = target = projection = function() {};
+
+          function verticalPath(p0, p3, m) {
+            var p = [
+              { x: p0.x, y: p0.y },
+              { x: p0.x, y: p0.y + 25 },
+              { x: p0.x, y: m.y },
+              { x: m.x, y: m.y },
+              { x: p3.x, y: m.y },
+              { x: p3.x, y: p3.y - 25},
+              { x: p3.x, y: p3.y }
+            ];
+
+            p = p.map(projection);
+
+            return 'M ' + p[0] +
+              ' L ' + p.slice(0, 2).join(' ') +
+              ' C ' + p.slice(1, 4).join(' ') +
+              ' C ' + p.slice(3, 6).join(' ') +
+              ' L ' + p.slice(-2).join(' ');
+          }
 
           function directPath(p0, p3, m) {
             var p = [
@@ -169,7 +175,11 @@ VisualComposer.directive('slComposerCanvas', [
               y: (p3.y + p0.y) / 2
             };
 
-            if (p0.x > p3.x) {
+            if (type == 'db') {
+              return verticalPath(p0, p3, m);
+            }
+
+            if (p3.x - p0.x < 50) {
               return reflexPath(p0, p3, m);
             }
 
@@ -197,7 +207,18 @@ VisualComposer.directive('slComposerCanvas', [
           return diagonal;
         };
 
-        var diagonal = vcConnector()
+        var dbPath = vcConnector('db')
+          .source(function(d) {
+            return getDiagonalCoords(d.source);
+          })
+          .target(function(d) {
+            return getDiagonalCoords(d.target);
+          })
+          .projection(function(d) {
+            return [d.x, d.y];
+          });
+
+        var modelPath = vcConnector('model')
           .source(function(d) {
             return getDiagonalCoords(d.source);
           })
@@ -309,7 +330,7 @@ VisualComposer.directive('slComposerCanvas', [
               var x = createIndex * 225;
               createIndex += 1;
 
-              return 'translate(' + x + ', 0)';
+              return 'translate(' + x + ', -300)';
             });
 
             g.append('rect')
@@ -387,7 +408,13 @@ VisualComposer.directive('slComposerCanvas', [
 
           links
             .selectAll('path')
-            .attr('d', diagonal)
+            .attr('d', function(d) {
+              if (d.type == 'db') {
+                return dbPath.apply(this, arguments);
+              }
+
+              return modelPath.apply(this, arguments);
+            })
             .attr('class', function(d) {
               if (d.target == 'connector') {
                 return 'link loose';
@@ -504,7 +531,13 @@ VisualComposer.directive('slComposerCanvas', [
               .attr('y', 30)
               .attr('x', 100);
 
-            var circle = g.append('rect')
+            var ds = g.append('circle')
+              .attr('class', 'ds-connector')
+              .attr('cx', 100)
+              .attr('cy', -2)
+              .attr('r', 2);
+
+            var attach = g.append('rect')
               .attr('class', 'connector')
               .attr('x', -6)
               .attr('y', 8)
@@ -535,7 +568,8 @@ VisualComposer.directive('slComposerCanvas', [
                 }
               });
 
-            idMapping[d.id] = circle[0][0];
+            idMapping[d.id] = attach[0][0];
+            idMapping[d.id + '._ds'] = ds[0][0];
           });
 
           selection.call(select);
