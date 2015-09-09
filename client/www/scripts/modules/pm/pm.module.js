@@ -16,27 +16,32 @@ PM.run([
   '$rootScope',
   '$log',
   'PackageDefinition',
-  function ($rootScope, $log, PackageDefinition) {
-    var pkg = PackageDefinition.findOne();
-    return pkg.$promise
-      .then(function () {
-        $rootScope.projectName = pkg.name;
-      })
-      .catch(function (err) {
-        $log.warn('Cannot get project\'s package definition.', err);
-      });
+  'ARC-LOCAL-PM-ENABLED',
+  function ($rootScope, $log, PackageDefinition, arcLocalPmEnabled) {
+    if (arcLocalPmEnabled) {
+      var pkg = PackageDefinition.findOne();
+      return pkg.$promise
+        .then(function () {
+          $rootScope.projectName = pkg.name;
+        })
+        .catch(function (err) {
+          $log.warn('Cannot get project\'s package definition.', err);
+        });
+    }
   }
 ]);
 PM.run([
   'PMHostService',
   'PMAppService',
-  function (PMHostService, PMAppService) {
-
-    PMAppService.isLocalApp()
-      .then(function(response) {
-        if (response === true) {
-          PMHostService.initializeInternalPMHost();
-        }
-      });
+  'ARC-LOCAL-PM-ENABLED',
+  function (PMHostService, PMAppService, arcLocalPmEnabled) {
+    if (arcLocalPmEnabled) {
+      PMAppService.isLocalApp()
+        .then(function(response) {
+          if (response === true) {
+            PMHostService.initializeInternalPMHost();
+          }
+        });
+    }
   }
 ]);

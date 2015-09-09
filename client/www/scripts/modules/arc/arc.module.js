@@ -29,6 +29,7 @@ var Arc = angular.module('Arc', [
   'ngCookies',
   'angular-growl',
   'lbServices',
+  'ArcInit',
   'ArcServices',
   'BuildDeployAPI',
   'ArcUserAuthFactory',
@@ -178,7 +179,8 @@ Arc.run([
     'ArcUserService',
     'LicensesService',
     'segmentio',
-    function($location, $state, $rootScope, $log, $q, $http, ArcUserService, LicensesService, segmentio){
+    'ARC-LICENSING-ENABLED',
+    function($location, $state, $rootScope, $log, $q, $http, ArcUserService, LicensesService, segmentio, arcLicensingEnabled){
       // finish initialization of segment.io analytics.js
       if (window.analytics && window.analytics.load) {
         window.analytics.load(CONST.SEGMENTIO_WRITE_KEY);
@@ -192,6 +194,11 @@ Arc.run([
       // Redirect to login if route requires auth and you're not logged in
       $rootScope.$on('$stateChangeStart', function (event, next) {
         function isAppModule(url){
+          if (!arcLicensingEnabled) {
+            var retVal = $q.defer();
+            retVal.resolve(false);
+            return retVal.promise;
+          }
           return LicensesService.getArcFeatures()
             .then(function(arcFeatures){
               return _.contains(arcFeatures, url.substr(1)); //remove '/' off page url
@@ -296,4 +303,3 @@ Arc.factory('arcRequestInterceptor', [
     };
   }
 ]);
-

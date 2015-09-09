@@ -94,6 +94,18 @@ ArcUser.service('ArcUserService', [
     svc.getCurrentUser = function() {
       return User.findById({id:svc.getCurrentUserId()});
     };
+    svc.setLoginUser = function(userEmail, userDisplayName, userId, token) {
+      data = {
+        user: {
+          email: userEmail,
+          displayName: userDisplayName,
+        },
+        userId: userId,
+        id: token,
+      };
+      this.saveUserData(data);
+      this.saveAuthTokenData(data);
+    };
 
     return svc;
 

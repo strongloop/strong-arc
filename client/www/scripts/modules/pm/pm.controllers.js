@@ -6,7 +6,8 @@ PM.controller('PMAppController', [
   '$interval',
   'PMAppService',
   'growl',
-  function($scope, $log, $timeout, $interval, PMAppService, growl) {
+  'ARC-LOCAL-PM-ENABLED',
+  function($scope, $log, $timeout, $interval, PMAppService, growl, arcLocalPmEnabled) {
 
     // app module constants
     var PMCONST = {
@@ -229,6 +230,8 @@ PM.controller('PMAppController', [
 
     };
 
-    $scope.pmAppControlInit();
+    if (arcLocalPmEnabled) {
+      $scope.pmAppControlInit();
+    }
   }
 ]);

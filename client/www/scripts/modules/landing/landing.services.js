@@ -3,7 +3,8 @@ Landing.service('LandingService', [
   '$q',
   'ArcApp',
   'Project',
-  function ($q, ArcApp, Project) {
+  'ARC-PROJECTS-ENABLED',
+  function ($q, ArcApp, Project, arcProjectsEnabled) {
     var svc = this;
 
     svc.getApps = function() {
@@ -11,7 +12,13 @@ Landing.service('LandingService', [
     };
 
     svc.getCurrentProject = function() {
-      return Project.current();
+      if (arcProjectsEnabled) {
+        return Project.current();
+      } else {
+        var deferred = $q.defer();
+        deferred.resolve(null);
+        return deferred.promise;
+      }
     };
 
     return svc;

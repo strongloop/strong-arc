@@ -8,12 +8,19 @@ PM.directive('slPmAppControls', [
 ]);
 
 PM.directive('slPmAppControllerMenu', [
-  function() {
-    return {
-      templateUrl: './scripts/modules/pm/templates/pm.app.controller.menu.html',
-      link: function(scope, el, attrs) {
+  'ARC-LOCAL-PM-ENABLED',
+  function(arcLocalPmEnabled) {
+    if (arcLocalPmEnabled) {
+      return {
+        templateUrl: './scripts/modules/pm/templates/pm.app.controller.menu.html',
+        link: function(scope, el, attrs) {
 
-      }
+        },
+      };
+    } else {
+      return {
+        templateUrl: './scripts/modules/pm/templates/pm.app.controller.menu.disabled.html',
+      };
     }
   }
 ]);

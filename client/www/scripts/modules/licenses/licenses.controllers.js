@@ -5,7 +5,8 @@ Licenses.controller('LicensesMainController', [
   '$timeout',
   '$rootScope',
   'LicensesService',
-  function ($scope, $q, $log, $timeout, $rootScope, LicensesService) {
+  'ARC-LICENSING-ENABLED',
+  function ($scope, $q, $log, $timeout, $rootScope, LicensesService, arcLicensingEnabled) {
     window.setScrollView('.common-instance-view-container');
 
     $scope.selectLicenseText = function(id){
@@ -44,5 +45,7 @@ Licenses.controller('LicensesMainController', [
         });
     }
 
-    getProductsAndLicenses();
+    if (arcLicensingEnabled) {
+      getProductsAndLicenses();
+    }
   }]);
