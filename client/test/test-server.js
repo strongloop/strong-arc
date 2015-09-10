@@ -22,17 +22,25 @@ var sandboxNeedsFullReset = false;
 var arc = require('../../server/server');
 var workspace = arc.workspace;
 
-// Inject `POST /reset` to reset the sandbox to initial state
-arc.post('/reset', function(req, res, next) {
-  console.log('--reset-start--');
-
-  if (sandboxNeedsFullReset) {
-    if (fs.existsSync(SANDBOX)) {
-      fs.removeSync(SANDBOX);
-    }
-    fs.copySync(EMPTY_PROJECT, SANDBOX);
-    sandboxNeedsFullReset = false;
+function resetSandbox(req, res, next) {
+  console.log('--reset-sandbox--');
+  if (!sandboxNeedsFullReset) {
+    return next();
   }
+  fs.remove(SANDBOX, function(err) {
+    if (err) {
+      return next(err);
+    }
+    fs.copy(EMPTY_PROJECT, SANDBOX, function(err) {
+      sandboxNeedsFullReset = false;
+      return next(err);
+    });
+  });
+}
+
+// Inject `POST /reset` to reset the sandbox to initial state
+arc.post('/reset', resetSandbox, function(req, res, next) {
+  console.log('--reset-start--');
 
   var modelsToReset = workspace.models().filter(function(m) {
     return [
@@ -103,7 +111,7 @@ var server = arc.listen(port, function(err) {
     process.send(server.address());
   }
   if (process.argv.length > 2)
-    runAndExit(process.argv[2], process.argv.slice(3));
+    runAndExit(process.execPath, process.argv.slice(2));
 });
 
 function runAndExit(cmd, args) {

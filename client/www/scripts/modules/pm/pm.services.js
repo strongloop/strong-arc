@@ -322,7 +322,6 @@ PM.service('PMHostService', [
     svc.getLatestPMServer = function(cb) {
       // get the last entry in the array
       //var pmServers = JSON.parse(window.localStorage.getItem('pmServers'));
-      $log.debug('get manager hosts 4');
       if (!cb) {
         $log.warn('CB is not a function');
         return;

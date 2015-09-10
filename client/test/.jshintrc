@@ -27,6 +27,7 @@
   "browser": true,
   "inject": true,
   "given": true,
-  "protractor": true
+  "protractor": true,
+  "window": true
 }
 }

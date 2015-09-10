@@ -12,7 +12,9 @@ describe('Arc', function() {
     });
   });
 
-  it('can autoupdate MySQL database', function() {
+  (window.__karma__.config.SKIP_MYSQL ?
+   it.skip : it)('can autoupdate MySQL database', function() {
+
     // We need more time for tests to finish on Jenkins
     this.timeout(5000);
 
