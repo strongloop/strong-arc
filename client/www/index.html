@@ -35,7 +35,7 @@
         <sl-popover-help name="{{helpId}}" position="left" iconclass="icon icon-documentation"></sl-popover-help>
       </li>
       <li>
-          <span class="dropdown" dropdown on-toggle="toggled(open)" data-id="ArcAccountDropdown" title="logout">
+          <span class="dropdown" dropdown on-toggle="toggled(open)" data-id="ArcAccountDropdown" title="logout" ng-if='showNavbarDowndown'>
             <a href class="dropdown-toggle" dropdown-toggle><i class="icon icon-menu"></i></a>
             <ul class="dropdown-menu" dropdown-menu>
               <li lb-login-nav-item></li>

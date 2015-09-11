@@ -5,7 +5,10 @@ Arc.controller('ArcMainController', [
   '$log',
   '$rootScope',
   'LandingService',
-  function($scope, ArcUserService, $log, $rootScope, LandingService){
+  'SHOW-NAVBAR-DROPDOWN',
+  function($scope, ArcUserService, $log, $rootScope, LandingService, showNavbarDropdown){
+
+    $scope.showNavbarDropdown = showNavbarDropdown;
 
     $scope.suiteIA = {
       apps: []

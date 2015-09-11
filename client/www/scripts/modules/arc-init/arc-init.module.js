@@ -17,3 +17,4 @@ ArcInit.constant('ARC-LOCAL-PM-ENABLED', false);
 ArcInit.constant('ARC-COMPOSER-ENABLED', false);
 ArcInit.constant('ARC-LICENSING-ENABLED', false);
 ArcInit.constant('ARC-PROJECTS-ENABLED', false);
+ArcInit.constant('SHOW-NAVBAR-DROPDOWN', false);

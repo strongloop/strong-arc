@@ -330,13 +330,13 @@ ol, ul {
       }
 
       .icon-search {
-        background: url(/images/magnifier_out.svg) no-repeat center center;
+        background: url("@{ui-img-path}/magnifier_out.svg") no-repeat center center;
         background-size: 75% 75%;
       }
 
       &.focused {
         .icon-search {
-          background-image: url(/images/magnifier_over.svg);
+          background-image: url("@{ui-img-path}/magnifier_over.svg");
         }
       }
     }
@@ -368,19 +368,19 @@ ol, ul {
           display: block;
           width: 100%;
           height: 100%;
-          background: url(/images/x_out.svg) no-repeat center center;
+          background: url("@{ui-img-path}/x_out.svg") no-repeat center center;
           background-size: 75% 75%;
         }
 
         &:hover {
           .icon-close {
-            background-image: url(/images/x_over.svg);
+            background-image: url("@{ui-img-path}/x_over.svg");
           }
         }
 
         &:active {
           .icon-close {
-            background-image: url(/images/x_down.svg);
+            background-image: url("@{ui-img-path}/x_down.svg");
           }
         }
       }
@@ -414,12 +414,12 @@ ol, ul {
       display: inline-block;
       width: 2rem;
       height: 2rem;
-      background: url(/images/checkbox_off.svg) no-repeat center center;
+      background: url("@{ui-img-path}/checkbox_off.svg") no-repeat center center;
     }
 
     &.checked, &[checked] {
       & + .icon {
-        background-image: url(/images/checkbox_on_out.svg);
+        background-image: url("@{ui-img-path}/checkbox_on_out.svg");
       }
     }
 
@@ -433,24 +433,24 @@ ol, ul {
   &:hover {
     input {
       & + .icon {
-        background-image: url(/images/checkbox_off_over.svg);
+        background-image: url("@{ui-img-path}/checkbox_off_over.svg");
       }
 
       &.checked, &[checked] {
         & + .icon {
-          background-image: url(/images/checkbox_on_over.svg);
+          background-image: url("@{ui-img-path}/checkbox_on_over.svg");
         }
       }
 
       &[disabled] {
         & + .icon {
-          background-image: url(/images/checkbox_on_down.svg);
+          background-image: url("@{ui-img-path}/checkbox_on_down.svg");
         }
       }
 
       &.checked[disabled], &[checked][disabled] {
         & + .icon {
-          background-image: url(/images/checkbox_on_out.svg);
+          background-image: url("@{ui-img-path}/checkbox_on_out.svg");
         }
       }
     }
@@ -459,24 +459,24 @@ ol, ul {
   &:hover:active {
     input {
       & + .icon {
-        background-image: url(/images/checkbox_on_out.svg);
+        background-image: url("@{ui-img-path}/checkbox_on_out.svg");
       }
 
       &[disabled] {
         & + .icon {
-          background-image: url(/images/checkbox_on_down.svg);
+          background-image: url("@{ui-img-path}/checkbox_on_down.svg");
         }
       }
 
       &.checked, &[checked] {
         & + .icon {
-          background-image: url(/images/checkbox_off.svg);
+          background-image: url("@{ui-img-path}/checkbox_off.svg");
         }
       }
 
       &.checked[disabled], &[checked][disabled] {
         & + .icon {
-          background-image: url(/images/checkbox_on_out.svg);
+          background-image: url("@{ui-img-path}/checkbox_on_out.svg");
         }
       }
     }
@@ -503,12 +503,12 @@ ol, ul {
       display: inline-block;
       width: 2rem;
       height: 2rem;
-      background: url(/images/radio_off.svg) no-repeat center center;
+      background: url("@{ui-img-path}/radio_off.svg") no-repeat center center;
     }
 
     &.checked, &[checked] {
       & + .icon {
-        background-image: url(/images/radio_on_out.svg);
+        background-image: url("@{ui-img-path}/radio_on_out.svg");
       }
     }
 
@@ -522,24 +522,24 @@ ol, ul {
   &:hover {
     input {
       & + .icon {
-        background-image: url(/images/radio_off_over.svg);
+        background-image: url("@{ui-img-path}/radio_off_over.svg");
       }
 
       &.checked, &[checked] {
         & + .icon {
-          background-image: url(/images/radio_on_over.svg);
+          background-image: url("@{ui-img-path}/radio_on_over.svg");
         }
       }
 
       &[disabled] {
         & + .icon {
-          background-image: url(/images/radio_off.svg);
+          background-image: url("@{ui-img-path}/radio_off.svg");
         }
       }
 
       &.checked[disabled], &[checked][disabled] {
         & + .icon {
-          background-image: url(/images/radio_on_out.svg);
+          background-image: url("@{ui-img-path}/radio_on_out.svg");
         }
       }
     }
@@ -548,24 +548,24 @@ ol, ul {
   &:hover:active {
     input {
       & + .icon {
-        background-image: url(/images/radio_on_out.svg);
+        background-image: url("@{ui-img-path}/radio_on_out.svg");
       }
 
       &[disabled] {
         & + .icon {
-          background-image: url(/images/radio_on_down.svg);
+          background-image: url("@{ui-img-path}/radio_on_down.svg");
         }
       }
 
       &.checked, &[checked] {
         & + .icon {
-          background-image: url(/images/radio_on_out.svg);
+          background-image: url("@{ui-img-path}/radio_on_out.svg");
         }
       }
 
       &.checked[disabled], &[checked][disabled] {
         & + .icon {
-          background-image: url(/images/radio_on_out.svg);
+          background-image: url("@{ui-img-path}/radio_on_out.svg");
         }
       }
     }
