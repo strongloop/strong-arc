@@ -440,12 +440,25 @@ VisualComposer.controller('VisualComposerMainController', [
               }
 
               if (model) {
-                model.properties.push(relation);
-                $scope.connections.push({
-                  source: relation.id,
-                  target: relation.facetName + '.' + relation.model,
-                  type: 'model'
+                var found = model.properties.some(function(x) {
+                  return x.id === relation.id;
                 });
+
+                if (!found) {
+                  model.properties.push(relation);
+                }
+
+                found = $scope.connections.some(function(x) {
+                  return x.id === relation.id;
+                });
+
+                if (!found) {
+                  $scope.connections.push({
+                    source: relation.id,
+                    target: relation.facetName + '.' + relation.model,
+                    type: 'model'
+                  });
+                }
               }
             });
 
