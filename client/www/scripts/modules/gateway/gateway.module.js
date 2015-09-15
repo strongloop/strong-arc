@@ -5,8 +5,8 @@ var GATEWAY_CONST = {
   POLICY_TYPE: 'policy',
   POLICY_AUTH_TYPE: 'auth',
   POLICY_METRICS_TYPE_TYPE: 'metrics',
-  POLICY_PROXY_TYPE: 'reverseproxy',
-  POLICY_RATELIMIT_TYPE: 'ratelimiting',
+  POLICY_PROXY_TYPE: 'reverseProxy',
+  POLICY_RATELIMIT_TYPE: 'rateLimiting',
 
 };
 Gateway.value('GATEWAY_CONST', GATEWAY_CONST);

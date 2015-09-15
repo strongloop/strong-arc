@@ -25,15 +25,15 @@
             <span class="scope" ng-repeat="scope in policy.scopes">{{scope}}</span>
           </div>
         </div>
-        <div class="ui-col" ng-show="policy.type == 'ratelimiting'">
+        <div class="ui-col" ng-show="policy.type == GATEWAY_CONST.POLICY_RATELIMIT_TYPE">
           <div class="txt">Limit:</div>
           <div class="val">{{policy.limit}}</div>
         </div>
-        <div class="ui-col" ng-show="policy.type == 'ratelimiting'">
+        <div class="ui-col" ng-show="policy.type == GATEWAY_CONST.POLICY_RATELIMIT_TYPE">
           <div class="txt">Interval:</div>
           <div class="val">{{policy.interval}}</div>
         </div>
-        <div class="ui-col full" ng-show="policy.type == 'reverseproxy'">
+        <div class="ui-col full" ng-show="policy.type == GATEWAY_CONST.POLICY_PROXY_TYPE">
           <div class="txt">Target URL:</div>
           <div class="val">{{policy.targetURL}}</div>
         </div>

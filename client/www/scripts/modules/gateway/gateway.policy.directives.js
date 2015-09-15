@@ -131,7 +131,7 @@ Gateway.directive('slPolicyForm', [
             $log.debug('it changed: ' + newVal);
 
             switch (newVal) {
-              case 'ratelimiting' :
+              case GATEWAY_CONST.POLICY_RATELIMIT_TYPE :
 
                 scope.context.isShowAuthPolicyForm = false;
                 scope.context.isShowRateLimitPolicyForm = true;
@@ -139,7 +139,7 @@ Gateway.directive('slPolicyForm', [
 
                 break;
 
-              case 'auth' :
+              case GATEWAY_CONST.POLICY_AUTH_TYPE:
 
                 scope.context.isShowAuthPolicyForm = true;
                 scope.context.isShowRateLimitPolicyForm = false;
@@ -148,7 +148,7 @@ Gateway.directive('slPolicyForm', [
 
                 break;
 
-              case 'reverseproxy' :
+              case GATEWAY_CONST.POLICY_PROXY_TYPE:
 
 
                 scope.context.isShowAuthPolicyForm = false;

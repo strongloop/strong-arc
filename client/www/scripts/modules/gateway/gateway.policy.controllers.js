@@ -116,14 +116,14 @@ Gateway.controller('PolicyMainController', [
     };
     function scrubNonTypeData(policy) {
       switch (policy.type) {
-        case 'auth':
+        case GATEWAY_CONST.POLICY_AUTH_TYPE:
           //erase proxy and ratelimit data
 
           break;
-        case 'ratelimiting':
+        case GATEWAY_CONST.POLICY_RATELIMIT_TYPE:
 
           break;
-        case 'reverseproxy' :
+        case GATEWAY_CONST.POLICY_PROXY_TYPE:
 
           break;
 

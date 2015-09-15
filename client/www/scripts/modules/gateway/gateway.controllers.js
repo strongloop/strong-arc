@@ -479,12 +479,12 @@ Gateway.controller('GatewayMainController', [
             description: ''
           },
           {
-            id: 'ratelimiting',
+            id: 'rateLimiting',
             name: 'Rate Limit',
             description: ''
           },
           {
-            id: 'reverseproxy',
+            id: 'reverseProxy',
             name: 'Proxy',
             description: ''
 
