@@ -550,6 +550,18 @@ module
       urlBase = url;
     };
 
+    /**
+     * @ngdoc method
+     * @name ArcServices.LoopBackResourceProvider#getUrlBase
+     * @methodOf ArcServices.LoopBackResourceProvider
+     * @description
+     * Get the URL of the REST API server. The URL provided
+     * to the code generator (`lb-ng` or `grunt-loopback-sdk-angular`) is used.
+     */
+    this.getUrlBase = function() {
+      return urlBase;
+    };
+
     this.$get = ['$resource', function($resource) {
       return function(url, params, actions) {
         var resource = $resource(url, params, actions);

@@ -1,0 +1,49 @@
+<div class="sl-app-controller">
+  <div class="sl-app-controller-content">
+    <header>
+      <h4>App Controller</h4>
+    </header>
+    <section>
+      <h4>{{ projectName }}</h4>
+      <div class="app-link-container">
+        <div class="loading"
+             sl-common-loading-indicator
+             size="small"
+             ng-show="isShowAppControlSpinner()"></div>
+
+        <a ng-show="isShowAppLink()" class="target-app-link" target="_new" href="{{ localAppCtx.localAppLink }}" >
+          {{ localAppCtx.localAppLink }}
+        </a>
+      </div>
+      <div
+        class="common-app-state"
+        ng-class="localAppCtx.localAppState">
+        {{ localAppCtx.localAppState.replace('-', ' ') }}
+      </div>
+    </section>
+
+    <footer>
+      <div class="common-app-control-btn-container">
+        <button class="common-app-control-btn secondary" data-action="stop" ng-click="stopApp()" ng-disabled="isButtonDisabled('stop')">
+          <i class="sl-icon sl-icon-stop"></i>
+        </button>
+        <span>Stop</span>
+      </div>
+
+      <div class="common-app-control-btn-container" ng-show="isShowRestartButton()">
+        <button class="common-app-control-btn secondary" data-action="restart" ng-click="reStartApp()" ng-disabled="isButtonDisabled('restart')">
+          <i class="sl-icon sl-icon-restart"></i>
+        </button>
+        <span>Restart</span>
+      </div>
+
+      <div class="common-app-control-btn-container" ng-show="isShowStartButton()">
+        <button class="common-app-control-btn secondary" data-action="start" ng-click="startApp()" ng-disabled="isButtonDisabled('start')">
+          <i class="sl-icon sl-icon-play"></i>
+        </button>
+        <span>Play</span>
+      </div>
+    </footer>
+  </div>
+</div>
+

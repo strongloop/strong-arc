@@ -8,8 +8,10 @@ var PM_CONST = {
   RESTARTING_STATE: 'restarting',
   STOPPING_STATE: 'stopping',
   UNKNOWN_STATE: 'unknown',
+  APP_POLL_INTERVAL: 8000,
   LOCAL_PM_HOST_NAME: 'local application',
-  LOCAL_PM_PORT_MASK: '----'
+  LOCAL_PM_PORT_MASK: '----',
+
 };
 PM.value('PM_CONST', PM_CONST);
 PM.run([
@@ -27,16 +29,4 @@ PM.run([
       });
   }
 ]);
-PM.run([
-  'PMHostService',
-  'PMAppService',
-  function (PMHostService, PMAppService) {
 
-    PMAppService.isLocalApp()
-      .then(function(response) {
-        if (response === true) {
-          PMHostService.initializeInternalPMHost();
-        }
-      });
-  }
-]);

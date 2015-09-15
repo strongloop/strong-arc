@@ -403,11 +403,11 @@ Common.service('SampleDataService', [
   }
 ]);
 
-Common.service('WorkspaceService', [
+Common.service('WorkspaceServices', [
   'Workspace',
   'Facet',
   '$q',
-  function WorkspaceService(Workspace, Facet, $q) {
+  function WorkspaceServices(Workspace, Facet, $q) {
     var svc = this;
 
     svc.validate = function() {
@@ -439,9 +439,22 @@ Common.service('WorkspaceService', [
     svc.startApp = function() {
       return Workspace.start().$promise;
     };
+    svc.restartApp = function() {
+      return Workspace.restart().$promise;
+    };
     svc.isAppRunning = function() {
       return Workspace.isRunning().$promise;
     };
+    svc.getLocalAppLink = function() {
+      return window.localStorage.getItem('localAppLink') || null;
+    };
+    svc.saveLocalAppLink = function(link) {
+      if (!window.localStorage) {
+        return;
+      }
+      window.localStorage.setItem('localAppLink', link);
+      return link;
+    }
   }
 ]);
 
