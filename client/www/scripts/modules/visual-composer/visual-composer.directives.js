@@ -389,6 +389,30 @@ VisualComposer.directive('slComposerCanvas', [
 
         }
 
+        var setRelationshipType = function(type) {
+          return function(elem, d, i) {
+            d.relationType = type;
+          };
+        };
+
+        var showLinkMenu = d3.contextMenu(function(d) {
+          return [
+            {
+              title: 'One to One',
+              action: setRelationshipType('belongsTo')
+            }, {
+              title: 'One to Many',
+              action: setRelationshipType('hasMany')
+            }, {
+              title: 'Many to One',
+              action: setRelationshipType('blongsToMany')
+            }, {
+              title: 'Many to Many',
+              action: setRelationshipType('hasAndBelongsToMany')
+            }
+          ];
+        });
+
         function buildLinks(selection) {
           var links = selection.selectAll('.link-group')
             .data($scope.connections.filter(
@@ -427,6 +451,7 @@ VisualComposer.directive('slComposerCanvas', [
 
           links
             .selectAll('circle')
+            .on('click', showLinkMenu)
             .attr('cx', function(d) {
               var pos0 = getDiagonalCoords(d.source);
               var pos1 = getDiagonalCoords(d.target);
