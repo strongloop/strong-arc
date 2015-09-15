@@ -391,7 +391,9 @@ VisualComposer.directive('slComposerCanvas', [
 
         var setRelationshipType = function(type) {
           return function(elem, d, i) {
-            d.relationType = type;
+            var relation = d.relation;
+            d.relation.type = type;
+            container.call(buildLinks);
           };
         };
 
@@ -413,57 +415,73 @@ VisualComposer.directive('slComposerCanvas', [
           ];
         });
 
+        function buildLink(selection) {
+          return selection.each(function(d) {
+            var g = d3.select(this);
+
+            g.append('path');
+            g.append('circle')
+              .attr('r', 10)
+              .attr('class', 'link-type')
+              .on('click', showLinkMenu);
+          });
+        }
+
+        function updateLink(selection) {
+          return selection.each(function(d) {
+            var g = d3.select(this);
+
+            g.selectAll('path')
+              .attr('d', function() {
+                if (d.type == 'db') {
+                  return dbPath.apply(this, [d]);
+                }
+
+                return modelPath.apply(this, [d]);
+              })
+              .attr('class', function() {
+                var type = (d.relation && d.relation.type) || '';
+                var state = '';
+
+                if (d.target == 'connector') {
+                  state = 'loose';
+                } else if (d === tempConnections) {
+                  state = 'valid';
+                }
+
+                return ['link', state, type].join(' ');
+              });
+
+            g.selectAll('.link-type')
+              .attr('cx', function() {
+                var pos0 = getDiagonalCoords(d.source);
+                var pos1 = getDiagonalCoords(d.target);
+
+                return (pos1.x + pos0.x) / 2;
+              })
+              .attr('cy', function() {
+                var pos0 = getDiagonalCoords(d.source);
+                var pos1 = getDiagonalCoords(d.target);
+
+                return (pos1.y + pos0.y) / 2;
+              });
+          });
+        }
+
         function buildLinks(selection) {
           var links = selection.selectAll('.link-group')
             .data($scope.connections.filter(
               function(x) {
-                return x.target !== 'connector' || tempConnections == null;
+                return x.target !== 'connector' || tempConnections === null;
               }
             ));
 
-          var enter = links.enter()
+          links.enter()
             .append('g')
-            .attr('class', 'link-group');
+            .attr('class', 'link-group')
+            .call(buildLink);
 
-          enter.append('path');
-          enter.append('circle')
-            .attr('r', 10)
-            .attr('class', 'link-type');
-
-          links
-            .selectAll('path')
-            .attr('d', function(d) {
-              if (d.type == 'db') {
-                return dbPath.apply(this, arguments);
-              }
-
-              return modelPath.apply(this, arguments);
-            })
-            .attr('class', function(d) {
-              if (d.target == 'connector') {
-                return 'link loose';
-              } else if (d === tempConnections) {
-                return 'link valid';
-              }
-
-              return 'link';
-            });
-
-          links
-            .selectAll('circle')
-            .on('click', showLinkMenu)
-            .attr('cx', function(d) {
-              var pos0 = getDiagonalCoords(d.source);
-              var pos1 = getDiagonalCoords(d.target);
-
-              return (pos1.x + pos0.x) / 2;
-            })
-            .attr('cy', function(d) {
-              var pos0 = getDiagonalCoords(d.source);
-              var pos1 = getDiagonalCoords(d.target);
-
-              return (pos1.y + pos0.y) / 2;
-            });
+          links.call(updateLink);
 
           links.exit()
             .remove();
@@ -574,7 +592,8 @@ VisualComposer.directive('slComposerCanvas', [
                   if (tempConnections == null) {
                     tempConnections = {
                       source: connectSource.id,
-                      target: d.id
+                      target: d.id,
+                      relation: {}
                     }
 
                     $scope.connections.push(tempConnections);

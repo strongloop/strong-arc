@@ -456,7 +456,8 @@ VisualComposer.controller('VisualComposerMainController', [
                   $scope.connections.push({
                     source: relation.id,
                     target: relation.facetName + '.' + relation.model,
-                    type: 'model'
+                    type: 'model',
+                    relation: relation
                   });
                 }
               }
