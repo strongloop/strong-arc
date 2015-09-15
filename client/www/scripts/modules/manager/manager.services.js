@@ -111,7 +111,7 @@ Manager.service('ManagerServices', [
             break;
           }
           case 'unknown': {
-            if (host.error.message.indexOf('ETIMEDOUT') !== -1){
+            if (host.error.message && host.error.message.indexOf('ETIMEDOUT') !== -1){
               host.status.isProblem = true;
               host.status.isNoApp = false;
               host.status.isActive = false;
@@ -121,7 +121,7 @@ Manager.service('ManagerServices', [
             }
             else {
               host.status.problem.title = 'exception: ' + host.errorType;
-              host.status.problem.description = host.error.message;
+              host.status.problem.description = host.error.message || 'Unknown error';
             }
 
             break;

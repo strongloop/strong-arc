@@ -1,6 +1,10 @@
 // Karma configuration
 
 module.exports = function(config) {
+
+  // tell the integration tests that there is no MySQL server setup
+  config.client.SKIP_MYSQL = process.env.SKIP_MYSQL;
+
   config.set({
 
     // base path, that will be used to resolve files and exclude
@@ -158,6 +162,9 @@ module.exports = function(config) {
 
     // If browser does not capture in given timeout [ms], kill it
     captureTimeout: 5000,
+
+    // If browser is idle
+    browserNoActivityTimeout: 20000,
 
     //preprocessors: {
     //  './e2e/**/*.spec.js': [ 'browserify' ]

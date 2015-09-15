@@ -39,13 +39,14 @@ PM.directive('slPmHostForm', [
       controller: [
         '$scope',
         '$log',
+        '$q',
         'growl',
         '$timeout',
         'PMAppService',
         'PMServerService',
         'ManagerServices',
         '$timeout',
-        function($scope, $log, growl, $timeout, PMAppService, PMServerService, ManagerServices, $timeout) {
+        function($scope, $log, $q, growl, $timeout, PMAppService, PMServerService, ManagerServices, $timeout) {
 
           var isLocal = false;
           var isInit = true;
@@ -219,12 +220,26 @@ PM.directive('slPmHostForm', [
               }
               if (instance && !$scope.selectedPMHost.status.isProblem) {
                 var refresh = function() {
-                  return PMPidService.getDefaultPidData(serverConfig, ServiceId)
-                    .then(function(pidCollection) {
-                      return pidCollection.filter(function(process) {
-                        return process.serviceInstanceId === 1;
-                      });
+                  var deferred = $q.defer();
+                  instance.processes(function(err, rawProcesses) {
+
+                    if (err) {
+                      $log.warn('bad get processes: ' + err.message);
+                      return [];
+                    }
+                    var returnProcesses = [];
+                    //filter out dead pids and supervisor
+                    returnProcesses = rawProcesses.filter(function(process){
+                      return (!process.stopTime && (process.workerId !== 0));
                     });
+
+                    for (var i = 0;i < returnProcesses.length;i++) {
+                      returnProcesses[i].status = 'Running';
+                    }
+
+                    deferred.resolve(returnProcesses);
+                  });
+                  return deferred.promise;
                 };
 
                 refresh().then(function(processes) {
@@ -353,11 +368,13 @@ PM.directive('slPmPidSelector', [
         onUpdateHost: '&',
         onUpdateProcesses: '&',
         onUpdateSelection: '&',
+        externalProcesses: '=',
         showPidSelector: '=',
         multiple: '='
       },
       controller: function($scope) {
         $scope.processes = [];
+        $scope.isExternalProcesses = false;
         $scope._showPidSelector = true;
 
         $scope.$watch('showPidSelector', function(newVal) {
@@ -367,6 +384,9 @@ PM.directive('slPmPidSelector', [
         });
 
         $scope.updateProcesses = function(processes, refresh) {
+          if ($scope.isExternalProcesses){
+            return;
+          }
           $scope.processes = processes;
 
           $scope.onUpdateProcesses({
@@ -374,7 +394,14 @@ PM.directive('slPmPidSelector', [
             refresh: refresh
           });
         };
-
+        // in case a component (tracing) needs to supply an external set of processes
+        // based on some additional filtering
+        $scope.$watch('externalProcesses', function(newVal) {
+          if (newVal !== undefined) {
+            $scope.isExternalProcesses = true;
+            $scope.processes = newVal;
+          }
+        }, true);
         $scope.updateHost = function(host) {
           $scope.onUpdateHost({
             host: host

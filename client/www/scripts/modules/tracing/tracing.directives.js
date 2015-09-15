@@ -135,13 +135,6 @@ Tracing.directive('slTracingHeader', [
     return {
       templateUrl: './scripts/modules/tracing/templates/tracing.header.html',
       restrict: 'E',
-      controller: [
-        '$scope',
-        '$log',
-        function($scope, $log) {
-
-        }
-      ],
       link: function(scope, el, attrs) {
         scope.$watch('tracingCtx.currentPMInstance', function(newVal, oldVal) {
           // pm instance is up but app is stopped

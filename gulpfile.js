@@ -294,7 +294,7 @@ gulp.task('test-client-integration', function(callback) {
     process.execPath,
     [
       'client/test/test-server',
-      'node_modules/.bin/karma',
+      require.resolve('karma/bin/karma'),
       'start',
       '--single-run',
       '--browsers',
@@ -327,6 +327,7 @@ gulp.task('setup-mysql', function(callback) {
   });
 
   function logMysqlErrorDescription(err) {
+    process.env.SKIP_MYSQL = process.env.SKIP_MYSQL || err.code;
     switch (err.code) {
       case 'ECONNREFUSED':
         logRed('Cannot connect to the MySQL server.');
