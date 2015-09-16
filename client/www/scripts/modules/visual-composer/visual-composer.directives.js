@@ -1,5 +1,6 @@
 VisualComposer.directive('slComposerCanvas', [
-  function slComposerCanvas() {
+  'slCanvasService',
+  function slComposerCanvas(slCanvasService) {
     return {
       restrict: 'E',
       replace: true,
@@ -10,7 +11,9 @@ VisualComposer.directive('slComposerCanvas', [
         activeInstance: '=',
         datasources: '=',
         onSelect: '&',
-        onNewConnection: '&'
+        onNewConnection: '&',
+        onUpdateConnection: '&',
+        onRemoveConnection: '&'
       },
       link: function($scope, elem) {
         var idMapping = {};
@@ -392,24 +395,30 @@ VisualComposer.directive('slComposerCanvas', [
         var setRelationshipType = function(type) {
           return function(elem, d, i) {
             var relation = d.relation;
-            d.relation.type = type;
-            container.call(buildLinks);
+
+            if (relation) {
+              d.relation.type = type;
+              container.call(buildLinks);
+              $scope.onUpdateConnection({
+                relation: relation
+              });
+            }
           };
         };
 
         var showLinkMenu = d3.contextMenu(function(d) {
           return [
             {
-              title: 'One to One',
+              title: 'One to One (belongsTo)',
               action: setRelationshipType('belongsTo')
             }, {
-              title: 'One to Many',
+              title: 'One to Many (hasOne)',
+              action: setRelationshipType('hasOne')
+            }, {
+              title: 'Many to One (hasMany)',
               action: setRelationshipType('hasMany')
             }, {
-              title: 'Many to One',
-              action: setRelationshipType('blongsToMany')
-            }, {
-              title: 'Many to Many',
+              title: 'Many to Many (hasAndBelongsToMany)',
               action: setRelationshipType('hasAndBelongsToMany')
             }
           ];
@@ -420,10 +429,14 @@ VisualComposer.directive('slComposerCanvas', [
             var g = d3.select(this);
 
             g.append('path');
-            g.append('circle')
-              .attr('r', 10)
-              .attr('class', 'link-type')
-              .on('click', showLinkMenu);
+
+            if (d.type === 'model') {
+
+              g.append('circle')
+                .attr('r', 10)
+                .attr('class', 'link-type')
+                .on('click', showLinkMenu);
+            }
           });
         }
 
@@ -452,17 +465,14 @@ VisualComposer.directive('slComposerCanvas', [
                 return ['link', state, type].join(' ');
               });
 
+            var pos0 = getDiagonalCoords(d.source);
+            var pos1 = getDiagonalCoords(d.target);
+
             g.selectAll('.link-type')
               .attr('cx', function() {
-                var pos0 = getDiagonalCoords(d.source);
-                var pos1 = getDiagonalCoords(d.target);
-
                 return (pos1.x + pos0.x) / 2;
               })
               .attr('cy', function() {
-                var pos0 = getDiagonalCoords(d.source);
-                var pos1 = getDiagonalCoords(d.target);
-
                 return (pos1.y + pos0.y) / 2;
               });
           });
@@ -554,10 +564,10 @@ VisualComposer.directive('slComposerCanvas', [
             var g = d3.select(this);
 
             g.attr('transform', function(d, i) {
-              var x = createIndex * 225;
-              createIndex += 1;
+              var x = createIndex++ * 225;
+              var pos = slCanvasService.getPositionById(d.id, { y: 50, x: x });
 
-              return 'translate(' + x + ', 0)';
+              return 'translate(' + pos.x + ', ' + pos.y + ')';
             });
 
             g.append('rect')
@@ -644,10 +654,18 @@ VisualComposer.directive('slComposerCanvas', [
           connectSource = d;
           idMapping.connector = connector[0][0];
 
-          $scope.connections.push({
-            source: d.id,
-            target: 'connector'
+          var connection = $scope.connections.filter(function(x) {
+            return x.source == d.id;
           });
+
+          if (connection.length) {
+            connection[0].target = 'connector';
+          } else {
+            $scope.connections.push({
+              source: d.id,
+              target: 'connector'
+            });
+          }
 
           d3.event.sourceEvent.stopPropagation();
         }
@@ -675,16 +693,26 @@ VisualComposer.directive('slComposerCanvas', [
           connector = null;
           connectSource = null;
 
+          $scope.connections = $scope.connections.filter(
+            function(d) {
+              if (d.target === 'connector') {
+                if (d.relation && !(tempConnections)) {
+                  $scope.onRemoveConnection({
+                    relation: d.relation
+                  });
+                }
+
+                return false;
+              }
+
+              return true;
+            }
+          );
+
           if (tempConnections) {
             $scope.onNewConnection(tempConnections);
             tempConnections = null;
           }
-
-          $scope.connections = $scope.connections.filter(
-            function(d) {
-              return d.target !== 'connector';
-            }
-          );
 
           container.call(buildLinks);
         }
@@ -707,13 +735,16 @@ VisualComposer.directive('slComposerCanvas', [
               var x = d3.event.x;
               var y = d3.event.y;
 
+              d.pos = {x: x, y: y};
+
               return 'translate(' + x + ', ' + y + ')';
             });
 
           container.call(buildLinks);
         }
 
-        function dragEnd() {
+        function dragEnd(d) {
+          slCanvasService.setPositionById(d.id, d.pos);
         }
       }
     };

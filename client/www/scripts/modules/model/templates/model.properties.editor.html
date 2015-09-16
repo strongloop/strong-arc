@@ -34,12 +34,15 @@
                      type="text" />
              </div>
           </td>
-          <td class="has-selectable">
+          <td ng-if="isRelation(property)" colspan="5">
+            {{property.type}} relationship to {{property.model}}
+          </td>
+          <td class="has-selectable" ng-if="!isRelation(property)">
             <div class="ui-form-group center selectable">
               <sl-property-data-type-select property="property"></sl-property-data-type-select>
             </div>
           </td>
-          <td>
+          <td ng-if="!isRelation(property)">
             <div class="ui-form-group center">
               <label class="ui-checkbox">
                 <input type="checkbox"
@@ -53,7 +56,7 @@
               </label>
             </div>
           </td>
-          <td>
+          <td ng-if="!isRelation(property)">
             <div class="ui-form-group center">
               <label class="ui-checkbox">
                 <input type="checkbox"
@@ -66,7 +69,7 @@
               </label>
             </div>
           </td >
-          <td>
+          <td ng-if="!isRelation(property)">
             <div class="ui-form-group center">
               <label class="ui-checkbox">
                 <input type="checkbox"
@@ -79,7 +82,7 @@
               </label>
             </div>
           </td >
-          <td class="has-selectable">
+          <td class="has-selectable" ng-if="!isRelation(property)">
             <div class="ui-form-group selectable">
               <input type="text"
                      data-name="comments"

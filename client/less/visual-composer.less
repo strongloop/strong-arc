@@ -20,7 +20,7 @@
     .ds-icon {
       fill: orange;
     }
-    
+
     .title-bg {
       fill: @grey-3;
     }
@@ -45,7 +45,7 @@
 
     text {
       font-size: 55;
-      font-family: verdana;
+      font-family: 'helvetica neue', helvetica, ubuntu, arial, sans-serif;
       stroke-width: 0px;
       fill: @grey-1;
     }
@@ -79,9 +79,15 @@
 
   }
 
+  .link-type {
+    fill: @white;
+    stroke: @grey-2;
+    stroke-width: 2px;
+  }
+
   .link {
-    stroke: @grey-1;
-    stroke-width: 3px;
+    stroke: @grey-2;
+    stroke-width: 2px;
     fill: none;
 
     &.loose {
@@ -90,6 +96,22 @@
 
     &.valid {
       stroke: @green-4;
+    }
+
+    &.hasOne {
+      stroke: hsl(128, 100%, 43%);
+    }
+
+    &.hasMany {
+      stroke: hsl(256, 100%, 43%);
+    }
+
+    &.belongsTo {
+      stroke: hsl(321, 100%, 43%);
+    }
+
+    &.hasAndBelongsToMany {
+      stroke: hsl(0, 100%, 43%);
     }
   }
 

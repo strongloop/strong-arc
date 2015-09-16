@@ -16,6 +16,8 @@
       models="models" connections="connections" datasources="mainNavDatasources"
       on-select="selectModel(model)"
       on-new-connection="createNewRelationship(source, target)"
+      on-update-connection="updateRelationship(relation)"
+      on-remove-connection="removeRelationship(relation)"
       activeInstance="activeInstance">
     </sl-composer-canvas>
   </div>

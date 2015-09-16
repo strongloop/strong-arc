@@ -107,9 +107,34 @@ VisualComposer.controller('VisualComposerMainController', [
       var type = 'hasOne';
 
       if (baseModel && remoteModel) {
-        ModelService.createNewRelationship(type, baseModel, remoteModel, name);
+        var props = baseModel.properties.filter(function(prop) {
+          return prop.id === sourceId;
+        });
+
+        if (props.length) {
+          PropertyService.deleteModelProperty(props[0]);
+        }
+
+        ModelService.createNewRelationship(type, baseModel, remoteModel, name)
+          .then(function() {
+            loadModels();
+          });
       }
-    }
+    };
+
+    $scope.updateRelationship = function(relationship) {
+      ModelService.updateRelationship(relationship)
+        .then(function() {
+          loadModels();
+        });
+    };
+
+    $scope.removeRelationship = function(relationship) {
+      ModelService.deleteRelationship(relationship)
+        .then(function() {
+          loadModels();
+        });
+    };
 
     // create new instance
     $scope.createNewInstance = function(type, initialData) {
@@ -187,26 +212,24 @@ VisualComposer.controller('VisualComposerMainController', [
 
     // delete model property
     $scope.deleteModelPropertyRequest = function(config) {
-      if (config.id && config.modelId) {
-        if (confirm('delete this model property?')){
-          // this seems a bit redundant and could likely benefit
-          // from refactoring
-          // delete the property from the active instance and then reload the
-          // whole instance again is 2 async calls
-          PropertyService.deleteModelProperty(config).
-            then(function(response) {
-              ModelService.getModelInstanceById(config.modelId).
-                then(function(instance) {
-                  growl.addSuccessMessage('property deleted');
-                  $scope.activeInstance = IAService.setActiveInstance(instance, CONST.MODEL_TYPE);
-                  $scope.activeModelPropertiesChanged = !$scope.activeModelPropertiesChanged;
-                }
-              );
-            }
-          );
-        }
+      if (config.id && config.modelId &&
+          confirm('delete this model property?')) {
+        // this seems a bit redundant and could likely benefit
+        // from refactoring
+        // delete the property from the active instance and then reload the
+        // whole instance again is 2 async calls
+        PropertyService.deleteModelProperty(config).
+          then(function(response) {
+            ModelService.getModelInstanceById(config.modelId).
+              then(function(instance) {
+                growl.addSuccessMessage('property deleted');
+                $scope.activeInstance = IAService.setActiveInstance(instance, CONST.MODEL_TYPE);
+                $scope.activeModelPropertiesChanged = !$scope.activeModelPropertiesChanged;
+              });
+          });
       }
     };
+
     // update model property
     $scope.updateModelPropertyRequest = function(config) {
       var modelPropertyConfig = config.propertyConfig;

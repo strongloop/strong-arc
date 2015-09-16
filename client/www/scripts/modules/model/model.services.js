@@ -13,6 +13,17 @@ Model.service('ModelService', [
            AppStorageService, ModelProperty, DataSourceDefinition, connectorMetadata) {
     var svc = {};
 
+    svc.deleteRelationship = function(relationship) {
+      return ModelRelation.deleteById({id: relationship.id}).$promise;
+    };
+
+    svc.updateRelationship = function(relationship) {
+      return svc.deleteRelationship(relationship)
+        .then(function() {
+          return ModelRelation.create(relationship).$promise;
+        });
+    };
+
     svc.createNewRelationship = function(type, baseModel, remoteModel, name) {
       var relation = {
         facetName: CONST.NEW_MODEL_FACET_NAME,
@@ -20,7 +31,7 @@ Model.service('ModelService', [
         model: remoteModel.name,
         modelId: baseModel.id,
         name: name,
-        type: 'hasOne'
+        type: type || 'hasOne'
       };
 
       return ModelRelation.create(relation).$promise;

@@ -136,8 +136,6 @@ Model.directive('modelPropertiesEditor',[
 
         }
 
-
-
         scope.toggleModelPropertiesView = function() {
           scope.isModelInstancePropertiesActive = !scope.isModelInstancePropertiesActive;
         };
@@ -376,6 +374,10 @@ Model.directive('slModelPropertiesEditor',[
       replace: true,
       templateUrl: './scripts/modules/model/templates/model.properties.editor.html',
       controller: ['$scope', 'growl', '$log', function($scope, growl, $log) {
+        $scope.isRelation = function(prop) {
+          return typeof(prop.foreignKey) === 'string';
+        };
+
         $scope.earlyNewPropertyWarning = function() {
           growl.addWarnMessage('you should name your model first');
         };
