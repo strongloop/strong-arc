@@ -299,7 +299,7 @@ VisualComposer.directive('slComposerCanvas', [
 
           ds.exit()
             .remove();
-        });
+        }, true);
 
         $scope.$watch('models', function(newVal) {
           var models = container.selectAll('.model')
@@ -321,7 +321,7 @@ VisualComposer.directive('slComposerCanvas', [
           if (newVal.length) {
             container.call(buildLinks);
           }
-        });
+        }, true);
 
         function buildDatasource(selection) {
           var createIndex = 1;
@@ -330,10 +330,10 @@ VisualComposer.directive('slComposerCanvas', [
             var g = d3.select(this);
 
             g.attr('transform', function(d, i) {
-              var x = createIndex * 225;
-              createIndex += 1;
+              var x = createIndex++ * 225;
+              var pos = slCanvasService.getPositionById(d.id, { y: 50, x: x });
 
-              return 'translate(' + x + ', -300)';
+              return 'translate(' + pos.x + ', ' + pos.y + ')'
             });
 
             g.append('rect')
@@ -386,10 +386,6 @@ VisualComposer.directive('slComposerCanvas', [
           });
 
           selection.call(drag);
-        }
-
-        function updateLinks(selection) {
-
         }
 
         var setRelationshipType = function(type) {

@@ -421,6 +421,7 @@ VisualComposer.controller('VisualComposerMainController', [
     loadDataSources();
 
     function loadModels() {
+
       ModelService.getAllModelInstances()
         .then(function(result) {
           var ready = [];
@@ -449,7 +450,9 @@ VisualComposer.controller('VisualComposerMainController', [
           });
         });
 
-      models.promise.then(function(models) {
+      models.promise.then(updateRelations);
+
+      function updateRelations(models) {
         ModelService.getAllModelRelations()
           .then(function(results) {
             results.map(function(relation) {
@@ -463,12 +466,19 @@ VisualComposer.controller('VisualComposerMainController', [
               }
 
               if (model) {
-                var found = model.properties.some(function(x) {
-                  return x.id === relation.id;
+                var id = -1;
+
+                var found = model.properties.some(function(x, idx) {
+                  if (x.id === relation.id) {
+                    id = idx;
+                    return true;
+                  }
                 });
 
                 if (!found) {
                   model.properties.push(relation);
+                } else {
+                  model.properties.splice(id, 1, relation)
                 }
 
                 found = $scope.connections.some(function(x) {
@@ -489,7 +499,7 @@ VisualComposer.controller('VisualComposerMainController', [
             $scope.models = models;
             $scope.$broadcast('refreshModels');
           });
-      });
+      }
     }
 
     function loadDataSources() {
