@@ -5,7 +5,10 @@ var EC = protractor.ExpectedConditions;
 describe('app-controller-test', function() {
   fdescribe('app-start', function() {
     it('should login,' +
-      ' start local app, confirm it is running, stop app, confirm it is stopped' +
+      ' start local app, ' +
+      ' confirm it is running, ' +
+      ' stop app, ' +
+      ' confirm it is stopped' +
       ' and log out',
       function() {
 
