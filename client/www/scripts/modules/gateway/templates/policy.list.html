@@ -38,35 +38,10 @@
               <span class="txt">Metrics</span>
             </div>
           </div>
-
-          <!--<div ng-show="policy.type == 'ratelimiting'">-->
-            <!--<ul>-->
-              <!--<li>limit: {{policy.limit}}</li>-->
-              <!--<li>interval (ms): {{policy.interval}}</li>-->
-            <!--</ul>-->
-          <!--</div>-->
-          <!--<div ng-show="policy.type == 'reverseproxy'">-->
-            <!--targetURL: <span>{{policy.targetURL}}</span>-->
-          <!--</div>-->
-          <!--<div ng-show="policy.type == 'auth'">-->
-            <!--<span>scopes:</span>-->
-            <!--<ul>-->
-            <!--<li ng-repeat="scope in policy.scopes">-->
-              <!--<div class="policy-scope-item">{{scope}}</div>-->
-            <!--</li>-->
-            <!--</ul>-->
-          <!--</div>-->
-
-          <sl-policy-auth-form ng-show="policy.editMode && isPolicyType('auth', policy)"></sl-policy-auth-form>
-          <sl-policy-rate-limit-form  ng-show="policy.editMode && isPolicyType('ratelimit', policy)"></sl-policy-rate-limit-form>
-          <sl-policy-proxy-form ng-show="policy.editMode && isPolicyType('proxy', policy)"></sl-policy-proxy-form>
+          <sl-policy-auth-form ng-show="policy.editMode && isPolicyType(GATEWAY_CONST.POLICY_AUTH_TYPE, policy)"></sl-policy-auth-form>
+          <sl-policy-rate-limit-form  ng-show="policy.editMode && isPolicyType(GATEWAY_CONST.POLICY_RATELIMIT_TYPE, policy)"></sl-policy-rate-limit-form>
+          <sl-policy-proxy-form ng-show="policy.editMode && isPolicyType(GATEWAY_CONST.POLICY_PROXY_TYPE, policy)"></sl-policy-proxy-form>
         </td>
-        <!--<td>-->
-          <!--<button ng-show="!policy.editMode" class="link-cmd" ng-click="editPolicy(policy)">edit</button>-->
-          <!--<button ng-show="policy.editMode" class="ui-btn secondary small" ng-click="cancelEditPolicy(policy)">cancel</button>-->
-          <!--<button ng-show="policy.editMode" class="ui-btn primary small" ng-click="savePolicy(policy)">save</button>-->
-
-        <!--</td>-->
         <td class="actions">
           <a href class="ui-close delete-policy" ng-click="confirmDeletePolicy(policy)">x</a>
         </td>
@@ -90,9 +65,9 @@
           </select>
         </td>
         <td>
-          <sl-policy-auth-form ng-show="isPolicyType('auth', policyCtx.currentPolicy)"></sl-policy-auth-form>
-          <sl-policy-rate-limit-form  ng-show="isPolicyType('ratelimit', policyCtx.currentPolicy)"></sl-policy-rate-limit-form>
-          <sl-policy-proxy-form ng-show="isPolicyType('proxy', policyCtx.currentPolicy)"> </sl-policy-proxy-form>
+          <sl-policy-auth-form ng-show="isPolicyType(GATEWAY_CONST.POLICY_AUTH_TYPE, policyCtx.currentPolicy)"></sl-policy-auth-form>
+          <sl-policy-rate-limit-form  ng-show="isPolicyType(GATEWAY_CONST.POLICY_RATELIMIT_TYPE, policyCtx.currentPolicy)"></sl-policy-rate-limit-form>
+          <sl-policy-proxy-form ng-show="isPolicyType(GATEWAY_CONST.POLICY_PROXY_TYPE, policyCtx.currentPolicy)"> </sl-policy-proxy-form>
         </td>
         <td class="master-action-col">
           <button class="ui-btn secondary small" ng-click="clearAddPolicyRow()">Cancel</button>
