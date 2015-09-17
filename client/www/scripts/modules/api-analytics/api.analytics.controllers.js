@@ -10,6 +10,8 @@ ApiAnalytics.controller('ApiAnalyticsController', [
     function($scope, $state, $log, $q, $interval, $timeout, ApiAnalyticsService, LicensesService) {
       $scope.apiChart = {};
       $scope.server = {};
+      $scope.showChartDataLoading = true;
+      $scope.isLoading = false;
 
       window.setScrollView('.common-instance-view-container');
 
@@ -26,33 +28,41 @@ ApiAnalytics.controller('ApiAnalyticsController', [
         $scope.getData(null, 0, 0);
       };
 
-      $scope.updateProcesses = function(processes) {
-        $scope.processes = processes;
-        $scope.updateProcessSelection([processes[0]]);
-      };
-
-      $scope.updateProcessSelection = function(selection) {
-        if (selection.length) {
-          selection[0].isActive = true;
-          $scope.activeProcess = selection[0];
-        }
-      };
-
       $scope.getData = function(d, i, depth, initialModel){
+        $scope.showChartDataLoading = true;
         var def = $q.defer();
 
-        ApiAnalyticsService.getApiAnalyticsChartDataByNode(d, i, depth, $scope.server, initialModel)
-          .then(function(data){
-            var chart = {
-              data: data,
-              node: d,
-              nodeIdx: i
-            };
+        if (!$scope.isLoading) {
+          $scope.isLoading = true;
+          ApiAnalyticsService.getApiAnalyticsChartDataByNode(d, i, depth, $scope.server, initialModel)
+            .then(function(data){
+              var allData = {};
 
-            $scope.apiChart = chart;
+              angular.extend(allData, data);
 
-            def.resolve($scope.apiChart);
-          });
+              var chart = {
+                data: data,
+                node: d,
+                nodeIdx: i,
+                allData: allData
+              };
+
+              $scope.apiChart = chart;
+              $scope.showChartDataLoading = false;
+              $scope.isLoading = false;
+              def.resolve($scope.apiChart);
+            })
+            .catch(function(error) {
+              $log.warn('bad get chart data: ', error);
+              $scope.showChartDataLoading = false;
+              $scope.isLoading = false;
+            })
+            .finally(function() {
+              $scope.showChartDataLoading = false;
+              $scope.isLoading = false;
+            });
+
+        }
 
         return def.promise;
       };

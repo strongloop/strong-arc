@@ -1,4 +1,6 @@
 var LoginView = (function () {
+  var EC = protractor.ExpectedConditions;
+
   function LoginView() {
     this.userNameInput = element(by.id('InputUserName'));
     this.passwordInput = element(by.id('InputPassword'));
@@ -6,22 +8,30 @@ var LoginView = (function () {
 
     this.openLoginView = function() {
       browser.get('http://127.0.0.1:9800/#/login');
-      browser.ignoreSynchronization = true;
       var loginBtn = this.submitButton;
-      browser.driver.wait(function() {
-        return loginBtn.isPresent();
-      }, 10000);
+      browser.driver.wait(
+        EC.visibilityOf(loginBtn),
+      10000);
     };
 
     this.loginAsTestUser = function() {
+      var self = this;
       var loginBtn = this.submitButton;
-      browser.driver.wait(function() {
-        return loginBtn.isPresent();
-      }, 10000);
-      this.userNameInput.sendKeys('strongloop-test@grr.la');
-      this.passwordInput.sendKeys('Str0ngL00p');
-      browser.ignoreSynchronization = true;
-      loginBtn.click();
+      browser.waitForAngular().then(function () {
+        self.userNameInput.sendKeys('strongloop-test@grr.la');
+        self.passwordInput.sendKeys('Str0ngL00p');
+        loginBtn.click();
+      });
+    };
+
+    this.loginAsFalseUser = function() {
+      var self = this;
+      var loginBtn = this.submitButton;
+      browser.waitForAngular().then(function () {
+        self.userNameInput.sendKeys('strongloop-test@grr.la');
+        self.passwordInput.sendKeys('WrongPassword1234');
+        loginBtn.click();
+      });
     };
 
     this.loginToLandingView = function() {
@@ -33,9 +43,9 @@ var LoginView = (function () {
             return url === 'http://127.0.0.1:9800/#/';
           });
         }, 10000);
-        return browser.driver.wait(function() {
-          return browser.driver.findElement(by.css('.sl-landing-page'));
-        }, 10000);
+        browser.driver.wait(
+          EC.presenceOf(element(by.css('.sl-landing-page'))),
+        10000);
       });
     };
   }

@@ -1,5 +1,5 @@
 <div class="manager-main-layout">
-  <div class="manager-main-container" ng-controller="ManagerMainController">
+  <div class="manager-main-container">
     <div class="load-balancer-container">
       <button class="link-cmd ui-btn accessory" ng-click="toggleManagerLoadBalancer()" class="btn-toggle-loadbalancer">Load Balancer</button>
       <div class="load-balancer-content" ng-show="showManagerLoadBalancer">
@@ -79,7 +79,7 @@
             </div>
 
           </td>
-          <td class="action-col"  class="actions">
+          <td class="action-col actions">
             <a href class="ui-close" ng-click="deleteHost(host)">(X)</a>
           </td>
         </tr>
@@ -99,7 +99,7 @@
                        typeahead-focus-first="false"
                        sl-common-select-on-click
                        typeahead-on-select="onPMServerSelectAutoCompleted($item, 'currentPM')"
-                       typeahead="server as server.host + ' : ' + server.port for server in pmServers"
+                       typeahead="server as server.host + ' : ' + server.port for server in hosts"
                        ng-minlength="8"
                        ng-focus="itemFocus($event)"
                        ng-blur="itemBlur($event)"
@@ -144,7 +144,7 @@
           <td class="pid-col">
           </td>
 
-          <td class="action-col"  class="actions">
+          <td class="action-col actions">
             <a href class="ui-close" ng-click="killNewPMHostForm()">(X)</a>
           </td>
         </tr>

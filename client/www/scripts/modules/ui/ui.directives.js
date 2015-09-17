@@ -328,3 +328,119 @@ UI.directive('uiSliderBar', function() {
     }
   }
 });
+
+UI.directive('slUiMenuDropdown', [
+  '$http',
+  '$log',
+  '$rootScope',
+  '$timeout', function($http, $log, $rootScope, $timeout){
+    return {
+      restrict: 'E',
+      replace: true,
+      transclude: true,
+      scope: {
+        toggler: '='
+      },
+      templateUrl: './scripts/modules/ui/templates/ui.menu.dropdown.html',
+      link: function(scope, element, attrs){
+        var to;
+        scope.hideOnPageClick = attrs.hideonpageclick;
+
+        $rootScope.$on('pageClick', function(e, $event){
+          var isMenuClick = !!$($event.target).parents('.ui-menu-dropdown').length;
+
+          if ( scope.hideOnPageClick && !isMenuClick ) {
+            scope.toggler = false;
+          }
+        });
+
+        scope.hideMenu = function(){
+          if ( scope.hideOnPageClick ) return;
+
+          to = $timeout(function(){
+            scope.toggler = false;
+          }, 300);
+        };
+
+        scope.cancelHide = function(){
+          if ( scope.hideOnPageClick ) return;
+
+          if ( to ) {
+            $timeout.cancel(to);
+          }
+        };
+      }
+    };
+  }]);
+
+UI.directive('slUiMenuDropdownFilter', [
+  '$http',
+  '$log',
+  '$rootScope',
+  '$timeout', function($http, $log, $rootScope, $timeout){
+    return {
+      restrict: 'E',
+      replace: true,
+      scope: {
+        filterText: '=filter',
+        toggler: '=',
+        selected: '=',
+        isFiltering: '=filtering'
+      },
+      templateUrl: './scripts/modules/ui/templates/ui.menu.dropdown.filter.html',
+      controller: function($scope){
+        $scope.clearFilter = function(item){
+          $scope.filterText = '';
+          $scope.toggler = false;
+          $scope.selected = null;
+        };
+
+        $scope.hideMenu = function(){
+          $scope.toggler = false;
+        };
+
+        $scope.showMenu = function(){
+          $scope.toggler = true;
+        };
+
+        $scope.toggleMenu = function(){
+          $scope.toggler = !$scope.toggler;
+        };
+
+        $scope.setFocused = function(val){
+          $scope.isFocused = val;
+        };
+      }
+    };
+  }]);
+
+UI.directive('uiDropdown', [
+  '$http',
+  '$log',
+  '$rootScope',
+  '$timeout', function($http, $log, $rootScope, $timeout){
+    return {
+      restrict: 'E',
+      replace: true,
+      scope: {
+        selected: '=',
+        items: '=',
+        isFiltering: '=filtering'
+      },
+      templateUrl: './scripts/modules/ui/templates/ui.dropdown.html',
+      controller: function($scope){
+        $scope.toggler = false;
+        $scope.filterText = '';
+
+        $scope.showMenu = function(){
+          $scope.toggler = true;
+        };
+
+        $scope.selectItem = function(item){
+          $scope.filterText = item.name;
+          $scope.selected = item;
+          $scope.toggler = false;
+        };
+      }
+    };
+  }]);

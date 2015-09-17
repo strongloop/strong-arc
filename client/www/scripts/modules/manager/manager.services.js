@@ -95,6 +95,11 @@ Manager.service('ManagerServices', [
           }
           case 'invalid': {
             if (host.error.message.indexOf('Unknown "ServiceInstance"') !== -1){
+              host.status.display = 'No App';
+              host.status.isProblem = false;
+              host.status.isNoApp = true;
+              host.status.isActive = true;
+              host.status.isInactive = false;
               host.status.problem.title = 'No Application Found';
               host.status.problem.description = 'If it is a new host try deploying an app to it via Arc or the command line.';
             }
@@ -104,7 +109,23 @@ Manager.service('ManagerServices', [
             }
 
             break;
-           }
+          }
+          case 'unknown': {
+            if (host.error.message && host.error.message.indexOf('ETIMEDOUT') !== -1){
+              host.status.isProblem = true;
+              host.status.isNoApp = false;
+              host.status.isActive = false;
+              host.status.isInactive = false;
+              host.status.problem.title = 'Request Timeout';
+              host.status.problem.description = 'Check the status of the host to make sure it is up.';
+            }
+            else {
+              host.status.problem.title = 'exception: ' + host.errorType;
+              host.status.problem.description = host.error.message || 'Unknown error';
+            }
+
+            break;
+          }
           default:
             host.status.problem.title = 'exception: ' + host.errorType;
             host.status.problem.description = host.error.message;
@@ -135,6 +156,7 @@ Manager.service('ManagerServices', [
                 host.status = {
                   isProblem: false,
                   isActive: true,
+                  isNoApp: false,
                   display: 'Active',
                   actionLabel: '',
                   problem: {
@@ -146,6 +168,7 @@ Manager.service('ManagerServices', [
               else {
                 host.status.isProblem = false;
                 host.status.isActive = false;
+                host.status.isNoApp = false;
                 host.status.isInactive = true;
                 host.status.display = 'Inactive';
                 host.status.problem.title = 'The app is not running';
@@ -156,7 +179,11 @@ Manager.service('ManagerServices', [
         }
         // there is no app here
         else {
-
+          host.status.display = 'No App';
+          host.status.isProblem = false;
+          host.status.isNoApp = true;
+          host.status.isActive = true;
+          host.status.isInactive = false;
           host.status.problem.title = 'No app found';
           host.status.problem.description = 'There is no app here. Try clicking start in the action menu to start it';
         }
@@ -173,7 +200,9 @@ Manager.service('ManagerServices', [
           return;
         }
         if (hosts && hosts.map) {
-          cb(hosts);
+          if (cb) {
+            cb(hosts);
+          }
         }
       });
     };

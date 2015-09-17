@@ -1,10 +1,14 @@
-form.ui-form {
+.ui-form {
   color: @ui-form-color;
   font-size: 1.4rem;
   padding: 1rem;
   margin-top: 3rem;
   border-radius: @ui-radius;
   border: 1px solid @ui-form-border-color;
+
+  &.no-border {
+    border: none;
+  }
 
   &.sans-style {
     border: none;
@@ -391,7 +395,7 @@ ol, ul {
 }
 
 //checkboxes
-form.ui-form .ui-checkbox, .ui-checkbox {
+.ui-form .ui-checkbox, .ui-checkbox {
   .clearfix;
   display: inline-block;
   line-height: 2rem;
@@ -480,7 +484,7 @@ form.ui-form .ui-checkbox, .ui-checkbox {
 }
 
 //radio buttons
-form.ui-form .ui-radio, .ui-radio {
+.ui-form .ui-radio, .ui-radio {
   .clearfix;
   display: inline-block;
   line-height: 2rem;

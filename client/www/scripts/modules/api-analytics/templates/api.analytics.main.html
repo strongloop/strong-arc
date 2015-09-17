@@ -8,9 +8,10 @@
             <section>
               <sl-pm-pid-selector
                 on-update-host="updateHost(host)"
-                on-update-processes="updateProcesses(processes)"
-                on-update-selection="updateProcessSelection(selection)">
+                show-pid-selector="false">
               </sl-pm-pid-selector>
+              <span class="loading" sl-common-loading-indicator size="medium" ng-show="showChartDataLoading"></span>
+
               <sl-api-analytics-chart
                 chart="apiChart"
                 getdata="getData(d, i, depth, initialModel)"

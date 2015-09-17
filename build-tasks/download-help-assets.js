@@ -27,9 +27,10 @@ function downloadHelpHtml(id, name, destDir, cb) {
     '?expand=body.view';
 
   request(url, function(err, res, body) {
+    var msg;
     if (err) return cb(err);
     if (res.statusCode !== 200) {
-      var msg = 'Cannot download help item #' + id + ': ' + res.statusCode;
+      msg = 'Cannot download help item #' + id + ': ' + res.statusCode;
       gutil.log(gutil.colors.red(msg));
       gutil.log(body || '(empty body)');
       return cb(new Error(msg));
@@ -39,7 +40,7 @@ function downloadHelpHtml(id, name, destDir, cb) {
     try {
       data = JSON.parse(body);
     } catch (error) {
-      var msg = 'Cannot parse help item #' + id + ', ' + name +': ' + error.message;
+      msg = 'Cannot parse help item #' + id + ', ' + name +': ' + error.message;
       gutil.log(gutil.colors.red(msg));
       gutil.log(body || '(empty body)');
       return cb(new Error(msg));

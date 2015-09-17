@@ -26,6 +26,22 @@ Tracing.service('TracingServices', [
           ]
         });
     };
+    svc.alertProcessLoadProblem = function(){
+
+      $rootScope.$emit('message', {
+          body: 'Not all processes are coming up.  Please check the pm host status.',
+          links: [{
+            link: '/#process-manager',
+            linkText: 'go to Process Manager view'
+          },
+          {
+            link: 'http://docs.strongloop.com/display/SLC/Tracing',
+            linkText: 'more info...'
+          }
+        ]
+      });
+    };
+
     svc.alertUnlicensedPMHost = function() {
       $rootScope.$emit('message', {
         body: 'The processes came up but they are not tracing.  You may need to push a license to your PM Host via the Process Manager view. Or you could try stopping and starting tracing again to reset.',
@@ -53,24 +69,6 @@ Tracing.service('TracingServices', [
             linkText: 'more info...'
           }
         ]
-
-      });
-    };
-    svc.getFirstPMInstance = function(pmHost, cb) {
-      var PMClient = require('strong-mesh-models').Client;
-      var pm = new PMClient('http://' + pmHost.host + ':' + pmHost.port );
-
-      pm.instanceFind('1', function(err, instance) {
-        if (err) {
-          $log.warn('trace: error finding pm instance: ' + err.message);
-          return cb(err, null);
-        }
-        if (!instance){
-          $log.warn('trace: no instance returned: ');
-          return cb({message:'no instance returned'}, null);
-        }
-
-        return cb(null, instance);
 
       });
     };

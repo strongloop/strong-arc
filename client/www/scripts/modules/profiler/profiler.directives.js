@@ -16,7 +16,12 @@ Profiler.directive('slProfilerNavbar', [
 
           $scope.updateProcesses = function(processes, refresh) {
             $scope.processes = processes;
-            $scope.refreshProcessesCallback = refresh;
+
+            if (refresh) {
+              $scope.refreshProcessesCallback = refresh;
+            } else {
+              $log.warn('updateProcesses called without update function');
+            }
 
             $scope.processes.forEach(function(process) {
               if (process.isProfiling) {
@@ -212,7 +217,7 @@ Profiler.directive('slProfilerDevtools', [
   function($log) {
     return {
       template: '<iframe id="DevToolsIFrame" src="/devtools" name="devtools"' +
-        'ng-class="{ disabled: profilerId == \'remote\' && !isRemoteValid }"' +
+        'ng-class="{ disabled: (profilerId == \'remote\' && !isRemoteValid) || !activeProcess }"' +
         'sl-iframe-onload="initProfiler()"></iframe>',
       link: function(scope, el, attrs) {
         window.onresize = function(event) {

@@ -17,4 +17,3 @@ Landing.controller('LandingController', [
     });
   }
 ]);
-

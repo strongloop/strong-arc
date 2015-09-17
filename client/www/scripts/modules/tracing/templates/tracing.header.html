@@ -1,65 +1,32 @@
 <div class="tracing-header-container">
   <div class="tracing-header-controls-container">
-    <table class="tracing-header-controls-table">
-      <tr>
-        <td>
-          <table class="tracing-controls-table">
-            <tr>
-              <td class="host-col">
-                <!-- host selector -->
-                <div ng-show="managerHosts.length > 0" class="pm-host-selector-container">
-                  <div class="btn-group pm-host-select dropdown" dropdown ng-show="managerHosts"  is-open="status.isopen">
-                    <span class="title">Host</span>
-                    <button type="button"
-                            class="btn btn-default dropdown-toggle" dropdown-toggle>
-                      {{selectedPMHost.host}} : {{selectedPMHost.port}}<span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu" dropdown-menu>
-                      <li ng-repeat="host in managerHosts">
-                        <button class="link-cmd" ng-click="changePMHost(host)">{{host.host}}:{{host.port}}</button>
-                      </li>
-                      <li class="divider"></li>
-                      <li>
-                        <button class="link-cmd" ng-click="goToAddPM()">add PM Host</button>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </td>
-              <td class="pids-col">
-                <!-- Processes list -->
-                <div class="sl-pid-selector" ng-show="processes.length > 0">
-                  <sl-tracing-processes></sl-tracing-processes>
-                </div>
-                <span class="loading" sl-common-loading-indicator size="small" ng-show="tracingProcessCycleActive"></span>
-              </td>
-              <td class="controls-col">
-                <!-- toggle control -->
-                <sl-tracing-host-status></sl-tracing-host-status>
-                <div class="pm-tracing-toggle-container" ng-show="showTraceToggle">
-                  <span class="title">Tracing</span>
-                  <sl-ui-switch switches="tracingOnOff"  ng-show="!tracingProcessCycleActive" classes="power"></sl-ui-switch>
-                  <div ng-show="tracingProcessCycleActive">{{tracingOnOffCycleMessage}} {{ ( processes.length + 1) }} of {{ targetProcessCount }} processes tracing</div>
-                </div>
-              </td>
-            </tr>
-          </table>
-        </td>
-        <td class="tracing-ticker-container">
-          <!-- ticker -->
-          <!-- Tracing ticker -->
-          <div class="tracing-ticker-container">
-            <div ng-hide="!tracingCtx.currentProcess.pid || tracingCtx.currentPFKey">
-              <span class="title" >Data Points: {{tracingCtx.currentTimelineKeyCollection.length}}</span>
-              <div sl-metrics-visual-ticker class="metrics-visual-ticker-container"></div>
-            </div>
-            <sl-tracing-prev-next ng-hide="tracingCtx.currentWaterfallKey"></sl-tracing-prev-next>
-          </div>
-        </td>
 
-      </tr>
+    <sl-pm-pid-selector
+      selected-host="selectedPMHost"
+      on-update-host="updateHost(host)"
+      on-update-processes="updateProcesses(processes)"
+      external-processes="processes"
+      on-update-selection="updateProcessSelection(selection)">
+    </sl-pm-pid-selector>
 
-    </table>
+    <span class="loading" sl-common-loading-indicator size="small" ng-show="tracingProcessCycleActive"></span>
+    <!-- toggle control -->
+    <sl-tracing-host-status ng-show="!showTraceToggle"></sl-tracing-host-status>
+    <div class="pm-tracing-toggle-container" ng-show="showTraceToggle">
+      <span class="title">Tracing</span>
+      <sl-ui-switch switches="tracingOnOff"  ng-show="!tracingProcessCycleActive" classes="power"></sl-ui-switch>
+      <div ng-show="tracingProcessCycleActive">{{tracingOnOffCycleMessage}} {{ ( processes.length + 1) }} of {{ targetProcessCount }} processes tracing</div>
+    </div>
+
+    <!-- ticker -->
+    <!-- Tracing ticker -->
+    <div class="tracing-ticker-container">
+      <div ng-hide="!tracingCtx.currentProcess.pid || tracingCtx.currentPFKey">
+        <span class="title" >Data Points: {{tracingCtx.currentTimelineKeyCollection.length}}</span>
+        <div sl-metrics-visual-ticker class="metrics-visual-ticker-container"></div>
+      </div>
+      <sl-tracing-prev-next ng-hide="tracingCtx.currentWaterfallKey"></sl-tracing-prev-next>
+    </div>
 
   </div>
   <hr />

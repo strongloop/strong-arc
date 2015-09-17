@@ -1,6 +1,6 @@
 {
   "name": "strong-arc",
-  "version": "1.6.0",
+  "version": "1.8.1",
   "main": "server/server.js",
   "bin": {
     "strong-arc": "bin/cli.js"
@@ -33,7 +33,7 @@
     "loopback": "^2.14.0",
     "loopback-boot": "^2.6.5",
     "loopback-datasource-juggler": "^2.20.0",
-    "loopback-workspace": "^3.10.0",
+    "loopback-workspace": "~3.15.0",
     "minimist": "^1.1.1",
     "node-underscorify": "0.0.14",
     "opener": "^1.4.0",
@@ -51,7 +51,7 @@
     "strong-trace-waterfall": "^1.0.0",
     "strong-trace-waterfalldata": "^1.0.0",
     "strong-trace-waterfalltransform": "^1.0.0",
-    "ws": "^0.7.1"
+    "ws": "^0.8.0"
   },
   "description": "A visual suite for the StrongLoop API Platform",
   "devDependencies": {
@@ -82,6 +82,7 @@
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^0.1.7",
     "karma-cli": "^0.0.4",
+    "karma-coverage": "^0.5.0",
     "karma-junit-reporter": "^0.2.2",
     "karma-mocha": "^0.1.10",
     "karma-mocha-reporter": "^1.0.0",
@@ -96,7 +97,7 @@
     "svn-interface": "^0.4.4"
   },
   "optionalDependencies": {
-    "sl-blip": "http://blip.strongloop.com/strong-arc@1.6.0"
+    "sl-blip": "http://blip.strongloop.com/strong-arc@1.8.1"
   },
   "repository": {
     "type": "git",

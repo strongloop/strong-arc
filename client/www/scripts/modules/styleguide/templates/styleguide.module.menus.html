@@ -1,0 +1,65 @@
+<section class="menus module">
+  <h2 ng-click="clickModule()">Menus</h2>
+  <article ng-show="show" class="clearfix">
+    <section>
+      <h4>Select menu (input trigger with filtering - shorthand directive)</h4>
+      <ui-dropdown items="menuItems" selected="selectedItemMenu0" filtering="true"></ui-dropdown>
+
+      <h4>Select menu (input trigger without filtering - shorthand directive)</h4>
+      <ui-dropdown items="menuItems" selected="selectedItemMenu4" filtering="false"></ui-dropdown>
+
+      <h4>Select menu (input trigger with filtering - manual composition)</h4>
+      <div class="ui-form no-border ui-menu-container">
+        <sl-ui-menu-dropdown-filter toggler="showDropdownMenu1"
+                                    filter="searchText1"
+                                    selected="selectedItemMenu1" filtering="true"></sl-ui-menu-dropdown-filter>
+
+        <sl-ui-menu-dropdown toggler="showDropdownMenu1">
+          <header>Optional header</header>
+          <section class="menu">
+            <ul>
+              <li ng-repeat="item in menuItems | filter:searchText1"
+                  ng-class="{ selected: selectedItemMenu1 == item }">
+                <a href ng-click="selectItemMenu1(item)">{{item.name}}</a>
+              </li>
+            </ul>
+          </section>
+          <footer>Optional footer</footer>
+        </sl-ui-menu-dropdown>
+      </div>
+    </section>
+    <section>
+      <h4>Select menu (input trigger without filtering - manual composition)</h4>
+      <div class="ui-form no-border ui-menu-container">
+        <input type="text"
+               class="ui-input toggler"
+               ng-mousedown="showDropdownMenu2 = true"
+               ng-value="selectedItemMenu2.name || 'Select Item'">
+        <sl-ui-menu-dropdown toggler="showDropdownMenu2">
+          <section class="menu">
+            <ul>
+              <li ng-repeat="item in menuItems" ng-class="{ selected: selectedItemMenu2 == item }"><a href ng-click="selectItemMenu2(item)">{{item.name}}</a></li>
+            </ul>
+          </section>
+          <footer>Optional footer</footer>
+        </sl-ui-menu-dropdown>
+      </div>
+    </section>
+    <section>
+      <h4>Dropdown menu (link icon trigger)</h4>
+      <div class="ui-menu-container">
+        <button class="ui-btn accessory toggler" ng-click="showDropdownMenu3 = !showDropdownMenu3">
+          Toggler
+          <span class="sl-icon sl-icon-plus-sign"></span>
+        </button>
+        <sl-ui-menu-dropdown toggler="showDropdownMenu3">
+          <section class="menu">
+            <ul>
+              <li ng-repeat="item in menuItems"><a href ng-click="selectItemMenu3(item)">{{item.name}}</a></li>
+            </ul>
+          </section>
+        </sl-ui-menu-dropdown>
+      </div>
+    </section>
+  </article>
+</section>

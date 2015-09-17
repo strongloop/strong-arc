@@ -135,13 +135,6 @@ Tracing.directive('slTracingHeader', [
     return {
       templateUrl: './scripts/modules/tracing/templates/tracing.header.html',
       restrict: 'E',
-      controller: [
-        '$scope',
-        '$log',
-        function($scope, $log) {
-
-        }
-      ],
       link: function(scope, el, attrs) {
         scope.$watch('tracingCtx.currentPMInstance', function(newVal, oldVal) {
           // pm instance is up but app is stopped
@@ -149,15 +142,10 @@ Tracing.directive('slTracingHeader', [
             $log.warn('no processes');
             scope.tracingProcessCycleActive = false;
             scope.showTimelineLoading = false;
-            scope.showTraceToggle = false;
           }
-
-          // check for 'problem' text
-
 
         }, true);
         scope.getStatusText = function(instance) {
-         // var xp = instance;
           if (instance.status) {
 
             if (instance.status.isProblem) {

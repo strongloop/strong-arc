@@ -25,6 +25,11 @@
   <div class="navButtons">
     <ul>
       <li ng-show="isAuthUser()">
+        <div id="intercom-widget">
+          <ui-icon name="intercom"></ui-icon>
+        </div>
+      </li>
+      <li ng-show="isAuthUser() && supportAppController">
         <div sl-pm-app-controller-menu class="header-pm-app-control-menu-item"></div>
       </li>
       <li class="header-help-container" ng-show="helpId">
@@ -123,8 +128,6 @@
 <script src="./scripts/vendor/angular-resource/angular-resource.js"></script>
 <script src="./scripts/vendor/angular-growl/build/angular-growl.js"></script>
 <script src="./scripts/vendor/angular-file-upload/angular-file-upload.js"></script>
-<script src="./scripts/vendor/ng-clip/dest/ng-clip.min.js"></script>
-<script src="./scripts/vendor/zeroclipboard/dist/ZeroClipboard.js"></script>
 
 <!-- sl ui -->
 <script src="./scripts/sl.ui.js"></script>
@@ -283,7 +286,7 @@
 <script src="./scripts/vendor/angular-segmentio/angular-segmentio.js"></script>
 
 <!-- segment.io -->
-<script src="./scripts/lib/segmentio/segmentio.js"></script>
+<script src="./scripts/lib/segmentio/segmentio.js" async></script>
 
 
 </body>

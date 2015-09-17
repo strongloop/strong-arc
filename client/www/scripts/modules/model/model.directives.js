@@ -264,17 +264,19 @@ Model.directive('slPropertyDataTypeSelect', [
       templateUrl: './scripts/modules/model/templates/model.property.data-type.html',
       controller: ['$scope', '$log', function($scope, $log) {
 
-        $scope.isArray = ($scope.getDataTypeString($scope.property.type) === 'array');
-        $scope.isAnonObject = $scope.isAnonObj($scope.property.type);
-        $scope.arrayType =  $scope.getArrayType($scope.property.type);
-        $scope.val = $scope.getDataTypeString($scope.property.type);
-        $scope.displayType = $scope.getDataTypeString($scope.property.type);
-        $scope.showObjDetails = false;
+        $scope.updateDataTypeConditions = function() {
+          $scope.isArray = ($scope.getDataTypeString($scope.property.type) === 'array');
+          $scope.isAnonObject = $scope.isAnonObj($scope.property.type);
+          $scope.arrayType =  $scope.getArrayType($scope.property.type);
+          $scope.val = $scope.getDataTypeString($scope.property.type);
+          $scope.displayType = $scope.getDataTypeString($scope.property.type);
+          $scope.showObjDetails = false;
+        };
 
         $scope.getDataType = function(property) {
-
           return $scope.getDataTypeString(property.type);
         };
+
         $scope.toggleAnonObjectDetails = function() {
           $scope.showObjDetails = !$scope.showObjDetails;
         };
@@ -310,7 +312,7 @@ Model.directive('slPropertyDataTypeSelect', [
 
               if (confirm('This value has been edited outside the scope of this gui.  ' +
                 'If you change it the existing value will be lost. Continue?')) {
-                $log('update property element');
+                $log.log('update property element');
 
                 if ($scope.isNameValid()) {
                   $scope.updateModelPropertyRequest(updateModelPropertyConfig);
@@ -327,6 +329,7 @@ Model.directive('slPropertyDataTypeSelect', [
             $log.warn('There is no id: ' + JSON.stringify(updateModelPropertyConfig));
           }
 
+          $scope.updateDataTypeConditions();
         };
         $scope.handleArrayTypeChange = function(value) {
 
@@ -360,6 +363,8 @@ Model.directive('slPropertyDataTypeSelect', [
           }
 
         };
+
+        $scope.updateDataTypeConditions();
       }]
     }
   }
@@ -368,7 +373,8 @@ Model.directive('slModelPropertiesEditor',[
   'modelPropertyTypes',
   '$timeout',
   '$log',
-  function(modelPropertyTypes, $timeout, $log) {
+  '$q',
+  function(modelPropertyTypes, $timeout, $log, $q) {
     return {
       restrict: 'E',
       replace: true,
@@ -403,11 +409,11 @@ Model.directive('slModelPropertiesEditor',[
           return retVal;
         };
         $scope.getDataTypeString = function(value) {
-          var retVal = value;
-          if (typeof retVal === 'object') {
-            retVal = Array.isArray(retVal)? 'array' : 'object';
+          if (Array.isArray(value)) {
+            return 'array';
           }
-          return retVal.toLowerCase();
+
+          return value;
         };
         $scope.getAppModelNames = function() {
           var retVal = [];
@@ -419,24 +425,8 @@ Model.directive('slModelPropertiesEditor',[
           return retVal;
         };
 
-        $scope.isAnonObj = function(value) {
-          var isAnonObject = false;
-          var tO = (typeof value);
-          if (tO !== 'object') {
-            return isAnonObject;
-          }
-          var isArray = Array.isArray(value)? true : false;
-
-          // if not object, may be an array of anon obj
-          if (isArray) {
-            if (typeof value[0] === 'object') {
-              isAnonObject = true;
-            }
-          }
-          else {
-            isAnonObject = true;
-          }
-          return isAnonObject;
+        $scope.isAnonObj = function(tO) {
+          return tO === 'object';
         };
 
         $scope.triggerModelPropertyUpdate = function(property) {
@@ -451,12 +441,16 @@ Model.directive('slModelPropertiesEditor',[
         };
 
         $scope.isModelInstancePropertiesActive = true;
-        $scope.modelPropertyTypes = modelPropertyTypes;
-        for (var i = 0;i < $scope.mainNavModels.length;i++) {
-          $scope.modelPropertyTypes.push($scope.mainNavModels[i].name);
-        }
+        $scope.modelPropertyTypes = [];
 
-        $scope.currentlPropertyTypes = $scope.modelPropertyTypes;
+        $q.when($scope.mainNavModels)
+          .then(function(models) {
+            $scope.modelPropertyTypes = modelPropertyTypes.concat(
+              models.map(function(model) {
+                return model.name;
+              })
+            );
+          });
       }],
       link: function(scope, el, attrs) {
         $timeout(function() {
@@ -601,7 +595,7 @@ Model.directive('propertyConnectionEditor', [
 /*
  *
  *
- *   MODEL RELATIONS EDITOR
+ *   MODEL RELATIONS EDITOR (DO NOT USE)
  *
  * */
 Model.directive('modelRelationsEditor', [

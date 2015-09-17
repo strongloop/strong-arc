@@ -4,7 +4,8 @@ BuildDeploy.controller('BuildDeployController', [
   'BuildDeployService',
   '$log',
   'PackageDefinition',
-  function ($scope, BuildDeployService, $log, PackageDefinition) {
+  '$state',
+  function ($scope, BuildDeployService, $log, PackageDefinition, $state) {
 
     $scope.pkg = PackageDefinition.findOne().$promise
       .then(function(pkg){
@@ -13,6 +14,10 @@ BuildDeploy.controller('BuildDeployController', [
         $log.warn('Cannot get project\'s package definition.', err);
         $scope.pkg = {};
       });
+
+    $scope.goToAddPM = function() {
+      $state.go('process-manager');
+    };
 
     $scope.buildId = 'universal';
     $scope.deployId = 'new';

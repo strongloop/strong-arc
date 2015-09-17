@@ -1,3 +1,35 @@
 .api-analytics {
   margin: 0 2rem;
+
+  text {
+    font: @font-family-sans-serif;
+    font-size:110%;
+  }
+
+  rect.background {
+    fill: white;
+  }
+
+  .axis {
+    shape-rendering: crispEdges;
+  }
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+  }
+
+
+  .pagination {
+    text-align: right;
+    display: block;
+    width: 85rem;
+    margin-top: 2rem;
+
+    .status {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+    }
+  }
 }

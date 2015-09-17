@@ -60,9 +60,6 @@ Model.service('ModelService', [
               },
               targetInstance.config);
 
-            if (targetInstance.config.dataSource && (targetInstance.config.dataSource === CONST.DEFAULT_DATASOURCE)){
-              targetInstance.config.dataSource = null;
-            }
             return ModelConfig.create(targetInstance.config)
               .$promise
               .then(function(config) {

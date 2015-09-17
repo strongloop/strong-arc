@@ -261,6 +261,10 @@ gulp.task('test-e2e', function(callback) {
           err = Error('exit code ' + status);
         }
         protractorResults(err);
+
+        try {
+          fs.unlinkSync('arc-manager.json'); //fix for this file being created in the root
+        } catch (e) {}
       });
   }
 
@@ -290,7 +294,7 @@ gulp.task('test-client-integration', function(callback) {
     process.execPath,
     [
       'client/test/test-server',
-      'node_modules/.bin/karma',
+      require.resolve('karma/bin/karma'),
       'start',
       '--single-run',
       '--browsers',
@@ -315,6 +319,7 @@ gulp.task('test-client-integration', function(callback) {
 
 gulp.task('setup-mysql', function(callback) {
   var ROOT_PASSWORD = process.env.MYSQL_ROOT_PWD || '';
+  
   setupMysql(ROOT_PASSWORD, function(err) {
     if (err) logMysqlErrorDescription(err);
     // Don't fail the build so that more tests will be run
@@ -322,6 +327,7 @@ gulp.task('setup-mysql', function(callback) {
   });
 
   function logMysqlErrorDescription(err) {
+    process.env.SKIP_MYSQL = process.env.SKIP_MYSQL || err.code;
     switch (err.code) {
       case 'ECONNREFUSED':
         logRed('Cannot connect to the MySQL server.');

@@ -1,6 +1,10 @@
 // Karma configuration
 
 module.exports = function(config) {
+
+  // tell the integration tests that there is no MySQL server setup
+  config.client.SKIP_MYSQL = process.env.SKIP_MYSQL;
+
   config.set({
 
     // base path, that will be used to resolve files and exclude
@@ -48,8 +52,6 @@ module.exports = function(config) {
       'client/www/scripts/vendor/angular-file-upload/angular-file-upload.js',
       'client/www/scripts/vendor/angular-moment/angular-moment.js',
       'client/www/scripts/vendor/stringjs/dist/string.js',
-      'client/www/scripts/vendor/ng-clip/dest/ng-clip.min.js',
-      'client/www/scripts/vendor/zeroclipboard/dist/ZeroClipboard.js',
 
       'client/www/scripts/vendor/inflection/lib/inflection.js',
       'client/www/scripts/vendor/chance/chance.js',
@@ -92,7 +94,21 @@ module.exports = function(config) {
 
     // test results reporter to use
     // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-    reporters: ['mocha', 'junit'],
+    reporters: ['mocha', 'junit', 'coverage'],
+
+    preprocessors: {
+      // source files, that you wanna generate coverage for
+      // do not include tests or libraries
+      // (these files will be instrumented by Istanbul)
+      // 'client/www/scripts/modules/**/*.module.js': ['coverage'],
+      'client/www/scripts/modules/**/*.js': ['coverage'],
+    },
+
+    coverageReporter: {
+      type : 'cobertura',
+      subdir: '.',
+      dir : 'coverage/',
+    },
 
     // CI friendly test output
     junitReporter: {
@@ -140,11 +156,15 @@ module.exports = function(config) {
       'karma-mocha',
       'karma-chai',
       'karma-mocha-reporter',
-      'karma-junit-reporter'
+      'karma-junit-reporter',
+      'karma-coverage',
     ],
 
     // If browser does not capture in given timeout [ms], kill it
     captureTimeout: 5000,
+
+    // If browser is idle
+    browserNoActivityTimeout: 20000,
 
     //preprocessors: {
     //  './e2e/**/*.spec.js': [ 'browserify' ]

@@ -306,3 +306,54 @@ Styleguide.directive('slStyleguideModuleMessage', [
     };
   }
 ]);
+
+Styleguide.directive('slStyleguideModuleMenus', [
+  '$log',
+  function ($log) {
+    return {
+      restrict: "E",
+      replace: true,
+      templateUrl: './scripts/modules/styleguide/templates/styleguide.module.menus.html',
+      scope: {},
+      controller: function($scope, $rootScope){
+        $scope.show = true;
+        $scope.searchText1 = '';
+        $scope.showDropdownMenu1 = false;
+        $scope.showDropdownMenu2 = false;
+        $scope.showDropdownMenu3 = false;
+        $scope.selectedItemMenu0 = null;
+        $scope.selectedItemMenu4 = null;
+
+
+        $scope.menuItems = [
+          { name: 'Item 1' },
+          { name: 'Item 2' },
+          { name: 'Item 3' },
+          { name: 'Other 4' },
+          { name: 'Other 5' },
+          { name: 'Other 6' }
+        ];
+
+        $scope.clickModule = function(){
+          $scope.show = !$scope.show;
+        };
+
+        $scope.selectItemMenu1 = function(item){
+          $scope.searchText1 = item.name;
+          $scope.selectedItemMenu1 = item;
+          $scope.showDropdownMenu1 = false;
+        };
+
+        $scope.selectItemMenu2 = function(item){
+          $scope.selectedItemMenu2 = item;
+          $scope.showDropdownMenu2 = false;
+        };
+
+        $scope.selectItemMenu3 = function(item){
+          $scope.selectedItemMenu3 = item;
+          $scope.showDropdownMenu3 = false;
+        };
+      }
+    };
+  }
+]);

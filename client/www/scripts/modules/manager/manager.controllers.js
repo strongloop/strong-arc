@@ -95,16 +95,6 @@ Manager.controller('ManagerMainController', [
 
     };
 
-
-
-
-
-
-
-
-
-
-
     $scope.isShowHostActionList = function(host) {
       if (host.isShowActionList === undefined) {
         return host.isShowActionList = false;
@@ -121,11 +111,6 @@ Manager.controller('ManagerMainController', [
       }
 
     };
-
-    //remove default host from list
-    $scope.pmServers = PMHostService.getPMServers().filter(function(item){
-      return item.port !== '----';
-    });
 
     //used by 'add new host' row
     $scope.onPMServerSelectAutoCompleted = function(item, model){
@@ -208,7 +193,9 @@ Manager.controller('ManagerMainController', [
 
       client.serviceList(function(err, service) {
         if (!err && service.length > 0) {
-          deferred.resolve(service[0]);
+          deferred.resolve(service[0].instances(function(err, instances) {
+            var first = instances[0].setSize
+          }));
         } else {
           deferred.reject(err);
         }
@@ -239,9 +226,6 @@ Manager.controller('ManagerMainController', [
           if (hosts && hosts.map) {
             var addressCollection = [];
 
-            //$scope.hostServers = ManagerServices.getHostServers();
-
-
             /*
             *
             * Iterate over the hosts to massage the data mode
@@ -270,8 +254,7 @@ Manager.controller('ManagerMainController', [
               * - edit
               * - delete
               * */
-              host.filteredActions = availableActions
-                .map(function(action) {
+              host.filteredActions = availableActions.map(function(action) {
                   return angular.extend({}, hostActionDefaults, action);
                 });
 
@@ -474,10 +457,6 @@ Manager.controller('ManagerMainController', [
         delete host.status;
 
         growl.addSuccessMessage("activate host ");
-        $log.debug('|');
-        $log.debug('| MESH CALL [SAVE HOST]');
-        $log.debug('|');
-
 
         host.save(function(err, response) {
           if (err) {

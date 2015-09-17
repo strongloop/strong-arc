@@ -7,19 +7,14 @@
   }
   hr {
     margin-top:.4rem;
-
-
   }
-  .sl-pid-selector {
 
-    .sl-profiler-processes {
-      min-height:0;
-    }
-  }
   .tracing-header-container {
     margin-top: .7rem;
 
     .tracing-header-controls-container {
+      display:flex;
+      flex-direction: row;
       font-size:1.4rem;
       color:#999999;
     }
@@ -28,29 +23,6 @@
       height:125px;
     }
 
-
-      .pm-host-selector-container {
-        position:relative;
-        display:inline-block;
-        margin:0 1rem 0 1rem;
-
-        .dropdown-menu {
-          top:6rem;
-          left:0;
-        }
-      }
-
-    .sl-pid-selector {
-      position:relative;
-      vertical-align: middle;
-      display:inline-block;
-      margin-left:1rem;
-      margin-right:1rem;
-
-      .sl-profiler-processes {
-        min-height:0;
-      }
-    }
       .pm-status-container {}
       .pm-tracing-toggle-container {
         display:inline-block;
@@ -128,34 +100,11 @@
       display: block;
       margin-bottom: 0.75rem;
     }
-    .tracing-header-controls-table {
-      width:100%;
-
-      td {
-
-        table.tracing-controls-table {
-
-          vertical-align: middle;
-
-          td.host-col {
-              min-width: 3rem;
-          }
-          td.pids-col {
-            min-width: 10rem;
-          }
-
-        }
-      }
-    }
   }
   .pm-host-select {
     .title {
       margin-bottom: 0.75rem;
     }
-  }
-
-  .sl-pid-selector {
-    display: inline-block;
   }
 
   h2 {
@@ -1173,14 +1122,18 @@
   font-style: italic;
   color: #66D9EF;
 }
-.invalid {
-  color: #F8F8F0;
-  background-color: #F92672;
+
+[data-id=TracingContainer] {
+  .invalid {
+    color: #F8F8F0;
+    background-color: #F92672;
+  }
+  .invalid.deprecated {
+    color: #F8F8F0;
+    background-color: #AE81FF;
+  }
 }
-.invalid.deprecated {
-  color: #F8F8F0;
-  background-color: #AE81FF;
-}
+
 .class.jade {
   color: #AE81FF;
 }
