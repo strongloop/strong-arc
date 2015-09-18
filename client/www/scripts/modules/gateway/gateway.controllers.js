@@ -302,15 +302,37 @@ Gateway.controller('GatewayMainController', [
       $log.log('watcher pipelines', newVal);
     }, true);
 
+    function hoistPipelineProperties(pipeline) {
+      // hoist scopes and targetURL if present
+      if (pipeline.policies) {
+        pipeline.policies.map(function(policy) {
+          if (policy.scopes) {
+            pipeline.scopes = policy.scopes;
+          }
+          if (policy.targetURL) {
+            pipeline.targetURL = policy.targetURL;
+          }
+        })
+      }
+      return pipeline;
+    }
 
     $scope.refreshMappings = function() {
       return GatewayServices.getGatewayMaps()
-        .then(function(maps) {
-          $scope.gatewayMapCtx.gatewayMaps = maps;
+        .then(function(mappings) {
+          if (mappings && mappings.map) {
+            mappings.map(function(mapping) {
+              if (mapping.pipeline) {
+                mapping.pipeline = hoistPipelineProperties(mapping.pipeline);
+              }
+            });
+          }
+          $scope.gatewayMapCtx.gatewayMaps = mappings;
+
           $scope.gatewayCtx.navMenus[GATEWAY_CONST.MAPPING_TYPE] = {
             type:GATEWAY_CONST.MAPPING_TYPE,
             title:'Mappings',
-            items: maps,
+            items: mappings,
             addNew: 'Mapping'
           };
 
@@ -318,10 +340,13 @@ Gateway.controller('GatewayMainController', [
         });
     };
     $scope.refreshPipelines = function() {
-      $log.log('refreshPipelines');
       return GatewayServices.getPipelines()
         .then(function(pipelines) {
-          $scope.pipelineCtx.pipelines = [];
+          if (pipelines && pipelines.map) {
+            pipelines.map(function(pipeline) {
+              pipeline = hoistPipelineProperties(pipeline);
+            });
+          }
           $scope.pipelineCtx.pipelines = pipelines;
           $scope.gatewayMapCtx.currentPipelines = pipelines;
           $scope.gatewayCtx.navMenus[GATEWAY_CONST.PIPELINE_TYPE] = {
@@ -334,7 +359,6 @@ Gateway.controller('GatewayMainController', [
     };
 
     $scope.refreshPolicies = function() {
-      $log.log('refreshPolicies');
       return GatewayServices.getPolicies()
         .then(function(policies) {
           $scope.policyCtx.policies = policies;
@@ -346,7 +370,6 @@ Gateway.controller('GatewayMainController', [
             items: policies,
             addNew: 'Policy'
           };
-
         });
     };
 
@@ -354,63 +377,13 @@ Gateway.controller('GatewayMainController', [
       $log.log('refreshDataSets');
       $scope.gatewayCtx.navMenus = [];
 
-      return GatewayServices.getPolicies()
-        .then(function(policies) {
-          $scope.policyCtx.policies = policies;
-          $scope.pipelineCtx.policies = policies;
-          $scope.gatewayMapCtx.currentPolicies = policies;
-          $scope.gatewayCtx.navMenus[GATEWAY_CONST.POLICY_TYPE] = {
-            type:GATEWAY_CONST.POLICY_TYPE,
-            title:'Policies',
-            items: policies,
-            addNew: 'Policy'
-          };
-
-        }).then(getPipelines)
-          .then(getGatewayMaps)
+      return $scope.refreshPolicies()
+        .then($scope.refreshPipelines)
+          .then($scope.refreshMappings)
         .then(function() {
-
-        //  $scope.main();
+          $log.debug('data sets refreshed');
         });
-
-
-      function getPipelines(){
-        return GatewayServices.getPipelines()
-          .then(function(pipelines) {
-            $log.debug('|  refresh pipelines: ' + pipelines.length);
-            $scope.pipelineCtx.pipelines = [];
-            $scope.pipelineCtx.pipelines = pipelines;
-            $scope.gatewayMapCtx.currentPipelines = pipelines;
-            $scope.gatewayCtx.navMenus[GATEWAY_CONST.PIPELINE_TYPE] = {
-              type:GATEWAY_CONST.PIPELINE_TYPE,
-              title:'Pipelines',
-              items: pipelines,
-              addNew: 'Pipeline'
-            };
-          });
-      }
-
-
-
-
-      function getGatewayMaps(){
-        return GatewayServices.getGatewayMaps()
-          .then(function(maps) {
-            $scope.gatewayMapCtx.gatewayMaps = maps;
-            $scope.gatewayCtx.navMenus[GATEWAY_CONST.MAPPING_TYPE] = {
-              type:GATEWAY_CONST.MAPPING_TYPE,
-              title:'Mappings',
-              items: maps,
-              addNew: 'Mapping'
-            };
-
-
-            window.triggerResizeUpdate();
-          });
-      }
     };
-
-
 
     $scope.init = function() {
 

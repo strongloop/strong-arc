@@ -24,23 +24,20 @@
                   <span class="scope" ng-repeat="scope in policy.scopes">{{scope}}</span>
                 </span>
             </div>
-            <div ng-show="policy.type == GATEWAY_CONST.POLICY_RATELIMIT_TYPE">
+            <div ng-show="policy.type === 'rateLimiting'">
               <span class="txt">Limit:</span>
               <span class="val">{{policy.limit}}</span>
               <span class="txt">Interval:</span>
               <span class="val">{{policy.interval}}</span>
             </div>
-            <div ng-show="policy.type == GATEWAY_CONST.POLICY_PROXY_TYPE">
+            <div ng-show="policy.type === 'reverseProxy'">
               <span class="txt">Target URL:</span>
               <span class="val">{{policy.targetURL}}</span>
             </div>
-            <div ng-show="policy.type == GATEWAY_CONST.POLICY_METRICS_TYPE_TYPE">
+            <div ng-show="policy.type === 'metrics'">
               <span class="txt">Metrics</span>
             </div>
           </div>
-          <sl-policy-auth-form ng-show="policy.editMode && isPolicyType(GATEWAY_CONST.POLICY_AUTH_TYPE, policy)"></sl-policy-auth-form>
-          <sl-policy-rate-limit-form  ng-show="policy.editMode && isPolicyType(GATEWAY_CONST.POLICY_RATELIMIT_TYPE, policy)"></sl-policy-rate-limit-form>
-          <sl-policy-proxy-form ng-show="policy.editMode && isPolicyType(GATEWAY_CONST.POLICY_PROXY_TYPE, policy)"></sl-policy-proxy-form>
         </td>
         <td class="actions">
           <a href class="ui-close delete-policy" ng-click="confirmDeletePolicy(policy)">x</a>
@@ -48,35 +45,6 @@
       </tr>
     </tbody>
   </table>
-  <form ng-model="policyCtx.currentPolicy">
-    <table ng-show="isShowAddPolicyRow" class="ui-table master-ui-table">
-      <tbody>
-        <tr>
-        <td class="edit">
-          <i class="sl-icon sl-icon-plus-sign"></i>
-        </td>
-        <td class="edit">
-          <label>Name</label>
-          <input ng-model="policyCtx.currentPolicy.name" type="text" />
-        </td>
-        <td class="edit">
-          <label>Type</label>
-          <select class="form-control" ng-model="policyCtx.currentPolicy.type"  ng-options="policyType.id as policyType.name for policyType in policyCtx.policyTypes">
-          </select>
-        </td>
-        <td>
-          <sl-policy-auth-form ng-show="isPolicyType(GATEWAY_CONST.POLICY_AUTH_TYPE, policyCtx.currentPolicy)"></sl-policy-auth-form>
-          <sl-policy-rate-limit-form  ng-show="isPolicyType(GATEWAY_CONST.POLICY_RATELIMIT_TYPE, policyCtx.currentPolicy)"></sl-policy-rate-limit-form>
-          <sl-policy-proxy-form ng-show="isPolicyType(GATEWAY_CONST.POLICY_PROXY_TYPE, policyCtx.currentPolicy)"> </sl-policy-proxy-form>
-        </td>
-        <td class="master-action-col">
-          <button class="ui-btn secondary small" ng-click="clearAddPolicyRow()">Revert</button>
-          <button class="ui-btn primary small" ng-click="savePolicy()">Save</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  </form>
   <button class="ui-btn accessory" ng-click="showAddNewPolicyForm()">
     <i class="sl-icon sl-icon-plus-sign"></i> Add New
   </button>
