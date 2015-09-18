@@ -37,15 +37,17 @@ describe('gateway smoke test', function() {
         /*
         *
         * add auth proxy
-        * add ratelimiting policy
-        * add reverseproxy policy
+        * add rateLimiting policy
+        * add reverseProxy policy
         *
         * */
 
         //gatewayHomeView.closeModalButton.click();
         //browser.driver.sleep(500);
         expect(EC.visibilityOf(gatewayHomeView.editPolicyNameInput));
-        expect(gatewayHomeView.editPolicyNameInput.getAttribute('value')).toEqual('new Metrics policy name');
+        expect(gatewayHomeView
+          .editPolicyNameInput.getAttribute('value'))
+          .toEqual('new Metrics policy name');
         //browser.driver.sleep(700);
 
         gatewayHomeView.policyListViewButton.click();
@@ -58,7 +60,9 @@ describe('gateway smoke test', function() {
 
         //browser.driver.sleep(500);
         expect(EC.visibilityOf(gatewayHomeView.editPolicyNameInput));
-        expect(gatewayHomeView.editPolicyNameInput.getAttribute('value')).toEqual('new Auth policy name');
+        expect(gatewayHomeView
+          .editPolicyNameInput.getAttribute('value'))
+          .toEqual('new Auth policy name');
         //browser.driver.sleep(700);
 
 
@@ -73,7 +77,9 @@ describe('gateway smoke test', function() {
 
         //browser.driver.sleep(500);
         expect(EC.visibilityOf(gatewayHomeView.editPolicyNameInput));
-        expect(gatewayHomeView.editPolicyNameInput.getAttribute('value')).toEqual('new Rate Limiting policy name');
+        expect(gatewayHomeView
+          .editPolicyNameInput.getAttribute('value'))
+          .toEqual('new Rate Limiting policy name');
         //browser.driver.sleep(700);
 
 
@@ -86,7 +92,9 @@ describe('gateway smoke test', function() {
 
         //browser.driver.sleep(500);
         expect(EC.visibilityOf(gatewayHomeView.editPolicyNameInput));
-        expect(gatewayHomeView.editPolicyNameInput.getAttribute('value')).toEqual('new Reverse Proxy policy name');
+        expect(gatewayHomeView.editPolicyNameInput
+          .getAttribute('value'))
+          .toEqual('new Reverse Proxy policy name');
         //browser.driver.sleep(700);
 
 
@@ -124,14 +132,6 @@ describe('gateway smoke test', function() {
 
         gatewayHomeView.addNewPipeline();
         //browser.driver.sleep(500);
-
-        // TODO fix post add new pipeline navigation
-        // currently sits on the pipeline list view
-        //expect(EC.visibilityOf(gatewayHomeView.editPipelineNameInput));
-        //
-        //expect(gatewayHomeView.editPipelineNameInput.getAttribute('value')).toEqual('new pipeline');
-
-
         browser.driver.wait(
           EC.presenceOf(gatewayHomeView.pipelineListViewButton),
           4000);

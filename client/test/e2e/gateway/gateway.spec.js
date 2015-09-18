@@ -38,26 +38,38 @@ describe('gateway', function() {
     gatewayHomeView.addNewPipeline();
     browser.waitForAngular();
 
-    browser.driver.wait(EC.presenceOf(gatewayHomeView.pipelineListViewButton), wait);
+    browser.driver.wait(
+      EC.presenceOf(gatewayHomeView.pipelineListViewButton),
+      wait);
 
     gatewayHomeView.pipelineListViewButton.click();
     browser.waitForAngular();
 
     // mapping
-    browser.driver.wait(EC.presenceOf(gatewayHomeView.gatewaymapListViewButton), wait);
+    browser.driver.wait(
+      EC.presenceOf(gatewayHomeView.gatewaymapListViewButton),
+      wait);
     gatewayHomeView.gatewaymapListViewButton.click();
     browser.waitForAngular();
 
-    browser.driver.wait(EC.presenceOf(gatewayHomeView.sideNewMappingButton), wait);
+    browser.driver.wait(
+      EC.presenceOf(gatewayHomeView.sideNewMappingButton),
+      wait);
 
     gatewayHomeView.sideNewMappingButton.click();
     browser.waitForAngular();
-    browser.driver.wait(EC.presenceOf(gatewayHomeView.closeModalButton), wait);
+    browser.driver.wait(
+      EC.presenceOf(gatewayHomeView.closeModalButton),
+      wait);
 
     gatewayHomeView.addNewMapping();
     browser.waitForAngular();
-    browser.driver.wait(EC.presenceOf(gatewayHomeView.gatewaymapListViewButton), wait);
-    browser.driver.wait(EC.presenceOf(gatewayHomeView.pipelineListViewButton), wait);
+    browser.driver.wait(
+      EC.presenceOf(gatewayHomeView.gatewaymapListViewButton),
+      wait);
+    browser.driver.wait(
+      EC.presenceOf(gatewayHomeView.pipelineListViewButton),
+      wait);
   });
 
   afterEach(function(){
@@ -119,14 +131,20 @@ describe('gateway', function() {
     gatewayHomeView.newPolicyTypeSelectNoModal.click();
     browser.waitForAngular();
 
-    browser.driver.wait(EC.presenceOf(gatewayHomeView.policyTypeRateLimitingSelectNoModal), wait);
+    browser.driver
+      .wait(
+      EC.presenceOf(gatewayHomeView.policyTypeRateLimitingSelectNoModal),
+      wait);
 
     //change policy type
     gatewayHomeView.policyTypeRateLimitingSelectNoModal.click();
     browser.waitForAngular();
 
     //fill in appropriate fields for rate limiting type
-    browser.wait(EC.elementToBeClickable(gatewayHomeView.policyRateLimitingLimitInputNoModal), wait);
+    browser.wait(
+      EC.elementToBeClickable(
+        gatewayHomeView.policyRateLimitingLimitInputNoModal),
+        wait);
     gatewayHomeView.policyRateLimitingLimitInputNoModal.sendKeys('5000');
     gatewayHomeView.policyRateLimitingIntervalInputNoModal.sendKeys('500000');
 
@@ -141,7 +159,8 @@ describe('gateway', function() {
     gatewayHomeView.loadFirstPolicy();
 
     //verify edits
-    expect(gatewayHomeView.newPolicyTypeSelectNoModal.getAttribute('value')).toEqual('rateLimiting');
+    expect(gatewayHomeView.newPolicyTypeSelectNoModal.getAttribute('value'))
+      .toEqual('rateLimiting');
     //expect(true).toEqual(false);
 
     //delete first policy
@@ -206,7 +225,10 @@ describe('gateway', function() {
     gatewayHomeView.newMappingVerbSelectNoModal.click();
     browser.waitForAngular();
 
-    browser.driver.wait(EC.presenceOf(gatewayHomeView.newMappingVerbPostSelectNoModal), wait);
+    browser.driver
+      .wait(
+      EC.presenceOf(gatewayHomeView.newMappingVerbPostSelectNoModal),
+      wait);
     gatewayHomeView.newMappingVerbPostSelectNoModal.click();
 
     //first save button (some are hidden)
@@ -223,17 +245,19 @@ describe('gateway', function() {
     gatewayHomeView.loadMappingsList();
 
     //check for pipeline name
-    var selectedPipelineName = gatewayHomeView.newMappingPipelineSelectNoModal.getAttribute('value');
-    var endpointUrl = gatewayHomeView.newMappingEndpointInputNoModal.getAttribute('value');
-    var selectedVerbName = gatewayHomeView.newMappingVerbSelectNoModal.getAttribute('value');
+    var selectedPipelineName =
+      gatewayHomeView.newMappingPipelineSelectNoModal.getAttribute('value');
+    var endpointUrl =
+      gatewayHomeView.newMappingEndpointInputNoModal.getAttribute('value');
+    var selectedVerbName =
+      gatewayHomeView.newMappingVerbSelectNoModal.getAttribute('value');
 
     //verify results of edit operation
     expect(selectedPipelineName).toMatch(/\d+/);
     expect(endpointUrl).toMatch(/api2/);
     expect(selectedVerbName).toEqual('POST');
 
-    //cleanup
-    //change mapping back to first pipeline so we can delete the cloned pipeline
+    // change mapping back to first pipeline so we can del the cloned pipeline
     gatewayHomeView.loadMappingsList();
     var editMapLink = gatewayHomeView.mappingsSummaryListEditLinks.first();
     var isEditLinkClickable = EC.elementToBeClickable(editMapLink);
@@ -241,7 +265,8 @@ describe('gateway', function() {
     editMapLink.click();
 
     //change pipeline in dropdown
-    gatewayHomeView.editMapSelectPipeline(1, false); //select first item in list (nomodal)
+    //select first item in list (nomodal)
+    gatewayHomeView.editMapSelectPipeline(1, false);
     //first save button (some are hidden)
     gatewayHomeView.saveNewInstanceButtonNoModal.filter(function(el) {
       return el.isDisplayed();
