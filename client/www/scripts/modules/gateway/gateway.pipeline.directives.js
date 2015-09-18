@@ -125,7 +125,10 @@ Gateway.directive('slPipelineForm', ['$modal',
 
 
           $scope.clearPipelineForm = function() {
-
+            GatewayServices.getPipelineById($scope.pipeline.id)
+              .then(function(data){
+                $scope.pipeline = data;
+              });
           };
 
 
