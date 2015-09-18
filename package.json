@@ -110,7 +110,7 @@
     "loopback",
     "StrongLoop"
   ],
-  "license": "LicenseRef-LICENSE",
+  "license": "SEE LICENSE IN LICENSE.md",
   "author": "engineering@strongloop.com",
   "homepage": "https://github.com/strongloop/strong-arc"
 }

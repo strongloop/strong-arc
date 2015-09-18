@@ -1,13 +1,15 @@
-Copyright (c) 2013-2014 StrongLoop, Inc.
+Copyright (c) 2013-2015 StrongLoop, Inc.
 
 StrongLoop License
 
 STRONGLOOP SUBSCRIPTION AGREEMENT
+
 PLEASE READ THIS AGREEMENT CAREFULLY BEFORE YOU AGREE TO THESE TERMS.  IF YOU
 ARE ACTING ON BEHALF OF AN ENTITY, THEN YOU REPRESENT THAT YOU HAVE THE
 AUTHORITY TO ENTER INTO THIS AGREEMENT ON BEHALF OF THAT ENTITY.  IF YOU DO NOT
 AGREE TO THESE TERMS, YOU SHOULD NOT AGREE TO THE TERMS OF THIS AGREEMENT OR
 INSTALL OR USE THE SOFTWARE.
+
 This StrongLoop Subscription Agreement ("Agreement") is made by and between
 StrongLoop, Inc. ("StrongLoop") with its principal place of business at 107 S.
 B St, Suite 220, San Mateo, CA 94401 and the person or entity entering into this
@@ -16,7 +18,9 @@ is the date Customer agrees to these terms or installs or uses the Software (as
 defined below).  This Agreement applies to Customer's use of the Software but it
 shall be superseded by any signed agreement between you and StrongLoop
 concerning the Software.
+
 1. Subscriptions and Licenses.
+
 1.1 Subscriptions.  StrongLoop offers five different subscription levels to its
 customers, each as more particularly described on StrongLoop's website located
 at www.strongloop.com (the "StrongLoop Site"):  (1) Free; (2) Developer; (3)
@@ -31,6 +35,7 @@ applicable Subscription, subject to Customer paying the fees applicable to the
 Subscription level purchased, if any (the "Subscription Fees").  StrongLoop may
 modify the services to be provided under any Subscription upon notice to
 Customer.
+
 1.2 License Grant.  Subject to the terms and conditions of this Agreement,
 StrongLoop grants to Customer, during the Subscription Term (as defined in
 Section 7.1 (Term and Termination) of this Agreement, a limited, non-exclusive,
@@ -44,42 +49,51 @@ including but not limited to the license and restrictions contained herein,
 apply to Customer regardless of whether Customer accesses the Software via
 download from the StrongLoop Site or through a third-party website or service,
 even if Customer acquired the Software prior to agreeing to this Agreement.
+
 1.3 License Restrictions.  Customer shall not itself, or through any parent,
 subsidiary, affiliate, agent or other third party:
-      1.3.1 sell, lease, license, distribute, sublicense or otherwise transfer
-      in whole or in part, any Software or the Documentation to a third party;
-      or
-      1.3.2 decompile, disassemble, translate, reverse engineer or otherwise
-      attempt to derive source code from the Software, in whole or in part, nor
-      shall Customer use any mechanical, electronic or other method to trace,
-      decompile, disassemble, or identify the source code of the Software or
-      encourage others to do so, except to the limited extent, if any, that
-      applicable law permits such acts notwithstanding any contractual
-      prohibitions, provided, however, before Customer exercises any rights that
-      Customer believes to be entitled to based on mandatory law, Customer shall
-      provide StrongLoop with thirty (30) days prior written notice and provide
-      all reasonably requested information to allow StrongLoop to assess
-      Customer's claim and, at StrongLoop's sole discretion, to provide
-      alternatives that reduce any adverse impact on StrongLoop's intellectual
-      property or other rights; or
-      1.3.3 allow access or permit use of the Software by any users other than
-      Customer's employees or authorized third-party contractors who are
-      providing services to Customer and agree in writing to abide by the terms
-      of this Agreement, provided further that Customer shall be liable for any
-      failure by such employees and third-party contractors to comply with the
-      terms of this Agreement and no usage restrictions, if any, shall be
-      exceeded; or
-      1.3.4 create, develop, license, install, use, or deploy any third party
-      software or services to circumvent or provide access, permissions or
-      rights which violate the license keys embedded within the Software; or
-      1.3.5 modify or create derivative works based upon the Software or
-      Documentation; or disclose the results of any benchmark test of the
-      Software to any third party without StrongLoop's prior written approval;
-      or
-      1.3.6 change any proprietary rights notices which appear in the Software
-      or Documentation; or
-      1.3.7 use the Software as part of a time sharing or service bureau
-      purposes or in any other resale capacity.
+
+1.3.1 sell, lease, license, distribute, sublicense or otherwise transfer
+in whole or in part, any Software or the Documentation to a third party;
+or
+
+1.3.2 decompile, disassemble, translate, reverse engineer or otherwise
+attempt to derive source code from the Software, in whole or in part, nor
+shall Customer use any mechanical, electronic or other method to trace,
+decompile, disassemble, or identify the source code of the Software or
+encourage others to do so, except to the limited extent, if any, that
+applicable law permits such acts notwithstanding any contractual
+prohibitions, provided, however, before Customer exercises any rights that
+Customer believes to be entitled to based on mandatory law, Customer shall
+provide StrongLoop with thirty (30) days prior written notice and provide
+all reasonably requested information to allow StrongLoop to assess
+Customer's claim and, at StrongLoop's sole discretion, to provide
+alternatives that reduce any adverse impact on StrongLoop's intellectual
+property or other rights; or
+
+1.3.3 allow access or permit use of the Software by any users other than
+Customer's employees or authorized third-party contractors who are
+providing services to Customer and agree in writing to abide by the terms
+of this Agreement, provided further that Customer shall be liable for any
+failure by such employees and third-party contractors to comply with the
+terms of this Agreement and no usage restrictions, if any, shall be
+exceeded; or
+
+1.3.4 create, develop, license, install, use, or deploy any third party
+software or services to circumvent or provide access, permissions or
+rights which violate the license keys embedded within the Software; or
+
+1.3.5 modify or create derivative works based upon the Software or
+Documentation; or disclose the results of any benchmark test of the
+Software to any third party without StrongLoop's prior written approval;
+or
+
+1.3.6 change any proprietary rights notices which appear in the Software
+or Documentation; or
+
+1.3.7 use the Software as part of a time sharing or service bureau
+purposes or in any other resale capacity.
+
 1.4 Third-Party Software.  The Software may include individual certain software
 that is owned by third parties, including individual open source software
 components (the "Third-Party Software"), each of which has its own copyright and
@@ -90,6 +104,7 @@ materials accompanying the Software, except that Sections 5 (Warranty
 Disclaimer) and 6 (Limitation of Liability) also govern Customer's use of the
 third-party software.  Customer agrees to comply with the terms and conditions
 of the relevant third-party software licenses.
+
 2. Support Services.  StrongLoop has no obligation to provide any support for
 the Software other than the support services specifically described on the
 StrongLoop Site for the Subscription level procured by Customer.  However,
@@ -99,6 +114,7 @@ in using the Software.  You can find that community and user feedback on the
 StrongLoop Site.  The use of any information, content or other materials from,
 contained in or on the StrongLoop Site are subject to the StrongLoop website
 terms of use located here http://www.strongloop.com/terms-of-service.
+
 3. Confidentiality.  For purposes of this Agreement, "Confidential Information"
 means any and all information or proprietary materials (in every form and media)
 not generally known in the relevant trade or industry and which has been or is
@@ -141,6 +157,7 @@ StrongLoop, its employees and agents shall be free to use and employ their
 general skills, know-how, and expertise, and to use, disclose, and employ any
 generalized ideas, concepts, know-how, methods, techniques or skills gained or
 learned during the Term or thereafter.
+
 4. Ownership.  StrongLoop shall retain all intellectual property and proprietary
 rights in the Software, Documentation, and related works, including but not
 limited to any derivative work of the foregoing and StrongLoop's licensors shall
@@ -153,6 +170,7 @@ otherwise disposing, encumbering, or suffering a lien or encumbrance upon or
 against any interest in the Software.  The Software (including any Third-Party
 Software) contain copyrighted material, trade secrets and other proprietary
 material of StrongLoop and/or its licensors.
+
 5. Warranty Disclaimer.  THE SOFTWARE (INCLUDING ANY THIRD-PARTY SOFTWARE) AND
 DOCUMENTATION MADE AVAILABLE TO CUSTOMER ARE PROVIDED "AS-IS" AND STRONGLOOP,
 ON BEHALF OF ITSELF AND ITS LICENSORS, EXPRESSLY DISCLAIMS ALL WARRANTIES OF ANY
@@ -173,39 +191,46 @@ SOFTWARE AND DOCUMENTATION ARE NOT DESIGNED, MANUFACTURED OR INTENDED FOR USE IN
 THE PLANNING, CONSTRUCTION, MAINTENANCE, CONTROL, OR DIRECT OPERATION OF NUCLEAR
 FACILITIES, AIRCRAFT NAVIGATION, CONTROL OR COMMUNICATION SYSTEMS, WEAPONS
 SYSTEMS, OR DIRECT LIFE SUPPORT SYSTEMS.
+
 6. Limitation of Liability.
-      6.1 Exclusion of Liability.  IN NO EVENT WILL STRONGLOOP OR ITS LICENSORS
-      BE LIABLE UNDER THIS AGREEMENT FOR ANY INDIRECT, RELIANCE, PUNITIVE,
-      CONSEQUENTIAL, SPECIAL, EXEMPLARY, OR INCIDENTAL DAMAGES OF ANY KIND AND
-      HOWEVER CAUSED (INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF
-      BUSINESS PROFITS, BUSINESS INTERRUPTION, LOSS OF BUSINESS INFORMATION AND
-      THE LIKE), EVEN IF STRONGLOOP HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH
-      DAMAGES.  CUSTOMER BEARS FULL RESPONSIBILITY FOR USE OF THE SOFTWARE AND
-      THE SUBSCRIPTION AND STRONGLOOP DOES NOT GUARANTEE THAT THE USE OF THE
-      SOFTWARE AND SUBSCRIPTION WILL ENSURE THAT CUSTOMER'S NETWORK WILL BE
-      AVAILABLE, SECURE, MONITORED OR PROTECTED AGAINST ANY DOWNTIME, DENIAL OF
-      SERVICE ATTACKS, SECUITY BREACHES, HACKERS AND THE LIKE.  IN NO EVENT WILL
-      STRONGLOOP'S CUMULATIVE LIABILITY FOR ANY DAMAGES, LOSSES AND CAUSES OF
-      ACTION (WHETHER IN CONTRACT, TORT, INCLUDING NEGLIGENCE, OR OTHERWISE)
-      ARISING OUT OF OR RELATED TO THIS AGREEMENT EXCEED THE GREATER OF ONE
-      HUNDRED DOLLARS (US$100) OR THE TOTAL SUBSCRIPTION FEES PAID BY CUSTOMER
-      TO STRONGLOOP IN THE TWELVE (12) MONTHS PRECEDING THE DATE THE CLAIM
-      ARISES.
-      6.2 Limitation of Damages.  IN NO EVENT WILL STRONGLOOP'S LICENSORS HAVE
-      ANY LIABILITY FOR ANY CLAIM ARISING IN CONNECTION WITH THIS AGREEMENT.
-      THE PROVISIONS OF THIS SECTION 6 ALLOCATE RISKS UNDER THIS AGREEMENT
-      BETWEEN CUSTOMER, STRONGLOOP AND STRONGLOOP'S SUPPLIERS.  THE FOREGOING
-      LIMITATIONS, EXCLUSIONS AND DISCLAIMERS APPLY TO THE MAXIMUM EXTENT
-      PERMITTED BY APPLICABLE LAW, EVEN IF ANY REMEDY FAILS IN ITS ESSENTIAL
-      PURPOSE.
-      6.3 Failure of Essential Purpose.  THE PARTIES AGREE THAT THESE
-      LIMITATIONS SHALL APPLY EVEN IF THIS AGREEMENT OR ANY LIMITED REMEDY
-      SPECIFIED HEREIN IS FOUND TO HAVE FAILED OF ITS ESSENTIAL PURPOSE.
-      6.4 Allocation of Risk.  The sections on limitation of liability and
-      disclaimer of warranties allocate the risks in the Agreement between the
-      parties.  This allocation is an essential element of the basis of the
-      bargain between the parties.
+
+6.1 Exclusion of Liability.  IN NO EVENT WILL STRONGLOOP OR ITS LICENSORS
+BE LIABLE UNDER THIS AGREEMENT FOR ANY INDIRECT, RELIANCE, PUNITIVE,
+CONSEQUENTIAL, SPECIAL, EXEMPLARY, OR INCIDENTAL DAMAGES OF ANY KIND AND
+HOWEVER CAUSED (INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF
+BUSINESS PROFITS, BUSINESS INTERRUPTION, LOSS OF BUSINESS INFORMATION AND
+THE LIKE), EVEN IF STRONGLOOP HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH
+DAMAGES.  CUSTOMER BEARS FULL RESPONSIBILITY FOR USE OF THE SOFTWARE AND
+THE SUBSCRIPTION AND STRONGLOOP DOES NOT GUARANTEE THAT THE USE OF THE
+SOFTWARE AND SUBSCRIPTION WILL ENSURE THAT CUSTOMER'S NETWORK WILL BE
+AVAILABLE, SECURE, MONITORED OR PROTECTED AGAINST ANY DOWNTIME, DENIAL OF
+SERVICE ATTACKS, SECUITY BREACHES, HACKERS AND THE LIKE.  IN NO EVENT WILL
+STRONGLOOP'S CUMULATIVE LIABILITY FOR ANY DAMAGES, LOSSES AND CAUSES OF
+ACTION (WHETHER IN CONTRACT, TORT, INCLUDING NEGLIGENCE, OR OTHERWISE)
+ARISING OUT OF OR RELATED TO THIS AGREEMENT EXCEED THE GREATER OF ONE
+HUNDRED DOLLARS (US$100) OR THE TOTAL SUBSCRIPTION FEES PAID BY CUSTOMER
+TO STRONGLOOP IN THE TWELVE (12) MONTHS PRECEDING THE DATE THE CLAIM
+ARISES.
+
+6.2 Limitation of Damages.  IN NO EVENT WILL STRONGLOOP'S LICENSORS HAVE
+ANY LIABILITY FOR ANY CLAIM ARISING IN CONNECTION WITH THIS AGREEMENT.
+THE PROVISIONS OF THIS SECTION 6 ALLOCATE RISKS UNDER THIS AGREEMENT
+BETWEEN CUSTOMER, STRONGLOOP AND STRONGLOOP'S SUPPLIERS.  THE FOREGOING
+LIMITATIONS, EXCLUSIONS AND DISCLAIMERS APPLY TO THE MAXIMUM EXTENT
+PERMITTED BY APPLICABLE LAW, EVEN IF ANY REMEDY FAILS IN ITS ESSENTIAL
+PURPOSE.
+
+6.3 Failure of Essential Purpose.  THE PARTIES AGREE THAT THESE
+LIMITATIONS SHALL APPLY EVEN IF THIS AGREEMENT OR ANY LIMITED REMEDY
+SPECIFIED HEREIN IS FOUND TO HAVE FAILED OF ITS ESSENTIAL PURPOSE.
+
+6.4 Allocation of Risk.  The sections on limitation of liability and
+disclaimer of warranties allocate the risks in the Agreement between the
+parties.  This allocation is an essential element of the basis of the
+bargain between the parties.
+
 7. Term and Termination.
+
 7.1 This Agreement shall commence on the Effective Date and continue for so long
 as Customer has a valid Subscription and is current on the payment of any
 Subscription Fees required to be paid for that Subscription (the "Subscription
@@ -214,8 +239,10 @@ notice to the other party, and the Subscription and licenses granted hereunder
 automatically terminate upon the termination of this Agreement.  This Agreement
 will terminate immediately without notice from StrongLoop if Customer fails to
 comply with or otherwise breaches any provision of this Agreement.
+
 7.2 All Sections other than Section 1.1 (Subscriptions) and 1.2 (Licenses) shall
 survive the expiration or termination of this Agreement.
+
 8. Subscription Fees and Payments.  StrongLoop, Customer agrees to pay
 StrongLoop the Subscription Fees as described on the StrongLoop Site for the
 Subscription purchased unless a different amount has been agreed to in a
@@ -242,7 +269,9 @@ ensure that, after such deduction or withholding, StrongLoop receives and
 retains, free from liability for such deduction or withholding, a net amount
 equal to the amount StrongLoop would have received and retained absent the
 required deduction or withholding.
+
 9. General.
+
 9.1 Compliance with Laws.  Customer shall abide by all local, state, federal and
 international laws, rules, regulations and orders applying to Customer's use of
 the Software, including, without limitation, the laws and regulations of the
@@ -250,6 +279,7 @@ United States that may restrict the export and re-export of certain commodities
 and technical data of United States origin, including the Software.  Customer
 agrees that it will not export or re-export the Software without the appropriate
 United States or foreign government licenses.
+
 9.2 Entire Agreement.  This Agreement constitutes the entire agreement between
 the parties concerning the subject matter hereof.  This Agreement supersedes all
 prior or contemporaneous discussions, proposals and agreements between the
@@ -258,19 +288,24 @@ waiver of any provision of this Agreement shall be effective unless in writing
 and signed by both parties.  Any additional or different terms on any purchase
 orders issued by Customer to StrongLoop shall not be binding on either party,
 are hereby rejected by StrongLoop and void.
+
 9.3 Severability.  If any provision of this Agreement is held to be invalid or
 unenforceable, the remaining portions shall remain in full force and effect and
 such provision shall be enforced to the maximum extent possible so as to effect
 the intent of the parties and shall be reformed to the extent necessary to make
 such provision valid and enforceable.
+
 9.4 Waiver.  No waiver of rights by either party may be implied from any actions
 or failures to enforce rights under this Agreement.
+
 9.5 Force Majeure.  Neither party shall be liable to the other for any delay or
 failure to perform due to causes beyond its reasonable control (excluding
 payment of monies due).
+
 9.6 No Third Party Beneficiaries.  Unless otherwise specifically stated, the
 terms of this Agreement are intended to be and are solely for the benefit of
 StrongLoop and Customer and do not create any right in favor of any third party.
+
 9.7 Governing Law and Jurisdiction.  This Agreement shall be governed by the
 laws of the State of California, without reference to the principles of
 conflicts of law.  The provisions of the Uniform Computerized Information
@@ -282,7 +317,7 @@ County, California.  Any litigation related to this Agreement shall be brought
 in the state or federal courts located in San Francisco County, California, and
 only in those courts and each party irrevocably waives any objections to such
 venue.
+
 9.8 Notices.  All notices must be in writing and shall be effective three (3)
 days after the date sent to the other party's headquarters, Attention Chief
 Financial Officer.
-
