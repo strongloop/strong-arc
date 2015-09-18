@@ -18,17 +18,7 @@ Gateway.controller('PolicyMainController', [
     $scope.policyCtx.isShowRateLimitPolicyForm = false;
     $scope.policyCtx.isShowProxyPolicyForm = false;
     $scope.isShowAddPolicyRow = false;
-    $scope.showAddPolicyRow = function() {
-      turnOffOtherPolicyEdits();
-      $scope.isShowAddPolicyRow = true;
-    };
-    $scope.clearAddPolicyRow = function() {
-      $scope.isShowAddPolicyRow = false;
-      $scope.policyCtx.currentPolicy = {};
-    };
-    $scope.isPolicyEditMode = function(policy) {
 
-    };
     $scope.policyCtx.init = function() {
 
       $scope.policyCtx.policies = GatewayServices.getPolicies()
@@ -40,14 +30,7 @@ Gateway.controller('PolicyMainController', [
     function resetCurrentPolicy() {
       $scope.policyCtx.currentPolicy = {};
     }
-    //function refreshPolicies() {
-    //  $scope.policyCtx.policies = GatewayServices.getPolicies()
-    //    .then(function(policies) {
-    //
-    //        $scope.policyCtx.policies = policies;
-    //
-    //    });
-    //}
+
 
 
     $scope.confirmDeletePolicy = function(policy) {
