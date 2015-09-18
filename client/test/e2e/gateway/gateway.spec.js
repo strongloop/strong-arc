@@ -7,7 +7,7 @@ var gatewayHomeView = require('./views/gateway-home-view');
 var EC = protractor.ExpectedConditions;
 
 
-fdescribe('gateway', function() {
+describe('gateway', function() {
   var wait = 5*1000;
   var sleep = 500;
 
