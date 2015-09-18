@@ -27,6 +27,18 @@ var LandingView = (function () {
       10000);
     };
 
+    this.openVisualComposerView = function() {
+      browser.driver.wait(
+        EC.presenceOf(this.composerAppCommand),
+      10000);
+      this.composerAppCommand.click();
+      browser.driver.wait(
+        EC.presenceOf(
+          element(by.css('.ia-project-title-header-container'))
+        ),
+      10000);
+    };
+
     this.openBuildDeployView = function() {
       browser.driver.wait(
         EC.presenceOf(this.buildDeployAppCommand),
@@ -49,7 +61,7 @@ var LandingView = (function () {
           element(by.css('button[ng-click="initAddNewPMHost()"]'))
         ),
       10000);
-    };    
+    };
 
     this.openMetricsView = function() {
       browser.driver.wait(
@@ -61,7 +73,7 @@ var LandingView = (function () {
           element(by.css('div .metrics-main-container'))
         ),
       10000);
-    }; 
+    };
 
     this.openTracingView = function() {
       browser.driver.wait(
@@ -73,8 +85,8 @@ var LandingView = (function () {
           element(by.css('sl-tracing-header'))
         ),
       10000);
-    }; 
-    
+    };
+
     this.openProfilerView = function() {
       browser.driver.wait(
         EC.presenceOf(this.profilerAppCommand),

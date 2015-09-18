@@ -234,6 +234,7 @@ VisualComposer.directive('slComposerCanvas', [
 
         var svg = d3.select(elem[0])
           .append('svg')
+            .attr('id', 'composer-canvas')
             .attr('height', height)
             .attr('width', width)
             .call(zoom);
