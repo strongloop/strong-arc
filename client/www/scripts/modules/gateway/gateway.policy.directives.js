@@ -288,7 +288,7 @@ Gateway.directive('slPolicyScopeInput', [ '$log', function($log) {
 
       // watch for changes in text field
       scope.$watch(attrs.ngModel, function(value) {
-        if (value != undefined) {
+        if (value && value != undefined) {
           var tempEl = $('<span>' + value + '</span>').appendTo('body');
           scope.inputWidth = tempEl.width() + 5;
           tempEl.remove();
