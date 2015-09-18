@@ -1,5 +1,10 @@
 <div ng-controller="PipelineMainController">
-  <h3>Pipelines</h3>
+  <h3>
+    Pipelines
+    <sl-popover-help name="gateway-pipelines" position="right"></sl-popover-help>
+  </h3>
+
+
   <sl-pipeline-list ng-show="!gatewayCtx.currentInstanceId"></sl-pipeline-list>
 
   <!--<button class="ui-btn small" ng-click="showModal()">Show Modal</button>-->
