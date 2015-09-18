@@ -1,12 +1,12 @@
 <div data-id="GatewayMapFormContainer">
   <form class="ui-form no-border">
     <div data-id="GatewayMapFormTopRow">
-      <div class="form-field">
+      <div class="ui-form-group">
         <label>Mapping Name</label>
         <input class="ui-input map-name" ng-model="map.name" type="text" placeholder="name">
       </div>
 
-      <div class="form-field">
+      <div class="ui-form-group">
         <label>Verb</label>
         <div class="ui-menu-container verb-menu">
           <input type="text"
@@ -26,7 +26,7 @@
           </sl-ui-menu-dropdown>
         </div>
       </div>
-      <div class="form-field">
+      <div class="ui-form-group">
         <label>Url Pattern</label>
         <input ng-model="map.endpoint"
                type="text"
@@ -34,7 +34,7 @@
                placeholder="endpoint" />
       </div>
     </div>
-    <div class="form-field">
+    <div class="ui-form-group">
       <label>Pipeline</label>
       <div class="ui-menu-container pipeline-menu">
         <input type="text"
