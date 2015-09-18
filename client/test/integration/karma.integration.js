@@ -42,7 +42,7 @@ module.exports = function(config) {
       'client/www/scripts/vendor/angular-ui-slider/src/slider.js',
       'client/www/scripts/vendor/angular-cookies/angular-cookies.js',
       'client/www/scripts/vendor/angular-animate/angular-animate.js',
-      'client/www/scripts/vendor/angular-ui-router/release/angular-ui-router.js',
+'client/www/scripts/vendor/angular-ui-router/release/angular-ui-router.js',
       // 'client/www/scripts/vendor/angular-touch/angular-touch.js',
       'client/www/scripts/vendor/angular-spinner/angular-spinner.js',
       'client/www/scripts/vendor/angular-sanitize/angular-sanitize.js',

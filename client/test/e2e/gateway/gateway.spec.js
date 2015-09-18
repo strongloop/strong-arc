@@ -259,8 +259,8 @@ describe('gateway', function() {
 
     // change mapping back to first pipeline so we can del the cloned pipeline
     gatewayHomeView.loadMappingsList();
-    var editMapLink = gatewayHomeView.mappingsSummaryListEditLinks.first();
-    var isEditLinkClickable = EC.elementToBeClickable(editMapLink);
+    editMapLink = gatewayHomeView.mappingsSummaryListEditLinks.first();
+    isEditLinkClickable = EC.elementToBeClickable(editMapLink);
     browser.driver.wait(isEditLinkClickable, wait);
     editMapLink.click();
 
