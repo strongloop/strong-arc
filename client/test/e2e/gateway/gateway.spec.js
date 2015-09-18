@@ -7,7 +7,7 @@ var gatewayHomeView = require('./views/gateway-home-view');
 var EC = protractor.ExpectedConditions;
 
 
-describe('gateway', function() {
+fdescribe('gateway', function() {
   var wait = 5*1000;
   var sleep = 500;
 
@@ -141,7 +141,7 @@ describe('gateway', function() {
     gatewayHomeView.loadFirstPolicy();
 
     //verify edits
-    expect(gatewayHomeView.newPolicyTypeSelectNoModal.getAttribute('value')).toEqual('ratelimiting');
+    expect(gatewayHomeView.newPolicyTypeSelectNoModal.getAttribute('value')).toEqual('rateLimiting');
     //expect(true).toEqual(false);
 
     //delete first policy

@@ -217,7 +217,7 @@ var GatewayHomeView = (function () {
       browser.waitForAngular();
 
 
-      expect(self.newPolicyTypeSelect.getAttribute('value')).toEqual('ratelimiting');
+      expect(self.newPolicyTypeSelect.getAttribute('value')).toEqual('rateLimiting');
       expect(EC.visibilityOf(self.policyRateLimitingLimitInput));
       expect(EC.visibilityOf(self.policyRateLimitingIntervalInput));
 
