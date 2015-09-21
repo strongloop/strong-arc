@@ -2,7 +2,7 @@ var ArcViews = require('../arc/views/');
 
 var EC = protractor.ExpectedConditions;
 
-describe('app-controller-test', function() {
+fdescribe('app-controller-test', function() {
   describe('app-start', function() {
     it('should login,' +
       ' start local app, ' +

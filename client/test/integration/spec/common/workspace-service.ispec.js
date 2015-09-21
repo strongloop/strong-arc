@@ -1,11 +1,11 @@
-describe('WorkspaceServices', function() {
+describe('WorkspaceService', function() {
   this.timeout(10000);
   var CONST, WorkspaceServices, throwHttpError, $injector;
   beforeEach(function() {
     inject(function(_$injector_) {
       $injector = _$injector_;
       CONST = $injector.get('CONST');
-      WorkspaceServices = $injector.get('WorkspaceServices');
+      WorkspaceServices = $injector.get('WorkspaceService');
       throwHttpError = $injector.get('throwHttpError');
     });
   });

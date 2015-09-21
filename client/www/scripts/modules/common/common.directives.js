@@ -128,6 +128,7 @@ Common.directive('slCommonAppControllerMenu', [
                     appStartResponse.host = 'localhost';
                   }
                   $scope.localAppCtx.localAppLink = '//' + appStartResponse.host + ':' + appStartResponse.port + '/';
+                  $scope.localAppCtx.localAppState = PM_CONST.RUNNING_STATE;
                   WorkspaceServices.saveLocalAppLink($scope.localAppCtx.localAppLink);
                 }
                 return appStartResponse;
@@ -159,6 +160,7 @@ Common.directive('slCommonAppControllerMenu', [
                     appRestartResponse.host = 'localhost';
                   }
                   $scope.localAppCtx.localAppLink = '//' + appRestartResponse.host + ':' + appRestartResponse.port + '/';
+                  $scope.localAppCtx.localAppState = PM_CONST.RUNNING_STATE;
                   WorkspaceServices.saveLocalAppLink($scope.localAppCtx.localAppLink);
                 }
                 return appRestartResponse;
