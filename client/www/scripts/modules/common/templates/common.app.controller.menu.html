@@ -1,8 +1,7 @@
 <sl-popover-menu
-  ng-controller="PMAppController"
   ng-class="{ 'is-running' : pm.isLocalAppRunning }"
   icon="icon icon-app-ctrl"
   hideonpageclick="true"
   title="app controller">
-  <div sl-pm-app-controls></div>
+  <sl-common-app-controls></sl-common-app-controls>
 </sl-popover-menu>

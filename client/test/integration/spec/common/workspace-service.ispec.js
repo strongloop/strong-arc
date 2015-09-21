@@ -1,11 +1,11 @@
 describe('WorkspaceService', function() {
   this.timeout(10000);
-  var CONST, WorkspaceService, throwHttpError, $injector;
+  var CONST, WorkspaceServices, throwHttpError, $injector;
   beforeEach(function() {
     inject(function(_$injector_) {
       $injector = _$injector_;
       CONST = $injector.get('CONST');
-      WorkspaceService = $injector.get('WorkspaceService');
+      WorkspaceServices = $injector.get('WorkspaceServices');
       throwHttpError = $injector.get('throwHttpError');
     });
   });
@@ -14,11 +14,11 @@ describe('WorkspaceService', function() {
     it('returns true for a valid project', function() {
       return given.emptyWorkspace()
         .then(function() {
-          return WorkspaceService.validate();
+          return WorkspaceServices.validate();
         })
         .then(function(isValid) {
           expect(isValid).to.equal(true);
-          expect(WorkspaceService.validationError, 'validationError')
+          expect(WorkspaceServices.validationError, 'validationError')
             .to.equal(null);
         });
     });
@@ -29,12 +29,12 @@ describe('WorkspaceService', function() {
           return given.facetIsMissing('server');
         })
         .then(function() {
-          return WorkspaceService.validate();
+          return WorkspaceServices.validate();
         })
         .catch(throwHttpError)
         .then(function(isValid) {
           expect(isValid, 'isValid').to.equal(false);
-          var err = WorkspaceService.validationError;
+          var err = WorkspaceServices.validationError;
           expect(err.code, 'err.code').to.equal('E_INVALID_WORKSPACE');
           expect(err.message, 'err.message').to.contain('`server` facet');
         });

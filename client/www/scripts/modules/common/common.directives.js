@@ -44,7 +44,239 @@ Common.directive('slCommonInstanceTitleView', [
     }
   }
 ]);
+Common.directive('slCommonAppControls', [
+  function() {
+    return {
+      restrict: 'E',
+      templateUrl: './scripts/modules/common/templates/common.app.controls.html'
+    }
+  }
+]);
 
+Common.directive('slCommonAppControllerMenu', [
+  function() {
+    return {
+      restrict: 'E',
+      templateUrl: './scripts/modules/common/templates/common.app.controller.menu.html',
+      controller: [
+        '$scope',
+        '$log',
+        '$timeout',
+        '$interval',
+        'WorkspaceServices',
+        function($scope, $log, $timeout, $interval, WorkspaceServices) {
+
+          var isCheckingAppStatus = false;
+          var stop;
+           /*
+           * Check Local App Status
+           *
+           * - recursive call to check if local app is running
+           * - if app is running call second api to get url
+           *
+           * */
+          function checkLocalAppStatus() {
+
+            if (!isCheckingAppStatus) {
+              isCheckingAppStatus = true;
+              WorkspaceServices.isAppRunning()
+                .then(function(response) {
+                  if (response.running) {
+                    $scope.localAppCtx.localAppState = PM_CONST.RUNNING_STATE;
+                    $scope.localAppCtx.localAppLink = WorkspaceServices.getLocalAppLink() || '-';
+                    isCheckingAppStatus = false;
+                    if (!stop) {
+                      startCheckingLocalAppStatus();
+                    }
+                  }
+                  else {
+                    isCheckingAppStatus = false;
+                    $scope.localAppCtx.localAppState = PM_CONST.STOPPED_STATE;
+                  }
+
+                })
+                .catch(function(error) {
+                  isCheckingAppStatus = false;
+                  $log.warn('bad check for local app running state', error);
+                  $scope.localAppCtx.isLocalAppRunning = false;
+                  $scope.localAppCtx.localAppState = PM_CONST.STOPPED_STATE;
+                  $scope.localAppCtx.localAppLink = '';
+                });
+
+            }
+          }
+          function startCheckingLocalAppStatus(){
+            stop = $interval(function() {
+              checkLocalAppStatus();
+            }, PM_CONST.APP_POLL_INTERVAL);
+
+          }
+
+
+          /*
+           *
+           * Button Event Controls
+           *
+           * */
+          $scope.startApp = function() {
+            $scope.localAppCtx.localAppState = PM_CONST.STARTING_STATE;
+            // call workspace services
+            WorkspaceServices.startApp()
+              .then(function(appStartResponse) {
+                if (appStartResponse.port) {
+                  if (appStartResponse.host === "0.0.0.0") {
+                    appStartResponse.host = 'localhost';
+                  }
+                  $scope.localAppCtx.localAppLink = '//' + appStartResponse.host + ':' + appStartResponse.port + '/';
+                  $scope.localAppCtx.localAppState = PM_CONST.RUNNING_STATE;
+                  WorkspaceServices.saveLocalAppLink($scope.localAppCtx.localAppLink);
+                }
+                return appStartResponse;
+              })
+              .then(function(response) {
+                if (!stop) {
+                  startCheckingLocalAppStatus();
+                }
+              }).
+              catch(function(error) {
+                $log.warn('bad start app running', error);
+                $scope.localAppCtx.isLocalAppRunning = false;
+                $scope.localAppCtx.localAppState = PM_CONST.STOPPED_STATE;
+                $scope.localAppCtx.localAppLink = '';
+                WorkspaceServices.saveLocalAppLink($scope.localAppCtx.localAppLink);
+
+              });
+          };
+          $scope.reStartApp = function() {
+            $scope.localAppCtx.isLocalAppRunning = false;
+            $scope.localAppCtx.localAppState = PM_CONST.RESTARTING_STATE;
+            $scope.localAppCtx.localAppLink = '';
+            WorkspaceServices.saveLocalAppLink($scope.localAppCtx.localAppLink);
+
+            WorkspaceServices.restartApp()
+              .then(function(appRestartResponse) {
+                if (appRestartResponse.port) {
+                  if (appRestartResponse.host === "0.0.0.0") {
+                    appRestartResponse.host = 'localhost';
+                  }
+                  $scope.localAppCtx.localAppLink = '//' + appRestartResponse.host + ':' + appRestartResponse.port + '/';
+                  $scope.localAppCtx.localAppState = PM_CONST.RUNNING_STATE;
+                  WorkspaceServices.saveLocalAppLink($scope.localAppCtx.localAppLink);
+                }
+                return appRestartResponse;
+              })
+              .then(function(response) {
+                if (!stop) {
+                  startCheckingLocalAppStatus();
+                }
+              });
+          };
+
+          $scope.stopApp = function() {
+            $scope.localAppCtx.isLocalAppRunning = false;
+            $scope.localAppCtx.localAppState = PM_CONST.STOPPING_STATE;
+            $scope.localAppCtx.localAppLink = '';
+
+            WorkspaceServices.stopApp()
+              .then(function(response) {
+                if (!response.running) {
+                  $scope.localAppCtx.localAppState = PM_CONST.STOPPED_STATE;
+                  if (angular.isDefined(stop)) {
+                    $interval.cancel(stop);
+                    stop = undefined;
+                  }
+                }
+              });
+          };
+
+          /*
+           *
+           *   UI Button State Stuff
+           *
+           * */
+          $scope.isShowStartButton = function() {
+            if (($scope.localAppCtx.localAppState === PM_CONST.STOPPED_STATE) ||
+              ($scope.localAppCtx.localAppState === PM_CONST.STARTING_STATE) ||
+              ($scope.localAppCtx.localAppState === PM_CONST.UNKNOWN_STATE)) {
+              return true;
+            }
+            return false;
+          };
+          $scope.isShowRestartButton = function() {
+            if (($scope.localAppCtx.localAppState === PM_CONST.RUNNING_STATE) ||
+              ($scope.localAppCtx.localAppState === PM_CONST.RETRIEVING_PORT_STATE) ||
+              ($scope.localAppCtx.localAppState === PM_CONST.STOPPING_STATE) ||
+              ($scope.localAppCtx.localAppState === PM_CONST.RESTARTING_STATE)) {
+              return true;
+            }
+            return false;
+          };
+          $scope.isShowAppLink = function() {
+            if ($scope.localAppCtx.localAppLink) {
+              return true;
+            }
+          };
+          $scope.isShowAppControlSpinner = function() {
+            if ($scope.localAppCtx.localAppLink) {
+              return false;
+            }
+            if ($scope.localAppCtx.localAppState === PM_CONST.STOPPED_STATE){
+              return false;
+            }
+            return true;
+          };
+          $scope.isButtonDisabled = function(buttonName) {
+
+            var well = false;
+            switch(buttonName) {
+
+              case 'stop':
+                if (($scope.localAppCtx.localAppState === PM_CONST.STOPPED_STATE) ||
+                  ($scope.localAppCtx.localAppState === PM_CONST.STOPPING_STATE)){
+                  well = true;
+                }
+                break;
+
+              case 'start':
+                if ($scope.localAppCtx.localAppState !== PM_CONST.STOPPED_STATE){
+                  well = true;
+                }
+                break;
+
+              case 'restart':
+                if (($scope.localAppCtx.localAppState !== PM_CONST.RUNNING_STATE)){
+                  well = true;
+                }
+                if (!$scope.localAppCtx.localAppLink) {
+                  well = true;
+                }
+                break;
+
+              default:
+
+            }
+            return well;
+          };
+
+
+          var init = function() {
+
+            $scope.localAppCtx = {
+              localAppState: PM_CONST.STOPPED_STATE,
+              isLocalAppRunning: false,
+              localAppLink: '',
+              isLocalApp: true
+            };
+            checkLocalAppStatus();
+
+          };
+
+          init();
+        }
+      ]
+    }
+  }
+]);
 /*
 *
 *   Common Instance Tabs View
