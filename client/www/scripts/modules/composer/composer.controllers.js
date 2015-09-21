@@ -7,14 +7,14 @@ Composer.controller('ComposerMainController', [
   '$http',
   'IAService',
   'DataSourceService',
-  'WorkspaceService',
+  'WorkspaceServices',
   'DiscoveryService',
   'PropertyService',
   '$location',
   '$timeout',
   'ModelService',
   'growl',
-  function($rootScope, $q, $log, $scope, $state, $http, IAService, DataSourceService, WorkspaceService, DiscoveryService, PropertyService, $location, $timeout, ModelService, growl) {
+  function($rootScope, $q, $log, $scope, $state, $http, IAService, DataSourceService, WorkspaceServices, DiscoveryService, PropertyService, $location, $timeout, ModelService, growl) {
 
     // Instance Collections
     $scope.mainNavDatasources = []; // initialized further down
@@ -59,12 +59,12 @@ Composer.controller('ComposerMainController', [
       }
     });
     // Validate the workspace
-    WorkspaceService.validate().then(function(isValid) {
+    WorkspaceServices.validate().then(function(isValid) {
       if (!isValid) {
         $rootScope.$broadcast('GlobalExceptionEvent', {
             isFatal: true,
-            message: WorkspaceService.validationError.message,
-            code: WorkspaceService.validationError.code,
+            message: WorkspaceServices.validationError.message,
+            code: WorkspaceServices.validationError.code,
             details: 'API Composer only works with valid LoopBack projects',
             help: [
               { text: 'Ensure you have LoopBack installed and create your project using the slc loopback command.' },

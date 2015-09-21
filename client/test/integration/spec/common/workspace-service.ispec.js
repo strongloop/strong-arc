@@ -5,7 +5,7 @@ describe('WorkspaceService', function() {
     inject(function(_$injector_) {
       $injector = _$injector_;
       CONST = $injector.get('CONST');
-      WorkspaceServices = $injector.get('WorkspaceService');
+      WorkspaceServices = $injector.get('WorkspaceServices');
       throwHttpError = $injector.get('throwHttpError');
     });
   });
