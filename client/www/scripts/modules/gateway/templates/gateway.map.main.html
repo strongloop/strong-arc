@@ -4,11 +4,13 @@
     <sl-popover-help name="gateway-maps" position="right"></sl-popover-help>
   </h3>
   <sl-gateway-map-list ng-show="!gatewayCtx.currentInstanceId"></sl-gateway-map-list>
-  <sl-gateway-map-form map="gatewayMapCtx.currentGatewayMap"
-     context="gatewayMapCtx"
-     hidebuttons="false"
-     is-modal="false"
-     ng-show="gatewayCtx.currentInstanceId">
-  </sl-gateway-map-form>
-
+  <ng-form name="form">
+    <sl-gateway-map-form map="gatewayMapCtx.currentGatewayMap"
+       context="gatewayMapCtx"
+       hidebuttons="false"
+       is-modal="false",
+       form="form",
+       ng-show="gatewayCtx.currentInstanceId">
+    </sl-gateway-map-form>
+  </ng-form>
 </div>

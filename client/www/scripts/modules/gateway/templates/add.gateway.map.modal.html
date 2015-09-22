@@ -5,20 +5,20 @@
     </div>
     <div class="modal-body">
       <div data-id="GatewayMapFormContainer">
+        <ng-form name="form">
         <sl-gateway-map-form
             map="gatewayMapCtx.newGatewayMap"
             context="gatewayMapCtx"
             hidebuttons="true"
+            form="form"
             is-modal="true">
         </sl-gateway-map-form>
+        </ng-form>
       </div>
     </div>
     <div class="modal-footer">
-      <button type="button" class="ui-btn secondary small pull-left" ng-click="close()">
-        Cancel
-      </button>
-      <button class="ui-btn primary small" ng-click="saveNewGatewayMap(gatewayMapCtx.newGatewayMap)">Add Map</button>
-
+      <button type="button" class="ui-btn secondary small pull-left" ng-click="close()">Cancel</button>
+      <button class="ui-btn primary small" ng-click="saveNewGatewayMap(gatewayMapCtx.newGatewayMap, form)">Add Map</button>
     </div>
 
 </div>

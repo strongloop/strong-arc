@@ -203,7 +203,12 @@ Gateway.controller('GatewayMainController', [
           $scope.close = function() {
             $modalInstance.dismiss();
           };
-          $scope.saveNewGatewayMap = function(map) {
+          $scope.saveNewGatewayMap = function(map, form) {
+
+            if ( form.$invalid ) {
+              return;
+            }
+
             $scope.close();
             if (map.name && map.endpoint) {
 

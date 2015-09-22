@@ -1,9 +1,12 @@
 <div data-id="GatewayMapFormContainer">
-  <form class="ui-form no-border">
+  <form class="ui-form no-border" name="form" novalidate>
     <div data-id="GatewayMapFormTopRow">
-      <div class="ui-form-group">
+      <div class="ui-form-group" ng-class="{
+            'valid': form.name.$valid,
+            'invalid': form.name.$invalid }">
         <label>Mapping Name</label>
-        <input class="ui-input map-name" ng-model="map.name" type="text" placeholder="name">
+        <input class="ui-input map-name" name="name" ng-model="map.name" type="text" ng-minlength="4" placeholder="name">
+        <span class="msg error" ng-show="form.name.$invalid">Please enter mapping name</span>
       </div>
 
       <div class="ui-form-group">
@@ -26,12 +29,18 @@
           </sl-ui-menu-dropdown>
         </div>
       </div>
-      <div class="ui-form-group">
+      <div class="ui-form-group" ng-class="{
+            'valid': form.endpoint.$valid,
+            'invalid': form.endpoint.$invalid }">
         <label>Url Pattern</label>
         <input ng-model="map.endpoint"
                type="text"
+               ng-minlength="4"
+               name="endpoint"
                class="ui-input map-endpoint"
-               placeholder="endpoint" />
+               placeholder="endpoint">
+
+        <span class="msg error" ng-show="form.endpoint.$invalid">Please enter endpoint</span>
       </div>
     </div>
     <div class="ui-form-group">
@@ -93,7 +102,7 @@
     <div>
       <div ng-hide="hidebuttons">
         <hr>
-        <button class="ui-btn secondary small" type="button" ng-click="clearPolicyForm()">Revert</button>
+        <button class="ui-btn secondary small" type="button" ng-click="clearMappingForm()">Revert</button>
         <button class="ui-btn primary small" ng-disabled="!isMappingDirty" ng-click="confirmSaveCurrentMapping(map)">Save</button>
       </div>
     </div>

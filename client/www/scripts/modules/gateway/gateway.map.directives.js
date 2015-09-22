@@ -15,7 +15,8 @@ Gateway.directive('slGatewayMapForm', [
       scope: {
         map: '=',
         context: '=',
-        hidebuttons: '='
+        hidebuttons: '=',
+        form: '='
       },
       templateUrl: './scripts/modules/gateway/templates/gateway.map.form.html',
       controller: ['$scope',
@@ -51,6 +52,10 @@ Gateway.directive('slGatewayMapForm', [
           }
 
           $scope.confirmSaveCurrentMapping = function(map){
+            if ( $scope.form.$invalid ) {
+              return;
+            }
+
             var x = map;
             var modalDlg = $modal.open({
               templateUrl: './scripts/modules/gateway/templates/confirm.mapping.save.html',
@@ -74,7 +79,13 @@ Gateway.directive('slGatewayMapForm', [
                 }
               }
             });
+          };
 
+          $scope.clearMappingForm = function() {
+            GatewayServices.getGatewayMapById($scope.map.id)
+              .then(function(data){
+                $scope.map = data;
+              });
           };
 
           $scope.saveCurrentMapping = function(map) {
@@ -82,39 +93,15 @@ Gateway.directive('slGatewayMapForm', [
               if (map.pipelineId && map.pipelineId.id) {
                 map.pipelineId = map.pipelineId.id;
               }
-              // check if name has changed
-              /*
-              *
-              *
 
-               *
-              * */
-              //if ($scope.context.originalInstance.name && ($scope.context.originalInstance.name !== map.name)) {
-              //  // rename in effect
-              //  GatewayServices.renameMapping(map, map.name, $scope.context.originalInstance.name)
-              //    .$promise
-              //    .then(function(map) {
-              //      GatewayServices.saveGatewayMap(map)
-              //        .$promise
-              //        .then(function(map) {
-              //          growl.addSuccessMessage('Mapping Saved');
-              //          $scope.$parent.refreshMappings();
-              //        });
-              //    });
-              //}
-              //else {
-                GatewayServices.saveGatewayMap(map)
-                  .$promise
-                  .then(function(map) {
-                    growl.addSuccessMessage('Gateway Map Saved');
-                    $scope.$parent.refreshMappings();
-                    $scope.$parent.main();
+              GatewayServices.saveGatewayMap(map)
+                .$promise
+                .then(function(map) {
+                  growl.addSuccessMessage('Gateway Map Saved');
+                  $scope.$parent.refreshMappings();
+                  $scope.$parent.main();
 
-                  });
-            //  }
-
-
-
+                });
             }
           };
         }
