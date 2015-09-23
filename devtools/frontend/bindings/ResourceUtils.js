@@ -181,7 +181,9 @@ WebInspector.linkifyURLAsNode = function(url, linkText, classes, isExternal, too
     classes = (classes ? classes + " " : "");
     classes += isExternal ? "webkit-html-external-link" : "webkit-html-resource-link";
 
-    var a = document.createElement("a");
+    //strongloop: change to span so links to files are not actual links
+    //since we don't have the actual file to link to
+    var a = document.createElement("span");
     var href = sanitizeHref(url);
     if (href !== null)
         a.href = href;
