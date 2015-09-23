@@ -45,7 +45,7 @@
     "sha1": "^1.1.0",
     "split": "^0.3.3",
     "strong-build": "^2.x",
-    "strong-deploy": "^1.1.4",
+    "strong-deploy": "^3.0.0",
     "strong-mesh-client": "^1.4.0",
     "strong-pm": "^3.0.0",
     "strong-trace-waterfall": "^1.0.0",
