@@ -17,6 +17,7 @@ Gateway.controller('PipelineMainController', [
       $scope.pipelineCtx.pipelines = GatewayServices.getPipelines()
         .then(function(lbs) {
           $scope.pipelineCtx.pipelines = lbs;
+          setScrollView();
         });
     }
     $scope.showPolicyDetails = function(policy) {
@@ -66,7 +67,12 @@ Gateway.controller('PipelineMainController', [
       }
     };
 
-
+    function setScrollView(){
+      $timeout(function(){
+        window.setScrollView('.sidebar-layout-main-container');
+        window.setScrollView('[data-id="GatewayMainContainer"]');
+      }, 0);
+    }
     //
     //$scope.addPipelinePolicy = function() {
     //  //var newPolicy = {

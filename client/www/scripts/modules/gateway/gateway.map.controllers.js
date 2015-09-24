@@ -79,6 +79,12 @@ Gateway.controller('GatewayMapMainController', [
 
 
 
+    function setScrollView(){
+      $timeout(function(){
+        window.setScrollView('.sidebar-layout-main-container');
+        window.setScrollView('[data-id="GatewayMainContainer"]');
+      }, 0);
+    }
 
     $scope.gatewayMapCtx.init();
   }

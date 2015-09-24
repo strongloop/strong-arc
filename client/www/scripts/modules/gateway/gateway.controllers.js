@@ -340,8 +340,6 @@ Gateway.controller('GatewayMainController', [
             items: mappings,
             addNew: 'Mapping'
           };
-
-          window.triggerResizeUpdate();
         });
     };
     $scope.refreshPipelines = function() {
@@ -360,7 +358,7 @@ Gateway.controller('GatewayMainController', [
             items: pipelines,
             addNew: 'Pipeline'
           };
-        });
+      });
     };
 
     $scope.refreshPolicies = function() {
@@ -384,11 +382,20 @@ Gateway.controller('GatewayMainController', [
 
       return $scope.refreshPolicies()
         .then($scope.refreshPipelines)
-          .then($scope.refreshMappings)
+        .then($scope.refreshMappings)
         .then(function() {
           $log.debug('data sets refreshed');
+
+          setScrollView();
         });
     };
+
+    function setScrollView(){
+      $timeout(function(){
+        window.setScrollView('.sidebar-layout-main-container');
+        window.setScrollView('[data-id="GatewayMainContainer"]');
+      }, 0);
+    }
 
     $scope.init = function() {
 

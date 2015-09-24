@@ -24,6 +24,7 @@ Gateway.controller('PolicyMainController', [
       $scope.policyCtx.policies = GatewayServices.getPolicies()
         .then(function(policies) {
           $scope.policyCtx.policies = policies;
+          setScrollView();
         });
 
     };
@@ -161,6 +162,11 @@ Gateway.controller('PolicyMainController', [
       }
     };
 
-
+    function setScrollView(){
+      $timeout(function(){
+        window.setScrollView('.sidebar-layout-main-container');
+        window.setScrollView('[data-id="GatewayMainContainer"]');
+      }, 0);
+    }
   }
 ]);
