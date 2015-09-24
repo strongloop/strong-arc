@@ -33,7 +33,7 @@
     "loopback": "^2.14.0",
     "loopback-boot": "^2.6.5",
     "loopback-datasource-juggler": "^2.20.0",
-    "loopback-workspace": "~3.15.0",
+    "loopback-workspace": "^3.18.1",
     "minimist": "^1.1.1",
     "node-underscorify": "0.0.14",
     "opener": "^1.4.0",
