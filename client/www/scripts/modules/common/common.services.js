@@ -446,13 +446,19 @@ Common.service('WorkspaceServices', [
       return Workspace.isRunning().$promise;
     };
     svc.getLocalAppLink = function() {
-      return window.localStorage.getItem('localAppLink') || null;
+      var val = JSON.parse(window.localStorage.getItem('localAppLink'));
+      if (val.url) {
+        return val;
+      }
+      val = {};
+      svc.saveLocalAppLink(val);
+      return {};
     };
     svc.saveLocalAppLink = function(link) {
       if (!window.localStorage) {
         return;
       }
-      window.localStorage.setItem('localAppLink', link);
+      window.localStorage.setItem('localAppLink', JSON.stringify(link));
       return link;
     }
   }
