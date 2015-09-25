@@ -11,8 +11,8 @@
              size="small"
              ng-show="isShowAppControlSpinner()"></div>
 
-        <a ng-show="isShowAppLink()" class="target-app-link" target="_new" href="{{ localAppCtx.localAppLink }}" >
-          {{ localAppCtx.localAppLink }}
+        <a ng-show="isShowAppLink()" class="target-app-link" target="_new" href="{{ localAppCtx.link.url }}" >
+          {{ localAppCtx.link.display }}
         </a>
       </div>
       <div

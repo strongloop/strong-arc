@@ -83,7 +83,7 @@ Common.directive('slCommonAppControllerMenu', [
                 .then(function(response) {
                   if (response.running) {
                     $scope.localAppCtx.localAppState = PM_CONST.RUNNING_STATE;
-                    $scope.localAppCtx.localAppLink = WorkspaceServices.getLocalAppLink() || '-';
+                    $scope.localAppCtx.link = WorkspaceServices.getLocalAppLink() || {};
                     isCheckingAppStatus = false;
                     if (!stop) {
                       startCheckingLocalAppStatus();
@@ -100,7 +100,8 @@ Common.directive('slCommonAppControllerMenu', [
                   $log.warn('bad check for local app running state', error);
                   $scope.localAppCtx.isLocalAppRunning = false;
                   $scope.localAppCtx.localAppState = PM_CONST.STOPPED_STATE;
-                  $scope.localAppCtx.localAppLink = '';
+                  $scope.localAppCtx = clearAppLink($scope.localAppCtx);
+
                 });
 
             }
@@ -112,6 +113,14 @@ Common.directive('slCommonAppControllerMenu', [
 
           }
 
+          function setAppLink(linkCtx, resp) {
+            linkCtx.link = {
+                display: resp.host + ':' + resp.port,
+                url: '//' + resp.host + ':' + resp.port + '/'
+              };
+            WorkspaceServices.saveLocalAppLink(linkCtx.link);
+            return linkCtx;
+          }
 
           /*
            *
@@ -127,9 +136,8 @@ Common.directive('slCommonAppControllerMenu', [
                   if (appStartResponse.host === "0.0.0.0") {
                     appStartResponse.host = 'localhost';
                   }
-                  $scope.localAppCtx.localAppLink = '//' + appStartResponse.host + ':' + appStartResponse.port + '/';
+                  $scope.localAppCtx = setAppLink($scope.localAppCtx, appStartResponse);
                   $scope.localAppCtx.localAppState = PM_CONST.RUNNING_STATE;
-                  WorkspaceServices.saveLocalAppLink($scope.localAppCtx.localAppLink);
                 }
                 return appStartResponse;
               })
@@ -142,16 +150,14 @@ Common.directive('slCommonAppControllerMenu', [
                 $log.warn('bad start app running', error);
                 $scope.localAppCtx.isLocalAppRunning = false;
                 $scope.localAppCtx.localAppState = PM_CONST.STOPPED_STATE;
-                $scope.localAppCtx.localAppLink = '';
-                WorkspaceServices.saveLocalAppLink($scope.localAppCtx.localAppLink);
+                $scope.localAppCtx = clearAppLink($scope.localAppCtx);
 
               });
           };
           $scope.reStartApp = function() {
             $scope.localAppCtx.isLocalAppRunning = false;
             $scope.localAppCtx.localAppState = PM_CONST.RESTARTING_STATE;
-            $scope.localAppCtx.localAppLink = '';
-            WorkspaceServices.saveLocalAppLink($scope.localAppCtx.localAppLink);
+            $scope.localAppCtx = clearAppLink($scope.localAppCtx);
 
             WorkspaceServices.restartApp()
               .then(function(appRestartResponse) {
@@ -159,9 +165,8 @@ Common.directive('slCommonAppControllerMenu', [
                   if (appRestartResponse.host === "0.0.0.0") {
                     appRestartResponse.host = 'localhost';
                   }
-                  $scope.localAppCtx.localAppLink = '//' + appRestartResponse.host + ':' + appRestartResponse.port + '/';
+                  $scope.localAppCtx = setAppLink($scope.localAppCtx, appRestartResponse);
                   $scope.localAppCtx.localAppState = PM_CONST.RUNNING_STATE;
-                  WorkspaceServices.saveLocalAppLink($scope.localAppCtx.localAppLink);
                 }
                 return appRestartResponse;
               })
@@ -171,11 +176,16 @@ Common.directive('slCommonAppControllerMenu', [
                 }
               });
           };
+          function clearAppLink(appCtx) {
+            appCtx.link = {};
+            WorkspaceServices.saveLocalAppLink(appCtx.link);
+            return appCtx;
+          };
 
           $scope.stopApp = function() {
             $scope.localAppCtx.isLocalAppRunning = false;
             $scope.localAppCtx.localAppState = PM_CONST.STOPPING_STATE;
-            $scope.localAppCtx.localAppLink = '';
+            $scope.localAppCtx = clearAppLink($scope.localAppCtx);
 
             WorkspaceServices.stopApp()
               .then(function(response) {
@@ -212,15 +222,18 @@ Common.directive('slCommonAppControllerMenu', [
             return false;
           };
           $scope.isShowAppLink = function() {
-            if ($scope.localAppCtx.localAppLink) {
+            if ($scope.localAppCtx.link.url) {
               return true;
             }
           };
           $scope.isShowAppControlSpinner = function() {
-            if ($scope.localAppCtx.localAppLink) {
+            if ($scope.localAppCtx.link.url) {
               return false;
             }
             if ($scope.localAppCtx.localAppState === PM_CONST.STOPPED_STATE){
+              return false;
+            }
+            if ($scope.localAppCtx.localAppState === PM_CONST.RUNNING_STATE){
               return false;
             }
             return true;
@@ -247,7 +260,7 @@ Common.directive('slCommonAppControllerMenu', [
                 if (($scope.localAppCtx.localAppState !== PM_CONST.RUNNING_STATE)){
                   well = true;
                 }
-                if (!$scope.localAppCtx.localAppLink) {
+                if (!$scope.localAppCtx.link.url) {
                   well = true;
                 }
                 break;
@@ -264,7 +277,7 @@ Common.directive('slCommonAppControllerMenu', [
             $scope.localAppCtx = {
               localAppState: PM_CONST.STOPPED_STATE,
               isLocalAppRunning: false,
-              localAppLink: '',
+              link: {},
               isLocalApp: true
             };
             checkLocalAppStatus();
