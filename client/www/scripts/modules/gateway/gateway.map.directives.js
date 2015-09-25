@@ -107,6 +107,15 @@ Gateway.directive('slGatewayMapForm', [
         }
       ],
       link: function(scope, el, attrs) {
+        scope.$watch('map.pipelineId', function(newVal, oldVal) {
+          if (newVal) {
+            $log.debug('the pipeline id has changed');
+            GatewayServices.getPipelineById(newVal)
+              .then(function(pipe) {
+                scope.map.pipeline = pipe;
+              });
+          }
+        }, true);
         /*
          *
          * Dirty check
