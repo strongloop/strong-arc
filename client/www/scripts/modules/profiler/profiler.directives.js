@@ -28,6 +28,7 @@ Profiler.directive('slProfilerNavbar', [
                 process.status = 'Profiling';
               }
             });
+            $scope.activeProcess = processes;
           };
 
           $scope.updateProcessSelection = function(processes) {
