@@ -193,9 +193,7 @@ Manager.controller('ManagerMainController', [
 
       client.serviceList(function(err, service) {
         if (!err && service.length > 0) {
-          deferred.resolve(service[0].instances(function(err, instances) {
-            var first = instances[0].setSize
-          }));
+          deferred.resolve(service[0]);
         } else {
           deferred.reject(err);
         }
@@ -212,7 +210,9 @@ Manager.controller('ManagerMainController', [
       $q.all({service: getPmService(host), licenseKey: getLicenseKey()})
         .then(function(d) {
           if (d.service && d.licenseKey) {
-            d.service.setEnv('STRONGLOOP_LICENSE', d.licenseKey);
+            $timeout(function() {
+              d.service.setEnv('STRONGLOOP_LICENSE', d.licenseKey);
+            }, 25);
           }
         });
     }
@@ -472,15 +472,17 @@ Manager.controller('ManagerMainController', [
     function updateHostEnv(host, env) {
       var deferred = $q.defer();
 
-      getPmService(host).then(function(service) {
-        service.setEnvs(env, function(err, result) {
-          if (err) {
-            deferred.reject(err);
-          } else {
-            deferred.resolve(result);
-          }
+      getPmService(host)
+        .then(function(service) {
+          service.setEnvs(env,
+            function(err, result) {
+              if (err) {
+                deferred.reject(err);
+              } else {
+                deferred.resolve(result);
+              }
+            });
         });
-      });
 
       return deferred.promise;
     }
