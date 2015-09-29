@@ -121,10 +121,6 @@
       display: inline-block;
       margin-right: 0;
     }
-
-    .ui-label-txt {
-      padding-left: .5rem;
-    }
   }
 
   input[type=text], input[type=number], input[type=password], textarea {
@@ -396,6 +392,17 @@ ol, ul {
   }
 }
 
+.ui-label-txt, label.ui-label-txt {
+  text-transform: uppercase;
+  margin-left: 0;
+  padding-left: 0;
+  font-size: 1.4rem;
+}
+
+.ui-table thead th.ui-label-txt {
+  margin: 0;
+}
+
 //checkboxes
 .ui-form .ui-checkbox, .ui-checkbox {
   .clearfix;
@@ -405,7 +412,6 @@ ol, ul {
   .ui-label-txt {
     float: left;
     margin-left: .5rem;
-    font-size: 1.4rem;
   }
 
   input {
@@ -493,8 +499,6 @@ ol, ul {
 
   .ui-label-txt {
     float: left;
-    margin-left: .5rem;
-    font-size: 1.4rem;
   }
 
   input {

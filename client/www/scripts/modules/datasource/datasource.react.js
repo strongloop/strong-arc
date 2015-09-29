@@ -145,7 +145,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
         <form name="DatasourceForm" className="ui-form" role="form">
           <div className="model-header-container">
             <div className={formGroupValidationClasses}>
-              <label for="name">Name</label>
+              <label for="name" className="ui-label-txt">Name</label>
               <input id="name"
               className={dsNameInputClasses}
               required="true"
@@ -172,7 +172,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                 <div data-ui-type="cell" className="datasource-layout-col1">
                   <div className="username-input-container">
                     <div className="datasource-form-group">
-                      <label for="user">Username</label>
+                      <label for="user" className="ui-label-txt">Username</label>
                       <input id="user"
                         className="form-control ui-input"
                         name="user"
@@ -188,7 +188,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                 <div data-ui-type="cell" className="datasource-layout-col2">
                   <div className="password-container">
                     <div className="datasource-form-group">
-                      <label for="password">Password</label>
+                      <label for="password" className="ui-label-txt">Password</label>
                       <input id="password"
                       className="form-control ui-input"
                       name="password"
@@ -208,7 +208,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
               <div data-ui-type="row" className="datasource-layout-row">
                 <div data-ui-type="cell" className="datasource-layout-fullwidth-col">
                   <div className="datasource-form-group">
-                    <label for="host">Url</label>
+                    <label for="host" className="ui-label-txt">Url</label>
                     <input id="url"
                     className="form-control ui-input"
                     name="url"
@@ -226,7 +226,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
               <div data-ui-type="row" className="datasource-layout-row">
                 <div data-ui-type="cell" className="datasource-layout-col1">
                   <div className="datasource-form-group">
-                    <label for="host">Host</label>
+                    <label for="host" className="ui-label-txt">Host</label>
                     <input id="host"
                     className="form-control ui-input"
                     name="host"
@@ -240,7 +240,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                 </div>
                 <div data-ui-type="cell" className="datasource-layout-col2">
                   <div className="datasource-form-group">
-                    <label for="port">Port</label>
+                    <label for="port" className="ui-label-txt">Port</label>
                     <input id="port"
                     className="form-control ui-input"
                     name="port"
@@ -257,7 +257,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                 <div data-ui-type="cell" className="datasource-layout-col1">
                   <input type="hidden" data-name="id" name="id" value={dsModel.id} />
                   <div className="datasource-form-group">
-                    <label for="database">Database</label>
+                    <label for="database" className="ui-label-txt">Database</label>
                     <input id="database"
                     className="form-control ui-input"
                     name="database"
@@ -271,7 +271,7 @@ var DatasourceEditorView = (DatasourceEditorView = React).createClass({
                 </div>
                 <div data-ui-type="cell" className="datasource-layout-col2">
                   <div className={formGroupConnectorValidationClasses}>
-                    <label for="connector">Connector</label>
+                    <label for="connector" className="ui-label-txt">Connector</label>
                     <select className="form-control model-instance-editor-input"
                         id="connector"
                         value={dsModel.connector}
