@@ -14,7 +14,7 @@
     <tbody>
       <tr ng-repeat="gatewayMap in gatewayMapCtx.gatewayMaps track by $index">
         <td>
-          <button class="link-cmd" ng-click="editGatewayMap(gatewayMap)">
+          <button class="ui-btn accessory" ng-click="editGatewayMap(gatewayMap)">
             {{gatewayMap.name}}
           </button>
         </td>
@@ -23,7 +23,7 @@
           <span>{{gatewayMap.endpoint}}</span>
         </td>
         <td>
-          <button class="link-cmd"
+          <button class="ui-btn accessory"
                   popover-template="mapPipelineDetailModal.templateUrl"
                   popover-placement="{{mapPipelineDetailModal.position}}"
                   ng-click="setupHidePopover($event, gatewayMap.pipeline)">

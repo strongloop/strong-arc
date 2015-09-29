@@ -12,7 +12,7 @@
       <tr ng-repeat="policy in policyCtx.policies track by $index">
         <td><ui-icon name="policy-{{policy.type}}"></ui-icon></td>
         <td class="gateway-name-col">
-          <button class="link-cmd" ng-click="editPolicy(policy)">
+          <button class="ui-btn accessory" ng-click="editPolicy(policy)">
             {{policy.name}}
           </button>
         </td>

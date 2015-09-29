@@ -10,20 +10,20 @@
     <tbody>
       <tr ng-repeat="pipeline in pipelineCtx.pipelines">
         <td>
-          <a href ng-click="editPipeline(pipeline)">{{pipeline.id}}</a>
+          <button class="ui-btn accessory" ng-click="editPipeline(pipeline)">{{pipeline.id}}</button>
         </td>
         <td>
           <div class="viewport" ng-scroll="scrollViewport($event)">
             <ul class="policies">
               <li ng-repeat="policy in pipeline.policies track by $index">
-                <a href
+                <button class="ui-btn accessory"
                    ng-click="setupHidePopover($event)"
                    popover-template="policyDetails.templateUrl"
                    popover-trigger="show"
                    popover-placement="{{policyDetails.placement}}">
                   <ui-icon name="policy-{{policy.type}}"></ui-icon>
                   <span class="policy-name">{{policy.name}}</span>
-                </a>
+                </button>
               </li>
             </ul>
           </div>
