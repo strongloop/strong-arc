@@ -65,8 +65,8 @@
     </div>
     <hr />
     <div ng-show="!isModal">
-      <button class="ui-btn secondary small" type="button" ng-click="clearPipelineForm()">Revert</button>
-      <button class="ui-btn primary small" ng-click="confirmSavePipeline(pipeline)">Save</button>
+      <button class="ui-btn secondary small" type="button" ng-show="isPipelineDirty" ng-click="clearPipelineForm()">Revert</button>
+      <button class="ui-btn primary small" ng-show="isPipelineDirty" ng-click="confirmSavePipeline(pipeline)">Save</button>
     </div>
   </form>
 </div>

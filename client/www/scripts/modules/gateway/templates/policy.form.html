@@ -37,8 +37,8 @@
     </div>
     <div ng-hide="hidebuttons">
       <hr>
-      <button class="ui-btn secondary small" type="button" ng-click="clearPolicyForm()">Revert</button>
-      <button class="ui-btn primary small" ng-disabled="!isPolicyDirty" ng-click="confirmSaveCurrentPolicy(policy)">Save</button>
+      <button class="ui-btn secondary small" type="button" ng-show="isPolicyDirty" ng-click="clearPolicyForm()">Revert</button>
+      <button class="ui-btn primary small" ng-show="isPolicyDirty" ng-click="confirmSaveCurrentPolicy(policy)">Save</button>
     </div>
   </form>
 </div>

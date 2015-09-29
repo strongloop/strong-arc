@@ -102,8 +102,8 @@
     <div>
       <div ng-hide="hidebuttons">
         <hr>
-        <button class="ui-btn secondary small" type="button" ng-click="clearMappingForm()">Revert</button>
-        <button class="ui-btn primary small" ng-disabled="!isMappingDirty" ng-click="confirmSaveCurrentMapping(map)">Save</button>
+        <button class="ui-btn secondary small" type="button" ng-show="isMappingDirty" ng-click="clearMappingForm()">Revert</button>
+        <button class="ui-btn primary small" ng-show="isMappingDirty" ng-click="confirmSaveCurrentMapping(map)">Save</button>
       </div>
     </div>
   </form>
