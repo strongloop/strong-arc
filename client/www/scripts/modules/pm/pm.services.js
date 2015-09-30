@@ -133,19 +133,19 @@ PM.service('PMHostService', [
       var PMClient = require('strong-mesh-models').Client;
       var pm = new PMClient('http://' + pmHost.host + ':' + pmHost.port );
 
-      pm.instanceFind('1', function(err, instance) {
-        if (err) {
-          $log.warn('trace: error finding pm instance: ' + err.message);
-          return cb(err, null);
-        }
-        if (!instance){
-          $log.warn('trace: no instance returned: ');
-          return cb({message:'no instance returned'}, null);
-        }
+        pm.instanceFind('1', function(err, instance) {
+          if (err) {
+            $log.warn('trace: error finding pm instance: ' + err.message);
+            return cb(err, null);
+          }
+          if (!instance){
+            $log.warn('trace: no instance returned: http://' + pmHost.host + ':' + pmHost.port );
+            return cb({message:'no instance returned'}, null);
+          }
 
-        return cb(null, instance);
+          return cb(null, instance);
 
-      });
+        });
     };
     svc.getLatestPMServer = function(cb) {
       // get the last entry in the array
