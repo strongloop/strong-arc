@@ -467,7 +467,7 @@ Common.service('WorkspaceServices', [
 
 Common.service('slPopoverService', ['$timeout', '$log', function($timeout, $log){
   function setupScrollingPopover($scope, $event) {
-    var $trigger = angular.element($event.target).closest('a');
+    var $trigger = angular.element($event.target).closest('button');
 
     $timeout(function() {
       $trigger.trigger('show');
@@ -482,11 +482,11 @@ Common.service('slPopoverService', ['$timeout', '$log', function($timeout, $log)
 
     $scope.hideCurrentPopover = function() {
       //look for any open popover on page
-      var hasOpenPopover = !!$('.popover').siblings('a').not($trigger).length;
+      var hasOpenPopover = !!$('.popover').siblings('button').not($trigger).length;
 
       if (hasOpenPopover) {
         //hide previously opened popover(s)
-        $('.popover').siblings('a').not($trigger).trigger('hide');
+        $('.popover').siblings('button').not($trigger).trigger('hide');
       } else {
         //hide the current popover
         $trigger.trigger('hide');
