@@ -18,11 +18,13 @@
         </td>
         <td>
           <div class="policy-details">
-            <div class="scopes" ng-show="policy.type == 'auth'">
+            <div class="scopes" ng-show="policy.type == 'auth' && policy.scopes.length">
               <span class="txt">Scopes:</span>
-                <span class="val">
-                  <span class="scope" ng-repeat="scope in policy.scopes">{{scope}}</span>
+              <span class="val pillbox">
+                <span class="pill" ng-repeat="scope in policy.scopes">
+                  <span class="name">{{scope}}</span>
                 </span>
+              </span>
             </div>
             <div ng-show="policy.type === 'rateLimiting'">
               <span class="txt">Limit:</span>

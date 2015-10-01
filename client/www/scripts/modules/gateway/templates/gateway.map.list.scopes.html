@@ -1,7 +1,8 @@
-<div class="gateway-map-list-scopes-container"  dropdown on-toggle="toggled(open)">
-  <span ng-show="scopes.length > 0" class="scope">{{scopes[0]}}<span ng-show="scopes.length > 1">...</span></span>
-  <!--<button ng-show="scopes.length > 0" class="scopes-pill"  dropdown-toggle>{{scopes[0]}}<span ng-show="scopes.length > 1">...</span></button>-->
-  <!--<ul class="dropdown-menu">-->
-    <!--<li ng-repeat="tScope in scopes track by $index">{{tScope}}</li>-->
-  <!--</ul>-->
+<div class="gateway-map-list-scopes-container pillbox"  dropdown on-toggle="toggled(open)">
+  <span ng-show="scopes.length" class="pill">
+    <span class="name">
+      {{scopes[0]}}
+    </span>
+    <span ng-show="scopes.length > 1" class="more">...</span>
+  </span>
 </div>

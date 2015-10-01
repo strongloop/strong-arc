@@ -65,6 +65,23 @@
         <a href="javascript:void(0)" class="ui-close">x</a>
       </li>
       <li>
+        <h5>Pillbox (with delete icon)</h5>
+        <div class="pillbox">
+          <div ng-repeat="pill in pills1" class="pill">
+            <span class="name">{{pill.name}}</span>
+            <span class="delete-pill" ng-click="deletePill(pill)">
+              <ui-icon name="circle-x" classes="dark-circle-x"></ui-icon>
+            </span>
+          </div>
+        </div>
+        <h5>Pillbox</h5>
+        <div class="pillbox">
+          <div ng-repeat="pill in pills2" class="pill">
+            <span class="name">{{pill.name}}</span>
+          </div>
+        </div>
+      </li>
+      <li>
         <h4 class="module-subheading">SVG Icons (.small, .medium, .large)</h4>
         <ul class="clearfix">
           <li ng-repeat="name in ['arrow', 'restart', 'separator']" class="pull-left">

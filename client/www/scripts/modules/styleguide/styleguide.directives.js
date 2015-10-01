@@ -30,6 +30,8 @@ Styleguide.directive('slStyleguideModuleText', [
 
         $scope.tabs = [{ id: 1, name: 'Normal' }, { id: 2, name: 'second tab' }, { id: 3, name: 'three' }, { id: 4, name: 'this is the fourth tab' }];
         $scope.crumbs = [{ name: 'Link 1' }, { name: 'Link 2' }, { name: 'Link 3' }, { name: 'Link 4' }];
+        $scope.pills1 = [{ id: 1, name: 'Pill 1'}, { id: 2, name: 'Pill 2' }, { id: 3, name: 'Pill 3'}];
+        $scope.pills2 = [{ id: 1, name: 'Pill 1'}, { id: 2, name: 'Pill 2' }, { id: 3, name: 'Pill 3'}];
         $scope.clickedCrumb = null;
         $scope.activeTab = null;
 
@@ -47,6 +49,11 @@ Styleguide.directive('slStyleguideModuleText', [
 
         $scope.onClickCrumb = function(i, crumb, len){
           $scope.clickedCrumb = crumb;
+        };
+
+        $scope.deletePill = function(pill){
+          var idx = _.findIndex($scope.pills1, { id: pill.id });
+          $scope.pills1.splice(idx, 1);
         };
       }
     };

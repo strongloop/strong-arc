@@ -1,7 +1,9 @@
-<div class="policy-scope-input-container">
-  <div ng-repeat="scope in policy.scopes" class="input-policy-scope">
-    {{scope}}
-    <div class="delete-policy-scope" ng-click="deletePolicyScope(scope)">&times;</div>
+<div class="policy-scope-input-container pillbox">
+  <div ng-repeat="scope in policy.scopes" class="input-policy-scope pill">
+    <span class="name">{{scope}}</span>
+    <span class="delete-policy-scope delete-pill" ng-click="deletePolicyScope(scope)">
+      <ui-icon name="circle-x" classes="dark-circle-x"></ui-icon>
+    </span>
   </div>
   <input class="policy-scope-input"
          typeahead="scope.name as scope.name for scope in context.policyScopes | filter:$viewValue | limitTo:8"

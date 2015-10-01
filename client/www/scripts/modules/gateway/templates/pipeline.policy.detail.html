@@ -19,10 +19,12 @@
         </div>
       </div>
       <div class="ui-row">
-        <div class="scopes" ng-show="policy.type == 'auth'">
+        <div class="scopes" ng-show="policy.type == 'auth' && policy.scopes.length">
           <div class="txt">Scopes:</div>
-          <div class="val">
-            <span class="scope" ng-repeat="scope in policy.scopes">{{scope}}</span>
+          <div class="val pillbox">
+            <span class="pill" ng-repeat="scope in policy.scopes">
+              <span class="name">{{scope}}</span>
+            </span>
           </div>
         </div>
         <div class="ui-col" ng-show="policy.type == GATEWAY_CONST.POLICY_RATELIMIT_TYPE">
