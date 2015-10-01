@@ -30,8 +30,11 @@ Styleguide.directive('slStyleguideModuleText', [
 
         $scope.tabs = [{ id: 1, name: 'Normal' }, { id: 2, name: 'second tab' }, { id: 3, name: 'three' }, { id: 4, name: 'this is the fourth tab' }];
         $scope.crumbs = [{ name: 'Link 1' }, { name: 'Link 2' }, { name: 'Link 3' }, { name: 'Link 4' }];
-        $scope.pills1 = [{ id: 1, name: 'Pill 1'}, { id: 2, name: 'Pill 2' }, { id: 3, name: 'Pill 3'}];
-        $scope.pills2 = [{ id: 1, name: 'Pill 1'}, { id: 2, name: 'Pill 2' }, { id: 3, name: 'Pill 3'}];
+        $scope.pills1 = ['Pill 1', 'Pill 2', 'Pill 3'];
+        $scope.pills2 = ['Pill 1', 'Pill 2', 'Pill 3'];
+        $scope.pills3 = ['Pill 1', 'Pill 2', 'Pill 3'];
+        $scope.pills4 = ['Pill 1', 'Pill 2', 'Pill 3'];
+        $scope.pills5 = ['Pill 1', 'Pill 2', 'Pill 3'];
         $scope.clickedCrumb = null;
         $scope.activeTab = null;
 
@@ -52,8 +55,9 @@ Styleguide.directive('slStyleguideModuleText', [
         };
 
         $scope.deletePill = function(pill){
-          var idx = _.findIndex($scope.pills1, { id: pill.id });
-          $scope.pills1.splice(idx, 1);
+          var idx = _.findIndex($scope.pills4, pill);
+
+          $scope.pills4.splice(idx, 1);
         };
       }
     };

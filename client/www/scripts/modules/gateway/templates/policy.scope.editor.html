@@ -1,14 +1,9 @@
 <div class="policy-scope-input-container pillbox">
-  <div ng-repeat="scope in policy.scopes" class="input-policy-scope pill has-delete">
-    <span class="name">{{scope}}</span>
-    <span class="delete-policy-scope delete-pill" ng-click="deletePolicyScope(scope)">
-      <ui-icon name="circle-x" classes="dark-circle-x"></ui-icon>
-    </span>
-  </div>
+  <sl-ui-pillbox list="policy.scopes" has-delete="true"></sl-ui-pillbox>
   <input class="policy-scope-input"
          typeahead="scope.name as scope.name for scope in context.policyScopes | filter:$viewValue | limitTo:8"
          type="text" sl-policy-scope-input=""
          new-policy-scope="addPolicyScope()"
          delete-policy-scope="deletePolicyScope()"
-         ng-model="context.newPolicyScope" ng-style="{width: inputWidth}"   />
+         ng-model="context.newPolicyScope" ng-style="{width: inputWidth}">
 </div>

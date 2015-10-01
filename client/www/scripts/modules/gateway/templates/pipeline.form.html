@@ -24,11 +24,8 @@
             <div class="policy-details">
               <div class="scopes" ng-show="policy.type == 'auth' && policy.scopes.length">
                 <span class="txt">Scopes:</span>
-                <span class="val pillbox">
-                  <span class="pill" ng-repeat="scope in policy.scopes">
-                    <span class="name">{{scope}}</span>
-                  </span>
-                </span>
+                <span class="val">
+                  <sl-ui-pillbox list="policy.scopes"></sl-ui-pillbox>
               </div>
               <div ng-show="policy.type == GATEWAY_CONST.POLICY_RATELIMIT_TYPE">
                 <span class="txt">Limit:</span>

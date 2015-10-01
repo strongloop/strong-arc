@@ -22,6 +22,34 @@ UI.directive('slUiSelect', [
   }
 ]);
 
+UI.directive('slUiPillbox', [
+  function(){
+    return {
+      restrict: "E",
+      replace: true,
+      templateUrl: './scripts/modules/ui/templates/ui.pillbox.html',
+      scope: {
+        list: '=',
+        onDelete: '&',
+        classes: '=',
+        hasDelete: '=',
+        showMore: '='
+      },
+      controller: function($scope) {
+        $scope.deletePill = function(item){
+          var idx = _.findIndex($scope.list, item);
+
+          $scope.list.splice(idx, 1);
+
+          if ( $scope.onDelete ) {
+            $scope.onDelete({ item: item });
+          }
+        }
+      }
+    }
+  }
+]);
+
 UI.directive('slUiToggle', [
   '$log',
   '$parse',

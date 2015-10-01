@@ -65,19 +65,29 @@
         <a href="javascript:void(0)" class="ui-close">x</a>
       </li>
       <li>
-        <h5>Pillbox (with delete icon)</h5>
+
+        <h5>Pillbox directive (with delete icon)</h5>
+        <sl-ui-pillbox list="pills1" has-delete="true"></sl-ui-pillbox>
+
+        <h5>Pillbox directive (with more elipsis)</h5>
+        <sl-ui-pillbox list="pills2" show-more="true"></sl-ui-pillbox>
+
+        <h5>Pillbox directive (read only)</h5>
+        <sl-ui-pillbox list="pills3"></sl-ui-pillbox>
+
+        <h5>Pillbox manual implementation (with delete icon)</h5>
         <div class="pillbox">
-          <div ng-repeat="pill in pills1" class="pill has-delete">
-            <span class="name">{{pill.name}}</span>
+          <div ng-repeat="pill in pills4" class="pill has-delete">
+            <span class="name">{{pill}}</span>
             <span class="delete-pill" ng-click="deletePill(pill)">
               <ui-icon name="circle-x" classes="dark-circle-x"></ui-icon>
             </span>
           </div>
         </div>
-        <h5>Pillbox</h5>
+        <h5>Pillbox manual implementation</h5>
         <div class="pillbox">
-          <div ng-repeat="pill in pills2" class="pill">
-            <span class="name">{{pill.name}}</span>
+          <div ng-repeat="pill in pills5" class="pill">
+            <span class="name">{{pill}}</span>
           </div>
         </div>
       </li>
