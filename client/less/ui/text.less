@@ -57,21 +57,26 @@ small {
   font-size: 1.4rem;
 
   .pill {
-    @height: 3rem;
-    height: 3rem;
     background-color: @grey-5;
     display:inline-block;
     border-radius: 20rem;
     margin-right: .5rem;
+    position: relative;
+
+    &.has-delete {
+      padding-right: 2.5rem;
+    }
+
+    &.has-more {
+      padding-right: 2.5rem;
+    }
 
     &:hover {
       background: @grey-3;
     }
 
     .name {
-      height: @height;
-      display: inline-block;
-      float: left;
+      display: block;
       color: @grey-1;
       padding: .2rem 1.5rem;
       text-transform: uppercase;
@@ -80,13 +85,19 @@ small {
     }
 
     .more {
+      position: absolute;
+      top: 50%;
+      right: 1.5rem;
+      margin-top: -1.5rem;
       display: inline-block;
-      padding: .2rem 1.5rem;
-      line-height: 1.9;
     }
 
     .delete-pill {
-      height: @height;
+      position: absolute;
+      top: 50%;
+      right: 0;
+      margin-top: -1.5rem;
+      height: 3rem;
       cursor: pointer;
       display: inline-block;
     }
