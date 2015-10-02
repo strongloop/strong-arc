@@ -1,5 +1,5 @@
 <span class="pillbox {{classes}}">
-  <span ng-repeat="item in list" class="pill" ng-class="{'has-delete': hasDelete, 'has-more': showMore }">
+  <span ng-repeat="item in list | limitTo: showMore ? 1 : list.length" class="pill" ng-class="{'has-delete': hasDelete, 'has-more': showMore }">
     <span class="name">
       {{item}}
     </span>
@@ -7,9 +7,5 @@
     <span ng-show="hasDelete" class="delete-pill" ng-click="deletePill(item)">
       <ui-icon name="circle-x" classes="dark-circle-x"></ui-icon>
     </span>
-  <!--<button ng-show="scopes.length > 0" class="scopes-pill"  dropdown-toggle>{{scopes[0]}}<span ng-show="scopes.length > 1">...</span></button>-->
-  <!--<ul class="dropdown-menu">-->
-    <!--<li ng-repeat="tScope in scopes track by $index">{{tScope}}</li>-->
-  <!--</ul>-->
   </span>
 </span>

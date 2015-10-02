@@ -78,7 +78,7 @@ small {
     .name {
       display: block;
       color: @grey-1;
-      padding: .2rem 1.5rem;
+      padding: 0 1.5rem;
       text-transform: uppercase;
       font-weight: 400;
       line-height: 1.9;
@@ -95,11 +95,15 @@ small {
     .delete-pill {
       position: absolute;
       top: 50%;
-      right: 0;
-      margin-top: -1.5rem;
-      height: 3rem;
+      right: .1rem;
+      margin-top: -1.2rem;
+      height: 2.4rem;
       cursor: pointer;
       display: inline-block;
+
+      .ui-icon {
+        width: 2.4rem;
+      }
     }
   }
 }

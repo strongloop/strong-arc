@@ -33,8 +33,6 @@ Styleguide.directive('slStyleguideModuleText', [
         $scope.pills1 = ['Pill 1', 'Pill 2', 'Pill 3'];
         $scope.pills2 = ['Pill 1', 'Pill 2', 'Pill 3'];
         $scope.pills3 = ['Pill 1', 'Pill 2', 'Pill 3'];
-        $scope.pills4 = ['Pill 1', 'Pill 2', 'Pill 3'];
-        $scope.pills5 = ['Pill 1', 'Pill 2', 'Pill 3'];
         $scope.clickedCrumb = null;
         $scope.activeTab = null;
 
@@ -52,12 +50,6 @@ Styleguide.directive('slStyleguideModuleText', [
 
         $scope.onClickCrumb = function(i, crumb, len){
           $scope.clickedCrumb = crumb;
-        };
-
-        $scope.deletePill = function(pill){
-          var idx = _.findIndex($scope.pills4, pill);
-
-          $scope.pills4.splice(idx, 1);
         };
       }
     };
