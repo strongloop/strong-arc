@@ -242,77 +242,89 @@ Tracing.controller('TracingMainController', [
          * - when app is stopped eg.
          *
          * */
-        if (pmInstance.setSize > 0) {
-          $scope.startTicker();
-          // processes are still coming up
-          var fpLen = filteredProcesses.length;
-          if (fpLen !== pmInstance.setSize) {
-            if (!restarting) {
-              if (prevTracingPidCount !== fpLen) {
-                // show progress via growl each time the process count changes
-                growl.addSuccessMessage('starting process: ' + (fpLen + 1));
-                prevTracingPidCount = fpLen;
-                loadTracingProcessesAttemptCount = 0;
-              }
-            }
-            if (fpLen === 1 && ($scope.processes.length === 0)) {
 
-              $scope.tracingCtx.currentProcess = filteredProcesses[0];  //default
-              $scope.selectedProcess = filteredProcesses[0];
-              $scope.tracingCtx.currentProcesses = filteredProcesses;
+          PMHostService.getFirstPMInstance($scope.selectedPMHost, function(err, instance) {
+            if (err) {
+              $log.warn('bad pm reload', err);
+              return;
+            }
+            $scope.targetProcessCount = instance.setSize;
+            if ($scope.targetProcessCount > 0) {
               $scope.startTicker();
-              $scope.refreshTimelineProcess();
-            }
-            $scope.processes = filteredProcesses;
-            $timeout(function() {
-              if (!$scope.killProcessPoll) {
-
-                $scope.loadTracingProcesses(pmInstance);
-                loadTracingProcessesAttemptCount++;
-                if (loadTracingProcessesAttemptCount > 40) {
-                  $scope.killProcessPoll = true;
-                  $scope.tracingProcessCycleActive = false;
-                  $scope.showTransactionHistoryLoading = false;
-                  $scope.isShowTraceSequenceLoader = false;
-                  $scope.showTimelineLoading = false;
-                  $scope.transactionHistoryRenderToggle = false;
-                  $scope.pidCycleCheckCollection = [];
-                  TracingServices.alertProcessLoadProblem();
-                  loadTracingProcessesAttemptCount = 0;
+              // processes are still coming up
+              var fpLen = filteredProcesses.length;
+              if (fpLen !== $scope.targetProcessCount) {
+                if (!restarting) {
+                  if (prevTracingPidCount !== fpLen) {
+                    // show progress via growl each time the process count changes
+                    growl.addSuccessMessage('starting process: ' + (fpLen + 1));
+                    prevTracingPidCount = fpLen;
+                    loadTracingProcessesAttemptCount = 0;
+                  }
                 }
+                if (fpLen === 1 && ($scope.processes.length === 0)) {
+
+                  $scope.tracingCtx.currentProcess = filteredProcesses[0];  //default
+                  $scope.selectedProcess = filteredProcesses[0];
+                  $scope.tracingCtx.currentProcesses = filteredProcesses;
+                  $scope.startTicker();
+                  $scope.refreshTimelineProcess();
+                }
+                $scope.processes = filteredProcesses;
+                $timeout(function () {
+                  if (!$scope.killProcessPoll) {
+
+                    $scope.loadTracingProcesses(instance);
+                    loadTracingProcessesAttemptCount++;
+                    if (loadTracingProcessesAttemptCount > 40) {
+                      $scope.killProcessPoll = true;
+                      $scope.tracingProcessCycleActive = false;
+                      $scope.showTransactionHistoryLoading = false;
+                      $scope.isShowTraceSequenceLoader = false;
+                      $scope.showTimelineLoading = false;
+                      $scope.transactionHistoryRenderToggle = false;
+                      $scope.pidCycleCheckCollection = [];
+                      TracingServices.alertProcessLoadProblem();
+                      loadTracingProcessesAttemptCount = 0;
+                    }
+                  }
+                }, 1000);
               }
-            }, 1000);
-          }
-          // all processes are up and tracing
-          else {
-            var firstProcess = filteredProcesses[0];
-            loadTracingProcessesAttemptCount = 0;
-            firstProcess.isActive = true;
-            $scope.tracingCtx.currentProcess = firstProcess;  //default
-            $scope.selectedProcess = firstProcess;
-            $scope.processes = filteredProcesses;
-            $scope.tracingCtx.currentProcesses = filteredProcesses;
-            $scope.tracingProcessCycleActive = false;
-            $scope.killProcessPoll = true;
-            $scope.pidCycleCheckCollection = [];
-            growl.addSuccessMessage('All processes are up and tracing');
+              // all processes are up and tracing
+              else {
+                var firstProcess = filteredProcesses[0];
+                loadTracingProcessesAttemptCount = 0;
+                firstProcess.isActive = true;
+                $scope.tracingCtx.currentProcess = firstProcess;  //default
+                $scope.selectedProcess = firstProcess;
+                $scope.processes = filteredProcesses;
+                $scope.tracingCtx.currentProcesses = filteredProcesses;
+                $scope.tracingProcessCycleActive = false;
+                $scope.killProcessPoll = true;
+                $scope.pidCycleCheckCollection = [];
+                growl.addSuccessMessage('All processes are up and tracing');
 
-            $scope.refreshTimelineProcess();
-          }
-        }
-        // pm process setSize = 0
-        else {
-          $scope.processes = [];
-          $scope.tracingCtx.currentProcesses = [];
-          $scope.killProcessPoll = true;
-          $scope.tracingProcessCycleActive = false;
-          $scope.showTransactionHistoryLoading = false;
-          $scope.isShowTraceSequenceLoader = false;
-          $scope.showTimelineLoading = false;
-          $scope.transactionHistoryRenderToggle = false;
-          $scope.pidCycleCheckCollection = [];
+                $scope.refreshTimelineProcess();
+              }
+            }
+            // pm process setSize = 0
+            else {
+              $scope.processes = [];
+              $scope.tracingCtx.currentProcesses = [];
+              $scope.killProcessPoll = true;
+              $scope.tracingProcessCycleActive = false;
+              $scope.showTransactionHistoryLoading = false;
+              $scope.isShowTraceSequenceLoader = false;
+              $scope.showTimelineLoading = false;
+              $scope.transactionHistoryRenderToggle = false;
+              $scope.pidCycleCheckCollection = [];
 
-        }
+            }
+          });
+
+
+
+
       });
     };
     $scope.setTracingOnOffToggle = function(value) {
@@ -379,7 +391,6 @@ Tracing.controller('TracingMainController', [
         $scope.showTraceToggle = true;
 
         $scope.tracingCtx.currentPMInstance = instance;
-        $scope.targetProcessCount = $scope.tracingCtx.currentPMInstance.setSize;
 
         $scope.tracingCtx.currentPMHost = $scope.selectedPMHost;
 
@@ -552,11 +563,19 @@ Tracing.controller('TracingMainController', [
         $scope.resetTracingCtx();
         $scope.selectedPMHost = host;
         $scope.tracingCtx.currentManagerHost = $scope.selectedPMHost;
+        // establish current process count
+        $scope.targetProcessCount = 0;
+        if ($scope.tracingCtx.currentManagerHost.processes && $scope.tracingCtx.currentManagerHost.processes.pids) {
+          var netProcesses = $scope.tracingCtx.currentManagerHost.processes.pids.filter(function(process){
+            return (!process.stopTime && (process.workerId !== 0));
+          });
+          $scope.targetProcessCount = netProcesses.length;
+        }
         $scope.main();
+
       }
     };
     $scope.updateHost = function(host) {
-      $log.debug('CHANGED HOST AGAIN');
       $scope.changePMHost(host);
     };
     $scope.$watch('selectedPMHost', function(newVal, oldVal) {
@@ -616,7 +635,6 @@ Tracing.controller('TracingMainController', [
     $scope.turnTracingOff = function() {
 
       if ($scope.tracingCtx.currentPMInstance.tracingEnabled) {
-        //$log.debug('Stop tracing on these processes: ' + $scope.processes);
         $scope.pidCycleCheckCollection = [];
         $scope.processes.map(function(process) {
           $scope.pidCycleCheckCollection.push(process.workerId);
