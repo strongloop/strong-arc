@@ -259,10 +259,11 @@ Styleguide.directive('slStyleguideModulePopovers', [
           };
         };
 
-        $scope.showModal = function() {
+        $scope.showModal = function(size) {
+          size = size || 'lg';
           var modalDlg = $modal.open({
             templateUrl: templateBase + 'styleguide.module.popovers.modal.html',
-            size: 'lg',
+            size: size,
             controller: function($scope, $modalInstance, title) {
               $scope.title = title;
               $scope.close = function() {
