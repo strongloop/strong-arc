@@ -1,3 +1,61 @@
+2015-10-05, Version 1.8.2
+=========================
+
+ * Fix broken service resolution (seanbrookes)
+
+ * Fix broken heap snapshot (seanbrookes)
+
+ * Remove double slash from app control link display (seanbrookes)
+
+ * Update loopback-workspace ver for new app controller (seanbrookes)
+
+ * convert links in profile to spans (Anthony Ettinger)
+
+ * pass cluster size to the new deployment API (Ryan Graham)
+
+ * fix reference to renamed WorkspaceServices 3.0 (seanbrookes)
+
+ * fix reference to renamed WorkspaceServices 2.0 (seanbrookes)
+
+ * fix reference to renamed WorkspaceServices (seanbrookes)
+
+ * Use strongloop conventions for licensing (Sam Roberts)
+
+ * remove isolate test notation (seanbrookes)
+
+ * fix jshint line too long (seanbrookes)
+
+ * Replace internal pm with workspace controlls (seanbrookes)
+
+ * update d3 libs (Anthony Ettinger)
+
+ * add missing sdk api references (seanbrookes)
+
+ * replace tracing pm host selector with shared component (Ryan Graham)
+
+ * linting: fix jshint failures that abort the build (Ryan Graham)
+
+ * set the number of x axis ticks to avoid messy auto display (seanbrookes)
+
+ * fix loading delay issue with api analytics (seanbrookes)
+
+ * Fix PID and profiles not updating automatically (Joseph Tary)
+
+ * test: generate coverge for karma tests (Ryan Graham)
+
+ * deps: update ws to 0.8.0 (Ryan Graham)
+
+ * test: fix flaky compoer test (Ryan Graham)
+
+ * fix various html/react errors (Ryan Graham)
+
+ * test: fix e2e composer tests (Ryan Graham)
+
+ * test: re-enable browser sync in protractor (Ryan Graham)
+
+ * test: catch and ignore unlink error (Ryan Graham)
+
+
 2015-08-18, Version 1.8.1
 =========================
 
