@@ -1,5 +1,11 @@
-<ul class="ui-list-scroll skinny">
-  <li ng-repeat="pid in host.processes.pids">
-    {{ pid.pid }}
-  </li>
-</ul>
+<div>
+  <div class="loading"
+       sl-common-loading-indicator
+       size="small"
+       ng-show="isShowPidsLoadingSpinner(host)"></div>
+  <ul class="ui-list-scroll skinny" ng-show="!isShowPidsLoadingSpinner(host)">
+    <li ng-repeat="pid in host.processes.pids">
+      {{ pid.pid }}
+    </li>
+  </ul>
+</div>
