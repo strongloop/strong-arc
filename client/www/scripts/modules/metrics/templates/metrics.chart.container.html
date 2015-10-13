@@ -1,16 +1,20 @@
 <div class="metrics-chart-view-container">
   <div ng-repeat="chart in chartData" class="chart-container">
-    <div class="main-chart-col" ng-show="showChart(chart, chart.chartModel)">
-      <ul class="metrics-chart-controls">
-        <li ng-repeat="metric in chart.metrics">
-          <label class="" ng-click="toggleChartMetric(metric)">
-            <span class="metrics-series-toggle" style="{{ getChartControlItemColor(metric) }}"></span>
-            <span class="ui-label-txt">{{ metric.key }}</span>
-          </label>
-        </li>
-      </ul>
-      <h3>{{ chart.displayName }}</h3>
-      <nvd3 class="metrics-chart" options="getChartOptions(chart.chartConfig)" data="getChartModel(chart.chartModel)"></nvd3>
+    <div data-ui-type="table">
+      <div data-ui-type="row">
+        <div data-ui-type="cell" class="main-chart-col" ng-show="showChart(chart, chart.chartModel)">
+          <ul class="metrics-chart-controls">
+            <li ng-repeat="metric in chart.metrics">
+              <label class="" ng-click="toggleChartMetric(metric)">
+                <span class="metrics-series-toggle" style="{{ getChartControlItemColor(metric) }}"></span>
+                <span class="ui-label-txt">{{ metric.key }}</span>
+              </label>
+            </li>
+          </ul>
+          <h3>{{ chart.displayName }}</h3>
+          <nvd3 class="metrics-chart" options="getChartOptions(chart.chartConfig)" data="getChartModel(chart.chartModel)"></nvd3>
+        </div>
+      </div>
     </div>
   </div>
 </div>
