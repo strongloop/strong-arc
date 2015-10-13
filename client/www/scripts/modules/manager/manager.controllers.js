@@ -13,7 +13,6 @@ Manager.controller('ManagerMainController', [
            $timeout, $q, $modal, LicensesService) {
     $scope.mesh = require('strong-mesh-client')('http://' + $location.host() + ':' + $location.port() + '/manager');
     $scope.currentPM = {};
-    var x = 42;
     $scope.loc = {
       host:$location.host(),
       port:$location.port()
@@ -261,7 +260,9 @@ Manager.controller('ManagerMainController', [
               // display status
               // add 'status' property
               host = ManagerServices.processHostStatus(host);
-              host = $scope.processPids(host);
+              $timeout(function() {
+                $scope.processPids(host);
+              }, 10);
 
             });
 
@@ -287,18 +288,20 @@ Manager.controller('ManagerMainController', [
      * */
     $scope.updateProcessCount = function(host) {
 
-      if (host.targetProcessCount < 1) {
-        host.targetProcessCount = 1;
-      }
-
-      host.action({cmd:"current","sub": "set-size", "size": host.targetProcessCount }, function(err, res) {
-        if (err) {
-          $log.warn('bad Strong PM host action ' + cmd + ' error: ' + err.message);
+      if (Number.isInteger(host.targetProcessCount)) {
+        if (host.targetProcessCount < 1) {
+          host.targetProcessCount = 1;
         }
-        $log.debug('| update pid count: target[' + host.targetProcessCount + ']   actual[' + host.processCount + ']');
+        host.processSnapshotCount = host.targetProcessCount;
+        //host.targetProcessCount = host.processCount;
+        host.action({cmd:"current","sub": "set-size", "size": host.targetProcessCount }, function(err, res) {
+          if (err) {
+            $log.warn('bad Strong PM host action ' + cmd + ' error: ' + err.message);
+          }
+          $log.debug('| update pid count: target[' + host.targetProcessCount + ']   actual[' + host.processCount + ']');
 
-      });
-
+        });
+      }
     };
     $scope.getProcessCount = function(host) {
       if (!host.processes) {
@@ -307,6 +310,15 @@ Manager.controller('ManagerMainController', [
       return host.processes.pids.length;
     };
 
+    $scope.isShowPidsLoadingSpinner = function(host) {
+      if (!host.processSnapshotCount) {
+        return false;
+      }
+      if (host.processSnapshotCount === host.processCount) {
+        return false;
+      }
+      return true;
+    };
     $scope.processPids = function(host) {
       var retVar = [];
       host.status.isUpdatingProcessCount = false;
@@ -320,7 +332,11 @@ Manager.controller('ManagerMainController', [
         }
       });
       host.processCount = retVar.length;
-      host.targetProcessCount = host.processCount;
+      if (!host.processSnapshotCount) {
+        host.processSnapshotCount = host.processCount;
+        host.targetProcessCount = host.processCount;
+      }
+
       host.processes.pids = retVar;
       return host;
     };
@@ -408,7 +424,6 @@ Manager.controller('ManagerMainController', [
       }
     };
     $scope.savePM = function() {
-      x++;
       if ($scope.currentPM.host && $scope.currentPM.port) {
 
         $scope.mesh.models.ManagerHost.create($scope.currentPM,
@@ -452,6 +467,7 @@ Manager.controller('ManagerMainController', [
         delete host.filteredActions;
         delete host.isShowActionList;
         delete host.processCount;
+        delete host.processSnapshotCount;
         delete host.targetProcessCount;
         delete host.displayStatus;
         delete host.status;
