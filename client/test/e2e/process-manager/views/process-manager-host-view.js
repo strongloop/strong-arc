@@ -48,7 +48,6 @@ var ProcessManagerHostView = (function () {
       10000);
 
       self.processManagerHostErrorIndicator.click();
-      self.processManagerHostErrorIndicator.click();
     };
 
     this.closeErrorDialog = function () {

@@ -286,39 +286,66 @@ Manager.controller('ManagerMainController', [
      * Update Process Count
      *
      * */
-    $scope.updateProcessCount = function(host) {
+    function updateProcessCount(host) {
+      var dfd = $q.defer();
+      var action = {
+        cmd: 'current',
+        sub: 'set-size',
+        size: host.targetProcessCount
+      };
 
+      host.action(action, function(err, res) {
+        if (err) {
+          $log.warn('bad Strong PM host action ' + action.sub + ' error: ' + err.message);
+          dfd.reject();
+          return;
+        }
+
+        $log.debug('| update pid count: target[' + host.targetProcessCount + ']   actual[' + host.processCount + ']');
+        dfd.resolve(host.targetProcessCount);
+      });
+
+      return dfd.promise;
+    }
+
+    function resetProcessCountTimeout(host, delay) {
+      if (host._processCountTimeout) {
+        $timeout.cancel(host._processCountTimeout);
+        host._processCountTimeout = null;
+      }
+
+      host._processCountTimeout = $timeout(function() {
+        host._processCountTimeout = null;
+        host.status.isBusy = true;
+
+        updateProcessCount(host).then(function() {
+          host.status.isBusy = false;
+        });
+      }, delay);
+    }
+
+    $scope.updateProcessCount = function(host) {
       if (Number.isInteger(host.targetProcessCount)) {
         if (host.targetProcessCount < 1) {
           host.targetProcessCount = 1;
         }
-        host.processSnapshotCount = host.targetProcessCount;
-        //host.targetProcessCount = host.processCount;
-        host.action({cmd:"current","sub": "set-size", "size": host.targetProcessCount }, function(err, res) {
-          if (err) {
-            $log.warn('bad Strong PM host action ' + cmd + ' error: ' + err.message);
-          }
-          $log.debug('| update pid count: target[' + host.targetProcessCount + ']   actual[' + host.processCount + ']');
 
-        });
+        resetProcessCountTimeout(host, 1000);
       }
     };
+
     $scope.getProcessCount = function(host) {
       if (!host.processes) {
         return;
       }
+
       return host.processes.pids.length;
     };
 
     $scope.isShowPidsLoadingSpinner = function(host) {
-      if (!host.processSnapshotCount) {
-        return false;
-      }
-      if (host.processSnapshotCount === host.processCount) {
-        return false;
-      }
-      return true;
+      return host.status.isBusy;
     };
+
     $scope.processPids = function(host) {
       var retVar = [];
       host.status.isUpdatingProcessCount = false;

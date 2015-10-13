@@ -9,8 +9,8 @@
       class="ui-input"
       placeholder="(eg. 4)"
       min="1"
-      ng-blur="updateProcessCount(host)"
+      ng-change="updateProcessCount(host)"
       ng-model="host.targetProcessCount"
-      ng-disabled="host.status.isProblem" />
+      ng-disabled="host.status.isProblem || host.status.isBusy" />
   </div>
 </ng-form>
