@@ -17,7 +17,7 @@ describe('process-manager-host-interactions', function () {
     headerView.logout();
   });
 
-	it('should login and navigate to process manager,' +
+	xit('should login and navigate to process manager,' +
 		'add a valid pm host,', function () {
 	  var processManagerHostView = 
 	  	new ProcessManagerViews.ProcessManagerHostView();
