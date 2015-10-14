@@ -1,3 +1,27 @@
+2015-10-14, Version 1.8.3
+=========================
+
+ * Revert "Fix squashed  / overlapping chart containers" (Anthony Ettinger)
+
+ * Fix issues with PID count on PM list (Joseph Tary)
+
+ * Fix delete then set pid count issue in PM view (seanbrookes)
+
+ * fix alignment on button for app popover (Anthony Ettinger)
+
+ * fixup! revert d3 library upgrades (Ryan Graham)
+
+ * add new generated lb-build script (Anthony Ettinger)
+
+ * revert d3 library upgrades (Anthony Ettinger)
+
+ * Ensure latest service instance when polling tracing processes (seanbrookes)
+
+ * Fix target pid count mis-match (seanbrookes)
+
+ * Fix squashed  / overlapping chart containers (seanbrookes)
+
+
 2015-10-05, Version 1.8.2
 =========================
 
@@ -229,11 +253,19 @@
 
  * fix broken injection (seanbrookes)
 
- * package: prevent strong-arc from bundling itself (Ryan Graham)
-
  * deps: remove dependency on slug (Ryan Graham)
 
  * Add support to Arc for smart-profiling feature (Joseph Tary)
+
+
+2015-06-11, Version 1.4.2
+=========================
+
+ * fix broken injection (seanbrookes)
+
+ * package: prevent strong-arc from bundling itself (Ryan Graham)
+
+ * deps: remove dependency on slug (Ryan Graham)
 
 
 2015-06-10, Version 1.4.1
