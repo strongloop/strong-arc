@@ -53,14 +53,29 @@ small {
   }
 }
 
+//optional container used in edit mode
+.pills {
+  display: flex;
+  padding: .5rem .5rem 0 .5rem;
+
+  &.edit {
+    width: 500px;
+    border: 1px solid @ui-form-border-color;
+    border-radius: @ui-radius;
+  }
+}
+
+//list of pills
 .pillbox {
   font-size: 1.4rem;
+  flex-grow: 0;
 
   .pill {
     background-color: @grey-5;
     display:inline-block;
     border-radius: 20rem;
     margin-right: .5rem;
+    margin-bottom: .5rem;
     position: relative;
 
     &.has-delete {
@@ -70,10 +85,6 @@ small {
     &.has-more {
       padding-right: 2.5rem;
     }
-
-    //&:hover {
-    //  background: @grey-3;
-    //}
 
     .name {
       cursor: default;
@@ -108,3 +119,11 @@ small {
     }
   }
 }
+
+//input field for adding more pills
+.pill-input {
+  flex-grow: 1;
+}
+
+
+

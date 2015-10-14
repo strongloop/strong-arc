@@ -292,7 +292,6 @@ Gateway.directive('slPolicyScopeInput', [ '$log', function($log) {
           var tempEl = $('<span>' + value + '</span>').appendTo('body');
           scope.inputWidth = tempEl.width() + 5;
           tempEl.remove();
-
         }
       });
 
