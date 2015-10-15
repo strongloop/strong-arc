@@ -250,6 +250,11 @@ Gateway.directive('slPolicyScopeEditor', [ '$log', function($log) {
       }
 
       $scope.addPolicyScope = function() {
+        //make sure this scope hasn't already been defined
+        if (_.contains($scope.policy.scopes, $scope.context.newPolicyScope)) {
+          return;
+        }
+
         if (!$scope.context.newPolicyScope || $scope.context.newPolicyScope.length === 0) {
           return;
         }
