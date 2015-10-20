@@ -80,10 +80,10 @@
           <td>
             <div class="policy-details">
               <div ng-show="policy.type == GATEWAY_CONST.POLICY_RATELIMIT_TYPE">
-                <ul>
-                  <li>limit: {{policy.limit}}</li>
-                  <li>interval (ms): {{policy.interval}}</li>
-                </ul>
+                <span class="txt">Limit:</span>
+                <span class="val">{{policy.limit}}</span>
+                <span class="txt">Interval:</span>
+                <span class="val">{{policy.interval}}</span>
               </div>
               <div ng-show="policy.type == GATEWAY_CONST.POLICY_PROXY_TYPE">
                 targetURL: <span>{{policy.targetURL}}</span>
@@ -93,6 +93,9 @@
                 <span class="val">
                   <sl-ui-pillbox list="policy.scopes"></sl-ui-pillbox>
                 </span>
+              </div>
+              <div ng-show="policy.type == GATEWAY_CONST.POLICY_METRICS_TYPE_TYPE">
+                <span class="txt">Metrics</span>
               </div>
             </div>
           </td>

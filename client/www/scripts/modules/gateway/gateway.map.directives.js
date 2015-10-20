@@ -28,6 +28,7 @@ Gateway.directive('slGatewayMapForm', [
           $scope.isMappingDirty = false;
           $scope.isMappingNameDirty = false;
           $scope.originalMap = {};
+          $scope.GATEWAY_CONST = GATEWAY_CONST;
 
           $scope.setMapPipelineId = function(map, pipeId) {
             $scope.showDropdownPipeline = false;
