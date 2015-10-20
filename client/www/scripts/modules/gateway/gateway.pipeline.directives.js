@@ -44,6 +44,7 @@ Gateway.directive('slPipelineForm', ['$modal',
           $scope.showAddPolicyMenu = false;
           $scope.isPipelineDirty = false;
           $scope.isPipelineNameDirty = false;
+          $scope.GATEWAY_CONST = GATEWAY_CONST;
 
           function getPipelineRenderPolicy(policyId) {
             return _.findWhere($scope.context.policies, { id: policyId });
