@@ -352,7 +352,7 @@ var GatewayHomeView = (function () {
       ));
     self.editFirstPipelineLink =
       element(by.css(
-        'table.pipelines tbody tr:first-child td:first-child a'
+        'table.pipelines tbody tr:first-child td:first-child button'
       ));
     self.saveEditPipelineButton =
       element(by.css(
