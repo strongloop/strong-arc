@@ -7,7 +7,8 @@ Gateway.controller('GatewayMainController', [
   '$stateParams',
   '$location',
   '$modal',
-  function($scope, $log, GatewayServices, $timeout, $state, $stateParams, $location, $modal) {
+  '$rootScope',
+  function($scope, $log, GatewayServices, $timeout, $state, $stateParams, $location, $modal, $rootScope) {
 
 
     function getNavBasePath() {
@@ -521,6 +522,7 @@ Gateway.controller('GatewayMainController', [
       }
       setView();
     }
+
     function setView() {
         if ($scope.gatewayCtx.currentView) {
           //$scope.refreshDataSets();
@@ -574,9 +576,9 @@ Gateway.controller('GatewayMainController', [
         }
 
     }
+
     $scope.setMainNav = function(view, id) {
-
-
+      $rootScope.$emit('hide-popup-help');
 
       $scope.gatewayCtx.currentView = view;
       if (id) {
