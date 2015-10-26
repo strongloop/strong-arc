@@ -395,6 +395,7 @@ Gateway.controller('GatewayMainController', [
       $timeout(function(){
         window.setScrollView('.sidebar-layout-main-container');
         window.setScrollView('[data-id="GatewayMainContainer"]');
+        $(window).trigger('resize');
       }, 0);
     }
 
