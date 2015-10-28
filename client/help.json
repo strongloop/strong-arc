@@ -28,6 +28,7 @@
     "gateway-maps": 6721841,
     "gateway-pipelines": 6721843,
     "gateway-policies": 6721846,
-    "smart-profiling": 6720103
+    "smart-profiling": 6720103,
+    "load-balancer": 6095954
   }
 }
