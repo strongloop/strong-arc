@@ -94,7 +94,9 @@ Profiler.service('ProfilerService', [
 
             if ( data.status === 200 ) {
               $interval.cancel(intv);
-              var file = new File([data.data], fileName, { type: "text/plain" });
+              //var file = new File([data.data], fileName, { type: "text/plain" });
+              var file = new Blob([data.data], { type: "text/plain" });
+              file.name = fileName;
 
               def.resolve(file);
             } else if ( data.status !== 204 ) {
