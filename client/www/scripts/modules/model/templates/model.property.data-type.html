@@ -1,14 +1,14 @@
 <div>
-    <select ng-model="displayType"
-            ng-options="type for type in modelPropertyTypes"
+  <select ng-model="displayType"
             ng-change="handleChange(displayType)">
+      <option ng-value="type" ng-repeat="type in modelPropertyTypes" ng-selected="type == displayType">{{type}}</option>
     </select>
   <div class="array-detail-container" ng-class="{ 'is-open': isArray, 'is-closed': !isArray }">
     <label>of</label>
     <select ng-model="arrayType"
             data-name="sub-type"
-            ng-options="type for type in modelPropertyTypes"
             ng-change="handleArrayTypeChange(arrayType)">
+      <option ng-value="type" ng-repeat="type in modelPropertyTypes" ng-selected="type == arrayType">{{type}}</option>
     </select>
   </div>
   <div class="property-type-object-definition-display">
