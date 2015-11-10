@@ -1,0 +1,55 @@
+.ui-modal {
+
+  &.file-picker {
+    .files {
+      padding-left: 2rem;
+
+      li:nth-child(odd) {
+        background-color: @grey-7;
+      }
+      .selected {
+        a {
+          background: @blue-2;
+          color: @white;
+        }
+      }
+
+      li {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        resize: vertical;
+      }
+
+      li > span, li > a {
+        color: @grey-1;
+        text-decoration: none;
+        padding: .5rem 1rem .75rem;
+        line-height: 1.4rem;
+        resize: vertical;
+      }
+
+      .ui-icon {
+        height: 1.6rem;
+
+        .directory {
+          path {
+            fill: @blue-3;
+          }
+        }
+
+        .file, .symlink {
+          path {
+            fill: @grey-4;
+          }
+        }
+      }
+    }
+
+    .cwd {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      word-break: break-all;
+    }
+  }
+}
