@@ -218,7 +218,7 @@ gulp.task('test-e2e', function(callback) {
     //   }
     //   runProtractorTests();
     // });
-    runProtractorTests();
+    runProtractorTests(msg);
   });
 
   function startTestPM(cb) {
@@ -251,7 +251,9 @@ gulp.task('test-e2e', function(callback) {
     });
   }
 
-  function runProtractorTests() {
+  function runProtractorTests(server) {
+    process.env.TEST_SERVER_PORT = server.port;
+
     spawn('protractor', ['client/test/protractor.conf.js'], {stdio: 'inherit'})
       .on('error', protractorResults)
       .on('exit', function(code, signal) {
@@ -319,7 +321,7 @@ gulp.task('test-client-integration', function(callback) {
 
 gulp.task('setup-mysql', function(callback) {
   var ROOT_PASSWORD = process.env.MYSQL_ROOT_PWD || '';
-  
+
   setupMysql(ROOT_PASSWORD, function(err) {
     if (err) logMysqlErrorDescription(err);
     // Don't fail the build so that more tests will be run

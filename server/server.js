@@ -51,10 +51,10 @@ if (app.enabled('feature:crash')) {
 
 try {
   // API explorer
-  var explorer = require('loopback-explorer');
-  app.use('/explorer/workspace', explorer(workspace,
+  var explorer = require('loopback-component-explorer');
+  app.use('/explorer/workspace', explorer.routes(workspace,
     { basePath: '/workspace/api' }));
-  app.use('/explorer/arc-api', explorer(arcApi, { basePath: '/api' }));
+  app.use('/explorer/arc-api', explorer.routes(arcApi, { basePath: '/api' }));
 } catch(err) {
   // silently ignore the error, the explorer is not available in "production"
 }

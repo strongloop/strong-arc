@@ -19,6 +19,8 @@ exports.config = {
     }));
 
     var EC = protractor.ExpectedConditions;
+    var testServer = 'http://127.0.0.1:' +
+      (process.env.TEST_SERVER_PORT || 9800);
 
     // First page load takes a while, so wait for it before even starting tests
     // HACK: this little load/delay/load saves about 10 seconds of spinning
@@ -26,12 +28,12 @@ exports.config = {
     return browser.driver.wait(EC.or(EC.and(goHome, isHome), sleep), 10000);
 
     function goHome() {
-      return browser.driver.get('http://127.0.0.1:9800/#/login');
+      return browser.driver.get(testServer + '/#/login');
     }
 
     function isHome() {
       return browser.driver.getCurrentUrl().then(function(url) {
-        return url === 'http://127.0.0.1:9800/#/login';
+        return url === testServer + '/#/login';
       });
     }
 
