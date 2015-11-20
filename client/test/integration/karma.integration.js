@@ -2,6 +2,9 @@
 
 module.exports = function(config) {
 
+  // get the port from the environment, or default to the old hard-code value
+  var testServerPort = process.env.TEST_SERVER_PORT || 9800;
+
   // tell the integration tests that there is no MySQL server setup
   config.client.SKIP_MYSQL = process.env.SKIP_MYSQL;
 
@@ -117,11 +120,12 @@ module.exports = function(config) {
 
 
     // web server port
+    // NOTE(jtary) This, as well as the test-server port, should be made
+    // dynamic so that tests can be run concurrently without port conflicts.
     port: 9876,
 
     proxies: {
-      // NOTE(bajtos) The port 9800 is hard-coded in test-server.js
-      '/': 'http://localhost:9800/'
+      '/': 'http://localhost:' + testServerPort + '/'
     },
 
     // enable / disable colors in the output (reporters and logs)

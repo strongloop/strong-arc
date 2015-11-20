@@ -1,6 +1,7 @@
 var ArcViews = require('../arc/views/');
 var ComposerViews = require('../composer/views/');
 var EC = protractor.ExpectedConditions;
+var testServer = 'http://127.0.0.1:' + (process.env.TEST_SERVER_PORT || 9800);
 
 describe('model-definition-interactions', function() {
   beforeAll(function() {
@@ -12,7 +13,7 @@ describe('model-definition-interactions', function() {
 
   beforeEach(function() {
     var modelEditorView = new ComposerViews.ModelEditorView();
-    browser.get('http://127.0.0.1:9800/#/composer');
+    browser.get(testServer + '/#/composer');
     browser.driver.wait(
       EC.visibilityOf(modelEditorView.addModelButton),
       5000);

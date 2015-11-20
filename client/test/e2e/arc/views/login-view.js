@@ -1,5 +1,6 @@
 var LoginView = (function () {
   var EC = protractor.ExpectedConditions;
+  var testServer = 'http://127.0.0.1:' + (process.env.TEST_SERVER_PORT || 9800);
 
   function LoginView() {
     this.userNameInput = element(by.id('InputUserName'));
@@ -7,7 +8,7 @@ var LoginView = (function () {
     this.submitButton = element(by.id('login-user-btn'));
 
     this.openLoginView = function() {
-      browser.get('http://127.0.0.1:9800/#/login');
+      browser.get(testServer + '/#/login');
       var loginBtn = this.submitButton;
       browser.driver.wait(
         EC.visibilityOf(loginBtn),
@@ -36,11 +37,11 @@ var LoginView = (function () {
 
     this.loginToLandingView = function() {
       var loginAsTestUser = this.loginAsTestUser.bind(this);
-      browser.get('http://127.0.0.1:9800/#/login').then(function() {
+      browser.get(testServer + '/#/login').then(function() {
         loginAsTestUser();
         browser.driver.wait(function() {
           return browser.driver.getCurrentUrl().then(function(url) {
-            return url === 'http://127.0.0.1:9800/#/';
+            return url === testServer + '/#/';
           });
         }, 10000);
         browser.driver.wait(

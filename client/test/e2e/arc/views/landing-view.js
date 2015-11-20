@@ -1,5 +1,6 @@
 var LandingView = (function () {
   var EC = protractor.ExpectedConditions;
+  var testServer = 'http://127.0.0.1:' + (process.env.TEST_SERVER_PORT || 9800);
   function LandingView() {
     this.landingTitle  = element(by.css('.landing-title'));
     this.composerAppCommand = element(
@@ -49,7 +50,7 @@ var LandingView = (function () {
           element(by.css('button[ng-click="initAddNewPMHost()"]'))
         ),
       10000);
-    };    
+    };
 
     this.openMetricsView = function() {
       browser.driver.wait(
@@ -61,7 +62,7 @@ var LandingView = (function () {
           element(by.css('div .metrics-main-container'))
         ),
       10000);
-    }; 
+    };
 
     this.openTracingView = function() {
       browser.driver.wait(
@@ -73,8 +74,8 @@ var LandingView = (function () {
           element(by.css('sl-tracing-header'))
         ),
       10000);
-    }; 
-    
+    };
+
     this.openProfilerView = function() {
       browser.driver.wait(
         EC.presenceOf(this.profilerAppCommand),
@@ -88,17 +89,18 @@ var LandingView = (function () {
     };
 
     this.waitUntilLoaded = function() {
-      browser.get('http://127.0.0.1:9800/#/');
+      var port =
+      browser.get(testServer + '/#/');
       browser.driver.wait(function() {
         return browser.driver.getCurrentUrl().then(function(url) {
-          return url === 'http://127.0.0.1:9800/#/';
+          return url === testServer + '/#/';
         });
       }, 20000);
       browser.waitForAngular();
     };
 
     this.get = function() {
-      browser.get('http://127.0.0.1:9800/#/');
+      browser.get(testServer + '/#/');
     };
   }
   return LandingView;

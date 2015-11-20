@@ -1,6 +1,8 @@
 var async = require('async');
 var fs = require('fs-extra');
 var path = require('path');
+var _defaults = require('lodash').defaults;
+
 process.env.SL_ARC_FEATURE_FLAGS = 'tracing';
 
 var given = require('loopback-workspace/test/helpers/given');
@@ -13,9 +15,8 @@ fs.removeSync(SANDBOX);
 fs.copySync(EMPTY_PROJECT, SANDBOX);
 process.env.WORKSPACE_DIR = SANDBOX;
 
-// karma listens on port 9876 by default
-// let's use a similar port number for the Arc server
-var port = 9800;
+// Use a random port to avoid conficts when running tests in parallel.
+var port = 0;
 
 var sandboxNeedsFullReset = false;
 
@@ -111,12 +112,17 @@ var server = arc.listen(port, function(err) {
     process.send(server.address());
   }
   if (process.argv.length > 2)
-    runAndExit(process.execPath, process.argv.slice(2));
+    runAndExit(process.execPath, process.argv.slice(2), server.address().port);
 });
 
-function runAndExit(cmd, args) {
+function runAndExit(cmd, args, serverPort) {
   console.log('Running %s %s', cmd, args.join(' '));
-  var child = require('child_process').spawn(cmd, args, { stdio: 'inherit' });
+  var child = require('child_process').spawn(cmd, args, {
+    stdio: 'inherit',
+    env: _defaults({}, process.env, {
+      TEST_SERVER_PORT: serverPort
+    })
+  });
   child.on('error', function(err) {
     console.log('child_process.spawn failed', err);
     process.exit(1);

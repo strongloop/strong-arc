@@ -3,6 +3,7 @@ var ComposerViews = require('../composer/views/');
 var EC = protractor.ExpectedConditions;
 
 var randomPropertyName = Math.floor(Math.random() * Date.now()).toString();
+var testServer = 'http://127.0.0.1:' + (process.env.TEST_SERVER_PORT || 9800);
 
 var SUCCESS = 0;
 var ERROR = 1;
@@ -23,7 +24,7 @@ describe('datasource-definition-interactions', function() {
   });
 
   beforeEach(function() {
-    browser.get('http://127.0.0.1:9800/#/composer');
+    browser.get(testServer + '/#/composer');
   });
 
   afterAll(function() {
