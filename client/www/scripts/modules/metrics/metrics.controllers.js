@@ -29,22 +29,20 @@ Metrics.controller('MetricsMainController', [
     });
 
     $scope.isCollapsed = true;  // settings
-    // the minimum number of datapoints required before rendering a chart
-    $scope.minInitDataPoints = 2;
     $scope.maxInitDataPointThreshold = MetricsService.getMaxInitDataPointThreshold();  // limit on the initial data load
     $scope.maxDataPointThrottle = MetricsService.getMaxDataPointThrottle();  // max number of current data points
     $scope.metricsUpdateInterval = MetricsService.getMetricsUpdateInterval();
     $scope.currentPMServerName = ''; // hybrid host / port as unique id metric branch
-    $scope.currentWorkerId = null;
-    $scope.currentProcessId = null;
+    $scope.currentWorkerId;
+    $scope.currentProcessId;
     $scope.activeProcess = null;
     $scope.isTimerRunning = false;
     $scope.isBackground = false;
     $scope.isMetricsLoaded = false;
     $scope.dataPointCount = 0;
-    $scope.lastGoodTS = null; // fallback
+    $scope.lastGoodTS; // fallback
     $scope.breakLoop = false;
-    $scope.currentStub = undefined; // temporary dataset to drive the current context
+    $scope.currentStub; // temporary dataset to drive the current context
     $scope.lastTimeStamp = {}; // object collection of metrics servers and the last metrics received
     $scope.currentMetrics = []; // the root
     $scope.sysTime = {
@@ -421,18 +419,6 @@ Metrics.controller('MetricsMainController', [
       return $scope[modelRef];
     };
 
-    $scope.showChartLoading = function(modelRef) {
-      var data = $scope[modelRef];
-
-      if (data) {
-        return data.some(function(x) {
-          return x.values && x.values.length < $scope.minInitDataPoints;
-        });
-      }
-
-      return true;
-    };
-
     $scope.showChart = function(chart, modelRef) {
       if ($scope.readyCharts) {
         return true;
@@ -501,16 +487,14 @@ Metrics.controller('MetricsMainController', [
       ChartConfigService.toggleMetricStatus(chartMetric);
       renderTheCharts();
     };
-
     $scope.startTicker = function() {
+      $scope.sysTime.ticker = $scope.metricsUpdateInterval;
       $scope.startTimer();
     };
-
     $scope.restartTicker = function() {
       $scope.sysTime.ticker = $scope.metricsUpdateInterval;
       $scope.startTimer();
     };
-
     $scope.startTimer = function() {
       // cancel the previous interval if it wasn't cleaned up
       $scope.stopTimer();
