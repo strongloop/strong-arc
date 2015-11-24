@@ -1,3 +1,25 @@
+2015-11-24, Version 1.8.4
+=========================
+
+ * Revert "Add user easing for when chart data is insuffient" (Joseph Tary)
+
+ * Change loopback-explorer to loopback-component-explorer (Joseph Tary)
+
+ * add option to override Arc host settings, and display better connection info to user (Joseph Tary)
+
+ * Add user easing for when chart data is insuffient (Joseph Tary)
+
+ * fix property menu when navigating back and forth in composer (Anthony Ettinger)
+
+ * remove old File call (Anthony Ettinger)
+
+ * use Blob instead of File object in profiler (Anthony Ettinger)
+
+ * Refer to licenses with a link (Sam Roberts)
+
+ * Remove reference to internal PM (Joseph Tary)
+
+
 2015-10-14, Version 1.8.3
 =========================
 

@@ -1,6 +1,6 @@
 {
   "name": "strong-arc",
-  "version": "1.4.0",
+  "version": "1.8.4",
   "homepage": "https://github.com/strongloop/strong-arc",
   "dependencies": {
     "angular": "~1.4.0",
