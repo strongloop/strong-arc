@@ -91,7 +91,7 @@ gulp.task('build-version', function(callback) {
 });
 
 gulp.task('build-workspace-services', function() {
-  return gulp.src('./node_modules/loopback-workspace/app.js')
+  return gulp.src('./node_modules/loopback-workspace/server/server.js')
     .pipe(loopbackAngular({ apiUrl: '/workspace/api' }))
     .pipe(rename('workspace.services.js'))
     .pipe(gulp.dest('./client/www/scripts/modules/common'));
