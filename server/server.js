@@ -15,6 +15,7 @@ features.forEach(function(f) {
 });
 
 var workspace = require('loopback-workspace');
+
 // export the workspace object, useful e.g. in tests
 app.workspace = workspace;
 
@@ -24,6 +25,7 @@ var meshProxy = require('strong-mesh-client/proxy/server')(
   path.join(process.cwd(), process.env.MANAGER_CONFIG || 'arc-manager.json')
 );
 app.meshProxy = meshProxy;
+var fsManager = require('strong-arc-filesystem/server/server');
 
 var arcApi = require('../arc-api/server/server');
 
@@ -36,6 +38,7 @@ app.use('/devtools', devtools);
 app.use('/build-deploy', buildDeploy);
 app.use('/api', arcApi);
 app.use('/manager', meshProxy);
+app.use('/fs', fsManager);
 
 // expose features list via REST so they can be checked by frontend
 app.get('/feature-flags', function(req, res) {
