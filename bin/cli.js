@@ -100,7 +100,7 @@ function getLocalIntfAddr(defaultAddr) {
 
     intf.forEach(function(addr) {
       if (addr.family === 'IPv4' && addr.internal === false) {
-        localIntfAddr = alias.address;
+        localIntfAddr = addr.address;
         return false;
       }
     });
