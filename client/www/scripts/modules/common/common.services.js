@@ -464,3 +464,43 @@ Common.service('WorkspaceServices', [
   }
 ]);
 
+Common.service('FileService', ['$q', '$http', function($q, $http){
+  var svc = this;
+
+  svc.getListByPath = function(path) {
+    return $http.get('/fs/readdir', { params: path })
+    .then(function(data){
+      var files = data.data;
+
+      files.files = _.sortByOrder(files.files, ['type', 'path'], ['desc', 'asc']);
+
+      return files;
+    })
+    .catch(function(err){
+      console.error(err);
+      return err;
+    });
+  };
+}]);
+
+Common.service('ProjectService', ['$q', '$http', function($q, $http){
+  var svc = this;
+
+  svc.getProjects = function(){
+    return $http.get('/project-list/Projects')
+      .then(function(data){
+        return data.data;
+      });
+  };
+
+  svc.addProject = function(data){
+    var project = data;
+
+    //delete unused properties
+    ['isLoopback', 'type'].forEach(function(prop){
+      delete project[prop];
+    });
+
+    return $http.post('/project-list/Projects', project);
+  };
+}]);

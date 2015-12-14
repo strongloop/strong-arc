@@ -319,7 +319,8 @@ UI.directive('slUiMenuDropdownFilter', [
         filterText: '=filter',
         toggler: '=',
         selected: '=',
-        isFiltering: '=filtering'
+        isFiltering: '=filtering',
+        placeholder: '@'
       },
       templateUrl: './scripts/modules/ui/templates/ui.menu.dropdown.filter.html',
       controller: function($scope){
@@ -356,15 +357,23 @@ UI.directive('uiDropdown', [
     return {
       restrict: 'E',
       replace: true,
+      transclude: true,
       scope: {
         selected: '=',
         items: '=',
-        isFiltering: '=filtering'
+        isFiltering: '=filtering',
+        toggler: '=?',
+        placeholder: '@'
       },
       templateUrl: './scripts/modules/ui/templates/ui.dropdown.html',
       controller: function($scope){
-        $scope.toggler = false;
+        $scope.toggler = angular.isDefined($scope.toggler) ? $scope.toggler : false;
         $scope.filterText = '';
+        $scope.hasItems = false;
+
+        $scope.$watch('items', function(items){
+          $scope.hasItems = items && items.length;
+        });
 
         $scope.showMenu = function(){
           $scope.toggler = true;

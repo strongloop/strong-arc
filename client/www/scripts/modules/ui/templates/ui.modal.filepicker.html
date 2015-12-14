@@ -1,0 +1,37 @@
+<div class="ui-modal file-picker">
+  <div class="modal-header">
+    <h3 class="modal-title">{{title}}</h3>
+  </div>
+  <div class="modal-body">
+    <header>
+      <p>Double click a directory to show its contents. Clicking "Add Project" will add the current directory as a project.</p>
+      <p>Current directory: <strong class="cwd">{{ files.cwd.path }}</strong></p>
+      <!--<p>Parent directory: <b>{{ items.parents[0].path }}</b></p>-->
+      <div class="ui-center">
+        <ui-dropdown items="files.parents" selected="selectedFileMenu" filtering="true"></ui-dropdown>
+      </div>
+      <br>
+    </header>
+    <ul class="files">
+      <li ng-repeat="item in files.files" ng-class="{ selected: item.path == selectedItem.path }">
+        <span ng-if="item.type == 'file' || item.type == 'symlink'">
+          <ui-icon name="{{item.type}}"></ui-icon>
+          {{item.name}}
+        </span>
+        <a href="#"
+           ng-click="selectItem(item)"
+           ng-dblclick="getFiles(item)"
+           ng-class="{ 'loopback-app': item.isLoopback }"
+           ng-if="item.type == 'directory'">
+          <ui-icon name="directory"></ui-icon>
+          {{ item.name }}
+        </a>
+      </li>
+    </ul>
+    <footer></footer>
+  </div>
+  <div class="modal-footer">
+    <button class="ui-btn secondary" type="button" ng-click="close()">Cancel</button>
+    <button class="ui-btn primary" type="button" ng-click="saveItem(selectedFile)">Add project</button>
+  </div>
+</div>

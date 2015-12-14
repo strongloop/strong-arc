@@ -736,3 +736,100 @@ Common.directive('slMessageGlobal', [
   }
 ]);
 
+Common.directive('slProjectSelector', [
+  function(){
+    return {
+      restrict: 'E',
+      replace: true,
+      scope: {},
+      templateUrl: './scripts/modules/common/templates/common.project.selector.html',
+      controller:['$state', '$scope', '$log', '$modal', 'ProjectService', function($state, $scope, $log, $modal, ProjectService){
+        $scope.selectedProject = null;
+        $scope.toggler = false;
+        $scope.projects = [];
+
+
+        $scope.$watch('selectedProject', function(newItem){
+
+          //todo: use the selected project environment
+          $log.log('selected project: ', newItem);
+        });
+
+        $scope.getProjects = function(){
+          ProjectService.getProjects()
+            .then(function(data){
+              $scope.projects = data;
+            });
+        };
+
+        $scope.addNewProject = function(){
+          var templateBase = '/scripts/modules/ui/templates/';
+          $scope.toggler = false;
+          $log.log('open filepicker');
+
+          var modalDlg = $modal.open({
+            templateUrl: templateBase + 'ui.modal.filepicker.html',
+            scope: $scope,
+            controller: function($scope, $modalInstance, title, FileService, ProjectService) {
+              $scope.selectedFile = null;
+              $scope.selectedFileMenu = null;
+              $scope.files = [];
+
+              $scope.$watch('selectedFileMenu', function(item){
+                if (!item) return;
+
+                $log.log('get new path: ', item.path);
+                FileService.getListByPath({ path: item.path })
+                  .then(function(items){
+                    $scope.files = items;
+                  })
+              });
+
+              FileService.getListByPath({ path: '.' })
+                .then(function(items){
+                  $scope.files = items;
+                });
+
+              $scope.title = title;
+              $scope.close = function() {
+                $modalInstance.dismiss();
+              };
+
+              $scope.selectItem = function(item){
+                $scope.selectedFile = item;
+                $log.log('selected item', $scope.selectedFile);
+              };
+
+              $scope.getFiles = function(item){
+                $log.log('get files', item);
+                FileService.getListByPath({ path: item.path })
+                  .then(function(items){
+                    $scope.files = items;
+                  });
+              };
+
+              $scope.saveItem = function(selectedItem){
+                $log.log('saved item in filepicker', selectedItem);
+
+                ProjectService.addProject(selectedItem)
+                  .then(function(data){
+                    $log.log('added project', data);
+                    $scope.getProjects();
+                    $modalInstance.dismiss();
+                  });
+              }
+            },
+            resolve: {
+              title: function() {
+                return 'File Picker';
+              }
+            }
+          });
+        };
+
+        $scope.getProjects();
+      }]
+    };
+  }
+]);
+
