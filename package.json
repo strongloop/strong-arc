@@ -21,7 +21,6 @@
     "cxviz-eventloop": "^1.0.0",
     "cxviz-flame": "^1.0.0",
     "cxviz-format": "^1.0.0",
-    "cxviz-pie": "^1.0.0",
     "cxviz-rawtree": "^1.0.0",
     "cxviz-timeseries": "^1.0.0",
     "debug": "^2.1.2",
