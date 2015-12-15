@@ -1,3 +1,15 @@
+2015-12-15, Version 1.8.5
+=========================
+
+ * Remove cxviz-pie (Joseph Tary)
+
+ * Fix error when overriding host (Joseph Tary)
+
+ * Add filesystem browsing support. (Krishna Raman)
+
+ * update the react tools away from deprecated version (Joseph Tary)
+
+
 2015-11-24, Version 1.8.4
 =========================
 
