@@ -46,6 +46,10 @@ Gateway.directive('slPolicyForm', [
           };
 
           $scope.confirmSaveCurrentPolicy = function(policy){
+            if ( $scope.policyForm.$invalid ){
+              return;
+            }
+
             var modalDlg = $modal.open({
               templateUrl: './scripts/modules/gateway/templates/confirm.policy.save.html',
               size: 'md',
@@ -181,11 +185,16 @@ Gateway.directive('slPolicyAuthForm', [
     }
   }
 ]);
-Gateway.directive('slPolicyProxyForm', [
-  function() {
+Gateway.directive('slPolicyProxyForm', ['$log',
+  function($log) {
     return {
       restrict: 'E',
-      templateUrl: './scripts/modules/gateway/templates/policy.proxy.html'
+      templateUrl: './scripts/modules/gateway/templates/policy.proxy.html',
+      controller: function($scope){
+        $scope.$watch('policyForm', function(form){
+          $scope.$parent.$parent.policyForm = form;
+        }, true)
+      }
     }
   }
 ]);

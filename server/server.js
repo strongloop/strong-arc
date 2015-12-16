@@ -30,9 +30,6 @@ var meshProxy = require('strong-mesh-client/proxy/server')(
   path.join(process.cwd(), process.env.MANAGER_CONFIG || 'arc-manager.json')
 );
 app.meshProxy = meshProxy;
-var gatewayApi = require('../gateway-api/server/server');
-
-app.gatewayApi = gatewayApi;
 var fsManager = require('strong-arc-filesystem/server/server');
 var projManager = require('strong-arc-project-list/server/server');
 
@@ -46,7 +43,6 @@ app.use('/workspace', workspace);
 app.use('/devtools', devtools);
 app.use('/build-deploy', buildDeploy);
 app.use('/api', arcApi);
-app.use('/gateway', gatewayApi);
 app.use('/manager', meshProxy);
 app.use('/fs', fsManager);
 app.use('/project-list/', projManager);

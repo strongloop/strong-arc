@@ -253,7 +253,10 @@ Gateway.controller('GatewayMainController', [
             $modalInstance.dismiss();
           };
           $scope.saveNewPolicy = function(policy) {
-            $scope.close();
+            if ( $scope.policyForm.$invalid ) {
+              return;
+            }
+
             if (policy.name && policy.type) {
 
               GatewayServices.savePolicy(policy)
@@ -263,6 +266,8 @@ Gateway.controller('GatewayMainController', [
                   $scope.setMainNav(GATEWAY_CONST.POLICY_TYPE, policy.id);
                  });
             }
+
+            $scope.close();
           };
         },
         resolve: {
