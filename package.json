@@ -1,6 +1,6 @@
 {
   "name": "strong-arc",
-  "version": "1.8.4",
+  "version": "1.8.5",
   "main": "server/server.js",
   "bin": {
     "strong-arc": "bin/cli.js"
@@ -21,7 +21,6 @@
     "cxviz-eventloop": "^1.0.0",
     "cxviz-flame": "^1.0.0",
     "cxviz-format": "^1.0.0",
-    "cxviz-pie": "^1.0.0",
     "cxviz-rawtree": "^1.0.0",
     "cxviz-timeseries": "^1.0.0",
     "debug": "^2.1.2",
@@ -102,7 +101,7 @@
     "svn-interface": "^0.4.4"
   },
   "optionalDependencies": {
-    "sl-blip": "http://blip.strongloop.com/strong-arc@1.8.4"
+    "sl-blip": "http://blip.strongloop.com/strong-arc@1.8.5"
   },
   "repository": {
     "type": "git",
