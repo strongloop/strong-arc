@@ -11,7 +11,12 @@
          <div class="metrics-header-label">Data Points: <span class="instrument-value">{{ dataPointCount }}</span></div>
       </div>
       <div data-ui-type="cell" class="metrics-visual-ticker-col">
-        <div sl-metrics-visual-ticker class="metrics-visual-ticker-container"></div>
+        <div sl-metrics-visual-ticker
+          class="metrics-visual-ticker-container"
+          ticker-size="metricsUpdateInterval",
+          ticker-value="sysTime.ticker"
+          ticker-on-max="scopeFoo(foo)">
+        </div>
       </div>
     </div>
   </div>

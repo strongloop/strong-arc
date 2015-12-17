@@ -1,24 +1,29 @@
 Metrics.directive('slMetricsVisualTicker', [
   function() {
     return {
-      replace: true,
+      scope: {
+        tickerSize: '=',
+        tickerValue: '='
+      },
       template: ('<ul class="metric-timer-list">' +
         '<li ng-repeat="tick in ticks">' +
         '<i class="{{getTickClass(tick)}}"></i>' +
         '</li>' +
         '</ul>'),
       link: function(scope, el, attrs) {
-        var tickCount = 16;
         scope.ticks = [];
-
-        for (var i = 0; i < tickCount; ++i) {
-          scope.ticks.push(i);
-        }
 
         scope.getTickClass = function(tickVal) {
           return 'refresh-icon ' +
-            (tickVal < scope.sysTime.ticker ? 'on' : 'off');
+            (tickVal < scope.tickerValue ? 'on' : 'off');
         };
+
+        scope.$watch('tickerSize', function(tickerSize) {
+          scope.ticks = [];
+          for (var i = 0; i < tickerSize; ++i) {
+            scope.ticks.push(i);
+          }
+        });
       }
     }
   }
