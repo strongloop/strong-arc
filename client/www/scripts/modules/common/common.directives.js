@@ -743,16 +743,22 @@ Common.directive('slProjectSelector', [
       replace: true,
       scope: {},
       templateUrl: './scripts/modules/common/templates/common.project.selector.html',
-      controller:['$state', '$scope', '$log', '$modal', 'ProjectService', function($state, $scope, $log, $modal, ProjectService){
+      controller:['$state', '$scope', '$log', '$modal', '$rootScope', 'ProjectService', function($state, $scope, $log, $modal, $rootScope, ProjectService){
         $scope.selectedProject = null;
         $scope.toggler = false;
         $scope.projects = [];
 
 
         $scope.$watch('selectedProject', function(newItem){
+          if ( !newItem ) return;
 
-          //todo: use the selected project environment
-          $log.log('selected project: ', newItem);
+          //set the selected project environment
+          ProjectService.setProjectEnvironment(newItem)
+            .then(function(){
+              $rootScope.$emit('message', {
+                body: 'Workspace has been changed to "'+newItem.name+'" at path: '+newItem.path
+              });
+            });
         });
 
         $scope.getProjects = function(){

@@ -460,6 +460,10 @@ Common.service('WorkspaceServices', [
       }
       window.localStorage.setItem('localAppLink', JSON.stringify(link));
       return link;
+    };
+
+    svc.loadWorkspace = function(workspace){
+      return Workspace.loadWorkspace(workspace).$promise;
     }
   }
 ]);
@@ -483,7 +487,7 @@ Common.service('FileService', ['$q', '$http', function($q, $http){
   };
 }]);
 
-Common.service('ProjectService', ['$q', '$http', function($q, $http){
+Common.service('ProjectService', ['$q', '$http', 'WorkspaceServices', function($q, $http, WorkspaceServices){
   var svc = this;
 
   svc.getProjects = function(){
@@ -502,5 +506,9 @@ Common.service('ProjectService', ['$q', '$http', function($q, $http){
     });
 
     return $http.post('/project-list/Projects', project);
+  };
+
+  svc.setProjectEnvironment = function(project){
+    return WorkspaceServices.loadWorkspace({ path: project.path });
   };
 }]);
