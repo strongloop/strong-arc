@@ -1,11 +1,24 @@
 Metrics.directive('slMetricsVisualTicker', [
   function() {
     return {
-      replace:true,
+      replace: true,
+      template: ('<ul class="metric-timer-list">' +
+        '<li ng-repeat="tick in ticks">' +
+        '<i class="{{getTickClass(tick)}}"></i>' +
+        '</li>' +
+        '</ul>'),
       link: function(scope, el, attrs) {
-        scope.$watch('sysTime', function(newVal) {
-          React.renderComponent(MetricsVisualTicker({scope:scope}), el[0]);
-        }, true);
+        var tickCount = 16;
+        scope.ticks = [];
+
+        for (var i = 0; i < tickCount; ++i) {
+          scope.ticks.push(i);
+        }
+
+        scope.getTickClass = function(tickVal) {
+          return 'refresh-icon ' +
+            (tickVal < scope.sysTime.ticker ? 'on' : 'off');
+        };
       }
     }
   }
@@ -42,4 +55,3 @@ Metrics.directive('slMetricsChartControls', [
   }
 
 ]);
-
