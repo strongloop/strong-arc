@@ -1,4 +1,9 @@
 <div class="policy-proxy-container ui-form-group">
   <label>End Point</label>
-  <input type="text" class="ui-input" ng-model="policy.targetURL" ng-pattern="/^https?:\/\/.{2,}/">
+  <input type="text"
+         class="ui-input"
+         name="targetURL"
+         ng-model="policy.targetURL"
+         ng-pattern="/https?:\/\/[^&*:\/\s]+(?::\d+)?\/.*/g">
+  <div class="error" ng-if="policyForm.targetURL.$invalid">Invalid URL</div>
 </div>
