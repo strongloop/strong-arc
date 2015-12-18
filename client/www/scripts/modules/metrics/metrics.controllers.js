@@ -75,30 +75,16 @@ Metrics.controller('MetricsMainController', [
       }
     };
 
-    /*
-    * Query filter helpers
-    *
-    * */
-    // test for existing timestamp on given server stub
-    function doesTimeStampExist() {
-      if (!$scope.lastTimeStamp) {
-        return false;
-      }
-      if (!$scope.lastTimeStamp[$scope.currentPMServerName]) {
-        return false;
-      }
-      if (!$scope.lastTimeStamp[$scope.currentPMServerName][$scope.currentProcessId]) {
-        return false;
-      }
-      return true;
-    }
     // get last query time if it exists
     function getQueryDate() {
-      if(!doesTimeStampExist()) {
-        return;
-      }
-      return $scope.lastTimeStamp[$scope.currentPMServerName][$scope.currentProcessId];
+      var timestamp = Date.now() - (
+        $scope.metricsUpdateInterval * ONE_SECOND *
+        $scope.maxDataPointThrottle
+      );
+
+      return new Date(timestamp);
     }
+
     // metric filter
     function getMetricFilter() {
       var filter = {where:{
@@ -121,214 +107,6 @@ Metrics.controller('MetricsMainController', [
       return $scope.isMetricsLoaded;
     };
 
-    /*
-    *
-    * Trim metrics arrays to keep data point count under control
-    *
-    * */
-    function ensureThrottledMetric(metricStub, newMetric) {
-      if (!Array.isArray(metricStub)) {
-        metricStub = [];
-      }
-      metricStub.push(newMetric);
-      var cLength = metricStub.length;
-      // check if current count is higher than the threshold
-      if (cLength > $scope.maxDataPointThrottle) {
-        var cutoffPoint = (cLength - $scope.maxDataPointThrottle);
-        // if so then slice the array
-        metricStub = metricStub.slice(cutoffPoint);
-      }
-      return metricStub;
-    }
-
-     /*
-    *
-    * PROCESS THE RAW METRICS OFF THE TICK
-    *
-    * - could be an initial dump of server memory
-    * - or just a 15 second update
-    *
-    * */
-    function processMetricsTick(metrics) {
-      var mStub;  // placeholder for unique server/service metrics 'bucket'
-
-      //iterate over the returned results to normalize the data
-      metrics.map(function(metric) {
-        var processedMetric = {
-          timeStamp: metric.timeStamp,
-          processId: metric.processId,
-          cpu: {
-            total:metric.gauges[METRICS_CONST.CPU_TOTAL],
-            system:metric.gauges[METRICS_CONST.CPU_SYSTEM],
-            user:metric.gauges[METRICS_CONST.CPU_USER]
-          },
-          heap: {
-            total:metric.gauges[METRICS_CONST.HEAP_TOTAL],
-            used:metric.gauges[METRICS_CONST.HEAP_USED]
-          },
-          loop: {
-            minimum:metric.gauges[METRICS_CONST.LOOP_MIN],
-            maximum:metric.gauges[METRICS_CONST.LOOP_MAX],
-            average:metric.gauges[METRICS_CONST.LOOP_AVG]
-          },
-          loopCount: {
-            count:metric.counters[METRICS_CONST.LOOP_COUNT]
-          },
-          http: {
-            minimum:metric.gauges[METRICS_CONST.HTTP_MIN],
-            maximum:metric.gauges[METRICS_CONST.HTTP_MAX],
-            average:metric.gauges[METRICS_CONST.HTTP_AVG]
-          },
-          httpCount: {
-            count:metric.counters[METRICS_CONST.HTTP_COUNT]
-          },
-          /*
-          *
-          * TIERS
-          *
-          * */
-          mongodb: {
-            minimum:metric.gauges[METRICS_CONST.MONGO_MIN],
-            maximum:metric.gauges[METRICS_CONST.MONGO_MAX],
-            average:metric.gauges[METRICS_CONST.MONGO_AVG]
-          },
-          mysql: {
-            minimum:metric.gauges[METRICS_CONST.MYSQL_MIN],
-            maximum:metric.gauges[METRICS_CONST.MYSQL_MAX],
-            average:metric.gauges[METRICS_CONST.MYSQL_AVG]
-          },
-          redis: {
-            minimum:metric.gauges[METRICS_CONST.REDIS_MIN],
-            maximum:metric.gauges[METRICS_CONST.REDIS_MAX],
-            average:metric.gauges[METRICS_CONST.REDIS_AVG]
-          },
-          dao: { // dao
-            minimum:metric.gauges[METRICS_CONST.DAO_MIN],
-            maximum:metric.gauges[METRICS_CONST.DAO_MAX],
-            average:metric.gauges[METRICS_CONST.DAO_AVG]
-          },
-          leveldown: { // leveldown
-            minimum:metric.gauges[METRICS_CONST.LEVELDOWN_MIN],
-            maximum:metric.gauges[METRICS_CONST.LEVELDOWN_MAX],
-            average:metric.gauges[METRICS_CONST.LEVELDOWN_AVG]
-          },
-          postgres: { // postgres
-            minimum:metric.gauges[METRICS_CONST.POSTGRES_MIN],
-            maximum:metric.gauges[METRICS_CONST.POSTGRES_MAX],
-            average:metric.gauges[METRICS_CONST.POSTGRES_AVG]
-          },
-          oracle: { // oracle
-            minimum:metric.gauges[METRICS_CONST.ORACLE_MIN],
-            maximum:metric.gauges[METRICS_CONST.ORACLE_MAX],
-            average:metric.gauges[METRICS_CONST.ORACLE_AVG]
-          },
-          riak: { // riak
-            minimum:metric.gauges[METRICS_CONST.RIAK_MIN],
-            maximum:metric.gauges[METRICS_CONST.RIAK_MAX],
-            average:metric.gauges[METRICS_CONST.RIAK_AVG]
-          },
-          memcached: {
-            minimum:metric.gauges[METRICS_CONST.MEMCACHED_MIN],
-            maximum:metric.gauges[METRICS_CONST.MEMCACHED_MAX],
-            average:metric.gauges[METRICS_CONST.MEMCACHED_AVG]
-          },
-          counters: {
-            memcached:metric.counters[METRICS_CONST.MEMCACHED_COUNT],
-            redis:metric.counters[METRICS_CONST.REDIS_COUNT],
-            mysql:metric.counters[METRICS_CONST.MYSQL_COUNT],
-            mongodb:metric.counters[METRICS_CONST.MONGO_COUNT],
-            dao:metric.counters[METRICS_CONST.DAO_COUNT],
-            leveldown:metric.counters[METRICS_CONST.LEVELDOWN_COUNT],
-            postgres:metric.counters[METRICS_CONST.POSTGRES_COUNT],
-            riak:metric.counters[METRICS_CONST.RIAK_COUNT],
-            oracle:metric.counters[METRICS_CONST.ORACLE_COUNT],
-            loop:metric.counters[METRICS_CONST.LOOP_COUNT],
-            http:metric.counters[METRICS_CONST.HTTP_COUNT]
-          }
-        };
-
-        /*
-        *
-        *   build the unique metric stub instance
-        *   - unique server/port/processId object instance
-        *   - track individual metrics as timestamped arrays off
-        *   this object
-        *   - eg: mStub['loop']['average'].push(newMetric);
-        *
-        * */
-        $scope.currentProcessId = metric.processId;
-
-        // check if the host and port have a metrics stub
-        if (!$scope.currentMetrics[$scope.currentPMServerName]) {
-          $scope.currentMetrics[$scope.currentPMServerName] = {};
-        }
-        if (!$scope.currentMetrics[$scope.currentPMServerName][$scope.currentProcessId]) {
-          $scope.currentMetrics[$scope.currentPMServerName][$scope.currentProcessId] = {};
-        }
-        // short reference to unique metric 'stub' instance
-        $scope.currentStub = $scope.currentMetrics[$scope.currentPMServerName][$scope.currentProcessId];
-
-        /*
-        * metrics type/name/group
-        *
-        *
-        *
-        * for each 'data' i.e metric group eg cpu
-        *
-        * iterate over the metrics collection
-        *
-        *
-        * set each metric group
-        *
-        *
-        * */
-
-        $scope.chartData.map(function(chart) {
-          /*
-          * data.name
-          * data.displayName
-          * data.metrics []
-          *
-          * */
-          // each metric collection ex chart
-          if (!$scope.currentStub[chart.name]) {
-            $scope.currentStub[chart.name] = {};
-          }
-
-          chart.metrics.map(function(metric) {
-            if (!processedMetric[chart.name][metric.name]){
-              //$log.warn('no metric: ' + chart.name + ':' + metric.name);
-              return;
-
-            }
-            var yVal = processedMetric[chart.name][metric.name];
-            if (yVal !== undefined) {
-              $scope.currentStub[chart.name][METRICS_CONST[metric.constant]] =
-                ensureThrottledMetric($scope.currentStub[chart.name][METRICS_CONST[metric.constant]],
-                  {x: new Date(processedMetric.timeStamp), y: yVal});
-            }
-          });
-        });
-
-        // last timestamp used for next query filter
-        if (!$scope.lastTimeStamp[$scope.currentPMServerName]) {
-          $scope.lastTimeStamp[$scope.currentPMServerName] = {};
-        }
-
-        $scope.lastTimeStamp[$scope.currentPMServerName][$scope.currentProcessId] = processedMetric.timeStamp;
-      });
-
-      if ($scope.currentStub) {
-        ChartConfigService.clearChartMemory();
-
-        if (!$scope.isBackground) {
-          renderTheCharts();
-        }
-      }
-
-      // data point count
-      $scope.dataPointCount = $scope.currentStub.cpu[METRICS_CONST.CPU_TOTAL].length;
-    }
 
     function renderTheCharts() {
       $scope.readyCharts = true;
@@ -384,7 +162,15 @@ Metrics.controller('MetricsMainController', [
                 metricsToRender = rawMetrics.slice(startPoint);
               }
 
-              processMetricsTick(metricsToRender);
+              MetricsService.processMetricsTick(metricsToRender, $scope);
+
+              if ($scope.currentStub) {
+                ChartConfigService.clearChartMemory();
+
+                if (!$scope.isBackground) {
+                  renderTheCharts();
+                }
+              }
             }
             else {
               $log.warn('getMetricsSnapShot returned no metrics ');
