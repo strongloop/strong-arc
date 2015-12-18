@@ -7,14 +7,15 @@ html {
 }
 
 a {
-  color: green;
+  color: @green-3;
+  text-decoration: none;
 
   &:hover {
-    color: darkgreen;
+    color: @green-1;
   }
 
   &:active {
-    color: darkgreen;
+    color: @green-4;
   }
 }
 
@@ -51,4 +52,8 @@ small {
   &:active {
     background-image: url(/images/x_down.svg);
   }
+}
+
+.align-right {
+  text-align: right;
 }

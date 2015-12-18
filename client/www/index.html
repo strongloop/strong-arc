@@ -31,6 +31,9 @@
       <li ng-show="isAuthUser() && supportAppController">
         <sl-common-app-controller-menu class="header-pm-app-control-menu-item"></sl-common-app-controller-menu>
       </li>
+      <li ng-show="isAuthUser() && supportApim">
+        <sl-apim-navbar-selector></sl-apim-navbar-selector>
+      </li>
       <li class="header-help-container" ng-show="helpId">
         <sl-popover-help name="{{helpId}}" position="left" iconclass="icon icon-documentation"></sl-popover-help>
       </li>
@@ -245,6 +248,11 @@
 <script src="./scripts/modules/licenses/licenses.services.js"></script>
 <!--<script src="./scripts/modules/licenses/licenses.directives.js"></script>-->
 <script src="./scripts/modules/licenses/licenses.controllers.js"></script>
+
+<!-- apim -->
+<script src="./scripts/modules/apim/apim.module.js"></script>
+<script src="./scripts/modules/apim/apim.directives.js"></script>
+<script src="./scripts/modules/apim/apim.services.js"></script>
 
 <!-- API analytics -->
 <script src="./scripts/modules/api-analytics/api.analytics.module.js"></script>

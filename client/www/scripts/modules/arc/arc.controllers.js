@@ -26,6 +26,7 @@ Arc.controller('ArcMainController', [
     };
 
     $scope.supportAppController = false;
+    $scope.supportApim = true;
 
     LandingService.getApps().$promise
       .then(function(response) {

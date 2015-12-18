@@ -160,7 +160,7 @@
   }
 }
 
-.ui-popover-box-shadow {
+.ui-popover-box-shadow, .ui-modal-box-shadow {
   box-shadow: 1px 1px 4px 0 rgba(0,0,0,.4);
 }
 
@@ -183,3 +183,24 @@
     }
   }
 }
+
+.modal-content {
+  padding: 0;
+  border-radius: 0 !important;
+
+  .modal-header {
+    border-bottom: 1px solid silver;
+    padding: 1rem 2rem;
+    text-align: left;
+  }
+
+  .modal-body {
+    padding: 2rem;
+  }
+
+  .modal-footer {
+    border-top: 1px solid silver;
+    padding: 1.5rem 2rem 1.5rem;
+  }
+}
+

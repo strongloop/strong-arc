@@ -52,6 +52,7 @@ var Arc = angular.module('Arc', [
   'ApiAnalytics',
   'Manager',
   'UI',
+  'Apim',
   'Datasource',
   'ui.bootstrap',
   'ui.utils',

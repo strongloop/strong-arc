@@ -1,0 +1,79 @@
+<div class="modal-content apim-login-modal">
+  <div class="modal-header">
+    <h4 class="header">Sign in to IBM API Management</h4>
+  </div>
+  <div class="modal-body">
+    <form class="ui-form no-border" name="form" novalidate ng-submit="submit()">
+      <div class="ui-form-group" ng-class="{
+            'valid': form.hostname.$valid,
+            'invalid': form.hostname.$invalid }">
+        <label>
+          <div class="ui-label-txt">APIm host address:</div>
+          <div class="flex">
+            <input type="text"
+                   class="ui-input fill-space"
+                   placeholder="Hostname (eg. localhost)"
+                   ng-model="apimUser.hostname"
+                   name="hostname"
+                   ng-minlength="3" autocomplete="off">
+          </div>
+          <span class="msg error" ng-show="form.hostname.$invalid">Please enter hostname</span>
+        </label>
+      </div>
+      <div class="ui-form-group" ng-class="{
+            'valid': form.username.$valid,
+            'invalid': form.username.$invalid }">
+        <label>
+          <div class="ui-label-txt">Username:</div>
+          <div class="flex">
+            <input type="text"
+                   class="ui-input fill-space"
+                   placeholder="username (eg. john.doe@example.com)"
+                   ng-model="apimUser.username"
+                   name="username"
+                   ng-minlength="3" autocomplete="off">
+          </div>
+          <span class="msg error" ng-show="form.username.$invalid">Please enter username</span>
+        </label>
+      </div>
+      <div class="ui-form-group" ng-class="{
+            'valid': form.password.$valid,
+            'invalid': form.password.$invalid }">
+        <label>
+          <div class="ui-label-txt">Password:</div>
+          <div class="flex">
+            <input type="text"
+                   class="ui-input fill-space"
+                   placeholder="password (eg. xxxxxxxxx)"
+                   ng-model="apimUser.password"
+                   name="password"
+                   ng-minlength="3" autocomplete="off">
+          </div>
+          <span class="msg error" ng-show="form.password.$invalid">Please enter password</span>
+        </label>
+      </div>
+
+      <div class="ui-form-footer">
+        <div class="ui-field-group group-inline pull-left">
+          <label class="ui-checkbox">
+            <input type="checkbox"
+                   ng-model="apimUser.remember"
+                   name="remember"
+                   ng-class="{ checked: apimUser.remember }">
+            <i class="icon"></i>
+            <span class="ui-label-txt">Keep me signed in</span>
+          </label>
+        </div>
+        <a href="#" class="pull-right">Forgot?</a>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="ui-btn secondary small pull-left"
+            ng-click="close()">Cancel
+    </button>
+    <button class="ui-btn small pull-right"
+            ng-click="apimLogin(apimLoginForm)">Sign In
+    </button>
+  </div>
+</div>
