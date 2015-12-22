@@ -13,7 +13,7 @@
       <br>
     </header>
     <ul class="files">
-      <li ng-repeat="item in files.files" ng-class="{ selected: item.path == selectedItem.path }">
+      <li ng-repeat="item in files.files" ng-class="{ selected: item.path == selectedFile.path }">
         <span ng-if="item.type == 'file' || item.type == 'symlink'">
           <ui-icon name="{{item.type}}"></ui-icon>
           {{item.name}}
