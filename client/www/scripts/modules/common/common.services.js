@@ -478,6 +478,11 @@ Common.service('FileService', ['$q', '$http', function($q, $http){
 
       files.files = _.sortByOrder(files.files, ['type', 'path'], ['desc', 'asc']);
 
+      //handle case where there is no name, we use path for name
+      files.parents = files.parents.map(function(item){
+        return item.name ? item : { name: item.path, path: item.path };
+      });
+
       return files;
     })
     .catch(function(err){
