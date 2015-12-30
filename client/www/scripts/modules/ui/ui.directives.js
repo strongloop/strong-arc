@@ -245,9 +245,12 @@ UI.directive('uiCrumbs', function () {
     templateUrl: './scripts/modules/ui/templates/ui.crumbs.html',
     scope: {
       crumbs: '=',
-      onClick: '&'
+      onClick: '&',
+      separator: '@'
     },
     link: function(scope, elem, attrs){
+      scope.separator = scope.separator || 'separator';
+
       scope._onClick = function($index, crumb){
         var len = scope.crumbs.length-1;
         var i = $index;

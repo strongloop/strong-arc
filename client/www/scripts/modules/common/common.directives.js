@@ -814,6 +814,10 @@ Common.directive('slProjectSelector', [
                   });
               };
 
+              $scope.onClickCrumb = function(i, crumb, len){
+                $scope.selectedFileMenu = crumb;
+              };
+
               $scope.saveItem = function(selectedItem){
                 $log.log('saved item in filepicker', selectedItem);
 
