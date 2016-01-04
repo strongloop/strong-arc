@@ -1,0 +1,36 @@
+<div class="ia-nav-model-row">
+  <div data-ui-type="row" class="tree-item-row" data-id="{{item.id}}"
+    ng-class="{
+      'is-active': item.isActive,
+      'is-open': item.isOpen,
+      'is-selected': item.isSelected
+    }">
+    <div data-ui-type="cell" class="ia-nav-item-icon-container-col">
+      <span data-name="{{item.name}}"  data-id="{{item.id}}" class="sl-icon sl-icon-file"></span>
+    </div>
+    <div data-ui-type="cell" class="ia-nav-item-name-container-col">
+      <button ng-click="singleClickItem(item, $event)"
+              data-name="{{item.name}}"
+              data-id="{{item.id}}"
+              class="nav-tree-item tree-node"
+              title="{{item.name}}">
+        <span class="nav-tree-item-header">{{item.name}}</span>
+      </button>
+    </div>
+    <div data-ui-type="cell" class="ia-nav-item-dsconnect-icon-container-col">
+      <span data-name="{{item.name}}"
+            data-id="{{item.id}}"
+            class="sl-icon sl-icon-lightning"></span>
+    </div>
+    <div data-ui-type="cell" class="ia-nav-item-contextmenu-icon-container-col">
+      <button class="btn-command btn-nav-context"
+              data-id="{{item.id}}"
+              data-config-id="{{item.configId}}">
+        <span data-name="{{item.name}}"
+              data-id="{{item.id}}"
+              data-config-id="{{item.configId}}"
+              class="sl-icon sl-icon-box-arrow-down"></span>
+      </button>
+    </div>
+  </div>
+</div>

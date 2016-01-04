@@ -3,7 +3,7 @@ var ModelEditorView = (function () {
     var EC = protractor.ExpectedConditions;
     this.modelNameInput  = element(by.id('ModelName'));
     this.saveModelButton = element(
-      by.css('.model-save-button-col .instance-save-button'));
+      by.css('#instance-save-button'));
     this.migrateModelButton = element(
       by.css('.model-migrate-button-col .model-migrate-button'));
     this.migrateLoadingIndicator = element(
@@ -31,7 +31,7 @@ var ModelEditorView = (function () {
     this.propertyRequiredCheckbox = element(
       by.css('input[ng-model="property.required"] ~ i'));
     this.propertyIndexCheckbox = element(
-      by.css('input[ng-model="property.index"] ~ i'));    
+      by.css('input[ng-model="property.index"] ~ i'));
     this.propertyCheckboxCollection = element.all(
       by.css('.modelproperty-container .checked'));
     this.validationErrorMessage = element(
@@ -120,7 +120,7 @@ var ModelEditorView = (function () {
       return this.propertyCheckboxCollection;
     };
 
-    this.validationErrorMessagePresent = 
+    this.validationErrorMessagePresent =
     function validationErrorMessagePresent () {
       return this.validationErrorMessage.isPresent();
     };
