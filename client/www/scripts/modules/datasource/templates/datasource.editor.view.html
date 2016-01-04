@@ -1,0 +1,156 @@
+<div ng-click="clearMessages()" data-id="DatasourceEditorInstanceContainer"
+  class="datasource-editor-instance-container">
+  <form name="DatasourceForm" class="ui-form" role="form" ng-submit="saveDatasource()">
+    <div class="model-header-container">
+      <div class="model-header-name-container form-group"
+           ng-class="{'has-error': !isNameValid()}">
+        <label for="name">Name</label>
+        <input id="name"
+        class="model-instance-name form-control ui-input"
+        ng-class="{'is-invalid': !isNameValid()}"
+        required="true"
+        name="name"
+        type="text"
+        ng-model="dsModel.name"
+        data-name="name"
+        placeholder="name"
+        required="true" />
+      </div>
+      <button ng-disabled="!isFormValid" type="submit"
+        id="instance-save-button"
+        data-id="datasource-save-button" class="instance-detail-pocket-button instance-save-button">
+        Save Datasource
+      </button>
+      <div class="model-instance-name-validation"
+        ng-show="!isNameValid()">
+        <span class="validation-error-message">
+        DataSource name should conform with
+        <a href="http://docs.strongloop.com/display/public/LB/Valid+names+in+LoopBack" target="_new">
+          valid javascript variable name conventions
+        </a>
+        </span>
+      </div>
+    </div>
+    <div class="lineBreak"></div>
+    <div class="datasource-field-container">
+      <div data-ui-type="table"  class="datasource-layout-table">
+        <div data-ui-type="row" class="datasource-layout-row">
+          <div data-ui-type="cell" class="datasource-layout-col1">
+            <div class="username-input-container">
+              <div class="datasource-form-group">
+                <label for="user">Username</label>
+                <input id="user"
+                  class="form-control ui-input"
+                  name="user"
+                  type="text"
+                  ng-model="dsModel.user"
+                  data-name="user"
+                  placeholder="user" />
+              </div>
+            </div>
+          </div>
+          <div data-ui-type="cell" class="datasource-layout-col2">
+            <div class="password-container">
+              <div class="datasource-form-group">
+                <label for="password">Password</label>
+                <input id="password"
+                class="form-control ui-input"
+                name="password"
+                ng-model="dsModel.password"
+                data-name="password"
+                type="password"
+                placeholder="password" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="lineBreak"></div>
+      <div data-ui-type="table" class="datasource-layout-table">
+        <div data-ui-type="row" class="datasource-layout-row">
+          <div data-ui-type="cell" class="datasource-layout-fullwidth-col">
+            <div class="datasource-form-group">
+              <label for="host">Url</label>
+              <input id="url"
+              class="form-control ui-input"
+              name="url"
+              ng-model="dsModel.url"
+              data-name="url"
+              type="text"
+              placeholder="url" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-ui-type="table" class="datasource-layout-table">
+        <div data-ui-type="row" class="datasource-layout-row">
+          <div data-ui-type="cell" class="datasource-layout-col1">
+            <div class="datasource-form-group">
+              <label for="host">Host</label>
+              <input id="host"
+              class="form-control ui-input"
+              name="host"
+              ng-model="dsModel.host"
+              data-name="host"
+              type="text"
+              placeholder="host" />
+            </div>
+          </div>
+          <div data-ui-type="cell" class="datasource-layout-col2">
+            <div class="datasource-form-group">
+              <label for="port">Port</label>
+              <input id="port"
+              class="form-control ui-input"
+              name="port"
+              ng-model="dsModel.port"
+              data-name="port"
+              type="text"
+              placeholder="port" />
+            </div>
+          </div>
+        </div>
+        <div data-ui-type="row"  class="datasource-layout-row">
+          <div data-ui-type="cell" class="datasource-layout-col1">
+            <input type="hidden" data-name="id" name="id" ng-model="dsModel.id" />
+            <div class="datasource-form-group">
+              <label for="database">Database</label>
+              <input id="database"
+              class="form-control ui-input"
+              name="database"
+              ng-model="dsModel.database"
+              data-name="database"
+              type="text"
+              placeholder="database name" />
+            </div>
+          </div>
+          <div data-ui-type="cell" class="datasource-layout-col2">
+            <div class="form-group"
+              ng-class="{'has-error': !isConnectorValid()}">
+              <label for="connector">Connector</label>
+              <select class="form-control model-instance-editor-input"
+                  id="connector"
+                  ng-model="dsModel.connector"
+                  data-name="connector"
+                  name="connector"
+                  ng-options="opt.name as opt.description for opt in connectorOptions"
+                  placeholder="choose">
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="datasource-buttons-layout-container">
+      <button ng-click="testConnection()"
+        id="datasource-test-connection-button"
+        class="instance-detail-pocket-button instance-save-button datasource-test-button"
+        ng-class="{'activity-indicator': isTesting()}">
+        Test Connection
+      </button>
+
+      <span class="datasource-connection-test-response-container ui-msg-inline-{{testConnectionStatus}}">
+        {{testConnectionMessage}}
+      </span>
+    </div>
+  </form>
+</div>

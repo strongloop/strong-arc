@@ -1,0 +1,22 @@
+<div class="ia-nav-model">
+  <div>
+    <button ng-click="toggleModelNav()" data-name="model_root" class="btn btn-default btn-block nav-tree-item tree-branch"  title="Models">
+      <span class="{{navItemOpenCloseIconClasses}}"></span>
+      <span class="nav-branch-folder-icon sl-icon sl-icon-folder"></span>
+      <span class="nav-branch-title">Models</span>
+    </button>
+    <div data-ui-type="table" class="ia-tree-node-table branch-leaf-list model-branch-container">
+      <div ng-repeat="item in mainNavModels">
+        <sl-ia-nav-model-row item="item"
+          on-item-click="navTreeItemClicked(type, id, meta)">
+        </sl-ia-nav-model-row>
+      </div>
+    </div>
+    <button ng-click="addNewModelInstanceRequest($event)"
+      data-type="model"
+      id="nav-tree-addnew-model"
+      class="nav-tree-item-addnew">
+      <span class="plus">+</span> Add New Model
+    </button>
+  </div>
+</div>

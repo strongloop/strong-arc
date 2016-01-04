@@ -1,12 +1,21 @@
 <div>
   <div class="instance-title-container">
-    <div sl-common-instance-title-view></div>
+    <span ng-show="activeInstance">{{activeInstance.name}}</span>
   </div>
   <div class="instance-tabs-view-container">
-    <div sl-common-instance-tabs-view></div>
+    <div sl-common-instance-tabs-view tab-items="tabItems"
+      on-tab-activate="openSelectedInstance(id, type)"
+      on-close-tab="instanceTabItemCloseClicked(id)"></div>
   </div>
   <div class="instance-body-container" ng-switch on="activeInstance.type">
     <div ng-switch-when="model" sl-model-instance-editor>/</div>
-    <div ng-switch-when="datasource" sl-datasource-editor-form>/</div>
+    <div ng-switch-when="datasource">
+      <sl-datasource-editor-form
+        active-instance="activeInstance"
+        on-clear-messages="clearTestMessage()"
+        on-test-connection="testDataSourceConnection(data)"
+        on-update-datasource="saveDataSourceInstanceRequest(data)">
+      </sl-datasource-editor-form>
+    </div>
   </div>
 </div>
