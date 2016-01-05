@@ -378,7 +378,7 @@ Composer.controller('ComposerMainController', [
           );
         })
         .then(function() {
-          growl.addSuccessMessage("model migrated");
+          growl.addSuccessMessage('model migrated');
         });
     }
 
@@ -393,7 +393,7 @@ Composer.controller('ComposerMainController', [
 
         PropertyService.updateModelProperty(modelPropertyConfig)
           .then(function(updatedProperty) {
-            growl.addSuccessMessage("property updated");
+            growl.addSuccessMessage('property updated');
             $scope.activeInstance.properties[currentIndex] = updatedProperty;
             IAService.setActiveInstance($scope.activeInstance);
             $scope.activeModelPropertiesChanged = !$scope.activeModelPropertiesChanged;
@@ -413,7 +413,7 @@ Composer.controller('ComposerMainController', [
       return retArray;
     }
     function getPropertyIndex(name, list) {
-      for (var i = 0;i < list.length;i++) {
+      for (var i = 0; i < list.length; i++) {
         if (list[i] === name) {
           return i;
         }
@@ -430,7 +430,7 @@ Composer.controller('ComposerMainController', [
 
         PropertyService.updateModelProperty(modelPropertyConfig)
           .then(function(updatedProperty) {
-            growl.addSuccessMessage("property updated");
+            growl.addSuccessMessage('property updated');
             $scope.activeInstance.properties[currentIndex] = updatedProperty;
             IAService.setActiveInstance($scope.activeInstance);
             $scope.activeModelPropertiesChanged = !$scope.activeModelPropertiesChanged;
@@ -518,6 +518,7 @@ Composer.controller('ComposerMainController', [
         $scope.createNewInstance(CONST.DATASOURCE_TYPE, initialData);
       }
     };
+
     // save DataSource instance
     $scope.saveDataSourceInstanceRequest = function(targetInstance) {
       var targetDef = targetInstance.definition;
@@ -570,68 +571,32 @@ Composer.controller('ComposerMainController', [
         }
       }
     };
+
     // test datasource connection
     $scope.testDataSourceConnection = function(instance) {
       var dsDef = instance.definition;
 
       if (!dsDef.connector) {
-         setFriendlyTestConnectionMsg('Failed: missing connector'); //todo pass as object
+        growl.addErrorMessage('Failed: missing connector');
         return;
       }
 
-      $scope.clearTestMessage();
-
-
-      $scope.saveDataSourceInstanceRequest(instance)
+      return $scope.saveDataSourceInstanceRequest(instance)
         .then(function(data) {
           return DataSourceService.testDataSourceConnection(data.id);
         })
-        .then(function(response) {
-          setFriendlyTestConnectionMsg(response);
-        })
         .catch(function(err) {
-          // Note: The http error is reported in the global error view
-          setFriendlyTestConnectionMsg('Failed.'); //todo pass as object
+          return {
+            status: false,
+            msg: 'Failed.'
+          };
         });
-
-
     };
-    $scope.clearTestMessage = function() {
-      $scope.datasource.connectionTestResponse = '';
-      $scope.datasource.connectionTestResponseType = 'success';
-    };
-
-    //todo fix signature so `response` arg is always an object with .status, optional .error, and .data
-    var setFriendlyTestConnectionMsg = function(response) {
-      var message;
-      var type = 'success';
-
-      if (typeof response === 'string') {
-        message = response;
-        type = 'error';
-      } else if (response.status) {
-        message = 'Success';
-      } else if (!response.error) {
-        message = 'Failed.';
-        type = 'error';
-      } else {
-        message = 'Failed: ' + response.error.message;
-        type = 'error';
-      }
-
-      $scope.datasource.connectionTestResponse = message;
-      $scope.datasource.connectionTestResponseType = type;
-    };
-
 
     // global exception
     $scope.clearGlobalException = function() {
       $scope.globalExceptionStack = IAService.clearGlobalExceptionStack();
     };
-
-
-
-
 
     /*
      *
@@ -689,8 +654,6 @@ Composer.controller('ComposerMainController', [
       var currActiveInstance = $scope.activeInstance;
       var openInstanceRefs = IAService.getOpenInstanceRefs();
 
-      $scope.clearTestMessage();
-
       // check if there is an active instance
       if (currActiveInstance && currActiveInstance.id) {
         var instanceObjRef = {
@@ -747,7 +710,3 @@ Composer.controller('ComposerMainController', [
 
   }
 ]);
-
-
-
-
