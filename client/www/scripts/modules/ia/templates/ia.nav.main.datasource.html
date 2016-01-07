@@ -1,0 +1,57 @@
+<div class="ia-datasource-nav-container">
+  <label class="main-control-command-label">DATA SOURCE</label>
+  <div data-ui-type="table">
+    <div data-ui-type="row">
+      <div data-ui-type="cell">
+        <button ng-click="addNewDatasourceMainInstanceRequest($event)"
+                data-type="datasource"
+                data-name="oracle"
+                class="ui-btn primary dark-bg square"
+                title="oracle connector">
+          <span class="sl-icon sl-icon-database"></span>
+        </button>
+        <div class="ds-type-name">Oracle</div>
+      </div>
+      <div data-ui-type="cell">
+        <button class="ui-btn primary dark-bg square"
+                data-type="datasource"
+                data-name="mssql"
+                ng-click="addNewDatasourceMainInstanceRequest($event)"
+                title="mssql connector">
+          <span class="sl-icon sl-icon-database"></span>
+        </button>
+        <div class="ds-type-name">MS SQL</div>
+      </div>
+      <div data-ui-type="cell">
+        <button ng-click="addNewDatasourceMainInstanceRequest($event)"
+                data-type="datasource"
+                class="ui-btn primary dark-bg square"
+                data-name="mysql"
+                title="mysql connector">
+          <span class="sl-icon sl-icon-database"></span>
+        </button>
+        <div class="ds-type-name">MySQL</div>
+      </div>
+      <div data-ui-type="cell">
+        <button ng-click="addNewDatasourceMainInstanceRequest($event)"
+                data-type="datasource"
+                class="ui-btn primary dark-bg square"
+                data-name="postgresql"
+                title="postgres connector">
+          <span class="sl-icon sl-icon-database"></span>
+        </button>
+        <div class="ds-type-name">PostgreSQL</div>
+      </div>
+      <div data-ui-type="cell">
+        <button ng-click="addNewDatasourceMainInstanceRequest($event)"
+                data-type="datasource"
+                class="ui-btn primary dark-bg square"
+                data-name="mongodb"
+                title="mongodb connector">
+          <span class="sl-icon sl-icon-database"></span>
+        </button>
+        <div class="ds-type-name">MongoDB</div>
+      </div>
+    </div>
+  </div>
+</div>

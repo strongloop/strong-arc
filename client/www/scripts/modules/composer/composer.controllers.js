@@ -113,17 +113,21 @@ Composer.controller('ComposerMainController', [
       $scope.apiModelsChanged = !$scope.apiModelsChanged;
     };
 
-    $scope.$watch('activeInstance', function(newVal) {
-      if ($scope.openInstanceRefs && $scope.openInstanceRefs.length) {
+    $scope.$watchGroup(['activeInstance', 'openInstanceRefs'],
+      function(newVal) {
+        if (!Array.isArray($scope.openInstanceRefs)) {
+          return;
+        }
+
         $scope.tabItems = $scope.openInstanceRefs.map(
           function(openInstance) {
             return angular.extend({}, openInstance, {
-              isActive: openInstance.name === newVal.name
+              isActive: openInstance.name === $scope.activeInstance.name
             });
           }
         );
       }
-    });
+    );
 
     $scope.openSelectedInstance = function(id, type) {
       if (id && type) {
@@ -264,28 +268,24 @@ Composer.controller('ComposerMainController', [
 
     // close editor tab
     $scope.instanceTabItemCloseClicked = function(id) {
-
       $scope.openInstanceRefs = IAService.closeInstanceById(id);
+
       // reset the active instance and reset tabs and nav
       if ($scope.activeInstance.id === id) {
         if ($scope.openInstanceRefs.length === 0) {
           IAService.clearActiveInstance();
-          $scope.activeInstance = {};
-          $scope.activeInstance = IAService.setActiveInstance($scope.activeInstance);
+          $scope.activeInstance = IAService.setActiveInstance({});
           $rootScope.$broadcast('IANavEvent');
-
-        }
-        else {
-
+        } else {
           // active the first instance by default
           IAService.activateInstanceById($scope.openInstanceRefs[0].id, $scope.openInstanceRefs[0].type).
             then(function(instance) {
               $scope.activeInstance = instance;
               $rootScope.$broadcast('IANavEvent');
-            }
-          );
+            });
         }
       }
+
       $scope.clearSelectedInstances();
     };
 
