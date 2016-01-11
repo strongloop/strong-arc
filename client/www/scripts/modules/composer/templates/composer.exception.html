@@ -1,0 +1,27 @@
+<div>
+  <div ng-repeat="stackItem in globalExceptionStack"
+       data-id="IAGlobalExceptionDisplayContainer"
+       class="ia-global-exception-container">
+    <span ng-click="clearGlobalException()"
+          class="sl-icon sl-icon-close ia-global-exception-close-button">
+    </span>
+    <div class="ia-global-exception-header">
+      Oops! Something is wrong
+    </div>
+    <div class="ia-global-exception-value">
+      {{stackItem.message}}
+    </div>
+    <sl-exception-help help-info="stackItem.help"></sl-exception-help>
+    <div class="ia-global-exception-link" ng-click="toggleStackView()">
+      Show/hide details
+    </div>
+    <div data-id="GlobalExceptionDetailsContainer">
+      <ul class="ia-global-exception-body">
+        <li ng-repeat="prop in exceptionProps" ng-show="stackItem[prop.key]">
+          <span class="ia-global-exception-label">{{prop.label}}: </span>
+          <span class="ia-global-exception-value">{{stackItem[prop.key]}}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
