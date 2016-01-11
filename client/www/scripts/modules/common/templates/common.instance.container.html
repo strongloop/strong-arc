@@ -1,9 +1,19 @@
 <div>
   <div class="instance-title-container">
-    <div sl-common-instance-title-view></div>
+    <span ng-show="activeInstance">{{activeInstance.name}}</span>
   </div>
   <div class="instance-tabs-view-container">
-    <div sl-common-instance-tabs-view></div>
+    <div sl-common-instance-tabs-view>
+      <li ng-class="{classNameVar}">
+        <button ng-click="clickInstanceTabItem()" class="tab-link" data-name="item.name" data-id="item.id">{{item.name}}</button>
+        <button ng-click="clickInstanceTabClose()" class="ui-close" data-name="item.name" data-id="item.id">
+          <span class="sl-icon sl-icon-close" data-name="item.name" data-id="item.id"></span>
+        </button>
+      </li>
+    </div>
+    <div>
+      <ul class="ui-tabs instance-tabs-list" ng-if="activeInstance.name">{{items}}</ul>
+    </div>
   </div>
   <div class="instance-body-container" ng-switch on="activeInstance.type">
     <div ng-switch-when="model" sl-model-instance-editor>/</div>

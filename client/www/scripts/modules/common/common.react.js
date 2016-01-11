@@ -5,17 +5,17 @@
  * Instance Title  View
  *
  * */
-var CommonInstanceTitleView = (CommonInstanceTitleView = React).createClass({
-  render: function() {
-    var retVal = (<span />);
-    if (this.props.scope.activeInstance) {
-      return (
-        <span>{this.props.scope.activeInstance.name}</span>
-        );
-    }
-    return retVal;
-  }
-});
+// var CommonInstanceTitleView = (CommonInstanceTitleView = React).createClass({
+//   render: function() {
+//     var retVal = (<span />);
+//     if (this.props.scope.activeInstance) {
+//       return (
+//         <span>{this.props.scope.activeInstance.name}</span>
+//         );
+//     }
+//     return retVal;
+//   }
+// });
 
 /*
  *
@@ -25,7 +25,6 @@ var CommonInstanceTitleView = (CommonInstanceTitleView = React).createClass({
 var CommonInstanceTabsView = (CommonInstanceTabsView = React).createClass({
   render: function() {
     var scope = this.props.scope;
-    var cx = React.addons.classSet;
 
     var clickInstanceTabItem = function(event) {
       if (event.target.attributes['data-id']){
@@ -58,25 +57,29 @@ var CommonInstanceTabsView = (CommonInstanceTabsView = React).createClass({
         classNameVar += ' active';
       }
 
-      return (
-        <li className={classNameVar}>
-          <button onClick={clickInstanceTabItem} className="tab-link" data-name={item.name} data-id={item.id}>{item.name}</button>
-          <button onClick={clickInstanceTabClose} className="ui-close" data-name={item.name} data-id={item.id}>
-            <span className="sl-icon sl-icon-close" data-name={item.name} data-id={item.id}></span>
-          </button>
-        </li>
-        );
+      // return (
+      //   <li className={classNameVar}>
+      //     <button onClick={clickInstanceTabItem} className="tab-link" data-name={item.name} data-id={item.id}>{item.name}</button>
+      //     <button onClick={clickInstanceTabClose} className="ui-close" data-name={item.name} data-id={item.id}>
+      //       <span className="sl-icon sl-icon-close" data-name={item.name} data-id={item.id}></span>
+      //     </button>
+      //   </li>
+      //   );
     });
 
-    var retVal = (<div />);
-    if (scope.activeInstance.name) {
-      retVal = (<div>
-          <ul className="ui-tabs instance-tabs-list">{items}</ul>
-        </div>);
-    }
-    return retVal;
+    // var retVal = (<div />);
+    // if (scope.activeInstance.name) {
+    //   retVal = (<div>
+    //       <ul className="ui-tabs instance-tabs-list">{items}</ul>
+    //     </div>);
+    // }
+    // return retVal;
   }
 });
+
+
+
+
 var CommonPreviewInstanceContainer = (CommonPreviewInstanceContainer = React).createClass({
   render: function() {
     var scope = this.props.scope;
