@@ -115,14 +115,17 @@
 
   &.small {
     height: 1.5rem;
+    width: 1.5rem;
   }
 
   &.medium {
-   height: 3rem;
+    height: 3rem;
+    width: 3rem;
   }
 
   &.large {
     height: 4rem;
+    width: 5rem;
   }
 
   svg {
@@ -156,6 +159,21 @@
         fill: @grey-5;
       }
     }
+
+    //policy icons
+    &.policy-rateLimiting, &.policy-reverseProxy, &.policy-metrics, &.policy-auth {
+      path.st0 {
+        fill: @green-1;
+      }
+
+      path.st1 {
+        fill: @white;
+      }
+    }
+
+    &.policy-reverseProxy, &.policy-metrics, &.policy-auth {
+      transform: scaleY(-1);
+    }
   }
 }
 
@@ -174,4 +192,28 @@
       }
     }
   }
+}
+
+.dark-circle-x.ui-icon {
+ .circle-x {
+   circle {
+     fill: @grey-2;
+   }
+
+   path {
+     fill: @white;
+   }
+
+   &:hover {
+     circle {
+       fill: @grey-1;
+     }
+   }
+
+   &:active {
+     circle {
+       fill: @grey-3;
+     }
+   }
+ }
 }

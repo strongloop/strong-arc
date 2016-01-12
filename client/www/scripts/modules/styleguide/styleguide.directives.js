@@ -30,6 +30,9 @@ Styleguide.directive('slStyleguideModuleText', [
 
         $scope.tabs = [{ id: 1, name: 'Normal' }, { id: 2, name: 'second tab' }, { id: 3, name: 'three' }, { id: 4, name: 'this is the fourth tab' }];
         $scope.crumbs = [{ name: 'Link 1' }, { name: 'Link 2' }, { name: 'Link 3' }, { name: 'Link 4' }];
+        $scope.pills1 = ['Pill 1', 'Pill 2', 'Pill 3'];
+        $scope.pills2 = ['Pill 1', 'Pill 2', 'Pill 3'];
+        $scope.pills3 = ['Pill 1', 'Pill 2', 'Pill 3'];
         $scope.clickedCrumb = null;
         $scope.activeTab = null;
 
@@ -256,10 +259,11 @@ Styleguide.directive('slStyleguideModulePopovers', [
           };
         };
 
-        $scope.showModal = function() {
+        $scope.showModal = function(size) {
+          size = size || 'lg';
           var modalDlg = $modal.open({
             templateUrl: templateBase + 'styleguide.module.popovers.modal.html',
-            size: 'lg',
+            size: size,
             controller: function($scope, $modalInstance, title) {
               $scope.title = title;
               $scope.close = function() {

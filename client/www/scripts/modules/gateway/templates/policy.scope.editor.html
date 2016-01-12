@@ -1,0 +1,9 @@
+<div class="policy-scope-input-container pills" ng-class="{ edit: true }">
+  <sl-ui-pillbox list="policy.scopes" has-delete="true"></sl-ui-pillbox>
+  <input class="policy-scope-input pill-input"
+         typeahead="scope.name as scope.name for scope in context.policyScopes | filter:$viewValue | limitTo:8"
+         type="text" sl-policy-scope-input=""
+         new-policy-scope="addPolicyScope()"
+         delete-policy-scope="deletePolicyScope()"
+         ng-model="context.newPolicyScope" ng-style="{width: inputWidth}">
+</div>

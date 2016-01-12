@@ -412,7 +412,9 @@ Common.directive('slCommonLoadingIndicator', [
 Common.directive('slPopoverHelp', [
   '$http',
   '$tooltip',
-  '$log', function($http, $tooltip, $log){
+  '$log',
+  '$rootScope',
+  function($http, $tooltip, $log, $rootScope){
     return {
       restrict: 'E',
       replace: true,
@@ -425,12 +427,14 @@ Common.directive('slPopoverHelp', [
         scope.position = attrs.position || 'right';
         scope.iconclass = attrs.iconclass || 'sl-icon sl-icon-question-mark';
 
-         scope.$watch('showHelp', function(newVal, oldVal){
+        scope.$watch('showHelp', function(newVal, oldVal){
           if ( newVal ) {
             //only  show spinner on initial request
             if ( !scope.content ) {
               scope.loading = true;
             }
+
+            $rootScope.$emit('hide-popup-help', { helpId: scope.name });
 
             $http.get('/help/'+scope.name+'.json')
               .then(function(res){
@@ -438,6 +442,13 @@ Common.directive('slPopoverHelp', [
                 scope.title = res.data.title;
                 scope.content = res.data.body.view.value;
               });
+          }
+        });
+
+
+        $rootScope.$on('hide-popup-help', function(event, data){
+          if ( !data || data.helpId !== scope.name ) {
+            scope.showHelp = false;
           }
         });
       }

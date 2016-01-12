@@ -1,0 +1,44 @@
+<div data-id="PolicyFormContainer">
+  <form class="ui-form no-border" name="policyForm" novalidate>
+    <div class="flex-container">
+      <div class="ui-form-group">
+        <label>Icon</label>
+        <ui-icon name="policy-{{policy.type}}" ng-if="policy.type"></ui-icon>
+      </div>
+      <div class="ui-form-group">
+        <label>Name</label>
+        <input type="text" class="ui-input" ng-model="policy.name" required>
+        <p class="error" ng-show="form.name.$error.required">
+          Name is required
+        </p>
+      </div>
+      <div class="ui-form-group">
+        <label>Type</label>
+        <div class="ui-menu-container policy-type-menu">
+          <input type="text"
+                 class="ui-input toggler"
+                 ng-mousedown="showPolicyMenu = true"
+                 ng-value="policy.type || 'Select Type'">
+          <sl-ui-menu-dropdown toggler="showPolicyMenu">
+            <section class="menu">
+              <ul>
+                <li ng-repeat="policyType in context.policyTypes track by $index">
+                  <a href ng-click="changePolicyType(policyType.id)"  value="{{policyType.id}}">{{policyType.name}}</a></li>
+              </ul>
+            </section>
+          </sl-ui-menu-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="flex-container">
+      <sl-policy-auth-form ng-show="context.isShowAuthPolicyForm"></sl-policy-auth-form>
+      <sl-policy-rate-limit-form  ng-show="context.isShowRateLimitPolicyForm"></sl-policy-rate-limit-form>
+      <sl-policy-proxy-form ng-show="context.isShowProxyPolicyForm"> </sl-policy-proxy-form>
+    </div>
+    <div ng-hide="hidebuttons">
+      <hr>
+      <button class="ui-btn secondary small" type="button" ng-show="isPolicyDirty" ng-click="clearPolicyForm()">Revert</button>
+      <button class="ui-btn primary small" type="button" ng-show="isPolicyDirty" ng-click="confirmSaveCurrentPolicy(policy)">Save</button>
+    </div>
+  </form>
+</div>

@@ -12,6 +12,7 @@ var jshint = require('gulp-jshint');
 var less = require('gulp-less');
 var mocha = require('gulp-spawn-mocha');
 var runSequence = require('run-sequence');
+var angularProtractor = require('gulp-angular-protractor');
 var rename = require('gulp-rename');
 var loopbackAngular = require('gulp-loopback-sdk-angular');
 var postcss      = require('gulp-postcss');
@@ -33,6 +34,7 @@ gulp.task('build', [
     'build-devtools-autoprefixer',
     'build-version',
     'build-workspace-services',
+    'build-gateway-services',
     'build-build-and-deploy-services',
     'build-help-assets',
     'build-arc-services',
@@ -42,6 +44,22 @@ gulp.task('build', [
   // Remove the env var
   process.env.GULP_ANGULAR_CODEGEN = undefined;
 });
+
+//@deprecated use `fdescribe()` or `fit()` to run a test in isolcation with `gulp test-e2e`
+//gulp.task('e2e', function(callback) {
+//
+//    gulp.src(['client/test/e2e/arc/tmp.gateway.spec.js'])
+//      .pipe(angularProtractor({
+//        'configFile': 'client/test/protractor.conf.js',
+//        'args': [ '--baseUrl', 'http://127.0.0.1:9800'],
+//        'autoStartStopServer': true,
+//        'debug': true
+//      }))
+//      .on('error', function(e) {
+//        console.log(e.message);
+//        throw e
+//      });
+//});
 
 gulp.task('build-less', function(done) {
   return gulp.src('client/less/style.less')
@@ -96,7 +114,15 @@ gulp.task('build-workspace-services', function() {
     .pipe(rename('workspace.services.js'))
     .pipe(gulp.dest('./client/www/scripts/modules/common'));
 });
-
+gulp.task('build-gateway-services', function() {
+  return gulp.src('./node_modules/gateway-workspace/server/server.js')
+    .pipe(loopbackAngular({
+      apiUrl: '/workspace/api',
+      ngModuleName: 'lbGatewayServices'
+    }))
+    .pipe(rename('gateway.services.js'))
+    .pipe(gulp.dest('./client/www/scripts/modules/common'));
+});
 gulp.task('build-arc-services', function() {
   process.env.GULP_ANGULAR_CODEGEN = 'YES';
   return gulp.src('./arc-api/server/server.js')
@@ -254,7 +280,9 @@ gulp.task('test-e2e', function(callback) {
   function runProtractorTests(server) {
     process.env.TEST_SERVER_PORT = server.port;
 
-    spawn('protractor', ['client/test/protractor.conf.js'], {stdio: 'inherit'})
+    var protractorBin = path.join(__dirname, 'node_modules', 'protractor', 'bin', 'protractor');
+
+    spawn(protractorBin, ['client/test/protractor.conf.js'], {stdio: 'inherit'})
       .on('error', protractorResults)
       .on('exit', function(code, signal) {
         var status = signal || code;

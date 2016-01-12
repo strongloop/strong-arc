@@ -52,3 +52,78 @@ small {
     background-image: url(/images/x_down.svg);
   }
 }
+
+//optional container used in edit mode
+.pills {
+  display: flex;
+  padding: .5rem .5rem 0 .5rem;
+
+  &.edit {
+    width: 500px;
+    border: 1px solid @ui-form-border-color;
+    border-radius: @ui-radius;
+  }
+}
+
+//list of pills
+.pillbox {
+  font-size: 1.4rem;
+  flex-grow: 0;
+
+  .pill {
+    background-color: @grey-5;
+    display:inline-block;
+    border-radius: 20rem;
+    margin-right: .5rem;
+    margin-bottom: .5rem;
+    position: relative;
+
+    &.has-delete {
+      padding-right: 2.5rem;
+    }
+
+    &.has-more {
+      padding-right: 2.5rem;
+    }
+
+    .name {
+      cursor: default;
+      display: block;
+      color: @grey-1;
+      padding: 0 1.5rem;
+      text-transform: uppercase;
+      font-weight: 400;
+      line-height: 1.9;
+    }
+
+    .more {
+      position: absolute;
+      top: 50%;
+      right: 1.5rem;
+      margin-top: -1.5rem;
+      display: inline-block;
+    }
+
+    .delete-pill {
+      position: absolute;
+      top: 50%;
+      right: .1rem;
+      margin-top: -1.2rem;
+      height: 2.4rem;
+      cursor: pointer;
+      display: inline-block;
+
+      .ui-icon {
+        width: 2.4rem;
+      }
+    }
+  }
+}
+
+//input field for adding more pills
+.pill-input {
+  flex-grow: 1;
+}
+
+
+

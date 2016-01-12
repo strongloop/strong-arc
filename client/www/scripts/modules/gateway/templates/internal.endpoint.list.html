@@ -1,0 +1,54 @@
+<div data-id="InternalEndpointListContainer">
+  <table class="ui-table">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Host</th>
+      <th>Port</th>
+      <th>App</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody ng-repeat="internalEndpoint in gatewayCtx.internalEndpoints">
+    <tr>
+      <td>
+        <button ng-show="!internalEndpoint.editMode" class="link-cmd">{{internalEndpoint.name}}</button>
+        <input ng-show="internalEndpoint.editMode" ng-model="internalEndpoint.name" />
+      </td>
+      <td>
+        <span ng-show="!internalEndpoint.editMode">{{internalEndpoint.host}}</span>
+        <input  ng-show="internalEndpoint.editMode" ng-model="internalEndpoint.host" />
+      </td>
+      <td>
+        <span ng-show="!internalEndpoint.editMode">{{internalEndpoint.port}}</span>
+        <input  ng-show="internalEndpoint.editMode" ng-model="internalEndpoint.port" />
+      </td>
+      <td>
+        <span ng-show="!internalEndpoint.editMode">{{internalEndpoint.serviceName}}</span>
+        <select ng-show="internalEndpoint.editMode" ng-model="internalEndpoint.serviceName"
+                ng-select="{{app.service.name === internalEndpoint.serviceName}}"
+                ng-options="app.service.name as app.service.name for app in gatewayCtx.deployedApps | unique:'service.name'"></select>
+      </td>
+      <td>
+        <button ng-show="internalEndpoint.editMode" class="ui-btn secondary small" ng-click="cancelEditInternalEndpoint(internalEndpoint)">cancel</button>
+        <button ng-show="internalEndpoint.editMode" class="ui-btn primary small" ng-click="saveInternalEndpoint(internalEndpoint)">save</button>
+        <div ng-show="!internalEndpoint.editMode" class="dropdown" dropdown>
+          <button class="dropdown-toggle link-cmd" dropdown-toggle>Actions<span class="caret"></span></button>
+          <ul class="dropdown-menu" dropdown-menu>
+            <li>
+              <button ng-click="editInternalEndpoint(internalEndpoint)" class="link-cmd">edit</button>
+            </li>
+            <li>
+              <button class="link-cmd" ng-click="saveInternalEndpoint(internalEndpoint)">save</button>
+            </li>
+            <li>
+              <button ng-click="deleteInternalEndpoint(internalEndpoint)" class="link-cmd">delete</button>
+            </li>
+          </ul>
+        </div>
+
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

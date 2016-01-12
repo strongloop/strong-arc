@@ -29,6 +29,7 @@ var Arc = angular.module('Arc', [
   'ngCookies',
   'angular-growl',
   'lbServices',
+  'lbGatewayServices',
   'ArcServices',
   'BuildDeployAPI',
   'ArcUserAuthFactory',
@@ -51,6 +52,7 @@ var Arc = angular.module('Arc', [
   'Metrics',
   'ApiAnalytics',
   'Manager',
+  'Gateway',
   'UI',
   'Datasource',
   'ui.bootstrap',
@@ -99,6 +101,31 @@ Arc.config([
         templateUrl: './scripts/modules/manager/templates/manager.main.html',
         controller: 'ManagerMainController'
       })
+      .state('gateway', {
+        url: '/gateway',
+        templateUrl: './scripts/modules/gateway/templates/gateway.main.html',
+        controller: 'GatewayMainController'
+      })
+      .state('gatewaymap', {
+        url: '/gateway/gatewaymap/:id',
+        templateUrl: './scripts/modules/gateway/templates/gateway.main.html',
+        controller: 'GatewayMainController'
+      })
+      .state('pipeline', {
+        url: '/gateway/pipeline/:id',
+        templateUrl: './scripts/modules/gateway/templates/gateway.main.html',
+        controller: 'GatewayMainController'
+      })
+      .state('policy', {
+        url: '/gateway/policy/:id',
+        templateUrl: './scripts/modules/gateway/templates/gateway.main.html',
+        controller: 'GatewayMainController'
+      })
+      //.state('policy.detail', {
+      //  url: '/:id',
+      //  templateUrl: './scripts/modules/gateway/templates/gateway.main.html',
+      //  controller: 'GatewayMainController'
+      //})
       .state('tracing', {
         url: '/tracing',
         templateUrl: './scripts/modules/tracing/templates/tracing.main.html',
@@ -240,8 +267,14 @@ Arc.run([
 
 Arc.config([
   '$httpProvider',
-  function ($httpProvider) {
+  '$tooltipProvider',
+  function ($httpProvider, $tooltipProvider) {
     $httpProvider.interceptors.push('arcRequestInterceptor');
+
+    //tooltip show/hide triggers
+    $tooltipProvider.setTriggers({
+      'show': 'hide'
+    });
   }
 ]);
 

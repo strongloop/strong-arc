@@ -1,0 +1,35 @@
+<div>
+  <div class="ia-project-title-header-container" >
+    <div class="ia-project-nav-help">
+      <a target="_blank" href="https://docs.strongloop.com/display/LGW/Using+Arc+API+Gateway">
+        <span id="mainNavContextHelp" data-id="MainNavContextHelp" class="sl-icon sl-icon-question-mark"></span>
+      </a>
+    </div>
+    <span class="ia-project-title-container">Gateway</span>
+  </div>
+  <!-- Mappings -->
+  <sl-gateway-nav-menu menu="gatewayCtx.navMenus['gatewaymap']"
+                       show-modal="showAddNewModal(type)"
+                       clone-method="cloneInstanceRequest(data)"
+                       delete-method="deleteInstanceRequest(type, id)"
+                       set-nav="setMainNav(type, id)"
+                       context="gatewayCtx">
+  </sl-gateway-nav-menu>
+  <!-- Pipelines -->
+  <sl-gateway-nav-menu menu="gatewayCtx.navMenus['pipeline']"
+                       show-modal="showAddNewModal(type)"
+                       clone-method="cloneInstanceRequest(data)"
+                       delete-method="deleteInstanceRequest(type, id)"
+                       set-nav="setMainNav(type, id)"
+                       context="gatewayCtx">
+  </sl-gateway-nav-menu>
+  <!-- Policy -->
+  <sl-gateway-nav-menu menu="gatewayCtx.navMenus['policy']"
+                       show-modal="showAddNewModal(type)"
+                       clone-method="cloneInstanceRequest(data)"
+                       delete-method="deleteInstanceRequest(type, id)"
+                       set-nav="setMainNav(type, id)"
+                       context="gatewayCtx">
+  </sl-gateway-nav-menu>
+
+</div>

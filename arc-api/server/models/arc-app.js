@@ -75,6 +75,15 @@ module.exports = function(ArcApp) {
       "supports": "*"
     },
     {
+      "id": "gateway",
+      "name": "Gateway",
+      "description": "Control access and configure pipelines for you apis.",
+      "disabled": false,
+      "featureFlag": "feature:gateway",
+      "beta": true,
+      "supports": "*"
+    },
+    {
       "id": "tracing",
       "name": "Tracing",
       "description": "Trace through request profiles over time.",

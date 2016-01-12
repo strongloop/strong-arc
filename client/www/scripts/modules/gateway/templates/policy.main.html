@@ -1,0 +1,11 @@
+<div ng-controller="PolicyMainController">
+  <h3>
+    {{gatewayCtx.viewTitle}}
+    <sl-popover-help name="gateway-policies" position="right"></sl-popover-help>
+  </h3>
+  <sl-policy-list ng-show="!gatewayCtx.currentInstanceId"></sl-policy-list>
+  <sl-policy-form ng-show="gatewayCtx.currentInstanceId"
+                  context="policyCtx"
+                  policy="policyCtx.currentPolicy">
+  </sl-policy-form>
+</div>

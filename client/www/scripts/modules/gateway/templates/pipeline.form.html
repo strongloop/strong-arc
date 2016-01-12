@@ -1,0 +1,71 @@
+<div data-id="PipelineFormContainer">
+  <form class="ui-form no-border" name="form">
+    <div class="ui-form-group">
+      <label>Name</label>
+      <input type="text" class="ui-input" name="name" ng-model="pipeline.name" required />
+      <p class="error" ng-show="form.name.$error.required">
+        Name is required
+      </p>
+    </div>
+    <table class="ui-table pipelines">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Name</th>
+          <th>Definitions</th>
+          <th class="actions"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="policy in pipeline.policies track by $index">
+          <td><ui-icon name="policy-{{policy.type}}"></ui-icon></td>
+          <td title="{{policy.name}}">{{policy.name}}</td>
+          <td>
+            <div class="policy-details">
+              <div class="scopes" ng-show="policy.type == 'auth' && policy.scopes.length">
+                <span class="txt">Scopes:</span>
+                <span class="val">
+                  <sl-ui-pillbox list="policy.scopes"></sl-ui-pillbox>
+              </div>
+              <div ng-show="policy.type == GATEWAY_CONST.POLICY_RATELIMIT_TYPE">
+                <span class="txt">Limit:</span>
+                <span class="val">{{policy.limit}}</span>
+                <span class="txt">Interval:</span>
+                <span class="val">{{policy.interval}}</span>
+              </div>
+              <div ng-show="policy.type == GATEWAY_CONST.POLICY_PROXY_TYPE">
+                <span class="txt">Target URL:</span>
+                <span class="val">{{policy.targetURL}}</span>
+              </div>
+              <div ng-show="policy.type == GATEWAY_CONST.POLICY_METRICS_TYPE_TYPE">
+                <span class="txt">Metrics</span>
+              </div>
+            </div>
+          </td>
+          <td class="actions">
+            <a href class="ui-close" ng-click="deletePolicy(policy)">x</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="ui-menu-container">
+      <button class="ui-btn accessory toggler" ng-click="toggleShowAddPolicyMenu()">
+        Add Policy
+        <span class="sl-icon sl-icon-plus-sign"></span>
+      </button>
+      <sl-ui-menu-dropdown toggler="showAddPolicyMenu">
+        <section class="menu">
+          <ul>
+            <li ng-repeat="policy in context.policies track by $index">
+              <a href ng-click="addNewPolicyToPipeline(policy)" data-id="{{policy.id}}">{{policy.name}} - {{policy.type}}</a></li>
+          </ul>
+        </section>
+      </sl-ui-menu-dropdown>
+    </div>
+    <hr />
+    <div ng-show="!isModal">
+      <button class="ui-btn secondary small" type="button" ng-show="isPipelineDirty" ng-click="clearPipelineForm()">Revert</button>
+      <button class="ui-btn primary small" ng-show="isPipelineDirty" ng-click="confirmSavePipeline(pipeline)">Save</button>
+    </div>
+  </form>
+</div>

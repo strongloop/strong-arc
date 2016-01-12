@@ -1,0 +1,13 @@
+<div class="sidebar-layout-container">
+  <div class="sidebar-layout-sidebar-container">
+    <sl-gateway-nav data-id="MainNavContainer" class="gateway-nav"></sl-gateway-nav>
+  </div>
+  <div class="sidebar-layout-main-container">
+    <div data-id="GatewayMainContainer">
+      <sl-gateway-map-main-view ng-show="gatewayCtx.isShowGatewayMapView"></sl-gateway-map-main-view>
+      <sl-pipeline-main-view ng-show="gatewayCtx.isShowPipelineView"></sl-pipeline-main-view>
+      <sl-policy-main-view ng-show="gatewayCtx.isShowPolicyView"></sl-policy-main-view>
+    </div>
+  </div>
+</div>
+

@@ -16,6 +16,11 @@ features.forEach(function(f) {
 
 var workspace = require('loopback-workspace');
 
+var gateway = require('gateway-workspace');
+gateway(workspace, {});
+
+
+
 // export the workspace object, useful e.g. in tests
 app.workspace = workspace;
 
@@ -60,6 +65,7 @@ try {
   app.use('/explorer/workspace', explorer.routes(workspace,
     { basePath: '/workspace/api' }));
   app.use('/explorer/arc-api', explorer.routes(arcApi, { basePath: '/api' }));
+  app.use('/explorer/gateway-api', explorer.routes(gatewayApi, { basePath: '/gateway/api' }));
 } catch(err) {
   // silently ignore the error, the explorer is not available in "production"
 }

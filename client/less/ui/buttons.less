@@ -138,11 +138,17 @@
   background: @ui-button-bg-color;
   color: @ui-button-color;
   padding: .8rem 4rem;
-  margin-left: 1rem;
+  margin-right: 1rem;
   border-bottom: 2px solid @ui-button-border-color;
   font-weight: 400;
   position: relative;
   letter-spacing: .1rem;
+
+
+  &.pull-right {
+    margin-left: 1rem;
+    margin-right: 0;
+  }
 
   .sl-icon {
     color: inherit;

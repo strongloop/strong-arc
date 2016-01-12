@@ -1,0 +1,51 @@
+<div data-id="PolicyListContainer" class="entity-list-container">
+  <table class="ui-table policies">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Details</th>
+        <th class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="policy in policyCtx.policies track by $index">
+        <td><ui-icon name="policy-{{policy.type}}"></ui-icon></td>
+        <td class="gateway-name-col">
+          <button class="ui-btn accessory" ng-click="editPolicy(policy)">
+            {{policy.name}}
+          </button>
+        </td>
+        <td>
+          <div class="policy-details">
+            <div class="scopes" ng-show="policy.type == 'auth' && policy.scopes.length">
+              <span class="txt">Scopes:</span>
+              <span class="val">
+                <sl-ui-pillbox list="policy.scopes"></sl-ui-pillbox>
+              </span>
+            </div>
+            <div ng-show="policy.type === 'rateLimiting'">
+              <span class="txt">Limit:</span>
+              <span class="val">{{policy.limit}}</span>
+              <span class="txt">Interval:</span>
+              <span class="val">{{policy.interval}}</span>
+            </div>
+            <div ng-show="policy.type === 'reverseProxy'">
+              <span class="txt">Target URL:</span>
+              <span class="val">{{policy.targetURL}}</span>
+            </div>
+            <div ng-show="policy.type === 'metrics'">
+              <span class="txt">Metrics</span>
+            </div>
+          </div>
+        </td>
+        <td class="actions">
+          <a href class="ui-close delete-policy" ng-click="confirmDeletePolicy(policy)">x</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="ui-btn accessory" ng-click="showAddNewPolicyForm()">
+    <i class="sl-icon sl-icon-plus-sign"></i> Add New
+  </button>
+</div>

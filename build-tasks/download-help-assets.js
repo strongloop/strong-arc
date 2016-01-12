@@ -70,5 +70,16 @@ function resolveRelativeHrefs(html) {
 
     $(this).attr('target', '_new');
   });
+
+  //prepend all images with confluence url
+  $('img').each(function(){
+    var src = $(this).attr('src');
+
+    if ( /^\//.test(src) ) {
+      src = CONFLUENCE_URL_BASE + src;
+      $(this).attr('src', src);
+    }
+  });
+
   return $.html();
 }

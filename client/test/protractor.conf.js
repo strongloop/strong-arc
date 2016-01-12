@@ -4,8 +4,9 @@ exports.config = {
   directConnect: true,
   // seleniumAddress: 'http://127.0.0.1:4444/wd/hub',
   specs: ['./e2e/**/*.spec.js'],
+  //specs: ['./e2e/**/tmp.gateway.spec.js'],
   framework: 'jasmine2',
-  jasmineNodeOpts: {isVerbose: true},
+  jasmineNodeOpts: {isVerbose: true },
   params: {
     pm: {
       host: process.env.TEST_PM_HOST,
@@ -15,7 +16,7 @@ exports.config = {
   onPrepare: function() {
     var jasmineReporters = require('jasmine-reporters');
     jasmine.getEnv().addReporter(new jasmineReporters.JUnitXmlReporter({
-        filePrefix: 'e2e-tests-xunit',
+        filePrefix: 'e2e-tests-xunit'
     }));
 
     var EC = protractor.ExpectedConditions;

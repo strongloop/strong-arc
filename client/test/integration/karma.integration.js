@@ -64,7 +64,7 @@ module.exports = function(config) {
 
       'client/www/scripts/vendor/nvd3/build/nv.d3.js',
 
-
+      'manager/client.js',
 
       // NOTE(bajtos) the main app script is intentionally omitted:
       //  - it contains UI-specific code depending on jQuery
@@ -136,7 +136,7 @@ module.exports = function(config) {
     // possible values:
     //   config.LOG_DISABLE || config.LOG_ERROR ||
     //   config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_DEBUG,
 
 
     // enable / disable watching file and executing tests

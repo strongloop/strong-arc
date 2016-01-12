@@ -464,3 +464,52 @@ Common.service('WorkspaceServices', [
   }
 ]);
 
+
+Common.service('slPopoverService', ['$timeout', '$log', function($timeout, $log){
+  function setupScrollingPopover($scope, $event) {
+    var $trigger = angular.element($event.target).closest('button');
+
+    $timeout(function() {
+      $trigger.trigger('show');
+    });
+
+    //close previous popover if open
+    if ($('.popover').hasClass('in')) {
+      $timeout(function() {
+        $scope.hideCurrentPopover();
+      });
+    }
+
+    $scope.hideCurrentPopover = function() {
+      //look for any open popover on page
+      var hasOpenPopover = !!$('.popover').siblings('button').not($trigger).length;
+
+      if (hasOpenPopover) {
+        //hide previously opened popover(s)
+        $('.popover').siblings('button').not($trigger).trigger('hide');
+      } else {
+        //hide the current popover
+        $trigger.trigger('hide');
+      }
+    };
+
+    //remove previously attached event handler
+    $('.viewport').off('.popover');
+
+    //hide on viewport scroll
+    $('.viewport').on('scroll.popover', function(e) {
+      $scope.hideCurrentPopover();
+    });
+
+    $scope.onClickHidePopover = function(e) {
+      $timeout(function() {
+        $scope.hideCurrentPopover();
+      });
+    };
+  }
+
+  //setup handler to hide when viewport is scrolled
+  return {
+    setupScrollingPopover: setupScrollingPopover
+  };
+}]);

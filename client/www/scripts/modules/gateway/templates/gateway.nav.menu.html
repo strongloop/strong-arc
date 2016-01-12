@@ -1,0 +1,36 @@
+<div data-menutype="{{menu.type}}">
+  <button data-type="{{menu.type}}" ng-click="setNav({type:menu.type})" class="btn btn-default btn-block nav-tree-item tree-branch"  title="{{menu.title}}" >
+    <span class="nav-branch-openclose-icon sl-icon sl-icon-arrow-right"></span>
+    <span class="nav-branch-folder-icon sl-icon sl-icon-folder"></span>
+    <span class="nav-branch-title">{{menu.title}}</span>
+  </button>
+  <div data-ui-type="table" class="ia-tree-node-table branch-leaf-list model-branch-container is-open">
+    <div ng-repeat="item in menu.items"
+         data-ui-type="row"
+         ng-class="{ 'is-active' : item.isActive}"
+         class="tree-item-row">
+      <div data-ui-type="cell" class="ia-nav-item-icon-container-col">
+        <span class="cssClassIcon"></span>
+      </div>
+      <div data-ui-type="cell" class="ia-nav-item-name-container-col">
+        <button class="nav-tree-item tree-node" ng-click="setNav({type:menu.type, id:item.id})">{{item.name}}</button>
+      </div>
+      <div data-ui-type="cell" class="ia-nav-item-dsconnect-icon-container-col">
+
+      </div>
+      <div data-ui-type="cell" class="ia-nav-item-contextmenu-icon-container-col">
+        <div  dropdown>
+          <button class="btn-command btn-nav-context" data-type="{{item.type}}" dropdown-toggle>
+            <span data-type="item.type" class="sl-icon sl-icon-box-arrow-down"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><button ng-click="cloneMethod({data: {type:menu.type, name:item.name, id:item.id}})" class="link-cmd clone-instance">clone</button></li>
+            <li><button ng-click="deleteMethod({type:menu.type, id:item.id})" class="link-cmd delete-instance">delete</button></li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <button ng-click="showModal({type: menu.type})" data-type="{{menu.type}}" class="nav-tree-item-addnew"><span class="plus">+</span>Add New {{menu.addNew}}</button>
+</div>

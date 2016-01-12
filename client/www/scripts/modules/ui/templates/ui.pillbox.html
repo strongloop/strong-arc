@@ -1,0 +1,11 @@
+<span class="pillbox {{classes}}">
+  <span ng-repeat="item in list | limitTo: showMore ? 1 : list.length" class="pill" ng-class="{'has-delete': hasDelete, 'has-more': showMore }">
+    <span class="name">
+      {{item}}
+    </span>
+    <span ng-show="showMore" class="more">...</span>
+    <span ng-show="hasDelete" class="delete-pill" ng-click="deletePill(item)">
+      <ui-icon name="circle-x" classes="dark-circle-x"></ui-icon>
+    </span>
+  </span>
+</span>

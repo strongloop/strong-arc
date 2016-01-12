@@ -1,0 +1,365 @@
+.sidebar-layout-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+
+
+  .sidebar-layout-sidebar-container {
+    width:28.5rem;
+  }
+
+  .sidebar-layout-main-container {
+    flex-grow: 1;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+
+  [data-id="GatewayMainContainer"] {
+    margin-bottom: 10rem;
+  }
+}
+
+[data-id="MainNavContainer"].gateway-nav {
+  width: 28.5rem;
+
+  .ia-nav-item-contextmenu-icon-container-col {
+    position: relative;
+  }
+}
+
+[data-id=PipelineFormContainer] {
+  .form-field {
+    margin-bottom: 1rem;
+  }
+}
+
+[data-id="GatewayMapFormContainer"] {
+  .gateway-map-pipeline-input-container {
+    position: relative;
+  }
+  .dropdown-container {
+    position: relative;
+  }
+  [data-id="GatewayMapFormTopRow"] {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+  }
+  .gateway-map-main-input {
+    max-width: 35rem;
+  }
+
+  .gateway-map-list-scopes-container {
+    position: relative;
+  }
+}
+[data-id="PolicyFormContainer"] {
+
+  margin: 0 auto;
+  width: 99%;
+
+  form.ui-form {
+    border:0;
+  }
+
+  .flex-container {
+    display: flex;
+    flex-direction: row;
+    /*justify-content: center;*/
+
+    .form-field {
+      padding-right:1rem;
+    }
+
+    &.policy-sub-form {
+      justify-content: flex-start;
+      padding-left:3.4rem;
+    }
+  }
+
+  select {
+    width:35rem;
+    height:30px;
+    color:#999999;
+  }
+}
+.policy-scope-item {
+  padding: 2px 4px;
+  line-height: 2rem;
+  font-size: 11px;
+  background-color: @gray-light-2;
+  color:@gray-dark;
+  float:left;
+  display:inline-block;
+  border-radius: 2px;
+  margin: 2px 5px 2px 0px;
+}
+
+.policy-scope-input-container {
+  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.075);
+
+  input[type=text].policy-scope-input{
+    display:inline-block;
+    height: 18px;
+    padding: 0px;
+    font-size: 13px;
+    line-height: 18px;
+    color: #444444;
+    border: 0;
+    margin: 2px;
+
+    &:focus {
+      outline:0;
+      box-shadow:0;
+    }
+  }
+}
+
+[data-id="GatewayMainContainer"] {
+  padding: 0 2rem;
+
+  [data-id="PolicyFormContainer"] {
+    .flex-container {
+      justify-content: flex-start;
+
+      &.policy-sub-form {
+        padding-left:0;
+      }
+    }
+  }
+
+  .gateway-map-list-scopes-container {
+    position:relative;
+  }
+
+
+  .tree-branch.is-active{
+    background: #4a90e2;
+  }
+
+  table.ui-table {
+    td.service-status-col {
+      table.service-status-table {
+        width:30rem;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        tbody tr:hover td {
+          border: 0;
+          box-shadow: none;
+        }
+        tr {
+          border: 0;
+          padding: 0;
+          margin: 0;
+
+          td.label-col {
+            vertical-align: middle;
+          }
+          td {
+            border: 0;
+            padding: 0;
+            margin: 0;
+          }
+        }
+
+      }
+
+    }
+  }
+  [data-id="PipelinePolicyDetailPopver"] {
+    min-height: 10rem;
+    min-width:50rem;
+    padding:1rem 2.5rem 2.5rem 2.5rem;
+  }
+  .pipeline-policy-sequence-list {
+
+    border:1px solid grey;
+
+    li {
+      border:1px solid red;
+      display:inline-block;
+      width:6rem;
+      margin:1rem;
+
+      .pipeline-policy-button {
+        height:6rem;
+        width:6rem;
+        text-align:left;
+        font-size:75%;
+        background-color:#eeeeee;
+        &:focus {
+          background-color:#a6b779;
+        }
+      }
+
+    }
+  }
+  .scope-endpoint-selector {
+    min-height:20rem;
+  }
+  .gateway-map-scope-selector {
+    min-width:26rem;
+  }
+
+  .policy-col {
+    .pipeline-add-policy-button {
+      float:right;
+    }
+  }
+}
+
+//pipeline list
+[data-id=PipelineListContainer] {
+
+  //constrain table so its width is dynamic
+  //but can be used to force the .viewport overflow scrollbar
+  .ui-table {
+    width: calc(~"100% - 1rem");
+    table-layout: fixed;
+    margin-top: 3rem;
+
+    th:nth-child(1) {
+      width: 25rem;
+    }
+
+    td:nth-child(2) {
+      padding-bottom: 0;
+    }
+  }
+
+  .viewport {
+    overflow-x: auto;
+  }
+
+  .policies {
+    display: block;
+    white-space: nowrap;
+    margin: 0 0 1rem 0;
+    padding: 0;
+
+    li {
+      display: inline-block;
+      width: 12rem;
+      margin-right: 1rem;
+
+      > a {
+        display: block;
+        text-decoration: none;
+      }
+
+      .policy-name {
+        width: 8rem;
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}
+
+.ui-table.pipelines, .ui-table.policies, .ui-table.mappings {
+  margin-top: 3rem;
+
+  th:nth-child(1) {
+    width: 20rem;
+  }
+
+  td {
+    vertical-align: middle;
+
+    .ui-btn.accessory {
+      text-align: left;
+    }
+  }
+
+  .policy-details {
+    .scopes {
+      padding: 0;
+
+      .scope {
+        margin-top: 0;
+      }
+    }
+  }
+}
+.scope {
+  display: inline-block;
+  background-color: @grey-5;
+  border-radius: 50rem;
+  margin: 1rem 1rem 0 0;
+  padding: .5rem 2rem;
+  font-weight: normal;
+}
+.popover .policy-details, .ui-table .policy-details {
+  h4 {
+    text-align: center;
+  }
+
+  .title {
+    width: 84%;
+  }
+
+  .title, a {
+    display: inline-block;
+    position: relative;
+    top: -6px;
+  }
+
+  .content, .dialog-buttons {
+    padding: 2rem;
+  }
+
+  .dialog-buttons {
+    text-align: right;
+  }
+
+  .ui-row {
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .ui-col {
+    width: 49%;
+    display: inline-block;
+
+    &.full {
+      width: 100%;
+    }
+  }
+
+  .txt {
+    color: @grey-2;
+    margin-right: 1rem;
+  }
+
+  .val {
+    color: @grey-1;
+    font-weight: 600;
+  }
+
+  .scopes {
+    .txt, .val {
+      display: block;
+      float: left;
+      height: 3rem;
+      line-height: 3rem;
+    }
+  }
+
+  .scope {
+    display: inline-block;
+    background-color: @grey-5;
+    border-radius: 50rem;
+    margin: 1rem 1rem 0 0;
+    padding: .5rem 2rem;
+    font-weight: normal;
+  }
+}
+
+[data-id=GatewayMapListContainer] {
+  .ui-table.policies {
+    width: 50rem;
+  }
+}

@@ -2,8 +2,7 @@ var async = require('async');
 var fs = require('fs-extra');
 var path = require('path');
 var _defaults = require('lodash').defaults;
-
-process.env.SL_ARC_FEATURE_FLAGS = 'tracing';
+process.env.SL_ARC_FEATURE_FLAGS = ['tracing', 'gateway'];
 
 var given = require('loopback-workspace/test/helpers/given');
 
