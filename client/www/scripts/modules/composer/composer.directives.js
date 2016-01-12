@@ -65,7 +65,7 @@ Composer.directive('slComposerExceptionView', [
 
         scope.$watch('globalExceptionStack', function(newVal) {
           var isFatal = function(statckItem) {
-            return stackItem.isFatal;
+            return stackItem && stackItem.isFatal;
           };
 
           // Hide the navigation in the event of a fatal error

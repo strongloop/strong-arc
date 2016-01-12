@@ -43,7 +43,6 @@
     "page": "^1.6.2",
     "parse-ms": "^1.0.0",
     "path": "^0.11.14",
-    "react-tools": "^0.13.3",
     "request": "^2.53.0",
     "serve-favicon": "^2.2.0",
     "sha1": "^1.1.0",
