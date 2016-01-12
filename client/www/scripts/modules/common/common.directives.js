@@ -272,9 +272,7 @@ Common.directive('slCommonAppControllerMenu', [
 *
 * */
 Common.directive('slCommonInstanceTabsView', [
-  '$http',
-  '$rootScope',
-  function($http, $rootScope) {
+  function() {
     return {
       templateUrl: './scripts/modules/common/templates/common.instance.tabs.view.html',
       replace: true,
