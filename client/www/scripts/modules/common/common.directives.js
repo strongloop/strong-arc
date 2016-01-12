@@ -265,6 +265,7 @@ Common.directive('slCommonAppControllerMenu', [
     }
   }
 ]);
+
 /*
 *
 *   Common Instance Tabs View
@@ -275,94 +276,31 @@ Common.directive('slCommonInstanceTabsView', [
   '$rootScope',
   function($http, $rootScope) {
     return {
-      templateUrl: './scripts/modules/common/templates/common.instance.container.html',
-      scope: {},
+      templateUrl: './scripts/modules/common/templates/common.instance.tabs.view.html',
+      replace: true,
+      scope: {
+        tabItems: '=',
+        onTabActivate: '&',
+        onCloseTab: '&'
+      },
       link: function(scope) {
-
-        scope.clickInstanceTabItem = function(event) {
-          if (event.target.attributes['data-id']){
-            // test to see if tab not already 'active'
-            scope.$apply(function () {
-              scope.instanceTabItemClicked(event.target.attributes['data-id'].value);
-            });
-          }
+        scope.clickInstanceTabItem = function(item) {
+          scope.onTabActivate({
+            id: item.id,
+            type: item.type
+          });
         };
-        scope.clickInstanceTabClose = function(event) {
-          if (event.target.attributes['data-id']){
-            // test to see if tab not already 'active'
-            scope.$apply(function () {
-              scope.instanceTabItemCloseClicked(event.target.attributes['data-id'].value);
-            });
-          }
-          else if (event.target.attributes['data-name']) {
-    //        console.log('close the new model tab');
-          }
-        };
-        scope.items = [];
-        scope.iterator;
-        if (scope.openInstanceRefs) {
-          scope.iterator = scope.openInstanceRefs;
-        }
 
-        // scope.items = scope.props.tabItems.map(function(item) {
-        //   scope.classNameVar = 'tab';
-        //   if (item.isActive) {
-        //     scope.classNameVar += ' active';
-        //   }
-        // });
+        scope.clickInstanceTabClose = function(item) {
+          scope.onCloseTab({
+            id: item.id
+          });
+        };
       }
     }
   }
-
-  // 'IAService',
-  // function(IAService) {
-  //   return {
-  //     link: function(scope, el, attrs) {
-  //       function renderComp() {
-  //         var tabItems = [];
-  //
-  //         if (scope.openInstanceRefs && scope.openInstanceRefs.length) {
-  //           for (var i = 0; i < scope.openInstanceRefs.length; i++) {
-  //             var isActive = false;
-  //
-  //             if (scope.openInstanceRefs[i].name === scope.activeInstance.name) {
-  //               isActive = true;
-  //             }
-  //
-  //             tabItems.push({
-  //               id:scope.openInstanceRefs[i].id,
-  //               name:scope.openInstanceRefs[i].name,
-  //               type:scope.openInstanceRefs[i].type,
-  //               isActive:isActive
-  //             });
-  //           }
-  //         }
-  //
-  //         React.renderComponent(
-  //           CommonInstanceTabsView({scope:scope, tabItems:tabItems}), el[0]);
-  //       }
-  //
-  //       scope.$watch('activeInstance', function(instance) {
-  //         if (scope.activeInstance) {
-  //           renderComp();
-  //         }
-  //       }, true);
-  //
-  //       scope.$watch('activeInstanceUpdated', function() {
-  //         if (scope.activeInstance) {
-  //           renderComp();
-  //         }
-  //       }, true);
-  //
-  //       scope.$watch('openInstanceRefs', function(newNames, oldNames) {
-  //         if (scope.activeInstance) {
-  //           renderComp();
-  //         }
-  //       }, true);
-  //     }
-  //   };
-  // }
 ]);
+
 /**
  * sl-common-enter
  *

@@ -113,8 +113,18 @@ Composer.controller('ComposerMainController', [
       $scope.apiModelsChanged = !$scope.apiModelsChanged;
     };
 
+    $scope.$watch('activeInstance', function(newVal) {
+      if ($scope.openInstanceRefs && $scope.openInstanceRefs.length) {
+        $scope.tabItems = $scope.openInstanceRefs.map(
+          function(openInstance) {
+            return angular.extend({}, openInstance, {
+              isActive: openInstance.name === newVal.name
+            });
+          }
+        );
+      }
+    });
 
-    // open instance
     $scope.openSelectedInstance = function(id, type) {
       if (id && type) {
         IAService.activateInstanceById(id, type).
