@@ -1,18 +1,3 @@
-Tracing.directive('expTimeSeries', [
-  '$log',
-  function($log) {
-    return {
-      restrict: 'E',
-      link: function(scope, el, attrs) {
-        scope.$watch('tracingCtx.currentTimeline', function(newTimeline, oldTimeline) {
-          if (newTimeline && newTimeline.length) {
-            React.renderComponent(TracingTraceList({scope:scope}), el[0]);
-          }
-        }, true);
-      }
-    }
-  }
-]);
 Tracing.directive('slTracingBreadcrumbs', [
   '$log',
   function($log) {

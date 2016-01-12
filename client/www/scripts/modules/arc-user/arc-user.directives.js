@@ -4,13 +4,13 @@ ArcUser.directive('slUserLoginView', [
   '$state',
   'ArcUserService',
   function($stateParams, $state, ArcUserService) {
-
     return {
+      restrict: 'E',
+      templateUrl: './scripts/modules/arc-user/templates/login.form.html',
       scope: {
         referrer: '@'
       },
       controller: function ($scope, $location, ArcUserService) {
-
         $scope.loginErrorMessage = '';
         $scope.credentials = {
           nameOrEmail: '',
@@ -22,13 +22,18 @@ ArcUser.directive('slUserLoginView', [
             password: ''
           };
         };
+
+        $scope.handleChange = function(){
+          $scope.clearLoginErrorMessage();
+        };
+
         $scope.clearLoginErrorMessage = function() {
           $scope.loginErrorMessage = '';
         };
 
-        $scope.loginRequest = function (formConfig) {
-          $scope.loginResult = ArcUserService.loginRequest(formConfig).
-            then(function(response) {
+        $scope.loginRequest = function (){
+          ArcUserService.loginRequest($scope.credentials)
+            .then(function(response) {
               var referrer = $scope.referrer;
 
               if ( referrer ) {
@@ -36,23 +41,12 @@ ArcUser.directive('slUserLoginView', [
               } else {
                 $state.go('home');
               }
-              //$location.path('/');
             }).catch(function(response) {
               $scope.loginErrorMessage = 'Authentication attempt failed. Please check your username (email) and password and try again';
               $scope.resetCredentials();
             }
           );
-
         };
-      },
-      link: function(scope, el, attrs) {
-
-        scope.$watch('credentials', function() {
-          React.renderComponent(LoginFormView({scope:scope}), el[0]);
-        });
-        scope.$watch('loginError', function() {
-          React.renderComponent(LoginFormView({scope:scope}), el[0]);
-        });
       }
     }
   }

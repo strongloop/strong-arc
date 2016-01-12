@@ -19,31 +19,6 @@ Common.directive('slCommonInstanceContainer', [
     }
   }
 ]);
-/*
-*
-*   Common Instance Title View
-*
-* */
-Common.directive('slCommonInstanceTitleView', [
-  function() {
-    return {
-      link: function(scope, el, attrs) {
-        scope.$watch('activeInstance', function(newVal, oldVal) {
-          if (scope.activeInstance) {
-            React.renderComponent(CommonInstanceTitleView({scope: scope}), el[0]);
-          }
-
-        }, true);
-        scope.$watch('activeInstanceUpdated', function() {
-          if (scope.activeInstance) {
-            React.renderComponent(CommonInstanceTitleView({scope: scope}), el[0]);
-          }
-        }, true);
-
-      }
-    }
-  }
-]);
 Common.directive('slCommonAppControls', [
   function() {
     return {
@@ -290,64 +265,40 @@ Common.directive('slCommonAppControllerMenu', [
     }
   }
 ]);
+
 /*
 *
 *   Common Instance Tabs View
 *
 * */
 Common.directive('slCommonInstanceTabsView', [
-  'IAService',
-  function(IAService) {
+  function() {
     return {
-      link: function(scope, el, attrs) {
-        function renderComp() {
-          var tabItems = [];
+      templateUrl: './scripts/modules/common/templates/common.instance.tabs.view.html',
+      replace: true,
+      scope: {
+        tabItems: '=',
+        onTabActivate: '&',
+        onCloseTab: '&'
+      },
+      link: function(scope) {
+        scope.clickInstanceTabItem = function(item) {
+          scope.onTabActivate({
+            id: item.id,
+            type: item.type
+          });
+        };
 
-          if (scope.openInstanceRefs && scope.openInstanceRefs.length) {
-            for (var i = 0; i < scope.openInstanceRefs.length; i++) {
-              var isActive = false;
-
-              if (scope.openInstanceRefs[i].name === scope.activeInstance.name) {
-                isActive = true;
-              }
-
-              tabItems.push({
-                id:scope.openInstanceRefs[i].id,
-                name:scope.openInstanceRefs[i].name,
-                type:scope.openInstanceRefs[i].type,
-                isActive:isActive
-              });
-            }
-          }
-
-          React.renderComponent(
-            CommonInstanceTabsView({
-              scope:scope,
-              tabItems:tabItems
-            }), el[0]);
-        }
-
-        scope.$watch('activeInstance', function(instance) {
-          if (scope.activeInstance) {
-            renderComp();
-          }
-        }, true);
-
-        scope.$watch('activeInstanceUpdated', function() {
-          if (scope.activeInstance) {
-            renderComp();
-          }
-        }, true);
-
-        scope.$watch('openInstanceRefs', function(newNames, oldNames) {
-          if (scope.activeInstance) {
-            renderComp();
-          }
-        }, true);
+        scope.clickInstanceTabClose = function(item) {
+          scope.onCloseTab({
+            id: item.id
+          });
+        };
       }
-    };
+    }
   }
 ]);
+
 /**
  * sl-common-enter
  *
@@ -735,4 +686,3 @@ Common.directive('slMessageGlobal', [
     };
   }
 ]);
-
