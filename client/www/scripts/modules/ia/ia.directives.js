@@ -7,6 +7,7 @@ IA.directive('slIaMainNav', [
   function(ModelService, DataSourceService, IAService, $timeout) {
     return {
       replace: true,
+      templateUrl: './scripts/modules/ia/templates/ia.nav.container.html',
       link: function(scope, el, attrs) {
 
         function processActiveNavState() {
@@ -97,15 +98,6 @@ IA.directive('slIaMainNav', [
         }
 
         var renderComp = function() {
-          $timeout(function() {
-
-          //  if (!scope.mainNavDatasources.$promise) {
-              React.renderComponent(IAMainNavContainer({scope:scope}), el[0]);
-          //  }
-
-          }, 140);
-
-
         };
         scope.$watch('currentSelectedCollection', function(newVal, oldVal) {
           processActiveNavState();
@@ -175,16 +167,233 @@ IA.directive('slIaMainControls', [
   function($timeout, growl) {
     return  {
       replace: true,
-      link: function(scope, el, attrs) {
+      scope: {},
+      templateUrl: './scripts/modules/ia/templates/ia.nav.main.controls.html',
+      controller: function($scope) {
+        $scope.createModelViewRequest = function(event){
+          $scope.$parent.createModelViewRequest(event);
+        }
+      }
+    }
+  }
+]);
 
-        var renderComp = function() {
-          React.renderComponent(IAMainControls({scope:scope}), el[0]);
-        };
-        scope.$watch('activeInstance', function(instance) {
-          renderComp();
+IA.directive('slIaNavModel', [function(){
+  return {
+    restrict: 'E',
+    replace: true,
+    templateUrl: './scripts/modules/ia/templates/ia.nav.model.html',
+    controller: function($scope){
+      $scope.addNewModelInstanceRequest = function(event) {
+        $scope.createModelViewRequest();
+      };
+    }
+  };
+}]);
+
+IA.directive('slIaNavDatasource', [function(){
+  return {
+    restrict: 'E',
+    replace: true,
+    templateUrl: './scripts/modules/ia/templates/ia.nav.datasource.html',
+    controller: function($scope){
+      $scope.addNewDatasourceInstanceRequest = function(event) {
+        if (event.target.attributes['data-type'] || event.target.parentElement.attributes['data-type']){
+          var val = '';
+          if (event.target.attributes['data-type']) {
+            val = event.target.attributes['data-type'].value;
+          }
+          else {
+            val = event.target.parentElement.attributes['data-type'].value;
+          }
+            $scope.createDatasourceViewRequest();
+        }
+      };
+    }
+  };
+}]);
+
+IA.directive('slIaNavModelRow', [function(){
+  return {
+    restrict: 'E',
+    replace: true,
+    templateUrl: './scripts/modules/ia/templates/ia.nav.model.row.html',
+    scope: {
+      item: '=',
+      onItemClick: '&'
+    },
+    controller: function($scope){
+      $scope.showDsConnectEl = false;
+
+      // TODO - SEAN fix this bug - it needs to reference 'config' for dataSource
+      if ($scope.item.dataSource && ($scope.item.dataSource !== CONST.DEFAULT_DATASOURCE)) {
+        $scope.showDsConnectEl = true;
+      }
+
+      $scope.item.configId = $scope.item.config && $scope.item.config.id;
+
+      $scope.singleClickItem = function(obj, event) {
+        $scope.onItemClick({
+          type: 'model',
+          id: obj.id,
+          meta: event.metaKey
         });
+      };
 
+      var menuItems = {};
+      menuItems.deleteSelectedModel = {name: "delete", callback: deleteSelectedModel};
 
+      $.contextMenu({
+        // define which elements trigger this menu
+        selector: '.btn-nav-context',
+        trigger: 'left',
+        // define the elements of the menu
+        items: menuItems,
+        events: {
+          show: function(opt, event) {
+            if (opt.sourceEvent.target.attributes['data-name']){
+              currentDSName = opt.sourceEvent.target.attributes['data-name'].value;
+            }
+          }
+        }
+      });
+
+      function deleteSelectedModel(key, opt) {
+        try{
+          var targetAttributes = opt.sourceEvent.currentTarget.attributes;
+          if (targetAttributes['data-id']) {
+            var definitionId = targetAttributes['data-id'].value;
+            var configId = targetAttributes['data-config-id'] && targetAttributes['data-config-id'].value;
+            var instanceId = {
+              definitionId: definitionId,
+              configId: configId
+            };
+
+            $scope.$parent.deleteInstanceRequest(instanceId, CONST.MODEL_TYPE);
+          } else {
+            console.warn('Missing some of the required model attributes.');
+          }
+        } catch (error) {
+          console.warn('error deleting model definition: ' + error);
+        }
+      }
+    }
+  };
+}]);
+
+IA.directive('slIaNavDatasourceRow', [function(){
+  return {
+    restrict: 'E',
+    replace: true,
+    templateUrl: './scripts/modules/ia/templates/ia.nav.datasource.row.html',
+    scope: {
+      item: '=',
+      onItemClick: '&'
+    },
+    controller: function($scope) {
+      var isDiscoverable = false;
+      if ($scope.item.isDiscoverable) {
+        isDiscoverable = $scope.item.isDiscoverable;
+      }
+
+      if ($scope.item.dataSource && ($scope.item.dataSource !== CONST.DEFAULT_DATASOURCE )) {
+        $scope.showDsConnectEl = true;
+      }
+
+      $scope.singleClickItem = function(obj, event) {
+        $scope.onItemClick({
+          type: 'datasource',
+          id: obj.id,
+          meta: event.metaKey
+        });
+      };
+
+      var menuItems = {};
+      menuItems.deleteSelectedModel = {name: "delete", callback: deleteSelectedModel};
+
+      $.contextMenu({
+        // define which elements trigger this menu
+        selector: '.btn-ds-nav-context',
+        trigger: 'left',
+        // define the elements of the menu
+        items: menuItems,
+        events: {
+          show: function(opt, event) {
+            if (opt.sourceEvent.target.attributes['data-name']){
+              currentDSName = opt.sourceEvent.target.attributes['data-name'].value;
+            }
+          }
+        }
+      });
+
+      //handles deletion of both models and datasources based on type passed to deleteInstanceRequest()
+      function deleteSelectedModel(key, opt) {
+        try{
+          var targetAttributes = opt.sourceEvent.currentTarget.attributes;
+          if (targetAttributes['data-id']) {
+            var definitionId = targetAttributes['data-id'].value;
+            var configId = targetAttributes['data-config-id'] && targetAttributes['data-config-id'].value;
+            var instanceId = {
+              definitionId: definitionId,
+              configId: configId
+            };
+
+            $scope.$parent.deleteInstanceRequest(instanceId, CONST.DATASOURCE_TYPE); //delete datasource instead of model
+          } else {
+            console.warn('Missing some of the required model attributes.');
+          }
+        }
+        catch(error) {
+          console.warn('error deleting model definition: ' + error);
+        }
+      }
+    }
+  };
+}]);
+
+IA.directive('slIaNavMainDatasource', [
+  function(){
+    return {
+      restrict: 'E',
+      replace: true,
+      scope: {},
+      templateUrl: './scripts/modules/ia/templates/ia.nav.main.datasource.html',
+      controller: function($scope){
+        $scope.isDataSourceNavContainerOpen = true;
+
+        $scope.openSelectedDataSource = function(key, opt) {
+          if (opt.sourceEvent.currentTarget.attributes['data-id']) {
+            var dsId = opt.sourceEvent.currentTarget.attributes['data-id'].value;
+            $scope.$parent.$parent.openSelectedInstance(dsId, CONST.DATASOURCE_TYPE);
+          }
+        };
+
+        $scope.addNewDatasourceMainInstanceRequest = function(event) {
+          if (event.target.attributes['data-type'] || event.target.parentElement.attributes['data-type']){
+            var val = '';
+            if (event.target.attributes['data-type']) {
+              val = event.target.attributes['data-type'].value;
+            }
+            else {
+              val = event.target.parentElement.attributes['data-type'].value;
+            }
+            $scope.$parent.$parent.createDatasourceViewRequest();
+          }
+        };
+
+        $scope.deleteSelectedDataSource = function(key, opt) {
+          try{
+            if (opt.sourceEvent.currentTarget.attributes['data-id']){
+              var dsIdConfig = {
+                definitionId: opt.sourceEvent.currentTarget.attributes['data-id'].value
+              };
+              $scope.$parent.$parent.deleteInstanceRequest(dsIdConfig, CONST.DATASOURCE_TYPE);
+            }
+          }
+          catch(error) {
+            console.warn('error deleting model definition: ' + error);
+          }
+        };
       }
     }
   }
