@@ -19,7 +19,7 @@ var DataSourceEditorView = (function () {
     this.connectionFailureIndicator = element(
       by.css('.ui-msg-inline-error'));
     this.testConnectionButton = element(
-      by.buttonText('Test Connection'));
+      by.id('datasource-test-connection-button'));
 
     this.createNewDataSource = function createNewDataSource(name) {
       this.dataSourceNameInput.clear();
@@ -53,7 +53,7 @@ var DataSourceEditorView = (function () {
     this.testDatabaseConnectionFor =
     function testDatabaseConnectionFor(outcome) {
       var self = this;
-      
+
       self.testConnectionButton.click();
 
       if(outcome === SUCCESS) {

@@ -598,7 +598,9 @@ Composer.controller('ComposerMainController', [
         .catch(function(err) {
           return {
             status: false,
-            msg: 'Failed.'
+            error: {
+              message: 'Failed.'
+            }
           };
         });
     };

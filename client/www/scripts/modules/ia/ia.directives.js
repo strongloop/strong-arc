@@ -241,7 +241,11 @@ IA.directive('slIaNavModelRow', [function(){
       };
 
       var menuItems = {};
-      menuItems.deleteSelectedModel = {name: "delete", callback: deleteSelectedModel};
+      menuItems.deleteSelectedModel = {
+        name: 'delete',
+        className: 'model-nav-context-delete',
+        callback: deleteSelectedModel
+      };
 
       $.contextMenu({
         // define which elements trigger this menu
@@ -313,6 +317,7 @@ IA.directive('slIaNavDatasourceRow', [function(){
 
       menuItems.createModelsFromDS = {
         name: "discover models",
+        className: 'datasource-nav-context-discover',
         disabled: function(key, opt) {
           if (opt.sourceEvent.target.attributes['data-is-discoverable']) {
             isDiscoverable = opt.sourceEvent.target.attributes['data-is-discoverable'].value;
@@ -345,6 +350,7 @@ IA.directive('slIaNavDatasourceRow', [function(){
 
       menuItems.deleteSelectedDataSource = {
         name: "delete",
+        className: 'datasource-nav-context-delete',
         callback: deleteSelectedDataSource
       };
 

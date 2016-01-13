@@ -141,7 +141,8 @@
       </div>
     </div>
     <div class="datasource-buttons-layout-container">
-      <button ng-click="testConnection()" data-id="{{dsModel.id}}"
+      <button ng-click="testConnection()"
+        id="datasource-test-connection-button"
         class="instance-detail-pocket-button instance-save-button datasource-test-button"
         ng-class="{'activity-indicator': isTesting()}">
         Test Connection
