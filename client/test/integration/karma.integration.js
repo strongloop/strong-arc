@@ -27,11 +27,6 @@ module.exports = function(config) {
       'client/www/scripts/vendor/jquery/dist/jquery.js',
 
       'client/www/scripts/vendor/angular/angular.js',
-
-      // Exclude react & jsx until we rename jsx files to .jsx
-      // (see the comment in `exclude` section below)
-      // 'client/www/scripts/vendor/react/react-addon.0.10.0.js',
-      // 'client/www/scripts/vendor/react/JSXTransformer.js',
       'client/www/scripts/vendor/spin.js/spin.js',
       'client/www/scripts/vendor/angular-segmentio/angular-segmentio.js',
       'client/www/scripts/lib/segmentio/segmentio.js',
@@ -88,11 +83,7 @@ module.exports = function(config) {
 
     // list of files to exclude
     exclude: [
-      // TODO(bajtos) Rename react scripts to *.jsx
-      // and use karma-react-jsx-preprocessor
-      'client/www/scripts/modules/**/*.react.js',
       'client/www/scripts/modules/tracing/src/**/*.js'
-
     ],
 
     // test results reporter to use

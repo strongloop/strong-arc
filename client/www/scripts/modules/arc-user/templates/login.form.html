@@ -1,0 +1,46 @@
+<div class="container card" id="LoginMainContainer">
+  <div class="center_div">
+    <div class="item item-divider assertive AuthExceptionMessageContainer" ng-show="loginErrorMessage">
+      <div class="login-fail-message-container bg-danger">
+        {{loginErrorMessage}}
+      </div>
+    </div>
+    <h2 class="login-form-title">StrongLoop Arc Sign In</h2>
+    <form data-id="LoginForm" name="LoginForm" class="ui-form" role="form" ng-submit="loginRequest()" novalidate>
+      <div class="form-group">
+        <label for="InputUserName" class="field-label">Username or E-mail</label>
+        <input id="InputUserName"
+               class="ui-input"
+               ng-model="credentials.nameOrEmail"
+               name="InputUserName"
+               ng-change="handleChange()"
+               type="text"
+               placeholder="Username or E-mail">
+      </div>
+      <div class="form-group">
+        <label for="InputPassword" class="field-label">Password</label>
+        <input type="password"
+               class="ui-input"
+               ng-model="credentials.password"
+               id="InputPassword"
+               ng-change="handleChange()"
+               name="InputPassword"
+               placeholder="Password">
+      </div>
+      <div class="login-button-container">
+        <button id="login-user-btn" class="ui-btn primary pull-right">Sign In</button>
+      </div>
+      <div class="lineBreak"></div>
+    </form>
+    <div class="LoginRegisterLinksContainer">
+      <a href="https://strongloop.com/register/"
+         target="_blank"
+         title="StrongLoop Arc register link"
+         class="login-register-link pull-right">Register</a>
+      <a href="https://strongloop.com/login?action=lostpassword"
+         target="_blank"
+         title="StrongLoop Arc forgot password link"
+         class="login-forgot-password-link">Forgot password</a>
+    </div>
+  </div>
+</div>

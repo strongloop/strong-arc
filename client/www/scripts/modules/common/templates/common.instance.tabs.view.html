@@ -1,0 +1,16 @@
+<div>
+  <ul class="ui-tabs instance-tabs-list" ng-show="tabItems.length">
+    <li class="tab" ng-class="{active: item.isActive}" ng-repeat="item in tabItems">
+      <button ng-click="clickInstanceTabItem(item)" class="tab-link"
+              data-name="{{item.name}}" data-id="{{item.id}}">
+        {{item.name}}
+      </button>
+      <button ng-click="clickInstanceTabClose(item)" class="ui-close"
+        data-name="{{item.name}}" data-id="{{item.id}}">
+        <span class="sl-icon sl-icon-close"
+              data-name="{{item.name}}" data-id="{{item.id}}">
+        </span>
+      </button>
+    </li>
+  </ul>
+</ul>
