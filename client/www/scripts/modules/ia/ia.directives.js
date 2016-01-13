@@ -288,7 +288,8 @@ IA.directive('slIaNavDatasourceRow', [function(){
     templateUrl: './scripts/modules/ia/templates/ia.nav.datasource.row.html',
     scope: {
       item: '=',
-      onItemClick: '&'
+      onItemClick: '&',
+      discoverModels: '&'
     },
     controller: function($scope) {
       var isDiscoverable = false;
@@ -309,7 +310,43 @@ IA.directive('slIaNavDatasourceRow', [function(){
       };
 
       var menuItems = {};
-      menuItems.deleteSelectedModel = {name: "delete", callback: deleteSelectedModel};
+
+      menuItems.createModelsFromDS = {
+        name: "discover models",
+        disabled: function(key, opt) {
+          if (opt.sourceEvent.target.attributes['data-is-discoverable']) {
+            isDiscoverable = opt.sourceEvent.target.attributes['data-is-discoverable'].value;
+          } else if (opt.sourceEvent.target.parentElement.attributes['data-name']) {
+            isDiscoverable = opt.sourceEvent.target.parentElement.attributes['data-is-discoverable'].value;
+          }
+
+          if (isDiscoverable === 'true') {
+            return false;
+          }
+
+          return true;
+        },
+        callback: function(key, opt) {
+          var dsId = '';
+
+          if (opt.sourceEvent.target.attributes['data-id']) {
+            dsId = opt.sourceEvent.target.attributes['data-id'].value;
+          } else if (opt.sourceEvent.target.parentElement.attributes['data-id']) {
+            dsId = opt.sourceEvent.target.parentElement.attributes['data-id'].value;
+          }
+
+          if (dsId) {
+            $scope.discoverModels({
+              datasource: dsId
+            });
+          }
+        }
+      };
+
+      menuItems.deleteSelectedDataSource = {
+        name: "delete",
+        callback: deleteSelectedDataSource
+      };
 
       $.contextMenu({
         // define which elements trigger this menu
@@ -322,12 +359,26 @@ IA.directive('slIaNavDatasourceRow', [function(){
             if (opt.sourceEvent.target.attributes['data-name']){
               currentDSName = opt.sourceEvent.target.attributes['data-name'].value;
             }
+
+            if (opt.sourceEvent.target.attributes['data-is-discoverable']) {
+              var isDiscoverable = JSON.parse(
+                opt.sourceEvent.target.attributes['data-is-discoverable'].value
+              );
+
+              // note the order of menu items to target not showing discover item on
+              // ds types that don't support it.
+              // show by default (in case it was turned off by another item as it is shared
+              $('.context-menu-list li:first-child').show();
+              if (!isDiscoverable) {
+                $('.context-menu-list li:first-child').hide();
+              }
+            }
           }
         }
       });
 
       //handles deletion of both models and datasources based on type passed to deleteInstanceRequest()
-      function deleteSelectedModel(key, opt) {
+      function deleteSelectedDataSource(key, opt) {
         try{
           var targetAttributes = opt.sourceEvent.currentTarget.attributes;
           if (targetAttributes['data-id']) {

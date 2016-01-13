@@ -64,7 +64,7 @@ Composer.directive('slComposerExceptionView', [
         ];
 
         scope.$watch('globalExceptionStack', function(newVal) {
-          var isFatal = function(statckItem) {
+          var isFatal = function(stackItem) {
             return stackItem && stackItem.isFatal;
           };
 

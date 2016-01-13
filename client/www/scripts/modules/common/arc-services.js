@@ -3,13 +3,6 @@
 var urlBase = "/api";
 var authHeader = 'authorization';
 
-function getHost(url) {
-  var m = url.match(/^(?:https?:)?\/\/([^\/]+)/);
-  return m ? m[1] : null;
-}
-
-var urlBaseHost = getHost(urlBase) || location.host;
-
 /**
  * @ngdoc overview
  * @name ArcServices
@@ -485,9 +478,8 @@ module
       return {
         'request': function(config) {
 
-          // filter out external requests
-          var host = getHost(config.url);
-          if (host && host !== urlBaseHost) {
+          // filter out non urlBase requests
+          if (config.url.substr(0, urlBase.length) !== urlBase) {
             return config;
           }
 
@@ -555,7 +547,6 @@ module
      */
     this.setUrlBase = function(url) {
       urlBase = url;
-      urlBaseHost = getHost(urlBase) || location.host;
     };
 
     /**

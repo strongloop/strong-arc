@@ -627,7 +627,6 @@ Composer.controller('ComposerMainController', [
 
     });
     $scope.createModelsFromDS = function(id) {
-
       DataSourceService.testDataSourceConnection(id)
         .then(function(response) {
           if (response.status) {

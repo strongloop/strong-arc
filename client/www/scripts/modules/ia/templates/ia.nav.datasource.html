@@ -11,7 +11,8 @@
   <div data-ui-type="table" class="ia-tree-node-table branch-leaf-list datasource-branch-container">
     <div ng-repeat="item in mainNavDatasources">
       <sl-ia-nav-datasource-row item="item"
-        on-item-click="navTreeItemClicked(type, id, meta)">
+        on-item-click="navTreeItemClicked(type, id, meta)"
+        discover-models="createModelsFromDS(datasource)">
       </sl-ia-nav-datasource-row>
     </div>
   </div>
