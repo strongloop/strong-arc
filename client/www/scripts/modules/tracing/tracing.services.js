@@ -1,3 +1,5 @@
+var g = require('strong-globalize');
+
 Tracing.service('TracingServices', [
   '$rootScope',
   '$log',
@@ -14,14 +16,14 @@ Tracing.service('TracingServices', [
     svc.alertNoProcesses = function(){
 
         $rootScope.$emit('message', {
-          body: 'No processes found.  Please try another host.',
+          body: g.t('No processes found.  Please try another host.'),
           links: [{
               link: '/#process-manager',
-              linkText: 'go to Process Manager view'
+              linkText: g.t('go to Process Manager view')
             },
             {
               link: 'http://docs.strongloop.com/display/SLC/Tracing',
-              linkText: 'more info...'
+              linkText: g.t('more info...')
             }
           ]
         });
@@ -29,14 +31,14 @@ Tracing.service('TracingServices', [
     svc.alertProcessLoadProblem = function(){
 
       $rootScope.$emit('message', {
-          body: 'Not all processes are coming up.  Please check the pm host status.',
+          body: g.t('Not all processes are coming up.  Please check the pm host status.'),
           links: [{
             link: '/#process-manager',
-            linkText: 'go to Process Manager view'
+            linkText: g.t('go to Process Manager view')
           },
           {
             link: 'http://docs.strongloop.com/display/SLC/Tracing',
-            linkText: 'more info...'
+            linkText: g.t('more info...')
           }
         ]
       });
@@ -44,29 +46,29 @@ Tracing.service('TracingServices', [
 
     svc.alertUnlicensedPMHost = function() {
       $rootScope.$emit('message', {
-        body: 'The processes came up but they are not tracing.  You may need to push a license to your PM Host via the Process Manager view. Or you could try stopping and starting tracing again to reset.',
+        body: g.t('The processes came up but they are not tracing.  You may need to push a license to your PM Host via the Process Manager view. Or you could try stopping and starting tracing again to reset.'),
         links: [{
           link: '/#process-manager',
-          linkText: 'go to Process Manager view'
+          linkText: g.t('go to Process Manager view')
         },
           {
             link: 'http://docs.strongloop.com/display/SL/Managing+your+licenses#Managingyourlicenses-Settingyourlicensekeyonaremotehost',
-            linkText: 'more info...'
+            linkText: g.t('more info...')
           }
         ]
       });
     };
     svc.alertNoHosts = function() {
       $rootScope.$emit('message', {
-        body: 'No hosts found.  Please add a Strong PM host via the Process Manager view.',
+        body: g.t('No hosts found.  Please add a Strong PM host via the Process Manager view.'),
         stateOnClose: 'process-manager',
         links: [{
             link: '/#process-manager',
-            linkText: 'go to Process Manager view'
+            linkText: g.t('go to Process Manager view')
           },
           {
             link: 'http://docs.strongloop.com/display/SLC/Tracing',
-            linkText: 'more info...'
+            linkText: g.t('more info...')
           }
         ]
 
@@ -78,10 +80,10 @@ Tracing.service('TracingServices', [
       ret.cpu = t.map(function(d){
         var item = {
           _t: moment(d.ts).unix()*1000,
-          'Memory Used': d['p_mu'],
-          'Load Average': d['s_la'],
           '__data': d
         };
+        item[g.t('Memory Used')] = d['p_mu'];
+        item[g.t('Load Average')] = d['s_la'];
         return item;
       });
       ret.cpu = ret.cpu.sort(function(a,b){ return a._t - b._t;});

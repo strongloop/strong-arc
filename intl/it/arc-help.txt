@@ -1,0 +1,2 @@
+Utilizzo Le Opzioni {0} [opzioni] {{--cli}} Avviano il backend solo, non aprono il visualizzatore.{{StrongLoop Arc}} utilizzerà un numero di porto diverso ogni volta che lo eseguite. Potete fornire un porto specifico e ospitare numero per mezzo  delle variabili di ambiente {{PORT}} e {{HOST},} ad esempio: {{HOST=192.168.1.100 PORT=4000 {1} }}
+

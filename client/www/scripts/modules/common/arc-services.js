@@ -417,7 +417,7 @@ module.factory(
 
 module
   .factory('LoopBackAuth', function() {
-    var props = ['accessTokenId', 'currentUserId', 'rememberMe'];
+    var props = ['accessTokenId', 'currentUserId'];
     var propsPrefix = '$LoopBack$';
 
     function LoopBackAuth() {
@@ -425,6 +425,7 @@ module
       props.forEach(function(name) {
         self[name] = load(name);
       });
+      this.rememberMe = undefined;
       this.currentUserData = null;
     }
 

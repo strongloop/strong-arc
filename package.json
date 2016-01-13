@@ -50,6 +50,7 @@
     "strong-arc-filesystem": "^1.x",
     "strong-build": "^2.x",
     "strong-deploy": "^3.0.0",
+    "strong-globalize": "^1.0.0",
     "strong-mesh-client": "^1.4.0",
     "strong-trace-waterfall": "^1.0.0",
     "strong-trace-waterfalldata": "^1.0.0",

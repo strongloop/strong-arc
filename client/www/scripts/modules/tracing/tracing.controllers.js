@@ -1,3 +1,5 @@
+var g = require('strong-globalize');
+
 Tracing.controller('TracingMainController', [
   '$scope',
   '$log',
@@ -19,7 +21,7 @@ Tracing.controller('TracingMainController', [
     $scope.tracingProcessCycleActive = false;
     $scope.showTraceToggle = true;
     $scope.targetProcessCount = 0;
-    $scope.tracingOnOffCycleMessage = 'starting';
+    $scope.tracingOnOffCycleMessage = g.t('starting');
     $scope.systemFeedback = [];  // FEEDBACK
     $scope.managerHosts = [];    // $location.host()
     $scope.selectedPMHost = {};
@@ -89,7 +91,7 @@ Tracing.controller('TracingMainController', [
       TracingServices.validateLicense()
         .then(function(isValid) {
           if (!isValid) {
-            $log.warn('invalid tracing license');
+            $log.warn(g.t('invalid tracing license'));
             $scope.showTimelineLoading = false;
             $scope.showTransactionHistoryLoading = false;
             $scope.isShowTraceSequenceLoader = false;
@@ -108,13 +110,13 @@ Tracing.controller('TracingMainController', [
               else {
                 TracingServices.alertNoHosts();
                 $scope.selectedPMHost = {
-                  error: 'no PM Hosts available',
+                  error: g.t('no PM Hosts available'),
                   errorType: 'NOHOSTS',
                   status: {
                     isProblem: true,
                     problem: {
-                      title:'No PM Hosts available',
-                      description:'You need to add a PM Host via the Process Manager view'
+                      title: g.t('No PM Hosts available'),
+                      description: g.t('You need to add a PM Host via the Process Manager view')
                     }
                   }
                 };
@@ -125,7 +127,7 @@ Tracing.controller('TracingMainController', [
 
         })
         .catch(function(error) {
-          $log.warn('exception validating tracing license (controller)');
+          $log.warn(g.t('exception validating tracing license (controller)'));
           return;
         });
 
@@ -302,7 +304,7 @@ Tracing.controller('TracingMainController', [
                 $scope.tracingProcessCycleActive = false;
                 $scope.killProcessPoll = true;
                 $scope.pidCycleCheckCollection = [];
-                growl.addSuccessMessage('All processes are up and tracing');
+                growl.addSuccessMessage(g.t('All processes are up and tracing'));
 
                 $scope.refreshTimelineProcess();
               }

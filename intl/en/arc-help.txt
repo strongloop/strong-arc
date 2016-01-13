@@ -1,0 +1,10 @@
+Usage
+
+  {0} [options]
+
+Options
+  {{--cli}}   Start the backend only, do not open the browser.
+
+{{StrongLoop Arc}} will use a different port number each time you run it. You can provide a specific port and host number via the environment variables {{PORT}} and {{HOST}}, for example:
+ {{HOST=192.168.1.100 PORT=4000 {1}}}
+

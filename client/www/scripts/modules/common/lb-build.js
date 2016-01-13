@@ -316,7 +316,7 @@ module.factory(
          *   populated with the actual data once the response is returned
          *   from the server.
          *
-         * The number of instances updated
+         * This method returns no data.
          */
         "updateAll": {
           url: urlBase + "/Builds/update",
@@ -346,10 +346,7 @@ module.factory(
          *   populated with the actual data once the response is returned
          *   from the server.
          *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `Build` object.)
-         * </em>
+         * This method returns no data.
          */
         "deleteById": {
           url: urlBase + "/Builds/:id",
@@ -568,7 +565,7 @@ module.factory(
          *   populated with the actual data once the response is returned
          *   from the server.
          *
-         * The number of instances updated
+         * This method returns no data.
          */
         R["update"] = R["updateAll"];
 
@@ -595,10 +592,7 @@ module.factory(
          *   populated with the actual data once the response is returned
          *   from the server.
          *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `Build` object.)
-         * </em>
+         * This method returns no data.
          */
         R["destroyById"] = R["deleteById"];
 
@@ -625,10 +619,7 @@ module.factory(
          *   populated with the actual data once the response is returned
          *   from the server.
          *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `Build` object.)
-         * </em>
+         * This method returns no data.
          */
         R["removeById"] = R["deleteById"];
 
@@ -775,7 +766,7 @@ module.factory(
 
 module
   .factory('LoopBackAuth', function() {
-    var props = ['accessTokenId', 'currentUserId', 'rememberMe'];
+    var props = ['accessTokenId', 'currentUserId'];
     var propsPrefix = '$LoopBack$';
 
     function LoopBackAuth() {
@@ -783,6 +774,7 @@ module
       props.forEach(function(name) {
         self[name] = load(name);
       });
+      this.rememberMe = undefined;
       this.currentUserData = null;
     }
 

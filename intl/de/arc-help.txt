@@ -1,0 +1,2 @@
+Gebrauch {0} [Optionen] Optionen {{--cli}} starten nur das Ausgabeprogramm, öffnen den Browser nicht.{{StrongLoop Arc}} wird jedes Mal eine andere Hafennummer verwenden, wenn Sie es führen. Sie können einen bestimmten Hafen liefern und Zahl über die Umweltsvariablen {{PORT}} und {{HOST}} zum Beispiel bewirten:}} {{HOST=192.168.1.100 PORT=4000 {1} }}
+

@@ -4,13 +4,18 @@ var util = require('util');
 var opener = require('opener');
 var minimist = require('minimist');
 var os = require('os');
+var g = require('strong-globalize');
 var DEFAULT_ARC_HOST = 'localhost';
 var ALL_INTF_HOST = '0.0.0.0';
+
+g.setRootDir(path.resolve(__dirname, '..'));
+g.setDefaultLanguage();
+
 var STRONG_ARC_RUNNING_MSG =
-exports.STRONG_ARC_RUNNING_MSG = 'StrongLoop Arc is running here:';
-var STRONG_ARC_REMOTE_WARN = 'NOTICE: Arc seems to have been launched from' +
+exports.STRONG_ARC_RUNNING_MSG = g.t('StrongLoop Arc is running here:');
+var STRONG_ARC_REMOTE_WARN = g.t('NOTICE: Arc seems to have been launched from' +
 ' a remote connection. Depending on your network setup, Arc may not be' +
-' accessible using the address above.';
+' accessible using the address above.');
 var opts = minimist(process.argv.slice(2), {
   alias: {
     v: 'version',
@@ -33,10 +38,11 @@ var pathArg = opts._[0];
 var WORKSPACE_DIR = process.cwd();
 
 if (opts.help) {
-  return printHelp();
+  printHelp();
 } else if (opts.version) {
-  return printVersion();
+  printVersion();
 }
+process.exit(0);
 
 // --features foo,bar --feature baz --feature quux
 //  => {feaures: 'foo,bar', feature: ['baz', 'quux']}
@@ -56,7 +62,7 @@ if (pathArg) {
 
 process.env.WORKSPACE_DIR = process.env.WORKSPACE_DIR || WORKSPACE_DIR;
 
-console.log('Loading workspace %s', process.env.WORKSPACE_DIR);
+g.log('Loading workspace %s', process.env.WORKSPACE_DIR);
 
 var port = process.env.PORT || 0;
 var host = process.env.HOST || DEFAULT_ARC_HOST;
@@ -65,7 +71,7 @@ delete process.env.PORT;
 
 var server = arc.listen(port, host, function(err) {
   if(err) {
-    console.error('could not start Arc!');
+    g.error('could not start Arc!');
     console.error(err);
     process.exit(1);
   }
@@ -127,17 +133,7 @@ function getArgv() {
 
 function printHelp() {
   var cmd = process.env.CMD || 'strong-arc';
-  console.log('Usage');
-  console.log('  %s [options]', cmd);
-  console.log();
-  console.log('Options');
-  console.log('  --cli   Start the backend only, do not open the browser.');
-  console.log();
-  console.log('StrongLoop Arc will use a different port number each time');
-  console.log('you run it. You can provide a specific port and host number');
-  console.log('via the environment variables PORT and HOST, for example:');
-  console.log(' HOST=192.168.1.100 PORT=4000 ' + cmd);
-  console.log();
+  g.log('arc-help.txt', cmd, cmd);
 }
 
 function printVersion() {

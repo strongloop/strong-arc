@@ -1,0 +1,23 @@
+{
+    "140952a72b38ada8a76562140b3bc298": "Todos los procesos de seguridad y rastreo",
+    "1ee85f6c60017a7f0646ba8dc5824de6": "Iniciar",
+    "2a136800dba65e653b32078c0222c3b6": "Carga de trabajo {0}",
+    "42d5a7d2362c894bf8d5786dbe48f4ba": "AVISO: Arco parece haber sido lanzado desde una conexión remota.  Dependiendo de la configuración de la red, Arco no sea accesible utilizando la dirección anterior.",
+    "4c726eb7a395eda1e4f64bc82dc60031": "Rastreo de licencia válida",
+    "4e38db265f0f5a64e2008007c86ca66e": "",
+    "5761de7611e80d00275c5c187822bdc6": "No se han encontrado hosts.   Añada un MP principal fuerte a través de la vista. Process Manager",
+    "646edd2d98847676beb643ea894410f3": "MP Hosts no está disponible",
+    "7cf50312a339f27dc51c9f037cd2821e": "Debe añadir un MP principal mediante la vista Process Manager",
+    "84db3228a747400657f939b1253a1a88": "No se han encontrado procesos.   Intente otro host.",
+    "8bc774e669bddf3a376ae92d5213af5c": "Las secuencias de rastreo son rutas identificables a través de un programa, como todos los códigos invoca para responder a una petición http entrante.  La lista siguiente contiene todas las rutas activas pondrá en el programa durante la ventana de perfiles.",
+    "91ccce50eca8c3f8c39ce15f4cddcbea": "Más información ...",
+    "947145fb9cb7f3cf54a28c25e7228438": "Excepción al validar el rastreo de licencia (del controlador)",
+    "a30eeb7ab24253421c21a959dff175c7": "StrongLoop Arco está aquí:",
+    "b1b2616f6357b8cebd6d32ddc01de5eb": "Vaya a ver Process Manager",
+    "b874a0921e552b0149023b1bae5c771a": "Memoria",
+    "bce1db6077ed0783eaad48aeeda3738b": "Promedio de carga",
+    "c77ac341e6e938d8b60873993b24a42c": "No se ha podido iniciar un arco!",
+    "e23c1986418b8105ca0e6fb0f4faadd0": "No todos los procesos están subiendo.   Compruebe el estado del host pm.",
+    "e57b2c83a76f7ca39391f29e498e7874": "Los procesos se acercó pero no son el rastreo.   Es necesario impulsar una licencia para el MP principal mediante la vista Process Manager.  O puede intentar detener e iniciar el rastreo de nuevo para restablecer.",
+    "e646fe3af0d0102813a3ce2d43c2db06": "MP Hosts no está disponible"
+}
