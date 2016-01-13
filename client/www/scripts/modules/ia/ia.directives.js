@@ -245,7 +245,7 @@ IA.directive('slIaNavModelContext', [function() {
       var menuItems = {};
       menuItems.deleteSelectedModel = {
         name: 'delete',
-        className: 'model-nav-context-delete',
+        className: 'context-menu-model-delete',
         callback: deleteSelectedModel
       };
 
@@ -296,7 +296,8 @@ IA.directive('slIaNavDatasourceContext', [function() {
     replace: true,
     template: '<span></span>',
     scope: {
-      triggerSelector: '@'
+      triggerSelector: '@',
+      discoverModels: '&'
     },
     link: function(scope, elem, attrs) {
       //handles deletion of both models and datasources based on type passed to deleteInstanceRequest()
@@ -324,7 +325,7 @@ IA.directive('slIaNavDatasourceContext', [function() {
 
       menuItems.createModelsFromDS = {
         name: 'discover models',
-        className: 'datasource-nav-context-discover',
+        className: 'context-menu-ds-discover',
         disabled: function(key, opt) {
           if (opt.sourceEvent.target.attributes['data-is-discoverable']) {
             isDiscoverable = opt.sourceEvent.target.attributes['data-is-discoverable'].value;
@@ -348,7 +349,7 @@ IA.directive('slIaNavDatasourceContext', [function() {
           }
 
           if (dsId) {
-            $scope.discoverModels({
+            scope.discoverModels({
               datasource: dsId
             });
           }
@@ -357,7 +358,7 @@ IA.directive('slIaNavDatasourceContext', [function() {
 
       menuItems.deleteSelectedDataSource = {
         name: 'delete',
-        className: 'datasource-nav-context-delete',
+        className: 'context-menu-ds-delete',
         callback: deleteSelectedDataSource
       };
 
@@ -399,8 +400,7 @@ IA.directive('slIaNavDatasourceRow', [function(){
     templateUrl: './scripts/modules/ia/templates/ia.nav.datasource.row.html',
     scope: {
       item: '=',
-      onItemClick: '&',
-      discoverModels: '&'
+      onItemClick: '&'
     },
     controller: function($scope) {
       var isDiscoverable = false;

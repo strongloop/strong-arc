@@ -12,7 +12,9 @@ var MainTreeNavView = (function () {
       by.css('.datasource-branch-container button.btn-ds-nav-context'));
     this.addModelButton = element(
       by.id('nav-tree-addnew-model'));
-    this.ctxMenuTriggers = element.all(by.css('.context-menu-item'));
+    this.ctxModelDelete = element(by.css('.context-menu-model-delete'));
+    this.ctxDsDelete = element(by.css('.context-menu-ds-delete'));
+    this.ctxDsDiscover = element(by.css('.context-menu-ds-discover'));
     this.dataSourceNavItems = element.all(
       by.css('.datasource-branch-container button.nav-tree-item'));
     this.contextMenuTrigger = element(by.css('button.btn-nav-context'));
@@ -39,13 +41,14 @@ var MainTreeNavView = (function () {
       self.dataSourceNavItems.first().click();
     };
     this.openDataSourceDiscoveryByIndex = function (index) {
+      var self = this;
       browser.driver.wait(
         EC.presenceOf(this.addDataSourceButton),
       10000);
       var dataSourceNavCtx = this.dataSourceCtxBtns.get(index);
       browser.driver.actions().click(dataSourceNavCtx).perform();
-      var discoverButton = this.ctxMenuTriggers.get(0);
-      browser.driver.actions().click(discoverButton).perform();
+      browser.driver.wait(EC.visibilityOf(self.ctxDsDiscover), 1000);
+      browser.driver.actions().click(self.ctxDsDiscover).perform();
     };
     this.openNewDataSourceView = function() {
       var self = this;
@@ -59,9 +62,9 @@ var MainTreeNavView = (function () {
       10000);
       var dataSourceNavCtx = self.dataSourceCtxBtns.get(index);
       browser.driver.actions().click(dataSourceNavCtx).perform();
-      var deleteButton = self.ctxMenuTriggers.get(1);
-      browser.driver.actions().click(deleteButton).perform();
-      browser.wait(EC.alertIsPresent(), 1000);
+      browser.driver.wait(EC.visibilityOf(self.ctxDsDelete), 1700);
+      browser.driver.actions().click(self.ctxDsDelete).perform();
+      browser.wait(EC.alertIsPresent(), 1200);
       var alertDialog = browser.switchTo().alert();
       alertDialog.accept();
     };
@@ -73,8 +76,8 @@ var MainTreeNavView = (function () {
       // Main Tree Context Menu
       var modelNavCtx = self.modelCtxBtns.get(0);
       browser.driver.actions().click(modelNavCtx).perform();
-      var deleteButton = self.ctxMenuTriggers.get(4);
-      browser.driver.actions().click(deleteButton).perform();
+      browser.driver.wait(EC.visibilityOf(self.ctxModelDelete), 1000);
+      browser.driver.actions().click(self.ctxModelDelete).perform();
       browser.wait(EC.alertIsPresent(), 10000);
       var alertDialog = browser.switchTo().alert();
       alertDialog.accept();
