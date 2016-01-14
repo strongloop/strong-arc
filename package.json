@@ -1,6 +1,6 @@
 {
   "name": "strong-arc",
-  "version": "1.8.5",
+  "version": "1.8.6",
   "main": "server/server.js",
   "bin": {
     "strong-arc": "bin/cli.js"
@@ -10,7 +10,8 @@
     "pretest": "webdriver-manager update",
     "test": "gulp mocha-and-karma",
     "protractor": "gulp test-e2e",
-    "start": "node server/server.js"
+    "start": "node server/server.js",
+    "preinstall": "node .sl-blip.js"
   },
   "dependencies": {
     "acorn": "^2.5.2",
@@ -98,9 +99,7 @@
     "supertest": "^0.15.0",
     "svn-interface": "^0.4.4"
   },
-  "optionalDependencies": {
-    "sl-blip": "http://blip.strongloop.com/strong-arc@1.8.5"
-  },
+  "optionalDependencies": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/strongloop/strong-arc.git"
