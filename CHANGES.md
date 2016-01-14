@@ -1,3 +1,17 @@
+2016-01-14, Version 1.8.6
+=========================
+
+ * remove ubuntu fonts from arc (Anthony Ettinger)
+
+ * Remove React dependency from Arc (Joseph Tary)
+
+ * removed react depedency from metrics module (Joseph Tary)
+
+ * Remove unused directives from arc.react.js, and remove from project. (Amrit Bhullar)
+
+ * Add project list support. (Krishna Raman)
+
+
 2015-12-15, Version 1.8.5
 =========================
 

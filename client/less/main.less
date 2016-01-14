@@ -9,20 +9,21 @@ body {
   font-size: 1.6rem;
   font-weight: 400;
   width: 100%;
-  background-color:#ffffff;
+  background-color: #ffffff;
   margin: 0;
   overflow: hidden;
-  font-family: 'helvetica neue', helvetica, ubuntu, arial, sans-serif;
+  font-family: 'helvetica neue', helvetica, arial, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
 input:focus, select:focus {
-  outline:none;
+  outline: none;
 }
 
 .pull-left {
   float: left;
 }
+
 /*
 
     Data Table Grid
@@ -31,16 +32,19 @@ input:focus, select:focus {
 [data-ui-type="table"] {
   display: table;
   table-layout: fixed;
-  width:100%;
+  width: 100%;
 }
+
 [data-ui-type="row"] {
   display: table-row;
 }
+
 [data-ui-type="cell"] {
   display: table-cell;
   vertical-align: top;
 
 }
+
 button:focus,
 button:active:focus,
 .btn:focus,
@@ -49,21 +53,26 @@ button:active:focus,
   outline: transparent;
   outline-color: transparent;
 }
+
 ul {
   list-style: none;
   padding: 0;
 }
+
 label {
   font-weight: normal;
   margin-right: 2rem;
 }
+
 label {
   color: #808080;
 }
+
 input {
   border: none;
   font-size: 90%;
 }
+
 pre {
   background-color: #F8F8F8;
   border: 1px solid #DDD;
@@ -73,18 +82,21 @@ pre {
   padding: 6px 10px;
   border-radius: 3px;
 }
+
 code {
   color: #000;
 }
+
 .center_div {
   margin: 0 auto;
   width: 80% /* value of your choice which suits your alignment */;
 }
+
 .btn-command {
-  border:0;
-  background:transparent;
-  margin:0;
-  padding:0;
+  border: 0;
+  background: transparent;
+  margin: 0;
+  padding: 0;
 }
 
 /*
@@ -98,6 +110,7 @@ code {
   margin-top: 1rem;
   margin-left: 0.5rem;
 }
+
 .lineBreak {
   height: 1.6rem;
   border-bottom: 1px solid #DDDDDD;
@@ -110,9 +123,10 @@ code {
 */
 .growl {
   top: 80px;
-  right:6rem;
+  right: 6rem;
   z-index: 4000;
 }
+
 /*
 
     Header
@@ -129,12 +143,15 @@ code {
   width: 100%;
   height: 7.5rem;
 }
-.header-help-container{
+
+.header-help-container {
   font-size: 17pt;
 }
+
 .headerContainer li {
   display: inline-block;
 }
+
 .navButtons {
   width: 18rem;
   position: absolute;
@@ -179,10 +196,12 @@ code {
   top: 4rem;
   left: -1.4rem;
 }
+
 .dropdown-menu li {
   display: block;
 }
-.branding{
+
+.branding {
   width: 25rem;
   float: left;
 
@@ -191,20 +210,19 @@ code {
   }
 }
 
-.logo{
+.logo {
   margin-top: 0.8rem;
   width: 15.8rem;
 }
 
-.wordbrand{
-  font-family: ubuntu;
+.wordbrand {
   font-size: 20pt;
   font-weight: 400;
-  color:  #08592B;
+  color: #08592B;
   float: left;
 }
 
-.header-version{
+.header-version {
   position: absolute;
   font-size: 0.55em;
   right: 2.2em;
@@ -223,24 +241,27 @@ code {
 
 */
 #LoginMainContainer {
-  position:relative;
+  position: relative;
 }
+
 #LoginMainContainer .center_div {
-  max-width:50rem;
+  max-width: 50rem;
   margin-top: 5rem;
   padding: 6rem;
   border: 1px solid #DDDDDD;
   border-radius: 5px;
 }
+
 .login-form-title {
-  margin-top:1rem;
+  margin-top: 1rem;
   font-size: 22pt;
   margin-bottom: 3rem;
   text-align: center;
 }
+
 [data-id="LoginForm"] {
-  max-width:45rem;
-  display:block;
+  max-width: 45rem;
+  display: block;
   margin: 0 auto 0 auto;
 
   &.ui-form {
@@ -248,46 +269,44 @@ code {
   }
 }
 
-[data-id="AuthExceptionMessageContainer"] {
-  position:absolute;
-  top:1rem;
-  max-width:38rem;
+.AuthExceptionMessageContainer {
+  margin-bottom: 3rem;
 }
+
 .login-fail-message-container {
-  padding:1.4rem;
-  font-size:115%;
+  padding: 1.4rem;
+  font-size: 115%;
   color: #d0021b;
   border: 1px solid #d0021b;
   border-radius: 0.5rem;
   background-color: rgba(208, 2, 27, 0.1);
 }
-.login-button-container{
+
+.login-button-container {
   display: inline-block;
   margin-top: 2rem;
   width: 100%;
   height: 5rem;
 }
-[data-id="LoginRegisterLinksContainer"] {
-  margin-top:1rem;
+
+.LoginRegisterLinksContainer {
+  margin-top: 1rem;
 }
-[data-id="RegisterLink"] {
-  float:right;
-}
+
 /*
 
   Link Command (button that looks like a link)
 
 */
 .link-cmd {
-  color:@action-primary;
-  border:0;
-  background:transparent;
+  color: @action-primary;
+  border: 0;
+  background: transparent;
 
   &:hover {
     text-decoration: underline;
   }
 }
-
 
 /*
 
@@ -298,6 +317,7 @@ code {
 .jumbotron {
   background-color: #ffffff;
 }
+
 .img-main-splash {
   width: 100%;
 }
@@ -308,8 +328,9 @@ code {
 
 */
 .app-module-container {
-  position:relative;
+  position: relative;
 }
+
 /*
 
     ide container
@@ -319,9 +340,11 @@ code {
   width: 100%;
   position: relative;
 }
+
 [data-id="MainSidebarContainer"] {
   background-color: #444444;
 }
+
 .top-level-container {
   border: 0px solid #cccccc;
   width: 28.5rem;
@@ -329,6 +352,7 @@ code {
   /*height:600px;
   overflow:scroll;*/
 }
+
 /*
 
     Loading Indicator
@@ -339,6 +363,7 @@ code {
   height: 180px;
   margin: 35px auto 0 auto;
 }
+
 /*
 
     Modal Window
@@ -347,6 +372,7 @@ code {
 .app-modal-window .modal-dialog {
   width: 1000px;
 }
+
 .app-modal-window .modal-dialog .modal-body {
   height: 550px;
   overflow: scroll;
@@ -366,6 +392,7 @@ Validation CSS
 .is-valid {
   display: none;
 }
+
 /*
 
     Global Exception
@@ -379,52 +406,63 @@ Validation CSS
   border-radius: 0.5rem;
   background-color: rgba(208, 2, 27, 0.1);
 }
+
 .ia-global-exception-header {
   margin-bottom: 1rem;
 }
+
 .ia-global-exception-body {
   font-size: 10pt;
 }
+
 .ia-global-exception-label {
   font-weight: bold;
 }
+
 .ia-global-exception-value {
-  font-size:11pt;
+  font-size: 11pt;
 }
+
 .ia-global-exception-help {
-  font-size:11pt;
+  font-size: 11pt;
   margin-top: 1rem;
 }
-.ia-global-exception-close-button{
+
+.ia-global-exception-close-button {
   float: right;
   font-size: 18pt;
 }
+
 .ia-global-exception-close-button:hover {
   color: #4a90e2;
   cursor: pointer;
 }
-.ia-global-exception-link{
-  text-align:right;
+
+.ia-global-exception-link {
+  text-align: right;
   padding-top: 1rem;
   text-decoration: underline;
 }
+
 .ia-global-exception-link:hover {
   color: #4a90e2;
   cursor: pointer;
 }
+
 .global-exception-stack-display {
-  width:100%;
+  width: 100%;
   height: 15rem;
   border: 1px solid #d0021b;
   margin-top: 1rem;
   padding: 1rem;
   font-size: 10pt;
   background-color: rgba(208, 2, 27, 0.1);;
-  overflow:auto;
-  white-space:pre;
+  overflow: auto;
+  white-space: pre;
 }
+
 [data-id="GlobalExceptionDetailsContainer"] {
-  display:none;
+  display: none;
 }
 
 #ProfilerContainer iframe {

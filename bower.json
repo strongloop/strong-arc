@@ -1,6 +1,6 @@
 {
   "name": "strong-arc",
-  "version": "1.8.4",
+  "version": "1.8.6",
   "homepage": "https://github.com/strongloop/strong-arc",
   "dependencies": {
     "angular": "~1.4.0",
@@ -9,7 +9,6 @@
     "jquery-ui": "~1.11.4",
     "jQuery-contextMenu": "~1.6.7",
     "jquery.transit": "~0.9.12",
-    "react": "0.12.1",
     "d3": "~3.4.13",
     "d3-tip": "~0.6.7",
     "nvd3": "~1.7.1",

@@ -1,0 +1,24 @@
+<div>
+  <button ng-click="toggleDataSourceNav($event)"
+          type="button"
+          data-name="datasources_root"
+          class="btn btn-default btn-block nav-tree-item tree-branch"
+          title="Datasources">
+    <span class="{{navItemOpenCloseIconClasses}}"></span>
+    <span class="nav-branch-folder-icon sl-icon sl-icon-folder"></span>
+    <span class="nav-branch-title">Data Sources</span>
+  </button>
+  <div data-ui-type="table" class="ia-tree-node-table branch-leaf-list datasource-branch-container">
+    <div ng-repeat="item in mainNavDatasources">
+      <sl-ia-nav-datasource-row item="item"
+        on-item-click="navTreeItemClicked(type, id, meta)">
+      </sl-ia-nav-datasource-row>
+    </div>
+  </div>
+  <button ng-click="addNewDatasourceInstanceRequest($event)"
+          data-type="datasource"
+          id="nav-tree-addnew-datasource"
+          class="nav-tree-item-addnew">
+          <span class="plus">+</span> Add New Data Source
+  </button>
+</div>
