@@ -26,7 +26,6 @@ var meshProxy = require('strong-mesh-client/proxy/server')(
 );
 app.meshProxy = meshProxy;
 var fsManager = require('strong-arc-filesystem/server/server');
-var projManager = require('strong-arc-project-list/server/server');
 
 var arcApi = require('../arc-api/server/server');
 
@@ -40,7 +39,6 @@ app.use('/build-deploy', buildDeploy);
 app.use('/api', arcApi);
 app.use('/manager', meshProxy);
 app.use('/fs', fsManager);
-app.use('/project-list/', projManager);
 
 // expose features list via REST so they can be checked by frontend
 app.get('/feature-flags', function(req, res) {
