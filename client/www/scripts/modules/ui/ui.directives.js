@@ -251,6 +251,18 @@ UI.directive('uiCrumbs', function () {
     link: function(scope, elem, attrs){
       scope.separator = scope.separator || 'separator';
 
+      // add default link property as true
+      // set to false to hide link and use span
+      scope.$watch('crumbs', function(newCrumbs){
+        if (!newCrumbs) return;
+
+        newCrumbs.map(function(crumb){
+          if ( typeof crumb.link === 'undefined' ) {
+            crumb.link = true;
+          }
+        });
+      });
+
       scope._onClick = function($index, crumb){
         var len = scope.crumbs.length-1;
         var i = $index;

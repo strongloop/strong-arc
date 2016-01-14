@@ -694,7 +694,7 @@ Common.directive('slProjectSelector', [
       replace: true,
       scope: {},
       templateUrl: './scripts/modules/common/templates/common.project.selector.html',
-      controller:['$state', '$scope', '$log', '$modal', '$rootScope', 'ProjectService', function($state, $scope, $log, $modal, $rootScope, ProjectService){
+      controller:['$state', '$scope', '$log', '$modal', '$rootScope', 'ProjectService', 'FileService', function($state, $scope, $log, $modal, $rootScope, ProjectService, FileService){
         $scope.selectedProject = null;
         $scope.toggler = false;
         $scope.projects = [];
@@ -727,10 +727,18 @@ Common.directive('slProjectSelector', [
           var modalDlg = $modal.open({
             templateUrl: templateBase + 'ui.modal.filepicker.html',
             scope: $scope,
-            controller: function($scope, $modalInstance, title, FileService, ProjectService) {
-              $scope.selectedFile = null;
+            controller: function($scope, $modalInstance, title, files, FileService, ProjectService) {
+              $scope.selectedFile = files.cwd;
               $scope.selectedFileMenu = null;
               $scope.files = [];
+
+              addParentPaths(files);
+
+              function addParentPaths(items){
+                items.cwd.link = false;
+                $scope.files = items;
+                $scope.files.parents.push(items.cwd);
+              }
 
               $scope.$watch('selectedFileMenu', function(item){
                 if (!item) return;
@@ -738,14 +746,9 @@ Common.directive('slProjectSelector', [
                 $log.log('get new path: ', item.path);
                 FileService.getListByPath({ path: item.path })
                   .then(function(items){
-                    $scope.files = items;
+                    addParentPaths(items);
                   })
               });
-
-              FileService.getListByPath({ path: '.' })
-                .then(function(items){
-                  $scope.files = items;
-                });
 
               $scope.title = title;
               $scope.close = function() {
@@ -761,7 +764,7 @@ Common.directive('slProjectSelector', [
                 $log.log('get files', item);
                 FileService.getListByPath({ path: item.path })
                   .then(function(items){
-                    $scope.files = items;
+                    addParentPaths(items);
                   });
               };
 
@@ -771,6 +774,9 @@ Common.directive('slProjectSelector', [
 
               $scope.saveItem = function(selectedItem){
                 $log.log('saved item in filepicker', selectedItem);
+
+                //remove temporary flag when saving
+                delete selectedItem.link;
 
                 ProjectService.addProject(selectedItem)
                   .then(function(data){
@@ -783,6 +789,12 @@ Common.directive('slProjectSelector', [
             resolve: {
               title: function() {
                 return 'File Picker';
+              },
+              files: function(){
+                return FileService.getListByPath({ path: '.' })
+                  .then(function(items){
+                    return items;
+                  });
               }
             }
           });

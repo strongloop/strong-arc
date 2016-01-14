@@ -5,10 +5,8 @@
   <div class="modal-body">
     <header>
       <p>Double click a directory to show its contents. Clicking "Add Project" will add the current directory as a project.</p>
-      <!--<p>Current directory: <strong class="cwd">{{ files.cwd.path }}</strong></p>-->
       <div class="ui-center">
         <ui-crumbs crumbs="files.parents" separator="path-separator" on-click="onClickCrumb(i, crumb, len)"></ui-crumbs>
-        <!--<ui-dropdown items="files.parents" selected="selectedFileMenu" filtering="true"></ui-dropdown>-->
       </div>
       <br>
     </header>
