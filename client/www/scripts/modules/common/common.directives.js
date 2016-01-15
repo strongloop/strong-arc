@@ -719,6 +719,14 @@ Common.directive('slProjectSelector', [
             });
         };
 
+        $scope.deleteProject = function(item){
+          ProjectService.deleteProject(item)
+            .then(function(data){
+              $log.log('deleted project', data);
+              $scope.getProjects();
+            });
+        };
+
         $scope.addNewProject = function(){
           var templateBase = '/scripts/modules/ui/templates/';
           $scope.toggler = false;
