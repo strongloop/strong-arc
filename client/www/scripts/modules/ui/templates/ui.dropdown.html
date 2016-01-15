@@ -9,6 +9,7 @@
         <li ng-repeat="item in items track by $index | filter:(isFiltering || '') && filterText"
             ng-class="{ selected: selected == item }">
           <a href ng-click="selectItem(item)">{{item.name || item}}</a>
+          <span ng-if="hasDelete" ng-click="_onDelete($index, item)" class="ui-close">x</span>
         </li>
       </ul>
     </section>

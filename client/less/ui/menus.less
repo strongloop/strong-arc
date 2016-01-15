@@ -332,12 +332,19 @@
       padding: 0 1rem;
       margin-bottom: 1rem !important;
       text-align: left;
+      position: relative;
 
       &.selected {
         a {
           background-color: @ui-dropdown-menu-selected-bg-color;
           color: @ui-dropdown-menu-link-hover-color;
         }
+      }
+
+      .ui-close {
+        position: absolute;
+        top: .5rem;
+        right: 1.5rem;
       }
     }
 

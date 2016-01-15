@@ -513,6 +513,10 @@ Common.service('ProjectService', ['$q', '$http', 'WorkspaceServices', function($
     return $http.post('/project-list/Projects', project);
   };
 
+  svc.deleteProject = function(project){
+    return $http.delete('/project-list/Projects/'+project.id);
+  };
+
   svc.setProjectEnvironment = function(project){
     return WorkspaceServices.loadWorkspace({ path: project.path });
   };

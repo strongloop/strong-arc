@@ -251,6 +251,18 @@ UI.directive('uiCrumbs', function () {
     link: function(scope, elem, attrs){
       scope.separator = scope.separator || 'separator';
 
+      // add default link property as true
+      // set to false to hide link and use span
+      scope.$watch('crumbs', function(newCrumbs){
+        if (!newCrumbs) return;
+
+        newCrumbs.map(function(crumb){
+          if ( typeof crumb.link === 'undefined' ) {
+            crumb.link = true;
+          }
+        });
+      });
+
       scope._onClick = function($index, crumb){
         var len = scope.crumbs.length-1;
         var i = $index;
@@ -366,6 +378,7 @@ UI.directive('uiDropdown', [
         items: '=',
         isFiltering: '=filtering',
         toggler: '=?',
+        onDelete: '&',
         placeholder: '@'
       },
       templateUrl: './scripts/modules/ui/templates/ui.dropdown.html',
@@ -373,6 +386,7 @@ UI.directive('uiDropdown', [
         $scope.toggler = angular.isDefined($scope.toggler) ? $scope.toggler : false;
         $scope.filterText = '';
         $scope.hasItems = false;
+        $scope.hasDelete = typeof $scope.onDelete === 'function';
 
         $scope.$watch('items', function(items){
           $scope.hasItems = items && items.length;
@@ -386,6 +400,10 @@ UI.directive('uiDropdown', [
           $scope.filterText = item.name;
           $scope.selected = item;
           $scope.toggler = false;
+        };
+
+        $scope._onDelete = function($index, item){
+          $scope.onDelete({item: item});
         };
       }
     };
