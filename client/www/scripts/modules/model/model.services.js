@@ -500,18 +500,21 @@ Model.service('ModelService', [
     svc.migrateModelConfig = function(config) {
       var deferred = $q.defer();
       var promise = deferred.promise;
+      var filter = {
+        filter: {
+          where: {
+            facetName: CONST.APP_FACET
+          }
+        }
+      };
 
       if (config.dataSource === CONST.DEFAULT_DATASOURCE) {
         config.dataSource = null;
       }
-      return DataSourceDefinition.findOne({
-        filter: {
-          where: {
-          name: config.dataSource,
-          facetName: CONST.APP_FACET
-          }
-        }
-      })
+      if(config.dataSource) {
+          filter.filter.where.name = config.dataSource;
+      }
+      return DataSourceDefinition.findOne(filter)
       .$promise
       .then(function(dataSourceDef) {
         return DataSourceDefinition.prototype$autoupdate({
