@@ -3,7 +3,7 @@
   "version": "1.8.8",
   "homepage": "https://github.com/strongloop/strong-arc",
   "dependencies": {
-    "angular": "^1.5.3",
+    "angular": "^1.4.x",
     "lodash": "~3.9.3",
     "jquery": "~2.1.4",
     "jquery-ui": "~1.11.4",
@@ -41,7 +41,7 @@
     "bootstrap": "~3.3.4"
   },
   "resolutions": {
-    "angular": "~1.4.0",
+    "angular": ">=1.2.0 <1.5.0",
     "d3": "~3.4.13",
     "nvd3": "~1.7.1",
     "spin.js": "~2.1.0",
