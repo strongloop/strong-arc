@@ -255,7 +255,7 @@ gulp.task('test-e2e', function(callback) {
     process.env.TEST_SERVER_PORT = server.port;
     var isWindows = /^win/.test(process.platform);
     var winExt = isWindows ? '.cmd' : '';
-    var protractorBin = path.resolve('protractor'+winExt);
+    var protractorBin = 'protractor'+winExt;
     var confPath = path.resolve(__dirname, 'client', 'test', 'protractor.conf.js');
 
     spawn(protractorBin, [confPath], {stdio: 'inherit'})
