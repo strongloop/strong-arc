@@ -122,7 +122,8 @@ describe('datasource-definition-interactions', function() {
         mysqlCreds.user,
         mysqlCreds.pass,
         '127.0.0.1',
-        '3306'
+        '3306',
+        3
       );
 
       expect(
@@ -273,7 +274,8 @@ describe('datasource-definition-interactions', function() {
         mysqlCreds.user,
         mysqlCreds.pass,
         '127.0.0.1',
-        '3306'
+        '3306',
+        3
       );
 
       expect(
