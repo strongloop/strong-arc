@@ -1,5 +1,8 @@
-Copyright (c) 2013-2015 StrongLoop, Inc.
+Licensed Materials - Property of IBM
+IBM StrongLoop Software
+Copyright IBM Corp. 2016. All Rights Reserved.
+US Government Users Restricted Rights - Use, duplication or disclosure
+restricted by GSA ADP Schedule Contract with IBM Corp.
 
-You may use this library under the terms of the [StrongLoop Subscription Agreement][].
-
-[StrongLoop Subscription Agreement]: http://strongloop.com/license
+See full text of IBM International Program License Agreement (IPLA)
+http://www-03.ibm.com/software/sla/sladb.nsf/pdf/ipla/$file/ipla.pdf
