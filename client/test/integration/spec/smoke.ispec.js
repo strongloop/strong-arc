@@ -16,7 +16,7 @@ describe('Arc', function() {
    it.skip : it)('can autoupdate MySQL database', function() {
 
     // We need more time for tests to finish on Jenkins
-    this.timeout(5000);
+    this.timeout(30000);
 
     // Note: this test does not check the result of autoupdate,
     // it only verifies that the process finishes with no errors

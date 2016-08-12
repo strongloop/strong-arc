@@ -26,13 +26,19 @@ var workspace = arc.workspace;
 function resetSandbox(req, res, next) {
   console.log('--reset-sandbox--');
   if (!sandboxNeedsFullReset) {
+    console.log('--full reset not required, skipping--');
     return next();
   }
+  console.log('--removing sandbox (' + SANDBOX + ')--');
   fs.remove(SANDBOX, function(err) {
     if (err) {
+      console.log('--error removing sandbox--', err);
       return next(err);
     }
+
+    console.log('--restore from empty project--', EMPTY_PROJECT, SANDBOX);
     fs.copy(EMPTY_PROJECT, SANDBOX, function(err) {
+      console.log('--restore complete--');
       sandboxNeedsFullReset = false;
       return next(err);
     });

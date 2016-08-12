@@ -4,7 +4,7 @@ given.emptyWorkspace = function() {
   // Increase the timeout when run via `beforeEach(given.emptyWorkspace)`
   // in order to support slow CI build slaves
   if (typeof this.timeout === 'function') {
-    this.timeout(30000);
+    this.timeout(300000);
   }
 
   return inject(function($http, $rootScope, $q, throwHttpError) {
