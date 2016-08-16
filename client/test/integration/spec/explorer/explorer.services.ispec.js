@@ -3,7 +3,7 @@ describe('ExplorerService', function() {
 
   // Starting a process on Jenkins is slow,
   // we need more time for tests to finish
-  this.timeout(5000);
+  this.timeout(20000);
 
   beforeEach(function() {
     inject(function(_$injector_) {

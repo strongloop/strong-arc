@@ -159,7 +159,7 @@ module.exports = function(config) {
     captureTimeout: 5000,
 
     // If browser is idle
-    browserNoActivityTimeout: 20000,
+    browserNoActivityTimeout: 1000000,
 
     //preprocessors: {
     //  './e2e/**/*.spec.js': [ 'browserify' ]
