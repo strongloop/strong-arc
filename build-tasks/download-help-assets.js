@@ -22,6 +22,32 @@ module.exports = function(names, destDir, cb) {
 };
 
 function downloadHelpHtml(id, name, destDir, cb) {
+  var fileName = path.join(destDir, name + '.json');
+
+  // Downloading data from Confluence frequently fails on our CI machines
+  // [08:54:55] 'build-help-assets' errored after 5.87 s
+  // [08:54:55] Error: read ECONNRESET
+  //     at exports._errnoException (util.js:907:11)
+  //         at TLSWrap.onread (net.js:557:26)
+  // Since we don't have any tests relying on the exact help contents,
+  // we can use a dummy placeholder instead.
+  if (process.env.CI) {
+    var data = {
+      id: id,
+      type: 'page',
+      title: name,
+      body: {
+        view: {
+          value: 'Dummy help contents for ' + name,
+          representation: 'view',
+        },
+      }
+    };
+
+    gutil.log('Creating dummy help file ' + fileName);
+    return fs.writeJsonFile(fileName, data, {}, cb);
+  }
+
   var url = CONFLUENCE_URL_BASE +
     'rest/api/content/' + id +
     '?expand=body.view';
@@ -47,8 +73,6 @@ function downloadHelpHtml(id, name, destDir, cb) {
     }
 
     data.body.view.value = resolveRelativeHrefs(data.body.view.value);
-
-    var fileName = path.join(destDir, name + '.json');
 
     gutil.log('Creating help file ' + fileName);
     fs.writeJsonFile(fileName, data, {}, cb);
