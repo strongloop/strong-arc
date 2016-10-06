@@ -1,6 +1,6 @@
 {
   "name": "strong-arc",
-  "version": "1.8.8",
+  "version": "1.8.9",
   "main": "server/server.js",
   "bin": {
     "strong-arc": "bin/cli.js"

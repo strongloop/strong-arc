@@ -1,3 +1,33 @@
+2016-10-06, Version 1.8.9
+=========================
+
+ * Stop downloading help from Confluence on CI (Miroslav Bajtoš)
+
+ * disable integration tests (Joseph Tary)
+
+ * Extra debug for integration test (Joseph Tary)
+
+ * Update URLs in CONTRIBUTING.md (#1728) (Ryan Graham)
+
+ * update copyright notices and license (Ryan Graham)
+
+ * fix datasource selection to use mysql (elkorep)
+
+ * use local path for protractor (Anthony Ettinger)
+
+ * fix protractor path (Anthony Ettinger)
+
+ * angular version in bower to 1.3.x (Anthony Ettinger)
+
+ * bower angular (Anthony Ettinger)
+
+ * force angular 1.4.x with bower (Anthony Ettinger)
+
+ * add windows safe path to gulp test-e2e task (Anthony Ettinger)
+
+ * Migrate model bugfix (hkeio)
+
+
 2016-01-19, Version 1.8.8
 =========================
 
