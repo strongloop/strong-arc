@@ -29,7 +29,7 @@
     "http-proxy": "^1.8.1",
     "less": "^2.5.3",
     "lodash": "^3.5.0",
-    "loopback": "^2.14.0",
+    "loopback": "^3.16.2",
     "loopback-boot": "^2.6.5",
     "loopback-component-explorer": "^2.1.1",
     "loopback-datasource-juggler": "^2.20.0",
