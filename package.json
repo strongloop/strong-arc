@@ -6,9 +6,10 @@
     "strong-arc": "bin/cli.js"
   },
   "scripts": {
-    "prepublish": "bower install && gulp build",
+    "prepublish": "npm run snyk-protect; bower install && gulp build",
     "test": "gulp jshint",
-    "start": "node server/server.js"
+    "start": "node server/server.js",
+    "snyk-protect": "snyk protect"
   },
   "dependencies": {
     "acorn": "^2.5.2",
@@ -51,7 +52,8 @@
     "strong-trace-waterfall": "^1.0.0",
     "strong-trace-waterfalldata": "^1.0.0",
     "strong-trace-waterfalltransform": "^1.0.0",
-    "ws": "^0.8.0"
+    "ws": "^0.8.0",
+    "snyk": "^1.80.1"
   },
   "description": "A visual suite for the StrongLoop API Platform",
   "devDependencies": {
@@ -109,5 +111,6 @@
   ],
   "license": "SEE LICENSE IN LICENSE.md",
   "author": "engineering@strongloop.com",
-  "homepage": "https://github.com/strongloop/strong-arc"
+  "homepage": "https://github.com/strongloop/strong-arc",
+  "snyk": true
 }
