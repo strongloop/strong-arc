@@ -27,7 +27,7 @@
     "express": "^4.12.2",
     "fs-extra": "^0.16.5",
     "http-proxy": "^1.8.1",
-    "less": "^2.5.3",
+    "less": "^3.0.2",
     "lodash": "^3.5.0",
     "loopback": "^2.14.0",
     "loopback-boot": "^2.6.5",
